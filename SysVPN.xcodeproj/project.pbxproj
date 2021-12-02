@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0CB0C3179C09CB2B78A22014 /* Pods_SysVPN__iOS_.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9BC128AC2A13B56F94EBA8CD /* Pods_SysVPN__iOS_.framework */; };
+		64E1F97657A4417E2FE3CA72 /* Pods_SysVPN__macOS_.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 77CA66A548B2998A416DAB70 /* Pods_SysVPN__macOS_.framework */; };
 		D78044B52758C6FC0086E59D /* Tests_iOS.swift in Sources */ = {isa = PBXBuildFile; fileRef = D78044B42758C6FC0086E59D /* Tests_iOS.swift */; };
 		D78044B72758C6FC0086E59D /* Tests_iOSLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D78044B62758C6FC0086E59D /* Tests_iOSLaunchTests.swift */; };
 		D78044C12758C6FC0086E59D /* Tests_macOS.swift in Sources */ = {isa = PBXBuildFile; fileRef = D78044C02758C6FC0086E59D /* Tests_macOS.swift */; };
@@ -41,6 +43,12 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		1FA1C7665E1A6D54F8D22701 /* Pods-SysVPN (iOS).release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SysVPN (iOS).release.xcconfig"; path = "Target Support Files/Pods-SysVPN (iOS)/Pods-SysVPN (iOS).release.xcconfig"; sourceTree = "<group>"; };
+		2B43C97C839B7834014B0DF7 /* Pods-SysVPN (iOS).debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SysVPN (iOS).debug.xcconfig"; path = "Target Support Files/Pods-SysVPN (iOS)/Pods-SysVPN (iOS).debug.xcconfig"; sourceTree = "<group>"; };
+		41A1AEAEEA5FDC7075F256B9 /* Pods-SysVPN (macOS).debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SysVPN (macOS).debug.xcconfig"; path = "Target Support Files/Pods-SysVPN (macOS)/Pods-SysVPN (macOS).debug.xcconfig"; sourceTree = "<group>"; };
+		44E1AD53955E4257D19CA39E /* Pods-SysVPN (macOS).release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SysVPN (macOS).release.xcconfig"; path = "Target Support Files/Pods-SysVPN (macOS)/Pods-SysVPN (macOS).release.xcconfig"; sourceTree = "<group>"; };
+		77CA66A548B2998A416DAB70 /* Pods_SysVPN__macOS_.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SysVPN__macOS_.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		9BC128AC2A13B56F94EBA8CD /* Pods_SysVPN__iOS_.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SysVPN__iOS_.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		D780449A2758C6F90086E59D /* Shared.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Shared.xcdatamodel; sourceTree = "<group>"; };
 		D780449B2758C6F90086E59D /* SysVPNApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SysVPNApp.swift; sourceTree = "<group>"; };
 		D780449C2758C6F90086E59D /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -62,6 +70,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0CB0C3179C09CB2B78A22014 /* Pods_SysVPN__iOS_.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -69,6 +78,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				64E1F97657A4417E2FE3CA72 /* Pods_SysVPN__macOS_.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -89,6 +99,17 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		60447A13D44C4DCD26907C7E /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				2B43C97C839B7834014B0DF7 /* Pods-SysVPN (iOS).debug.xcconfig */,
+				1FA1C7665E1A6D54F8D22701 /* Pods-SysVPN (iOS).release.xcconfig */,
+				41A1AEAEEA5FDC7075F256B9 /* Pods-SysVPN (macOS).debug.xcconfig */,
+				44E1AD53955E4257D19CA39E /* Pods-SysVPN (macOS).release.xcconfig */,
+			);
+			path = Pods;
+			sourceTree = "<group>";
+		};
 		D78044932758C6F90086E59D = {
 			isa = PBXGroup;
 			children = (
@@ -97,6 +118,8 @@
 				D78044B32758C6FC0086E59D /* Tests iOS */,
 				D78044BF2758C6FC0086E59D /* Tests macOS */,
 				D78044A42758C6FB0086E59D /* Products */,
+				60447A13D44C4DCD26907C7E /* Pods */,
+				E384F2A7218657BACCD5156E /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -149,6 +172,15 @@
 			path = "Tests macOS";
 			sourceTree = "<group>";
 		};
+		E384F2A7218657BACCD5156E /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				9BC128AC2A13B56F94EBA8CD /* Pods_SysVPN__iOS_.framework */,
+				77CA66A548B2998A416DAB70 /* Pods_SysVPN__macOS_.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -156,9 +188,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = D78044D02758C6FC0086E59D /* Build configuration list for PBXNativeTarget "SysVPN (iOS)" */;
 			buildPhases = (
+				3506537919A78B79D04700A8 /* [CP] Check Pods Manifest.lock */,
 				D780449F2758C6FB0086E59D /* Sources */,
 				D78044A02758C6FB0086E59D /* Frameworks */,
 				D78044A12758C6FB0086E59D /* Resources */,
+				7186BB405E550B027E49C13C /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -173,6 +207,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = D78044D32758C6FC0086E59D /* Build configuration list for PBXNativeTarget "SysVPN (macOS)" */;
 			buildPhases = (
+				79586AC338E3772DB062E24C /* [CP] Check Pods Manifest.lock */,
 				D78044A52758C6FB0086E59D /* Sources */,
 				D78044A62758C6FB0086E59D /* Frameworks */,
 				D78044A72758C6FB0086E59D /* Resources */,
@@ -301,6 +336,70 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		3506537919A78B79D04700A8 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-SysVPN (iOS)-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		7186BB405E550B027E49C13C /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-SysVPN (iOS)/Pods-SysVPN (iOS)-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-SysVPN (iOS)/Pods-SysVPN (iOS)-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-SysVPN (iOS)/Pods-SysVPN (iOS)-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		79586AC338E3772DB062E24C /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-SysVPN (macOS)-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		D780449F2758C6FB0086E59D /* Sources */ = {
@@ -472,6 +571,7 @@
 		};
 		D78044D12758C6FC0086E59D /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 2B43C97C839B7834014B0DF7 /* Pods-SysVPN (iOS).debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -482,6 +582,7 @@
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
@@ -501,6 +602,7 @@
 		};
 		D78044D22758C6FC0086E59D /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 1FA1C7665E1A6D54F8D22701 /* Pods-SysVPN (iOS).release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -511,6 +613,7 @@
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
@@ -531,6 +634,7 @@
 		};
 		D78044D42758C6FC0086E59D /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 41A1AEAEEA5FDC7075F256B9 /* Pods-SysVPN (macOS).debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -557,6 +661,7 @@
 		};
 		D78044D52758C6FC0086E59D /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 44E1AD53955E4257D19CA39E /* Pods-SysVPN (macOS).release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
