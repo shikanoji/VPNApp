@@ -23,6 +23,10 @@
 		D78044CB2758C6FC0086E59D /* Persistence.swift in Sources */ = {isa = PBXBuildFile; fileRef = D780449D2758C6F90086E59D /* Persistence.swift */; };
 		D78044CC2758C6FC0086E59D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D780449E2758C6FB0086E59D /* Assets.xcassets */; };
 		D78044CD2758C6FC0086E59D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D780449E2758C6FB0086E59D /* Assets.xcassets */; };
+		D78044DD2758F46B0086E59D /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = D78044DC2758F46B0086E59D /* GoogleService-Info.plist */; };
+		D78044DE2758F46B0086E59D /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = D78044DC2758F46B0086E59D /* GoogleService-Info.plist */; };
+		D78044E12758F5110086E59D /* UIApplicationExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = D78044E02758F5110086E59D /* UIApplicationExtension.swift */; };
+		D78044E32758F54A0086E59D /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D78044E22758F54A0086E59D /* AppDelegate.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -63,6 +67,9 @@
 		D78044BC2758C6FC0086E59D /* Tests macOS.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Tests macOS.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		D78044C02758C6FC0086E59D /* Tests_macOS.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tests_macOS.swift; sourceTree = "<group>"; };
 		D78044C22758C6FC0086E59D /* Tests_macOSLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tests_macOSLaunchTests.swift; sourceTree = "<group>"; };
+		D78044DC2758F46B0086E59D /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		D78044E02758F5110086E59D /* UIApplicationExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIApplicationExtension.swift; sourceTree = "<group>"; };
+		D78044E22758F54A0086E59D /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -126,11 +133,14 @@
 		D78044982758C6F90086E59D /* Shared */ = {
 			isa = PBXGroup;
 			children = (
+				D78044DF2758F4FE0086E59D /* Extensions */,
 				D780449B2758C6F90086E59D /* SysVPNApp.swift */,
 				D780449C2758C6F90086E59D /* ContentView.swift */,
 				D780449D2758C6F90086E59D /* Persistence.swift */,
 				D780449E2758C6FB0086E59D /* Assets.xcassets */,
+				D78044DC2758F46B0086E59D /* GoogleService-Info.plist */,
 				D78044992758C6F90086E59D /* SysVPN.xcdatamodeld */,
+				D78044E22758F54A0086E59D /* AppDelegate.swift */,
 			);
 			path = Shared;
 			sourceTree = "<group>";
@@ -170,6 +180,14 @@
 				D78044C22758C6FC0086E59D /* Tests_macOSLaunchTests.swift */,
 			);
 			path = "Tests macOS";
+			sourceTree = "<group>";
+		};
+		D78044DF2758F4FE0086E59D /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				D78044E02758F5110086E59D /* UIApplicationExtension.swift */,
+			);
+			path = Extensions;
 			sourceTree = "<group>";
 		};
 		E384F2A7218657BACCD5156E /* Frameworks */ = {
@@ -310,6 +328,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				D78044CC2758C6FC0086E59D /* Assets.xcassets in Resources */,
+				D78044DD2758F46B0086E59D /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -318,6 +337,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				D78044CD2758C6FC0086E59D /* Assets.xcassets in Resources */,
+				D78044DE2758F46B0086E59D /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -406,8 +426,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D78044E32758F54A0086E59D /* AppDelegate.swift in Sources */,
 				D78044C62758C6FC0086E59D /* SysVPNApp.swift in Sources */,
 				D78044CA2758C6FC0086E59D /* Persistence.swift in Sources */,
+				D78044E12758F5110086E59D /* UIApplicationExtension.swift in Sources */,
 				D78044C42758C6FC0086E59D /* SysVPN.xcdatamodeld in Sources */,
 				D78044C82758C6FC0086E59D /* ContentView.swift in Sources */,
 			);

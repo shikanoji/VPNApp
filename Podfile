@@ -12,6 +12,8 @@ target 'SysVPN (iOS)' do
   pod 'RxSwift'
   pod 'RxCocoa'
   pod 'SwiftyJSON'
+  pod 'Firebase/Analytics'
+  pod 'Firebase/Auth'
 end
 
 target 'SysVPN (macOS)' do
