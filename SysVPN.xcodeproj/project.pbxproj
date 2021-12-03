@@ -131,6 +131,57 @@
 			path = Pods;
 			sourceTree = "<group>";
 		};
+		D762EC102759B53B00023ABF /* Authentication */ = {
+			isa = PBXGroup;
+			children = (
+				D762EC162759C7E700023ABF /* Register */,
+				D762EC152759C7E200023ABF /* Login */,
+			);
+			path = Authentication;
+			sourceTree = "<group>";
+		};
+		D762EC112759B69600023ABF /* Main */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Main;
+			sourceTree = "<group>";
+		};
+		D762EC122759B69D00023ABF /* Settings */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Settings;
+			sourceTree = "<group>";
+		};
+		D762EC132759B6CA00023ABF /* AccountInfo */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = AccountInfo;
+			sourceTree = "<group>";
+		};
+		D762EC142759C6EC00023ABF /* Introduction */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Introduction;
+			sourceTree = "<group>";
+		};
+		D762EC152759C7E200023ABF /* Login */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Login;
+			sourceTree = "<group>";
+		};
+		D762EC162759C7E700023ABF /* Register */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Register;
+			sourceTree = "<group>";
+		};
 		D78044932758C6F90086E59D = {
 			isa = PBXGroup;
 			children = (
@@ -240,6 +291,11 @@
 		D78044E727590D850086E59D /* Components */ = {
 			isa = PBXGroup;
 			children = (
+				D762EC142759C6EC00023ABF /* Introduction */,
+				D762EC132759B6CA00023ABF /* AccountInfo */,
+				D762EC122759B69D00023ABF /* Settings */,
+				D762EC112759B69600023ABF /* Main */,
+				D762EC102759B53B00023ABF /* Authentication */,
 			);
 			path = Components;
 			sourceTree = "<group>";
