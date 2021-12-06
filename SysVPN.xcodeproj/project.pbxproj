@@ -34,6 +34,8 @@
 		D78044F227590E990086E59D /* TextModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = D78044F127590E990086E59D /* TextModifier.swift */; };
 		D78044F4275912AC0086E59D /* AppSetting.swift in Sources */ = {isa = PBXBuildFile; fileRef = D78044F3275912AC0086E59D /* AppSetting.swift */; };
 		D78044F62759133A0086E59D /* Constant.swift in Sources */ = {isa = PBXBuildFile; fileRef = D78044F52759133A0086E59D /* Constant.swift */; };
+		D784FA65275DA89B00A7A7F1 /* Localizations.strings in Resources */ = {isa = PBXBuildFile; fileRef = D784FA67275DA89B00A7A7F1 /* Localizations.strings */; };
+		D784FA69275DA90300A7A7F1 /* LocalizedStrings.swift in Sources */ = {isa = PBXBuildFile; fileRef = D784FA68275DA90300A7A7F1 /* LocalizedStrings.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -84,6 +86,8 @@
 		D78044F127590E990086E59D /* TextModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextModifier.swift; sourceTree = "<group>"; };
 		D78044F3275912AC0086E59D /* AppSetting.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppSetting.swift; sourceTree = "<group>"; };
 		D78044F52759133A0086E59D /* Constant.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constant.swift; sourceTree = "<group>"; };
+		D784FA66275DA89B00A7A7F1 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizations.strings; sourceTree = "<group>"; };
+		D784FA68275DA90300A7A7F1 /* LocalizedStrings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalizedStrings.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -211,6 +215,8 @@
 				D78044DC2758F46B0086E59D /* GoogleService-Info.plist */,
 				D78044992758C6F90086E59D /* SysVPN.xcdatamodeld */,
 				D78044E22758F54A0086E59D /* AppDelegate.swift */,
+				D784FA67275DA89B00A7A7F1 /* Localizations.strings */,
+				D784FA68275DA90300A7A7F1 /* LocalizedStrings.swift */,
 			);
 			path = Shared;
 			sourceTree = "<group>";
@@ -445,6 +451,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				D78044CC2758C6FC0086E59D /* Assets.xcassets in Resources */,
+				D784FA65275DA89B00A7A7F1 /* Localizations.strings in Resources */,
 				D78044DD2758F46B0086E59D /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -547,6 +554,7 @@
 				D78044E32758F54A0086E59D /* AppDelegate.swift in Sources */,
 				D78044F4275912AC0086E59D /* AppSetting.swift in Sources */,
 				D78044C62758C6FC0086E59D /* SysVPNApp.swift in Sources */,
+				D784FA69275DA90300A7A7F1 /* LocalizedStrings.swift in Sources */,
 				D78044EC27590DC30086E59D /* APIServices.swift in Sources */,
 				D78044CA2758C6FC0086E59D /* Persistence.swift in Sources */,
 				D78044E12758F5110086E59D /* UIApplicationExtension.swift in Sources */,
@@ -602,6 +610,17 @@
 			targetProxy = D78044BD2758C6FC0086E59D /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		D784FA67275DA89B00A7A7F1 /* Localizations.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				D784FA66275DA89B00A7A7F1 /* en */,
+			);
+			name = Localizations.strings;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
 		D78044CE2758C6FC0086E59D /* Debug */ = {
