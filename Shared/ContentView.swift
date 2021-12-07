@@ -11,7 +11,7 @@ import CoreData
 struct ContentView: View {
     var body: some View {
         NavigationView {
-            Text(LocalizedStringKey.Global.slogan.localized).modifier(DefaultLabel())
+            IntroductionView()
         }
     }
 }
