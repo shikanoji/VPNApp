@@ -36,6 +36,7 @@
 		D78044F62759133A0086E59D /* Constant.swift in Sources */ = {isa = PBXBuildFile; fileRef = D78044F52759133A0086E59D /* Constant.swift */; };
 		D784FA65275DA89B00A7A7F1 /* Localizations.strings in Resources */ = {isa = PBXBuildFile; fileRef = D784FA67275DA89B00A7A7F1 /* Localizations.strings */; };
 		D784FA69275DA90300A7A7F1 /* LocalizedStrings.swift in Sources */ = {isa = PBXBuildFile; fileRef = D784FA68275DA90300A7A7F1 /* LocalizedStrings.swift */; };
+		D78F47262761A53A0064A764 /* AppColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = D78F47252761A53A0064A764 /* AppColor.swift */; };
 		D795FFA8275F6E9A00E54206 /* PagingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D795FFA7275F6E9A00E54206 /* PagingView.swift */; };
 		D795FFAA275F6ED200E54206 /* Introduction.swift in Sources */ = {isa = PBXBuildFile; fileRef = D795FFA9275F6ED200E54206 /* Introduction.swift */; };
 		D795FFAC275F9AC500E54206 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D795FFAB275F9AC500E54206 /* LaunchScreen.storyboard */; };
@@ -91,6 +92,7 @@
 		D78044F52759133A0086E59D /* Constant.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constant.swift; sourceTree = "<group>"; };
 		D784FA66275DA89B00A7A7F1 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizations.strings; sourceTree = "<group>"; };
 		D784FA68275DA90300A7A7F1 /* LocalizedStrings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalizedStrings.swift; sourceTree = "<group>"; };
+		D78F47252761A53A0064A764 /* AppColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppColor.swift; sourceTree = "<group>"; };
 		D795FFA7275F6E9A00E54206 /* PagingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PagingView.swift; sourceTree = "<group>"; };
 		D795FFA9275F6ED200E54206 /* Introduction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Introduction.swift; sourceTree = "<group>"; };
 		D795FFAB275F9AC500E54206 /* LaunchScreen.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -291,6 +293,7 @@
 			children = (
 				D78044F3275912AC0086E59D /* AppSetting.swift */,
 				D78044F52759133A0086E59D /* Constant.swift */,
+				D78F47252761A53A0064A764 /* AppColor.swift */,
 			);
 			path = Common;
 			sourceTree = "<group>";
@@ -574,6 +577,7 @@
 				D795FFA8275F6E9A00E54206 /* PagingView.swift in Sources */,
 				D78044C62758C6FC0086E59D /* SysVPNApp.swift in Sources */,
 				D784FA69275DA90300A7A7F1 /* LocalizedStrings.swift in Sources */,
+				D78F47262761A53A0064A764 /* AppColor.swift in Sources */,
 				D78044EC27590DC30086E59D /* APIServices.swift in Sources */,
 				D78044CA2758C6FC0086E59D /* Persistence.swift in Sources */,
 				D78044E12758F5110086E59D /* UIApplicationExtension.swift in Sources */,
