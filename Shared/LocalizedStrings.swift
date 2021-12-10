@@ -15,6 +15,14 @@ struct LocalizedStringKey {
             return NSLocalizedString(self.rawValue, tableName: "Localizations", comment: "")
         }
     }
+    
+    enum Introduction: String {
+        case trialButton = "Introduction.trialButton"
+        
+        var localized: String {
+            return NSLocalizedString(self.rawValue, tableName: "Localizations", comment: "")
+        }
+    }
 }
 
 

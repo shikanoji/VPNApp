@@ -36,6 +36,7 @@
 		D78044F62759133A0086E59D /* Constant.swift in Sources */ = {isa = PBXBuildFile; fileRef = D78044F52759133A0086E59D /* Constant.swift */; };
 		D784FA65275DA89B00A7A7F1 /* Localizations.strings in Resources */ = {isa = PBXBuildFile; fileRef = D784FA67275DA89B00A7A7F1 /* Localizations.strings */; };
 		D784FA69275DA90300A7A7F1 /* LocalizedStrings.swift in Sources */ = {isa = PBXBuildFile; fileRef = D784FA68275DA90300A7A7F1 /* LocalizedStrings.swift */; };
+		D788B18927635BC000855C24 /* AppButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = D788B18827635BC000855C24 /* AppButton.swift */; };
 		D78F47262761A53A0064A764 /* AppColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = D78F47252761A53A0064A764 /* AppColor.swift */; };
 		D78F47282761D1840064A764 /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D78F47272761D1840064A764 /* LoginView.swift */; };
 		D78F472A2761D1960064A764 /* RegisterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D78F47292761D1960064A764 /* RegisterView.swift */; };
@@ -96,6 +97,7 @@
 		D78044F52759133A0086E59D /* Constant.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constant.swift; sourceTree = "<group>"; };
 		D784FA66275DA89B00A7A7F1 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizations.strings; sourceTree = "<group>"; };
 		D784FA68275DA90300A7A7F1 /* LocalizedStrings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalizedStrings.swift; sourceTree = "<group>"; };
+		D788B18827635BC000855C24 /* AppButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppButton.swift; sourceTree = "<group>"; };
 		D78F47252761A53A0064A764 /* AppColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppColor.swift; sourceTree = "<group>"; };
 		D78F47272761D1840064A764 /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
 		D78F47292761D1960064A764 /* RegisterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterView.swift; sourceTree = "<group>"; };
@@ -341,6 +343,7 @@
 			isa = PBXGroup;
 			children = (
 				D795FFA7275F6E9A00E54206 /* PagingView.swift */,
+				D788B18827635BC000855C24 /* AppButton.swift */,
 			);
 			path = Components;
 			sourceTree = "<group>";
@@ -594,6 +597,7 @@
 				D78F472C2761D1B50064A764 /* LoginViewModel.swift in Sources */,
 				D78F472A2761D1960064A764 /* RegisterView.swift in Sources */,
 				D78044CA2758C6FC0086E59D /* Persistence.swift in Sources */,
+				D788B18927635BC000855C24 /* AppButton.swift in Sources */,
 				D78044E12758F5110086E59D /* UIApplicationExtension.swift in Sources */,
 				D78044F227590E990086E59D /* TextModifier.swift in Sources */,
 				D78044C42758C6FC0086E59D /* SysVPN.xcdatamodeld in Sources */,
@@ -800,6 +804,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.ilg.SysVPN;
 				PRODUCT_NAME = SysVPN;
 				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -832,6 +837,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.ilg.SysVPN;
 				PRODUCT_NAME = SysVPN;
 				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = RELEASE;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
