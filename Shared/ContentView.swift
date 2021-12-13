@@ -9,6 +9,9 @@ import SwiftUI
 import CoreData
 
 struct ContentView: View {
+    init() {
+        UINavigationBar.appearance().tintColor = UIColor.black
+    }
     var body: some View {
         NavigationView {
             IntroductionView()

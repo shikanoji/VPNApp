@@ -10,6 +10,7 @@ import SwiftUI
 
 struct IntroductionView: View {
     @State var index = 0
+    @State private var signIn = false
     
     var images = ["Introduction-1", "Introduction-2"]
     
@@ -25,12 +26,16 @@ struct IntroductionView: View {
             .aspectRatio(3/4, contentMode: .fit)
             .clipShape(RoundedRectangle(cornerRadius: 15))
             
-            Stepper("Index: \(index)", value: $index.animation(.easeInOut), in: 0...images.count-1)
-                .font(Font.body.monospacedDigit())
+            //                Stepper("Index: \(index)", value: $index.animation(.easeInOut), in: 0...images.count-1)
+            //                    .font(Font.body.monospacedDigit())
             
-            AppButton(style: .themeButton, width: 300, height:50, text: LocalizedStringKey.Introduction.trialButton.localized)
-            
-            AppButton(style: .grayButton, width: 300, height:50, text: "Sign In")
+            AppButton(style: .themeButton, width: 300, height:50, text: LocalizedStringKey.Introduction.trialButton.localized) {
+                print("Trial")
+            }
+            NavigationLink(destination: LoginView(), isActive: $signIn) { }
+            AppButton(style: .grayButton, width: 300, height:50, text: "Sign In") {
+                self.signIn = true
+            }
         }
         .padding()
     }
