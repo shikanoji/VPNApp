@@ -32,7 +32,7 @@ struct IntroductionView: View {
             AppButton(style: .themeButton, width: 300, height:50, text: LocalizedStringKey.Introduction.trialButton.localized) {
                 print("Trial")
             }
-            NavigationLink(destination: LoginView(), isActive: $signIn) { }
+            NavigationLink(destination: LoginView(viewModel: LoginViewModel()), isActive: $signIn) { }
             AppButton(style: .grayButton, width: 300, height:50, text: "Sign In") {
                 self.signIn = true
             }
