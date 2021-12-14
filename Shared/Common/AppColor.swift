@@ -16,4 +16,5 @@ struct AppColor {
     static var darkGray = Color(hex: "E0E1EA")
     static var green = Color(hex: "00A569")
     static var darkNavigation = Color(hex: "363651")
+    static var background = Color(hex: "F3F4FA")
 }
