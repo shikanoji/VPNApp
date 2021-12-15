@@ -21,7 +21,11 @@ struct LoginView: View {
                     viewModel.login()
                 }
                 Spacer()
-            }.frame(width: geometry.size.width, height: geometry.size.height)
+            }
+            .frame(width: geometry.size.width, height: geometry.size.height)
+            .onReceiveAlertWithAction(title: $viewModel.alertTitle, message: $viewModel.alertMessage, showing: $viewModel.showAlert) {
+                
+            }
         }
     }
 }

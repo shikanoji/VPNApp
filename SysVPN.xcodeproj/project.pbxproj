@@ -43,6 +43,7 @@
 		D78F472A2761D1960064A764 /* RegisterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D78F47292761D1960064A764 /* RegisterView.swift */; };
 		D78F472C2761D1B50064A764 /* LoginViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D78F472B2761D1B50064A764 /* LoginViewModel.swift */; };
 		D78F472E2761D20C0064A764 /* RegisterViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D78F472D2761D20C0064A764 /* RegisterViewModel.swift */; };
+		D78F76C52769D84700919AA6 /* ViewModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = D78F76C42769D84700919AA6 /* ViewModifier.swift */; };
 		D795FFA8275F6E9A00E54206 /* PagingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D795FFA7275F6E9A00E54206 /* PagingView.swift */; };
 		D795FFAA275F6ED200E54206 /* Introduction.swift in Sources */ = {isa = PBXBuildFile; fileRef = D795FFA9275F6ED200E54206 /* Introduction.swift */; };
 		D795FFAC275F9AC500E54206 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D795FFAB275F9AC500E54206 /* LaunchScreen.storyboard */; };
@@ -105,6 +106,7 @@
 		D78F47292761D1960064A764 /* RegisterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterView.swift; sourceTree = "<group>"; };
 		D78F472B2761D1B50064A764 /* LoginViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewModel.swift; sourceTree = "<group>"; };
 		D78F472D2761D20C0064A764 /* RegisterViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterViewModel.swift; sourceTree = "<group>"; };
+		D78F76C42769D84700919AA6 /* ViewModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewModifier.swift; sourceTree = "<group>"; };
 		D795FFA7275F6E9A00E54206 /* PagingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PagingView.swift; sourceTree = "<group>"; };
 		D795FFA9275F6ED200E54206 /* Introduction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Introduction.swift; sourceTree = "<group>"; };
 		D795FFAB275F9AC500E54206 /* LaunchScreen.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -318,6 +320,7 @@
 			isa = PBXGroup;
 			children = (
 				D78044F127590E990086E59D /* TextModifier.swift */,
+				D78F76C42769D84700919AA6 /* ViewModifier.swift */,
 			);
 			path = Modifiers;
 			sourceTree = "<group>";
@@ -596,6 +599,7 @@
 				D78044C62758C6FC0086E59D /* SysVPNApp.swift in Sources */,
 				D784FA69275DA90300A7A7F1 /* LocalizedStrings.swift in Sources */,
 				D78F47262761A53A0064A764 /* AppColor.swift in Sources */,
+				D78F76C52769D84700919AA6 /* ViewModifier.swift in Sources */,
 				D78044EC27590DC30086E59D /* APIServices.swift in Sources */,
 				D78F472C2761D1B50064A764 /* LoginViewModel.swift in Sources */,
 				D78F472A2761D1960064A764 /* RegisterView.swift in Sources */,

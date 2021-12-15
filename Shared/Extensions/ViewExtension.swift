@@ -45,3 +45,11 @@ extension View {
         #endif
     }
 }
+
+extension View {
+    func onReceiveAlert(title: Binding<String>, message: Binding<String>, showing: Binding<Bool>) -> some View { modifier(ReceiveAlert(title: title, message: message, showing: showing))}
+    
+    func onReceiveAlertWithAction(title: Binding<String>, message: Binding<String>, showing: Binding<Bool>, onConfirm: @escaping () -> Void) -> some View {
+        modifier(ReceiveAlertWithAction(title: title, message: message, showing: showing, onConfirmation: onConfirm))
+    }
+}
