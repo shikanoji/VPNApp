@@ -41,3 +41,11 @@ struct ReceiveAlertWithAction: ViewModifier {
         }
     }
 }
+
+struct EndEditingOnTappingOutside: ViewModifier {
+    func body(content: Content) -> some View {
+        content.onTapGesture {
+            UIApplication.shared.endEditing()
+        }
+    }
+}

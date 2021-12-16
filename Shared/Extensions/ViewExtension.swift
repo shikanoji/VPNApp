@@ -52,4 +52,8 @@ extension View {
     func onReceiveAlertWithAction(title: Binding<String>, message: Binding<String>, showing: Binding<Bool>, onConfirm: @escaping () -> Void) -> some View {
         modifier(ReceiveAlertWithAction(title: title, message: message, showing: showing, onConfirmation: onConfirm))
     }
+    
+    func endEditingOnTappingOutside() -> some View {
+        modifier(EndEditingOnTappingOutside())
+    }
 }

@@ -41,19 +41,20 @@ struct AppButton: View {
     }
     
     var body: some View {
-        GeometryReader { geometric in
-            HStack {
-                Text(text)
-                    .foregroundColor(textColor)
-                    .font(.system(size: 14, weight: .bold, design: .default))
-            }.frame(width: geometric.size.width, height: geometric.size.height, alignment: .center)
+        Button {
+            self.action()
+        } label: {
+            GeometryReader { geometric in
+                HStack {
+                    Text(text)
+                        .foregroundColor(textColor)
+                        .font(.system(size: 14, weight: .bold, design: .default))
+                }.frame(width: geometric.size.width, height: geometric.size.height, alignment: .center)
+            }
         }
         .frame(width: width, height: height)
         .background(backgroundColor)
         .cornerRadius(cornerRadius)
-        .onTapGesture {
-            self.action()
-        }
     }
 }
 

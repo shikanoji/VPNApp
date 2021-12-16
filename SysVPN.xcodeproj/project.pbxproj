@@ -38,6 +38,9 @@
 		D784FA65275DA89B00A7A7F1 /* Localizations.strings in Resources */ = {isa = PBXBuildFile; fileRef = D784FA67275DA89B00A7A7F1 /* Localizations.strings */; };
 		D784FA69275DA90300A7A7F1 /* LocalizedStrings.swift in Sources */ = {isa = PBXBuildFile; fileRef = D784FA68275DA90300A7A7F1 /* LocalizedStrings.swift */; };
 		D788B18927635BC000855C24 /* AppButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = D788B18827635BC000855C24 /* AppButton.swift */; };
+		D78A35C8276B2F1400CC010D /* TextExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = D78A35C7276B2F1400CC010D /* TextExtension.swift */; };
+		D78A35CA276B767400CC010D /* AppTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = D78A35C9276B767400CC010D /* AppTextField.swift */; };
+		D78A35CC276B9D5A00CC010D /* Background.swift in Sources */ = {isa = PBXBuildFile; fileRef = D78A35CB276B9D5A00CC010D /* Background.swift */; };
 		D78F47262761A53A0064A764 /* AppColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = D78F47252761A53A0064A764 /* AppColor.swift */; };
 		D78F47282761D1840064A764 /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D78F47272761D1840064A764 /* LoginView.swift */; };
 		D78F472A2761D1960064A764 /* RegisterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D78F47292761D1960064A764 /* RegisterView.swift */; };
@@ -101,6 +104,9 @@
 		D784FA66275DA89B00A7A7F1 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizations.strings; sourceTree = "<group>"; };
 		D784FA68275DA90300A7A7F1 /* LocalizedStrings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalizedStrings.swift; sourceTree = "<group>"; };
 		D788B18827635BC000855C24 /* AppButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppButton.swift; sourceTree = "<group>"; };
+		D78A35C7276B2F1400CC010D /* TextExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextExtension.swift; sourceTree = "<group>"; };
+		D78A35C9276B767400CC010D /* AppTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppTextField.swift; sourceTree = "<group>"; };
+		D78A35CB276B9D5A00CC010D /* Background.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Background.swift; sourceTree = "<group>"; };
 		D78F47252761A53A0064A764 /* AppColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppColor.swift; sourceTree = "<group>"; };
 		D78F47272761D1840064A764 /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
 		D78F47292761D1960064A764 /* RegisterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterView.swift; sourceTree = "<group>"; };
@@ -293,6 +299,7 @@
 				D78044EF27590E550086E59D /* ColorExtension.swift */,
 				D78044E02758F5110086E59D /* UIApplicationExtension.swift */,
 				D78044ED27590E480086E59D /* ViewExtension.swift */,
+				D78A35C7276B2F1400CC010D /* TextExtension.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -350,6 +357,8 @@
 				D795FFA7275F6E9A00E54206 /* PagingView.swift */,
 				D788B18827635BC000855C24 /* AppButton.swift */,
 				D767F27E276780C1005F7AA5 /* Form.swift */,
+				D78A35C9276B767400CC010D /* AppTextField.swift */,
+				D78A35CB276B9D5A00CC010D /* Background.swift */,
 			);
 			path = Components;
 			sourceTree = "<group>";
@@ -609,11 +618,14 @@
 				D78044F227590E990086E59D /* TextModifier.swift in Sources */,
 				D767F27F276780C1005F7AA5 /* Form.swift in Sources */,
 				D78044C42758C6FC0086E59D /* SysVPN.xcdatamodeld in Sources */,
+				D78A35CA276B767400CC010D /* AppTextField.swift in Sources */,
 				D78F47282761D1840064A764 /* LoginView.swift in Sources */,
 				D78044F62759133A0086E59D /* Constant.swift in Sources */,
 				D78F472E2761D20C0064A764 /* RegisterViewModel.swift in Sources */,
 				D78044C82758C6FC0086E59D /* ContentView.swift in Sources */,
 				D78044EA27590DB70086E59D /* APIManager.swift in Sources */,
+				D78A35CC276B9D5A00CC010D /* Background.swift in Sources */,
+				D78A35C8276B2F1400CC010D /* TextExtension.swift in Sources */,
 				D78044F027590E550086E59D /* ColorExtension.swift in Sources */,
 				D795FFAA275F6ED200E54206 /* Introduction.swift in Sources */,
 			);
