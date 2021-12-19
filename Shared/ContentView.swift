@@ -11,12 +11,17 @@ import UIKit
 
 struct ContentView: View {
     init() {
-        UINavigationBar.appearance().tintColor = UIColor.black
+        UINavigationBar.appearance().tintColor = UIColor.white
+        UINavigationBar.appearance().backgroundColor = UIColor(AppColor.background)
+        UITextField.appearance().tintColor = .white
     }
     var body: some View {
-        NavigationView {
-            IntroductionView()
-        }.background(AppColor.background)
+        ZStack{
+            AppColor.background
+            NavigationView {
+                IntroductionView()
+            }.navigationBarTitleDisplayMode(.inline)
+        }.ignoresSafeArea()
     }
 }
 

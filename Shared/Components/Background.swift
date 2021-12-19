@@ -23,6 +23,6 @@ struct Background<Content: View>: View {
         AppColor.background
             .frame(width: width, height: height)
         .overlay(content)
-        .navigationBarTitle("", displayMode: .inline)
+        .ignoresSafeArea()
     }
 }

@@ -10,7 +10,7 @@ import SwiftUI
 
 enum AppButtonStyle {
     case themeButton
-    case grayButton
+    case darkButton
 }
 struct AppButton: View {
     var style: AppButtonStyle
@@ -22,12 +22,12 @@ struct AppButton: View {
     var cornerRadius: CGFloat = 10
     private let action: () -> Void
     
-    init(style: AppButtonStyle = .themeButton, width: CGFloat = 200, height: CGFloat = 50, backgroundColor: Color = AppColor.blue, textColor: Color = Color.white, text: String = "", cornerRadius: CGFloat = 10, action: @escaping () -> Void) {
+    init(style: AppButtonStyle = .themeButton, width: CGFloat = 200, height: CGFloat = 50, backgroundColor: Color = AppColor.green, textColor: Color = AppColor.blackText, text: String = "", cornerRadius: CGFloat = 10, action: @escaping () -> Void) {
         self.style = style
         switch style {
-        case .grayButton:
-            self.backgroundColor = AppColor.gray
-            self.textColor = Color.black
+        case .darkButton:
+            self.backgroundColor = AppColor.darkButton
+            self.textColor = Color.white
         default:
             self.backgroundColor = backgroundColor
             self.textColor = textColor
@@ -65,7 +65,7 @@ struct AppButton_Previews: PreviewProvider {
             AppButton(width: 200, height: 50, text: "App Button") {
             }
             Spacer().frame(height: 20)
-            AppButton(style: .grayButton, text: "Gray Button") {
+            AppButton(style: .darkButton, text: "Gray Button") {
             }
         }
         

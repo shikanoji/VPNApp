@@ -24,21 +24,19 @@ struct Form: View {
     }
     
     var body: some View {
-        GeometryReader { geometry in
-            VStack(alignment: .center) {
-                if isPassword {
-                    PasswordField(text: $value, isRevealed: $isRevealed, isFocused: $isFocused, placeholder: placeholder)
-                } else {
-                    AppTextField(text: $value, isRevealed: $isRevealed, isFocused: $isFocused, placeholder: placeholder)
-                }
+        VStack {
+            if isPassword {
+                PasswordField(text: $value, isRevealed: $isRevealed, isFocused: $isFocused, placeholder: placeholder)
+            } else {
+                AppTextField(text: $value, isRevealed: $isRevealed, isFocused: $isFocused, placeholder: placeholder)
             }
-            .frame(width: geometry.size.width, height: geometry.size.height, alignment: .center)
         }
         .padding()
         .frame(width: 311, height: 50)
-        .background(isFocused ? Color.white : AppColor.gray)
+        .background(Color.clear)
+        .overlay(isFocused ? RoundedRectangle(cornerRadius: 5).stroke(Color.white.opacity(0.8), lineWidth: 3) : RoundedRectangle(cornerRadius: 5).stroke(Color.white.opacity(0.2), lineWidth: 3))
         .cornerRadius(5)
-        .overlay(isFocused ? RoundedRectangle(cornerRadius: 5).stroke(AppColor.blue, lineWidth:2) : nil)
+        .animation(Animation.interpolatingSpring(stiffness: 70, damping: 20))
     }
 }
 

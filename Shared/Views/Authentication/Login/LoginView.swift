@@ -12,8 +12,8 @@ struct LoginView: View {
     var body: some View {
         GeometryReader{ geometry in
             Background(width: geometry.size.width, height: geometry.size.height) {
-                VStack(alignment: .center) {
-                    Spacer().frame(height: 80)
+                VStack() {
+                    Spacer()
                     Form(placeholder: "Your username", value: $viewModel.username)
                     Spacer().frame(height: 20)
                     Form(placeholder: "Your password", value: $viewModel.password, isPassword: true)
@@ -23,13 +23,12 @@ struct LoginView: View {
                     }
                     Spacer()
                 }
-                .frame(width: geometry.size.width, height: geometry.size.height)
                 .onReceiveAlertWithAction(title: $viewModel.alertTitle, message: $viewModel.alertMessage, showing: $viewModel.showAlert) {
                     
                 }
             }.endEditingOnTappingOutside()
         }
-        
+        .frame(width: UIScreen.main.bounds.size.width, height: UIScreen.main.bounds.size.height)
     }
 }
 #if DEBUG

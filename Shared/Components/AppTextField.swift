@@ -19,9 +19,13 @@ struct AppTextField: UIViewRepresentable {
      // 2
     func makeUIView(context: UIViewRepresentableContext<AppTextField>) -> UITextField {
         let tf = UITextField(frame: .zero)
-        tf.placeholder = placeholder
+        tf.attributedPlaceholder = NSAttributedString(
+            string: placeholder,
+            attributes: [NSAttributedString.Key.foregroundColor: UIColor(Color.white.opacity(0.3))]
+        )
         tf.isUserInteractionEnabled = true
         tf.delegate = context.coordinator
+        tf.textColor = UIColor.white
         return tf
     }
 
@@ -79,11 +83,12 @@ struct PasswordField: View {
             AppTextField(text: $text,
                         isRevealed: $isRevealed,
                          isFocused: $isFocused, placeholder: placeholder)
+            Spacer().frame(width: 10)
             Button(action: {
                 self.isRevealed.toggle()
             }) {
                 Image(systemName: self.isRevealed ? "eye.slash.fill" : "eye.fill")
-                    .foregroundColor(AppColor.blue)
+                    .foregroundColor(AppColor.green)
             }
         }
     }
