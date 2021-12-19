@@ -14,6 +14,9 @@ struct IntroductionView: View {
     
     var images = ["Introduction-1", "Introduction-2"]
     
+    // test board screen
+    @State private var isPresented = false
+    
     var body: some View {
         GeometryReader { geometry in
             Background(width: geometry.size.width, height: geometry.size.height) {
@@ -42,6 +45,12 @@ struct IntroductionView: View {
                     Spacer()
                 }
                 .padding()
+                Button("Present") { isPresented.toggle() }
+                .background(Color.white)
+                .fullScreenCover(isPresented: $isPresented) {
+                } content: {
+                    BoardView(viewModel: BoardViewModel())
+                }
             }
             
         }.frame(width: UIScreen.main.bounds.size.width, height: UIScreen.main.bounds.size.height)

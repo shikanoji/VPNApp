@@ -8,6 +8,13 @@
 
 /* Begin PBXBuildFile section */
 		0CB0C3179C09CB2B78A22014 /* Pods_SysVPN__iOS_.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9BC128AC2A13B56F94EBA8CD /* Pods_SysVPN__iOS_.framework */; };
+		6353F83E276F235900B42334 /* Color+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6353F83D276F235900B42334 /* Color+.swift */; };
+		6353F842276F333900B42334 /* StatusVPNView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6353F841276F333900B42334 /* StatusVPNView.swift */; };
+		6353F844276F3E8500B42334 /* BoardNavigationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6353F843276F3E8500B42334 /* BoardNavigationView.swift */; };
+		6384B4F5276C374E00E904D2 /* BoardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6384B4F4276C374E00E904D2 /* BoardView.swift */; };
+		6384B4F6276C374E00E904D2 /* BoardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6384B4F4276C374E00E904D2 /* BoardView.swift */; };
+		6384B4F8276C43DD00E904D2 /* BoardViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6384B4F7276C43DD00E904D2 /* BoardViewModel.swift */; };
+		6384B4F9276C43DD00E904D2 /* BoardViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6384B4F7276C43DD00E904D2 /* BoardViewModel.swift */; };
 		64E1F97657A4417E2FE3CA72 /* Pods_SysVPN__macOS_.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 77CA66A548B2998A416DAB70 /* Pods_SysVPN__macOS_.framework */; };
 		D767F27F276780C1005F7AA5 /* Form.swift in Sources */ = {isa = PBXBuildFile; fileRef = D767F27E276780C1005F7AA5 /* Form.swift */; };
 		D78044B52758C6FC0086E59D /* Tests_iOS.swift in Sources */ = {isa = PBXBuildFile; fileRef = D78044B42758C6FC0086E59D /* Tests_iOS.swift */; };
@@ -74,6 +81,11 @@
 		2B43C97C839B7834014B0DF7 /* Pods-SysVPN (iOS).debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SysVPN (iOS).debug.xcconfig"; path = "Target Support Files/Pods-SysVPN (iOS)/Pods-SysVPN (iOS).debug.xcconfig"; sourceTree = "<group>"; };
 		41A1AEAEEA5FDC7075F256B9 /* Pods-SysVPN (macOS).debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SysVPN (macOS).debug.xcconfig"; path = "Target Support Files/Pods-SysVPN (macOS)/Pods-SysVPN (macOS).debug.xcconfig"; sourceTree = "<group>"; };
 		44E1AD53955E4257D19CA39E /* Pods-SysVPN (macOS).release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SysVPN (macOS).release.xcconfig"; path = "Target Support Files/Pods-SysVPN (macOS)/Pods-SysVPN (macOS).release.xcconfig"; sourceTree = "<group>"; };
+		6353F83D276F235900B42334 /* Color+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Color+.swift"; sourceTree = "<group>"; };
+		6353F841276F333900B42334 /* StatusVPNView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatusVPNView.swift; sourceTree = "<group>"; };
+		6353F843276F3E8500B42334 /* BoardNavigationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoardNavigationView.swift; sourceTree = "<group>"; };
+		6384B4F4276C374E00E904D2 /* BoardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoardView.swift; sourceTree = "<group>"; };
+		6384B4F7276C43DD00E904D2 /* BoardViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoardViewModel.swift; sourceTree = "<group>"; };
 		77CA66A548B2998A416DAB70 /* Pods_SysVPN__macOS_.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SysVPN__macOS_.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		9BC128AC2A13B56F94EBA8CD /* Pods_SysVPN__iOS_.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SysVPN__iOS_.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		D767F27E276780C1005F7AA5 /* Form.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Form.swift; sourceTree = "<group>"; };
@@ -161,6 +173,17 @@
 				44E1AD53955E4257D19CA39E /* Pods-SysVPN (macOS).release.xcconfig */,
 			);
 			path = Pods;
+			sourceTree = "<group>";
+		};
+		6384B4F3276C372300E904D2 /* Board */ = {
+			isa = PBXGroup;
+			children = (
+				6384B4F4276C374E00E904D2 /* BoardView.swift */,
+				6353F841276F333900B42334 /* StatusVPNView.swift */,
+				6384B4F7276C43DD00E904D2 /* BoardViewModel.swift */,
+				6353F843276F3E8500B42334 /* BoardNavigationView.swift */,
+			);
+			path = Board;
 			sourceTree = "<group>";
 		};
 		D762EC102759B53B00023ABF /* Authentication */ = {
@@ -319,6 +342,7 @@
 				D78044F3275912AC0086E59D /* AppSetting.swift */,
 				D78044F52759133A0086E59D /* Constant.swift */,
 				D78F47252761A53A0064A764 /* AppColor.swift */,
+				6353F83D276F235900B42334 /* Color+.swift */,
 			);
 			path = Common;
 			sourceTree = "<group>";
@@ -335,6 +359,7 @@
 		D78044E727590D850086E59D /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				6384B4F3276C372300E904D2 /* Board */,
 				D762EC142759C6EC00023ABF /* Introduction */,
 				D762EC132759B6CA00023ABF /* AccountInfo */,
 				D762EC122759B69D00023ABF /* Settings */,
@@ -615,7 +640,10 @@
 				D78044CA2758C6FC0086E59D /* Persistence.swift in Sources */,
 				D788B18927635BC000855C24 /* AppButton.swift in Sources */,
 				D78044E12758F5110086E59D /* UIApplicationExtension.swift in Sources */,
+				6353F842276F333900B42334 /* StatusVPNView.swift in Sources */,
 				D78044F227590E990086E59D /* TextModifier.swift in Sources */,
+				6353F844276F3E8500B42334 /* BoardNavigationView.swift in Sources */,
+				6384B4F8276C43DD00E904D2 /* BoardViewModel.swift in Sources */,
 				D767F27F276780C1005F7AA5 /* Form.swift in Sources */,
 				D78044C42758C6FC0086E59D /* SysVPN.xcdatamodeld in Sources */,
 				D78A35CA276B767400CC010D /* AppTextField.swift in Sources */,
@@ -626,6 +654,8 @@
 				D78044EA27590DB70086E59D /* APIManager.swift in Sources */,
 				D78A35CC276B9D5A00CC010D /* Background.swift in Sources */,
 				D78A35C8276B2F1400CC010D /* TextExtension.swift in Sources */,
+				6384B4F5276C374E00E904D2 /* BoardView.swift in Sources */,
+				6353F83E276F235900B42334 /* Color+.swift in Sources */,
 				D78044F027590E550086E59D /* ColorExtension.swift in Sources */,
 				D795FFAA275F6ED200E54206 /* Introduction.swift in Sources */,
 			);
@@ -637,8 +667,10 @@
 			files = (
 				D78044C72758C6FC0086E59D /* SysVPNApp.swift in Sources */,
 				D78044CB2758C6FC0086E59D /* Persistence.swift in Sources */,
+				6384B4F6276C374E00E904D2 /* BoardView.swift in Sources */,
 				D78044C52758C6FC0086E59D /* SysVPN.xcdatamodeld in Sources */,
 				D78044C92758C6FC0086E59D /* ContentView.swift in Sources */,
+				6384B4F9276C43DD00E904D2 /* BoardViewModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
