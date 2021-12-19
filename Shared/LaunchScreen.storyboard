@@ -16,31 +16,17 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Launch-screen-logo" translatesAutoresizingMaskIntoConstraints="NO" id="W9w-hn-U5o">
-                                <rect key="frame" x="19.5" y="231" width="375" height="444.5"/>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" insetsLayoutMarginsFromSafeArea="NO" image="LaunchScreen" translatesAutoresizingMaskIntoConstraints="NO" id="W9w-hn-U5o">
+                                <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                             </imageView>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="SYSVPN" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="oGd-C6-xFI">
-                                <rect key="frame" x="155.5" y="710" width="103" height="32"/>
-                                <fontDescription key="fontDescription" type="boldSystem" pointSize="26"/>
-                                <nil key="textColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Light is Faster, but We are Safer" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lH7-0R-0gK">
-                                <rect key="frame" x="104.5" y="758" width="205.5" height="17"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <nil key="textColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="Bcu-3y-fUS"/>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
-                            <constraint firstItem="oGd-C6-xFI" firstAttribute="centerX" secondItem="Bcu-3y-fUS" secondAttribute="centerX" id="KSe-mC-Ao5"/>
-                            <constraint firstItem="lH7-0R-0gK" firstAttribute="centerX" secondItem="Bcu-3y-fUS" secondAttribute="centerX" id="Yco-yP-9mw"/>
-                            <constraint firstItem="oGd-C6-xFI" firstAttribute="top" secondItem="W9w-hn-U5o" secondAttribute="bottom" constant="34.5" id="ffg-VM-vpj"/>
-                            <constraint firstItem="W9w-hn-U5o" firstAttribute="centerX" secondItem="Bcu-3y-fUS" secondAttribute="centerX" id="vs6-Hu-OwF"/>
-                            <constraint firstItem="W9w-hn-U5o" firstAttribute="centerY" secondItem="Bcu-3y-fUS" secondAttribute="centerY" id="xWg-Jx-aRv"/>
-                            <constraint firstItem="lH7-0R-0gK" firstAttribute="top" secondItem="oGd-C6-xFI" secondAttribute="bottom" constant="16" id="zRg-EC-DCd"/>
+                            <constraint firstAttribute="bottom" secondItem="W9w-hn-U5o" secondAttribute="bottom" id="0U5-nr-bXh"/>
+                            <constraint firstItem="W9w-hn-U5o" firstAttribute="top" secondItem="Ze5-6b-2t3" secondAttribute="top" id="6d3-O0-Phr"/>
+                            <constraint firstItem="W9w-hn-U5o" firstAttribute="leading" secondItem="Ze5-6b-2t3" secondAttribute="leading" id="Acu-vh-V2F"/>
+                            <constraint firstAttribute="trailing" secondItem="W9w-hn-U5o" secondAttribute="trailing" id="fl2-Te-5ah"/>
                         </constraints>
                     </view>
                 </viewController>
@@ -50,6 +36,6 @@
         </scene>
     </scenes>
     <resources>
-        <image name="Launch-screen-logo" width="375" height="444.5"/>
+        <image name="LaunchScreen" width="375" height="812"/>
     </resources>
 </document>
