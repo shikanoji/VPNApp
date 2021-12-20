@@ -41,9 +41,9 @@ class BoardViewModel: ObservableObject {
         var subColor: Color {
             switch self {
             case .error, .start:
-                return .VPNUnconnect
+                return AppColor.VPNUnconnect
             case .connected:
-                return .VPNConnected
+                return AppColor.VPNConnected
             }
         }
     }
