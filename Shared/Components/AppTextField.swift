@@ -26,7 +26,7 @@ struct AppTextField: UIViewRepresentable {
         tf.isUserInteractionEnabled = true
         tf.delegate = context.coordinator
         tf.textColor = UIColor.white
-        tf.frame.size.width = 200
+        tf.setContentCompressionResistancePriority(.defaultLow, for: .horizontal)
         return tf
     }
 
