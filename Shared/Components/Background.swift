@@ -20,5 +20,6 @@ struct Background<Content: View>: View {
             .frame(maxWidth: .infinity, maxHeight: .infinity)
         .overlay(content)
         .ignoresSafeArea()
+        .navigationBarTitleDisplayMode(.inline)
     }
 }
