@@ -23,6 +23,15 @@ struct LocalizedStringKey {
             return NSLocalizedString(self.rawValue, tableName: "Localizations", comment: "")
         }
     }
+    
+    enum Login: String {
+        case title = "Login.Title"
+        case body = "Login.Body"
+        
+        var localized: String {
+            return NSLocalizedString(self.rawValue, tableName: "Localizations", comment: "")
+        }
+    }
 }
 
 
