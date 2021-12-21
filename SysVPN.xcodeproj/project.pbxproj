@@ -188,17 +188,10 @@
 			path = Board;
 			sourceTree = "<group>";
 		};
-		D72E50522771EE9F002357E8 /* Authentication */ = {
-			isa = PBXGroup;
-			children = (
-				D72E50532771EEAF002357E8 /* Authentication.swift */,
-			);
-			path = Authentication;
-			sourceTree = "<group>";
-		};
 		D762EC102759B53B00023ABF /* Authentication */ = {
 			isa = PBXGroup;
 			children = (
+				D72E50532771EEAF002357E8 /* Authentication.swift */,
 				D762EC162759C7E700023ABF /* Register */,
 				D762EC152759C7E200023ABF /* Login */,
 			);
@@ -340,6 +333,7 @@
 		D78044E427590D580086E59D /* Networking */ = {
 			isa = PBXGroup;
 			children = (
+				D72E50502771D023002357E8 /* Connectivity.swift */,
 				D78044E927590DB70086E59D /* APIManager.swift */,
 				D78044EB27590DC30086E59D /* APIServices.swift */,
 			);
@@ -352,7 +346,6 @@
 				D78044F3275912AC0086E59D /* AppSetting.swift */,
 				D78044F52759133A0086E59D /* Constant.swift */,
 				D78F47252761A53A0064A764 /* AppColor.swift */,
-				D72E50502771D023002357E8 /* Connectivity.swift */,
 			);
 			path = Common;
 			sourceTree = "<group>";
@@ -382,7 +375,6 @@
 		D78044E827590DA80086E59D /* Models */ = {
 			isa = PBXGroup;
 			children = (
-				D72E50522771EE9F002357E8 /* Authentication */,
 			);
 			path = Models;
 			sourceTree = "<group>";

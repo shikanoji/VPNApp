@@ -31,7 +31,7 @@ class LoginViewModel: ObservableObject {
 //        showAlert = true
         showProgressView = true
         
-        DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(3), execute: {
+        DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(3), execute: { [self] in
             self.showProgressView = false
             completion(.success)
         })

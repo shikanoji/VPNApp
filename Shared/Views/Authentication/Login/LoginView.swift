@@ -26,9 +26,7 @@ struct LoginView: View {
                     Spacer().frame(height: 20)
                     AppButton(style: .themeButton, width: 311, text: "Sign In") {
                         viewModel.login() {result in
-                            if result == .success {
-                                authentication.updateValidation(success: true)
-                            }
+                            authentication.login(username: viewModel.username, password: viewModel.password)
                         }
                     }.disabled(viewModel.loginDisable)
                     Spacer()

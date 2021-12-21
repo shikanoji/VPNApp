@@ -27,7 +27,7 @@ struct BoardView: View {
                     VStack {
                         StatusVPNView(ip: viewModel.ip, status: viewModel.state)
                         Button("Logout") {
-                            authentication.updateValidation(success: false)
+                            authentication.logout()
                         }
                     }
                     .padding(/*@START_MENU_TOKEN@*/.all/*@END_MENU_TOKEN@*/)

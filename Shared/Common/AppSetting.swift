@@ -10,6 +10,7 @@ import Foundation
 
 enum AppKeys: String {
     case email = "email"
+    case username = "username"
     case password = "password"
 }
 
@@ -24,6 +25,15 @@ struct AppSetting {
         }
         set {
             UserDefaults.standard.setValue(newValue, forKey: AppKeys.email.rawValue)
+        }
+    }
+    
+    var username: String {
+        get {
+            return UserDefaults.standard.string(forKey: AppKeys.username.rawValue) ?? ""
+        }
+        set {
+            UserDefaults.standard.setValue(newValue, forKey: AppKeys.username.rawValue)
         }
     }
     
