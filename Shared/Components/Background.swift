@@ -10,18 +10,14 @@ import SwiftUI
 
 struct Background<Content: View>: View {
     private var content: Content
-    var width: CGFloat
-    var height: CGFloat
 
-    init(width: CGFloat, height: CGFloat, @ViewBuilder content: @escaping () -> Content) {
+    init(@ViewBuilder content: @escaping () -> Content) {
         self.content = content()
-        self.width = width
-        self.height = height
     }
 
     var body: some View {
         AppColor.background
-            .frame(width: width, height: height)
+            .frame(maxWidth: .infinity, maxHeight: .infinity)
         .overlay(content)
         .ignoresSafeArea()
     }

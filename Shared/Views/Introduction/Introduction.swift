@@ -19,7 +19,7 @@ struct IntroductionView: View {
     
     var body: some View {
         GeometryReader { geometry in
-            Background(width: geometry.size.width, height: geometry.size.height) {
+            Background() {
                 VStack(spacing: 20) {
                     Spacer().frame(height:50)
                     PagingView(index: $index.animation(), maxIndex: images.count - 1) {

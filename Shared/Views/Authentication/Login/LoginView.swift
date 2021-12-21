@@ -11,7 +11,7 @@ struct LoginView: View {
     @StateObject var viewModel: LoginViewModel
     var body: some View {
         GeometryReader{ geometry in
-            Background(width: geometry.size.width, height: geometry.size.height) {
+            Background() {
                 VStack() {
                     Spacer()
                     Form(placeholder: "Your username", value: $viewModel.username)
