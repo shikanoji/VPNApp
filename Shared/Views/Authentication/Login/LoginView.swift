@@ -9,22 +9,34 @@ import Foundation
 import SwiftUI
 struct LoginView: View {
     @StateObject var viewModel: LoginViewModel
+    @EnvironmentObject var authentication: Authentication
     var body: some View {
         GeometryReader{ geometry in
             Background() {
                 VStack() {
                     Spacer()
+                    
                     Form(placeholder: "Your username", value: $viewModel.username)
                     Spacer().frame(height: 20)
                     Form(placeholder: "Your password", value: $viewModel.password, isPassword: true)
                     Spacer().frame(height: 80)
-                    AppButton(style: .themeButton, width: 311, text: "Sign In") {
-                        viewModel.login()
+                    if viewModel.showProgressView {
+                        ProgressView().progressViewStyle(CircularProgressViewStyle(tint: Color.white))
                     }
+                    Spacer().frame(height: 20)
+                    AppButton(style: .themeButton, width: 311, text: "Sign In") {
+                        viewModel.login() {result in
+                            if result == .success {
+                                authentication.updateValidation(success: true)
+                            }
+                        }
+                    }.disabled(viewModel.loginDisable)
                     Spacer()
                 }
+                .autocapitalization(.none)
+                .disabled(viewModel.showProgressView)
                 .onReceiveAlertWithAction(title: $viewModel.alertTitle, message: $viewModel.alertMessage, showing: $viewModel.showAlert) {
-                    
+                    //Handle Alert Confirmation
                 }
             }.endEditingOnTappingOutside()
         }

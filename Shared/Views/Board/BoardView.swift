@@ -11,6 +11,7 @@ struct BoardView: View {
     
     @StateObject var viewModel: BoardViewModel
     @Environment(\.presentationMode) var presentationMode
+    @EnvironmentObject var authentication: Authentication
     
     var body: some View {
         ZStack {
@@ -25,6 +26,9 @@ struct BoardView: View {
                     Color.red
                     VStack {
                         StatusVPNView(ip: viewModel.ip, status: viewModel.state)
+                        Button("Logout") {
+                            authentication.updateValidation(success: false)
+                        }
                     }
                     .padding(/*@START_MENU_TOKEN@*/.all/*@END_MENU_TOKEN@*/)
                 }
@@ -42,7 +46,6 @@ struct BoardView: View {
     }
     
     func handlerTapRightNavigation() {
-        
     }
 }
 

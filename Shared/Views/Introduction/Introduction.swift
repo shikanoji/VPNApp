@@ -45,12 +45,6 @@ struct IntroductionView: View {
                     Spacer()
                 }
                 .padding()
-                Button("Present") { isPresented.toggle() }
-                .background(Color.white)
-                .fullScreenCover(isPresented: $isPresented) {
-                } content: {
-                    BoardView(viewModel: BoardViewModel())
-                }
             }
             
         }.frame(width: UIScreen.main.bounds.size.width, height: UIScreen.main.bounds.size.height)

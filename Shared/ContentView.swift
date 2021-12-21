@@ -10,6 +10,7 @@ import CoreData
 import UIKit
 
 struct ContentView: View {
+    @EnvironmentObject var authentication: Authentication
     init() {
         UINavigationBar.appearance().tintColor = UIColor.white
         UINavigationBar.appearance().backgroundColor = UIColor(AppColor.background)
@@ -19,7 +20,11 @@ struct ContentView: View {
         ZStack{
             AppColor.background
             NavigationView {
-                IntroductionView()
+                if authentication.isValidated {
+                    BoardView(viewModel: BoardViewModel())
+                } else {
+                    IntroductionView()
+                }
             }.navigationBarTitleDisplayMode(.inline)
         }.ignoresSafeArea()
     }
