@@ -18,36 +18,33 @@ struct IntroductionView: View {
     @State private var isPresented = false
     
     var body: some View {
-        GeometryReader { geometry in
-            Background() {
-                VStack(spacing: 20) {
-                    Spacer().frame(height:50)
-                    PagingView(index: $index.animation(), maxIndex: images.count - 1) {
-                        ForEach(self.images, id: \.self) { imageName in
-                            Image(imageName)
-                                .resizable()
-                                .scaledToFill()
-                        }
+        Background() {
+            VStack(spacing: 20) {
+                Spacer().frame(height:50)
+                PagingView(index: $index.animation(), maxIndex: images.count - 1) {
+                    ForEach(self.images, id: \.self) { imageName in
+                        Image(imageName)
+                            .resizable()
+                            .scaledToFill()
                     }
-                    .aspectRatio(3/4, contentMode: .fit)
-                    .clipShape(RoundedRectangle(cornerRadius: 15))
-                    
-                    //                Stepper("Index: \(index)", value: $index.animation(.easeInOut), in: 0...images.count-1)
-                    //                    .font(Font.body.monospacedDigit())
-                    
-                    AppButton(style: .themeButton, width: 300, height:50, text: LocalizedStringKey.Introduction.trialButton.localized) {
-                        print("Trial")
-                    }
-                    NavigationLink(destination: LoginView(viewModel: LoginViewModel()), isActive: $signIn) { }
-                    AppButton(style: .darkButton, width: 300, height:50, text: "Sign In") {
-                        self.signIn = true
-                    }
-                    Spacer()
                 }
-                .padding()
+                .aspectRatio(3/4, contentMode: .fit)
+                .clipShape(RoundedRectangle(cornerRadius: 15))
+                
+                //                Stepper("Index: \(index)", value: $index.animation(.easeInOut), in: 0...images.count-1)
+                //                    .font(Font.body.monospacedDigit())
+                
+                AppButton(style: .themeButton, width: 300, height:50, text: LocalizedStringKey.Introduction.trialButton.localized) {
+                    print("Trial")
+                }
+                NavigationLink(destination: LoginView(viewModel: LoginViewModel()), isActive: $signIn) { }
+                AppButton(style: .darkButton, width: 300, height:50, text: "Sign In") {
+                    self.signIn = true
+                }
+                Spacer()
             }
-            
-        }.frame(width: UIScreen.main.bounds.size.width, height: UIScreen.main.bounds.size.height)
+            .padding()
+        }
     }
 }
 

@@ -13,7 +13,7 @@ struct ContentView: View {
     @EnvironmentObject var authentication: Authentication
     init() {
         UINavigationBar.appearance().tintColor = UIColor.white
-        UINavigationBar.appearance().backgroundColor = UIColor(AppColor.background)
+        UINavigationBar.appearance().backgroundColor = UIColor.clear
         UITextField.appearance().tintColor = .white
     }
     var body: some View {
