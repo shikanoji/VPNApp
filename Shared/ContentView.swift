@@ -15,6 +15,7 @@ struct ContentView: View {
         UINavigationBar.appearance().tintColor = UIColor.white
         UINavigationBar.appearance().backgroundColor = UIColor.clear
         UITextField.appearance().tintColor = .white
+        UIScrollView.appearance().bounces = false
     }
     var body: some View {
         ZStack{
