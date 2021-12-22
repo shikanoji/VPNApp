@@ -63,7 +63,7 @@ struct LoginView: View {
                             //Handle Forgot Password
                         }
                     }
-                    Spacer()
+                    Spacer().frame(height: 50)
                 }
                 .autocapitalization(.none)
                 .disabled(viewModel.showProgressView)

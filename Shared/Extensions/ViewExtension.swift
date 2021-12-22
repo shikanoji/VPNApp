@@ -8,41 +8,41 @@
 import SwiftUI
 extension View {
     func iOS<Content: View>(_ modifier: (Self) -> Content) -> some View {
-        #if os(iOS)
+#if os(iOS)
         return modifier(self)
-        #else
+#else
         return self
-        #endif
+#endif
     }
 }
 
 extension View {
     func macOS<Content: View>(_ modifier: (Self) -> Content) -> some View {
-        #if os(macOS)
+#if os(macOS)
         return modifier(self)
-        #else
+#else
         return self
-        #endif
+#endif
     }
 }
 
 extension View {
     func tvOS<Content: View>(_ modifier: (Self) -> Content) -> some View {
-        #if os(tvOS)
+#if os(tvOS)
         return modifier(self)
-        #else
+#else
         return self
-        #endif
+#endif
     }
 }
 
 extension View {
     func watchOS<Content: View>(_ modifier: (Self) -> Content) -> some View {
-        #if os(watchOS)
+#if os(watchOS)
         return modifier(self)
-        #else
+#else
         return self
-        #endif
+#endif
     }
 }
 
@@ -55,5 +55,9 @@ extension View {
     
     func endEditingOnTappingOutside() -> some View {
         modifier(EndEditingOnTappingOutside())
+    }
+    
+    func navigationAppearance(backgroundColor: UIColor, foregroundColor: UIColor, tintColor: UIColor? = nil, hideSeparator: Bool = false) -> some View {
+        self.modifier(NavAppearanceModifier(backgroundColor: backgroundColor, foregroundColor: foregroundColor, tintColor: tintColor, hideSeparator: hideSeparator))
     }
 }

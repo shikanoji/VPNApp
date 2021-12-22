@@ -17,6 +17,7 @@
 		64E1F97657A4417E2FE3CA72 /* Pods_SysVPN__macOS_.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 77CA66A548B2998A416DAB70 /* Pods_SysVPN__macOS_.framework */; };
 		D72E50512771D023002357E8 /* Connectivity.swift in Sources */ = {isa = PBXBuildFile; fileRef = D72E50502771D023002357E8 /* Connectivity.swift */; };
 		D72E50542771EEAF002357E8 /* Authentication.swift in Sources */ = {isa = PBXBuildFile; fileRef = D72E50532771EEAF002357E8 /* Authentication.swift */; };
+		D75F936E2773486900E16981 /* NavigationModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = D75F936D2773486900E16981 /* NavigationModifier.swift */; };
 		D767F27F276780C1005F7AA5 /* Form.swift in Sources */ = {isa = PBXBuildFile; fileRef = D767F27E276780C1005F7AA5 /* Form.swift */; };
 		D78044B52758C6FC0086E59D /* Tests_iOS.swift in Sources */ = {isa = PBXBuildFile; fileRef = D78044B42758C6FC0086E59D /* Tests_iOS.swift */; };
 		D78044B72758C6FC0086E59D /* Tests_iOSLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D78044B62758C6FC0086E59D /* Tests_iOSLaunchTests.swift */; };
@@ -90,6 +91,7 @@
 		9BC128AC2A13B56F94EBA8CD /* Pods_SysVPN__iOS_.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SysVPN__iOS_.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		D72E50502771D023002357E8 /* Connectivity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Connectivity.swift; sourceTree = "<group>"; };
 		D72E50532771EEAF002357E8 /* Authentication.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Authentication.swift; sourceTree = "<group>"; };
+		D75F936D2773486900E16981 /* NavigationModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationModifier.swift; sourceTree = "<group>"; };
 		D767F27E276780C1005F7AA5 /* Form.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Form.swift; sourceTree = "<group>"; };
 		D780449A2758C6F90086E59D /* Shared.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Shared.xcdatamodel; sourceTree = "<group>"; };
 		D780449B2758C6F90086E59D /* SysVPNApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SysVPNApp.swift; sourceTree = "<group>"; };
@@ -355,6 +357,7 @@
 			children = (
 				D78044F127590E990086E59D /* TextModifier.swift */,
 				D78F76C42769D84700919AA6 /* ViewModifier.swift */,
+				D75F936D2773486900E16981 /* NavigationModifier.swift */,
 			);
 			path = Modifiers;
 			sourceTree = "<group>";
@@ -637,6 +640,7 @@
 				D784FA69275DA90300A7A7F1 /* LocalizedStrings.swift in Sources */,
 				D78F47262761A53A0064A764 /* AppColor.swift in Sources */,
 				D78F76C52769D84700919AA6 /* ViewModifier.swift in Sources */,
+				D75F936E2773486900E16981 /* NavigationModifier.swift in Sources */,
 				D78044EC27590DC30086E59D /* APIServices.swift in Sources */,
 				D78F472C2761D1B50064A764 /* LoginViewModel.swift in Sources */,
 				D78F472A2761D1960064A764 /* RegisterView.swift in Sources */,

@@ -12,8 +12,6 @@ import UIKit
 struct ContentView: View {
     @EnvironmentObject var authentication: Authentication
     init() {
-        UINavigationBar.appearance().tintColor = UIColor.white
-        UINavigationBar.appearance().backgroundColor = UIColor.clear
         UITextField.appearance().tintColor = .white
         UIScrollView.appearance().bounces = false
     }
@@ -27,6 +25,7 @@ struct ContentView: View {
                     IntroductionView()
                 }
             }.navigationBarTitleDisplayMode(.inline)
+                .navigationAppearance(backgroundColor: UIColor(AppColor.background), foregroundColor: UIColor.white, tintColor: UIColor.white, hideSeparator: true)
         }.ignoresSafeArea()
     }
 }
