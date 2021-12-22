@@ -26,9 +26,9 @@ struct LoginView: View {
                     }
                     
                     Group{
-                        Form(placeholder: "Your username", value: $viewModel.username)
+                        Form(placeholder: LocalizedStringKey.Login.usernamePlaceholder.localized, value: $viewModel.username)
                         Spacer().frame(height: 20)
-                        Form(placeholder: "Your password", value: $viewModel.password, isPassword: true)
+                        Form(placeholder: LocalizedStringKey.Login.passwordPlaceholder.localized, value: $viewModel.password, isPassword: true)
                         Spacer().frame(height: 20)
                         if viewModel.showProgressView {
                             ProgressView().progressViewStyle(CircularProgressViewStyle(tint: Color.white))
@@ -37,29 +37,29 @@ struct LoginView: View {
                     }
                     
                     Group {
-                        AppButton(style: .themeButton, width: 311, text: "Sign In") {
+                        AppButton(style: .themeButton, width: 311, text: LocalizedStringKey.Login.signin.localized) {
                             viewModel.login() {result in
                                 authentication.login(username: viewModel.username, password: viewModel.password)
                             }
                         }.disabled(viewModel.loginDisable)
                         Spacer().frame(height: 30)
-                        AppButton(style: .darkButton, width: 311, text: "Sign In With Google") {
+                        AppButton(style: .darkButton, width: 311, text: LocalizedStringKey.Login.signinWithGoogle.localized) {
                         }
                         Spacer().frame(height: 10)
-                        AppButton(style: .darkButton, width: 311, text: "Sign In With Apple") {
+                        AppButton(style: .darkButton, width: 311, text: LocalizedStringKey.Login.signinWithApple.localized) {
                         }
                         Spacer().frame(height: 30)
                     }
                     Group {
                         HStack{
-                            Text("Don't have an account?").setDefault()
+                            Text(LocalizedStringKey.Login.noAccountQuestion.localized).setDefault()
                             Spacer().frame(width: 5)
-                            Text("Create new").setDefaultBold().onTapGesture {
+                            Text(LocalizedStringKey.Login.createNew.localized).setDefaultBold().onTapGesture {
                                 //Handle Create new account
                             }
                         }
                         Spacer().frame(height: 20)
-                        Text("Forgot Pasword?").setDefault().onTapGesture {
+                        Text(LocalizedStringKey.Login.forgotPassword.localized).setDefault().onTapGesture {
                             //Handle Forgot Password
                         }
                     }

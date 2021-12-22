@@ -18,6 +18,8 @@
 		D72E50512771D023002357E8 /* Connectivity.swift in Sources */ = {isa = PBXBuildFile; fileRef = D72E50502771D023002357E8 /* Connectivity.swift */; };
 		D72E50542771EEAF002357E8 /* Authentication.swift in Sources */ = {isa = PBXBuildFile; fileRef = D72E50532771EEAF002357E8 /* Authentication.swift */; };
 		D75F936E2773486900E16981 /* NavigationModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = D75F936D2773486900E16981 /* NavigationModifier.swift */; };
+		D75F9371277370AE00E16981 /* Introduction.strings in Resources */ = {isa = PBXBuildFile; fileRef = D75F9370277370AE00E16981 /* Introduction.strings */; };
+		D75F9373277370BC00E16981 /* Login.strings in Resources */ = {isa = PBXBuildFile; fileRef = D75F9372277370BC00E16981 /* Login.strings */; };
 		D767F27F276780C1005F7AA5 /* Form.swift in Sources */ = {isa = PBXBuildFile; fileRef = D767F27E276780C1005F7AA5 /* Form.swift */; };
 		D78044B52758C6FC0086E59D /* Tests_iOS.swift in Sources */ = {isa = PBXBuildFile; fileRef = D78044B42758C6FC0086E59D /* Tests_iOS.swift */; };
 		D78044B72758C6FC0086E59D /* Tests_iOSLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D78044B62758C6FC0086E59D /* Tests_iOSLaunchTests.swift */; };
@@ -44,7 +46,7 @@
 		D78044F227590E990086E59D /* TextModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = D78044F127590E990086E59D /* TextModifier.swift */; };
 		D78044F4275912AC0086E59D /* AppSetting.swift in Sources */ = {isa = PBXBuildFile; fileRef = D78044F3275912AC0086E59D /* AppSetting.swift */; };
 		D78044F62759133A0086E59D /* Constant.swift in Sources */ = {isa = PBXBuildFile; fileRef = D78044F52759133A0086E59D /* Constant.swift */; };
-		D784FA65275DA89B00A7A7F1 /* Localizations.strings in Resources */ = {isa = PBXBuildFile; fileRef = D784FA67275DA89B00A7A7F1 /* Localizations.strings */; };
+		D784FA65275DA89B00A7A7F1 /* Global.strings in Resources */ = {isa = PBXBuildFile; fileRef = D784FA67275DA89B00A7A7F1 /* Global.strings */; };
 		D784FA69275DA90300A7A7F1 /* LocalizedStrings.swift in Sources */ = {isa = PBXBuildFile; fileRef = D784FA68275DA90300A7A7F1 /* LocalizedStrings.swift */; };
 		D788B18927635BC000855C24 /* AppButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = D788B18827635BC000855C24 /* AppButton.swift */; };
 		D78A35C8276B2F1400CC010D /* TextExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = D78A35C7276B2F1400CC010D /* TextExtension.swift */; };
@@ -92,6 +94,8 @@
 		D72E50502771D023002357E8 /* Connectivity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Connectivity.swift; sourceTree = "<group>"; };
 		D72E50532771EEAF002357E8 /* Authentication.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Authentication.swift; sourceTree = "<group>"; };
 		D75F936D2773486900E16981 /* NavigationModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationModifier.swift; sourceTree = "<group>"; };
+		D75F9370277370AE00E16981 /* Introduction.strings */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; path = Introduction.strings; sourceTree = "<group>"; };
+		D75F9372277370BC00E16981 /* Login.strings */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; path = Login.strings; sourceTree = "<group>"; };
 		D767F27E276780C1005F7AA5 /* Form.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Form.swift; sourceTree = "<group>"; };
 		D780449A2758C6F90086E59D /* Shared.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Shared.xcdatamodel; sourceTree = "<group>"; };
 		D780449B2758C6F90086E59D /* SysVPNApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SysVPNApp.swift; sourceTree = "<group>"; };
@@ -117,7 +121,7 @@
 		D78044F127590E990086E59D /* TextModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextModifier.swift; sourceTree = "<group>"; };
 		D78044F3275912AC0086E59D /* AppSetting.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppSetting.swift; sourceTree = "<group>"; };
 		D78044F52759133A0086E59D /* Constant.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constant.swift; sourceTree = "<group>"; };
-		D784FA66275DA89B00A7A7F1 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizations.strings; sourceTree = "<group>"; };
+		D784FA66275DA89B00A7A7F1 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Global.strings; sourceTree = "<group>"; };
 		D784FA68275DA90300A7A7F1 /* LocalizedStrings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalizedStrings.swift; sourceTree = "<group>"; };
 		D788B18827635BC000855C24 /* AppButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppButton.swift; sourceTree = "<group>"; };
 		D78A35C7276B2F1400CC010D /* TextExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextExtension.swift; sourceTree = "<group>"; };
@@ -190,6 +194,17 @@
 			path = Board;
 			sourceTree = "<group>";
 		};
+		D75F936F2773705400E16981 /* Language */ = {
+			isa = PBXGroup;
+			children = (
+				D784FA67275DA89B00A7A7F1 /* Global.strings */,
+				D784FA68275DA90300A7A7F1 /* LocalizedStrings.swift */,
+				D75F9370277370AE00E16981 /* Introduction.strings */,
+				D75F9372277370BC00E16981 /* Login.strings */,
+			);
+			path = Language;
+			sourceTree = "<group>";
+		};
 		D762EC102759B53B00023ABF /* Authentication */ = {
 			isa = PBXGroup;
 			children = (
@@ -198,13 +213,6 @@
 				D762EC152759C7E200023ABF /* Login */,
 			);
 			path = Authentication;
-			sourceTree = "<group>";
-		};
-		D762EC112759B69600023ABF /* Main */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Main;
 			sourceTree = "<group>";
 		};
 		D762EC122759B69D00023ABF /* Settings */ = {
@@ -263,6 +271,7 @@
 		D78044982758C6F90086E59D /* Shared */ = {
 			isa = PBXGroup;
 			children = (
+				D75F936F2773705400E16981 /* Language */,
 				D795FFA6275F6E7D00E54206 /* Components */,
 				D78044E827590DA80086E59D /* Models */,
 				D78044E727590D850086E59D /* Views */,
@@ -277,8 +286,6 @@
 				D78044DC2758F46B0086E59D /* GoogleService-Info.plist */,
 				D78044992758C6F90086E59D /* SysVPN.xcdatamodeld */,
 				D78044E22758F54A0086E59D /* AppDelegate.swift */,
-				D784FA67275DA89B00A7A7F1 /* Localizations.strings */,
-				D784FA68275DA90300A7A7F1 /* LocalizedStrings.swift */,
 				D795FFAB275F9AC500E54206 /* LaunchScreen.storyboard */,
 			);
 			path = Shared;
@@ -369,7 +376,6 @@
 				D762EC142759C6EC00023ABF /* Introduction */,
 				D762EC132759B6CA00023ABF /* AccountInfo */,
 				D762EC122759B69D00023ABF /* Settings */,
-				D762EC112759B69600023ABF /* Main */,
 				D762EC102759B53B00023ABF /* Authentication */,
 			);
 			path = Views;
@@ -532,8 +538,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				D78044CC2758C6FC0086E59D /* Assets.xcassets in Resources */,
+				D75F9371277370AE00E16981 /* Introduction.strings in Resources */,
 				D795FFAC275F9AC500E54206 /* LaunchScreen.storyboard in Resources */,
-				D784FA65275DA89B00A7A7F1 /* Localizations.strings in Resources */,
+				D784FA65275DA89B00A7A7F1 /* Global.strings in Resources */,
+				D75F9373277370BC00E16981 /* Login.strings in Resources */,
 				D78044DD2758F46B0086E59D /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -716,12 +724,12 @@
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
-		D784FA67275DA89B00A7A7F1 /* Localizations.strings */ = {
+		D784FA67275DA89B00A7A7F1 /* Global.strings */ = {
 			isa = PBXVariantGroup;
 			children = (
 				D784FA66275DA89B00A7A7F1 /* en */,
 			);
-			name = Localizations.strings;
+			name = Global.strings;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */

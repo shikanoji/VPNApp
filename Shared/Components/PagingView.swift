@@ -44,9 +44,7 @@ struct PagingView<Content>: View where Content: View {
                         let predictedEndOffset = -CGFloat(self.index) * geometry.size.width + value.predictedEndTranslation.width
                         let predictedIndex = Int(round(predictedEndOffset / -geometry.size.width))
                         self.index = self.clampedIndex(from: predictedIndex)
-                        withAnimation(.easeOut) {
-                            self.dragging = false
-                        }
+                        self.dragging = false
                     }
                 )
             }
