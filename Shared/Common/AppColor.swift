@@ -9,7 +9,8 @@ import Foundation
 import SwiftUI
 
 struct AppColor {
-    static var green = Color(hex: "66FFCC")
+    static var themeColor = Color(hex: "66FFCC")
+    static var textColor = Color.white
     static var blackText = Color(hex: "15151C")
     static var darkButton = Color(hex: "2E303D")
     static var background = Color(hex: "1B1C26")

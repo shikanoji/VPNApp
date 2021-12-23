@@ -89,7 +89,7 @@ struct PasswordField: View {
                 self.isRevealed.toggle()
             }) {
                 Image(systemName: self.isRevealed ? "eye.slash.fill" : "eye.fill")
-                    .foregroundColor(AppColor.green)
+                    .foregroundColor(AppColor.themeColor)
             }
         }
     }

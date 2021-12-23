@@ -8,8 +8,8 @@
 import Foundation
 import Firebase
 import FirebaseAnalytics
-import UIKit
 import FirebaseMessaging
+import GoogleSignIn
 
 class AppDelegate: NSObject, UIApplicationDelegate, MessagingDelegate {
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey : Any]? = nil) -> Bool {
@@ -63,5 +63,12 @@ class AppDelegate: NSObject, UIApplicationDelegate, MessagingDelegate {
             print("FCM registration token: \(token)")
           }
         }
+    }
+    
+    @available(iOS 9.0, *)
+    func application(_ application: UIApplication, open url: URL,
+                     options: [UIApplication.OpenURLOptionsKey: Any])
+      -> Bool {
+      return GIDSignIn.sharedInstance.handle(url)
     }
 }

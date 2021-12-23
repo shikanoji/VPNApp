@@ -46,6 +46,7 @@ struct IntroductionView: View {
             VStack(spacing: 10) {
                 Spacer().frame(height: 10)
                 HStack {
+                    Spacer().frame(width: 10)
                     Image("Logo-small")
                     Spacer()
                 }
