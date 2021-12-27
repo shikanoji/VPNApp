@@ -19,10 +19,11 @@ struct AppButton: View {
     var backgroundColor: Color
     var textColor: Color
     var text: String
-    var cornerRadius: CGFloat = 10
+    var cornerRadius: CGFloat = 8
+    var icon: Image?
     private let action: () -> Void
     
-    init(style: AppButtonStyle = .themeButton, width: CGFloat = 200, height: CGFloat = 50, backgroundColor: Color = AppColor.green, textColor: Color = AppColor.blackText, text: String = "", cornerRadius: CGFloat = 10, action: @escaping () -> Void) {
+    init(style: AppButtonStyle = .themeButton, width: CGFloat = 200, height: CGFloat = 50, backgroundColor: Color = AppColor.themeColor, textColor: Color = AppColor.blackText, text: String = "", cornerRadius: CGFloat = 10, icon: Image? = nil, action: @escaping () -> Void) {
         self.style = style
         switch style {
         case .darkButton:
@@ -38,6 +39,7 @@ struct AppButton: View {
         self.text = text
         self.cornerRadius = cornerRadius
         self.action = action
+        self.icon = icon
     }
     
     var body: some View {
@@ -45,7 +47,10 @@ struct AppButton: View {
             self.action()
         } label: {
             GeometryReader { geometric in
-                HStack {
+                HStack(alignment: .center, spacing: 10) {
+                    if self.icon != nil {
+                        self.icon
+                    }
                     Text(text)
                         .foregroundColor(textColor)
                         .font(.system(size: 14, weight: .bold, design: .default))
@@ -68,7 +73,6 @@ struct AppButton_Previews: PreviewProvider {
             AppButton(style: .darkButton, text: "Gray Button") {
             }
         }
-        
     }
 }
 #endif

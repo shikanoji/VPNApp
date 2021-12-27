@@ -39,6 +39,7 @@ struct LocalizedStringKey {
         
         case usernamePlaceholder = "Login.UsernamePlaceholder"
         case passwordPlaceholder = "Login.PasswordPlaceholder"
+        case emailPlaceholder = "Login.EmailPlaceholder"
         
         case signin = "Login.Signin"
         case signinWithGoogle = "Login.SigninWithGoogle"
@@ -50,6 +51,27 @@ struct LocalizedStringKey {
         
         var localized: String {
             return NSLocalizedString(self.rawValue, tableName: "Login", comment: "")
+        }
+    }
+    
+    enum Register: String {
+        case title = "Register.Title"
+        case body = "Register.Body"
+        
+        case usernamePlaceholder = "Register.UsernamePlaceholder"
+        case passwordPlaceholder = "Register.PasswordPlaceholder"
+        case emailPlaceholder = "Register.EmailPlaceholder"
+        case retypePassword = "Register.RetypePassword"
+        
+        case signup = "Register.Signup"
+        case signupWithGoogle = "Register.SignupWithGoogle"
+        case signupWithApple = "Register.SignupWithApple"
+        
+        case hadAccountText = "Register.HadAccountText"
+        case signin = "Register.Signin"
+        
+        var localized: String {
+            return NSLocalizedString(self.rawValue, tableName: "Register", comment: "")
         }
     }
 }

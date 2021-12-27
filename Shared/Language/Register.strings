@@ -1,0 +1,18 @@
+/* 
+  Register.strings
+  SysVPN
+
+  Created by Nguyễn Đình Thạch on 24/12/2021.
+  
+*/
+
+"Register.Title" = "Create an account";
+"Register.Body" = "Start protecting yourself with SysVPN";
+"Register.EmailPlaceholder" = "Your Email";
+"Register.PasswordPlaceholder" = "Your Password";
+"Register.RetypePassword" = "Retype Your Password";
+"Register.Signup" = "Create An Account";
+"Register.SignupWithGoogle" = "Sign up with Google";
+"Register.SignupWithApple" = "Sign up with Apple";
+"Register.HadAccountText" = "Already have an account?";
+"Register.Signin" = "Sign In";

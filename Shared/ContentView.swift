@@ -7,7 +7,6 @@
 
 import SwiftUI
 import CoreData
-import UIKit
 
 struct ContentView: View {
     @EnvironmentObject var authentication: Authentication
