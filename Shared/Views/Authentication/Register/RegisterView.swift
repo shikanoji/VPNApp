@@ -44,7 +44,7 @@ struct RegisterView: View {
                             viewModel.signup(){result in
                                 
                             }
-                        }.disabled(viewModel.loginDisable)
+                        }.disabled(viewModel.registerDisable)
                         Spacer().frame(height: 30)
                         AppButton(style: .darkButton, width: 311, text: LocalizedStringKey.Register.signupWithGoogle.localized, icon: Image("google")) {
                             viewModel.signupGoogle()

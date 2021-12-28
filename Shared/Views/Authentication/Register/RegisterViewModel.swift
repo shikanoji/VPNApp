@@ -26,8 +26,8 @@ class RegisterViewModel: NSObject, ObservableObject {
     var alertTitle: String = ""
     var alertMessage: String = ""
     var appleToken: String = ""
-    var loginDisable: Bool {
-        username.isEmpty || password.isEmpty
+    var registerDisable: Bool {
+        username.isEmpty || password.isEmpty || retypePassword.isEmpty
     }
     
     func signup(completion: @escaping (RegisterResult) -> Void) {

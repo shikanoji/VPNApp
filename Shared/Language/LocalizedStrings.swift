@@ -74,6 +74,17 @@ struct LocalizedStringKey {
             return NSLocalizedString(self.rawValue, tableName: "Register", comment: "")
         }
     }
+    
+    enum ForgotPassword: String {
+        case title = "ForgotPassword.Title"
+        case body = "ForgotPassword.Body"
+        case emailPlaceholder = "ForgotPassword.EmailPlaceholder"
+        case sendRequestButton = "ForgotPassword.SendRequestButton"
+        
+        var localized: String {
+            return NSLocalizedString(self.rawValue, tableName: "ForgotPassword", comment: "")
+        }
+    }
 }
 
 
