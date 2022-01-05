@@ -13,6 +13,7 @@ struct LoginView: View {
     @StateObject var viewModel: LoginViewModel
     @EnvironmentObject var authentication: Authentication
     @State var createNewAccount: Bool = false
+    @State var forgotPassword: Bool = false
     
     var body: some View {
         Background() {
@@ -56,19 +57,22 @@ struct LoginView: View {
                         Spacer().frame(height: 30)
                     }
                     Group {
-                        HStack{
+                        HStack(spacing: 2){
                             Text(LocalizedStringKey.Login.noAccountQuestion.localized).setDefault()
-                            Spacer().frame(width: 5)
                             NavigationLink(destination: RegisterView(viewModel: RegisterViewModel()), isActive: $createNewAccount) {
+                                Text(LocalizedStringKey.Login.createNew.localized).setDefaultBold()
+                                    .onTapGesture {
+                                        self.createNewAccount = true
+                                    }
                             }
-                            Text(LocalizedStringKey.Login.createNew.localized).setDefaultBold()
-                                .onTapGesture {
-                                    self.createNewAccount = true
-                                }
+                            
                         }
                         Spacer().frame(height: 20)
+                        NavigationLink(destination: ForgotPasswordView(viewModel: ForgotPasswordViewModel()), isActive: $forgotPassword) {
+                        }
                         Text(LocalizedStringKey.Login.forgotPassword.localized).setDefault().onTapGesture {
                             //Handle Forgot Password
+                            self.forgotPassword = true
                         }
                     }
                     Spacer().frame(height: 50)
