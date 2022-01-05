@@ -20,4 +20,8 @@ extension Text {
     func setTitle() -> some View {
         modifier(TitleLabel())
     }
+    
+    func setLightBlackText() -> some View {
+        modifier(LightBlackText())
+    }
 }

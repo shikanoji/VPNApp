@@ -12,6 +12,8 @@ struct AppColor {
     static var themeColor = Color(hex: "66FFCC")
     static var textColor = Color.white
     static var blackText = Color(hex: "15151C")
+    static var lightBlackText = Color(hex: "8C8D97")
+    static var lightBlack = Color(hex: "14141C")
     static var darkButton = Color(hex: "2E303D")
     static var background = Color(hex: "1B1C26")
     static var lightGray = Color(hex: "5B5F75")

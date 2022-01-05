@@ -18,11 +18,16 @@ struct ContentView: View {
         ZStack{
             AppColor.background
             NavigationView {
-                if authentication.isValidated {
-                    BoardView(viewModel: BoardViewModel())
+                if AppSetting.shared.showedNotice {
+                    if authentication.isValidated {
+                        BoardView(viewModel: BoardViewModel())
+                    } else {
+                        IntroductionView()
+                    }
                 } else {
-                    IntroductionView()
+                    NoticeView()
                 }
+                
             }.navigationBarTitleDisplayMode(.inline)
                 .navigationAppearance(backgroundColor: UIColor(AppColor.background), foregroundColor: UIColor.white, tintColor: UIColor.white, hideSeparator: true)
         }.ignoresSafeArea()
