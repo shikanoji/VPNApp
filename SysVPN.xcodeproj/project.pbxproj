@@ -21,6 +21,7 @@
 		D75F9371277370AE00E16981 /* Introduction.strings in Resources */ = {isa = PBXBuildFile; fileRef = D75F9370277370AE00E16981 /* Introduction.strings */; };
 		D75F9373277370BC00E16981 /* Login.strings in Resources */ = {isa = PBXBuildFile; fileRef = D75F9372277370BC00E16981 /* Login.strings */; };
 		D767F27F276780C1005F7AA5 /* Form.swift in Sources */ = {isa = PBXBuildFile; fileRef = D767F27E276780C1005F7AA5 /* Form.swift */; };
+		D76BDD002785CF0B002DF290 /* Notice.strings in Resources */ = {isa = PBXBuildFile; fileRef = D76BDCFF2785CF0B002DF290 /* Notice.strings */; };
 		D78044B52758C6FC0086E59D /* Tests_iOS.swift in Sources */ = {isa = PBXBuildFile; fileRef = D78044B42758C6FC0086E59D /* Tests_iOS.swift */; };
 		D78044B72758C6FC0086E59D /* Tests_iOSLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D78044B62758C6FC0086E59D /* Tests_iOSLaunchTests.swift */; };
 		D78044C12758C6FC0086E59D /* Tests_macOS.swift in Sources */ = {isa = PBXBuildFile; fileRef = D78044C02758C6FC0086E59D /* Tests_macOS.swift */; };
@@ -60,6 +61,7 @@
 		D78A35C8276B2F1400CC010D /* TextExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = D78A35C7276B2F1400CC010D /* TextExtension.swift */; };
 		D78A35CA276B767400CC010D /* AppTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = D78A35C9276B767400CC010D /* AppTextField.swift */; };
 		D78A35CC276B9D5A00CC010D /* Background.swift in Sources */ = {isa = PBXBuildFile; fileRef = D78A35CB276B9D5A00CC010D /* Background.swift */; };
+		D78AC3E527858D860056FCC0 /* NoticeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D78AC3E427858D860056FCC0 /* NoticeView.swift */; };
 		D78F47262761A53A0064A764 /* AppColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = D78F47252761A53A0064A764 /* AppColor.swift */; };
 		D78F47282761D1840064A764 /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D78F47272761D1840064A764 /* LoginView.swift */; };
 		D78F472A2761D1960064A764 /* RegisterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D78F47292761D1960064A764 /* RegisterView.swift */; };
@@ -105,6 +107,7 @@
 		D75F9370277370AE00E16981 /* Introduction.strings */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; path = Introduction.strings; sourceTree = "<group>"; };
 		D75F9372277370BC00E16981 /* Login.strings */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; path = Login.strings; sourceTree = "<group>"; };
 		D767F27E276780C1005F7AA5 /* Form.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Form.swift; sourceTree = "<group>"; };
+		D76BDCFF2785CF0B002DF290 /* Notice.strings */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; path = Notice.strings; sourceTree = "<group>"; };
 		D780449A2758C6F90086E59D /* Shared.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Shared.xcdatamodel; sourceTree = "<group>"; };
 		D780449B2758C6F90086E59D /* SysVPNApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SysVPNApp.swift; sourceTree = "<group>"; };
 		D780449C2758C6F90086E59D /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -139,6 +142,7 @@
 		D78A35C7276B2F1400CC010D /* TextExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextExtension.swift; sourceTree = "<group>"; };
 		D78A35C9276B767400CC010D /* AppTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppTextField.swift; sourceTree = "<group>"; };
 		D78A35CB276B9D5A00CC010D /* Background.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Background.swift; sourceTree = "<group>"; };
+		D78AC3E427858D860056FCC0 /* NoticeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoticeView.swift; sourceTree = "<group>"; };
 		D78C8FC827748EE200D4A46F /* SysVPN--iOS--Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = "SysVPN--iOS--Info.plist"; sourceTree = "<group>"; };
 		D78C8FC92774914400D4A46F /* SysVPN (iOS).entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "SysVPN (iOS).entitlements"; sourceTree = "<group>"; };
 		D78F47252761A53A0064A764 /* AppColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppColor.swift; sourceTree = "<group>"; };
@@ -217,6 +221,7 @@
 				D75F9372277370BC00E16981 /* Login.strings */,
 				D78848912775AB5600AF22C6 /* Register.strings */,
 				D7874DF4277AF04900ADC7AD /* ForgotPassword.strings */,
+				D76BDCFF2785CF0B002DF290 /* Notice.strings */,
 			);
 			path = Language;
 			sourceTree = "<group>";
@@ -250,6 +255,7 @@
 			isa = PBXGroup;
 			children = (
 				D795FFA9275F6ED200E54206 /* Introduction.swift */,
+				D78AC3E427858D860056FCC0 /* NoticeView.swift */,
 			);
 			path = Introduction;
 			sourceTree = "<group>";
@@ -572,6 +578,7 @@
 				D795FFAC275F9AC500E54206 /* LaunchScreen.storyboard in Resources */,
 				D784FA65275DA89B00A7A7F1 /* Global.strings in Resources */,
 				D75F9373277370BC00E16981 /* Login.strings in Resources */,
+				D76BDD002785CF0B002DF290 /* Notice.strings in Resources */,
 				D78044DD2758F46B0086E59D /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -689,6 +696,7 @@
 				D78044E12758F5110086E59D /* UIApplicationExtension.swift in Sources */,
 				6353F842276F333900B42334 /* StatusVPNView.swift in Sources */,
 				D78044F227590E990086E59D /* TextModifier.swift in Sources */,
+				D78AC3E527858D860056FCC0 /* NoticeView.swift in Sources */,
 				6353F844276F3E8500B42334 /* BoardNavigationView.swift in Sources */,
 				6384B4F8276C43DD00E904D2 /* BoardViewModel.swift in Sources */,
 				D767F27F276780C1005F7AA5 /* Form.swift in Sources */,

@@ -12,6 +12,7 @@ enum AppKeys: String {
     case email = "email"
     case username = "username"
     case password = "password"
+    case showedNotice = "showedNotice"
 }
 
 struct AppSetting {
@@ -46,5 +47,13 @@ struct AppSetting {
         }
     }
     
+    var showedNotice: Bool {
+        get {
+            return UserDefaults.standard.bool(forKey: AppKeys.showedNotice.rawValue)
+        }
+        set {
+            UserDefaults.standard.setValue(newValue, forKey: AppKeys.showedNotice.rawValue)
+        }
+    }
     
 }

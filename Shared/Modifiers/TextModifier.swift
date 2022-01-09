@@ -24,3 +24,9 @@ struct TitleLabel: ViewModifier {
         content.foregroundColor(AppColor.textColor).font(.system(size: 24, weight: .bold))
     }
 }
+
+struct LightBlackText: ViewModifier {
+    func body(content: Content) -> some View {
+        content.foregroundColor(AppColor.lightBlackText).font(.system(size: 14))
+    }
+}

@@ -85,6 +85,18 @@ struct LocalizedStringKey {
             return NSLocalizedString(self.rawValue, tableName: "ForgotPassword", comment: "")
         }
     }
+    
+    enum Notice: String {
+        case title = "Notice.Title"
+        case firstGraph = "Notice.FirstGraph"
+        case firstTerm = "Notice.FirstTerm"
+        case secondTerm = "Notice.SecondTerm"
+        case lastGraph = "Notice.LastGraph"
+        case buttonText = "Notice.ButtonText"
+        var localized: String {
+            return NSLocalizedString(self.rawValue, tableName: "Notice", comment: "")
+        }
+    }
 }
 
 
