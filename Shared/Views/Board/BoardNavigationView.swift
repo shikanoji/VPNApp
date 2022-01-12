@@ -24,7 +24,7 @@ struct BoardNavigationView: View {
                     .frame(width: Constant.Board.IconFrame.leftIconWidth, height: Constant.Board.IconFrame.leftIconWidth)
                 Spacer()
                 Text(status.title)
-                    .fontWeight(.bold)
+                    .font(.system(size: Constant.Board.Navigation.sizeFont, weight: Constant.Board.Navigation.weightFont))
                     .foregroundColor(.white)
                 Spacer()
                 Image(Constant.Board.Image.user)
@@ -42,7 +42,7 @@ struct BoardNavigationView: View {
 
 struct BoardNavigationView_Previews: PreviewProvider {
     static var previews: some View {
-        BoardNavigationView(status: .start, tapLeftIcon: {
+        BoardNavigationView(status: .loading, tapLeftIcon: {
             
         }, tapRightIcon: {
             

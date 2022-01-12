@@ -13,32 +13,46 @@ struct BoardView: View {
     @Environment(\.presentationMode) var presentationMode
     @EnvironmentObject var authentication: Authentication
     
+    @ObservedObject var mesh = Mesh.sampleMesh()
+    @ObservedObject var selection = SelectionHandler()
+    
     var body: some View {
-        ZStack {
+//        ZStack {
             VStack(spacing: 0.0) {
-                BoardNavigationView(status: viewModel.state,
-                                    tapLeftIcon: {
-                    handlerTapLeftNavigation()
-                }, tapRightIcon: {
-                    handlerTapRightNavigation()
-                })
                 ZStack(alignment: .top) {
-                    Color.red
-                    VStack {
-                        StatusVPNView(ip: viewModel.ip, status: viewModel.state)
-                        Button("Logout") {
-                            authentication.logout()
+                    GeometryReader { geometry in
+                        MapView(mesh: mesh, selection: selection, showCityNodes: $viewModel.showCityNodes)
+                        VStack {
+                            BoardNavigationView(status: viewModel.state,
+                                                tapLeftIcon: {
+                                handlerTapLeftNavigation()
+                            }, tapRightIcon: {
+                                handlerTapRightNavigation()
+                            })
+                            StatusVPNView(ip: viewModel.ip, status: viewModel.state)
+                            Button("Logout") {
+                                authentication.logout()
+                            }
+                            Spacer()
+                            ConnectButton(status: viewModel.state,
+                                          uploadSpeed: viewModel.uploadSpeed,
+                                          downloadSpeed: viewModel.downloadSpeed)
+                                .onTapGesture {
+                                    viewModel.getLocationAvaible()
+                                }
+                            BoardTabView(tab: $viewModel.tab)
+                                .padding(.top, Constant.Board.Tabs.topPadding)
                         }
+                        .padding(/*@START_MENU_TOKEN@*/.all/*@END_MENU_TOKEN@*/)
                     }
-                    .padding(/*@START_MENU_TOKEN@*/.all/*@END_MENU_TOKEN@*/)
                 }
-                .background(Color.white)
+                .background(AppColor.background)
                 .frame(alignment: .top)
             }
             .preferredColorScheme(.dark)
             .navigationBarHidden(true)
             .edgesIgnoringSafeArea(.all)
-        }
+//        }
     }
     
     func handlerTapLeftNavigation() {

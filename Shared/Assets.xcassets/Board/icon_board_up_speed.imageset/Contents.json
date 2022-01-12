@@ -1,0 +1,12 @@
+{
+  "images" : [
+    {
+      "filename" : "icon_board_up_speed.pdf",
+      "idiom" : "universal"
+    }
+  ],
+  "info" : {
+    "author" : "xcode",
+    "version" : 1
+  }
+}

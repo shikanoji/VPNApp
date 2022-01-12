@@ -40,7 +40,6 @@ struct LocalizedStringKey {
         case usernamePlaceholder = "Login.UsernamePlaceholder"
         case passwordPlaceholder = "Login.PasswordPlaceholder"
         case emailPlaceholder = "Login.EmailPlaceholder"
-        
         case signin = "Login.Signin"
         case signinWithGoogle = "Login.SigninWithGoogle"
         case signinWithApple = "Login.SigninWithApple"
@@ -51,6 +50,27 @@ struct LocalizedStringKey {
         
         var localized: String {
             return NSLocalizedString(self.rawValue, tableName: "Login", comment: "")
+        }
+    }
+    
+    enum Board: String {
+        case yourIP = "Board.IP"
+        case subIP = "Board.SubIP"
+        case unConnect = "Board.Unconnect"
+        case connected = "Board.Connected"
+        case connecting = "Board.Connecting"
+        case titleNavigationNotConnect = "Board.NavigationTitleNotConnect"
+        case titleNavigationConnected = "Board.NavigationTitleConnected"
+        case titleNavigationConnecting = "Board.NavigationTitleConnecting"
+        case locationTab = "Locations"
+        case staticIPTab = "Static IP"
+        case multiHopTab = "MultiHop"
+        case unconnectButton = "Board.QuickUnConnect"
+        case connectedAlert = "Board.ConnectedAlert"
+        case speed = "Board.Speed"
+        
+        var localized: String {
+            return NSLocalizedString(self.rawValue, tableName: "Board", comment: "")
         }
     }
     
