@@ -14,6 +14,7 @@ target 'SysVPN (iOS)' do
   pod 'SwiftyJSON'
   pod 'Firebase/Analytics'
   pod 'Firebase/Auth'
+  pod 'GoogleSignIn'
   pod 'Firebase/Messaging'
   pod 'Firebase/Crashlytics'
 end

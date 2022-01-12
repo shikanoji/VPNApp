@@ -7,10 +7,14 @@
 
 import Foundation
 import SwiftUI
+import AuthenticationServices
+
 struct LoginView: View {
     @StateObject var viewModel: LoginViewModel
     @EnvironmentObject var authentication: Authentication
-
+    @State var createNewAccount: Bool = false
+    @State var forgotPassword: Bool = false
+    
     var body: some View {
         Background() {
             ScrollView(.vertical, showsIndicators: false) {
@@ -26,7 +30,7 @@ struct LoginView: View {
                     }
                     
                     Group{
-                        Form(placeholder: LocalizedStringKey.Login.usernamePlaceholder.localized, value: $viewModel.username)
+                        Form(placeholder: LocalizedStringKey.Login.emailPlaceholder.localized, value: $viewModel.username)
                         Spacer().frame(height: 20)
                         Form(placeholder: LocalizedStringKey.Login.passwordPlaceholder.localized, value: $viewModel.password, isPassword: true)
                         Spacer().frame(height: 20)
@@ -43,24 +47,32 @@ struct LoginView: View {
                             }
                         }.disabled(viewModel.loginDisable)
                         Spacer().frame(height: 30)
-                        AppButton(style: .darkButton, width: 311, text: LocalizedStringKey.Login.signinWithGoogle.localized) {
+                        AppButton(style: .darkButton, width: 311, text: LocalizedStringKey.Login.signinWithGoogle.localized, icon: Image("google")) {
+                            viewModel.loginGoogle()
                         }
                         Spacer().frame(height: 10)
-                        AppButton(style: .darkButton, width: 311, text: LocalizedStringKey.Login.signinWithApple.localized) {
+                        AppButton(style: .darkButton, width: 311, text: LocalizedStringKey.Login.signinWithApple.localized, icon: Image("apple")) {
+                            viewModel.loginApple()
                         }
                         Spacer().frame(height: 30)
                     }
                     Group {
-                        HStack{
+                        HStack(spacing: 2){
                             Text(LocalizedStringKey.Login.noAccountQuestion.localized).setDefault()
-                            Spacer().frame(width: 5)
-                            Text(LocalizedStringKey.Login.createNew.localized).setDefaultBold().onTapGesture {
-                                //Handle Create new account
+                            NavigationLink(destination: RegisterView(viewModel: RegisterViewModel()), isActive: $createNewAccount) {
+                                Text(LocalizedStringKey.Login.createNew.localized).setDefaultBold()
+                                    .onTapGesture {
+                                        self.createNewAccount = true
+                                    }
                             }
+                            
                         }
                         Spacer().frame(height: 20)
+                        NavigationLink(destination: ForgotPasswordView(viewModel: ForgotPasswordViewModel()), isActive: $forgotPassword) {
+                        }
                         Text(LocalizedStringKey.Login.forgotPassword.localized).setDefault().onTapGesture {
                             //Handle Forgot Password
+                            self.forgotPassword = true
                         }
                     }
                     Spacer().frame(height: 50)

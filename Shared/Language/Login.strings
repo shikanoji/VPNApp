@@ -10,6 +10,7 @@
 
 "Login.UsernamePlaceholder" = "Your username";
 "Login.PasswordPlaceholder" = "Your password";
+"Login.EmailPlaceholder" = "Your email";
 
 "Login.Signin" = "Sign In";
 "Login.SigninWithGoogle" = "Sign In With Google";

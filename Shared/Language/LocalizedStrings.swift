@@ -39,7 +39,7 @@ struct LocalizedStringKey {
         
         case usernamePlaceholder = "Login.UsernamePlaceholder"
         case passwordPlaceholder = "Login.PasswordPlaceholder"
-        
+        case emailPlaceholder = "Login.EmailPlaceholder"
         case signin = "Login.Signin"
         case signinWithGoogle = "Login.SigninWithGoogle"
         case signinWithApple = "Login.SigninWithApple"
@@ -50,6 +50,71 @@ struct LocalizedStringKey {
         
         var localized: String {
             return NSLocalizedString(self.rawValue, tableName: "Login", comment: "")
+        }
+    }
+    
+    enum Board: String {
+        case yourIP = "Board.IP"
+        case subIP = "Board.SubIP"
+        case unConnect = "Board.Unconnect"
+        case connected = "Board.Connected"
+        case connecting = "Board.Connecting"
+        case titleNavigationNotConnect = "Board.NavigationTitleNotConnect"
+        case titleNavigationConnected = "Board.NavigationTitleConnected"
+        case titleNavigationConnecting = "Board.NavigationTitleConnecting"
+        case locationTab = "Locations"
+        case staticIPTab = "Static IP"
+        case multiHopTab = "MultiHop"
+        case unconnectButton = "Board.QuickUnConnect"
+        case connectedAlert = "Board.ConnectedAlert"
+        case speed = "Board.Speed"
+        
+        var localized: String {
+            return NSLocalizedString(self.rawValue, tableName: "Board", comment: "")
+        }
+    }
+    
+    enum Register: String {
+        case title = "Register.Title"
+        case body = "Register.Body"
+        
+        case usernamePlaceholder = "Register.UsernamePlaceholder"
+        case passwordPlaceholder = "Register.PasswordPlaceholder"
+        case emailPlaceholder = "Register.EmailPlaceholder"
+        case retypePassword = "Register.RetypePassword"
+        
+        case signup = "Register.Signup"
+        case signupWithGoogle = "Register.SignupWithGoogle"
+        case signupWithApple = "Register.SignupWithApple"
+        
+        case hadAccountText = "Register.HadAccountText"
+        case signin = "Register.Signin"
+        
+        var localized: String {
+            return NSLocalizedString(self.rawValue, tableName: "Register", comment: "")
+        }
+    }
+    
+    enum ForgotPassword: String {
+        case title = "ForgotPassword.Title"
+        case body = "ForgotPassword.Body"
+        case emailPlaceholder = "ForgotPassword.EmailPlaceholder"
+        case sendRequestButton = "ForgotPassword.SendRequestButton"
+        
+        var localized: String {
+            return NSLocalizedString(self.rawValue, tableName: "ForgotPassword", comment: "")
+        }
+    }
+    
+    enum Notice: String {
+        case title = "Notice.Title"
+        case firstGraph = "Notice.FirstGraph"
+        case firstTerm = "Notice.FirstTerm"
+        case secondTerm = "Notice.SecondTerm"
+        case lastGraph = "Notice.LastGraph"
+        case buttonText = "Notice.ButtonText"
+        var localized: String {
+            return NSLocalizedString(self.rawValue, tableName: "Notice", comment: "")
         }
     }
 }

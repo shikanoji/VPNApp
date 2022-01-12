@@ -44,8 +44,9 @@ struct IntroductionView: View {
     var body: some View {
         Background() {
             VStack(spacing: 10) {
-                Spacer().frame(height: 10)
+                Spacer().frame(height: 20)
                 HStack {
+                    Spacer().frame(width: 10)
                     Image("Logo-small")
                     Spacer()
                 }
