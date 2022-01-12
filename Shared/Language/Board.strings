@@ -1,0 +1,22 @@
+/* 
+  Board.strings
+  SysVPN
+
+  Created by Da Phan Van on 23/12/2021.
+  
+*/
+
+"Board.IP" = "Your IP: ";
+"Board.SubIP" = "Connect to VPN to online sercurity";
+"Board.Unconnect" = "Unprotected";
+"Board.Connected" = "Protected";
+"Board.Connecting" = "Connecting..";
+"Board.QuickUnConnect" = "Quick\nConnect";
+"Board.NavigationTitleNotConnect" = "VPN not connected";
+"Board.NavigationTitleConnecting" = "Connecting...";
+"Board.NavigationTitleConnected" = "VPN connected";
+"Board.LocationTitleTab" = "Locations";
+"Board.StaticIPTitleTab" = "Static IP";
+"Board.MultiHopTitleTab" = "MultiHop";
+"Board.ConnectedAlert" = "Connected";
+"Board.Speed" = "kb/s";

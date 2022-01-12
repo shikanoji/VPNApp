@@ -17,7 +17,9 @@ struct AppColor {
     static var darkButton = Color(hex: "2E303D")
     static var background = Color(hex: "1B1C26")
     static var lightGray = Color(hex: "5B5F75")
-    static let navigationBar = Color("navigationBar")
-    static let VPNConnected = Color("VPN_connected")
-    static let VPNUnconnect = Color("VPN_unconnect")
+    static let navigationBar = Color(hex: "1B1C26")
+    static let backgroundStatusView = Color(hex: "4C4E5D")
+    static let VPNConnected = Color(hex: "66FFCC")
+    static let VPNUnconnect = Color(hex: "CA1D1D")
+    static let backgroundCity = Color(hex: "F2F2F2")
 }

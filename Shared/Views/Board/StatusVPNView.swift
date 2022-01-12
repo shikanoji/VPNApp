@@ -12,17 +12,14 @@ struct StatusVPNView: View {
     var status: BoardViewModel.StateBoard
     
     var body: some View {
-        ZStack {
+        ZStack(alignment: .leading) {
             RoundedRectangle(cornerRadius: Constant.Board.SubBoard.radius)
-                .foregroundColor(.white)
-            HStack {
-                Image(Constant.Board.Image.unconnect)
-                VStack(alignment: .leading) {
-                    getStatusText()
-                    Text("Connect to VPN to online sercurity")
-                        .foregroundColor(.black)
-                }
+                .foregroundColor(AppColor.backgroundStatusView)
+            HStack(spacing: 15) {
+                Image(Constant.Board.Image.locationDefault)
+                getStatusTextView()
             }
+            .padding()
         }
         .frame(height: Constant.Board.SubBoard.height)
     }
@@ -32,16 +29,22 @@ struct StatusVPNView: View {
         self.status = status
     }
     
-    func getStatusText() -> Text {
-        Text("Your IP: \(ip) - ")
-            .foregroundColor(.black) + Text(status.subTitle)
-            .foregroundColor(status.subColor)
+    func getStatusTextView() -> some View {
+        VStack(alignment: .leading, spacing: 5) {
+            Text(LocalizedStringKey.Board.yourIP.localized + " \(ip) - ")
+            + Text(status.statusTitle)
+                .foregroundColor(status.statusColor)
+                .fontWeight(.semibold)
+            Text(LocalizedStringKey.Board.subIP.localized)
+        }
+        .font(.system(size: Constant.Board.SubBoard.fontSize))
+        .foregroundColor(Constant.Board.SubBoard.fontColor)
     }
 }
 
 struct StatusVPNView_Previews: PreviewProvider {
     static var previews: some View {
-        StatusVPNView(ip: "199.199.199.8", status: .start)
+        StatusVPNView(ip: "199.199.199.8", status: .notConnect)
             .previewLayout(.fixed(width: /*@START_MENU_TOKEN@*/343.0/*@END_MENU_TOKEN@*/, height: /*@START_MENU_TOKEN@*/68.0/*@END_MENU_TOKEN@*/))
     }
 }

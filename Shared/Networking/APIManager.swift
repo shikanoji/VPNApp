@@ -35,4 +35,16 @@ struct APIManager {
                 throw APIError.someError
             }
     }
+    
+    func getLocationCity() -> Single<[Node]> {
+        return provider.rx
+            .request(.getLocationCity)
+            .filterSuccessfulStatusAndRedirectCodes()
+            .map { response in
+                return try response.map([Node].self)
+            }
+            .catch { error in
+                throw APIError.someError
+            }
+    }
 }
