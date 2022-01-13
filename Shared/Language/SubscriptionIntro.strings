@@ -1,0 +1,15 @@
+/* 
+  SubscriptionIntro.strings
+  SysVPN
+
+  Created by Nguyễn Đình Thạch on 13/01/2022.
+  
+*/
+"SubscriptionIntro.Title" = "Subscription";
+"SubscriptionIntro.unlimited" = "One account for All your devices";
+"SubscriptionIntro.cashback" = "30-day money-back guarantee";
+"SubscriptionIntro.rocketFast" = "3200+ fast servers";
+"SubscriptionIntro.liveSupport" = "24/7 live customer support";
+"SubscriptionIntro.startFreeTrial" = "Start your 7-day free trial";
+"SubscriptionIntro.continueWithoutSub" = "Continue without subscription";
+"SubscriptionIntro.note"= "Auto-renewable subscription info:\n\nThe payment will be charged to your iTunes Account at confirmation of purchase\n\nThe subscription renews automatically unless the auto-renew is turned off at least 24 hours before the end of the current billing period\n\nYout account will be charged for renewal within 24 hours prior to the end of your selected subscription\n\nYou can manager subscription and turn off auto-renewal after purchase by going to your Account Settings\n\nAny unused portion of Sysvpn’s free trial period, if offered, will be forfeited when you purchase a subscription";

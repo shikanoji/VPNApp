@@ -15,6 +15,10 @@
 		6384B4F8276C43DD00E904D2 /* BoardViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6384B4F7276C43DD00E904D2 /* BoardViewModel.swift */; };
 		6384B4F9276C43DD00E904D2 /* BoardViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6384B4F7276C43DD00E904D2 /* BoardViewModel.swift */; };
 		64E1F97657A4417E2FE3CA72 /* Pods_SysVPN__macOS_.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 77CA66A548B2998A416DAB70 /* Pods_SysVPN__macOS_.framework */; };
+		D71CE4FD27903D4F00E8731D /* SubscriptionIntroductionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D71CE4FC27903D4F00E8731D /* SubscriptionIntroductionView.swift */; };
+		D71CE4FF2790419700E8731D /* SubscriptionIntro.strings in Resources */ = {isa = PBXBuildFile; fileRef = D71CE4FE2790419700E8731D /* SubscriptionIntro.strings */; };
+		D71CE5012790575D00E8731D /* PlanSelectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D71CE5002790575D00E8731D /* PlanSelectionView.swift */; };
+		D71CE503279059C800E8731D /* PlanSelect.strings in Resources */ = {isa = PBXBuildFile; fileRef = D71CE502279059C800E8731D /* PlanSelect.strings */; };
 		D72E50512771D023002357E8 /* Connectivity.swift in Sources */ = {isa = PBXBuildFile; fileRef = D72E50502771D023002357E8 /* Connectivity.swift */; };
 		D72E50542771EEAF002357E8 /* Authentication.swift in Sources */ = {isa = PBXBuildFile; fileRef = D72E50532771EEAF002357E8 /* Authentication.swift */; };
 		D75F936E2773486900E16981 /* NavigationModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = D75F936D2773486900E16981 /* NavigationModifier.swift */; };
@@ -114,6 +118,10 @@
 		6384B4F7276C43DD00E904D2 /* BoardViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoardViewModel.swift; sourceTree = "<group>"; };
 		77CA66A548B2998A416DAB70 /* Pods_SysVPN__macOS_.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SysVPN__macOS_.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		9BC128AC2A13B56F94EBA8CD /* Pods_SysVPN__iOS_.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SysVPN__iOS_.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		D71CE4FC27903D4F00E8731D /* SubscriptionIntroductionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubscriptionIntroductionView.swift; sourceTree = "<group>"; };
+		D71CE4FE2790419700E8731D /* SubscriptionIntro.strings */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; path = SubscriptionIntro.strings; sourceTree = "<group>"; };
+		D71CE5002790575D00E8731D /* PlanSelectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlanSelectionView.swift; sourceTree = "<group>"; };
+		D71CE502279059C800E8731D /* PlanSelect.strings */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; path = PlanSelect.strings; sourceTree = "<group>"; };
 		D72E50502771D023002357E8 /* Connectivity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Connectivity.swift; sourceTree = "<group>"; };
 		D72E50532771EEAF002357E8 /* Authentication.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Authentication.swift; sourceTree = "<group>"; };
 		D75F936D2773486900E16981 /* NavigationModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationModifier.swift; sourceTree = "<group>"; };
@@ -247,6 +255,15 @@
 			path = Board;
 			sourceTree = "<group>";
 		};
+		D71CE4FB27903D3700E8731D /* Subscription */ = {
+			isa = PBXGroup;
+			children = (
+				D71CE4FC27903D4F00E8731D /* SubscriptionIntroductionView.swift */,
+				D71CE5002790575D00E8731D /* PlanSelectionView.swift */,
+			);
+			path = Subscription;
+			sourceTree = "<group>";
+		};
 		D75F936F2773705400E16981 /* Language */ = {
 			isa = PBXGroup;
 			children = (
@@ -258,6 +275,8 @@
 				D78848912775AB5600AF22C6 /* Register.strings */,
 				D7874DF4277AF04900ADC7AD /* ForgotPassword.strings */,
 				D76BDCFF2785CF0B002DF290 /* Notice.strings */,
+				D71CE4FE2790419700E8731D /* SubscriptionIntro.strings */,
+				D71CE502279059C800E8731D /* PlanSelect.strings */,
 			);
 			path = Language;
 			sourceTree = "<group>";
@@ -433,6 +452,7 @@
 		D78044E727590D850086E59D /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				D71CE4FB27903D3700E8731D /* Subscription */,
 				6384B4F3276C372300E904D2 /* Board */,
 				D762EC142759C6EC00023ABF /* Introduction */,
 				D762EC132759B6CA00023ABF /* AccountInfo */,
@@ -615,6 +635,8 @@
 				D7874DF5277AF04900ADC7AD /* ForgotPassword.strings in Resources */,
 				D75F9371277370AE00E16981 /* Introduction.strings in Resources */,
 				D795FFAC275F9AC500E54206 /* LaunchScreen.storyboard in Resources */,
+				D71CE503279059C800E8731D /* PlanSelect.strings in Resources */,
+				D71CE4FF2790419700E8731D /* SubscriptionIntro.strings in Resources */,
 				D784FA65275DA89B00A7A7F1 /* Global.strings in Resources */,
 				D75F9373277370BC00E16981 /* Login.strings in Resources */,
 				EE79F52F27741E4A006F0E5D /* Board.strings in Resources */,
@@ -734,11 +756,13 @@
 				D78044CA2758C6FC0086E59D /* Persistence.swift in Sources */,
 				EE79F5392775AFF3006F0E5D /* AlertConnectView.swift in Sources */,
 				D72E50512771D023002357E8 /* Connectivity.swift in Sources */,
+				D71CE4FD27903D4F00E8731D /* SubscriptionIntroductionView.swift in Sources */,
 				D788B18927635BC000855C24 /* AppButton.swift in Sources */,
 				D78044E12758F5110086E59D /* UIApplicationExtension.swift in Sources */,
 				6353F842276F333900B42334 /* StatusVPNView.swift in Sources */,
 				EEAD5C53277AC968008181E3 /* MapView.swift in Sources */,
 				EEEAF2172782E1A100A96114 /* NodeMapView.swift in Sources */,
+				D71CE5012790575D00E8731D /* PlanSelectionView.swift in Sources */,
 				D78044F227590E990086E59D /* TextModifier.swift in Sources */,
 				D78AC3E527858D860056FCC0 /* NoticeView.swift in Sources */,
 				6353F844276F3E8500B42334 /* BoardNavigationView.swift in Sources */,
