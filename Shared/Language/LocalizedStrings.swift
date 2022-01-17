@@ -117,6 +117,27 @@ struct LocalizedStringKey {
             return NSLocalizedString(self.rawValue, tableName: "Notice", comment: "")
         }
     }
+    
+    enum SubscriptionIntro: String {
+        case title = "SubscriptionIntro.Title"
+        case unlimited = "SubscriptionIntro.unlimited"
+        case cashback = "SubscriptionIntro.cashback"
+        case rocketFast = "SubscriptionIntro.rocketFast"
+        case liveSupport = "SubscriptionIntro.liveSupport"
+        case startFreeTrial = "SubscriptionIntro.startFreeTrial"
+        case continueWithoutSub = "SubscriptionIntro.continueWithoutSub"
+        case note = "SubscriptionIntro.note"
+        var localized: String {
+            return NSLocalizedString(self.rawValue, tableName: "SubscriptionIntro", comment: "")
+        }
+    }
+    
+    enum PlanSelect: String {
+        case title = "PlanSelect.title"
+        case body = "PlanSelect.body"
+        case continueButton = "PlanSelect.continueButton"
+        case note = "PlanSelect.note"
+    }
 }
 
 
