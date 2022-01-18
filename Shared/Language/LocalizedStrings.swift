@@ -157,6 +157,18 @@ struct LocalizedStringKey {
             return NSLocalizedString(self.rawValue, tableName: "PlanSelect", comment: "")
         }
     }
+    
+    enum Welcome: String {
+        case title = "Welcome.title"
+        case message = "Welcome.message"
+        case startButton = "Welcome.startButton"
+        case setupVPN = "Welcome.setupVPN"
+        case setupVPNMessage = "Welcome.setupVPNMessage"
+        case setupButton = "Welcome.setupButton"
+        var localized: String {
+            return NSLocalizedString(self.rawValue, tableName: "Welcome", comment: "")
+        }
+    }
 }
 
 

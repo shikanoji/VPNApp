@@ -10,6 +10,7 @@ import SwiftUI
 
 struct PlanSelectionView: View {
     @ObservedObject var planListViewModel = PlanListViewModel()
+    @State var toWelcomeScreen = false
     var body: some View {
         Background {
             ScrollView(.vertical, showsIndicators: false) {
@@ -25,8 +26,10 @@ struct PlanSelectionView: View {
                         PlanListView(viewModel: planListViewModel)
                         Spacer().frame(height: 20)
                     }
+                    NavigationLink(destination: WelcomeView(), isActive: $toWelcomeScreen) {
+                    }
                     AppButton(width: 311, text: LocalizedStringKey.PlanSelect.continueButton.localized) {
-                        
+                        self.toWelcomeScreen = true
                     }
                     Spacer().frame(height: 20)
                     Text(planListViewModel.selectedPlan?.note ?? "")
