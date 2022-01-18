@@ -9,6 +9,7 @@ import Foundation
 import SwiftUI
 
 struct SubscriptionIntroduction: View {
+    @State var toPlanSelection: Bool = false
     var body: some View {
         Background {
             ScrollView(.vertical, showsIndicators: false) {
@@ -40,14 +41,18 @@ struct SubscriptionIntroduction: View {
                         }.frame(width: 250)
                         Spacer().frame(height: 30)
                     }
-                    AppButton(width: 300, text: LocalizedStringKey.SubscriptionIntro.startFreeTrial.localized) {
-                        
+                    Group {
+                        NavigationLink(destination: PlanSelectionView(), isActive: $toPlanSelection) {
+                        }
+                        AppButton(width: 300, text: LocalizedStringKey.SubscriptionIntro.startFreeTrial.localized) {
+                            toPlanSelection = true
+                        }
+                        Spacer().frame(height: 20)
+                        AppButton(width: 250, backgroundColor: Color.clear, textColor: AppColor.lightBlackText, text: LocalizedStringKey.SubscriptionIntro.continueWithoutSub.localized) {
+                            
+                        }
+                        Spacer().frame(height: 15)
                     }
-                    Spacer().frame(height: 20)
-                    AppButton(width: 250, backgroundColor: Color.clear, textColor: AppColor.lightBlackText, text: LocalizedStringKey.SubscriptionIntro.continueWithoutSub.localized) {
-                        
-                    }
-                    Spacer().frame(height: 15)
                     Text(LocalizedStringKey.SubscriptionIntro.note.localized).setLightBlackText().frame(width: 300)
                     Spacer().frame(height: 20)
                 }

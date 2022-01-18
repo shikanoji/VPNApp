@@ -10,6 +10,7 @@ import SwiftUI
 
 struct RegisterView: View {
     @StateObject var viewModel: RegisterViewModel
+    @State var toPlanSelection: Bool = false
     @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
     
     var body: some View {
@@ -40,9 +41,13 @@ struct RegisterView: View {
                     }
                     
                     Group {
+                        NavigationLink(destination: PlanSelectionView(), isActive: $toPlanSelection) {
+                        }
                         AppButton(style: .themeButton, width: 311, text: LocalizedStringKey.Register.signup.localized) {
                             viewModel.signup(){result in
-                                
+                                if result == .success {
+                                    toPlanSelection = true
+                                }
                             }
                         }.disabled(viewModel.registerDisable)
                         Spacer().frame(height: 30)

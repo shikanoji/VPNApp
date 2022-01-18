@@ -137,6 +137,25 @@ struct LocalizedStringKey {
         case body = "PlanSelect.body"
         case continueButton = "PlanSelect.continueButton"
         case note = "PlanSelect.note"
+        case planATitle = "PlanA.title"
+        case planADescription = "PlanA.description"
+        case planAPrice = "PlanA.price"
+        case planASavingText = "PlanA.savingText"
+        case planANote = "PlanA.note"
+        case planBTitle = "PlanB.title"
+        case planBDescription = "PlanB.description"
+        case planBPrice = "PlanB.price"
+        case planBSavingText = "PlanB.savingText"
+        case planBNote = "PlanB.note"
+        case planCTitle = "PlanC.title"
+        case planCPrice = "PlanC.price"
+        case planCDescription = "PlanC.description"
+        case planCSavingText = "PlanC.savingText"
+        case planCNote = "PlanC.note"
+        case month = "PlanSelect.month"
+        var localized: String {
+            return NSLocalizedString(self.rawValue, tableName: "PlanSelect", comment: "")
+        }
     }
 }
 
