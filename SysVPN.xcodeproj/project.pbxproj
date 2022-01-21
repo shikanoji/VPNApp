@@ -75,6 +75,10 @@
 		D795FFA8275F6E9A00E54206 /* PagingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D795FFA7275F6E9A00E54206 /* PagingView.swift */; };
 		D795FFAA275F6ED200E54206 /* Introduction.swift in Sources */ = {isa = PBXBuildFile; fileRef = D795FFA9275F6ED200E54206 /* Introduction.swift */; };
 		D795FFAC275F9AC500E54206 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D795FFAB275F9AC500E54206 /* LaunchScreen.storyboard */; };
+		D79E82952796F671009E36F3 /* WelcomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D79E82942796F671009E36F3 /* WelcomeView.swift */; };
+		D79E82972796FE03009E36F3 /* Welcome.strings in Resources */ = {isa = PBXBuildFile; fileRef = D79E82962796FE03009E36F3 /* Welcome.strings */; };
+		D79E829927970649009E36F3 /* SetupVPNView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D79E829827970649009E36F3 /* SetupVPNView.swift */; };
+		D79E829B27971299009E36F3 /* BackgroundBlurView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D79E829A27971299009E36F3 /* BackgroundBlurView.swift */; };
 		D7A4AC4127952C4700C88162 /* PlanListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7A4AC4027952C4700C88162 /* PlanListView.swift */; };
 		D7A4AC4327952C5900C88162 /* PlanListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7A4AC4227952C5900C88162 /* PlanListViewModel.swift */; };
 		D7A4AC4527954A7900C88162 /* PlanListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7A4AC4427954A7900C88162 /* PlanListCell.swift */; };
@@ -179,6 +183,10 @@
 		D795FFA7275F6E9A00E54206 /* PagingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PagingView.swift; sourceTree = "<group>"; };
 		D795FFA9275F6ED200E54206 /* Introduction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Introduction.swift; sourceTree = "<group>"; };
 		D795FFAB275F9AC500E54206 /* LaunchScreen.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = LaunchScreen.storyboard; sourceTree = "<group>"; };
+		D79E82942796F671009E36F3 /* WelcomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WelcomeView.swift; sourceTree = "<group>"; };
+		D79E82962796FE03009E36F3 /* Welcome.strings */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; path = Welcome.strings; sourceTree = "<group>"; };
+		D79E829827970649009E36F3 /* SetupVPNView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetupVPNView.swift; sourceTree = "<group>"; };
+		D79E829A27971299009E36F3 /* BackgroundBlurView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackgroundBlurView.swift; sourceTree = "<group>"; };
 		D7A4AC4027952C4700C88162 /* PlanListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlanListView.swift; sourceTree = "<group>"; };
 		D7A4AC4227952C5900C88162 /* PlanListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlanListViewModel.swift; sourceTree = "<group>"; };
 		D7A4AC4427954A7900C88162 /* PlanListCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlanListCell.swift; sourceTree = "<group>"; };
@@ -269,6 +277,7 @@
 				D7A4AC3F27952C3300C88162 /* PlanList */,
 				D71CE4FC27903D4F00E8731D /* SubscriptionIntroductionView.swift */,
 				D71CE5002790575D00E8731D /* PlanSelectionView.swift */,
+				D79E82942796F671009E36F3 /* WelcomeView.swift */,
 			);
 			path = Subscription;
 			sourceTree = "<group>";
@@ -286,6 +295,7 @@
 				D76BDCFF2785CF0B002DF290 /* Notice.strings */,
 				D71CE4FE2790419700E8731D /* SubscriptionIntro.strings */,
 				D71CE502279059C800E8731D /* PlanSelect.strings */,
+				D79E82962796FE03009E36F3 /* Welcome.strings */,
 			);
 			path = Language;
 			sourceTree = "<group>";
@@ -468,6 +478,7 @@
 				D762EC132759B6CA00023ABF /* AccountInfo */,
 				D762EC122759B69D00023ABF /* Settings */,
 				D762EC102759B53B00023ABF /* Authentication */,
+				D79E829A27971299009E36F3 /* BackgroundBlurView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -509,6 +520,7 @@
 				D7A4AC4027952C4700C88162 /* PlanListView.swift */,
 				D7A4AC4227952C5900C88162 /* PlanListViewModel.swift */,
 				D7A4AC4427954A7900C88162 /* PlanListCell.swift */,
+				D79E829827970649009E36F3 /* SetupVPNView.swift */,
 			);
 			path = PlanList;
 			sourceTree = "<group>";
@@ -655,6 +667,7 @@
 				D7874DF5277AF04900ADC7AD /* ForgotPassword.strings in Resources */,
 				D75F9371277370AE00E16981 /* Introduction.strings in Resources */,
 				D795FFAC275F9AC500E54206 /* LaunchScreen.storyboard in Resources */,
+				D79E82972796FE03009E36F3 /* Welcome.strings in Resources */,
 				D71CE503279059C800E8731D /* PlanSelect.strings in Resources */,
 				D71CE4FF2790419700E8731D /* SubscriptionIntro.strings in Resources */,
 				D784FA65275DA89B00A7A7F1 /* Global.strings in Resources */,
@@ -769,6 +782,7 @@
 				D78F47262761A53A0064A764 /* AppColor.swift in Sources */,
 				D78F76C52769D84700919AA6 /* ViewModifier.swift in Sources */,
 				D7874DF8277AFED200ADC7AD /* ForgotPasswordView.swift in Sources */,
+				D79E829927970649009E36F3 /* SetupVPNView.swift in Sources */,
 				D75F936E2773486900E16981 /* NavigationModifier.swift in Sources */,
 				D78044EC27590DC30086E59D /* APIServices.swift in Sources */,
 				D78F472C2761D1B50064A764 /* LoginViewModel.swift in Sources */,
@@ -786,6 +800,7 @@
 				D7A4AC4127952C4700C88162 /* PlanListView.swift in Sources */,
 				D71CE5012790575D00E8731D /* PlanSelectionView.swift in Sources */,
 				D78044F227590E990086E59D /* TextModifier.swift in Sources */,
+				D79E82952796F671009E36F3 /* WelcomeView.swift in Sources */,
 				D78AC3E527858D860056FCC0 /* NoticeView.swift in Sources */,
 				6353F844276F3E8500B42334 /* BoardNavigationView.swift in Sources */,
 				6384B4F8276C43DD00E904D2 /* BoardViewModel.swift in Sources */,
@@ -800,6 +815,7 @@
 				D7A4AC4327952C5900C88162 /* PlanListViewModel.swift in Sources */,
 				D78F472E2761D20C0064A764 /* RegisterViewModel.swift in Sources */,
 				EEAD5C5B277D9654008181E3 /* NodeView.swift in Sources */,
+				D79E829B27971299009E36F3 /* BackgroundBlurView.swift in Sources */,
 				D78044C82758C6FC0086E59D /* ContentView.swift in Sources */,
 				EEEAF2192785834200A96114 /* NodePopupView.swift in Sources */,
 				D78044EA27590DB70086E59D /* APIManager.swift in Sources */,
