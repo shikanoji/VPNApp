@@ -10,6 +10,9 @@ import Foundation
 struct LocalizedStringKey {
     enum Global: String {
         case slogan = "Global.slogan"
+        case on = "Global.on"
+        case off = "Global.off"
+        case stateDefault = "Global.default"
         
         var localized: String {
             return NSLocalizedString(self.rawValue, tableName: "Global", comment: "")
@@ -68,6 +71,7 @@ struct LocalizedStringKey {
         case unconnectButton = "Board.QuickUnConnect"
         case connectedAlert = "Board.ConnectedAlert"
         case speed = "Board.Speed"
+        case backToMap = "Board.backToMap"
         
         var localized: String {
             return NSLocalizedString(self.rawValue, tableName: "Board", comment: "")
@@ -167,6 +171,115 @@ struct LocalizedStringKey {
         case setupButton = "Welcome.setupButton"
         var localized: String {
             return NSLocalizedString(self.rawValue, tableName: "Welcome", comment: "")
+        }
+    }
+    
+    enum Account: String {
+        case itemAccount = "Account.itemAccount"
+        case itemDevices = "Account.itemDevices"
+        case itemQuestions = "Account.itemQuestions"
+        case itemHelpCenter = "Account.itemHelpCenter"
+        case itemSecurity = "Account.itemSecurity"
+        case tapControlProfile = "Account.tapControl"
+        case sectionAccount = "Account.Account"
+        case sectionSupport = "Account.Support"
+        case signOut = "Account.signout"
+        case titleAccount = "Account.titleAccount"
+        case cancelSubscribe = "PaymentHistory.cancelSubscription"
+        case contentTotalDevices = "Account.contentTotalDevices"
+        
+        var localized: String {
+            return NSLocalizedString(self.rawValue, tableName: "Account", comment: "")
+        }
+    }
+    
+    enum Infomation: String {
+        case emailCell = "Infomation.email"
+        case memberCell = "Infomation.member"
+        case idCell = "Infomation.id"
+        case securityCell = "Infomation.security"
+        case changePassword = "Infomation.changePassword"
+        case introChangePassword = "Infomation.introChangePassword"
+        case currentPassword = "Infomation.currentPassword"
+        case newPassword = "Infomation.newPassword"
+        case retypePassword = "Infomation.retypePassword"
+        case save = "Infomation.save"
+        case tapToChange = "Infomation.tapToChangePassword"
+        case title = "Infomation.title"
+        
+        var localized: String {
+            return NSLocalizedString(self.rawValue, tableName: "Account", comment: "")
+        }
+    }
+    
+    enum AccountStatus: String {
+        case title = "AccountStatus.title"
+        case paymentHistory = "AccountStatus.paymentHistory"
+        case tapToShow = "AccountStatus.tapToShow"
+        case extendSub = "AccountStatus.extend"
+        
+        var localized: String {
+            return NSLocalizedString(self.rawValue, tableName: "Account", comment: "")
+        }
+    }
+    
+    enum Settings: String {
+        case title = "Settings.title"
+        case sectionVPN = "Settings.sectionVPN"
+        case itemVPN = "Settings.itemVPN"
+        case itemTool = "Settings.itemTool"
+        case itemGeneral = "Settings.itemGeneral"
+        case itemApps = "Settings.itemApps"
+        case itemProtec = "Settings.itemProtec"
+        case itemHelp = "Settings.itemHelp"
+        case enabled = "Settings.enabled"
+        case disabled = "Settings.disabled"
+        case sectionOther = "Settings.sectionOther"
+        case settings = "Settings.settings"
+        
+        
+        var localized: String {
+            return NSLocalizedString(self.rawValue, tableName: "Settings", comment: "")
+        }
+    }
+    
+    enum VPNSetting: String {
+        case itemAuto = "Settings.itemAuto"
+        case itemProtocol = "Settings.itemProtocol"
+        case itemSplit = "Settings.itemSplit"
+        case itemDNS = "Settings.itemDNS"
+        case itemLocalNetwork = "Settings.itemLocalNetwork"
+        case itemMetered = "Settings.itemPMetered"
+        case contentItemProtocol = "Settings.contentItemProtocol"
+        case contentItemLocalNetwork = "Settings.contentItemLocalNetwork"
+        case contentItemMetered = "Settings.contentItemMetered"
+        case contentItemSplit = "Settings.contentItemSplit"
+        
+        case itemAlways = "Settings.alwaysConnect"
+        case itemOnWifi = "Settings.onWifiConnect"
+        case itemOnMobile = "Settings.onMobileConnect"
+        case itemOff = "Settings.offConnect"
+        case sectionAuto = "Settings.sectionAutoConnect"
+        case itemFaster = "Settings.fastestConnect"
+        case contentItemRecommend =  "Settings.contentRecommend"
+        
+        var localized: String {
+            return NSLocalizedString(self.rawValue, tableName: "Settings", comment: "")
+        }
+    }
+    
+    enum BoardList: String {
+        case search = "BoardList.Search"
+        case recentLocation = "BoardList.RecentLocations"
+        case recommend = "BoardList.Recommended"
+        case all = "BoardList.AllCountries"
+        case city = "BoardList.City"
+        case cites = "BoardList.Cities"
+        case avaiable = "BoardList.Available"
+        case singleLocation = "BoardList.SingleLocation"
+        
+        var localized: String {
+            return NSLocalizedString(self.rawValue, tableName: "Board", comment: "")
         }
     }
 }

@@ -55,6 +55,7 @@ enum APIError: Error {
 enum APIService {
     case getSiteHtml(url: String)
     case getLocationCity
+    case getNodeTab
 }
 
 extension APIService: TargetType {
@@ -63,6 +64,8 @@ extension APIService: TargetType {
         switch self {
         case .getLocationCity:
             return URL(string: Constant.api.getLocationCity)!
+        case .getNodeTab:
+            return URL(string: Constant.api.getNodeTab)!
         default:
             return URL(string: "")!
         }
@@ -83,6 +86,8 @@ extension APIService: TargetType {
         case .getSiteHtml:
             return .get
         case .getLocationCity:
+            return .get
+        case .getNodeTab:
             return .get
         }
     }

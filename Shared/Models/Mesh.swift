@@ -43,10 +43,10 @@ extension Mesh {
     static func sampleMesh() -> Mesh {
         let mesh = Mesh()
         
-        mesh.addNode(Node.simple1)
-        mesh.addNode(Node.simple2)
-        mesh.addNode(Node.simple3)
-        
+        for _ in 0...20 {
+            mesh.addNode(Node(position: CGPoint(x: CGFloat.random(in: -150..<150),
+                                                y: CGFloat.random(in: -100..<100)), name: "helo",subName: "22", ensign: "japan"))
+        }
         mesh.cityNodes = [Node.simple0]
         
         return mesh

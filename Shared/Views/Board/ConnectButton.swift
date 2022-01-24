@@ -13,9 +13,12 @@ struct ConnectButton: View {
     var uploadSpeed: CGFloat
     var downloadSpeed: CGFloat
     
+    let widthSpeed = (UIScreen.main.bounds.width - Constant.Board.QuickButton.widthSize - 30) / 2
+    
     var body: some View {
-        HStack(alignment: .center, spacing: 20) {
+        HStack(spacing: 0) {
             Spacer()
+                .frame(width: widthSpeed)
             VStack(spacing: 10) {
                 getConnectAlert()
                     .opacity(status == .connected ? 1 : 0)
@@ -35,8 +38,8 @@ struct ConnectButton: View {
             SpeedConnectedView(uploadSpeed: uploadSpeed, downLoadSpeed: downloadSpeed)
                 .opacity(status == .connected ? 1 : 0)
                 .padding(.top, 35)
+                .frame(width: widthSpeed)
         }
-        .padding(.leading)
     }
     
     func getConnectAlert() -> some View {
@@ -101,10 +104,8 @@ struct TimeConnectedView: View {
             .foregroundColor(Color.black)
             .font(.system(size: 14, weight: .bold))
             .lineLimit(1)
-            .padding()
             .frame(width: Constant.Board.QuickButton.heightSize + 5,
                    height: Constant.Board.QuickButton.heightSize + 5)
-            .padding()
             .onAppear {
                 self.stopWatch.start()
             }

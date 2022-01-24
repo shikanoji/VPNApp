@@ -47,4 +47,16 @@ struct APIManager {
                 throw APIError.someError
             }
     }
+    
+    func getNodeTab() -> Single<[NodeTab]> {
+        return provider.rx
+            .request(.getNodeTab)
+            .filterSuccessfulStatusAndRedirectCodes()
+            .map { response in
+                return try response.map([NodeTab].self)
+            }
+            .catch { error in
+                throw APIError.someError
+            }
+    }
 }

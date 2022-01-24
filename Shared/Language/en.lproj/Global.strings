@@ -6,4 +6,7 @@
   
 */
 "Global.slogan" = "Light is Faster, but We are Safer";
+"Global.on" = "On";
+"Global.off" = "Off";
+"Global.default" = "Default";
 

@@ -20,3 +20,12 @@
 "Board.MultiHopTitleTab" = "MultiHop";
 "Board.ConnectedAlert" = "Connected";
 "Board.Speed" = "kb/s";
+"Board.backToMap" = "Back to maps";
+"BoardList.Search" = "Search";
+"BoardList.RecentLocations" = "Recent locations";
+"BoardList.Recommended" = "Recommended";
+"BoardList.AllCountries" = "All countries";
+"BoardList.City" = "city";
+"BoardList.Cities" = "cities";
+"BoardList.Available" = "available";
+"BoardList.SingleLocation" = "Single location";

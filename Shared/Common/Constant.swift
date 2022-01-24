@@ -13,6 +13,7 @@ struct Constant {
     struct api {
         static let root = "google.com.vn"
         static let getLocationCity = "google.com.vn"
+        static let getNodeTab = "google.com.vn"
     }
     
     struct Board {
@@ -85,5 +86,59 @@ struct Constant {
             static let enableCityZoom: CGFloat = 2
             static let zoomCity: CGFloat = 0.75
         }
+    }
+    
+    struct Account {
+        static let iconProfile = "icon_setting_profile"
+        static let heightIconProfile: CGFloat = 40
+        static let heightCellProfile: CGFloat = 84
+        static let fontEmail: Font = Font.system(size: 14, weight: .bold)
+        static let fontSubEmail: Font = Font.system(size: 12)
+        static let colorProfile: Color = .white
+        static let rightButton = "icon_setting_item_right"
+        static let iconRemove = "icon_remove"
+        static let fontRightNavigation = Font.system(size: 11, weight: .bold)
+    }
+    
+    struct CustomNavigation {
+        static let iconBack = "icon_setting_back"
+        static let iconLeft = "icon_setting_item_left"
+        static let iconRightConnect = "icon_setting_right_connect"
+        static let heightCurrentTitle: CGFloat = 38
+        static let fontTitleNavigation = Font.system(size: 20, weight: .semibold)
+    }
+    
+    struct Menu {
+        static let fontSubItem = Font.system(size: 11, weight: .regular)
+        static let fontSectionTitle = Font.system(size: 12, weight: .medium)
+        static let sizeIconItemMenu: CGFloat = 32
+        static let fontItem = Font.system(size: 13, weight: .bold)
+        static let heightItemMenu: CGFloat = 48
+        static let radiusCell: CGFloat = 10
+        static let heightItemCell: CGFloat = 63
+        static let hozitalPaddingCell: CGFloat = 16
+        static let topPaddingCell: CGFloat = 15
+    }
+    
+    struct ChangePassWord {
+        static let fontTitle = Font.system(size: 16, weight: .bold)
+        static let fontSubContent = Font.system(size: 14, weight: .regular)
+    }
+    
+    struct BoardList {
+        static let iconUp = "icon_setting_item_up"
+        static let fontLocationStatus = Font.system(size: 14, weight: .bold)
+        static let heightStatusLoction: CGFloat = 50
+        static let heightSearchLoction: CGFloat = 48
+        static let heightImageNode: CGFloat = 32
+        static let fontNameCity = Font.system(size: 13, weight: .bold)
+        static let numberCities = Font.system(size: 11, weight: .bold)
+        static let fontNodeList = Font.system(size: 12)
+    }
+    
+    struct Global {
+        static let errorImage = Image("japan")
+        static let iconCheck = Image("icon_checkbox")
+        static let iconUncheck = Image("icon_uncheck")
     }
 }
