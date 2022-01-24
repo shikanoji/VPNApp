@@ -17,12 +17,13 @@ struct NodeMapView: View {
     var body: some View {
         ZStack {
             if !showCityNode {
-                ForEach(nodes, id: \.id) { node in
+                ForEach(nodes) { node in
                     NodeView(node: node, selection: self.selection)
                         .offset(x: node.position.x, y: node.position.y)
                         .onTapGesture {
                             self.selection.selectNode(node)
                         }
+                        .zIndex(selection.selectedNodeIDs.first == node.id ? 1 : 0)
                 }
             } else {
                 ForEach(cityNodes, id: \.id) { node in
@@ -31,6 +32,7 @@ struct NodeMapView: View {
                         .onTapGesture {
                             self.selection.selectNode(node)
                         }
+                        .zIndex(selection.selectedNodeIDs.first == node.id ? 1 : 0)
                 }
             }
         }

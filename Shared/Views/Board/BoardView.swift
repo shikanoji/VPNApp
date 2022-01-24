@@ -16,9 +16,21 @@ struct BoardView: View {
     @ObservedObject var mesh = Mesh.sampleMesh()
     @ObservedObject var selection = SelectionHandler()
     
+    @State var showAccount = false
+    @State var showSettings = false
+    @State var showBoardList = false
+    
     var body: some View {
-//        ZStack {
-            VStack(spacing: 0.0) {
+        VStack(spacing: 0.0) {
+            if showAccount {
+                AccountView(showAccount: $showAccount,
+                            statusConnect: $viewModel.state)
+            } else if showSettings{
+                SettingsView(showSettings: $showSettings,
+                             statusConnect: $viewModel.state)
+            } else if showBoardList {
+                BoardListView(nodeTabList: $viewModel.nodeTabList, showBoardList: $showBoardList, currentTab: $viewModel.tab, node: $viewModel.nodeConnected)
+            } else {
                 ZStack(alignment: .top) {
                     GeometryReader { geometry in
                         MapView(mesh: mesh, selection: selection, showCityNodes: $viewModel.showCityNodes)
@@ -40,8 +52,9 @@ struct BoardView: View {
                                 .onTapGesture {
                                     viewModel.getLocationAvaible()
                                 }
-                            BoardTabView(tab: $viewModel.tab)
-                                .padding(.top, Constant.Board.Tabs.topPadding)
+                            Spacer()
+                                .frame(height: Constant.Board.Tabs.topPadding)
+                            BoardTabView(tab: $viewModel.tab, showBoardList: $showBoardList)
                         }
                         .padding(/*@START_MENU_TOKEN@*/.all/*@END_MENU_TOKEN@*/)
                     }
@@ -49,17 +62,22 @@ struct BoardView: View {
                 .background(AppColor.background)
                 .frame(alignment: .top)
             }
-            .preferredColorScheme(.dark)
-            .navigationBarHidden(true)
-            .edgesIgnoringSafeArea(.all)
-//        }
+        }
+        .onAppear {
+            viewModel.getNodeTab()
+        }
+        .animation(Animation.linear(duration: 0.25))
+        .preferredColorScheme(.dark)
+        .navigationBarHidden(true)
+        .edgesIgnoringSafeArea(.all)
     }
     
     func handlerTapLeftNavigation() {
-        presentationMode.wrappedValue.dismiss()
+        showSettings = true
     }
     
     func handlerTapRightNavigation() {
+        showAccount = true
     }
 }
 

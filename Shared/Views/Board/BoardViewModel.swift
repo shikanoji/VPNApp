@@ -59,10 +59,10 @@ class BoardViewModel: ObservableObject {
         }
     }
     
-    enum StateTab {
-        case location
-        case staticIP
-        case multiHop
+    enum StateTab: Int {
+        case location = 0
+        case staticIP = 1
+        case multiHop = 2
     }
     
     @Published var state: StateBoard = .notConnect
@@ -73,11 +73,13 @@ class BoardViewModel: ObservableObject {
     @Published var uploadSpeed: CGFloat = 900.1
     @Published var downloadSpeed: CGFloat = 1605
     @Published var showCityNodes: Bool = false
+    @Published var nodeConnected: Node? = nil
+    @Published var nodeTabList: [NodeTab] = []
     
     let disposedBag = DisposeBag()
     
     init() {
-//        getLocationAvaible()
+        //        getLocationAvaible()
     }
     
     var x = true
@@ -87,15 +89,26 @@ class BoardViewModel: ObservableObject {
         DispatchQueue.main.asyncAfter(deadline: .now() + 1) { [self] in
             self.x.toggle()
             self.state = self.x ? .notConnect : .connected
-//            APIManager.shared.getLocationCity()
-//                .subscribe { locations in
-//                    self.locations = locations
-//                    self.state = .connected
-//                } onFailure: { err in
-//                    self.errorMessage = err.localizedDescription
-//                    self.state = .notConnect
-//                }
-//                .disposed(by: self.disposedBag)
+            //            APIManager.shared.getLocationCity()
+            //                .subscribe { locations in
+            //                    self.locations = locations
+            //                    self.state = .connected
+            //                } onFailure: { err in
+            //                    self.errorMessage = err.localizedDescription
+            //                    self.state = .notConnect
+            //                }
+            //                .disposed(by: self.disposedBag)
         }
+    }
+    
+    func getNodeTab() {
+        APIManager.shared.getNodeTab()
+            .subscribe { nodeTabList in
+                self.nodeTabList = nodeTabList
+            } onFailure: { err in
+                self.nodeTabList = NodeTab.example
+//                self.errorMessage = err.localizedDescription
+            }
+            .disposed(by: self.disposedBag)
     }
 }

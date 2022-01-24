@@ -65,5 +65,23 @@ extension View {
 extension View {
     func cornerRadius(radius: CGFloat, corners: UIRectCorner) -> some View {
         ModifiedContent(content: self, modifier: CornerRadiusStyle(radius: radius, corners: corners))
+        //    func cornerRadius(_ radius: CGFloat, corners: UIRectCorner) -> some View {
+        //        clipShape( RoundedCorner(radius: radius, corners: corners) )
+        //    }
+    }
+}
+
+extension Array {
+    func getPosition(_ i: Int) -> PositionItemCell {
+        let count = self.count
+        if count == 0 || count == 1  {
+            return .all
+        } else if count - 1 == i {
+            return .bot
+        } else if i == 0 && count > 1 {
+            return .top
+        } else {
+            return .middle
+        }
     }
 }

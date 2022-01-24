@@ -22,4 +22,7 @@ struct AppColor {
     static let VPNConnected = Color(hex: "66FFCC")
     static let VPNUnconnect = Color(hex: "CA1D1D")
     static let backgroundCity = Color(hex: "F2F2F2")
+    static let green = Color(hex: "4CD964")
+    static let whiteStatus = Color(hex: "E7E8F0")
+    static let borderSearch = Color(hex: "4D4F5C")
 }
