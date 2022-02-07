@@ -1,0 +1,36 @@
+/* 
+  Settings.strings
+  SysVPN
+
+  Created by Da Phan Van on 14/01/2022.
+  
+*/
+
+"Account.tapControl" = "Tap to control profile";
+"Account.itemAccount" = "Account status:";
+"Account.itemDevices" = "Devices";
+"Account.itemQuestions" = "Frequently Asked Questions";
+"Account.itemHelpCenter" = "Help Center";
+"Account.itemSecurity" = "Sercurity level";
+"Account.Account" = "My Account";
+"Account.Support" = "Help & Support";
+"Account.signout" = "Sign Out";
+"Account.titleAccount" = "Account";
+"Infomation.email" = "Your email";
+"Infomation.member" = "Member since";
+"Infomation.id" = "SysVpn id";
+"Infomation.security" = "Account sercurity";
+"Infomation.changePassword" = "Change password";
+"Infomation.introChangePassword" = "Enter current & new password";
+"Infomation.currentPassword" = "Current Password";
+"Infomation.newPassword" = "New Password";
+"Infomation.retypePassword" = "Retype New Password";
+"Infomation.save" = "Save";
+"Infomation.tapToChangePassword" = "Tap to change password";
+"Infomation.title" = "Infomation";
+"AccountStatus.title" = "Your Subscription";
+"AccountStatus.paymentHistory" = "Payment history";
+"AccountStatus.tapToShow" = "Tap to show";
+"AccountStatus.extend" = "Extend Subscription";
+"PaymentHistory.cancelSubscription" = "Cancel Subscription";
+"Account.contentTotalDevices" = "Multiple devices online";

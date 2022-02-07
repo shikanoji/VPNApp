@@ -37,7 +37,7 @@ struct IntroductionPage: Hashable {
 struct IntroductionView: View {
     @State var index = 0
     @State private var signIn = false
-    
+    @State private var trial = false
     // test board screen
     @State private var isPresented = false
     
@@ -69,9 +69,9 @@ struct IntroductionView: View {
                 
                 //                Stepper("Index: \(index)", value: $index.animation(.easeInOut), in: 0...images.count-1)
                 //                    .font(Font.body.monospacedDigit())
-                
+                NavigationLink(destination: SubscriptionIntroduction(), isActive: $trial) { }
                 AppButton(style: .themeButton, width: 300, height:50, text: LocalizedStringKey.Introduction.trialButton.localized) {
-                    print("Trial")
+                    self.trial = true
                 }
                 NavigationLink(destination: LoginView(viewModel: LoginViewModel()), isActive: $signIn) { }
                 AppButton(style: .darkButton, width: 300, height:50, text: "Sign In") {

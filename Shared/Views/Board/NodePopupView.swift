@@ -26,7 +26,7 @@ struct NodePopupView: View {
         if node.isCity {
             return AnyView(
                 VStack(alignment: .center, spacing: 0) {
-                    Text(node.subName)
+                    Text(node.name)
                         .font(.system(size: Constant.Board.NodePopupView.sizeFont * Constant.Board.Map.zoomCity,
                                       weight: Constant.Board.NodePopupView.weightFont))
                         .lineLimit(Constant.Board.NodePopupView.numberLineText)
@@ -39,7 +39,7 @@ struct NodePopupView: View {
                             .resizable()
                             .frame(width: Constant.Board.NodePopupView.frameEnsign * Constant.Board.Map.zoomCity,
                                    height: Constant.Board.NodePopupView.frameEnsign * Constant.Board.Map.zoomCity)
-                        Text(node.name)
+                        Text(node.subName)
                             .font(.system(size: Constant.Board.NodePopupView.sizeFont * Constant.Board.Map.zoomCity,
                                           weight: Constant.Board.NodePopupView.weightFont))
                             .lineLimit(Constant.Board.NodePopupView.numberLineText)
