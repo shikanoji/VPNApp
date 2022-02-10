@@ -1,19 +1,19 @@
 //
-//  DevicesView.swift
+//  FrequentlyAskedQuestionsView.swift
 //  SysVPN
 //
-//  Created by Da Phan Van on 18/01/2022.
+//  Created by Nguyễn Đình Thạch on 08/02/2022.
 //
 
+import Foundation
 import SwiftUI
 
-struct DevicesView: View {
+struct FAQView: View {
     @Binding var showAccount: Bool
     @State var statusConnect: BoardViewModel.StateBoard = .connected
-    @StateObject var viewModel: DeviceViewModel
+    @StateObject var viewModel: FAQViewModel
     
     @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
-    
     var body: some View {
         ScrollView(.vertical, showsIndicators: false) {
             ZStack(alignment: .top) {
@@ -22,22 +22,22 @@ struct DevicesView: View {
                         .frame(height: 10)
                     CustomNavigationView(
                         leftTitle: LocalizedStringKey.AccountStatus.title.localized,
-                        currentTitle: LocalizedStringKey.Account.itemDevices.localized + " (\(AppSetting.shared.currentNumberDevice)/\(AppSetting.shared.totalNumberDevices))",
+                        currentTitle: LocalizedStringKey.FAQ.title.localized,
                         tapLeftButton: {
                             presentationMode.wrappedValue.dismiss()
                         }, tapRightButton: {
                             showAccount = false
                         }, statusConnect: statusConnect)
                     VStack(spacing: 1) {
-                        ForEach(Array(viewModel.deviceList.enumerated()), id: \.offset) { index, item in
-                            DeviceCell(deviceOnline: item,
-                                       position: viewModel.deviceList.getPosition(index)) {
-                                viewModel.deviceList.remove(at: index)
-                            }
+                        ForEach(Array(viewModel.questions.enumerated()), id: \.offset) { index, item in
+                            FAQCell(question: item, position: viewModel.questions.getPosition(index), onTap: {
+                                //Handle tapping question
+                            })
                         }
                     }
                     .padding(Constant.Menu.hozitalPaddingCell)
                     .padding(.top, Constant.Menu.topPaddingCell)
+                    Spacer()
                 }
             }
         }
@@ -47,10 +47,11 @@ struct DevicesView: View {
     }
 }
 
-struct DevicesView_Previews: PreviewProvider {
+#if DEBUG
+struct FAQViewPreview: PreviewProvider {
     @State static var showAccount = true
-    
     static var previews: some View {
-        DevicesView(showAccount: $showAccount, viewModel: DeviceViewModel())
+        FAQView(showAccount: $showAccount, viewModel: FAQViewModel())
     }
 }
+#endif

@@ -17,6 +17,8 @@ struct AccountView: View {
     
     @State private var showAccountStatus = false
     
+    @State private var showFAQ = false
+    
     @State var sections: [DataSection] = [
         DataSection(type: .myAccount),
         DataSection(type: .helpSupport)
@@ -67,6 +69,8 @@ struct AccountView: View {
                                                 self.showAccountStatus = true
                                             case .totalDevice:
                                                 self.showTotalDevice = true
+                                            case .questions:
+                                                self.showFAQ = true
                                             default:
                                                 return
                                             }
@@ -83,7 +87,8 @@ struct AccountView: View {
                             .frame(height: 34)
                         NavigationLink(destination: InfomationView(showAccount: $showAccount, statusConnect: statusConnect), isActive: $showInfomation) { }
                         NavigationLink(destination: AccountStatusView(showAccount: $showAccount, statusConnect: statusConnect), isActive: $showAccountStatus) { }
-                        NavigationLink(destination: DevicesView(showAccount: $showAccount, statusConnect: statusConnect), isActive: $showTotalDevice) { }
+                        NavigationLink(destination: DevicesView(showAccount: $showAccount, statusConnect: statusConnect, viewModel: DeviceViewModel()), isActive: $showTotalDevice) { }
+                        NavigationLink(destination: FAQView(showAccount: $showAccount, statusConnect: statusConnect, viewModel: FAQViewModel()), isActive: $showFAQ) { }
                     }
                     .frame(
                         minHeight: geometry.size.height,
