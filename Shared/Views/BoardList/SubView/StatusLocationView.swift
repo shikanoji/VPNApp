@@ -14,7 +14,7 @@ struct StatusLocationView: View {
     var body: some View {
         HStack(spacing: 0) {
             if let node = node {
-                Image(node.ensign)
+                Image(node.flag)
                     .resizable()
                     .frame(width: 16, height: 16)
                     .padding()

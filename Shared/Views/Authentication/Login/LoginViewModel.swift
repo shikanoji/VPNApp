@@ -36,15 +36,15 @@ class LoginViewModel: NSObject, ObservableObject {
         showProgressView = true
         
         APIManager.shared.login(email: email, password: password, ip: "127.0.0.1", country: "Hanoi", city: "VN")
-            .subscribe(onSuccess: { [self] loginResult in
+            .subscribe(onSuccess: { [self] response in
                 self.showProgressView = false
-                if let result = loginResult, !result.tokens.access.token.isEmpty {
-                    authentication?.login(email: email, password: password)
+                if let result = response.result, !result.tokens.access.token.isEmpty {
+//                    authentication?.login(email: result.user.email, password: result.user.password)
                     completion(.success)
                 }
             }, onFailure: { error in
-            completion(.accountNotExist)
-        })
+                completion(.accountNotExist)
+            })
         .disposed(by: disposedBag)
         
         DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(3), execute: { [self] in

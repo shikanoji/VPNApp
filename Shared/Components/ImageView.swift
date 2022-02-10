@@ -16,7 +16,7 @@ class ImageLoader: ObservableObject {
             didChange.send(data)
         }
     }
-
+    
     init(urlString:String) {
         guard let url = URL(string: urlString) else { return }
         let task = URLSession.shared.dataTask(with: url) { data, response, error in
@@ -32,19 +32,20 @@ class ImageLoader: ObservableObject {
 struct ImageView: View {
     @ObservedObject var imageLoader:ImageLoader
     @State var image:UIImage = UIImage()
-
-    init(withURL url:String) {
+    @State var size: CGFloat = 100
+    
+    init(withURL url:String, size: CGFloat = 100) {
+        self.size = size
         imageLoader = ImageLoader(urlString:url)
     }
-
+    
     var body: some View {
-        
-            Image(uiImage: image)
-                .resizable()
-                .aspectRatio(contentMode: .fit)
-                .frame(width:100, height:100)
-                .onReceive(imageLoader.didChange) { data in
+        Image(uiImage: image)
+            .resizable()
+            .aspectRatio(contentMode: .fit)
+            .frame(width:size, height:size)
+            .onReceive(imageLoader.didChange) { data in
                 self.image = UIImage(data: data) ?? UIImage()
-        }
+            }
     }
 }

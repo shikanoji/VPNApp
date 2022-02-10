@@ -8,6 +8,8 @@
 import SwiftUI
 
 struct NodeView: View {
+    @Binding var scale: CGFloat
+    
     var width = CGFloat(5)
     // 1
     @State var node: Node
@@ -22,26 +24,28 @@ struct NodeView: View {
     
     var body: some View {
         VStack(spacing: 2) {
-            NodePopupView(node: node)
+            NodePopupView(node: node, scale: $scale)
                 .opacity(isSelected ? 1 : 0)
             ZStack {
                 Ellipse()
                     .fill(AppColor.themeColor)
-                    .frame(width: width * 2,
-                           height: width * 2)
+                    .frame(width: width * 2 * scale,
+                           height: width * 2 * scale)
                     .opacity(0.2)
                 Ellipse()
                     .fill(AppColor.themeColor)
-                    .frame(width: width,
-                           height: width)
+                    .frame(width: width * scale,
+                           height: width * scale)
             }
         }
     }
 }
 
 struct NodeView_Previews: PreviewProvider {
+    @State static var scale: CGFloat = 1.0
+    
     static var previews: some View {
-        NodeView(node: Node.simple1, selection: SelectionHandler())
+        NodeView(scale: $scale, node: Node.country, selection: SelectionHandler())
             .previewLayout(.fixed(width: /*@START_MENU_TOKEN@*/100.0/*@END_MENU_TOKEN@*/, height: /*@START_MENU_TOKEN@*/100.0/*@END_MENU_TOKEN@*/))
             .preferredColorScheme(.dark)
     }

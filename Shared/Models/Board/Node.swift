@@ -12,43 +12,92 @@ typealias NodeID = UUID
 
 struct Node: Identifiable, Codable {
     var id: NodeID
-    var position: CGPoint = .zero
     var name = ""
-    var subName = ""
-    var ensign: String
+    var iso2 = ""
+    var iso3 = ""
+    var region = ""
+    var subRegion = ""
+    var latitude = ""
+    var longitude = ""
+    var x: CGFloat = .zero
+    var y: CGFloat = .zero
+    var flag: String = ""
     var isCity = false
     var cityNodeList = [Node]()
+    var countryId: Int
+    var countryName = ""
     
     enum CodingKeys: String, CodingKey {
         case id
-        case position
         case name
-        case subName
-        case ensign
-        case isCity
-        case cityNodeList
+        case iso2
+        case iso3
+        case region
+        case subRegion
+        case latitude
+        case longitude
+        case flag
+        case cityNodeList = "city"
+        case x
+        case y
+        case countryId
     }
     
     init(from decoder: Decoder) throws {
         let values = try decoder.container(keyedBy: CodingKeys.self)
         
         id = try values.decode(NodeID.self, forKey: .id)
-        position = try values.decode(CGPoint.self, forKey: .position)
         name = try values.decode(String.self, forKey: .name)
-        subName = try values.decode(String.self, forKey: .subName)
-        ensign = try values.decode(String.self, forKey: .ensign)
-        isCity = (try values.decode(Int.self, forKey: .isCity) == 1)
+        iso2 = try values.decode(String.self, forKey: .iso2)
+        iso3 = try values.decode(String.self, forKey: .iso3)
+        region = try values.decode(String.self, forKey: .region)
+        subRegion = try values.decode(String.self, forKey: .subRegion)
+        latitude = try values.decode(String.self, forKey: .latitude)
+        longitude = try values.decode(String.self, forKey: .longitude)
+        flag = try values.decode(String.self, forKey: .flag)
         cityNodeList = try values.decode([Node].self, forKey: .cityNodeList)
+        x = try values.decode(CGFloat.self, forKey: .x)
+        y = try values.decode(CGFloat.self, forKey: .y)
+        countryId = try values.decode(Int.self, forKey: .countryId)
+        
+        cityNodeList = cityNodeList.map { city -> Node in
+            var updateCity = city
+            updateCity.flag = flag
+            updateCity.countryName = name
+            return updateCity
+        }
     }
     
-    init(id: NodeID = NodeID(), position: CGPoint = .zero, name: String = "", subName: String = "", ensign: String = "", isCity: Bool = false, cityNodeList: [Node] = []) {
+    init(id: NodeID = NodeID(),
+         name: String = "",
+         iso2: String = "",
+         iso3: String = "",
+         region: String = "",
+         subRegion: String = "",
+         latitude: String = "",
+         longitude: String = "",
+         x: CGFloat = .zero,
+         y: CGFloat = .zero,
+         flag: String = "",
+         isCity: Bool = false,
+         cityNodeList: [Node] = [],
+         countryName: String = "",
+         countryId: Int = 0) {
         self.id = id
-        self.position = position
         self.name = name
-        self.subName = name
-        self.ensign = ensign
+        self.iso2 = iso2
+        self.iso3 = iso3
+        self.region = region
+        self.subRegion = subRegion
+        self.latitude = latitude
+        self.longitude = longitude
+        self.x = x
+        self.y = y
+        self.flag = flag
         self.isCity = isCity
         self.cityNodeList = cityNodeList
+        self.countryName = countryName
+        self.countryId = countryId
     }
 }
 
@@ -56,6 +105,10 @@ extension Node {
     static func == (lhs: Node, rhs: Node) -> Bool {
         return lhs.id == rhs.id
     }
+}
+
+extension Node: Equatable {
+    
 }
 
 extension Node {
@@ -73,39 +126,35 @@ extension Node {
 }
 
 extension Node {
+    static let cityNode = Node(name: "Tokyo", flag: "https://cdn2.thecatapi.com/images/0XYvRd7oD.jpg", countryName: "Jpan")
     static let cityNodeList = [
-        Node(name: "Tokyo", subName: "Jpan", ensign: "https://cdn2.thecatapi.com/images/0XYvRd7oD.jpg"),
-        Node(position: CGPoint(x: 100, y: -50), name: "Poland",subName: "22", ensign: "33"),
-        Node(position: CGPoint(x: 100, y: -50), name: "Kristinehamn",subName: "Sweden", ensign: "33"),
-        Node(position: CGPoint(x: 50, y: 50), name: "helo2",subName: "223", ensign: "334")
+        cityNode
     ]
-    static let simple1 = Node(name: "Sweden", subName: "", ensign: "https://cdn2.thecatapi.com/images/0XYvRd7oD.jpg", cityNodeList: cityNodeList)
-    static let simple0 = Node(position: CGPoint(x: 10, y: 10),name: "Sweden", subName: "Kristinehamn", ensign: "Sweden", isCity: true)
-    static let simple2 = Node(position: CGPoint(x: 100, y: -50), name: "helo",subName: "22", ensign: "https://cdn2.thecatapi.com/images/ozEvzdVM-.jpg")
-    static let simple3 = Node(position: CGPoint(x: 50, y: 50), name: "helo2",subName: "223", ensign: "334")
-    
-    static let poland = Node(name: "Poland", ensign: "https://cdn2.thecatapi.com/images/0XYvRd7oD.jpg")
+    static let country = Node(name: "Sweden", flag: "https://cdn2.thecatapi.com/images/0XYvRd7oD.jpg", cityNodeList: cityNodeList)
+
+    static let poland = Node(name: "Poland", flag: "https://cdn2.thecatapi.com/images/0XYvRd7oD.jpg")
     static let usa = Node(name: "United States")
     static let france = Node(name: "France")
-    
+    static let tokyo = Node(name: "Tokyo", flag: "https://cdn2.thecatapi.com/images/0XYvRd7oD.jpg", countryName: "Jpan")
+
     static let cityNodeCanada = [
-        Node(name: "Ontario", subName: "Cananda"),
-        Node(name: "Prince Edward Island", subName: "Cananda"),
-        Node(name: "Yukon", subName: "Cananda")
+        Node(name: "Ontario", countryName: "Cananda"),
+        Node(name: "Prince Edward Island", countryName: "Cananda"),
+        Node(name: "Yukon", countryName: "Cananda")
     ]
-    
-    static let canada = Node(name: "Cananda", ensign: "https://cdn2.thecatapi.com/images/ozEvzdVM-.jpg", cityNodeList: cityNodeCanada)
+
+    static let canada = Node(name: "Cananda", flag: "https://cdn2.thecatapi.com/images/ozEvzdVM-.jpg", cityNodeList: cityNodeCanada)
     static let ire = Node(name: "Ireland")
     static let gree = Node(name: "Greece")
-    
+
     static let recent = [
         poland
     ]
-    
+
     static let recommend = [
         usa, france
     ]
-    
+
     static let all = [
         poland, usa, france, canada, ire, gree
     ]
@@ -160,7 +209,9 @@ extension NodeListResult {
 struct NodeTab: Identifiable, Decodable {
     let id = UUID()
     var state: BoardViewModel.StateTab
-    var data: [NodeListResult]
+    var dataLocations: [NodeListResult] = []
+    var dataStaticIP: [NodeListResult] = []
+    var dataMultihop: [NodeListResult] = []
     
     enum CodingKeys: String, CodingKey {
         case state
@@ -171,12 +222,17 @@ struct NodeTab: Identifiable, Decodable {
         let values = try decoder.container(keyedBy: CodingKeys.self)
         
         state = BoardViewModel.StateTab(rawValue: try values.decode(Int.self, forKey: .state)) ?? .location
-        data = try values.decode([NodeListResult].self, forKey: .data)
+        dataLocations = try values.decode([NodeListResult].self, forKey: .data)
     }
     
-    init(state: BoardViewModel.StateTab, data: [NodeListResult]) {
+    init(state: BoardViewModel.StateTab,
+         dataLocations: [NodeListResult] = [],
+         dataStaticIP: [NodeListResult] = [],
+         dataMultihop: [NodeListResult] = []) {
         self.state = state
-        self.data = data
+        self.dataLocations = dataLocations
+        self.dataStaticIP = dataStaticIP
+        self.dataMultihop = dataMultihop
     }
 }
 
@@ -190,6 +246,9 @@ extension NodeListResult {
 
 extension NodeTab {
     static let example = [
-        NodeTab(state: .location, data: NodeListResult.example)
+        NodeTab(state: .location, dataLocations: NodeListResult.example)
     ]
+    
+    static let location = NodeTab(state: .location, dataLocations: NodeListResult.example)
+    static let multihop = NodeTab(state: .location)
 }

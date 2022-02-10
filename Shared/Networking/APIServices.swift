@@ -54,7 +54,7 @@ enum APIError: Error {
 
 enum APIService {
     case getSiteHtml(url: String)
-    case getLocationCity
+    case getCountryList
     case getNodeTab
     case register(email: String, password: String, name: String, ip: String, country: String, city: String)
     case login(email: String, password: String, ip: String, country: String, city: String)
@@ -64,7 +64,7 @@ extension APIService: TargetType {
     // This is the base URL we'll be using, typically our server.
     var baseURL: URL {
         switch self {
-        case .getLocationCity:
+        case .getCountryList:
             return URL(string: Constant.api.getLocationCity)!
         case .getNodeTab:
             return URL(string: Constant.api.getNodeTab)!
@@ -91,7 +91,7 @@ extension APIService: TargetType {
         switch self {
         case .getSiteHtml:
             return .get
-        case .getLocationCity:
+        case .getCountryList:
             return .get
         case .getNodeTab:
             return .get

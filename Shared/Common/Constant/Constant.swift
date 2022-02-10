@@ -75,9 +75,9 @@ struct Constant {
         }
         
         struct Map {
-            static let minZoom: CGFloat = 1
-            static let maxZoom: CGFloat = 5
-            static let enableCityZoom: CGFloat = 2
+            static let minZoom: CGFloat = 0.1
+            static let maxZoom: CGFloat = 4
+            static let enableCityZoom: CGFloat = 3
             static let zoomCity: CGFloat = 0.75
         }
     }
@@ -128,11 +128,23 @@ struct Constant {
         static let fontNameCity = Font.system(size: 13, weight: .bold)
         static let numberCities = Font.system(size: 11, weight: .bold)
         static let fontNodeList = Font.system(size: 12)
+        static let iconCity = Image("icon_board_city")
+    }
+    
+    struct StaticIP {
+        static let iconS = Image("icon_static")
+    }
+    
+    struct MultiHop {
+        static let iconWhat = Image("icon_multihop_what")
+        static let iconExit = Image("icon_multihop_exit")
+        static let sizeIcon: CGFloat = 24
     }
     
     struct Global {
         static let errorImage = Image("japan")
         static let iconCheck = Image("icon_checkbox")
         static let iconUncheck = Image("icon_uncheck")
+        static let iconArrowRight = Image("icon_arrow_right")
     }
 }

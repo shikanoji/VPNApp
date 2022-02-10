@@ -24,6 +24,7 @@ enum AppKeys: String {
     case autoConnect = "autoConnect"
     case lineNetwork = "lineNetwork"
     case listNode = "listNode"
+    case token = "token"
 }
 
 struct AppSetting {
@@ -150,11 +151,19 @@ struct AppSetting {
     
     var lineNetwork: Int {
         get {
-            return 4
             return UserDefaults.standard.integer(forKey: AppKeys.lineNetwork.rawValue)
         }
         set {
             UserDefaults.standard.setValue(newValue, forKey: AppKeys.lineNetwork.rawValue)
+        }
+    }
+    
+    var token: String {
+        get {
+            return UserDefaults.standard.string(forKey: AppKeys.token.rawValue) ?? ""
+        }
+        set {
+            UserDefaults.standard.setValue(newValue, forKey: AppKeys.token.rawValue)
         }
     }
     

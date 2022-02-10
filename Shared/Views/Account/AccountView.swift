@@ -62,19 +62,18 @@ struct AccountView: View {
                                     .font(Constant.Menu.fontSectionTitle)
                                     .foregroundColor(AppColor.lightBlackText)
                                 ForEach(section.type.items) { item in
-                                    ItemRowView(item: item)
-                                        .onTapGesture {
-                                            switch item.type {
-                                            case .statusAccount:
-                                                self.showAccountStatus = true
-                                            case .totalDevice:
-                                                self.showTotalDevice = true
-                                            case .questions:
-                                                self.showFAQ = true
-                                            default:
-                                                return
-                                            }
+                                    Button {
+                                        switch item.type {
+                                        case .statusAccount:
+                                            self.showAccountStatus = true
+                                        case .totalDevice:
+                                            self.showTotalDevice = true
+                                        default:
+                                            return
                                         }
+                                    } label: {
+                                        ItemRowView(item: item)
+                                    }
                                 }
                             }
                         }
