@@ -11,4 +11,26 @@ class DeviceViewModel: ObservableObject {
     init() {
         deviceList = DeviceOnline.exampleList()
     }
+    
+    func remove(device: DeviceOnline) {
+        if deviceList.count > 0 {
+            for i in 0..<deviceList.count {
+                if deviceList[i].id == device.id {
+                    deviceList.remove(at: i)
+                    return 
+                }
+            }
+        }
+    }
+    
+    func getDeviceCellPosition(device: DeviceOnline) -> PositionItemCell {
+        if deviceList.count > 0 {
+            for i in 0..<deviceList.count {
+                if deviceList[i].id == device.id {
+                    return deviceList.getPosition(i)
+                }
+            }
+        }
+        return .all
+    }
 }
