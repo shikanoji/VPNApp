@@ -282,6 +282,17 @@ struct LocalizedStringKey {
             return NSLocalizedString(self.rawValue, tableName: "Board", comment: "")
         }
     }
+    
+    enum FAQ: String {
+        case title = "FAQ.title"
+        case vpnbasic = "FAQ.vpnbasic"
+        case sysvpnSubscription = "FAQ.sysvpnSubscription"
+        case aboutSysvpn = "FAQ.aboutSysvpn"
+        
+        var localized: String {
+            return NSLocalizedString(self.rawValue, tableName: "FAQ", comment: "")
+        }
+    }
 }
 
 
