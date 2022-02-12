@@ -50,7 +50,9 @@ struct DeviceOnline: Codable, Identifiable {
         return [
             DeviceOnline(id: "0", name: "iPhone 13 Promax", active: true, ip: "168.362.3.82.2", location: "Ha Noi, Viet Nam"),
             DeviceOnline(id: "1", name: "macOs Monterey", active: true, ip: "192.362.3.82.2", location: "Ha Noi, Viet Nam"),
-            DeviceOnline(id: "2", name: "Samsung Note 20 Ultra", active: false, ip: "122.362.3.82.2", location: "Ha Noi, Viet Nam")
+            DeviceOnline(id: "2", name: "Samsung Note 20 Ultra", active: false, ip: "122.362.3.82.2", location: "Ha Noi, Viet Nam"),
+            DeviceOnline(id: "3", name: "Huawei X20", active: false, ip: "122.362.3.82.2", location: "Ha Noi, Viet Nam"),
+            DeviceOnline(id: "4", name: "RedMi Pro 5", active: false, ip: "122.362.3.82.2", location: "Ha Noi, Viet Nam")
         ]
     }
 }
