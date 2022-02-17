@@ -10,6 +10,7 @@ import SwiftUI
 
 struct RegisterView: View {
     @StateObject var viewModel: RegisterViewModel
+    @StateObject var registerResult: RegisterResultModel = RegisterResultModel()
     @State var toPlanSelection: Bool = false
     @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
     
@@ -28,7 +29,7 @@ struct RegisterView: View {
                     }
                     
                     Group{
-                        Form(placeholder: LocalizedStringKey.Register.emailPlaceholder.localized, value: $viewModel.username)
+                        Form(placeholder: LocalizedStringKey.Register.emailPlaceholder.localized, value: $viewModel.email)
                         Spacer().frame(height: 20)
                         Form(placeholder: LocalizedStringKey.Register.passwordPlaceholder.localized, value: $viewModel.password, isPassword: true)
                         Spacer().frame(height: 20)
@@ -41,11 +42,13 @@ struct RegisterView: View {
                     }
                     
                     Group {
-                        NavigationLink(destination: PlanSelectionView(), isActive: $toPlanSelection) {
+                        NavigationLink(destination: SubscriptionIntroduction().environmentObject(registerResult), isActive: $toPlanSelection) {
                         }
                         AppButton(style: .themeButton, width: 311, text: LocalizedStringKey.Register.signup.localized) {
-                            viewModel.signup(){result in
-                                if result == .success {
+                            viewModel.signup(){ result, register in
+                                if result == .success, let  _register = register {
+                                    registerResult.user = _register.user
+                                    registerResult.tokens = _register.tokens
                                     toPlanSelection = true
                                 }
                             }
@@ -73,12 +76,10 @@ struct RegisterView: View {
                 }
                 .autocapitalization(.none)
                 .disabled(viewModel.showProgressView)
-                .onReceiveAlertWithAction(title: $viewModel.alertTitle, message: $viewModel.alertMessage, showing: $viewModel.showAlert) {
-                    //Handle Alert Confirmation
-                }
+                .onReceiveAlert(title: $viewModel.alertTitle, message: $viewModel.alertMessage, showing: $viewModel.showAlert)
             }
             .frame(maxWidth: .infinity, maxHeight: .infinity)
-        }
+        }.environmentObject(registerResult)
     }
 }
 #if DEBUG

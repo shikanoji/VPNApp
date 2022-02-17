@@ -10,15 +10,16 @@ import SwiftUI
 import Firebase
 import GoogleSignIn
 import AuthenticationServices
+import RxSwift
 
 enum RegisterResult {
     case success
-    case wrongPassword
-    case accountNotExist
+    case emailExisted
+    case error
 }
 
 class RegisterViewModel: NSObject, ObservableObject {
-    @Published var username: String = ""
+    @Published var email: String = ""
     @Published var password: String = ""
     @Published var retypePassword: String = ""
     @Published var showAlert: Bool = false
@@ -27,19 +28,30 @@ class RegisterViewModel: NSObject, ObservableObject {
     var alertMessage: String = ""
     var appleToken: String = ""
     var registerDisable: Bool {
-        username.isEmpty || password.isEmpty || retypePassword.isEmpty
+        email.isEmpty || password.isEmpty || retypePassword.isEmpty
     }
+    var disposedBag = DisposeBag()
     
-    func signup(completion: @escaping (RegisterResult) -> Void) {
-        //        alertTitle = "Login Success"
-        //        alertMessage = "Congrats!"
-        //        showAlert = true
+    func signup(completion: @escaping (RegisterResult, RegisterResultModel?) -> Void) {
         showProgressView = true
-        
-        DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(3), execute: { [self] in
-            self.showProgressView = false
-            completion(.success)
-        })
+        APIManager.shared.register(email: email, password: password, ip: "127.0.0.1", country: "Hanoi", city: "VN")
+            .subscribe(onSuccess: { [self] response in
+                self.showProgressView = false
+                if let result = response.result, !result.tokens.access.token.isEmpty, !result.tokens.refresh.token.isEmpty {
+                    completion(.success, result)
+                } else {
+                    let error = response.errors
+                    if error.count > 0, let message = error[0] as? String {
+                        alertMessage = message
+                        showAlert = true
+                    }
+                    completion(.error, nil)
+                }
+            }, onFailure: { error in
+                self.showProgressView = false
+                completion(.error, nil)
+            })
+            .disposed(by: disposedBag)
     }
     
     //MARK: - Login with Google

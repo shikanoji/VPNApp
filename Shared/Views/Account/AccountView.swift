@@ -7,6 +7,7 @@
 import SwiftUI
 
 struct AccountView: View {
+    @EnvironmentObject var authentication: Authentication
     @Binding var showAccount: Bool
     
     @Binding var statusConnect: BoardViewModel.StateBoard
@@ -80,7 +81,7 @@ struct AccountView: View {
                         .padding([.top, .leading])
                         Spacer()
                         AppButton(style: .darkButton, width: UIScreen.main.bounds.size.width - 30, text: LocalizedStringKey.Account.signOut.localized) {
-                            print("Log out")
+                                authentication.logout()
                         }
                         Spacer()
                             .frame(height: 34)

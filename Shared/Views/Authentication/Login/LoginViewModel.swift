@@ -40,20 +40,17 @@ class LoginViewModel: NSObject, ObservableObject {
             .subscribe(onSuccess: { [self] response in
                 self.showProgressView = false
                 if let result = response.result, !result.tokens.access.token.isEmpty, !result.tokens.refresh.token.isEmpty {
-                    authentication?.login(email: email, password: password, accessToken: result.tokens.access.token, refreshToken:result.tokens.refresh.token)
+                    authentication?.login(email: email, accessToken: result.tokens.access.token, refreshToken:result.tokens.refresh.token)
                     completion(.success)
                 } else {
                     completion(.error)
                 }
             }, onFailure: { error in
+                self.showProgressView = false
                 completion(.accountNotExist)
             })
         .disposed(by: disposedBag)
         
-        DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(3), execute: { [self] in
-            self.showProgressView = false
-            completion(.success)
-        })
     }
     
     //MARK: - Login with Google

@@ -11,8 +11,6 @@ import SwiftUI
 enum AppKeys: String {
     ///Auth Keys
     case email = "email"
-    case username = "username"
-    case password = "password"
     case accessToken = "accessToken"
     case refreshToken = "refreshToken"
     
@@ -44,24 +42,6 @@ struct AppSetting {
         }
         set {
             UserDefaults.standard.setValue(newValue, forKey: AppKeys.email.rawValue)
-        }
-    }
-    
-    var username: String {
-        get {
-            return UserDefaults.standard.string(forKey: AppKeys.username.rawValue) ?? ""
-        }
-        set {
-            UserDefaults.standard.setValue(newValue, forKey: AppKeys.username.rawValue)
-        }
-    }
-    
-    var password: String {
-        get {
-            return UserDefaults.standard.string(forKey: AppKeys.password.rawValue) ?? ""
-        }
-        set {
-            UserDefaults.standard.setValue(newValue, forKey: AppKeys.password.rawValue)
         }
     }
     

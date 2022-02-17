@@ -68,10 +68,10 @@ struct IntroductionView: View {
                 .clipShape(RoundedRectangle(cornerRadius: 15))
                 
                 //                Stepper("Index: \(index)", value: $index.animation(.easeInOut), in: 0...images.count-1)
-                //                    .font(Font.body.monospacedDigit())
-                NavigationLink(destination: SubscriptionIntroduction(), isActive: $trial) { }
+                .font(Font.body.monospacedDigit())
+                //                NavigationLink(destination: SubscriptionIntroduction(), isActive: $trial) { }
                 AppButton(style: .themeButton, width: 300, height:50, text: LocalizedStringKey.Introduction.trialButton.localized) {
-                    self.trial = true
+                    self.signIn = true
                 }
                 NavigationLink(destination: LoginView(viewModel: LoginViewModel()), isActive: $signIn) { }
                 AppButton(style: .darkButton, width: 300, height:50, text: "Sign In") {
