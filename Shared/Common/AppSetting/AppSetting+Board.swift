@@ -1,73 +1,14 @@
 //
-//  AppSetting.swift
-//  SysVPN (iOS)
+//  AppSetting+Board.swift
+//  SysVPN
 //
-//  Created by Nguyễn Đình Thạch on 02/12/2021.
+//  Created by Nguyễn Đình Thạch on 17/02/2022.
 //
 
 import Foundation
-import SwiftUI
 
-enum AppKeys: String {
-    case email = "email"
-    case username = "username"
-    case password = "password"
-    case showedNotice = "showedNotice"
-    case dateMember = "dateMember"
-    case idVPN = "idVPN"
-    case statusAccoutn = "statusAccoutn"
-    case currentNumberDevice = "currentNumberDevice"
-    case totalNumberDevices = "totalNumberDevices"
-    case appShourtcuts = "appShourtcuts"
-    case protection = "protection"
-    case help = "help"
-    case autoConnect = "autoConnect"
-    case lineNetwork = "lineNetwork"
-    case listNode = "listNode"
-    case token = "token"
-}
-
-struct AppSetting {
-    static var shared = AppSetting()
-    
-    init() {}
-    
-    var email: String {
-        get {
-            return UserDefaults.standard.string(forKey: AppKeys.email.rawValue) ?? "flashkick2001@gmail.com"
-        }
-        set {
-            UserDefaults.standard.setValue(newValue, forKey: AppKeys.email.rawValue)
-        }
-    }
-    
-    var username: String {
-        get {
-            return UserDefaults.standard.string(forKey: AppKeys.username.rawValue) ?? ""
-        }
-        set {
-            UserDefaults.standard.setValue(newValue, forKey: AppKeys.username.rawValue)
-        }
-    }
-    
-    var password: String {
-        get {
-            return UserDefaults.standard.string(forKey: AppKeys.password.rawValue) ?? ""
-        }
-        set {
-            UserDefaults.standard.setValue(newValue, forKey: AppKeys.password.rawValue)
-        }
-    }
-    
-    var showedNotice: Bool {
-        get {
-            return UserDefaults.standard.bool(forKey: AppKeys.showedNotice.rawValue)
-        }
-        set {
-            UserDefaults.standard.setValue(newValue, forKey: AppKeys.showedNotice.rawValue)
-        }
-    }
-    
+extension AppSetting {
+    /// Board Settings
     var dateMember: Date? {
         get {
             return UserDefaults.standard.object(forKey: AppKeys.dateMember.rawValue) as! Date?
@@ -185,7 +126,7 @@ struct AppSetting {
 //            return UserDefaults.standard.value(forKey: AppKeys.listNode.rawValue)
 //        }
 //        set {
-//            
+//
 //        }
 //    }
 }

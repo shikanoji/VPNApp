@@ -16,6 +16,7 @@ enum LoginResult {
     case success
     case wrongPassword
     case accountNotExist
+    case error
 }
 
 class LoginViewModel: NSObject, ObservableObject {
@@ -38,9 +39,11 @@ class LoginViewModel: NSObject, ObservableObject {
         APIManager.shared.login(email: email, password: password, ip: "127.0.0.1", country: "Hanoi", city: "VN")
             .subscribe(onSuccess: { [self] response in
                 self.showProgressView = false
-                if let result = response.result, !result.tokens.access.token.isEmpty {
-//                    authentication?.login(email: result.user.email, password: result.user.password)
+                if let result = response.result, !result.tokens.access.token.isEmpty, !result.tokens.refresh.token.isEmpty {
+                    authentication?.login(email: email, password: password, accessToken: result.tokens.access.token, refreshToken:result.tokens.refresh.token)
                     completion(.success)
+                } else {
+                    completion(.error)
                 }
             }, onFailure: { error in
                 completion(.accountNotExist)
