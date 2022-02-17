@@ -30,7 +30,7 @@ struct SetupVPNView: View {
                     Spacer().frame(height: 30)
                     AppButton(width: 311, text: LocalizedStringKey.Welcome.setupButton.localized) {
                         presentationMode.wrappedValue.dismiss()
-                        authentication.login(username: "abc", password: "abc")
+                        authentication.login(email: "abc", password: "abc")
                     }
                     Spacer().frame(height: 5)
                 }

@@ -10,6 +10,7 @@ import SwiftUI
 import Firebase
 import GoogleSignIn
 import AuthenticationServices
+import RxSwift
 
 enum LoginResult {
     case success
@@ -18,22 +19,33 @@ enum LoginResult {
 }
 
 class LoginViewModel: NSObject, ObservableObject {
-    @Published var username: String = ""
+    @Published var email: String = ""
     @Published var password: String = ""
     @Published var showAlert: Bool = false
     @Published var showProgressView: Bool = false
     var alertTitle: String = ""
     var alertMessage: String = ""
     var appleToken: String = ""
+    var disposedBag = DisposeBag()
+    var authentication: Authentication?
     var loginDisable: Bool {
-        username.isEmpty || password.isEmpty
+        email.isEmpty || password.isEmpty
     }
     
     func login(completion: @escaping (LoginResult) -> Void) {
-        //        alertTitle = "Login Success"
-        //        alertMessage = "Congrats!"
-        //        showAlert = true
         showProgressView = true
+        
+        APIManager.shared.login(email: email, password: password, ip: "127.0.0.1", country: "Hanoi", city: "VN")
+            .subscribe(onSuccess: { [self] loginResult in
+                self.showProgressView = false
+                if let result = loginResult, !result.tokens.access.token.isEmpty {
+                    authentication?.login(email: email, password: password)
+                    completion(.success)
+                }
+            }, onFailure: { error in
+            completion(.accountNotExist)
+        })
+        .disposed(by: disposedBag)
         
         DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(3), execute: { [self] in
             self.showProgressView = false

@@ -16,13 +16,12 @@ struct APIManager {
     static let shared = APIManager()
     
     // This is the provider for the service we defined earlier
-    private var provider: MoyaProvider<APIService>
+    var provider: MoyaProvider<APIService>
     
     private init() {
         let plugin = NetworkLoggerPlugin(configuration: .init(logOptions: .formatRequestAscURL))
         self.provider = MoyaProvider<APIService>(plugins: [plugin])
     }
-    
     
     func getSiteHtml(withUrl url: String) -> Single<String> {
         return provider.rx
