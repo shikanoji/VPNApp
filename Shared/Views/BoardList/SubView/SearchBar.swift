@@ -48,6 +48,9 @@ struct SearchBar: View {
                 .onTapGesture {
                     isEditing = true
                 }
+                .onChange(of: text, perform: { newValue in
+                    isEditing = text != ""
+                })
                 .foregroundColor(.white)
                 .font(.system(size: 14))
         }

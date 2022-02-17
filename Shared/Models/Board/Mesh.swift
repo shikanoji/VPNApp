@@ -44,10 +44,15 @@ extension Mesh {
         let mesh = Mesh()
         
         for _ in 0...20 {
-            mesh.addNode(Node(position: CGPoint(x: CGFloat.random(in: -150..<150),
-                                                y: CGFloat.random(in: -100..<100)), name: "helo",subName: "22", ensign: "japan"))
+            mesh.addNode(Node(name: "Tokyo",
+                              x: CGFloat.random(in: 0..<300),
+                              y: CGFloat.random(in: 0..<400),
+                              flag: "japan",
+                              countryName: "Japan"))
         }
-        mesh.cityNodes = [Node.simple0]
+        mesh.addNode(Node(x: 100, y: 100))
+        mesh.addNode(Node(x: 350, y: 200))
+        mesh.cityNodes = [Node.country]
         
         return mesh
     }

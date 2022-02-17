@@ -8,11 +8,11 @@
 import Foundation
 import SwiftyJSON
 
-struct APIResponse: Decodable {
+struct APIResponse<T: Decodable>: Decodable {
     var success: Bool
     var message: String
-    var errors: Any
-    var result: Any
+    var errors: [Any]
+    var result: T?
     
     enum CodingKeys: String, CodingKey {
         case success = "success"
@@ -25,9 +25,16 @@ struct APIResponse: Decodable {
         let values = try decoder.container(keyedBy: CodingKeys.self)
         success = try values.decode(Bool.self, forKey: .success)
         message = try values.decode(String.self, forKey: .message)
-        let _errors = try values.decode([Any].self, forKey: .errors)
-        errors = JSON(_errors)
-        let _result = try values.decode([Any].self, forKey: .result) 
-        result = JSON(_result)
+        if let _errors = try? values.decode([Any].self, forKey: .errors) {
+            self.errors = _errors
+        } else {
+            self.errors = []
+        }
+        
+        if let _result = try? values.decode(T?.self, forKey: .result) {
+            result = _result
+        } else {
+            result = nil
+        }
     }
 }

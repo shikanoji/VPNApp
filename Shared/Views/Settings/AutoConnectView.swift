@@ -17,8 +17,7 @@ struct AutoConnectView: View {
     
     var body: some View {
         ScrollView(.vertical, showsIndicators: false) {
-            ZStack(alignment: .top) {
-                VStack(spacing: 0) {
+                VStack() {
                     AppColor.darkButton
                         .frame(height: 10)
                     CustomNavigationView(
@@ -49,7 +48,6 @@ struct AutoConnectView: View {
                     }
                     .padding(Constant.Menu.hozitalPaddingCell)
                     .padding(.top, Constant.Menu.topPaddingCell)
-                }
             }
         }
         .navigationBarHidden(true)

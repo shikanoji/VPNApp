@@ -12,8 +12,15 @@ struct BoardListView: View {
     @Binding var showBoardList: Bool
     @Binding var currentTab: BoardViewModel.StateTab
     @Binding var node: Node?
-    @State var searchText = ""
-    @State var isEditing = false
+    
+    @Binding var nodeStaticList: [Node]
+    @Binding var nodeMultihop: [(Node, Node)]
+    
+    @Binding var entryNodeList: [Node]
+    @Binding var exitNodeList: [Node]
+    
+    @Binding var entryNodeSelect: Node
+    @Binding var exitNodeSelect: Node
     
     var body: some View {
         VStack(spacing: 8) {
@@ -27,30 +34,17 @@ struct BoardListView: View {
                 .padding([.leading, .trailing])
             Spacer()
                 .frame(height: 8)
-            SearchBar(text: $searchText, isEditing: $isEditing)
-                .padding(.horizontal)
-            ScrollView(showsIndicators: false) {
-                VStack(alignment: .leading) {
-                    if isEditing {
-                        ForEach(nodeListSearch) { node in
-                            NodeCellView(node: node)
-                        }
-                    } else {
-                        ForEach(nodeTabList) { nodeTab in
-                            if nodeTab.state == currentTab {
-                                ForEach(nodeTab.data) { nodeListResult in
-                                    Text(nodeListResult.typeList.title)
-                                        .foregroundColor(AppColor.lightBlackText)
-                                        .font(Constant.BoardList.fontNodeList)
-                                        .padding()
-                                    ForEach(nodeListResult.nodeList) { node in
-                                        NodeCellView(node: node)
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
+            switch currentTab {
+            case .location:
+                LocationListView(nodeLocation: $nodeTabList[0], nodeSelect: $node)
+            case .staticIP:
+                StaticIPListView(nodeStaticList: $nodeStaticList, nodeSelect: $node)
+            case .multiHop:
+                 MultiHopView(nodeRecentList: $nodeMultihop,
+                              entryNodeList: $entryNodeList,
+                              exitNodeList: $exitNodeList,
+                              entryNodeSelect: $entryNodeSelect,
+                              exitNodeSelect: $exitNodeSelect)
             }
             Spacer()
         }
@@ -59,37 +53,29 @@ struct BoardListView: View {
         .background(AppColor.background)
         .ignoresSafeArea()
     }
-    
-    var nodeListSearch: [Node] {
-        if searchText.isEmpty {
-            return []
-        } else {
-            var allNode: [Node] = []
-            if let currentNodeTab = nodeTabList.filter({
-                $0.state == currentTab
-            }).first {
-                for i in 0..<currentNodeTab.data.count {
-                    if currentNodeTab.data[i].typeList == .all {
-                        allNode += currentNodeTab.data[i].nodeList
-                    }
-                }
-            }
-            return allNode.filter {
-//                $0.name.contains(searchText)
-                $0.name.range(of: searchText, options: .caseInsensitive) != nil
-            }
-        }
-    }
 }
 
 
 struct BoardListView_Previews: PreviewProvider {
     @State static var show = true
-    @State static var node: Node? = Node.simple1
+    @State static var node: Node? = Node.country
     @State static var nodeTabList: [NodeTab] = NodeTab.example
+    @State static var nodeMultihop =  [(Node.country, Node.tokyo), (Node.country, Node.tokyo)]
+    @State static var nodeStaticList = Node.cityNodeList
+    @State static var nodeList = Node.all
+    @State static var nodeSelectMultihop1 = Node.country
+    @State static var nodeSelectMultihop2 = Node.tokyo
     
     static var previews: some View {
-        BoardListView(nodeTabList: $nodeTabList, showBoardList: $show, currentTab: Binding<BoardViewModel.StateTab>.constant(.location),
-                      node: $node)
+        BoardListView(nodeTabList: $nodeTabList,
+                      showBoardList: $show,
+                      currentTab: Binding<BoardViewModel.StateTab>.constant(.location),
+                      node: $node,
+                      nodeStaticList: $nodeList,
+                      nodeMultihop: $nodeMultihop,
+                      entryNodeList: $nodeList,
+                      exitNodeList: $nodeList,
+                      entryNodeSelect: $nodeSelectMultihop1,
+                      exitNodeSelect: $nodeSelectMultihop2)
     }
 }
