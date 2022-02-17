@@ -51,9 +51,6 @@ struct BoardView: View {
                                 handlerTapRightNavigation()
                             })
                             StatusVPNView(ip: viewModel.ip, status: viewModel.state)
-                            Button("Logout") {
-                                authentication.logout()
-                            }
                             Spacer()
                             ConnectButton(status: viewModel.state,
                                           uploadSpeed: viewModel.uploadSpeed,

@@ -20,7 +20,7 @@ enum APIError: Error {
     case unknown
     
     var localizedDescription: String {
-        // user feedback
+        /// User feedback
         switch self {
         case .badURL, .parsing, .unknown, .tokenError, .someError, .permissionError:
             return "Sorry, something went wrong."
@@ -32,7 +32,7 @@ enum APIError: Error {
     }
     
     var description: String {
-        //info for debugging
+        /// Info for debugging
         switch self {
         case .unknown: return "unknown error"
         case .badURL: return "invalid URL"
@@ -56,7 +56,7 @@ enum APIService {
     case getSiteHtml(url: String)
     case getCountryList
     case getNodeTab
-    case register(email: String, password: String, name: String, ip: String, country: String, city: String)
+    case register(email: String, password: String, ip: String, country: String, city: String)
     case login(email: String, password: String, ip: String, country: String, city: String)
 }
 
@@ -107,11 +107,10 @@ extension APIService: TargetType {
     // In this example we will not pass anything in the body of the request.
     var task: Task {
         switch self {
-        case .register(let email, let password, let name, let ip, let country, let city):
+        case .register(let email, let password, let ip, let country, let city):
             var body: [String: Any] = [:]
             body["email"] = email
             body["password"] = password
-            body["name"] = name
             body["ip"] = ip
             body["country"] = country
             body["city"] = city

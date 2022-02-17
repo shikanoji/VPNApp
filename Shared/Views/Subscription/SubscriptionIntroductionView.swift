@@ -9,12 +9,14 @@ import Foundation
 import SwiftUI
 
 struct SubscriptionIntroduction: View {
+    @EnvironmentObject var registerResult: RegisterResultModel
     @State var toPlanSelection: Bool = false
+    @State var toWelcomeScreen: Bool = false
     var body: some View {
         Background {
             ScrollView(.vertical, showsIndicators: false) {
                 VStack(alignment: .center) {
-                    Spacer().frame(height: 80)
+                    Spacer().frame(height: 90)
                     Text(LocalizedStringKey.SubscriptionIntro.title.localized).setTitle()
                     Image("Subscription-Intro-Image")
                     Group {
@@ -42,18 +44,20 @@ struct SubscriptionIntroduction: View {
                         Spacer().frame(height: 30)
                     }
                     Group {
-                        NavigationLink(destination: PlanSelectionView(), isActive: $toPlanSelection) {
+                        NavigationLink(destination: PlanSelectionView().environmentObject(registerResult), isActive: $toPlanSelection) {
                         }
                         AppButton(width: 300, text: LocalizedStringKey.SubscriptionIntro.startFreeTrial.localized) {
                             toPlanSelection = true
                         }
                         Spacer().frame(height: 20)
+                        NavigationLink(destination: WelcomeView().environmentObject(registerResult), isActive: $toWelcomeScreen) {
+                        }
                         AppButton(width: 250, backgroundColor: Color.clear, textColor: AppColor.lightBlackText, text: LocalizedStringKey.SubscriptionIntro.continueWithoutSub.localized) {
-                            
+                            toWelcomeScreen = true
                         }
                         Spacer().frame(height: 15)
                     }
-                    Text(LocalizedStringKey.SubscriptionIntro.note.localized).setLightBlackText().frame(width: 300)
+                    Text(LocalizedStringKey.SubscriptionIntro.note.localized).foregroundColor(AppColor.lightBlackText).font(.system(size: 11)).frame(width: 300)
                     Spacer().frame(height: 20)
                 }
             }

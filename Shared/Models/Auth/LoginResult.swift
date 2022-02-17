@@ -37,6 +37,11 @@ struct Tokens: Decodable {
         access = try values.decode(Token.self, forKey: .access)
         refresh = try values.decode(Token.self, forKey: .refresh)
     }
+    
+    init(accessToken: Token = Token(), refreshToken: Token = Token()) {
+        self.access = accessToken
+        self.refresh = refreshToken
+    }
 }
 
 struct Token: Decodable {
@@ -51,28 +56,48 @@ struct Token: Decodable {
         expires = try values.decode(String.self, forKey: .expires)
     }
     
-    let token: String
-    let expires: String
+    init(token: String = "", expires: String = "") {
+        self.token = token
+        self.expires = expires
+    }
+    
+    var token: String
+    var expires: String
 }
 
 struct User: Decodable {
+    init(id: Int64 = 0, created_at: Int64 = 0, updated_at: Int64 = 0, email: String = "", password: String = "") {
+        self.id = id
+        self.created_at = created_at
+        self.updated_at = updated_at
+        self.email = email
+        self.password = password
+    }
+    
     enum CodingKeys: String, CodingKey {
         case id = "id"
-        case name = "name"
         case created_at = "created_at"
         case email = "email"
+        case updated_at = "updated_at"
+        case password = "password"
     }
     
     init(from decoder: Decoder) throws {
         let values = try decoder.container(keyedBy: CodingKeys.self)
         id = try values.decode(Int64.self, forKey: .id)
-        name = try values.decode(String.self, forKey: .name)
         created_at = try values.decode(Int64.self, forKey: .created_at)
         email = try values.decode(String.self, forKey: .email)
+        if values.contains(.updated_at) {
+            updated_at = try values.decode(Int64.self, forKey: .updated_at)
+        }
+        if values.contains(.password) {
+            password = try values.decode(String.self, forKey: .password)
+        }
     }
     
-    let id: Int64
-    let name: String
-    let created_at: Int64
-    let email: String
+    var id: Int64 = 0
+    var created_at: Int64 = 0
+    var updated_at: Int64 = 0
+    var email: String = ""
+    var password: String = ""
 }
