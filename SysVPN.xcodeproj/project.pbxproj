@@ -86,6 +86,8 @@
 		D79BF76127BD173600E76C37 /* APIManager+Auth.swift in Sources */ = {isa = PBXBuildFile; fileRef = D79BF76027BD173600E76C37 /* APIManager+Auth.swift */; };
 		D79BF76627BD27E000E76C37 /* APIResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = D79BF76527BD27E000E76C37 /* APIResponse.swift */; };
 		D79BF76B27BD31CD00E76C37 /* LoginResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = D79BF76A27BD31CD00E76C37 /* LoginResult.swift */; };
+		D79C224E27BE0FA100B54613 /* AppSetting+Board.swift in Sources */ = {isa = PBXBuildFile; fileRef = D79C224D27BE0FA100B54613 /* AppSetting+Board.swift */; };
+		D79C224F27BE0FA100B54613 /* AppSetting+Board.swift in Sources */ = {isa = PBXBuildFile; fileRef = D79C224D27BE0FA100B54613 /* AppSetting+Board.swift */; };
 		D79E82952796F671009E36F3 /* WelcomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D79E82942796F671009E36F3 /* WelcomeView.swift */; };
 		D79E82972796FE03009E36F3 /* Welcome.strings in Resources */ = {isa = PBXBuildFile; fileRef = D79E82962796FE03009E36F3 /* Welcome.strings */; };
 		D79E829927970649009E36F3 /* SetupVPNView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D79E829827970649009E36F3 /* SetupVPNView.swift */; };
@@ -268,6 +270,7 @@
 		D79BF76027BD173600E76C37 /* APIManager+Auth.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "APIManager+Auth.swift"; sourceTree = "<group>"; };
 		D79BF76527BD27E000E76C37 /* APIResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIResponse.swift; sourceTree = "<group>"; };
 		D79BF76A27BD31CD00E76C37 /* LoginResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginResult.swift; sourceTree = "<group>"; };
+		D79C224D27BE0FA100B54613 /* AppSetting+Board.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AppSetting+Board.swift"; sourceTree = "<group>"; };
 		D79E82942796F671009E36F3 /* WelcomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WelcomeView.swift; sourceTree = "<group>"; };
 		D79E82962796FE03009E36F3 /* Welcome.strings */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; path = Welcome.strings; sourceTree = "<group>"; };
 		D79E829827970649009E36F3 /* SetupVPNView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetupVPNView.swift; sourceTree = "<group>"; };
@@ -573,8 +576,8 @@
 		D78044E527590D630086E59D /* Common */ = {
 			isa = PBXGroup;
 			children = (
+				D79C224C27BE0F8700B54613 /* AppSetting */,
 				D79BF75C27BD10C600E76C37 /* Constant */,
-				D78044F3275912AC0086E59D /* AppSetting.swift */,
 				D78F47252761A53A0064A764 /* AppColor.swift */,
 			);
 			path = Common;
@@ -692,6 +695,15 @@
 				EE85EE0D27BDF5B6000F967A /* SelectionHandler.swift */,
 			);
 			path = Board;
+			sourceTree = "<group>";
+		};
+		D79C224C27BE0F8700B54613 /* AppSetting */ = {
+			isa = PBXGroup;
+			children = (
+				D78044F3275912AC0086E59D /* AppSetting.swift */,
+				D79C224D27BE0FA100B54613 /* AppSetting+Board.swift */,
+			);
+			path = AppSetting;
 			sourceTree = "<group>";
 		};
 		D7A4AC3F27952C3300C88162 /* PlanList */ = {
@@ -1104,6 +1116,7 @@
 				EEAD5C53277AC968008181E3 /* MapView.swift in Sources */,
 				EEEAF2172782E1A100A96114 /* NodeMapView.swift in Sources */,
 				D7A4AC472795743300C88162 /* NotificationNameExtension.swift in Sources */,
+				D79C224E27BE0FA100B54613 /* AppSetting+Board.swift in Sources */,
 				D7A4AC4127952C4700C88162 /* PlanListView.swift in Sources */,
 				D71CE5012790575D00E8731D /* PlanSelectionView.swift in Sources */,
 				EE85EDBD27B26FC4000F967A /* DescriptionMultihopView.swift in Sources */,
@@ -1209,6 +1222,7 @@
 				D78044C92758C6FC0086E59D /* ContentView.swift in Sources */,
 				6384B4F9276C43DD00E904D2 /* BoardViewModel.swift in Sources */,
 				EE85EDB427B2146B000F967A /* CityListView.swift in Sources */,
+				D79C224F27BE0FA100B54613 /* AppSetting+Board.swift in Sources */,
 				D78848942775D84900AF22C6 /* Authentication.swift in Sources */,
 				EE890FE127910FBD00ADF293 /* AccountView.swift in Sources */,
 				D7F9695927B262190037A3D0 /* DeviceViewModel.swift in Sources */,
