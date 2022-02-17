@@ -30,7 +30,7 @@ struct LoginView: View {
                     }
                     
                     Group{
-                        Form(placeholder: LocalizedStringKey.Login.emailPlaceholder.localized, value: $viewModel.username)
+                        Form(placeholder: LocalizedStringKey.Login.emailPlaceholder.localized, value: $viewModel.email)
                         Spacer().frame(height: 20)
                         Form(placeholder: LocalizedStringKey.Login.passwordPlaceholder.localized, value: $viewModel.password, isPassword: true)
                         Spacer().frame(height: 20)
@@ -43,7 +43,7 @@ struct LoginView: View {
                     Group {
                         AppButton(style: .themeButton, width: 311, text: LocalizedStringKey.Login.signin.localized) {
                             viewModel.login() {result in
-                                authentication.login(username: viewModel.username, password: viewModel.password)
+                                
                             }
                         }.disabled(viewModel.loginDisable)
                         Spacer().frame(height: 30)
@@ -84,6 +84,9 @@ struct LoginView: View {
                 }
             }
             .frame(maxWidth: .infinity, maxHeight: .infinity)
+        }.onAppear {
+            /// Pass authentication to view model because Environment object only receivable through view
+            viewModel.authentication = authentication
         }
     }
 }

@@ -56,6 +56,8 @@ enum APIService {
     case getSiteHtml(url: String)
     case getLocationCity
     case getNodeTab
+    case register(email: String, password: String, name: String, ip: String, country: String, city: String)
+    case login(email: String, password: String, ip: String, country: String, city: String)
 }
 
 extension APIService: TargetType {
@@ -67,7 +69,7 @@ extension APIService: TargetType {
         case .getNodeTab:
             return URL(string: Constant.api.getNodeTab)!
         default:
-            return URL(string: "")!
+            return URL(string: Constant.api.root)!
         }
         
     }
@@ -75,6 +77,10 @@ extension APIService: TargetType {
     // This is the path of each operation that will be appended to our base URL.
     var path: String {
         switch self {
+        case .register:
+            return Constant.api.path.register
+        case .login:
+            return Constant.api.path.login
         default:
             return ""
         }
@@ -89,6 +95,10 @@ extension APIService: TargetType {
             return .get
         case .getNodeTab:
             return .get
+        case .register:
+            return .post
+        case .login:
+            return .post
         }
     }
 
@@ -97,6 +107,23 @@ extension APIService: TargetType {
     // In this example we will not pass anything in the body of the request.
     var task: Task {
         switch self {
+        case .register(let email, let password, let name, let ip, let country, let city):
+            var body: [String: Any] = [:]
+            body["email"] = email
+            body["password"] = password
+            body["name"] = name
+            body["ip"] = ip
+            body["country"] = country
+            body["city"] = city
+            return .requestCompositeParameters(bodyParameters: body, bodyEncoding: JSONEncoding.prettyPrinted, urlParameters: [:])
+        case .login(let email, let password, let ip, let country, let city):
+            var body: [String: Any] = [:]
+            body["email"] = email
+            body["password"] = password
+            body["ip"] = ip
+            body["country"] = country
+            body["city"] = city
+            return .requestCompositeParameters(bodyParameters: body, bodyEncoding: JSONEncoding.prettyPrinted, urlParameters: [:])
         default:
             return .requestPlain
         }

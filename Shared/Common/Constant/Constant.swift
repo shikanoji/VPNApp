@@ -10,12 +10,6 @@ import UIKit
 import SwiftUI
 
 struct Constant {
-    struct api {
-        static let root = "google.com.vn"
-        static let getLocationCity = "google.com.vn"
-        static let getNodeTab = "google.com.vn"
-    }
-    
     struct Board {
         struct Image {
             static let setting = "icon_setting_board"
