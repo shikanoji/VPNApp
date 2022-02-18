@@ -55,7 +55,6 @@ enum APIError: Error {
 enum APIService {
     case getSiteHtml(url: String)
     case getCountryList
-    case getNodeTab
     case register(email: String, password: String, ip: String, country: String, city: String)
     case login(email: String, password: String, ip: String, country: String, city: String)
 }
@@ -64,10 +63,6 @@ extension APIService: TargetType {
     // This is the base URL we'll be using, typically our server.
     var baseURL: URL {
         switch self {
-        case .getCountryList:
-            return URL(string: Constant.api.getLocationCity)!
-        case .getNodeTab:
-            return URL(string: Constant.api.getNodeTab)!
         default:
             return URL(string: Constant.api.root)!
         }
@@ -81,6 +76,8 @@ extension APIService: TargetType {
             return Constant.api.path.register
         case .login:
             return Constant.api.path.login
+        case .getCountryList:
+            return Constant.api.path.getCountryList + "/\(AppSetting.shared.countryCode)/\(AppSetting.shared.ip)"
         default:
             return ""
         }
@@ -92,8 +89,6 @@ extension APIService: TargetType {
         case .getSiteHtml:
             return .get
         case .getCountryList:
-            return .get
-        case .getNodeTab:
             return .get
         case .register:
             return .post
@@ -123,6 +118,10 @@ extension APIService: TargetType {
             body["country"] = country
             body["city"] = city
             return .requestCompositeParameters(bodyParameters: body, bodyEncoding: JSONEncoding.prettyPrinted, urlParameters: [:])
+        case .getCountryList:
+            var param: [String: Any] = [:]
+            param["key"] = "f11b69c57d5fe9555e29c57c1d863bf8"
+            return .requestParameters(parameters: param, encoding: URLEncoding.queryString)
         default:
             return .requestPlain
         }
@@ -134,6 +133,11 @@ extension APIService: TargetType {
         switch self {
         case .getSiteHtml:
             return ["Content-type": "text/html"]
+        case .getCountryList:
+            return [
+                "Content-type": "application/json",
+                "Authorization": "Bearer \(AppSetting.shared.author)"
+            ]
         default:
             return ["Content-type": "application/json"]
         }

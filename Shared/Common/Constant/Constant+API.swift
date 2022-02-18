@@ -9,12 +9,11 @@ import Foundation
 extension Constant {
     struct api {
         static let root = "https://api.sysvpnconnect.com"
-        static let getLocationCity = "google.com.vn"
-        static let getNodeTab = "google.com.vn"
         
         struct path {
             static let register = "/shared/module_auth/v1/register"
             static let login = "/shared/module_auth/v1/login"
+            static let getCountryList = "app/module_server/v1/country/get_list"
         }
     }
 }

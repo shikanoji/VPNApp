@@ -33,10 +33,12 @@ struct ImageView: View {
     @ObservedObject var imageLoader:ImageLoader
     @State var image:UIImage = UIImage()
     @State var size: CGFloat = 100
+    var placeholder: UIImage = UIImage()
     
-    init(withURL url:String, size: CGFloat = 100) {
+    init(withURL url:String, size: CGFloat = 100, placeholder: UIImage? = nil) {
         self.size = size
         imageLoader = ImageLoader(urlString:url)
+        self.placeholder = placeholder ?? UIImage()
     }
     
     var body: some View {
@@ -45,7 +47,7 @@ struct ImageView: View {
             .aspectRatio(contentMode: .fit)
             .frame(width:size, height:size)
             .onReceive(imageLoader.didChange) { data in
-                self.image = UIImage(data: data) ?? UIImage()
+                self.image = UIImage(data: data) ?? placeholder
             }
     }
 }

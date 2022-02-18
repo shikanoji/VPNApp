@@ -24,7 +24,11 @@ struct APIResponse<T: Decodable>: Decodable {
     init(from decoder: Decoder) throws {
         let values = try decoder.container(keyedBy: CodingKeys.self)
         success = try values.decode(Bool.self, forKey: .success)
-        message = try values.decode(String.self, forKey: .message)
+        if let _message = try? values.decode(String.self, forKey: .message) {
+            self.message = _message
+        } else {
+            self.message = ""
+        }
         if let _errors = try? values.decode([Any].self, forKey: .errors) {
             self.errors = _errors
         } else {

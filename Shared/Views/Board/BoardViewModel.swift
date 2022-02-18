@@ -74,38 +74,53 @@ class BoardViewModel: ObservableObject {
     @Published var downloadSpeed: CGFloat = 1605
     @Published var showCityNodes: Bool = false
     @Published var nodeConnected: Node? = nil
-    @Published var nodeTabList: [NodeTab] = []
-    @Published var nodeTabStatic: [Node] = Node.all
-    @Published var nodeTabMutilhop = [(Node.country, Node.tokyo), (Node.country, Node.tokyo)]
+    
+    @Published var locationData: [NodeGroup] = []
+    @Published var staticIPData: [Node] = Node.all
+    @Published var mutilhopData = [(Node.country, Node.tokyo), (Node.country, Node.tokyo)]
+    
     @Published var entryNodeListMutilhop: [Node] = Node.all
     @Published var exitNodeListMutilhop: [Node] = Node.all
     @Published var entryNodeSelectMutilhop: Node = Node.country
     @Published var exitNodeSelectMutilhop: Node = Node.tokyo
+    @Published var countryListResult: CountryListResultModel?
+    @Published var mesh: Mesh = Mesh()
     
     let disposedBag = DisposeBag()
     
     init() {
-        //        getLocationAvaible()
+        getCountryList()
     }
-    
-    var x = true
     
     func connectVPN() {
         self.state = .loading
-        DispatchQueue.main.asyncAfter(deadline: .now() + 1) { [self] in
-            self.x.toggle()
-            self.state = self.x ? .notConnect : .connected
-        }
     }
     
     func getCountryList() {
-//        APIManager.shared.getCountryList()
-//            .subscribe { nodeTabList in
-//                self.nodeTabList = nodeTabList
-//            } onFailure: { err in
-//                self.nodeTabList = NodeTab.example
-////                self.errorMessage = err.localizedDescription
-//            }
-//            .disposed(by: self.disposedBag)
+        APIManager.shared.getCountryList()
+            .subscribe { [weak self] response in
+                guard let `self` = self else {
+                    return
+                }
+                if let result = response.result {
+                    self.configCountryList(result)
+                }
+            } onFailure: { error in
+                
+            }
+            .disposed(by: disposedBag)
+    }
+    
+    func configCountryList(_ result: CountryListResultModel) {
+        self.countryListResult = result
+        let countryNodes = result.availableCountries
+        var cityNodes = [Node]()
+        countryNodes.forEach { cityNodes.append(contentsOf: $0.cityNodeList) }
+        self.mesh.configNode(nodes: countryNodes, cityNodes: cityNodes)
+        
+        locationData = [
+            NodeGroup(nodeList: result.recommendedCountries, type: .recommend),
+            NodeGroup(nodeList: result.availableCountries, type: .all),
+        ]
     }
 }

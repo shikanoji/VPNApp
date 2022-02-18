@@ -28,6 +28,9 @@ enum AppKeys: String {
     case lineNetwork = "lineNetwork"
     case listNode = "listNode"
     case token = "token"
+    case countryCode = "countryCode"
+    case ip = "ip"
+    case author = "author"
 }
 
 struct AppSetting {
@@ -69,6 +72,33 @@ struct AppSetting {
         }
         set {
             UserDefaults.standard.setValue(newValue, forKey: AppKeys.showedNotice.rawValue)
+        }
+    }
+    
+    var countryCode: String {
+        get {
+            return UserDefaults.standard.string(forKey: AppKeys.countryCode.rawValue) ?? "VN"
+        }
+        set {
+            UserDefaults.standard.setValue(newValue, forKey: AppKeys.countryCode.rawValue)
+        }
+    }
+    
+    var ip: String {
+        get {
+            return UserDefaults.standard.string(forKey: AppKeys.ip.rawValue) ?? "192.168.1.1"
+        }
+        set {
+            UserDefaults.standard.setValue(newValue, forKey: AppKeys.ip.rawValue)
+        }
+    }
+    
+    var author: String {
+        get {
+            return UserDefaults.standard.string(forKey: AppKeys.author.rawValue) ?? "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjgsImlhdCI6MTY0NDg5OTcxOSwiZXhwIjoxNjQ2Njk5NzE5LCJ0eXBlIjoiYWNjZXNzIn0.YUoQgljtrK6RaSBpOjArAJZzkkRhorwZd42Pe51YmTo"
+        }
+        set {
+            UserDefaults.standard.setValue(newValue, forKey: AppKeys.author.rawValue)
         }
     }
 }

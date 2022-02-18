@@ -33,6 +33,11 @@ class Mesh: ObservableObject {
         newSet.append(replacement)
         nodes = newSet
     }
+    
+    func configNode(nodes: [Node] = [], cityNodes: [Node] = []) {
+        self.nodes = nodes
+        self.cityNodes = cityNodes
+    }
 }
 
 extension Mesh {

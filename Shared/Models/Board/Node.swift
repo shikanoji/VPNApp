@@ -8,24 +8,24 @@
 import Foundation
 import CoreGraphics
 
-typealias NodeID = UUID
+typealias NodeID = Int
 
 struct Node: Identifiable, Codable {
     var id: NodeID
     var name = ""
-    var iso2 = ""
-    var iso3 = ""
-    var region = ""
-    var subRegion = ""
-    var latitude = ""
-    var longitude = ""
-    var x: CGFloat = .zero
-    var y: CGFloat = .zero
-    var flag: String = ""
+    var iso2: String
+    var iso3: String
+    var region: String
+    var subRegion: String
+    var latitude: String
+    var longitude: String
+    var x: CGFloat
+    var y: CGFloat
+    var flag: String
     var isCity = false
     var cityNodeList = [Node]()
-    var countryId: Int
-    var countryName = ""
+    var countryId: Int?
+    var countryName: String?
     
     enum CodingKeys: String, CodingKey {
         case id
@@ -46,19 +46,72 @@ struct Node: Identifiable, Codable {
     init(from decoder: Decoder) throws {
         let values = try decoder.container(keyedBy: CodingKeys.self)
         
-        id = try values.decode(NodeID.self, forKey: .id)
-        name = try values.decode(String.self, forKey: .name)
-        iso2 = try values.decode(String.self, forKey: .iso2)
-        iso3 = try values.decode(String.self, forKey: .iso3)
-        region = try values.decode(String.self, forKey: .region)
-        subRegion = try values.decode(String.self, forKey: .subRegion)
-        latitude = try values.decode(String.self, forKey: .latitude)
-        longitude = try values.decode(String.self, forKey: .longitude)
-        flag = try values.decode(String.self, forKey: .flag)
-        cityNodeList = try values.decode([Node].self, forKey: .cityNodeList)
-        x = try values.decode(CGFloat.self, forKey: .x)
-        y = try values.decode(CGFloat.self, forKey: .y)
-        countryId = try values.decode(Int.self, forKey: .countryId)
+        if let _id = try? values.decode(NodeID.self, forKey: .id){
+            self.id = _id
+        } else {
+            self.id = 0
+        }
+        if let _name = try? values.decode(String.self, forKey: .name){
+            self.name = _name
+        } else {
+            self.name = ""
+        }
+        if let _iso2 = try? values.decode(String.self, forKey: .iso2){
+            self.iso2 = _iso2
+        } else {
+            self.iso2 = ""
+        }
+        if let _iso3 = try? values.decode(String.self, forKey: .iso3){
+            self.iso3 = _iso3
+        } else {
+            self.iso3 = ""
+        }
+        if let _region = try? values.decode(String.self, forKey: .region){
+            self.region = _region
+        } else {
+            self.region = ""
+        }
+        if let _subRegion = try? values.decode(String.self, forKey: .subRegion){
+            self.subRegion = _subRegion
+        } else {
+            self.subRegion = ""
+        }
+        if let _latitude = try? values.decode(String.self, forKey: .latitude){
+            self.latitude = _latitude
+        } else {
+            self.latitude = ""
+        }
+        if let _longitude = try? values.decode(String.self, forKey: .longitude){
+            self.longitude = _longitude
+        } else {
+            self.longitude = ""
+        }
+        if let _flag = try? values.decode(String.self, forKey: .flag){
+            self.flag = _flag
+        } else {
+            self.flag = ""
+        }
+        if let _cityNodeList = try? values.decode([Node].self, forKey: .cityNodeList){
+            self.cityNodeList = _cityNodeList
+        } else {
+            self.cityNodeList = []
+        }
+        if let _x = try? values.decode(CGFloat.self, forKey: .x){
+            self.x = _x
+        } else {
+            self.x = 0
+        }
+        if let _y = try? values.decode(CGFloat.self, forKey: .y){
+            self.y = _y
+        } else {
+            self.y = 0
+        }
+        
+        if let _countryId = try? values.decode(Int.self, forKey: .countryId){
+            self.countryId = _countryId
+        } else {
+            self.countryId = nil
+        }
         
         cityNodeList = cityNodeList.map { city -> Node in
             var updateCity = city
@@ -68,7 +121,7 @@ struct Node: Identifiable, Codable {
         }
     }
     
-    init(id: NodeID = NodeID(),
+    init(id: Int = 0,
          name: String = "",
          iso2: String = "",
          iso3: String = "",
@@ -98,6 +151,14 @@ struct Node: Identifiable, Codable {
         self.cityNodeList = cityNodeList
         self.countryName = countryName
         self.countryId = countryId
+    }
+    
+    func convertXToMap() -> CGFloat {
+        return (x / Constant.Board.Map.widthMapOrigin) * Constant.Board.Map.widthScreen
+    }
+    
+    func convertYToMap() -> CGFloat {
+        return (y / Constant.Board.Map.heightMapOrigin) * (Constant.Board.Map.widthScreen / Constant.Board.Map.ration)
     }
 }
 
@@ -160,16 +221,16 @@ extension Node {
     ]
 }
 
-enum NodeListType: Int {
+enum NodeGroupType: Int {
     case recent = 0
-    case recoomend = 1
+    case recommend = 1
     case all = 2
     
     var title: String {
         switch self {
         case .recent:
             return LocalizedStringKey.BoardList.recentLocation.localized
-        case .recoomend:
+        case .recommend:
             return LocalizedStringKey.BoardList.recommend.localized
         case .all:
             return LocalizedStringKey.BoardList.all.localized
@@ -177,78 +238,51 @@ enum NodeListType: Int {
     }
 }
 
-struct NodeListResult: Identifiable, Decodable {
+struct NodeGroup: Identifiable {
     let id = UUID()
-    var typeList: NodeListType
-    var nodeList: [Node]
+    var type: NodeGroupType
+    var list: [Node]
     
-    enum CodingKeys: String, CodingKey {
-        case id
-        case typeList
-        case nodeList
-    }
-    
-    init(from decoder: Decoder) throws {
-        let values = try decoder.container(keyedBy: CodingKeys.self)
-        nodeList = try values.decode([Node].self, forKey: .nodeList)
-        typeList = NodeListType(rawValue: try values.decode(Int.self, forKey: .typeList)) ?? .all
-    }
-    
-    init(nodeList: [Node], type: NodeListType) {
-        self.nodeList = nodeList
-        self.typeList = type
+    init(nodeList: [Node], type: NodeGroupType) {
+        self.list = nodeList
+        self.type = type
     }
 }
 
-extension NodeListResult {
-    static func == (lhs: NodeListResult, rhs: NodeListResult) -> Bool {
+extension NodeGroup {
+    static func == (lhs: NodeGroup, rhs: NodeGroup) -> Bool {
         return lhs.id == rhs.id
     }
 }
 
-struct NodeTab: Identifiable, Decodable {
+struct NodeTabData: Identifiable {
     let id = UUID()
-    var state: BoardViewModel.StateTab
-    var dataLocations: [NodeListResult] = []
-    var dataStaticIP: [NodeListResult] = []
-    var dataMultihop: [NodeListResult] = []
+    var dataLocations: [NodeGroup] = []
+    var dataStaticIP: [NodeGroup] = []
+    var dataMultihop: [NodeGroup] = []
     
-    enum CodingKeys: String, CodingKey {
-        case state
-        case data
-    }
-    
-    init(from decoder: Decoder) throws {
-        let values = try decoder.container(keyedBy: CodingKeys.self)
-        
-        state = BoardViewModel.StateTab(rawValue: try values.decode(Int.self, forKey: .state)) ?? .location
-        dataLocations = try values.decode([NodeListResult].self, forKey: .data)
-    }
-    
-    init(state: BoardViewModel.StateTab,
-         dataLocations: [NodeListResult] = [],
-         dataStaticIP: [NodeListResult] = [],
-         dataMultihop: [NodeListResult] = []) {
-        self.state = state
+    init(dataLocations: [NodeGroup] = [],
+         dataStaticIP: [NodeGroup] = [],
+         dataMultihop: [NodeGroup] = []) {
         self.dataLocations = dataLocations
         self.dataStaticIP = dataStaticIP
         self.dataMultihop = dataMultihop
     }
 }
 
-extension NodeListResult {
+extension NodeGroup {
     static let example = [
-        NodeListResult(nodeList: Node.recent, type: .recent),
-        NodeListResult(nodeList: Node.recommend, type: .recoomend),
-        NodeListResult(nodeList: Node.all, type: .all)
+        NodeGroup(nodeList: Node.recent, type: .recent),
+        NodeGroup(nodeList: Node.recommend, type: .recommend),
+        NodeGroup(nodeList: Node.all, type: .all)
     ]
 }
 
-extension NodeTab {
+extension NodeTabData {
     static let example = [
-        NodeTab(state: .location, dataLocations: NodeListResult.example)
+        NodeTabData(dataLocations: NodeGroup.example)
     ]
     
-    static let location = NodeTab(state: .location, dataLocations: NodeListResult.example)
-    static let multihop = NodeTab(state: .location)
+    static let location = NodeTabData(dataLocations: NodeGroup.example)
+    static let multihop = NodeTabData()
 }

@@ -20,7 +20,7 @@ struct NodeMapView: View {
             if !showCityNode {
                 ForEach(nodes) { node in
                     NodeView(scale: $scale, node: node, selection: self.selection)
-                        .position(x: node.x * scale, y: node.y * scale)
+                        .position(x: node.convertXToMap() * scale, y: node.convertYToMap() * scale - (scale - 0.8) * 8 - 18)
                         .onTapGesture {
                             self.selection.selectNode(node)
                         }

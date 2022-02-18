@@ -11,6 +11,8 @@ struct NodePopupView: View {
     @State var node: Node!
     @Binding var scale: CGFloat
     
+    let ensignSize: CGFloat = Constant.Board.NodePopupView.frameEnsign
+    
     var body: some View {
         VStack(spacing: -1) {
             getStateViewDescription()
@@ -54,10 +56,8 @@ struct NodePopupView: View {
             )
         } else {
             return AnyView(HStack {
-                Image(node.flag)
-                    .resizable()
-                    .frame(width: Constant.Board.NodePopupView.frameEnsign * scale,
-                           height: Constant.Board.NodePopupView.frameEnsign * scale)
+                ImageView(withURL: node.flag, size: ensignSize * scale)
+                    .clipShape(Circle())
                 Text(node.name)
                     .font(.system(size: Constant.Board.NodePopupView.sizeFont * scale,
                                   weight: Constant.Board.NodePopupView.weightFont))

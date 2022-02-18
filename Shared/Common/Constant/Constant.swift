@@ -65,7 +65,7 @@ struct Constant {
             static let sizeFont: CGFloat = 8
             static let weightFont: Font.Weight = .semibold
             static let paddingContent: CGFloat = 3.0
-            static let frameEnsign: CGFloat = 10.0
+            static let frameEnsign: CGFloat = 20.0
             static let widthTriangle: CGFloat = 12
             static let heightTriangle: CGFloat = 5
             static let backgroudTriangle: Color = .white
@@ -75,10 +75,15 @@ struct Constant {
         }
         
         struct Map {
-            static let minZoom: CGFloat = 0.1
+            static let minZoom: CGFloat = 1
             static let maxZoom: CGFloat = 4
             static let enableCityZoom: CGFloat = 3
             static let zoomCity: CGFloat = 0.75
+            static let widthScreen = UIScreen.main.bounds.width
+            static let heightScreen = UIScreen.main.bounds.height
+            static let widthMapOrigin: CGFloat = 2048
+            static let heightMapOrigin: CGFloat = 1588
+            static let ration: CGFloat = widthMapOrigin / heightMapOrigin
         }
     }
     
@@ -128,7 +133,7 @@ struct Constant {
         static let fontNameCity = Font.system(size: 13, weight: .bold)
         static let numberCities = Font.system(size: 11, weight: .bold)
         static let fontNodeList = Font.system(size: 12)
-        static let iconCity = Image("icon_board_city")
+        static let iconCity = UIImage(named: "icon_board_city")
     }
     
     struct StaticIP {
