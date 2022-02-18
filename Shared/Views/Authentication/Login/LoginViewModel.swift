@@ -10,35 +10,47 @@ import SwiftUI
 import Firebase
 import GoogleSignIn
 import AuthenticationServices
+import RxSwift
 
 enum LoginResult {
     case success
     case wrongPassword
     case accountNotExist
+    case error
 }
 
 class LoginViewModel: NSObject, ObservableObject {
-    @Published var username: String = ""
+    @Published var email: String = ""
     @Published var password: String = ""
     @Published var showAlert: Bool = false
     @Published var showProgressView: Bool = false
     var alertTitle: String = ""
     var alertMessage: String = ""
     var appleToken: String = ""
+    var disposedBag = DisposeBag()
+    var authentication: Authentication?
     var loginDisable: Bool {
-        username.isEmpty || password.isEmpty
+        email.isEmpty || password.isEmpty
     }
     
     func login(completion: @escaping (LoginResult) -> Void) {
-        //        alertTitle = "Login Success"
-        //        alertMessage = "Congrats!"
-        //        showAlert = true
         showProgressView = true
         
-        DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(3), execute: { [self] in
-            self.showProgressView = false
-            completion(.success)
-        })
+        APIManager.shared.login(email: email, password: password, ip: "127.0.0.1", country: "Hanoi", city: "VN")
+            .subscribe(onSuccess: { [self] response in
+                self.showProgressView = false
+                if let result = response.result, !result.tokens.access.token.isEmpty, !result.tokens.refresh.token.isEmpty {
+                    authentication?.login(email: email, accessToken: result.tokens.access.token, refreshToken:result.tokens.refresh.token)
+                    completion(.success)
+                } else {
+                    completion(.error)
+                }
+            }, onFailure: { error in
+                self.showProgressView = false
+                completion(.accountNotExist)
+            })
+        .disposed(by: disposedBag)
+        
     }
     
     //MARK: - Login with Google

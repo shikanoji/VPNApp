@@ -277,9 +277,36 @@ struct LocalizedStringKey {
         case cites = "BoardList.Cities"
         case avaiable = "BoardList.Available"
         case singleLocation = "BoardList.SingleLocation"
+        case cityOf = "BoardList.CityOf"
         
         var localized: String {
             return NSLocalizedString(self.rawValue, tableName: "Board", comment: "")
+        }
+    }
+    
+    enum MultiHop: String {
+        case whatIsMultiHop = "BoardList.MultiHop.What"
+        case recentConnections = "BoardList.MultiHop.RecentConnections"
+        case selectEntryLocation = "BoardList.MultiHop.SelectEntryLocation"
+        case selectExitLocation = "BoardList.MultiHop.SelectExitLocation"
+        case connect = "BoardList.MultiHop.Connect"
+        case exit = "BoardList.MultiHop.Exit"
+        case contentMultiHop = "BoardList.MultiHop.ContentMultiHop"
+        case gotIt = "BoardList.MultiHop.GotIt"
+        
+        var localized: String {
+            return NSLocalizedString(self.rawValue, tableName: "Board", comment: "")
+        }
+    }
+    
+    enum FAQ: String {
+        case title = "FAQ.title"
+        case vpnbasic = "FAQ.vpnbasic"
+        case sysvpnSubscription = "FAQ.sysvpnSubscription"
+        case aboutSysvpn = "FAQ.aboutSysvpn"
+        
+        var localized: String {
+            return NSLocalizedString(self.rawValue, tableName: "FAQ", comment: "")
         }
     }
 }

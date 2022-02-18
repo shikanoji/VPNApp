@@ -8,17 +8,19 @@
 import Foundation
 import SwiftUI
 class Authentication: ObservableObject {
-    @Published var isValidated = (!AppSetting.shared.password.isEmpty && !AppSetting.shared.username.isEmpty)
+    @Published var isValidated = (!AppSetting.shared.accessToken.isEmpty && !AppSetting.shared.email.isEmpty)
     
-    func login(username: String, password: String) {
-        AppSetting.shared.password = password
-        AppSetting.shared.username = username
-        isValidated = (!AppSetting.shared.password.isEmpty && !AppSetting.shared.username.isEmpty)
+    func login(email: String, accessToken: String, refreshToken: String) {
+        AppSetting.shared.email = email
+        AppSetting.shared.accessToken = accessToken
+        AppSetting.shared.refreshToken = refreshToken
+        isValidated = (!AppSetting.shared.accessToken.isEmpty && !AppSetting.shared.email.isEmpty)
     }
     
     func logout() {
-        AppSetting.shared.password = ""
-        AppSetting.shared.username = ""
-        isValidated = (!AppSetting.shared.password.isEmpty && !AppSetting.shared.username.isEmpty)
+        AppSetting.shared.email = ""
+        AppSetting.shared.accessToken = ""
+        AppSetting.shared.refreshToken = ""
+        isValidated = (!AppSetting.shared.accessToken.isEmpty && !AppSetting.shared.email.isEmpty)
     }
 }

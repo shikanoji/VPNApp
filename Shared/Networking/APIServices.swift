@@ -20,7 +20,7 @@ enum APIError: Error {
     case unknown
     
     var localizedDescription: String {
-        // user feedback
+        /// User feedback
         switch self {
         case .badURL, .parsing, .unknown, .tokenError, .someError, .permissionError:
             return "Sorry, something went wrong."
@@ -32,7 +32,7 @@ enum APIError: Error {
     }
     
     var description: String {
-        //info for debugging
+        /// Info for debugging
         switch self {
         case .unknown: return "unknown error"
         case .badURL: return "invalid URL"
@@ -54,20 +54,22 @@ enum APIError: Error {
 
 enum APIService {
     case getSiteHtml(url: String)
-    case getLocationCity
+    case getCountryList
     case getNodeTab
+    case register(email: String, password: String, ip: String, country: String, city: String)
+    case login(email: String, password: String, ip: String, country: String, city: String)
 }
 
 extension APIService: TargetType {
     // This is the base URL we'll be using, typically our server.
     var baseURL: URL {
         switch self {
-        case .getLocationCity:
+        case .getCountryList:
             return URL(string: Constant.api.getLocationCity)!
         case .getNodeTab:
             return URL(string: Constant.api.getNodeTab)!
         default:
-            return URL(string: "")!
+            return URL(string: Constant.api.root)!
         }
         
     }
@@ -75,6 +77,10 @@ extension APIService: TargetType {
     // This is the path of each operation that will be appended to our base URL.
     var path: String {
         switch self {
+        case .register:
+            return Constant.api.path.register
+        case .login:
+            return Constant.api.path.login
         default:
             return ""
         }
@@ -85,10 +91,14 @@ extension APIService: TargetType {
         switch self {
         case .getSiteHtml:
             return .get
-        case .getLocationCity:
+        case .getCountryList:
             return .get
         case .getNodeTab:
             return .get
+        case .register:
+            return .post
+        case .login:
+            return .post
         }
     }
 
@@ -97,6 +107,22 @@ extension APIService: TargetType {
     // In this example we will not pass anything in the body of the request.
     var task: Task {
         switch self {
+        case .register(let email, let password, let ip, let country, let city):
+            var body: [String: Any] = [:]
+            body["email"] = email
+            body["password"] = password
+            body["ip"] = ip
+            body["country"] = country
+            body["city"] = city
+            return .requestCompositeParameters(bodyParameters: body, bodyEncoding: JSONEncoding.prettyPrinted, urlParameters: [:])
+        case .login(let email, let password, let ip, let country, let city):
+            var body: [String: Any] = [:]
+            body["email"] = email
+            body["password"] = password
+            body["ip"] = ip
+            body["country"] = country
+            body["city"] = city
+            return .requestCompositeParameters(bodyParameters: body, bodyEncoding: JSONEncoding.prettyPrinted, urlParameters: [:])
         default:
             return .requestPlain
         }

@@ -29,7 +29,16 @@ struct BoardView: View {
                 SettingsView(showSettings: $showSettings,
                              statusConnect: $viewModel.state)
             } else if showBoardList {
-                BoardListView(nodeTabList: $viewModel.nodeTabList, showBoardList: $showBoardList, currentTab: $viewModel.tab, node: $viewModel.nodeConnected)
+                BoardListView(nodeTabList: $viewModel.nodeTabList,
+                              showBoardList: $showBoardList,
+                              currentTab: $viewModel.tab,
+                              node: $viewModel.nodeConnected,
+                              nodeStaticList: $viewModel.nodeTabStatic,
+                              nodeMultihop: $viewModel.nodeTabMutilhop,
+                              entryNodeList: $viewModel.entryNodeListMutilhop,
+                              exitNodeList: $viewModel.exitNodeListMutilhop,
+                              entryNodeSelect: $viewModel.entryNodeSelectMutilhop,
+                              exitNodeSelect: $viewModel.exitNodeSelectMutilhop)
             } else {
                 ZStack(alignment: .top) {
                     GeometryReader { geometry in
@@ -42,19 +51,17 @@ struct BoardView: View {
                                 handlerTapRightNavigation()
                             })
                             StatusVPNView(ip: viewModel.ip, status: viewModel.state)
-                            Button("Logout") {
-                                authentication.logout()
-                            }
                             Spacer()
                             ConnectButton(status: viewModel.state,
                                           uploadSpeed: viewModel.uploadSpeed,
                                           downloadSpeed: viewModel.downloadSpeed)
                                 .onTapGesture {
-                                    viewModel.getLocationAvaible()
+                                    viewModel.connectVPN()
                                 }
                             Spacer()
                                 .frame(height: Constant.Board.Tabs.topPadding)
                             BoardTabView(tab: $viewModel.tab, showBoardList: $showBoardList)
+                                .padding(.bottom)
                         }
                         .padding(/*@START_MENU_TOKEN@*/.all/*@END_MENU_TOKEN@*/)
                     }
@@ -64,8 +71,13 @@ struct BoardView: View {
             }
         }
         .onAppear {
-            viewModel.getNodeTab()
+//            viewModel.getNodeTab()
         }
+        .onChange(of: viewModel.nodeConnected, perform: { newValue in
+            showAccount = false
+            showSettings = false
+            showBoardList = false
+        })
         .animation(Animation.linear(duration: 0.25))
         .preferredColorScheme(.dark)
         .navigationBarHidden(true)

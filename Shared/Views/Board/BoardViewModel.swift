@@ -75,6 +75,12 @@ class BoardViewModel: ObservableObject {
     @Published var showCityNodes: Bool = false
     @Published var nodeConnected: Node? = nil
     @Published var nodeTabList: [NodeTab] = []
+    @Published var nodeTabStatic: [Node] = Node.all
+    @Published var nodeTabMutilhop = [(Node.country, Node.tokyo), (Node.country, Node.tokyo)]
+    @Published var entryNodeListMutilhop: [Node] = Node.all
+    @Published var exitNodeListMutilhop: [Node] = Node.all
+    @Published var entryNodeSelectMutilhop: Node = Node.country
+    @Published var exitNodeSelectMutilhop: Node = Node.tokyo
     
     let disposedBag = DisposeBag()
     
@@ -84,31 +90,22 @@ class BoardViewModel: ObservableObject {
     
     var x = true
     
-    func getLocationAvaible() {
+    func connectVPN() {
         self.state = .loading
         DispatchQueue.main.asyncAfter(deadline: .now() + 1) { [self] in
             self.x.toggle()
             self.state = self.x ? .notConnect : .connected
-            //            APIManager.shared.getLocationCity()
-            //                .subscribe { locations in
-            //                    self.locations = locations
-            //                    self.state = .connected
-            //                } onFailure: { err in
-            //                    self.errorMessage = err.localizedDescription
-            //                    self.state = .notConnect
-            //                }
-            //                .disposed(by: self.disposedBag)
         }
     }
     
-    func getNodeTab() {
-        APIManager.shared.getNodeTab()
-            .subscribe { nodeTabList in
-                self.nodeTabList = nodeTabList
-            } onFailure: { err in
-                self.nodeTabList = NodeTab.example
-//                self.errorMessage = err.localizedDescription
-            }
-            .disposed(by: self.disposedBag)
+    func getCountryList() {
+//        APIManager.shared.getCountryList()
+//            .subscribe { nodeTabList in
+//                self.nodeTabList = nodeTabList
+//            } onFailure: { err in
+//                self.nodeTabList = NodeTab.example
+////                self.errorMessage = err.localizedDescription
+//            }
+//            .disposed(by: self.disposedBag)
     }
 }

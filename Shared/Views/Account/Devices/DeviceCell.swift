@@ -11,7 +11,7 @@ struct DeviceCell: View {
     
     @State var deviceOnline: DeviceOnline
     
-    @State var position: PositionItemCell = .middle
+    var position: PositionItemCell = .middle
     
     var removeDevice: (() -> Void)?
     

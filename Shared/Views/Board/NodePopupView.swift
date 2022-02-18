@@ -9,6 +9,7 @@ import SwiftUI
 
 struct NodePopupView: View {
     @State var node: Node!
+    @Binding var scale: CGFloat
     
     var body: some View {
         VStack(spacing: -1) {
@@ -17,7 +18,8 @@ struct NodePopupView: View {
                 .background(Constant.Board.NodePopupView.backgroudTriangle)
                 .cornerRadius(Constant.Board.NodePopupView.cornerRadius)
             Triangle()
-                .frame(width: Constant.Board.NodePopupView.widthTriangle, height: Constant.Board.NodePopupView.heightTriangle)
+                .frame(width: Constant.Board.NodePopupView.widthTriangle * scale,
+                       height: Constant.Board.NodePopupView.heightTriangle * scale)
                 .foregroundColor(Constant.Board.NodePopupView.backgroudTriangle)
         }
     }
@@ -27,7 +29,7 @@ struct NodePopupView: View {
             return AnyView(
                 VStack(alignment: .center, spacing: 0) {
                     Text(node.name)
-                        .font(.system(size: Constant.Board.NodePopupView.sizeFont * Constant.Board.Map.zoomCity,
+                        .font(.system(size: Constant.Board.NodePopupView.sizeFont * Constant.Board.Map.zoomCity * scale ,
                                       weight: Constant.Board.NodePopupView.weightFont))
                         .lineLimit(Constant.Board.NodePopupView.numberLineText)
                         .frame(maxWidth: .infinity, maxHeight: .infinity)
@@ -35,40 +37,42 @@ struct NodePopupView: View {
                         .background(AppColor.backgroundCity)
                         .minimumScaleFactor(.leastNonzeroMagnitude)
                     HStack(spacing: 6) {
-                        Image(node.ensign)
+                        Image(node.flag)
                             .resizable()
-                            .frame(width: Constant.Board.NodePopupView.frameEnsign * Constant.Board.Map.zoomCity,
-                                   height: Constant.Board.NodePopupView.frameEnsign * Constant.Board.Map.zoomCity)
-                        Text(node.subName)
-                            .font(.system(size: Constant.Board.NodePopupView.sizeFont * Constant.Board.Map.zoomCity,
+                            .frame(width: Constant.Board.NodePopupView.frameEnsign * Constant.Board.Map.zoomCity * scale,
+                                   height: Constant.Board.NodePopupView.frameEnsign * Constant.Board.Map.zoomCity * scale)
+                        Text(node.subRegion)
+                            .font(.system(size: Constant.Board.NodePopupView.sizeFont * Constant.Board.Map.zoomCity * scale,
                                           weight: Constant.Board.NodePopupView.weightFont))
                             .lineLimit(Constant.Board.NodePopupView.numberLineText)
                     }
                     .frame(maxWidth: .infinity, maxHeight: .infinity)
                     .padding(Constant.Board.NodePopupView.paddingContent)
                 }
-                    .frame(height: Constant.Board.NodePopupView.heightContentPopupView * Constant.Board.Map.zoomCity)
+                    .frame(height: Constant.Board.NodePopupView.heightContentPopupView * Constant.Board.Map.zoomCity * scale)
                     .fixedSize(horizontal: true, vertical: false)
             )
         } else {
             return AnyView(HStack {
-                Image(node.ensign)
+                Image(node.flag)
                     .resizable()
-                    .frame(width: Constant.Board.NodePopupView.frameEnsign,
-                           height: Constant.Board.NodePopupView.frameEnsign)
+                    .frame(width: Constant.Board.NodePopupView.frameEnsign * scale,
+                           height: Constant.Board.NodePopupView.frameEnsign * scale)
                 Text(node.name)
-                    .font(.system(size: Constant.Board.NodePopupView.sizeFont,
+                    .font(.system(size: Constant.Board.NodePopupView.sizeFont * scale,
                                   weight: Constant.Board.NodePopupView.weightFont))
                     .lineLimit(Constant.Board.NodePopupView.numberLineText)
-            }.padding(5))
+            }.padding(10))
         }
     }
 }
 
 
 struct NodePopupView_Previews: PreviewProvider {
+    @State static var scale: CGFloat = 1.0
+    
     static var previews: some View {
-        NodePopupView(node: Node.simple0)
+        NodePopupView(node: Node.country, scale: $scale)
             .preferredColorScheme(.dark)
             .previewLayout(.sizeThatFits)
             .frame(width: 300.0, height: 300.0)

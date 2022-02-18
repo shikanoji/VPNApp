@@ -7,6 +7,7 @@
 import SwiftUI
 
 struct AccountView: View {
+    @EnvironmentObject var authentication: Authentication
     @Binding var showAccount: Bool
     
     @Binding var statusConnect: BoardViewModel.StateBoard
@@ -16,6 +17,8 @@ struct AccountView: View {
     @State private var showTotalDevice = false
     
     @State private var showAccountStatus = false
+    
+    @State private var showFAQ = false
     
     @State var sections: [DataSection] = [
         DataSection(type: .myAccount),
@@ -60,30 +63,32 @@ struct AccountView: View {
                                     .font(Constant.Menu.fontSectionTitle)
                                     .foregroundColor(AppColor.lightBlackText)
                                 ForEach(section.type.items) { item in
-                                    ItemRowView(item: item)
-                                        .onTapGesture {
-                                            switch item.type {
-                                            case .statusAccount:
-                                                self.showAccountStatus = true
-                                            case .totalDevice:
-                                                self.showTotalDevice = true
-                                            default:
-                                                return
-                                            }
+                                    Button {
+                                        switch item.type {
+                                        case .statusAccount:
+                                            self.showAccountStatus = true
+                                        case .totalDevice:
+                                            self.showTotalDevice = true
+                                        default:
+                                            return
                                         }
+                                    } label: {
+                                        ItemRowView(item: item)
+                                    }
                                 }
                             }
                         }
                         .padding([.top, .leading])
                         Spacer()
                         AppButton(style: .darkButton, width: UIScreen.main.bounds.size.width - 30, text: LocalizedStringKey.Account.signOut.localized) {
-                            print("Log out")
+                                authentication.logout()
                         }
                         Spacer()
                             .frame(height: 34)
                         NavigationLink(destination: InfomationView(showAccount: $showAccount, statusConnect: statusConnect), isActive: $showInfomation) { }
                         NavigationLink(destination: AccountStatusView(showAccount: $showAccount, statusConnect: statusConnect), isActive: $showAccountStatus) { }
-                        NavigationLink(destination: DevicesView(showAccount: $showAccount, statusConnect: statusConnect), isActive: $showTotalDevice) { }
+                        NavigationLink(destination: DevicesView(showAccount: $showAccount, statusConnect: statusConnect, viewModel: DeviceViewModel()), isActive: $showTotalDevice) { }
+                        NavigationLink(destination: FAQView(showAccount: $showAccount, statusConnect: statusConnect, viewModel: FAQViewModel()), isActive: $showFAQ) { }
                     }
                     .frame(
                         minHeight: geometry.size.height,
