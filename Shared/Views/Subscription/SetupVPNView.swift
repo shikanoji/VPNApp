@@ -37,13 +37,13 @@ struct SetupVPNView: View {
                         if !email.isEmpty, !accessToken.isEmpty, !refreshToken.isEmpty {
                             authentication.login(email: email, accessToken: accessToken, refreshToken: refreshToken)
                         }
-                        
                     }
                     Spacer().frame(height: 5)
                 }
                 .frame(width: UIScreen.main.bounds.width, height: 222)
                 .background(Color.black)
-                .cornerRadius(radius: 15, corners: [.topLeft, .topRight])            }
+                .cornerRadius(radius: 15, corners: [.topLeft, .topRight])
+            }
         }.background(BackgroundBlurView.init())
     }
 }

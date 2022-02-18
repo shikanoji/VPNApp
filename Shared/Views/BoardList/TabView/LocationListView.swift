@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct LocationListView: View {
-    @Binding var nodeLocation: NodeTab
+    @Binding var locationData: [NodeGroup]
     @Binding var nodeSelect: Node?
     @State var searchText = ""
     @State var isEditing = false
@@ -26,12 +26,12 @@ struct LocationListView: View {
                             NodeCellView(node: node)
                         }
                     } else {
-                        ForEach(nodeLocation.dataLocations) { nodeListResult in
-                            Text(nodeListResult.typeList.title)
+                        ForEach(locationData) { nodeList in
+                            Text(nodeList.type.title)
                                 .foregroundColor(AppColor.lightBlackText)
                                 .font(Constant.BoardList.fontNodeList)
                                 .padding(.leading)
-                            ForEach(nodeListResult.nodeList) { node in
+                            ForEach(nodeList.list) { node in
                                 Button(action: {
                                     if node.cityNodeList.count > 0 {
                                         cityNode = node
@@ -61,9 +61,9 @@ struct LocationListView: View {
             return []
         } else {
             var allNode: [Node] = []
-            for i in 0..<nodeLocation.dataLocations.count {
-                if nodeLocation.dataLocations[i].typeList == .all {
-                    allNode += nodeLocation.dataLocations[i].nodeList
+            for i in 0..<locationData.count {
+                if locationData[i].type == .all {
+                    allNode += locationData[i].list
                 }
             }
             return allNode.filter {
@@ -75,10 +75,10 @@ struct LocationListView: View {
 }
 
 struct LocationListView_Previews: PreviewProvider {
-    @State static var nodeTabList = NodeTab.location
+    @State static var locationData: [NodeGroup] = [NodeGroup.init(nodeList: Node.cityNodeList, type: .all)]
     @State static var nodeSelect: Node? = nil
     
     static var previews: some View {
-        LocationListView(nodeLocation: $nodeTabList, nodeSelect: $nodeSelect)
+        LocationListView(locationData: $locationData, nodeSelect: $nodeSelect)
     }
 }

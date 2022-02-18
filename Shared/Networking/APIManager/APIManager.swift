@@ -35,12 +35,13 @@ struct APIManager {
             }
     }
     
-    func getCountryList() -> Single<[Node]> {
+    func getCountryList() -> Single<APIResponse<CountryListResultModel>> {
         return provider.rx
             .request(.getCountryList)
             .filterSuccessfulStatusAndRedirectCodes()
             .map { response in
-                return try response.map([Node].self)
+                let result = try JSONDecoder().decode(APIResponse<CountryListResultModel>.self, from: response.data)
+                return result
             }
             .catch { error in
                 throw APIError.someError

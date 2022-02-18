@@ -126,6 +126,7 @@
 		EE85EE1227BDF5B6000F967A /* Node.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE85EE0E27BDF5B6000F967A /* Node.swift */; };
 		EE85EE1427BDF5C7000F967A /* DeviceOnline.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE85EE1327BDF5C7000F967A /* DeviceOnline.swift */; };
 		EE85EE1627BDF5CB000F967A /* PaymentHistory.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE85EE1527BDF5CB000F967A /* PaymentHistory.swift */; };
+		EE85EE1827BE3C4C000F967A /* CountryListResultModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE85EE1727BE3C4C000F967A /* CountryListResultModel.swift */; };
 		EE890FE027910FBD00ADF293 /* AccountView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE890FDF27910FBD00ADF293 /* AccountView.swift */; };
 		EE890FE127910FBD00ADF293 /* AccountView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE890FDF27910FBD00ADF293 /* AccountView.swift */; };
 		EE890FE32791101E00ADF293 /* CustomNavigationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE890FE22791101E00ADF293 /* CustomNavigationView.swift */; };
@@ -304,6 +305,7 @@
 		EE85EE0E27BDF5B6000F967A /* Node.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Node.swift; sourceTree = "<group>"; };
 		EE85EE1327BDF5C7000F967A /* DeviceOnline.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DeviceOnline.swift; sourceTree = "<group>"; };
 		EE85EE1527BDF5CB000F967A /* PaymentHistory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PaymentHistory.swift; sourceTree = "<group>"; };
+		EE85EE1727BE3C4C000F967A /* CountryListResultModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountryListResultModel.swift; sourceTree = "<group>"; };
 		EE890FDF27910FBD00ADF293 /* AccountView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountView.swift; sourceTree = "<group>"; };
 		EE890FE22791101E00ADF293 /* CustomNavigationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomNavigationView.swift; sourceTree = "<group>"; };
 		EE890FE527911FB600ADF293 /* Account.strings */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; path = Account.strings; sourceTree = "<group>"; };
@@ -697,6 +699,7 @@
 				EE85EE0B27BDF5B6000F967A /* Mesh.swift */,
 				EE85EE0E27BDF5B6000F967A /* Node.swift */,
 				EE85EE0D27BDF5B6000F967A /* SelectionHandler.swift */,
+				EE85EE1727BE3C4C000F967A /* CountryListResultModel.swift */,
 			);
 			path = Board;
 			sourceTree = "<group>";
@@ -1169,6 +1172,7 @@
 				EE890FEC2791310000ADF293 /* ItemRowView.swift in Sources */,
 				D78A35C8276B2F1400CC010D /* TextExtension.swift in Sources */,
 				EE85EE1027BDF5B6000F967A /* DataList.swift in Sources */,
+				EE85EE1827BE3C4C000F967A /* CountryListResultModel.swift in Sources */,
 				D7F9695C27B2AC980037A3D0 /* FAQView.swift in Sources */,
 				EE79F53127742B21006F0E5D /* BoardTabView.swift in Sources */,
 				D79BF76B27BD31CD00E76C37 /* LoginResult.swift in Sources */,
