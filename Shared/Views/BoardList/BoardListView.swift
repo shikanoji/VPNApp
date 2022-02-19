@@ -13,7 +13,10 @@ struct BoardListView: View {
     @Binding var node: Node?
     
     @Binding var locationData: [NodeGroup]
-    @Binding var staticIPData: [Node]
+    
+    @Binding var staticIPData: [StaticServer]
+    @Binding var staticNode: StaticServer?
+    
     @Binding var multihopData: [(Node, Node)]
     
     @Binding var entryNodeList: [Node]
@@ -38,7 +41,7 @@ struct BoardListView: View {
             case .location:
                 LocationListView(locationData: $locationData, nodeSelect: $node)
             case .staticIP:
-                StaticIPListView(nodeStaticList: $staticIPData, nodeSelect: $node)
+                StaticIPListView(staticIPData: $staticIPData, selectStaticServer: $staticNode)
             case .multiHop:
                  MultiHopView(nodeRecentList: $multihopData,
                               entryNodeList: $entryNodeList,
@@ -46,7 +49,6 @@ struct BoardListView: View {
                               entryNodeSelect: $entryNodeSelect,
                               exitNodeSelect: $exitNodeSelect)
             }
-            Spacer()
         }
         .frame(maxHeight: .infinity)
         .navigationBarHidden(true)
@@ -61,7 +63,10 @@ struct BoardListView_Previews: PreviewProvider {
     @State static var node: Node? = Node.country
     @State static var nodeTabList: [NodeGroup] = [NodeGroup.init(nodeList: Node.cityNodeList, type: .all)]
     @State static var nodeMultihop =  [(Node.country, Node.tokyo), (Node.country, Node.tokyo)]
-    @State static var nodeStaticList = Node.cityNodeList
+    
+    @State static var nodeStaticList = [StaticServer()]
+    @State static var staticNode: StaticServer? = nil
+    
     @State static var nodeList = Node.all
     @State static var nodeSelectMultihop1 = Node.country
     @State static var nodeSelectMultihop2 = Node.tokyo
@@ -71,7 +76,8 @@ struct BoardListView_Previews: PreviewProvider {
                       currentTab: Binding<BoardViewModel.StateTab>.constant(.location),
                       node: $node,
                       locationData: $nodeTabList,
-                      staticIPData: $nodeList,
+                      staticIPData: $nodeStaticList,
+                      staticNode: $staticNode,
                       multihopData: $nodeMultihop,
                       entryNodeList: $nodeList,
                       exitNodeList: $nodeList,

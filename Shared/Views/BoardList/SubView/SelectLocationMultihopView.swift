@@ -45,7 +45,8 @@ struct SelectLocationMultihopView: View {
                 VStack(alignment: .leading) {
                     if isEditing {
                         ForEach(nodeListSearch) { node in
-                            NodeCellStaticView(node: node)
+                            NodeCellView(node: node)
+//                            NodeCellStaticView(node: node)
                         }
                     } else {
                         ForEach(nodeList) { node in
@@ -58,7 +59,8 @@ struct SelectLocationMultihopView: View {
                                     presentationMode.wrappedValue.dismiss()
                                 }
                             }) {
-                                NodeCellStaticView(node: node)
+                                NodeCellView(node: node)
+//                                NodeCellStaticView(node: node)
                             }
                         }
                     }

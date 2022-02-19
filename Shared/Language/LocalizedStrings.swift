@@ -309,6 +309,15 @@ struct LocalizedStringKey {
             return NSLocalizedString(self.rawValue, tableName: "FAQ", comment: "")
         }
     }
+    
+    enum StaticIP: String {
+        case staticIP = "StaticIP"
+        case currentLoad = "CurrentLoad"
+        
+        var localized: String {
+            return NSLocalizedString(self.rawValue, tableName: "StaticIP", comment: "")
+        }
+    }
 }
 
 

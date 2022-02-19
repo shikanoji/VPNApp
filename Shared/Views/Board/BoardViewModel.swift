@@ -76,7 +76,10 @@ class BoardViewModel: ObservableObject {
     @Published var nodeConnected: Node? = nil
     
     @Published var locationData: [NodeGroup] = []
-    @Published var staticIPData: [Node] = Node.all
+    
+    @Published var staticIPData: [StaticServer] = []
+    @Published var staticIPNodeSelecte: StaticServer? = nil
+    
     @Published var mutilhopData = [(Node.country, Node.tokyo), (Node.country, Node.tokyo)]
     
     @Published var entryNodeListMutilhop: [Node] = Node.all
@@ -85,6 +88,19 @@ class BoardViewModel: ObservableObject {
     @Published var exitNodeSelectMutilhop: Node = Node.tokyo
     @Published var countryListResult: CountryListResultModel?
     @Published var mesh: Mesh = Mesh()
+    
+    @Published var configMapView: ConfigMapView = ConfigMapView()
+    
+    class ConfigMapView {
+        var firstload = true
+        var isConfig = false
+        var progressingScale: CGFloat = 1
+        var magScale: CGFloat = 1
+        var totalScale: CGFloat = 1
+        var location: CGPoint = CGPoint(
+            x: Constant.Board.Map.widthScreen / 2,
+            y: Constant.Board.Map.widthScreen)
+    }
     
     let disposedBag = DisposeBag()
     
@@ -116,11 +132,13 @@ class BoardViewModel: ObservableObject {
         let countryNodes = result.availableCountries
         var cityNodes = [Node]()
         countryNodes.forEach { cityNodes.append(contentsOf: $0.cityNodeList) }
-        self.mesh.configNode(nodes: countryNodes, cityNodes: cityNodes)
+        self.mesh.configNode(nodes: countryNodes, cityNodes: cityNodes, clientCountryNode: result.clientCountryDetail)
         
         locationData = [
             NodeGroup(nodeList: result.recommendedCountries, type: .recommend),
             NodeGroup(nodeList: result.availableCountries, type: .all),
         ]
+        
+        staticIPData = result.staticServers
     }
 }

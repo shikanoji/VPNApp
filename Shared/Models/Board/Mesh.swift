@@ -11,6 +11,7 @@ import CoreGraphics
 class Mesh: ObservableObject {
     @Published var nodes: [Node] = []
     @Published var cityNodes: [Node] = []
+    @Published var clientCountryNode: Node?
     
     init() {
         
@@ -34,9 +35,12 @@ class Mesh: ObservableObject {
         nodes = newSet
     }
     
-    func configNode(nodes: [Node] = [], cityNodes: [Node] = []) {
+    func configNode(nodes: [Node] = [],
+                    cityNodes: [Node] = [],
+                    clientCountryNode: Node?) {
         self.nodes = nodes
         self.cityNodes = cityNodes
+        self.clientCountryNode = clientCountryNode
     }
 }
 

@@ -18,6 +18,8 @@ struct StaticServer: Identifiable, Codable {
     var x: CGFloat
     var y: CGFloat
     var flag: String
+    var cityName: String
+    var status: CGFloat
     
     enum CodingKeys: String, CodingKey {
         case serverId
@@ -28,6 +30,8 @@ struct StaticServer: Identifiable, Codable {
         case flag
         case x
         case y
+        case status
+        case cityName
     }
     
     init(from decoder: Decoder) throws {
@@ -72,6 +76,41 @@ struct StaticServer: Identifiable, Codable {
         } else {
             self.y = 0
         }
+        if let _status = try? values.decode(CGFloat.self, forKey: .status){
+            self.status = _status
+        } else {
+            self.status = 0.5
+        }
+        if let _cityName = try? values.decode(String.self, forKey: .cityName){
+            self.cityName = _cityName
+        } else {
+            self.cityName = ""
+        }
+    }
+    
+    init(serverId: Int = 0,
+         name: String = "",
+         cityName: String = "",
+         subRegion: String = "",
+         latitude: String = "",
+         longitude: String = "",
+         x: CGFloat = .zero,
+         y: CGFloat = .zero,
+         flag: String = "",
+         status: CGFloat = 0) {
+        self.serverId = serverId
+        self.name = name
+        self.cityName = cityName
+        self.latitude = latitude
+        self.longitude = longitude
+        self.x = x
+        self.y = y
+        self.flag = flag
+        self.status = status
+    }
+    
+    func getSubContentCell() -> String {
+        return cityName + " #\(serverId)"
     }
 }
 

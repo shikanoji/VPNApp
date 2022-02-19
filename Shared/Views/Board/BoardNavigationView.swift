@@ -36,7 +36,6 @@ struct BoardNavigationView: View {
             .padding(.all, 5.0)
         }
         .frame(height: Constant.Board.Navigation.heightNavigationBar)
-        .background(AppColor.navigationBar)
     }
 }
 
