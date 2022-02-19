@@ -97,6 +97,7 @@
 		D7A4AC4327952C5900C88162 /* PlanListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7A4AC4227952C5900C88162 /* PlanListViewModel.swift */; };
 		D7A4AC4527954A7900C88162 /* PlanListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7A4AC4427954A7900C88162 /* PlanListCell.swift */; };
 		D7A4AC472795743300C88162 /* NotificationNameExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7A4AC462795743300C88162 /* NotificationNameExtension.swift */; };
+		D7F0EAB527BF9BB300B41015 /* GoogleService-Info-dev.plist in Resources */ = {isa = PBXBuildFile; fileRef = D7F0EAB427BF9BB300B41015 /* GoogleService-Info-dev.plist */; };
 		D7F9695827B262190037A3D0 /* DeviceViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7F9695727B262190037A3D0 /* DeviceViewModel.swift */; };
 		D7F9695927B262190037A3D0 /* DeviceViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7F9695727B262190037A3D0 /* DeviceViewModel.swift */; };
 		D7F9695C27B2AC980037A3D0 /* FAQView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7F9695B27B2AC980037A3D0 /* FAQView.swift */; };
@@ -282,6 +283,7 @@
 		D7A4AC4227952C5900C88162 /* PlanListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlanListViewModel.swift; sourceTree = "<group>"; };
 		D7A4AC4427954A7900C88162 /* PlanListCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlanListCell.swift; sourceTree = "<group>"; };
 		D7A4AC462795743300C88162 /* NotificationNameExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationNameExtension.swift; sourceTree = "<group>"; };
+		D7F0EAB427BF9BB300B41015 /* GoogleService-Info-dev.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info-dev.plist"; sourceTree = "<group>"; };
 		D7F9695727B262190037A3D0 /* DeviceViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviceViewModel.swift; sourceTree = "<group>"; };
 		D7F9695B27B2AC980037A3D0 /* FAQView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FAQView.swift; sourceTree = "<group>"; };
 		D7F9695E27B2B8590037A3D0 /* QuestionModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuestionModel.swift; sourceTree = "<group>"; };
@@ -497,6 +499,7 @@
 		D78044982758C6F90086E59D /* Shared */ = {
 			isa = PBXGroup;
 			children = (
+				D7F0EAB127BF9B8200B41015 /* GoogleService */,
 				D75F936F2773705400E16981 /* Language */,
 				D795FFA6275F6E7D00E54206 /* Components */,
 				D78044E827590DA80086E59D /* Models */,
@@ -509,7 +512,6 @@
 				D780449C2758C6F90086E59D /* ContentView.swift */,
 				D780449D2758C6F90086E59D /* Persistence.swift */,
 				D780449E2758C6FB0086E59D /* Assets.xcassets */,
-				D78044DC2758F46B0086E59D /* GoogleService-Info.plist */,
 				D78044992758C6F90086E59D /* SysVPN.xcdatamodeld */,
 				D78044E22758F54A0086E59D /* AppDelegate.swift */,
 				D795FFAB275F9AC500E54206 /* LaunchScreen.storyboard */,
@@ -721,6 +723,31 @@
 				D7A4AC4427954A7900C88162 /* PlanListCell.swift */,
 			);
 			path = PlanList;
+			sourceTree = "<group>";
+		};
+		D7F0EAB127BF9B8200B41015 /* GoogleService */ = {
+			isa = PBXGroup;
+			children = (
+				D7F0EAB327BF9B9D00B41015 /* Release */,
+				D7F0EAB227BF9B9200B41015 /* Dev */,
+			);
+			path = GoogleService;
+			sourceTree = "<group>";
+		};
+		D7F0EAB227BF9B9200B41015 /* Dev */ = {
+			isa = PBXGroup;
+			children = (
+				D7F0EAB427BF9BB300B41015 /* GoogleService-Info-dev.plist */,
+			);
+			path = Dev;
+			sourceTree = "<group>";
+		};
+		D7F0EAB327BF9B9D00B41015 /* Release */ = {
+			isa = PBXGroup;
+			children = (
+				D78044DC2758F46B0086E59D /* GoogleService-Info.plist */,
+			);
+			path = Release;
 			sourceTree = "<group>";
 		};
 		D7F9695A27B2AC860037A3D0 /* FAQ */ = {
@@ -981,6 +1008,7 @@
 				D784FA65275DA89B00A7A7F1 /* Global.strings in Resources */,
 				D75F9373277370BC00E16981 /* Login.strings in Resources */,
 				D785DFC527B4117F001FC84B /* FAQ.strings in Resources */,
+				D7F0EAB527BF9BB300B41015 /* GoogleService-Info-dev.plist in Resources */,
 				EE79F52F27741E4A006F0E5D /* Board.strings in Resources */,
 				EE89101B2797ADDE00ADF293 /* Settings.strings in Resources */,
 				D76BDD002785CF0B002DF290 /* Notice.strings in Resources */,
@@ -1419,7 +1447,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.ilg.SysVPN;
+				PRODUCT_BUNDLE_IDENTIFIER = com.ilg.SysVPN.dev;
 				PRODUCT_NAME = SysVPN;
 				SDKROOT = iphoneos;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
