@@ -79,9 +79,7 @@ struct LoginView: View {
                 }
                 .autocapitalization(.none)
                 .disabled(viewModel.showProgressView)
-                .onReceiveAlertWithAction(title: $viewModel.alertTitle, message: $viewModel.alertMessage, showing: $viewModel.showAlert) {
-                    //Handle Alert Confirmation
-                }
+                .onReceiveAlert(title: $viewModel.alertTitle, message: $viewModel.alertMessage, showing: $viewModel.showAlert)
             }
             .frame(maxWidth: .infinity, maxHeight: .infinity)
         }.onAppear {

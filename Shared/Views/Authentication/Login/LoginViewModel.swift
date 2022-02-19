@@ -43,6 +43,14 @@ class LoginViewModel: NSObject, ObservableObject {
                     authentication?.login(email: email, accessToken: result.tokens.access.token, refreshToken:result.tokens.refresh.token)
                     completion(.success)
                 } else {
+                    let error = response.errors
+                    if error.count > 0, let message = error[0] as? String {
+                        alertMessage = message
+                        showAlert = true
+                    } else if !response.message.isEmpty {
+                        alertMessage = response.message
+                        showAlert = true
+                    }
                     completion(.error)
                 }
             }, onFailure: { error in
@@ -71,6 +79,7 @@ class LoginViewModel: NSObject, ObservableObject {
                     return
                 }
                 let credential = GoogleAuthProvider.credential(withIDToken: idToken, accessToken: authentication.accessToken)
+                print(credential)
             }
         }
     }
