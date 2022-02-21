@@ -57,6 +57,9 @@ enum APIService {
     case getCountryList
     case register(email: String, password: String, ip: String, country: String, city: String)
     case login(email: String, password: String, ip: String, country: String, city: String)
+    case logout
+    case refreshToken(ip: String, country: String, city: String)
+    case forgotPassword(email: String, ip: String, country: String, city: String)
 }
 
 extension APIService: TargetType {
@@ -66,7 +69,6 @@ extension APIService: TargetType {
         default:
             return URL(string: Constant.api.root)!
         }
-        
     }
 
     // This is the path of each operation that will be appended to our base URL.
@@ -76,6 +78,12 @@ extension APIService: TargetType {
             return Constant.api.path.register
         case .login:
             return Constant.api.path.login
+        case .logout:
+            return Constant.api.path.logout
+        case .refreshToken:
+            return Constant.api.path.refreshToken
+        case .forgotPassword:
+            return Constant.api.path.forgotPassword
         case .getCountryList:
             return Constant.api.path.getCountryList + "/\(AppSetting.shared.countryCode)/\(AppSetting.shared.ip)"
         default:
@@ -93,6 +101,12 @@ extension APIService: TargetType {
         case .register:
             return .post
         case .login:
+            return .post
+        case .logout:
+            return .post
+        case .refreshToken:
+            return .post
+        case .forgotPassword:
             return .post
         }
     }
@@ -114,6 +128,24 @@ extension APIService: TargetType {
             var body: [String: Any] = [:]
             body["email"] = email
             body["password"] = password
+            body["ip"] = ip
+            body["country"] = country
+            body["city"] = city
+            return .requestCompositeParameters(bodyParameters: body, bodyEncoding: JSONEncoding.prettyPrinted, urlParameters: [:])
+        case .logout:
+            var body: [String: Any] = [:]
+            body["refreshToken"] = AppSetting.shared.refreshToken
+            return .requestCompositeParameters(bodyParameters: body, bodyEncoding: JSONEncoding.prettyPrinted, urlParameters: [:])
+        case .refreshToken(let ip, let country, let city):
+            var body: [String: Any] = [:]
+            body["refreshToken"] = AppSetting.shared.refreshToken
+            body["ip"] = ip
+            body["country"] = country
+            body["city"] = city
+            return .requestCompositeParameters(bodyParameters: body, bodyEncoding: JSONEncoding.prettyPrinted, urlParameters: [:])
+        case .forgotPassword(let email, let ip, let country, let city):
+            var body: [String: Any] = [:]
+            body["email"] = email
             body["ip"] = ip
             body["country"] = country
             body["city"] = city
