@@ -22,7 +22,7 @@ struct BoardView: View {
         VStack(spacing: 0.0) {
             if showAccount {
                 AccountView(showAccount: $showAccount,
-                            statusConnect: $viewModel.state)
+                            statusConnect: $viewModel.state, viewModel: AccountViewModel())
             } else if showSettings{
                 SettingsView(showSettings: $showSettings,
                              statusConnect: $viewModel.state)
