@@ -25,4 +25,7 @@ struct AppColor {
     static let green = Color(hex: "4CD964")
     static let whiteStatus = Color(hex: "E7E8F0")
     static let borderSearch = Color(hex: "4D4F5C")
+    static let greenGradient = Color(hex: "0CBC92")
+    static let yellowGradient = Color(hex: "CEA71B")
+    static let redradient = Color(hex: "BF1616")
 }

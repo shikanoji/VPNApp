@@ -138,6 +138,9 @@ struct Constant {
     
     struct StaticIP {
         static let iconS = Image("icon_static")
+        
+        static let widthStatusStatic: CGFloat = 40
+        static let heightStatusStatic: CGFloat = 8
     }
     
     struct MultiHop {

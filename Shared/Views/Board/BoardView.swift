@@ -32,6 +32,7 @@ struct BoardView: View {
                               node: $viewModel.nodeConnected,
                               locationData: $viewModel.locationData,
                               staticIPData: $viewModel.staticIPData,
+                              staticNode: $viewModel.staticIPNodeSelecte,
                               multihopData: $viewModel.mutilhopData,
                               entryNodeList: $viewModel.entryNodeListMutilhop,
                               exitNodeList: $viewModel.exitNodeListMutilhop,
@@ -40,7 +41,10 @@ struct BoardView: View {
             } else {
                 ZStack(alignment: .top) {
                     GeometryReader { geometry in
-                        MapView(mesh: viewModel.mesh, selection: selection, showCityNodes: $viewModel.showCityNodes)
+                        MapView(mesh: viewModel.mesh,
+                                selection: selection,
+                                showCityNodes: $viewModel.showCityNodes,
+                                configMapView: viewModel.configMapView)
                         VStack {
                             BoardNavigationView(status: viewModel.state,
                                                 tapLeftIcon: {

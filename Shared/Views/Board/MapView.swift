@@ -26,6 +26,8 @@ struct MapView: View {
     @GestureState private var fingerLocation: CGPoint? = nil
     @GestureState private var startLocation: CGPoint? = nil
     
+    @State var configMapView: BoardViewModel.ConfigMapView
+    
     var simpleDrag: some Gesture {
         DragGesture()
             .onChanged { value in
@@ -62,8 +64,15 @@ struct MapView: View {
                           y: location.y + totalScale)
         }
         .onReceive(selection.$selectedNodeIDs) {
-            if let id = $0.first {
-                moveToNode(id)
+            if let id = $0.first, let node = mesh.nodeWithID(id) {
+                moveToNode(node)
+            }
+        }
+        .onReceive(mesh.$clientCountryNode) {
+            if configMapView.firstload, let node = $0 {
+                totalScale = 3
+                moveToNode(node)
+                configMapView.firstload = false
             }
         }
         .animation(.easeIn)
@@ -83,6 +92,22 @@ struct MapView: View {
                     onEndedZoom($0)
                 })
         .background(AppColor.background)
+        .onAppear {
+            if configMapView.isConfig {
+                progressingScale = configMapView.progressingScale
+                magScale = configMapView.magScale
+                totalScale = configMapView.totalScale
+                location = configMapView.location
+                configMapView.isConfig = false
+            }
+        }
+        .onDisappear {
+            configMapView.isConfig = true
+            configMapView.progressingScale = progressingScale
+            configMapView.magScale = magScale
+            configMapView.totalScale = totalScale
+            configMapView.location = location
+        }
     }
     
     private func onChangedZoom(_ newValue: CGFloat) {
@@ -136,28 +161,27 @@ struct MapView: View {
         }
     }
     
-    func moveToNode(_ id: NodeID) {
-        if let xNode = mesh.nodeWithID(id)?.convertXToMap(),
-           let yNode = mesh.nodeWithID(id)?.convertYToMap() {
-            let x = totalScale * (widthMap / 2 - xNode) + Constant.Board.Map.widthScreen / 2
-            let y = totalScale * (heightMap / 2 - yNode) + Constant.Board.Map.widthScreen
-            
-            location = CGPoint(
-                x: x,
-                y: y)
-            
-            checkCollision()
-        }
+    func moveToNode(_ node: Node) {
+        let xNode = node.convertXToMap()
+        let yNode = node.convertYToMap()
+        let x = totalScale * (widthMap / 2 - xNode) + Constant.Board.Map.widthScreen / 2
+        let y = totalScale * (heightMap / 2 - yNode) + Constant.Board.Map.widthScreen
+        
+        location = CGPoint(
+            x: x,
+            y: y)
+        
+        checkCollision()
     }
 }
 
 struct MapView_Previews: PreviewProvider {
-    
+    @State static var configMapView = BoardViewModel.ConfigMapView()
     @State static var value = false
     
     static var previews: some View {
         let mesh = Mesh.sampleMesh()
-        return MapView(mesh: mesh, selection: SelectionHandler(), showCityNodes: $value)
+        return MapView(mesh: mesh, selection: SelectionHandler(), showCityNodes: $value, configMapView: configMapView)
     }
 }
 

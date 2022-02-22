@@ -8,41 +8,44 @@
 import SwiftUI
 
 struct StaticIPListView: View {
-    @Binding var nodeStaticList: [Node]
-    @Binding var nodeSelect: Node?
+    @Binding var staticIPData: [StaticServer]
+    @Binding var selectStaticServer: StaticServer?
     @State var searchText = ""
     @State var isEditing = false
-    @State var showCityListView = false
-    @State var cityNode: Node?
     
     var body: some View {
         VStack(spacing: 8) {
             SearchBar(text: $searchText, isEditing: $isEditing)
                 .padding(.horizontal)
             ScrollView(showsIndicators: false) {
+                HStack {
+                    Text(LocalizedStringKey.StaticIP.staticIP.localized)
+                        .foregroundColor(AppColor.lightBlackText)
+                        .font(.system(size: 12))
+                    Spacer()
+                    Text(LocalizedStringKey.StaticIP.currentLoad.localized)
+                        .foregroundColor(AppColor.backgroundStatusView)
+                        .font(.system(size: 9))
+                }
+                .padding(.all)
                 VStack(alignment: .leading) {
                     if isEditing {
                         ForEach(nodeListSearch) { node in
                             NodeCellStaticView(node: node)
                         }
                     } else {
-                        ForEach(nodeStaticList) { node in
+                        ForEach(staticIPData) { node in
                             Button(action: {
-                                if node.cityNodeList.count > 0 {
-                                    cityNode = node
-                                    showCityListView = true
-                                } else {
-                                    nodeSelect = node
-                                }
+                                selectStaticServer = node
                             }) {
                                 NodeCellStaticView(node: node)
                             }
                         }
                     }
                 }
+                .padding()
             }
             Spacer()
-            NavigationLink(destination: CityListView(nodeSelect: $nodeSelect, node: cityNode ?? Node.country), isActive: $showCityListView) { }
         }
         .frame(maxHeight: .infinity)
         .navigationBarHidden(true)
@@ -50,11 +53,11 @@ struct StaticIPListView: View {
         .ignoresSafeArea()
     }
     
-    var nodeListSearch: [Node] {
+    var nodeListSearch: [StaticServer] {
         if searchText.isEmpty {
             return []
         } else {
-            return nodeStaticList.filter {
+            return staticIPData.filter {
                 //                $0.name.contains(searchText)
                 $0.name.range(of: searchText, options: .caseInsensitive) != nil
             }
@@ -63,10 +66,10 @@ struct StaticIPListView: View {
 }
 
 struct StaticIPListView_Previews: PreviewProvider {
-    @State static var nodeStaticList = Node.cityNodeList
-    @State static var nodeSelect: Node? = nil
+    @State static var nodeStaticList = [StaticServer()]
+    @State static var nodeSelect: StaticServer? = nil
     
     static var previews: some View {
-        StaticIPListView(nodeStaticList: $nodeStaticList, nodeSelect: $nodeSelect)
+        StaticIPListView(staticIPData: $nodeStaticList, selectStaticServer: $nodeSelect)
     }
 }

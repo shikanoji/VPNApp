@@ -24,7 +24,7 @@ struct MultiHopView: View {
     @Binding var exitNodeSelect: Node
     
     var body: some View {
-        VStack(alignment: .leading, spacing: 20) {
+        VStack(alignment: .leading, spacing: 8) {
             Button {
                 showDescriptionMultihop = true
             } label: {

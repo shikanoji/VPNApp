@@ -121,8 +121,6 @@
 		EE85EDC127B369B6000F967A /* StaticIPListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE85EDC027B369B6000F967A /* StaticIPListView.swift */; };
 		EE85EDC327B37120000F967A /* NodeCellStaticView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE85EDC227B37120000F967A /* NodeCellStaticView.swift */; };
 		EE85EDC527B374AA000F967A /* SelectLocationMultihopView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE85EDC427B374AA000F967A /* SelectLocationMultihopView.swift */; };
-		EE85EE0927BDF395000F967A /* StaticServer.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE85EE0827BDF395000F967A /* StaticServer.swift */; };
-		EE85EE0A27BDF395000F967A /* StaticServer.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE85EE0827BDF395000F967A /* StaticServer.swift */; };
 		EE85EE0F27BDF5B6000F967A /* Mesh.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE85EE0B27BDF5B6000F967A /* Mesh.swift */; };
 		EE85EE1027BDF5B6000F967A /* DataList.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE85EE0C27BDF5B6000F967A /* DataList.swift */; };
 		EE85EE1127BDF5B6000F967A /* SelectionHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE85EE0D27BDF5B6000F967A /* SelectionHandler.swift */; };
@@ -175,6 +173,10 @@
 		EE8910742799458A00ADF293 /* NodeCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE8910732799458A00ADF293 /* NodeCellView.swift */; };
 		EE8910752799458A00ADF293 /* NodeCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE8910732799458A00ADF293 /* NodeCellView.swift */; };
 		EE891077279947FA00ADF293 /* ImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE891076279947FA00ADF293 /* ImageView.swift */; };
+		EE9B8B5227C33A230077BCFC /* MapViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE9B8B5127C33A230077BCFC /* MapViewModel.swift */; };
+		EE9B8B5627C37C320077BCFC /* LinearGradientStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE9B8B5527C37C320077BCFC /* LinearGradientStatus.swift */; };
+		EE9B8B5827C387C50077BCFC /* StaticServer.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE9B8B5727C387C50077BCFC /* StaticServer.swift */; };
+		EE9B8B5A27C391210077BCFC /* StaticIP.strings in Resources */ = {isa = PBXBuildFile; fileRef = EE9B8B5927C391210077BCFC /* StaticIP.strings */; };
 		EEAD5C512779C2D3008181E3 /* SpeedConnectedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEAD5C502779C2D3008181E3 /* SpeedConnectedView.swift */; };
 		EEAD5C53277AC968008181E3 /* MapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEAD5C52277AC968008181E3 /* MapView.swift */; };
 		EEAD5C5B277D9654008181E3 /* NodeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEAD5C5A277D9654008181E3 /* NodeView.swift */; };
@@ -304,7 +306,6 @@
 		EE85EDC027B369B6000F967A /* StaticIPListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StaticIPListView.swift; sourceTree = "<group>"; };
 		EE85EDC227B37120000F967A /* NodeCellStaticView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NodeCellStaticView.swift; sourceTree = "<group>"; };
 		EE85EDC427B374AA000F967A /* SelectLocationMultihopView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectLocationMultihopView.swift; sourceTree = "<group>"; };
-		EE85EE0827BDF395000F967A /* StaticServer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StaticServer.swift; sourceTree = "<group>"; };
 		EE85EE0B27BDF5B6000F967A /* Mesh.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Mesh.swift; sourceTree = "<group>"; };
 		EE85EE0C27BDF5B6000F967A /* DataList.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataList.swift; sourceTree = "<group>"; };
 		EE85EE0D27BDF5B6000F967A /* SelectionHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SelectionHandler.swift; sourceTree = "<group>"; };
@@ -335,6 +336,10 @@
 		EE8910702798FBD500ADF293 /* SearchBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchBar.swift; sourceTree = "<group>"; };
 		EE8910732799458A00ADF293 /* NodeCellView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NodeCellView.swift; sourceTree = "<group>"; };
 		EE891076279947FA00ADF293 /* ImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageView.swift; sourceTree = "<group>"; };
+		EE9B8B5127C33A230077BCFC /* MapViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapViewModel.swift; sourceTree = "<group>"; };
+		EE9B8B5527C37C320077BCFC /* LinearGradientStatus.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LinearGradientStatus.swift; sourceTree = "<group>"; };
+		EE9B8B5727C387C50077BCFC /* StaticServer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StaticServer.swift; sourceTree = "<group>"; };
+		EE9B8B5927C391210077BCFC /* StaticIP.strings */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; path = StaticIP.strings; sourceTree = "<group>"; };
 		EEAD5C502779C2D3008181E3 /* SpeedConnectedView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpeedConnectedView.swift; sourceTree = "<group>"; };
 		EEAD5C52277AC968008181E3 /* MapView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapView.swift; sourceTree = "<group>"; };
 		EEAD5C5A277D9654008181E3 /* NodeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NodeView.swift; sourceTree = "<group>"; };
@@ -400,6 +405,7 @@
 				EE79F53227758896006F0E5D /* StopWatch.swift */,
 				EEAD5C502779C2D3008181E3 /* SpeedConnectedView.swift */,
 				EEAD5C52277AC968008181E3 /* MapView.swift */,
+				EE9B8B5127C33A230077BCFC /* MapViewModel.swift */,
 				EEEAF2162782E1A100A96114 /* NodeMapView.swift */,
 				EEAD5C5A277D9654008181E3 /* NodeView.swift */,
 				EEEAF2182785834200A96114 /* NodePopupView.swift */,
@@ -424,6 +430,7 @@
 			children = (
 				D784FA67275DA89B00A7A7F1 /* Global.strings */,
 				D784FA68275DA90300A7A7F1 /* LocalizedStrings.swift */,
+				EE9B8B5927C391210077BCFC /* StaticIP.strings */,
 				D75F9370277370AE00E16981 /* Introduction.strings */,
 				D75F9372277370BC00E16981 /* Login.strings */,
 				EE79F52E27741E4A006F0E5D /* Board.strings */,
@@ -628,7 +635,6 @@
 				D79BF76727BD2E1600E76C37 /* Payment */,
 				D79BF76227BD25B600E76C37 /* Auth */,
 				D79BF76527BD27E000E76C37 /* APIResponse.swift */,
-				EE85EE0827BDF395000F967A /* StaticServer.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -705,6 +711,7 @@
 				EE85EE0C27BDF5B6000F967A /* DataList.swift */,
 				EE85EE0B27BDF5B6000F967A /* Mesh.swift */,
 				EE85EE0E27BDF5B6000F967A /* Node.swift */,
+				EE9B8B5727C387C50077BCFC /* StaticServer.swift */,
 				EE85EE0D27BDF5B6000F967A /* SelectionHandler.swift */,
 				EE85EE1727BE3C4C000F967A /* CountryListResultModel.swift */,
 			);
@@ -804,6 +811,7 @@
 				EE8910702798FBD500ADF293 /* SearchBar.swift */,
 				EE85EDC227B37120000F967A /* NodeCellStaticView.swift */,
 				EE85EDC427B374AA000F967A /* SelectLocationMultihopView.swift */,
+				EE9B8B5527C37C320077BCFC /* LinearGradientStatus.swift */,
 			);
 			path = SubView;
 			sourceTree = "<group>";
@@ -1003,6 +1011,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				EE890FE627911FB600ADF293 /* Account.strings in Resources */,
+				EE9B8B5A27C391210077BCFC /* StaticIP.strings in Resources */,
 				D78044CC2758C6FC0086E59D /* Assets.xcassets in Resources */,
 				D78848922775AB5600AF22C6 /* Register.strings in Resources */,
 				D7874DF5277AF04900ADC7AD /* ForgotPassword.strings in Resources */,
@@ -1152,6 +1161,7 @@
 				D79C225127BE31CE00B54613 /* RegisterResult.swift in Sources */,
 				EE85EDB327B21467000F967A /* CityListView.swift in Sources */,
 				D71CE4FD27903D4F00E8731D /* SubscriptionIntroductionView.swift in Sources */,
+				EE9B8B5827C387C50077BCFC /* StaticServer.swift in Sources */,
 				D788B18927635BC000855C24 /* AppButton.swift in Sources */,
 				D78044E12758F5110086E59D /* UIApplicationExtension.swift in Sources */,
 				6353F842276F333900B42334 /* StatusVPNView.swift in Sources */,
@@ -1163,6 +1173,7 @@
 				D71CE5012790575D00E8731D /* PlanSelectionView.swift in Sources */,
 				EE85EDBD27B26FC4000F967A /* DescriptionMultihopView.swift in Sources */,
 				D78044F227590E990086E59D /* TextModifier.swift in Sources */,
+				EE9B8B5227C33A230077BCFC /* MapViewModel.swift in Sources */,
 				D79E82952796F671009E36F3 /* WelcomeView.swift in Sources */,
 				EE85EE1427BDF5C7000F967A /* DeviceOnline.swift in Sources */,
 				D78AC3E527858D860056FCC0 /* NoticeView.swift in Sources */,
@@ -1198,11 +1209,11 @@
 				D78F472E2761D20C0064A764 /* RegisterViewModel.swift in Sources */,
 				D79BF76127BD173600E76C37 /* APIManager+Auth.swift in Sources */,
 				EEAD5C5B277D9654008181E3 /* NodeView.swift in Sources */,
+				EE9B8B5627C37C320077BCFC /* LinearGradientStatus.swift in Sources */,
 				D79E829B27971299009E36F3 /* BackgroundBlurView.swift in Sources */,
 				D78044C82758C6FC0086E59D /* ContentView.swift in Sources */,
 				EEEAF2192785834200A96114 /* NodePopupView.swift in Sources */,
 				D78044EA27590DB70086E59D /* APIManager.swift in Sources */,
-				EE85EE0927BDF395000F967A /* StaticServer.swift in Sources */,
 				D78A35CC276B9D5A00CC010D /* Background.swift in Sources */,
 				EE890FEC2791310000ADF293 /* ItemRowView.swift in Sources */,
 				D78A35C8276B2F1400CC010D /* TextExtension.swift in Sources */,
@@ -1235,7 +1246,6 @@
 				D78848962775D87E00AF22C6 /* AppSetting.swift in Sources */,
 				EE890FF9279558EC00ADF293 /* DateExtension.swift in Sources */,
 				EE8910132796B8CF00ADF293 /* DeviceCell.swift in Sources */,
-				EE85EE0A27BDF395000F967A /* StaticServer.swift in Sources */,
 				EE890FF627951A6100ADF293 /* ItemRowCell.swift in Sources */,
 				D78044C72758C6FC0086E59D /* SysVPNApp.swift in Sources */,
 				D78044CB2758C6FC0086E59D /* Persistence.swift in Sources */,
