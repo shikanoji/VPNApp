@@ -27,7 +27,7 @@ struct StaticIPListView: View {
                         .foregroundColor(AppColor.backgroundStatusView)
                         .font(.system(size: 9))
                 }
-                .padding(.all)
+                .padding([.top, .leading, .trailing])
                 VStack(alignment: .leading) {
                     if isEditing {
                         ForEach(nodeListSearch) { node in
@@ -43,7 +43,7 @@ struct StaticIPListView: View {
                         }
                     }
                 }
-                .padding()
+                .padding([.leading, .bottom, .trailing])
             }
             Spacer()
         }
@@ -59,7 +59,7 @@ struct StaticIPListView: View {
         } else {
             return staticIPData.filter {
                 //                $0.name.contains(searchText)
-                $0.name.range(of: searchText, options: .caseInsensitive) != nil
+                $0.countryName.range(of: searchText, options: .caseInsensitive) != nil
             }
         }
     }

@@ -19,7 +19,7 @@ struct NodeCellStaticView: View {
             Constant.StaticIP.iconS
                 .frame(width: 20, height: 20)
             VStack(alignment: .leading, spacing: 6) {
-                Text(node.name)
+                Text(node.countryName)
                     .font(Constant.BoardList.fontNameCity)
                     .foregroundColor(.white)
                 Text(node.getSubContentCell())
@@ -27,9 +27,9 @@ struct NodeCellStaticView: View {
                     .foregroundColor(AppColor.lightBlackText)
             }
             Spacer()
-            LinearGradientStatus(percent: node.status)
+            LinearGradientStatus(percent: node.currentLoad / 100)
         }
-        .padding()
+        .padding([.top, .bottom, .trailing])
         .frame(height: Constant.BoardList.heightStatusLoction)
     }
 }
