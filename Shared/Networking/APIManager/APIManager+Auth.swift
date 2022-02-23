@@ -10,9 +10,9 @@ import Moya
 import SwiftyJSON
 
 extension APIManager {
-    func login(email: String, password: String, ip: String, country: String, city: String) -> Single<APIResponse<LoginResultModel>> {
+    func login(email: String, password: String) -> Single<APIResponse<LoginResultModel>> {
         return provider.rx
-            .request(.login(email: email, password: password, ip: ip, country: country, city: city))
+            .request(.login(email: email, password: password))
             .filterSuccessfulStatusAndRedirectCodes()
             .map { response in
                 let loginResult = try JSONDecoder().decode(APIResponse<LoginResultModel>.self, from: response.data)
@@ -23,9 +23,9 @@ extension APIManager {
             }
     }
     
-    func register(email: String, password: String, ip: String, country: String, city: String) -> Single<APIResponse<RegisterResultModel>> {
+    func register(email: String, password: String) -> Single<APIResponse<RegisterResultModel>> {
         return provider.rx
-            .request(.register(email: email, password: password, ip: ip, country: country, city: city))
+            .request(.register(email: email, password: password))
             .filterSuccessfulStatusAndRedirectCodes()
             .map { response in
                 let registerResult = try JSONDecoder().decode(APIResponse<RegisterResultModel>.self, from: response.data)
@@ -49,12 +49,19 @@ extension APIManager {
             }
     }
     
-    func refreshToken(ip: String, city: String, country: String)-> Single<APIResponse<RegisterResultModel>> {
+    func refreshToken()-> Single<APIResponse<RegisterResultModel>> {
         return provider.rx
-            .request(.refreshToken(ip: ip, country: country, city: city))
+            .request(.refreshToken)
             .filterSuccessfulStatusAndRedirectCodes()
             .map { response in
                 let refreshTokenResult = try JSONDecoder().decode(APIResponse<RegisterResultModel>.self, from: response.data)
+                if let result = refreshTokenResult.result {
+                    let tokens = result.tokens
+                    AppSetting.shared.accessToken = tokens.access.token
+                    AppSetting.shared.accessTokenExpires = tokens.access.expires
+                    AppSetting.shared.refreshToken = tokens.refresh.token
+                    AppSetting.shared.refreshTokenExpires = tokens.refresh.expires
+                }
                 return refreshTokenResult
             }
             .catch { error in

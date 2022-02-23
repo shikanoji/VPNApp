@@ -9,9 +9,10 @@ import RxSwift
 import Moya
 import SwiftyJSON
 import SwiftUI
+import SwiftDate
 
 struct APIManager {
-
+    
     // I'm using a singleton for the sake of demonstration and other lies I tell myself
     static let shared = APIManager()
     
@@ -20,7 +21,7 @@ struct APIManager {
     
     private init() {
         let plugin = NetworkLoggerPlugin(configuration: .init(logOptions: .formatRequestAscURL))
-        self.provider = MoyaProvider<APIService>(plugins: [plugin])
+        self.provider = MoyaProvider<APIService>(requestClosure: MoyaProvider<APIService>.endpointResolver(), plugins: [plugin])
     }
     
     func getCountryList() -> Single<APIResponse<CountryListResultModel>> {
@@ -34,5 +35,32 @@ struct APIManager {
             .catch { error in
                 throw APIError.someError
             }
+    }
+}
+
+extension MoyaProvider {
+    /// Handle refresh token
+    static func endpointResolver() -> MoyaProvider<APIService>.RequestClosure {
+        return { (endpoint, closure) in
+            //Getting the original request
+            let request = try! endpoint.urlRequest()
+            if (request.headers.value(for: "Authorization") != nil) {
+                //assume you have saved the existing token somewhere
+                if !AppSetting.shared.accessToken.isEmpty, let expiresDate = AppSetting.shared.accessTokenExpires.toDate(), Date().convertTo(region: .local) < expiresDate {
+                    // Token is valid, so just resume the original request
+                    closure(.success(request))
+                    return
+                }
+                
+                //Do a request to refresh the authtoken based on refreshToken
+                APIManager.shared.refreshToken().subscribe(onSuccess: { result in
+                    closure(.success(request))
+                }, onFailure: { error in
+                    
+                })
+            } else {
+                closure(.success(request))
+            }
+        }
     }
 }
