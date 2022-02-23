@@ -54,11 +54,11 @@ enum APIError: Error {
 
 enum APIService {
     case getCountryList
-    case register(email: String, password: String, ip: String, country: String, city: String)
-    case login(email: String, password: String, ip: String, country: String, city: String)
+    case register(email: String, password: String)
+    case login(email: String, password: String)
     case logout
-    case refreshToken(ip: String, country: String, city: String)
-    case forgotPassword(email: String, ip: String, country: String, city: String)
+    case refreshToken
+    case forgotPassword(email: String)
 }
 
 extension APIService: TargetType {
@@ -69,7 +69,7 @@ extension APIService: TargetType {
             return URL(string: Constant.api.root)!
         }
     }
-
+    
     // This is the path of each operation that will be appended to our base URL.
     var path: String {
         switch self {
@@ -85,11 +85,9 @@ extension APIService: TargetType {
             return Constant.api.path.forgotPassword
         case .getCountryList:
             return Constant.api.path.getCountryList + "/\(AppSetting.shared.countryCode)/\(AppSetting.shared.ip)"
-        default:
-            return ""
         }
     }
-
+    
     // Here we specify which method our calls should use.
     var method: Moya.Method {
         switch self {
@@ -107,55 +105,53 @@ extension APIService: TargetType {
             return .post
         }
     }
-
+    
     // Here we specify body parameters, objects, files etc.
     // or just do a plain request without a body.
     // In this example we will not pass anything in the body of the request.
     var task: Task {
         switch self {
-        case .register(let email, let password, let ip, let country, let city):
+        case .register(let email, let password):
             var body: [String: Any] = [:]
             body["email"] = email
             body["password"] = password
-            body["ip"] = ip
-            body["country"] = country
-            body["city"] = city
+            body["ip"] = AppSetting.shared.ip
+            body["country"] = AppSetting.shared.countryCode
+            body["city"] = AppSetting.shared.city
             return .requestCompositeParameters(bodyParameters: body, bodyEncoding: JSONEncoding.prettyPrinted, urlParameters: [:])
-        case .login(let email, let password, let ip, let country, let city):
+        case .login(let email, let password):
             var body: [String: Any] = [:]
             body["email"] = email
             body["password"] = password
-            body["ip"] = ip
-            body["country"] = country
-            body["city"] = city
+            body["ip"] = AppSetting.shared.ip
+            body["country"] = AppSetting.shared.countryCode
+            body["city"] = AppSetting.shared.city
             return .requestCompositeParameters(bodyParameters: body, bodyEncoding: JSONEncoding.prettyPrinted, urlParameters: [:])
         case .logout:
             var body: [String: Any] = [:]
             body["refreshToken"] = AppSetting.shared.refreshToken
             return .requestCompositeParameters(bodyParameters: body, bodyEncoding: JSONEncoding.prettyPrinted, urlParameters: [:])
-        case .refreshToken(let ip, let country, let city):
+        case .refreshToken:
             var body: [String: Any] = [:]
             body["refreshToken"] = AppSetting.shared.refreshToken
-            body["ip"] = ip
-            body["country"] = country
-            body["city"] = city
+            body["ip"] = AppSetting.shared.ip
+            body["country"] = AppSetting.shared.countryCode
+            body["city"] = AppSetting.shared.city
             return .requestCompositeParameters(bodyParameters: body, bodyEncoding: JSONEncoding.prettyPrinted, urlParameters: [:])
-        case .forgotPassword(let email, let ip, let country, let city):
+        case .forgotPassword(let email):
             var body: [String: Any] = [:]
             body["email"] = email
-            body["ip"] = ip
-            body["country"] = country
-            body["city"] = city
+            body["ip"] = AppSetting.shared.ip
+            body["country"] = AppSetting.shared.countryCode
+            body["city"] = AppSetting.shared.city
             return .requestCompositeParameters(bodyParameters: body, bodyEncoding: JSONEncoding.prettyPrinted, urlParameters: [:])
         case .getCountryList:
             var param: [String: Any] = [:]
             param["key"] = "f11b69c57d5fe9555e29c57c1d863bf8"
             return .requestParameters(parameters: param, encoding: URLEncoding.queryString)
-        default:
-            return .requestPlain
         }
     }
-
+    
     // These are the headers that our service requires.
     // Usually you would pass auth tokens here.
     var headers: [String: String]? {
@@ -171,11 +167,11 @@ extension APIService: TargetType {
             return ["Content-type": "application/json"]
         }
     }
-
+    
     // This is sample return data that you can use to mock and test your services,
     // but we won't be covering this.
     var sampleData: Data {
         return Data()
     }
-
+    
 }

@@ -458,13 +458,6 @@
 			path = Authentication;
 			sourceTree = "<group>";
 		};
-		D762EC132759B6CA00023ABF /* AccountInfo */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = AccountInfo;
-			sourceTree = "<group>";
-		};
 		D762EC142759C6EC00023ABF /* Introduction */ = {
 			isa = PBXGroup;
 			children = (
@@ -620,7 +613,6 @@
 				EE890FDE27910F8E00ADF293 /* Account */,
 				6384B4F3276C372300E904D2 /* Board */,
 				D762EC142759C6EC00023ABF /* Introduction */,
-				D762EC132759B6CA00023ABF /* AccountInfo */,
 				D762EC102759B53B00023ABF /* Authentication */,
 				D79E829A27971299009E36F3 /* BackgroundBlurView.swift */,
 			);
@@ -646,6 +638,23 @@
 				D7874DF9277AFEE200ADC7AD /* ForgotPasswordViewModel.swift */,
 			);
 			path = ForgotPassword;
+			sourceTree = "<group>";
+		};
+		D78EECE727C65BD000A2CBA5 /* ChangePassword */ = {
+			isa = PBXGroup;
+			children = (
+				EE890FFA27956B9100ADF293 /* ChangePasswordView.swift */,
+				EE890FFD27956E0E00ADF293 /* ChangePasswordViewModel.swift */,
+			);
+			path = ChangePassword;
+			sourceTree = "<group>";
+		};
+		D78EECE827C65BE200A2CBA5 /* Information */ = {
+			isa = PBXGroup;
+			children = (
+				EE890FEE2795101300ADF293 /* InfomationView.swift */,
+			);
+			path = Information;
 			sourceTree = "<group>";
 		};
 		D795FFA6275F6E7D00E54206 /* Components */ = {
@@ -819,16 +828,15 @@
 		EE890FDE27910F8E00ADF293 /* Account */ = {
 			isa = PBXGroup;
 			children = (
+				D78EECE827C65BE200A2CBA5 /* Information */,
+				D78EECE727C65BD000A2CBA5 /* ChangePassword */,
 				D7F9695A27B2AC860037A3D0 /* FAQ */,
 				EE8910192797AC5700ADF293 /* SubView */,
 				EE89100D2796B53700ADF293 /* Devices */,
 				EE89100C2796B51F00ADF293 /* PaymentHistory */,
 				EE890FDF27910FBD00ADF293 /* AccountView.swift */,
-				EE890FEE2795101300ADF293 /* InfomationView.swift */,
-				EE890FFA27956B9100ADF293 /* ChangePasswordView.swift */,
-				EE890FFD27956E0E00ADF293 /* ChangePasswordViewModel.swift */,
-				EE89100327967AA200ADF293 /* AccountStatusView.swift */,
 				D76644BF27C3B2AC00478B6D /* AccountViewModel.swift */,
+				EE89100327967AA200ADF293 /* AccountStatusView.swift */,
 			);
 			path = Account;
 			sourceTree = "<group>";
@@ -966,7 +974,7 @@
 			attributes = {
 				BuildIndependentTargetsInParallel = 1;
 				LastSwiftUpdateCheck = 1300;
-				LastUpgradeCheck = 1300;
+				LastUpgradeCheck = 1320;
 				TargetAttributes = {
 					D78044A22758C6FB0086E59D = {
 						CreatedOnToolsVersion = 13.0;
@@ -1518,6 +1526,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = macOS/macOS.entitlements;
+				CODE_SIGN_IDENTITY = "-";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				CURRENT_PROJECT_VERSION = 1;
@@ -1545,6 +1554,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = macOS/macOS.entitlements;
+				CODE_SIGN_IDENTITY = "-";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				CURRENT_PROJECT_VERSION = 1;

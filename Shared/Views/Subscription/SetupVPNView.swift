@@ -32,10 +32,8 @@ struct SetupVPNView: View {
                     AppButton(width: 311, text: LocalizedStringKey.Welcome.setupButton.localized) {
                         presentationMode.wrappedValue.dismiss()
                         let email = registerResult.user.email
-                        let accessToken = registerResult.tokens.access.token
-                        let refreshToken = registerResult.tokens.refresh.token
-                        if !email.isEmpty, !accessToken.isEmpty, !refreshToken.isEmpty {
-                            authentication.login(email: email, accessToken: accessToken, refreshToken: refreshToken)
+                        if !email.isEmpty, !registerResult.tokens.access.token.isEmpty, !registerResult.tokens.refresh.token.isEmpty {
+                            authentication.login(email: email, accessToken: registerResult.tokens.access, refreshToken: registerResult.tokens.refresh)
                         }
                     }
                     Spacer().frame(height: 5)

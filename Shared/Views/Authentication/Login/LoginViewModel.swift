@@ -36,11 +36,11 @@ class LoginViewModel: NSObject, ObservableObject {
     func login(completion: @escaping (LoginResult) -> Void) {
         showProgressView = true
         
-        APIManager.shared.login(email: email, password: password, ip: "127.0.0.1", country: "Hanoi", city: "VN")
+        APIManager.shared.login(email: email, password: password)
             .subscribe(onSuccess: { [self] response in
                 self.showProgressView = false
                 if let result = response.result, !result.tokens.access.token.isEmpty, !result.tokens.refresh.token.isEmpty {
-                    authentication?.login(email: email, accessToken: result.tokens.access.token, refreshToken:result.tokens.refresh.token)
+                    authentication?.login(email: email, accessToken: result.tokens.access, refreshToken: result.tokens.refresh)
                     completion(.success)
                 } else {
                     let error = response.errors
@@ -57,7 +57,7 @@ class LoginViewModel: NSObject, ObservableObject {
                 self.showProgressView = false
                 completion(.accountNotExist)
             })
-        .disposed(by: disposedBag)
+            .disposed(by: disposedBag)
         
     }
     
@@ -68,7 +68,7 @@ class LoginViewModel: NSObject, ObservableObject {
         let config = GIDConfiguration(clientID: clientID)
         if let rootView = UIApplication.shared.rootViewController {
             GIDSignIn.sharedInstance.signIn(with: config, presenting: rootView) { [unowned self] user, error in
-                if let error = error {
+                if let _ = error {
                     // ...
                     return
                 }

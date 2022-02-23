@@ -13,6 +13,10 @@ enum AppKeys: String {
     case email = "email"
     case accessToken = "accessToken"
     case refreshToken = "refreshToken"
+    case accessTokenExpires = "accessTokenExpires"
+    case refreshTokenExpires = "refreshTokenExpires"
+    case country = "country"
+    case city = "city"
     
     ///Board Keys
     case showedNotice = "showedNotice"
@@ -65,6 +69,24 @@ struct AppSetting {
         }
     }
     
+    var refreshTokenExpires: String {
+        get {
+            return UserDefaults.standard.string(forKey: AppKeys.refreshTokenExpires.rawValue) ?? ""
+        }
+        set {
+            UserDefaults.standard.setValue(newValue, forKey: AppKeys.refreshTokenExpires.rawValue)
+        }
+    }
+    
+    var accessTokenExpires: String {
+        get {
+            return UserDefaults.standard.string(forKey: AppKeys.accessTokenExpires.rawValue) ?? ""
+        }
+        set {
+            UserDefaults.standard.setValue(newValue, forKey: AppKeys.accessTokenExpires.rawValue)
+        }
+    }
+    
     var showedNotice: Bool {
         get {
             return UserDefaults.standard.bool(forKey: AppKeys.showedNotice.rawValue)
@@ -89,6 +111,15 @@ struct AppSetting {
         }
         set {
             UserDefaults.standard.setValue(newValue, forKey: AppKeys.ip.rawValue)
+        }
+    }
+    
+    var city: String {
+        get {
+            return UserDefaults.standard.string(forKey: AppKeys.city.rawValue) ?? "Hanoi"
+        }
+        set {
+            UserDefaults.standard.setValue(newValue, forKey: AppKeys.city.rawValue)
         }
     }
 }
