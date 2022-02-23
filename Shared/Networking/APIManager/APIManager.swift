@@ -23,18 +23,6 @@ struct APIManager {
         self.provider = MoyaProvider<APIService>(plugins: [plugin])
     }
     
-    func getSiteHtml(withUrl url: String) -> Single<String> {
-        return provider.rx
-            .request(.getSiteHtml(url: url))
-            .filterSuccessfulStatusAndRedirectCodes()
-            .map { response in
-                return try response.mapString()
-            }
-            .catch { error in
-                throw APIError.someError
-            }
-    }
-    
     func getCountryList() -> Single<APIResponse<CountryListResultModel>> {
         return provider.rx
             .request(.getCountryList)

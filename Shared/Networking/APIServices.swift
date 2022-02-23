@@ -53,7 +53,6 @@ enum APIError: Error {
 }
 
 enum APIService {
-    case getSiteHtml(url: String)
     case getCountryList
     case register(email: String, password: String, ip: String, country: String, city: String)
     case login(email: String, password: String, ip: String, country: String, city: String)
@@ -94,8 +93,6 @@ extension APIService: TargetType {
     // Here we specify which method our calls should use.
     var method: Moya.Method {
         switch self {
-        case .getSiteHtml:
-            return .get
         case .getCountryList:
             return .get
         case .register:
@@ -163,12 +160,12 @@ extension APIService: TargetType {
     // Usually you would pass auth tokens here.
     var headers: [String: String]? {
         switch self {
-        case .getSiteHtml:
-            return ["Content-type": "text/html"]
+        case .login, .register:
+            return ["Content-type": "application/json"]
         case .getCountryList:
             return [
                 "Content-type": "application/json",
-                "Authorization": "Bearer \(AppSetting.shared.author)"
+                "Authorization": "Bearer \(AppSetting.shared.accessToken)"
             ]
         default:
             return ["Content-type": "application/json"]

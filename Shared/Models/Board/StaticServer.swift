@@ -12,25 +12,25 @@ struct StaticServer: Identifiable, Codable {
     var id: Int { serverId }
     var serverId: Int
     var countryId: Int?
-    var name: String
+    var countryName: String
     var latitude: String
     var longitude: String
     var x: CGFloat
     var y: CGFloat
     var flag: String
     var cityName: String
-    var status: CGFloat
+    var currentLoad: CGFloat
     
     enum CodingKeys: String, CodingKey {
         case serverId
         case countryId
-        case name
+        case countryName
         case latitude
         case longitude
         case flag
         case x
         case y
-        case status
+        case currentLoad
         case cityName
     }
     
@@ -46,10 +46,10 @@ struct StaticServer: Identifiable, Codable {
         } else {
             self.countryId = nil
         }
-        if let _name = try? values.decode(String.self, forKey: .name){
-            self.name = _name
+        if let _countryName = try? values.decode(String.self, forKey: .countryName){
+            self.countryName = _countryName
         } else {
-            self.name = ""
+            self.countryName = ""
         }
         if let _latitude = try? values.decode(String.self, forKey: .latitude){
             self.latitude = _latitude
@@ -76,10 +76,10 @@ struct StaticServer: Identifiable, Codable {
         } else {
             self.y = 0
         }
-        if let _status = try? values.decode(CGFloat.self, forKey: .status){
-            self.status = _status
+        if let _currentLoad = try? values.decode(CGFloat.self, forKey: .currentLoad){
+            self.currentLoad = _currentLoad
         } else {
-            self.status = 0.5
+            self.currentLoad = 0
         }
         if let _cityName = try? values.decode(String.self, forKey: .cityName){
             self.cityName = _cityName
@@ -89,7 +89,7 @@ struct StaticServer: Identifiable, Codable {
     }
     
     init(serverId: Int = 0,
-         name: String = "",
+         countryName: String = "",
          cityName: String = "",
          subRegion: String = "",
          latitude: String = "",
@@ -97,16 +97,16 @@ struct StaticServer: Identifiable, Codable {
          x: CGFloat = .zero,
          y: CGFloat = .zero,
          flag: String = "",
-         status: CGFloat = 0) {
+         currentLoad: CGFloat = 0) {
         self.serverId = serverId
-        self.name = name
+        self.countryName = countryName
         self.cityName = cityName
         self.latitude = latitude
         self.longitude = longitude
         self.x = x
         self.y = y
         self.flag = flag
-        self.status = status
+        self.currentLoad = currentLoad
     }
     
     func getSubContentCell() -> String {

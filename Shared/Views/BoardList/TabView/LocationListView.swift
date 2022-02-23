@@ -30,7 +30,7 @@ struct LocationListView: View {
                             Text(nodeList.type.title)
                                 .foregroundColor(AppColor.lightBlackText)
                                 .font(Constant.BoardList.fontNodeList)
-                                .padding(.leading)
+                                .padding([.top, .leading])
                             ForEach(nodeList.list) { node in
                                 Button(action: {
                                     if node.cityNodeList.count > 0 {
