@@ -30,10 +30,15 @@ enum AppKeys: String {
     case help = "help"
     case autoConnect = "autoConnect"
     case lineNetwork = "lineNetwork"
-    case listNode = "listNode"
+    case dataMap = "dataMap"
     case token = "token"
     case countryCode = "countryCode"
     case ip = "ip"
+    case listNodeGroup = "listNodeGroup"
+    
+    ///Last Time when Data Map Update
+    case lastChange = "lastChange"
+    case updateDataMap = "updateDataMap"
 }
 
 struct AppSetting {
@@ -98,7 +103,7 @@ struct AppSetting {
     
     var countryCode: String {
         get {
-            return UserDefaults.standard.string(forKey: AppKeys.countryCode.rawValue) ?? "VN"
+            return UserDefaults.standard.string(forKey: AppKeys.countryCode.rawValue) ?? ""
         }
         set {
             UserDefaults.standard.setValue(newValue, forKey: AppKeys.countryCode.rawValue)
@@ -107,7 +112,7 @@ struct AppSetting {
     
     var ip: String {
         get {
-            return UserDefaults.standard.string(forKey: AppKeys.ip.rawValue) ?? "192.168.1.1"
+            return UserDefaults.standard.string(forKey: AppKeys.ip.rawValue) ?? ""
         }
         set {
             UserDefaults.standard.setValue(newValue, forKey: AppKeys.ip.rawValue)
@@ -116,10 +121,31 @@ struct AppSetting {
     
     var city: String {
         get {
-            return UserDefaults.standard.string(forKey: AppKeys.city.rawValue) ?? "Hanoi"
+            /// Fake City
+            return "Hanoi"
+            return UserDefaults.standard.string(forKey: AppKeys.city.rawValue) ?? ""
         }
         set {
             UserDefaults.standard.setValue(newValue, forKey: AppKeys.city.rawValue)
+        }
+    }
+    
+    var lastChange: Double {
+        get {
+            return UserDefaults.standard.double(forKey: AppKeys.lastChange.rawValue)
+        }
+        set {
+            updateDataMap = newValue != lastChange
+            UserDefaults.standard.setValue(newValue, forKey: AppKeys.lastChange.rawValue)
+        }
+    }
+    
+    var updateDataMap: Bool {
+        get {
+            return UserDefaults.standard.bool(forKey: AppKeys.updateDataMap.rawValue)
+        }
+        set {
+            UserDefaults.standard.setValue(newValue, forKey: AppKeys.updateDataMap.rawValue)
         }
     }
 }

@@ -34,4 +34,9 @@ struct AppColor {
     
     ///Toast
     static let toastBackground = Color(hex: "2E303D")
+    
+    ///Loading
+    static let rightCircle = Color(hex: "66FFCC")
+    static let leftCircle = Color(hex: "FFFFFF")
+    static let backgroundLoading = Color(hex: "0A0A0D")
 }

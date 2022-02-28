@@ -21,6 +21,9 @@ class Authentication: ObservableObject {
     }
     
     func logout() {
+        AppSetting.shared.ip = ""
+        AppSetting.shared.city = ""
+        AppSetting.shared.countryCode = ""
         AppSetting.shared.email = ""
         AppSetting.shared.accessToken = ""
         AppSetting.shared.accessTokenExpires = ""

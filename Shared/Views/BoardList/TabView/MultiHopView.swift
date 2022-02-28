@@ -42,6 +42,8 @@ struct MultiHopView: View {
                 .foregroundColor(AppColor.darkButton)
                 .frame(height: 1)
             selectView
+            Spacer()
+                .frame(height: 4)
             Group {
                 Spacer()
                     .frame(height: 0)
@@ -62,6 +64,13 @@ struct MultiHopView: View {
                 }
                 Spacer()
             }
+            NavigationLink(destination:
+                            SelectLocationMultihopView(nodeList: $entryNodeList,
+                                                       leftText: LocalizedStringKey.MultiHop.selectEntryLocation.localized, nodeSelectClosure: { self.entryNodeSelect = $0 }),
+                           isActive: $showEntryLocationView) { }
+            NavigationLink(destination: SelectLocationMultihopView(nodeList: $exitNodeList,
+                                                                   leftText: LocalizedStringKey.MultiHop.selectExitLocation.localized, nodeSelectClosure: { self.exitNodeSelect = $0 }),
+                           isActive: $showExitLocationView) { }
         }
         .padding()
         .frame(maxHeight: .infinity)
@@ -74,20 +83,15 @@ struct MultiHopView: View {
             DescriptionMultihopView()
                 .clearModalBackground()
         }
-        NavigationLink(destination:
-                        SelectLocationMultihopView(nodeList: $entryNodeList,
-                                                   leftText: LocalizedStringKey.MultiHop.selectEntryLocation.localized, nodeSelectClosure: { self.entryNodeSelect = $0 }),
-                       isActive: $showEntryLocationView) { }
-        NavigationLink(destination: SelectLocationMultihopView(nodeList: $exitNodeList,
-                                                               leftText: LocalizedStringKey.MultiHop.selectExitLocation.localized, nodeSelectClosure: { self.exitNodeSelect = $0 }),
-                       isActive: $showExitLocationView) { }
     }
     
     var recentConnectionsView: some View {
-        Group {
+        VStack(alignment: .leading, spacing: 2) {
             Text(LocalizedStringKey.MultiHop.recentConnections.localized)
                 .foregroundColor(AppColor.lightBlackText)
                 .font(Constant.BoardList.fontNodeList)
+            Spacer()
+                .frame(height: 10)
             ForEach((0..<nodeRecentList.count), id: \.self) { i in
                 let nodeStart = nodeRecentList[i].0
                 let nodeEnd = nodeRecentList[i].1
@@ -110,12 +114,13 @@ struct MultiHopView: View {
                         .font(Constant.BoardList.fontNodeList)
                     Spacer()
                 }
+                .padding(.vertical, 5)
             }
         }
     }
     
     var selectView: some View {
-        Group {
+        VStack(alignment: .leading, spacing: 15) {
             Text(LocalizedStringKey.MultiHop.selectEntryLocation.localized)
                 .foregroundColor(AppColor.lightBlackText)
                 .font(Constant.BoardList.fontNodeList)

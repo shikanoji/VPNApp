@@ -59,12 +59,16 @@ enum APIService {
     case logout
     case refreshToken
     case forgotPassword(email: String)
+    case ipInfo
+    case ipInfoOptional
 }
 
 extension APIService: TargetType {
     // This is the base URL we'll be using, typically our server.
     var baseURL: URL {
         switch self {
+        case .ipInfoOptional:
+            return URL(string: Constant.api.ipInfoOptional)!
         default:
             return URL(string: Constant.api.root)!
         }
@@ -85,6 +89,10 @@ extension APIService: TargetType {
             return Constant.api.path.forgotPassword
         case .getCountryList:
             return Constant.api.path.getCountryList + "/\(AppSetting.shared.countryCode)/\(AppSetting.shared.ip)"
+        case .ipInfo:
+            return Constant.api.path.ipInfo
+        case .ipInfoOptional:
+            return ""
         }
     }
     
@@ -103,6 +111,10 @@ extension APIService: TargetType {
             return .post
         case .forgotPassword:
             return .post
+        case .ipInfo:
+            return .get
+        case .ipInfoOptional:
+            return .get
         }
     }
     
@@ -149,6 +161,12 @@ extension APIService: TargetType {
             var param: [String: Any] = [:]
             param["key"] = "f11b69c57d5fe9555e29c57c1d863bf8"
             return .requestParameters(parameters: param, encoding: URLEncoding.queryString)
+        case .ipInfo:
+            var param: [String: Any] = [:]
+            param["key"] = "f11b69c57d5fe9555e29c57c1d863bf8"
+            return .requestParameters(parameters: param, encoding: URLEncoding.queryString)
+        case .ipInfoOptional:
+            return .requestPlain
         }
     }
     

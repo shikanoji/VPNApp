@@ -8,10 +8,10 @@
 import Foundation
 import SwiftyJSON
 
-struct CountryListResultModel: Decodable {
+struct CountryListResultModel: Codable {
     var availableCountries: [Node]
     var recommendedCountries: [Node]
-    var clientCountryDetail: Node
+    var clientCountryDetail: Node?
     var staticServers: [StaticServer]
     
     enum CodingKeys: String, CodingKey {
@@ -23,9 +23,30 @@ struct CountryListResultModel: Decodable {
 
     init(from decoder: Decoder) throws {
         let values = try decoder.container(keyedBy: CodingKeys.self)
-        availableCountries = try values.decode([Node].self, forKey: .availableCountries)
-        recommendedCountries = try values.decode([Node].self, forKey: .recommendedCountries)
-        staticServers = try values.decode([StaticServer].self, forKey: .staticServers)
-        clientCountryDetail = try values.decode(Node.self, forKey: .clientCountryDetail)
+        
+        if let _availableCountries = try? values.decode([Node].self, forKey: .availableCountries) {
+            availableCountries = _availableCountries
+        } else {
+            availableCountries = []
+        }
+        
+        if let _recommendedCountries = try? values.decode([Node].self, forKey: .recommendedCountries) {
+            recommendedCountries = _recommendedCountries
+        } else {
+            recommendedCountries = []
+        }
+        
+        if let _staticServers = try? values.decode([StaticServer].self, forKey: .staticServers) {
+            staticServers = _staticServers
+        } else {
+            staticServers = []
+        }
+        
+        if let _clientCountryDetail = try? values.decode(Node.self, forKey: .clientCountryDetail) {
+            clientCountryDetail = _clientCountryDetail
+        } else {
+            clientCountryDetail = nil
+        }
+        
     }
 }

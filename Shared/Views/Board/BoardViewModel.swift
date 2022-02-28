@@ -66,12 +66,12 @@ class BoardViewModel: ObservableObject {
     }
     
     @Published var state: StateBoard = .notConnect
-    @Published var ip = "199.199.199.8"
+    @Published var ip = AppSetting.shared.ip
     @Published var nodes: [Node] = []
     @Published var errorMessage: String? = nil
     @Published var tab: StateTab = .location
-    @Published var uploadSpeed: CGFloat = 900.1
-    @Published var downloadSpeed: CGFloat = 1605
+    @Published var uploadSpeed: CGFloat = 0.0
+    @Published var downloadSpeed: CGFloat = 0.0
     @Published var showCityNodes: Bool = false
     @Published var nodeConnected: Node? = nil
     
@@ -80,13 +80,12 @@ class BoardViewModel: ObservableObject {
     @Published var staticIPData: [StaticServer] = []
     @Published var staticIPNodeSelecte: StaticServer? = nil
     
-    @Published var mutilhopData = [(Node.country, Node.tokyo), (Node.country, Node.tokyo)]
+    @Published var mutilhopData: [(Node, Node)] = [(Node.country, Node.tokyo), (Node.country, Node.tokyo)]
     
     @Published var entryNodeListMutilhop: [Node] = Node.all
     @Published var exitNodeListMutilhop: [Node] = Node.all
     @Published var entryNodeSelectMutilhop: Node = Node.country
     @Published var exitNodeSelectMutilhop: Node = Node.tokyo
-    @Published var countryListResult: CountryListResultModel?
     @Published var mesh: Mesh = Mesh()
     
     @Published var configMapView: ConfigMapView = ConfigMapView()
@@ -105,7 +104,7 @@ class BoardViewModel: ObservableObject {
     let disposedBag = DisposeBag()
     
     init() {
-        getCountryList()
+        AppSetting.shared.updateDataMap ? getCountryList() : getDataFromLocal()
     }
     
     func connectVPN() {
@@ -119,6 +118,7 @@ class BoardViewModel: ObservableObject {
                     return
                 }
                 if let result = response.result {
+                    AppSetting.shared.saveDataMap(result)
                     self.configCountryList(result)
                 }
             } onFailure: { error in
@@ -127,8 +127,14 @@ class BoardViewModel: ObservableObject {
             .disposed(by: disposedBag)
     }
     
+    func getDataFromLocal() {
+        if let dataMapLocal = AppSetting.shared.getDataMap() {
+            configCountryList(dataMapLocal)
+        }
+    }
+    
     func configCountryList(_ result: CountryListResultModel) {
-        self.countryListResult = result
+        
         let countryNodes = result.availableCountries
         var cityNodes = [Node]()
         countryNodes.forEach { cityNodes.append(contentsOf: $0.cityNodeList) }

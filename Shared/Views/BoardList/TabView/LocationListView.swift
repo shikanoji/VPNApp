@@ -26,8 +26,8 @@ struct LocationListView: View {
                             NodeCellView(node: node)
                         }
                     } else {
-                        ForEach(locationData) { nodeList in
-                            Text(nodeList.type.title)
+                        ForEach(locationData, id: \.type) { nodeList in
+                            Text(nodeList.type?.title ?? "")
                                 .foregroundColor(AppColor.lightBlackText)
                                 .font(Constant.BoardList.fontNodeList)
                                 .padding([.top, .leading])
