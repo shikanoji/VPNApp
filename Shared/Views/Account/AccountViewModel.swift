@@ -9,7 +9,7 @@ import Foundation
 import RxSwift
 
 class AccountViewModel: ObservableObject {
-    @Published var showAlert: Bool = false
+    @Published var showAlert = false
     var disposedBag = DisposeBag()
     var alertTitle: String = ""
     var alertMessage: String = ""

@@ -17,6 +17,7 @@ target 'SysVPN (iOS)' do
   pod 'GoogleSignIn'
   pod 'Firebase/Messaging'
   pod 'Firebase/Crashlytics'
+  pod 'ExytePopupView'
 end
 
 target 'SysVPN (macOS)' do
