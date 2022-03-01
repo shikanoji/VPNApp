@@ -13,7 +13,6 @@ extension APIManager {
     func login(email: String, password: String) -> Single<APIResponse<LoginResultModel>> {
         return provider.rx
             .request(.login(email: email, password: password))
-            .filterSuccessfulStatusAndRedirectCodes()
             .map { response in
                 let loginResult = try JSONDecoder().decode(APIResponse<LoginResultModel>.self, from: response.data)
                 return loginResult
@@ -26,7 +25,6 @@ extension APIManager {
     func register(email: String, password: String) -> Single<APIResponse<RegisterResultModel>> {
         return provider.rx
             .request(.register(email: email, password: password))
-            .filterSuccessfulStatusAndRedirectCodes()
             .map { response in
                 let registerResult = try JSONDecoder().decode(APIResponse<RegisterResultModel>.self, from: response.data)
                 return registerResult
@@ -39,7 +37,6 @@ extension APIManager {
     func logout() -> Single<APIResponse<LogoutResult>> {
         return provider.rx
             .request(.logout)
-            .filterSuccessfulStatusAndRedirectCodes()
             .map { response in
                 let logoutResult = try JSONDecoder().decode(APIResponse<LogoutResult>.self, from: response.data)
                 return logoutResult

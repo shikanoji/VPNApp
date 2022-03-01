@@ -57,7 +57,7 @@ extension MoyaProvider {
                     closure(.success(request))
                 }, onFailure: { error in
                     
-                })
+                }).disposed(by: DisposeBag())
             } else {
                 closure(.success(request))
             }

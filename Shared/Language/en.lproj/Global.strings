@@ -9,4 +9,6 @@
 "Global.on" = "On";
 "Global.off" = "Off";
 "Global.default" = "Default";
+"Global.cancel" = "Cancel";
+"Global.ok" = "OK";
 
