@@ -155,4 +155,9 @@ struct Constant {
         static let iconUncheck = Image("icon_uncheck")
         static let iconArrowRight = Image("icon_arrow_right")
     }
+    
+    struct Loading {
+        static let sizeCircle: CGFloat = 17.15
+        static let sizeLoading: CGFloat = 64
+    }
 }

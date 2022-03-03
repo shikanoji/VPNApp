@@ -221,7 +221,7 @@ extension Node {
     ]
 }
 
-enum NodeGroupType: Int {
+enum NodeGroupType: Int, Codable {
     case recent = 0
     case recommend = 1
     case all = 2
@@ -238,20 +238,34 @@ enum NodeGroupType: Int {
     }
 }
 
-struct NodeGroup: Identifiable {
-    let id = UUID()
-    var type: NodeGroupType
+struct NodeGroup: Codable {
+    var type: NodeGroupType?
     var list: [Node]
+    
+    enum CodingKeys: String, CodingKey {
+        case type
+        case list
+    }
     
     init(nodeList: [Node], type: NodeGroupType) {
         self.list = nodeList
         self.type = type
     }
-}
-
-extension NodeGroup {
-    static func == (lhs: NodeGroup, rhs: NodeGroup) -> Bool {
-        return lhs.id == rhs.id
+    
+    init(from decoder: Decoder) throws {
+        let values = try decoder.container(keyedBy: CodingKeys.self)
+        
+        if let _type = try? values.decode(NodeGroupType.self, forKey: .type) {
+            self.type = _type
+        } else {
+            self.type = nil
+        }
+        
+        if let _list = try? values.decode([Node].self, forKey: .list) {
+            self.list = _list
+        } else {
+            self.list = []
+        }
     }
 }
 

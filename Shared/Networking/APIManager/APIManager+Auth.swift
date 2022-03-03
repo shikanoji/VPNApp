@@ -65,4 +65,28 @@ extension APIManager {
                 throw APIError.someError
             }
     }
+    
+    func getIpInfo() -> Single<APIResponse<IpInfoResultModel>> {
+        return provider.rx
+            .request(.ipInfo)
+            .map { response in
+                let ipInfoResult = try JSONDecoder().decode(APIResponse<IpInfoResultModel>.self, from: response.data)
+                return ipInfoResult
+            }
+            .catch { error in
+                throw APIError.someError
+            }
+    }
+    
+    func getIpInfoOptional() -> Single<IpInfoResultModel> {
+        return provider.rx
+            .request(.ipInfoOptional)
+            .map { response in
+                let ipInfoResult = try JSONDecoder().decode(IpInfoResultModel.self, from: response.data)
+                return ipInfoResult
+            }
+            .catch { error in
+                throw APIError.someError
+            }
+    }
 }

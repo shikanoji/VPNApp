@@ -121,12 +121,16 @@ extension AppSetting {
         }
     }
     
-//    var listNode: [Node] {
-//        get {
-//            return UserDefaults.standard.value(forKey: AppKeys.listNode.rawValue)
-//        }
-//        set {
-//
-//        }
-//    }
+    func saveDataMap(_ dataMap: CountryListResultModel) {
+        let data = try! JSONEncoder().encode(dataMap )
+        UserDefaults.standard.set(data, forKey: AppKeys.dataMap.rawValue)
+    }
+    
+    func getDataMap() -> CountryListResultModel? {
+        if let dataMapData = UserDefaults.standard.data(forKey: AppKeys.dataMap.rawValue) {
+            let dataMap = try! JSONDecoder().decode(CountryListResultModel.self, from: dataMapData)
+            return dataMap
+        }
+        return nil
+    }
 }

@@ -127,6 +127,7 @@ struct MapView: View {
             showCityNodes = newValue > Constant.Board.Map.enableCityZoom
             totalScale = progressingScale * magScale
         }
+        checkCollision()
     }
     
     private func validateZoom(_ newValue: CGFloat) -> Bool {
