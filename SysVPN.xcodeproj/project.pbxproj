@@ -16,6 +16,8 @@
 		6384B4F9276C43DD00E904D2 /* BoardViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6384B4F7276C43DD00E904D2 /* BoardViewModel.swift */; };
 		64E1F97657A4417E2FE3CA72 /* Pods_SysVPN__macOS_.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 77CA66A548B2998A416DAB70 /* Pods_SysVPN__macOS_.framework */; };
 		AC4051E227CCB6860054F6AE /* ToastView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC4051E127CCB6860054F6AE /* ToastView.swift */; };
+		AC9A8F5B27D6236900FACD7D /* KeychainService.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC9A8F5A27D6236900FACD7D /* KeychainService.swift */; };
+		AC9A8F5D27D655C700FACD7D /* Constant+KeychainService.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC9A8F5C27D655C700FACD7D /* Constant+KeychainService.swift */; };
 		D71CE4FD27903D4F00E8731D /* SubscriptionIntroductionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D71CE4FC27903D4F00E8731D /* SubscriptionIntroductionView.swift */; };
 		D71CE4FF2790419700E8731D /* SubscriptionIntro.strings in Resources */ = {isa = PBXBuildFile; fileRef = D71CE4FE2790419700E8731D /* SubscriptionIntro.strings */; };
 		D71CE5012790575D00E8731D /* PlanSelectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D71CE5002790575D00E8731D /* PlanSelectionView.swift */; };
@@ -217,6 +219,8 @@
 		77CA66A548B2998A416DAB70 /* Pods_SysVPN__macOS_.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SysVPN__macOS_.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		9BC128AC2A13B56F94EBA8CD /* Pods_SysVPN__iOS_.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SysVPN__iOS_.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		AC4051E127CCB6860054F6AE /* ToastView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToastView.swift; sourceTree = "<group>"; };
+		AC9A8F5A27D6236900FACD7D /* KeychainService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeychainService.swift; sourceTree = "<group>"; };
+		AC9A8F5C27D655C700FACD7D /* Constant+KeychainService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Constant+KeychainService.swift"; sourceTree = "<group>"; };
 		D71CE4FC27903D4F00E8731D /* SubscriptionIntroductionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubscriptionIntroductionView.swift; sourceTree = "<group>"; };
 		D71CE4FE2790419700E8731D /* SubscriptionIntro.strings */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; path = SubscriptionIntro.strings; sourceTree = "<group>"; };
 		D71CE5002790575D00E8731D /* PlanSelectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlanSelectionView.swift; sourceTree = "<group>"; };
@@ -421,6 +425,14 @@
 			path = Board;
 			sourceTree = "<group>";
 		};
+		AC9A8F5927D6233700FACD7D /* KeychainService */ = {
+			isa = PBXGroup;
+			children = (
+				AC9A8F5A27D6236900FACD7D /* KeychainService.swift */,
+			);
+			path = KeychainService;
+			sourceTree = "<group>";
+		};
 		D71CE4FB27903D3700E8731D /* Subscription */ = {
 			isa = PBXGroup;
 			children = (
@@ -596,6 +608,7 @@
 		D78044E527590D630086E59D /* Common */ = {
 			isa = PBXGroup;
 			children = (
+				AC9A8F5927D6233700FACD7D /* KeychainService */,
 				D79C224C27BE0F8700B54613 /* AppSetting */,
 				D79BF75C27BD10C600E76C37 /* Constant */,
 				D78F47252761A53A0064A764 /* AppColor.swift */,
@@ -686,6 +699,7 @@
 			children = (
 				D78044F52759133A0086E59D /* Constant.swift */,
 				D79BF75D27BD10D700E76C37 /* Constant+API.swift */,
+				AC9A8F5C27D655C700FACD7D /* Constant+KeychainService.swift */,
 			);
 			path = Constant;
 			sourceTree = "<group>";
@@ -1230,6 +1244,8 @@
 				D7F9695F27B2B8590037A3D0 /* QuestionModel.swift in Sources */,
 				D7A4AC4327952C5900C88162 /* PlanListViewModel.swift in Sources */,
 				EE89106E2798164500ADF293 /* NetworkWaveView.swift in Sources */,
+				AC9A8F5B27D6236900FACD7D /* KeychainService.swift in Sources */,
+				AC9A8F5D27D655C700FACD7D /* Constant+KeychainService.swift in Sources */,
 				D78F472E2761D20C0064A764 /* RegisterViewModel.swift in Sources */,
 				D79BF76127BD173600E76C37 /* APIManager+Auth.swift in Sources */,
 				EEAD5C5B277D9654008181E3 /* NodeView.swift in Sources */,
