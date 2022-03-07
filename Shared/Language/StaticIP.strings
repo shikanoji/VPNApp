@@ -1,0 +1,10 @@
+/* 
+  StaticIP.strings
+  SysVPN
+
+  Created by Da Phan Van on 21/02/2022.
+  
+*/
+"StaticIP" = "Static ip";
+"CurrentLoad" = "CURRENT LOAD";
+

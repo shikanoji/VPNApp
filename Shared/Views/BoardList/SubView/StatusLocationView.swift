@@ -11,12 +11,13 @@ struct StatusLocationView: View {
     
     @State var node: Node?
     
+    let imageSize: CGFloat = Constant.BoardList.heightImageNode / 2
+    
     var body: some View {
         HStack(spacing: 0) {
             if let node = node {
-                Image(node.flag)
-                    .resizable()
-                    .frame(width: 16, height: 16)
+                ImageView(withURL: node.flag, size: imageSize, placeholder: Constant.BoardList.iconCity)
+                    .clipShape(Circle())
                     .padding()
                 Text(node.name)
                     .font(Constant.BoardList.fontLocationStatus)

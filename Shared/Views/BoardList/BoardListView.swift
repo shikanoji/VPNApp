@@ -8,13 +8,16 @@
 import SwiftUI
 
 struct BoardListView: View {
-    @Binding var nodeTabList: [NodeTab]
     @Binding var showBoardList: Bool
     @Binding var currentTab: BoardViewModel.StateTab
     @Binding var node: Node?
     
-    @Binding var nodeStaticList: [Node]
-    @Binding var nodeMultihop: [(Node, Node)]
+    @Binding var locationData: [NodeGroup]
+    
+    @Binding var staticIPData: [StaticServer]
+    @Binding var staticNode: StaticServer?
+    
+    @Binding var multihopData: [(Node, Node)]
     
     @Binding var entryNodeList: [Node]
     @Binding var exitNodeList: [Node]
@@ -36,17 +39,16 @@ struct BoardListView: View {
                 .frame(height: 8)
             switch currentTab {
             case .location:
-                LocationListView(nodeLocation: $nodeTabList[0], nodeSelect: $node)
+                LocationListView(locationData: $locationData, nodeSelect: $node)
             case .staticIP:
-                StaticIPListView(nodeStaticList: $nodeStaticList, nodeSelect: $node)
+                StaticIPListView(staticIPData: $staticIPData, selectStaticServer: $staticNode)
             case .multiHop:
-                 MultiHopView(nodeRecentList: $nodeMultihop,
+                 MultiHopView(nodeRecentList: $multihopData,
                               entryNodeList: $entryNodeList,
                               exitNodeList: $exitNodeList,
                               entryNodeSelect: $entryNodeSelect,
                               exitNodeSelect: $exitNodeSelect)
             }
-            Spacer()
         }
         .frame(maxHeight: .infinity)
         .navigationBarHidden(true)
@@ -59,20 +61,24 @@ struct BoardListView: View {
 struct BoardListView_Previews: PreviewProvider {
     @State static var show = true
     @State static var node: Node? = Node.country
-    @State static var nodeTabList: [NodeTab] = NodeTab.example
+    @State static var nodeTabList: [NodeGroup] = [NodeGroup.init(nodeList: Node.cityNodeList, type: .all)]
     @State static var nodeMultihop =  [(Node.country, Node.tokyo), (Node.country, Node.tokyo)]
-    @State static var nodeStaticList = Node.cityNodeList
+    
+    @State static var nodeStaticList = [StaticServer()]
+    @State static var staticNode: StaticServer? = nil
+    
     @State static var nodeList = Node.all
     @State static var nodeSelectMultihop1 = Node.country
     @State static var nodeSelectMultihop2 = Node.tokyo
     
     static var previews: some View {
-        BoardListView(nodeTabList: $nodeTabList,
-                      showBoardList: $show,
+        BoardListView(showBoardList: $show,
                       currentTab: Binding<BoardViewModel.StateTab>.constant(.location),
                       node: $node,
-                      nodeStaticList: $nodeList,
-                      nodeMultihop: $nodeMultihop,
+                      locationData: $nodeTabList,
+                      staticIPData: $nodeStaticList,
+                      staticNode: $staticNode,
+                      multihopData: $nodeMultihop,
                       entryNodeList: $nodeList,
                       exitNodeList: $nodeList,
                       entryNodeSelect: $nodeSelectMultihop1,

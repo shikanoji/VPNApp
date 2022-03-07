@@ -13,8 +13,18 @@ import GoogleSignIn
 
 class AppDelegate: NSObject, UIApplicationDelegate, MessagingDelegate {
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey : Any]? = nil) -> Bool {
-        FirebaseApp.configure()
         Messaging.messaging().delegate = self
+        var filePath:String!
+        #if DEBUG
+        filePath = Bundle.main.path(forResource: "GoogleService-Info-dev", ofType: "plist")
+        #elseif RELEASE
+        filePath = Bundle.main.path(forResource: "GoogleService-Info", ofType: "plist")
+        #endif
+        guard let path = filePath, let fileopts = FirebaseOptions(contentsOfFile: path) else {
+            assert(false, "Couldn't load config file")
+            return true
+        }
+        FirebaseApp.configure(options: fileopts)
         return true
     }
     

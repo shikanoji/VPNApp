@@ -5,6 +5,7 @@ PODS:
     - AppAuth/ExternalUserAgent (= 1.4.0)
   - AppAuth/Core (1.4.0)
   - AppAuth/ExternalUserAgent (1.4.0)
+  - ExytePopupView (1.0.7)
   - Firebase/Analytics (8.10.0):
     - Firebase/Core
   - Firebase/Auth (8.10.0):
@@ -147,6 +148,7 @@ PODS:
 
 DEPENDENCIES:
   - Alamofire
+  - ExytePopupView
   - Firebase/Analytics
   - Firebase/Auth
   - Firebase/Crashlytics
@@ -162,6 +164,7 @@ SPEC REPOS:
   trunk:
     - Alamofire
     - AppAuth
+    - ExytePopupView
     - Firebase
     - FirebaseAnalytics
     - FirebaseAuth
@@ -188,6 +191,7 @@ SPEC REPOS:
 SPEC CHECKSUMS:
   Alamofire: 1c4fb5369c3fe93d2857c780d8bbe09f06f97e7c
   AppAuth: 31bcec809a638d7bd2f86ea8a52bd45f6e81e7c7
+  ExytePopupView: 2a0d2744f356589aad8a4d138f690231b210eba0
   Firebase: 44213362f1dcc52555b935dc925ed35ac55f1b20
   FirebaseAnalytics: 319c9b3b1bdd400d60e2f415dff0c5f6959e6760
   FirebaseAuth: 59a2d2b933b5b79e18fb1e6ad230c6abdaa73d26
@@ -211,6 +215,6 @@ SPEC CHECKSUMS:
   SwiftDate: 72d28954e8e1c6c1c0f917ccc8005e4f83c7d4b2
   SwiftyJSON: 2f33a42c6fbc52764d96f13368585094bfd8aa5e
 
-PODFILE CHECKSUM: 03fdd666f49bd2f01cca05654c1efafe717be30e
+PODFILE CHECKSUM: 9f933708f7233c933fb28561b1d5128ef6083fbe
 
 COCOAPODS: 1.11.2

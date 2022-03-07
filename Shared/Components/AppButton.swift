@@ -11,24 +11,31 @@ import SwiftUI
 enum AppButtonStyle {
     case themeButton
     case darkButton
+    case none
 }
 struct AppButton: View {
-    var style: AppButtonStyle
-    var width: CGFloat
-    var height: CGFloat
-    var backgroundColor: Color
-    var textColor: Color
-    var text: String
-    var cornerRadius: CGFloat = 8
-    var icon: Image?
+    let style: AppButtonStyle
+    let width: CGFloat
+    let height: CGFloat
+    let backgroundColor: Color
+    let textColor: Color
+    let textSize: CGFloat
+    let text: String
+    let cornerRadius: CGFloat
+    let borderWidth: CGFloat
+    let borderColor: Color
+    let icon: Image?
     private let action: () -> Void
     
-    init(style: AppButtonStyle = .themeButton, width: CGFloat = 200, height: CGFloat = 50, backgroundColor: Color = AppColor.themeColor, textColor: Color = AppColor.blackText, text: String = "", cornerRadius: CGFloat = 10, icon: Image? = nil, action: @escaping () -> Void) {
+    init(style: AppButtonStyle = .none, width: CGFloat = 200, height: CGFloat = 50, backgroundColor: Color = AppColor.themeColor, textColor: Color = AppColor.blackText, textSize: CGFloat = 14, text: String = "", cornerRadius: CGFloat = 10, borderWidth: CGFloat = 0, borderColor: Color = Color.clear, icon: Image? = nil, action: @escaping () -> Void) {
         self.style = style
         switch style {
         case .darkButton:
             self.backgroundColor = AppColor.darkButton
             self.textColor = Color.white
+        case .themeButton:
+            self.backgroundColor = AppColor.themeColor
+            self.textColor = AppColor.blackText
         default:
             self.backgroundColor = backgroundColor
             self.textColor = textColor
@@ -37,7 +44,10 @@ struct AppButton: View {
         self.width = width
         self.height = height
         self.text = text
+        self.textSize = textSize
         self.cornerRadius = cornerRadius
+        self.borderWidth = borderWidth
+        self.borderColor = borderColor
         self.action = action
         self.icon = icon
     }
@@ -53,13 +63,17 @@ struct AppButton: View {
                     }
                     Text(text)
                         .foregroundColor(textColor)
-                        .font(.system(size: 14, weight: .bold, design: .default))
+                        .font(.system(size: textSize, weight: .bold, design: .default))
                 }.frame(width: geometric.size.width, height: geometric.size.height, alignment: .center)
             }
         }
         .frame(width: width, height: height)
         .background(backgroundColor)
         .cornerRadius(cornerRadius)
+        .overlay(
+                RoundedRectangle(cornerRadius: cornerRadius)
+                    .stroke(borderColor, lineWidth: borderWidth)
+            )
     }
 }
 
@@ -71,6 +85,10 @@ struct AppButton_Previews: PreviewProvider {
             }
             Spacer().frame(height: 20)
             AppButton(style: .darkButton, text: "Gray Button") {
+            }
+            Spacer().frame(height: 20)
+            AppButton(backgroundColor: Color.gray, textColor: Color.white, text: "Custom button", borderWidth: 1, borderColor: AppColor.lightGray) {
+                
             }
         }
     }

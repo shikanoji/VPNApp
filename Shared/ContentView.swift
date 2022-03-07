@@ -9,27 +9,39 @@ import SwiftUI
 import CoreData
 
 struct ContentView: View {
+    @StateObject var viewModel: ContentViewModel = ContentViewModel()
     @EnvironmentObject var authentication: Authentication
+    
     init() {
         UITextField.appearance().tintColor = .white
         UIScrollView.appearance().bounces = false
     }
+    
     var body: some View {
         ZStack{
             AppColor.background
-            NavigationView {
-                if AppSetting.shared.showedNotice {
-                    if authentication.isValidated {
-                        BoardView(viewModel: BoardViewModel())
-                    } else {
-                        IntroductionView()
-                    }
-                } else {
-                    NoticeView()
+            if !viewModel.getIpInfoSuccess {
+                if viewModel.showProgressView {
+                    Image("map")
+                        .resizable()
+                        .aspectRatio(contentMode: .fit)
+                    LoadingView()
                 }
-                
-            }.navigationBarTitleDisplayMode(.inline)
-                .navigationAppearance(backgroundColor: UIColor(AppColor.background), foregroundColor: UIColor.white, tintColor: UIColor.white, hideSeparator: true)
+            } else {
+                NavigationView {
+                    if AppSetting.shared.showedNotice {
+                        if authentication.isValidated {
+                            BoardView(viewModel: BoardViewModel())
+                        } else {
+                            IntroductionView()
+                        }
+                    } else {
+                        NoticeView()
+                    }
+                    
+                }.navigationBarTitleDisplayMode(.inline)
+                    .navigationAppearance(backgroundColor: UIColor(AppColor.background), foregroundColor: UIColor.white, tintColor: UIColor.white, hideSeparator: true)
+            }
         }.ignoresSafeArea()
     }
 }

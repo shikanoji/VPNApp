@@ -34,7 +34,7 @@ class RegisterViewModel: NSObject, ObservableObject {
     
     func signup(completion: @escaping (RegisterResult, RegisterResultModel?) -> Void) {
         showProgressView = true
-        APIManager.shared.register(email: email, password: password, ip: "127.0.0.1", country: "Hanoi", city: "VN")
+        APIManager.shared.register(email: email, password: password)
             .subscribe(onSuccess: { [self] response in
                 self.showProgressView = false
                 if let result = response.result, !result.tokens.access.token.isEmpty, !result.tokens.refresh.token.isEmpty {

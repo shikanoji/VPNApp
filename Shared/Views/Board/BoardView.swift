@@ -12,8 +12,6 @@ struct BoardView: View {
     @StateObject var viewModel: BoardViewModel
     @Environment(\.presentationMode) var presentationMode
     @EnvironmentObject var authentication: Authentication
-    
-    @ObservedObject var mesh = Mesh.sampleMesh()
     @ObservedObject var selection = SelectionHandler()
     
     @State var showAccount = false
@@ -24,17 +22,18 @@ struct BoardView: View {
         VStack(spacing: 0.0) {
             if showAccount {
                 AccountView(showAccount: $showAccount,
-                            statusConnect: $viewModel.state)
+                            statusConnect: $viewModel.state, viewModel: AccountViewModel())
             } else if showSettings{
                 SettingsView(showSettings: $showSettings,
                              statusConnect: $viewModel.state)
             } else if showBoardList {
-                BoardListView(nodeTabList: $viewModel.nodeTabList,
-                              showBoardList: $showBoardList,
+                BoardListView(showBoardList: $showBoardList,
                               currentTab: $viewModel.tab,
                               node: $viewModel.nodeConnected,
-                              nodeStaticList: $viewModel.nodeTabStatic,
-                              nodeMultihop: $viewModel.nodeTabMutilhop,
+                              locationData: $viewModel.locationData,
+                              staticIPData: $viewModel.staticIPData,
+                              staticNode: $viewModel.staticIPNodeSelecte,
+                              multihopData: $viewModel.mutilhopData,
                               entryNodeList: $viewModel.entryNodeListMutilhop,
                               exitNodeList: $viewModel.exitNodeListMutilhop,
                               entryNodeSelect: $viewModel.entryNodeSelectMutilhop,
@@ -42,7 +41,10 @@ struct BoardView: View {
             } else {
                 ZStack(alignment: .top) {
                     GeometryReader { geometry in
-                        MapView(mesh: mesh, selection: selection, showCityNodes: $viewModel.showCityNodes)
+                        MapView(mesh: viewModel.mesh,
+                                selection: selection,
+                                showCityNodes: $viewModel.showCityNodes,
+                                configMapView: viewModel.configMapView)
                         VStack {
                             BoardNavigationView(status: viewModel.state,
                                                 tapLeftIcon: {
@@ -69,9 +71,6 @@ struct BoardView: View {
                 .background(AppColor.background)
                 .frame(alignment: .top)
             }
-        }
-        .onAppear {
-//            viewModel.getNodeTab()
         }
         .onChange(of: viewModel.nodeConnected, perform: { newValue in
             showAccount = false

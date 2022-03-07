@@ -13,24 +13,25 @@ struct LocalizedStringKey {
         case on = "Global.on"
         case off = "Global.off"
         case stateDefault = "Global.default"
-        
+        case cancel = "Global.cancel"
+        case ok = "Global.ok"
         var localized: String {
             return NSLocalizedString(self.rawValue, tableName: "Global", comment: "")
         }
     }
-    
+
     enum Introduction: String {
         case trialButton = "Introduction.trialButton"
-        
+
         case intro1Title = "Introduction.Intro1Title"
         case intro1Body = "Introduction.Intro1Body"
-        
+
         case intro2Title = "Introduction.Intro2Title"
         case intro2Body = "Introduction.Intro2Body"
-        
+
         case intro3Title = "Introduction.Intro3Title"
         case intro3Body = "Introduction.Intro3Body"
-        
+
         var localized: String {
             return NSLocalizedString(self.rawValue, tableName: "Introduction", comment: "")
         }
@@ -39,23 +40,23 @@ struct LocalizedStringKey {
     enum Login: String {
         case title = "Login.Title"
         case body = "Login.Body"
-        
+
         case usernamePlaceholder = "Login.UsernamePlaceholder"
         case passwordPlaceholder = "Login.PasswordPlaceholder"
         case emailPlaceholder = "Login.EmailPlaceholder"
         case signin = "Login.Signin"
         case signinWithGoogle = "Login.SigninWithGoogle"
         case signinWithApple = "Login.SigninWithApple"
-        
+
         case noAccountQuestion = "Login.NoAccountQuestion"
         case createNew = "Login.CreateNew"
         case forgotPassword = "Login.ForgotPassword"
-        
+
         var localized: String {
             return NSLocalizedString(self.rawValue, tableName: "Login", comment: "")
         }
     }
-    
+
     enum Board: String {
         case yourIP = "Board.IP"
         case subIP = "Board.SubIP"
@@ -72,28 +73,28 @@ struct LocalizedStringKey {
         case connectedAlert = "Board.ConnectedAlert"
         case speed = "Board.Speed"
         case backToMap = "Board.backToMap"
-        
+
         var localized: String {
             return NSLocalizedString(self.rawValue, tableName: "Board", comment: "")
         }
     }
-    
+
     enum Register: String {
         case title = "Register.Title"
         case body = "Register.Body"
-        
+
         case usernamePlaceholder = "Register.UsernamePlaceholder"
         case passwordPlaceholder = "Register.PasswordPlaceholder"
         case emailPlaceholder = "Register.EmailPlaceholder"
         case retypePassword = "Register.RetypePassword"
-        
+
         case signup = "Register.Signup"
         case signupWithGoogle = "Register.SignupWithGoogle"
         case signupWithApple = "Register.SignupWithApple"
-        
+
         case hadAccountText = "Register.HadAccountText"
         case signin = "Register.Signin"
-        
+
         var localized: String {
             return NSLocalizedString(self.rawValue, tableName: "Register", comment: "")
         }
@@ -104,7 +105,7 @@ struct LocalizedStringKey {
         case body = "ForgotPassword.Body"
         case emailPlaceholder = "ForgotPassword.EmailPlaceholder"
         case sendRequestButton = "ForgotPassword.SendRequestButton"
-        
+
         var localized: String {
             return NSLocalizedString(self.rawValue, tableName: "ForgotPassword", comment: "")
         }
@@ -173,7 +174,7 @@ struct LocalizedStringKey {
             return NSLocalizedString(self.rawValue, tableName: "Welcome", comment: "")
         }
     }
-    
+
     enum Account: String {
         case itemAccount = "Account.itemAccount"
         case itemDevices = "Account.itemDevices"
@@ -192,7 +193,7 @@ struct LocalizedStringKey {
             return NSLocalizedString(self.rawValue, tableName: "Account", comment: "")
         }
     }
-    
+
     enum Infomation: String {
         case emailCell = "Infomation.email"
         case memberCell = "Infomation.member"
@@ -206,7 +207,7 @@ struct LocalizedStringKey {
         case save = "Infomation.save"
         case tapToChange = "Infomation.tapToChangePassword"
         case title = "Infomation.title"
-        
+
         var localized: String {
             return NSLocalizedString(self.rawValue, tableName: "Account", comment: "")
         }
@@ -293,7 +294,7 @@ struct LocalizedStringKey {
         case exit = "BoardList.MultiHop.Exit"
         case contentMultiHop = "BoardList.MultiHop.ContentMultiHop"
         case gotIt = "BoardList.MultiHop.GotIt"
-        
+
         var localized: String {
             return NSLocalizedString(self.rawValue, tableName: "Board", comment: "")
         }
@@ -304,9 +305,18 @@ struct LocalizedStringKey {
         case vpnbasic = "FAQ.vpnbasic"
         case sysvpnSubscription = "FAQ.sysvpnSubscription"
         case aboutSysvpn = "FAQ.aboutSysvpn"
-        
+
         var localized: String {
             return NSLocalizedString(self.rawValue, tableName: "FAQ", comment: "")
+        }
+    }
+    
+    enum StaticIP: String {
+        case staticIP = "StaticIP"
+        case currentLoad = "CurrentLoad"
+
+        var localized: String {
+            return NSLocalizedString(self.rawValue, tableName: "StaticIP", comment: "")
         }
     }
 }

@@ -66,46 +66,85 @@ class BoardViewModel: ObservableObject {
     }
     
     @Published var state: StateBoard = .notConnect
-    @Published var ip = "199.199.199.8"
+    @Published var ip = AppSetting.shared.ip
     @Published var nodes: [Node] = []
     @Published var errorMessage: String? = nil
     @Published var tab: StateTab = .location
-    @Published var uploadSpeed: CGFloat = 900.1
-    @Published var downloadSpeed: CGFloat = 1605
+    @Published var uploadSpeed: CGFloat = 0.0
+    @Published var downloadSpeed: CGFloat = 0.0
     @Published var showCityNodes: Bool = false
     @Published var nodeConnected: Node? = nil
-    @Published var nodeTabList: [NodeTab] = []
-    @Published var nodeTabStatic: [Node] = Node.all
-    @Published var nodeTabMutilhop = [(Node.country, Node.tokyo), (Node.country, Node.tokyo)]
+    
+    @Published var locationData: [NodeGroup] = []
+    
+    @Published var staticIPData: [StaticServer] = []
+    @Published var staticIPNodeSelecte: StaticServer? = nil
+    
+    @Published var mutilhopData: [(Node, Node)] = [(Node.country, Node.tokyo), (Node.country, Node.tokyo)]
+    
     @Published var entryNodeListMutilhop: [Node] = Node.all
     @Published var exitNodeListMutilhop: [Node] = Node.all
     @Published var entryNodeSelectMutilhop: Node = Node.country
     @Published var exitNodeSelectMutilhop: Node = Node.tokyo
+    @Published var mesh: Mesh = Mesh()
+    
+    @Published var configMapView: ConfigMapView = ConfigMapView()
+    
+    class ConfigMapView {
+        var firstload = true
+        var isConfig = false
+        var progressingScale: CGFloat = 1
+        var magScale: CGFloat = 1
+        var totalScale: CGFloat = 1
+        var location: CGPoint = CGPoint(
+            x: Constant.Board.Map.widthScreen / 2,
+            y: Constant.Board.Map.widthScreen)
+    }
     
     let disposedBag = DisposeBag()
     
     init() {
-        //        getLocationAvaible()
+        AppSetting.shared.updateDataMap ? getCountryList() : getDataFromLocal()
     }
-    
-    var x = true
     
     func connectVPN() {
         self.state = .loading
-        DispatchQueue.main.asyncAfter(deadline: .now() + 1) { [self] in
-            self.x.toggle()
-            self.state = self.x ? .notConnect : .connected
-        }
     }
     
     func getCountryList() {
-//        APIManager.shared.getCountryList()
-//            .subscribe { nodeTabList in
-//                self.nodeTabList = nodeTabList
-//            } onFailure: { err in
-//                self.nodeTabList = NodeTab.example
-////                self.errorMessage = err.localizedDescription
-//            }
-//            .disposed(by: self.disposedBag)
+        APIManager.shared.getCountryList()
+            .subscribe { [weak self] response in
+                guard let `self` = self else {
+                    return
+                }
+                if let result = response.result {
+                    AppSetting.shared.saveDataMap(result)
+                    self.configCountryList(result)
+                }
+            } onFailure: { error in
+                
+            }
+            .disposed(by: disposedBag)
+    }
+    
+    func getDataFromLocal() {
+        if let dataMapLocal = AppSetting.shared.getDataMap() {
+            configCountryList(dataMapLocal)
+        }
+    }
+    
+    func configCountryList(_ result: CountryListResultModel) {
+        
+        let countryNodes = result.availableCountries
+        var cityNodes = [Node]()
+        countryNodes.forEach { cityNodes.append(contentsOf: $0.cityNodeList) }
+        self.mesh.configNode(nodes: countryNodes, cityNodes: cityNodes, clientCountryNode: result.clientCountryDetail)
+        
+        locationData = [
+            NodeGroup(nodeList: result.recommendedCountries, type: .recommend),
+            NodeGroup(nodeList: result.availableCountries, type: .all),
+        ]
+        
+        staticIPData = result.staticServers
     }
 }

@@ -53,27 +53,27 @@ enum APIError: Error {
 }
 
 enum APIService {
-    case getSiteHtml(url: String)
     case getCountryList
-    case getNodeTab
-    case register(email: String, password: String, ip: String, country: String, city: String)
-    case login(email: String, password: String, ip: String, country: String, city: String)
+    case register(email: String, password: String)
+    case login(email: String, password: String)
+    case logout
+    case refreshToken
+    case forgotPassword(email: String)
+    case ipInfo
+    case ipInfoOptional
 }
 
 extension APIService: TargetType {
     // This is the base URL we'll be using, typically our server.
     var baseURL: URL {
         switch self {
-        case .getCountryList:
-            return URL(string: Constant.api.getLocationCity)!
-        case .getNodeTab:
-            return URL(string: Constant.api.getNodeTab)!
+        case .ipInfoOptional:
+            return URL(string: Constant.api.ipInfoOptional)!
         default:
             return URL(string: Constant.api.root)!
         }
-        
     }
-
+    
     // This is the path of each operation that will be appended to our base URL.
     var path: String {
         switch self {
@@ -81,68 +81,115 @@ extension APIService: TargetType {
             return Constant.api.path.register
         case .login:
             return Constant.api.path.login
-        default:
+        case .logout:
+            return Constant.api.path.logout
+        case .refreshToken:
+            return Constant.api.path.refreshToken
+        case .forgotPassword:
+            return Constant.api.path.forgotPassword
+        case .getCountryList:
+            return Constant.api.path.getCountryList + "/\(AppSetting.shared.countryCode)/\(AppSetting.shared.ip)"
+        case .ipInfo:
+            return Constant.api.path.ipInfo
+        case .ipInfoOptional:
             return ""
         }
     }
-
+    
     // Here we specify which method our calls should use.
     var method: Moya.Method {
         switch self {
-        case .getSiteHtml:
-            return .get
         case .getCountryList:
-            return .get
-        case .getNodeTab:
             return .get
         case .register:
             return .post
         case .login:
             return .post
+        case .logout:
+            return .post
+        case .refreshToken:
+            return .post
+        case .forgotPassword:
+            return .post
+        case .ipInfo:
+            return .get
+        case .ipInfoOptional:
+            return .get
         }
     }
-
+    
     // Here we specify body parameters, objects, files etc.
     // or just do a plain request without a body.
     // In this example we will not pass anything in the body of the request.
     var task: Task {
         switch self {
-        case .register(let email, let password, let ip, let country, let city):
+        case .register(let email, let password):
             var body: [String: Any] = [:]
             body["email"] = email
             body["password"] = password
-            body["ip"] = ip
-            body["country"] = country
-            body["city"] = city
+            body["ip"] = AppSetting.shared.ip
+            body["country"] = AppSetting.shared.countryCode
+            body["city"] = AppSetting.shared.city
             return .requestCompositeParameters(bodyParameters: body, bodyEncoding: JSONEncoding.prettyPrinted, urlParameters: [:])
-        case .login(let email, let password, let ip, let country, let city):
+        case .login(let email, let password):
             var body: [String: Any] = [:]
             body["email"] = email
             body["password"] = password
-            body["ip"] = ip
-            body["country"] = country
-            body["city"] = city
+            body["ip"] = AppSetting.shared.ip
+            body["country"] = AppSetting.shared.countryCode
+            body["city"] = AppSetting.shared.city
             return .requestCompositeParameters(bodyParameters: body, bodyEncoding: JSONEncoding.prettyPrinted, urlParameters: [:])
-        default:
+        case .logout:
+            var body: [String: Any] = [:]
+            body["refreshToken"] = AppSetting.shared.refreshToken
+            return .requestCompositeParameters(bodyParameters: body, bodyEncoding: JSONEncoding.prettyPrinted, urlParameters: [:])
+        case .refreshToken:
+            var body: [String: Any] = [:]
+            body["refreshToken"] = AppSetting.shared.refreshToken
+            body["ip"] = AppSetting.shared.ip
+            body["country"] = AppSetting.shared.countryCode
+            body["city"] = AppSetting.shared.city
+            return .requestCompositeParameters(bodyParameters: body, bodyEncoding: JSONEncoding.prettyPrinted, urlParameters: [:])
+        case .forgotPassword(let email):
+            var body: [String: Any] = [:]
+            body["email"] = email
+            body["ip"] = AppSetting.shared.ip
+            body["country"] = AppSetting.shared.countryCode
+            body["city"] = AppSetting.shared.city
+            return .requestCompositeParameters(bodyParameters: body, bodyEncoding: JSONEncoding.prettyPrinted, urlParameters: [:])
+        case .getCountryList:
+            var param: [String: Any] = [:]
+            param["key"] = "f11b69c57d5fe9555e29c57c1d863bf8"
+            return .requestParameters(parameters: param, encoding: URLEncoding.queryString)
+        case .ipInfo:
+            var param: [String: Any] = [:]
+            param["key"] = "f11b69c57d5fe9555e29c57c1d863bf8"
+            return .requestParameters(parameters: param, encoding: URLEncoding.queryString)
+        case .ipInfoOptional:
             return .requestPlain
         }
     }
-
+    
     // These are the headers that our service requires.
     // Usually you would pass auth tokens here.
     var headers: [String: String]? {
         switch self {
-        case .getSiteHtml:
-            return ["Content-type": "text/html"]
+        case .login, .register:
+            return ["Content-type": "application/json"]
+        case .getCountryList:
+            return [
+                "Content-type": "application/json",
+                "Authorization": "Bearer \(AppSetting.shared.accessToken)"
+            ]
         default:
             return ["Content-type": "application/json"]
         }
     }
-
+    
     // This is sample return data that you can use to mock and test your services,
     // but we won't be covering this.
     var sampleData: Data {
         return Data()
     }
-
+    
 }

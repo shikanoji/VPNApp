@@ -15,7 +15,8 @@ struct CityCellView: View {
     
     var body: some View {
         HStack(spacing: 16) {
-            Constant.BoardList.iconCity
+            Image(uiImage: Constant.BoardList.iconCity!)
+                .resizable()
                 .frame(width: imageSize,
                        height: imageSize)
             VStack(alignment: .leading, spacing: 4) {

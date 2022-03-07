@@ -20,6 +20,8 @@ struct AccountView: View {
     
     @State private var showFAQ = false
     
+    @StateObject var viewModel: AccountViewModel
+    
     @State var sections: [DataSection] = [
         DataSection(type: .myAccount),
         DataSection(type: .helpSupport)
@@ -81,7 +83,7 @@ struct AccountView: View {
                         .padding([.top, .leading])
                         Spacer()
                         AppButton(style: .darkButton, width: UIScreen.main.bounds.size.width - 30, text: LocalizedStringKey.Account.signOut.localized) {
-                                authentication.logout()
+                            viewModel.logout()
                         }
                         Spacer()
                             .frame(height: 34)
@@ -104,6 +106,9 @@ struct AccountView: View {
             )
         }
         .background(AppColor.background)
+        .onAppear() {
+            viewModel.authentication = authentication
+        }
     }
 }
 
@@ -112,6 +117,6 @@ struct AccountView_Previews: PreviewProvider {
     @State static var value: BoardViewModel.StateBoard = .connected
     
     static var previews: some View {
-        AccountView(showAccount: $showMenu, statusConnect: $value)
+        AccountView(showAccount: $showMenu, statusConnect: $value, viewModel: AccountViewModel())
     }
 }
