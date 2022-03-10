@@ -9,7 +9,7 @@ import Foundation
 import SwiftUI
 import UIKit
 
-struct BackgroundBlurView: UIViewRepresentable {
+struct PopupBackgroundView: UIViewRepresentable {
     func makeUIView(context: Context) -> UIView {
         let view = UIView()
         DispatchQueue.main.async {

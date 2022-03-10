@@ -16,11 +16,14 @@ struct SetupVPNView: View {
     var body: some View {
         ZStack {
             Background{}.opacity(0.8)
-            
             VStack {
+                Spacer().frame(height: 40)
                 HStack {
-                    Image("close").onTapGesture {
-                        presentationMode.wrappedValue.dismiss()                    }
+                    Button {
+                        presentationMode.wrappedValue.dismiss()
+                    } label: {
+                        Image("close")
+                    }
                     Spacer()
                 }
                 Spacer()
@@ -42,7 +45,9 @@ struct SetupVPNView: View {
                 .background(Color.black)
                 .cornerRadius(radius: 15, corners: [.topLeft, .topRight])
             }
-        }.background(BackgroundBlurView.init())
+        }
+        .background(PopupBackgroundView())
+        .ignoresSafeArea()
     }
 }
 

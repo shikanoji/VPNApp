@@ -10,17 +10,18 @@ import SwiftUI
 import RxSwift
 
 struct Form: View {
-    var placeholder: String = ""
+    var placeholder: String
     @Binding var value: String
     var isPassword: Bool = false
     @State private var isRevealed: Bool
-    @State private var isFocused = false
+    @State private var isFocused: Bool
     
-    init(placeholder: String, value: Binding<String>, isPassword: Bool = false){
+    init(placeholder: String = "", value: Binding<String>, isPassword: Bool = false){
         self.placeholder = placeholder
         _value = value
         self.isPassword = isPassword
         isRevealed = !self.isPassword
+        isFocused = false
     }
     
     var body: some View {
