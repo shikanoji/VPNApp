@@ -21,8 +21,8 @@ struct FAQView: View {
                     AppColor.darkButton
                         .frame(height: 10)
                     CustomNavigationView(
-                        leftTitle: LocalizedStringKey.AccountStatus.title.localized,
-                        currentTitle: LocalizedStringKey.FAQ.title.localized,
+                        leftTitle: L10n.Account.AccountStatus.title,
+                        currentTitle: L10n.Faq.title,
                         tapLeftButton: {
                             presentationMode.wrappedValue.dismiss()
                         }, tapRightButton: {

@@ -45,7 +45,7 @@ struct AccountView: View {
                     Text(verbatim: "flashkick2001@gmail.com")
                         .font(Constant.Account.fontEmail)
                     //                    Text(AppSetting.shared.email)
-                    Text(LocalizedStringKey.Account.tapControlProfile.localized)
+                    Text(L10n.Account.tapControl)
                         .font(Constant.Account.fontSubEmail)
                 }
                 .foregroundColor(Color.white)
@@ -82,7 +82,7 @@ struct AccountView: View {
                         }
                         .padding([.top, .leading])
                         Spacer()
-                        AppButton(style: .darkButton, width: UIScreen.main.bounds.size.width - 30, text: LocalizedStringKey.Account.signOut.localized) {
+                        AppButton(style: .darkButton, width: UIScreen.main.bounds.size.width - 30, text: L10n.Account.signout) {
                             viewModel.logout()
                         }
                         Spacer()

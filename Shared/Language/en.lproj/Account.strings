@@ -6,16 +6,16 @@
   
 */
 
-"Account.tapControl" = "Tap to control profile";
-"Account.itemAccount" = "Account status:";
-"Account.itemDevices" = "Devices";
-"Account.itemQuestions" = "Frequently Asked Questions";
-"Account.itemHelpCenter" = "Help Center";
-"Account.itemSecurity" = "Sercurity level";
-"Account.Account" = "My Account";
-"Account.Support" = "Help & Support";
-"Account.signout" = "Sign Out";
-"Account.titleAccount" = "Account";
+"tapControl" = "Tap to control profile";
+"itemAccount" = "Account status:";
+"itemDevices" = "Devices";
+"itemQuestions" = "Frequently Asked Questions";
+"itemHelpCenter" = "Help Center";
+"itemSecurity" = "Sercurity level";
+"Account" = "My Account";
+"Support" = "Help & Support";
+"signout" = "Sign Out";
+"titleAccount" = "Account";
 "Infomation.email" = "Your email";
 "Infomation.member" = "Member since";
 "Infomation.id" = "SysVpn id";
@@ -33,4 +33,4 @@
 "AccountStatus.tapToShow" = "Tap to show";
 "AccountStatus.extend" = "Extend Subscription";
 "PaymentHistory.cancelSubscription" = "Cancel Subscription";
-"Account.contentTotalDevices" = "Multiple devices online";
+"contentTotalDevices" = "Multiple devices online";

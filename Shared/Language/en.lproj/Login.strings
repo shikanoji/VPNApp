@@ -1,0 +1,21 @@
+/* 
+  strings
+  SysVPN
+
+  Created by Nguyễn Đình Thạch on 22/12/2021.
+  
+*/
+"Title" = "Welcome back";
+"Body" = "Start protecting yourself with SysVPN";
+
+"UsernamePlaceholder" = "Your username";
+"PasswordPlaceholder" = "Your password";
+"EmailPlaceholder" = "Your email";
+
+"Signin" = "Sign In";
+"SigninWithGoogle" = "Sign In With Google";
+"SigninWithApple" = "Sign In With Apple";
+
+"NoAccountQuestion" = "Don't have an account?";
+"CreateNew" = "Create new";
+"ForgotPassword" = "Forgot password?";

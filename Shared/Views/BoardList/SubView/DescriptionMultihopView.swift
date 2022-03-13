@@ -29,13 +29,13 @@ struct DescriptionMultihopView: View {
                 VStack(alignment: .center) {
                     Group{
                         Spacer().frame(height: 32)
-                        Text(LocalizedStringKey.MultiHop.whatIsMultiHop.localized)
+                        Text(L10n.Board.BoardList.MultiHop.what)
                             .font(Constant.ChangePassWord.fontTitle)
-                        Text(LocalizedStringKey.MultiHop.contentMultiHop.localized)
+                        Text(L10n.Board.BoardList.MultiHop.contentMultiHop)
                             .font(Constant.ChangePassWord.fontSubContent)
                             .padding(.vertical)
                         Spacer().frame(height: 16)
-                        AppButton(style: .darkButton, width: UIScreen.main.bounds.size.width - 32, text: LocalizedStringKey.MultiHop.gotIt.localized) {
+                        AppButton(style: .darkButton, width: UIScreen.main.bounds.size.width - 32, text: L10n.Board.BoardList.MultiHop.gotIt) {
                             presentationMode.wrappedValue.dismiss()
                         }
                         Spacer().frame(height: 40)

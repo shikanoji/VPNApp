@@ -36,11 +36,11 @@ struct BoardTabViewCustom: View {
     init(typeTab: BoardViewModel.StateTab, currentTab: Binding<BoardViewModel.StateTab>, showBoardList: Binding<Bool>) {
         switch typeTab {
         case .location:
-            self.title = LocalizedStringKey.Board.locationTab.localized
+            self.title = L10n.Board.locationTitleTab
         case .staticIP:
-            self.title = LocalizedStringKey.Board.staticIPTab.localized
+            self.title = L10n.Board.staticIPTitleTab
         case .multiHop:
-            self.title = LocalizedStringKey.Board.multiHopTab.localized
+            self.title = L10n.Board.multiHopTitleTab
         }
         
         self.typeTab = typeTab

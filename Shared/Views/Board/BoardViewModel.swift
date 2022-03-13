@@ -19,22 +19,22 @@ class BoardViewModel: ObservableObject {
         var title: String {
             switch self {
             case .notConnect:
-                return LocalizedStringKey.Board.titleNavigationNotConnect.localized
+                return L10n.Board.navigationTitleNotConnect
             case .loading:
-                return LocalizedStringKey.Board.titleNavigationConnecting.localized
+                return L10n.Board.connecting
             case .connected:
-                return LocalizedStringKey.Board.titleNavigationConnected.localized
+                return L10n.Board.connected
             }
         }
         
         var statusTitle: String {
             switch self {
             case .notConnect:
-                return LocalizedStringKey.Board.unConnect.localized
+                return L10n.Board.unconnect
             case .loading:
-                return LocalizedStringKey.Board.connecting.localized
+                return L10n.Board.connecting
             case .connected:
-                return LocalizedStringKey.Board.connected.localized
+                return L10n.Board.connected
             }
         }
         
@@ -50,11 +50,11 @@ class BoardViewModel: ObservableObject {
         var titleButton: String {
             switch self {
             case .notConnect:
-                return LocalizedStringKey.Board.unConnect.localized
+                return L10n.Board.unconnect
             case .loading:
-                return LocalizedStringKey.Board.connecting.localized
+                return L10n.Board.connecting
             case .connected:
-                return LocalizedStringKey.Board.connected.localized
+                return L10n.Board.connected
             }
         }
     }

@@ -28,11 +28,11 @@ struct SetupVPNView: View {
                 }
                 Spacer()
                 VStack {
-                    Text(LocalizedStringKey.Welcome.setupVPN.localized).setTitle()
+                    Text(L10n.Welcome.setupVPN).setTitle()
                     Spacer().frame(height:10)
-                    Text(LocalizedStringKey.Welcome.setupVPNMessage.localized).setDefault()
+                    Text(L10n.Welcome.setupVPNMessage).setDefault()
                     Spacer().frame(height: 30)
-                    AppButton(width: 311, text: LocalizedStringKey.Welcome.setupButton.localized) {
+                    AppButton(width: 311, text: L10n.Welcome.setupButton) {
                         presentationMode.wrappedValue.dismiss()
                         let email = registerResult.user.email
                         if !email.isEmpty, !registerResult.tokens.access.token.isEmpty, !registerResult.tokens.refresh.token.isEmpty {

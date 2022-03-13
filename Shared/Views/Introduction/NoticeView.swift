@@ -18,31 +18,31 @@ struct NoticeView: View {
             VStack{
                 Asset.Assets.lock.SuImage
                 Spacer().frame(height: 20)
-                Text(LocalizedStringKey.Notice.title.localized).setTitle()
+                Text(L10n.Notice.title).setTitle()
                 Group {
                     Spacer().frame(height: 20)
-                    Text(LocalizedStringKey.Notice.firstGraph.localized).setLightBlackText()
+                    Text(L10n.Notice.firstGraph).setLightBlackText()
                     Spacer().frame(height: 20)
                     HStack(alignment: .firstTextBaseline) {
                         Asset.Assets.checkmark.SuImage
                         Spacer().frame(width: 10)
-                        Text(LocalizedStringKey.Notice.firstTerm.localized).setLightBlackText()
+                        Text(L10n.Notice.firstTerm).setLightBlackText()
                         Spacer()
                     }
                     Spacer().frame(height: 20)
                     HStack(alignment: .firstTextBaseline) {
                         Asset.Assets.checkmark.SuImage
                         Spacer().frame(width: 10)
-                        Text(LocalizedStringKey.Notice.secondTerm.localized).setLightBlackText()
+                        Text(L10n.Notice.secondTerm).setLightBlackText()
                         Spacer()
                     }
                     Spacer().frame(height: 20)
                 }
-                Text(LocalizedStringKey.Notice.lastGraph.localized).setLightBlackText()
+                Text(L10n.Notice.lastGraph).setLightBlackText()
                 Spacer().frame(height: 20)
                 NavigationLink(destination: IntroductionView(), isActive: $showIntroduction) {
                 }
-                AppButton(width: 295, text: LocalizedStringKey.Notice.buttonText.localized){
+                AppButton(width: 295, text: L10n.Notice.buttonText){
                     AppSetting.shared.showedNotice = true
                     showIntroduction = true
                 }

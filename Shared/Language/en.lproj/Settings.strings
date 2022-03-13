@@ -1,0 +1,36 @@
+/* 
+  strings
+  SysVPN
+
+  Created by Da Phan Van on 19/01/2022.
+  
+*/
+"title" = "Settings";
+"sectionVPN" = "VPN Settings";
+"sectionOther" = "Other Settings";
+"itemVPN" = "VPN connection";
+"itemTool" = "Tools";
+"itemGeneral" = "General";
+"itemApps" = "App & Website Shortcuts";
+"itemProtec" = "Protection Summary";
+"itemHelp" = "Help improve SysVpn";
+"enabled" = "Enabled";
+"disabled" = "Disabled";
+"settings" = "settings";
+"itemAuto" = "Auto-connect";
+"itemProtocol" = "Protocol";
+"itemSplit" = "Split tunneling";
+"itemDNS" = "DNS";
+"itemLocalNetwork" = "Local network discovery";
+"itemPMetered" = "Metered connection";
+"contentItemProtocol" = "Recommend";
+"contentItemLocalNetwork" = "Enables access to printers, Tvs, and other devices when connected";
+"contentItemMetered" = "Metered VPN connection gives you more control over how much data your phone uses through downloads and other apps";
+"contentItemSplit" = "Disables VPN for selected apps";
+"alwaysConnect" = "Always";
+"onWifiConnect" = "On Wi-fi";
+"onMobileConnect" = "On mobile networks";
+"offConnect" = "Off";
+"sectionAutoConnect" = "Auto-connect to";
+"fastestConnect" = "Fastest server";
+"contentRecommend" = "Recommend";

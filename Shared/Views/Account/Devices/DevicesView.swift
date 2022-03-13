@@ -22,8 +22,8 @@ struct DevicesView: View {
                     AppColor.darkButton
                         .frame(height: 10)
                     CustomNavigationView(
-                        leftTitle: LocalizedStringKey.AccountStatus.title.localized,
-                        currentTitle: LocalizedStringKey.Account.itemDevices.localized + " (\(AppSetting.shared.currentNumberDevice)/\(AppSetting.shared.totalNumberDevices))",
+                        leftTitle: L10n.Account.AccountStatus.title,
+                        currentTitle: L10n.Account.itemDevices + " (\(AppSetting.shared.currentNumberDevice)/\(AppSetting.shared.totalNumberDevices))",
                         tapLeftButton: {
                             presentationMode.wrappedValue.dismiss()
                         }, tapRightButton: {

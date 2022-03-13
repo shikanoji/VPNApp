@@ -34,25 +34,25 @@ struct ChangePasswordView: View {
                 }
                 VStack(alignment: .leading) {
                     VStack(alignment: .leading, spacing: 8) {
-                        Text(LocalizedStringKey.Infomation.changePassword.localized)
+                        Text(L10n.Account.Infomation.changePassword)
                             .font(Constant.ChangePassWord.fontTitle)
-                        Text(LocalizedStringKey.Infomation.introChangePassword.localized)
+                        Text(L10n.Account.Infomation.introChangePassword)
                             .font(Constant.ChangePassWord.fontSubContent)
                     }
                     .padding(.vertical)
                     Group{
-                        Form(placeholder: LocalizedStringKey.Infomation.currentPassword.localized, value: $viewModel.password,
+                        Form(placeholder: L10n.Account.Infomation.currentPassword, value: $viewModel.password,
                              isPassword: true)
                         Spacer().frame(height: 16)
-                        Form(placeholder: LocalizedStringKey.Infomation.newPassword.localized, value: $viewModel.newPassword, isPassword: true)
+                        Form(placeholder: L10n.Account.Infomation.newPassword, value: $viewModel.newPassword, isPassword: true)
                         Spacer().frame(height: 16)
-                        Form(placeholder: LocalizedStringKey.Infomation.retypePassword.localized, value: $viewModel.newPassword, isPassword: true)
+                        Form(placeholder: L10n.Account.Infomation.retypePassword, value: $viewModel.newPassword, isPassword: true)
                         Spacer().frame(height: 16)
                         if viewModel.showProgressView {
                             ProgressView().progressViewStyle(CircularProgressViewStyle(tint: Color.white))
                         }
                         Spacer().frame(height: 20)
-                        AppButton(style: .themeButton, width: 311, text: LocalizedStringKey.Infomation.save.localized) {
+                        AppButton(style: .themeButton, width: 311, text: L10n.Account.Infomation.save) {
                             self.showChangePassword = false
                         }
                         Spacer().frame(height: 40)

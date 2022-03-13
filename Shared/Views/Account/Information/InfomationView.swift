@@ -22,23 +22,23 @@ struct InfomationView: View {
                     AppColor.darkButton
                         .frame(height: 10)
                     CustomNavigationView(
-                        leftTitle: LocalizedStringKey.Account.titleAccount.localized,
-                        currentTitle: LocalizedStringKey.Account.titleAccount.localized,
+                        leftTitle: L10n.Account.titleAccount,
+                        currentTitle: L10n.Account.titleAccount,
                         tapLeftButton: {
                             presentationMode.wrappedValue.dismiss()
                         }, tapRightButton: {
                             showAccount = false
                         }, statusConnect: statusConnect)
                     VStack(spacing: 1) {
-                        ItemRowCell(title: LocalizedStringKey.Infomation.emailCell.localized,
+                        ItemRowCell(title: L10n.Account.Infomation.email,
                                     content: AppSetting.shared.email,
                                     position: .top)
-                        ItemRowCell(title: LocalizedStringKey.Infomation.memberCell.localized,
+                        ItemRowCell(title: L10n.Account.Infomation.member,
                                     content: AppSetting.shared.getDateMemberSince())
-                        ItemRowCell(title: LocalizedStringKey.Infomation.idCell.localized,
+                        ItemRowCell(title: L10n.Account.Infomation.id,
                                     content: AppSetting.shared.idVPN)
-                        ItemRowCell(title: LocalizedStringKey.Infomation.securityCell.localized,
-                                    content: LocalizedStringKey.Infomation.tapToChange.localized,
+                        ItemRowCell(title: L10n.Account.Infomation.security,
+                                    content: L10n.Account.Infomation.tapToChangePassword,
                                     position: .bot)
                             .onTapGesture {
                                 showChangePassword = true

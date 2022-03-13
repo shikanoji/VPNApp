@@ -24,16 +24,16 @@ struct LoginView: View {
                                 Asset.Assets.logoMedium.SuImage
                                 Group{
                                     Spacer().frame(height: 50)
-                                    Text(LocalizedStringKey.Login.title.localized).setTitle()
+                                    Text(L10n.Login.title).setTitle()
                                     Spacer().frame(height: 20)
-                                    Text(LocalizedStringKey.Login.body.localized).setDefault()
+                                    Text(L10n.Login.body).setDefault()
                                     Spacer().frame(height: 40)
                                 }
                                 
                                 Group{
-                                    Form(placeholder: LocalizedStringKey.Login.emailPlaceholder.localized, value: $viewModel.email)
+                                    Form(placeholder: L10n.Login.emailPlaceholder, value: $viewModel.email)
                                     Spacer().frame(height: 20)
-                                    Form(placeholder: LocalizedStringKey.Login.passwordPlaceholder.localized, value: $viewModel.password, isPassword: true)
+                                    Form(placeholder: L10n.Login.passwordPlaceholder, value: $viewModel.password, isPassword: true)
                                     Spacer().frame(height: 20)
                                     if viewModel.showProgressView {
                                         ProgressView().progressViewStyle(CircularProgressViewStyle(tint: Color.white))
@@ -42,26 +42,26 @@ struct LoginView: View {
                                 }
                                 
                                 Group {
-                                    AppButton(style: .themeButton, width: 311, text: LocalizedStringKey.Login.signin.localized) {
+                                    AppButton(style: .themeButton, width: 311, text: L10n.Login.signin) {
                                         viewModel.login() {result in
                                             
                                         }
                                     }.disabled(viewModel.loginDisable)
                                     Spacer().frame(height: 30)
-                                    AppButton(style: .darkButton, width: 311, text: LocalizedStringKey.Login.signinWithGoogle.localized, icon: Asset.Assets.google.SuImage) {
+                                    AppButton(style: .darkButton, width: 311, text: L10n.Login.signinWithGoogle, icon: Asset.Assets.google.SuImage) {
                                         viewModel.loginGoogle()
                                     }
                                     Spacer().frame(height: 10)
-                                    AppButton(style: .darkButton, width: 311, text: LocalizedStringKey.Login.signinWithApple.localized, icon: Asset.Assets.apple.SuImage) {
+                                    AppButton(style: .darkButton, width: 311, text: L10n.Login.signinWithApple, icon: Asset.Assets.apple.SuImage) {
                                         viewModel.loginApple()
                                     }
                                     Spacer().frame(height: 30)
                                 }
                                 Group {
                                     HStack(spacing: 2){
-                                        Text(LocalizedStringKey.Login.noAccountQuestion.localized).setDefault()
+                                        Text(L10n.Login.noAccountQuestion).setDefault()
                                         NavigationLink(destination: RegisterView(viewModel: RegisterViewModel()), isActive: $createNewAccount) {
-                                            Text(LocalizedStringKey.Login.createNew.localized).setDefaultBold()
+                                            Text(L10n.Login.createNew).setDefaultBold()
                                                 .onTapGesture {
                                                     self.createNewAccount = true
                                                 }
@@ -71,7 +71,7 @@ struct LoginView: View {
                                     Spacer().frame(height: 20)
                                     NavigationLink(destination: ForgotPasswordView(viewModel: ForgotPasswordViewModel()), isActive: $forgotPassword) {
                                     }
-                                    Text(LocalizedStringKey.Login.forgotPassword.localized).setDefault().onTapGesture {
+                                    Text(L10n.Login.forgotPassword).setDefault().onTapGesture {
                                         //Handle Forgot Password
                                         self.forgotPassword = true
                                     }

@@ -71,15 +71,15 @@ enum SectionType: Decodable {
     var title: String {
         switch self {
         case .myAccount:
-            return LocalizedStringKey.Account.sectionAccount.localized
+            return L10n.Account.account
         case .helpSupport:
-            return LocalizedStringKey.Account.sectionSupport.localized
+            return L10n.Account.support
         case .vpnSetting:
-            return LocalizedStringKey.Settings.sectionVPN.localized
+            return L10n.Settings.sectionVPN
         case .otherSetting:
-            return LocalizedStringKey.Settings.sectionOther.localized
+            return L10n.Settings.sectionOther
         case .autoConnect:
-            return LocalizedStringKey.VPNSetting.sectionAuto.localized
+            return L10n.Settings.sectionAutoConnect
         case .typeAutoConnect:
             return ""
         }
@@ -116,51 +116,51 @@ enum ItemCellType: Decodable {
     var title: String {
         switch self {
         case .paymentHistory:
-            return LocalizedStringKey.AccountStatus.paymentHistory.localized
+            return L10n.Account.AccountStatus.paymentHistory
         case .statusAccount:
-            return LocalizedStringKey.Account.itemAccount.localized + " " + AppSetting.shared.statusAccoutn
+            return L10n.Account.itemAccount + " " + AppSetting.shared.statusAccoutn
         case .totalDevice:
-            return LocalizedStringKey.Account.itemDevices.localized + ": \(AppSetting.shared.currentNumberDevice)/\(AppSetting.shared.totalNumberDevices)"
+            return L10n.Account.itemDevices + ": \(AppSetting.shared.currentNumberDevice)/\(AppSetting.shared.totalNumberDevices)"
         case .questions:
-            return LocalizedStringKey.Account.itemQuestions.localized
+            return L10n.Account.itemQuestions
         case .helpCenter:
-            return LocalizedStringKey.Account.itemHelpCenter.localized
+            return L10n.Account.itemHelpCenter
         case .security:
-            return LocalizedStringKey.Account.itemSecurity.localized
+            return L10n.Account.itemSecurity
         case .vpnConnection:
-            return LocalizedStringKey.Settings.itemVPN.localized
+            return L10n.Settings.itemVPN
         case .tools:
-            return LocalizedStringKey.Settings.itemTool.localized
+            return L10n.Settings.itemTool
         case .general:
-            return LocalizedStringKey.Settings.itemGeneral.localized
+            return L10n.Settings.itemGeneral
         case .apps:
-            return LocalizedStringKey.Settings.itemApps.localized
+            return L10n.Settings.itemApps
         case .protection:
-            return LocalizedStringKey.Settings.itemProtec.localized
+            return L10n.Settings.itemProtec
         case .help:
-            return LocalizedStringKey.Settings.itemHelp.localized
+            return L10n.Settings.itemHelp
         case .autoConnet:
-            return LocalizedStringKey.VPNSetting.itemAuto.localized
+            return L10n.Settings.itemAuto
         case .protocolConnect:
-            return LocalizedStringKey.VPNSetting.itemProtocol.localized
+            return L10n.Settings.itemProtocol
         case .split:
-            return LocalizedStringKey.VPNSetting.itemSplit.localized
+            return L10n.Settings.itemSplit
         case .dns:
-            return LocalizedStringKey.VPNSetting.itemDNS.localized
+            return L10n.Settings.itemDNS
         case .localNetwork:
-            return LocalizedStringKey.VPNSetting.itemLocalNetwork.localized
+            return L10n.Settings.itemLocalNetwork
         case .metered:
-            return LocalizedStringKey.VPNSetting.itemMetered.localized
+            return L10n.Settings.itemPMetered
         case .always:
-            return LocalizedStringKey.VPNSetting.itemAlways.localized
+            return L10n.Settings.alwaysConnect
         case .onWifi:
-            return LocalizedStringKey.VPNSetting.itemOnWifi.localized
+            return L10n.Settings.onWifiConnect
         case .onMobile:
-            return LocalizedStringKey.VPNSetting.itemOnMobile.localized
+            return L10n.Settings.onMobileConnect
         case .off:
-            return LocalizedStringKey.VPNSetting.itemOff.localized
+            return L10n.Settings.offConnect
         case .faster:
-            return LocalizedStringKey.VPNSetting.itemFaster.localized
+            return L10n.Settings.fastestConnect
         }
     }
     
@@ -200,33 +200,33 @@ enum ItemCellType: Decodable {
         case .statusAccount:
             return AppSetting.shared.getDateMemberSince()
         case .paymentHistory:
-            return LocalizedStringKey.AccountStatus.tapToShow.localized
+            return L10n.Account.AccountStatus.tapToShow
         case .totalDevice:
-            return LocalizedStringKey.Account.contentTotalDevices.localized
+            return L10n.Account.contentTotalDevices
         case .vpnConnection:
-            return "6 " + LocalizedStringKey.Settings.settings.localized
+            return "6 " + L10n.Settings.settings
         case .general:
-            return "3 " + LocalizedStringKey.Settings.settings.localized
+            return "3 " + L10n.Settings.settings
         case .apps:
-            return AppSetting.shared.appShourtcuts ? LocalizedStringKey.Settings.enabled.localized : LocalizedStringKey.Settings.disabled.localized
+            return AppSetting.shared.appShourtcuts ? L10n.Settings.enabled : L10n.Settings.disabled
         case .protection:
-            return AppSetting.shared.protection ? LocalizedStringKey.Settings.enabled.localized : LocalizedStringKey.Settings.disabled.localized
+            return AppSetting.shared.protection ? L10n.Settings.enabled : L10n.Settings.disabled
         case .help:
-            return AppSetting.shared.help ? LocalizedStringKey.Settings.enabled.localized : LocalizedStringKey.Settings.disabled.localized
+            return AppSetting.shared.help ? L10n.Settings.enabled : L10n.Settings.disabled
         case .autoConnet:
-            return AppSetting.shared.autoConnect ? LocalizedStringKey.Global.on.localized : LocalizedStringKey.Global.off.localized
+            return AppSetting.shared.autoConnect ? L10n.Global.on : L10n.Global.off
         case .protocolConnect:
-            return LocalizedStringKey.VPNSetting.contentItemProtocol.localized
+            return L10n.Settings.contentItemProtocol
         case .split:
-            return LocalizedStringKey.VPNSetting.contentItemSplit.localized
+            return L10n.Settings.contentItemSplit
         case .dns:
-            return LocalizedStringKey.Global.stateDefault.localized
+            return L10n.Global.default
         case .localNetwork:
-            return LocalizedStringKey.VPNSetting.contentItemLocalNetwork.localized
+            return L10n.Settings.contentItemLocalNetwork
         case .metered:
-            return LocalizedStringKey.VPNSetting.contentItemMetered.localized
+            return L10n.Settings.contentItemMetered
         case .faster:
-            return LocalizedStringKey.VPNSetting.contentItemRecommend.localized
+            return L10n.Settings.contentRecommend
         default:
             return ""
         }

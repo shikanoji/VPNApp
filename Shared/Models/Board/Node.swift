@@ -177,11 +177,11 @@ extension Node {
         let count = cityNodeList.count
         switch count {
         case 0:
-            return LocalizedStringKey.BoardList.singleLocation.localized
+            return L10n.Board.BoardList.singleLocation
         case 1:
-            return "1 " + LocalizedStringKey.BoardList.city.localized + " " + LocalizedStringKey.BoardList.avaiable.localized
+            return "1 " + L10n.Board.BoardList.city + " " + L10n.Board.BoardList.available
         default:
-            return "\(count) " + LocalizedStringKey.BoardList.city.localized + " " + LocalizedStringKey.BoardList.avaiable.localized
+            return "\(count) " + L10n.Board.BoardList.city + " " + L10n.Board.BoardList.available
         }
     }
 }
@@ -229,11 +229,11 @@ enum NodeGroupType: Int, Codable {
     var title: String {
         switch self {
         case .recent:
-            return LocalizedStringKey.BoardList.recentLocation.localized
+            return L10n.Board.BoardList.recentLocations
         case .recommend:
-            return LocalizedStringKey.BoardList.recommend.localized
+            return L10n.Board.BoardList.recommended
         case .all:
-            return LocalizedStringKey.BoardList.all.localized
+            return L10n.Board.BoardList.allCountries
         }
     }
 }

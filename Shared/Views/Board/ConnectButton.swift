@@ -49,7 +49,7 @@ struct ConnectButton: View {
     func getContentButton() -> some View {
         switch status {
         case .notConnect:
-            return AnyView(Text(LocalizedStringKey.Board.unconnectButton.localized)
+            return AnyView(Text(L10n.Board.quickUnConnect)
                             .foregroundColor(Color.black)
                             .multilineTextAlignment(.center)
                             .font(.system(size: 14, weight: .bold))

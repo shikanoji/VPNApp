@@ -23,18 +23,18 @@ struct RegisterView: View {
                         Asset.Assets.logoMedium.SuImage
                         Group{
                             Spacer().frame(height: 50)
-                            Text(LocalizedStringKey.Register.title.localized).setTitle()
+                            Text(L10n.Register.title).setTitle()
                             Spacer().frame(height: 20)
-                            Text(LocalizedStringKey.Register.body.localized).setDefault()
+                            Text(L10n.Register.body).setDefault()
                             Spacer().frame(height: 40)
                         }
                         
                         Group{
-                            Form(placeholder: LocalizedStringKey.Register.emailPlaceholder.localized, value: $viewModel.email)
+                            Form(placeholder: L10n.Register.emailPlaceholder, value: $viewModel.email)
                             Spacer().frame(height: 20)
-                            Form(placeholder: LocalizedStringKey.Register.passwordPlaceholder.localized, value: $viewModel.password, isPassword: true)
+                            Form(placeholder: L10n.Register.passwordPlaceholder, value: $viewModel.password, isPassword: true)
                             Spacer().frame(height: 20)
-                            Form(placeholder: LocalizedStringKey.Register.retypePassword.localized, value: $viewModel.retypePassword, isPassword: true)
+                            Form(placeholder: L10n.Register.retypePassword, value: $viewModel.retypePassword, isPassword: true)
                             Spacer().frame(height: 20)
                             if viewModel.showProgressView {
                                 ProgressView().progressViewStyle(CircularProgressViewStyle(tint: Color.white))
@@ -45,7 +45,7 @@ struct RegisterView: View {
                         Group {
                             NavigationLink(destination: SubscriptionIntroduction().environmentObject(registerResult), isActive: $toPlanSelection) {
                             }
-                            AppButton(style: .themeButton, width: 311, text: LocalizedStringKey.Register.signup.localized) {
+                            AppButton(style: .themeButton, width: 311, text: L10n.Register.signup) {
                                 viewModel.signup(){ result, register in
                                     if result == .success, let  _register = register {
                                         registerResult.user = _register.user
@@ -55,20 +55,20 @@ struct RegisterView: View {
                                 }
                             }.disabled(viewModel.registerDisable)
                             Spacer().frame(height: 30)
-                            AppButton(style: .darkButton, width: 311, text: LocalizedStringKey.Register.signupWithGoogle.localized, icon: Asset.Assets.google.SuImage) {
+                            AppButton(style: .darkButton, width: 311, text: L10n.Register.signupWithGoogle, icon: Asset.Assets.google.SuImage) {
                                 viewModel.signupGoogle()
                             }
                             Spacer().frame(height: 10)
-                            AppButton(style: .darkButton, width: 311, text: LocalizedStringKey.Register.signupWithApple.localized, icon: Asset.Assets.apple.SuImage) {
+                            AppButton(style: .darkButton, width: 311, text: L10n.Register.signupWithApple, icon: Asset.Assets.apple.SuImage) {
                                 viewModel.signupApple()
                             }
                             Spacer().frame(height: 30)
                         }
                         Group {
                             HStack{
-                                Text(LocalizedStringKey.Register.hadAccountText.localized).setDefault()
+                                Text(L10n.Register.hadAccountText).setDefault()
                                 Spacer().frame(width: 5)
-                                Text(LocalizedStringKey.Register.signin.localized).setDefaultBold().onTapGesture {
+                                Text(L10n.Register.signin).setDefaultBold().onTapGesture {
                                     presentationMode.wrappedValue.dismiss()
                                 }
                             }

@@ -1,14 +1,14 @@
 /* 
-  PlanSelect.strings
+  strings
   SysVPN
 
   Created by Nguyễn Đình Thạch on 13/01/2022.
   
 */
-"PlanSelect.title" = "Select a plan";
-"PlanSelect.body" = "All plans include protection for 6 devices";
-"PlanSelect.continueButton" = "Continue";
-"PlanSelect.note" = "Pay after 7 days. Subscription auto-renews every 2 years\nuntil canceled.";
+"title" = "Select a plan";
+"body" = "All plans include protection for 6 devices";
+"continueButton" = "Continue";
+"note" = "Pay after 7 days. Subscription auto-renews every 2 years\nuntil canceled.";
 "PlanA.title" = "2-Years plan";
 "PlanA.description" = "$99.00 for the first 2 years.\nThen $105.00/year\n7-day free trial";
 "PlanA.savingText" = "Save 69%";
@@ -25,4 +25,4 @@ until canceled.";
 "PlanA.price" = "$3.67";
 "PlanB.price" = "$4.92";
 "PlanC.price" = "$11.95";
-"PlanSelect.month" = "month";
+"month" = "month";

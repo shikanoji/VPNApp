@@ -1,26 +1,26 @@
 /* 
-  Board.strings
+  strings
   SysVPN
 
   Created by Da Phan Van on 23/12/2021.
   
 */
 
-"Board.IP" = "Your IP: ";
-"Board.SubIP" = "Connect to VPN to online sercurity";
-"Board.Unconnect" = "Unprotected";
-"Board.Connected" = "Protected";
-"Board.Connecting" = "Connecting..";
-"Board.QuickUnConnect" = "Quick\nConnect";
-"Board.NavigationTitleNotConnect" = "VPN not connected";
-"Board.NavigationTitleConnecting" = "Connecting...";
-"Board.NavigationTitleConnected" = "VPN connected";
-"Board.LocationTitleTab" = "Locations";
-"Board.StaticIPTitleTab" = "Static IP";
-"Board.MultiHopTitleTab" = "MultiHop";
-"Board.ConnectedAlert" = "Connected";
-"Board.Speed" = "kb/s";
-"Board.backToMap" = "Back to maps";
+"IP" = "Your IP: ";
+"SubIP" = "Connect to VPN to online sercurity";
+"Unconnect" = "Unprotected";
+"Connected" = "Protected";
+"Connecting" = "Connecting..";
+"QuickUnConnect" = "Quick\nConnect";
+"NavigationTitleNotConnect" = "VPN not connected";
+"NavigationTitleConnecting" = "Connecting...";
+"NavigationTitleConnected" = "VPN connected";
+"LocationTitleTab" = "Locations";
+"StaticIPTitleTab" = "Static IP";
+"MultiHopTitleTab" = "MultiHop";
+"ConnectedAlert" = "Connected";
+"Speed" = "kb/s";
+"backToMap" = "Back to maps";
 "BoardList.Search" = "Search";
 "BoardList.RecentLocations" = "Recent locations";
 "BoardList.Recommended" = "Recommended";
