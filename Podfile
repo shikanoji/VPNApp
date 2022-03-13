@@ -18,6 +18,7 @@ target 'SysVPN (iOS)' do
   pod 'Firebase/Messaging'
   pod 'Firebase/Crashlytics'
   pod 'ExytePopupView'
+  pod 'SwiftGen', '~> 6.0'
 end
 
 target 'SysVPN (macOS)' do

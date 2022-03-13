@@ -47,7 +47,7 @@ struct MapView: View {
     
     var body: some View {
         ZStack(alignment: .center) {
-            Image("map")
+            Asset.Assets.map.SuImage
                 .resizable()
                 .frame(width: widthMap * totalScale,
                        height: heightMap * totalScale)

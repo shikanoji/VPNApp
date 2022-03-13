@@ -17,7 +17,7 @@ struct ForgotPasswordView: View {
             ScrollView(.vertical, showsIndicators: false) {
                 VStack(alignment: .center) {
                     Spacer().frame(height: 100)
-                    Image("Logo-medium")
+                    Asset.Assets.logoMedium.SuImage
                     Group{
                         Spacer().frame(height: 50)
                         Text(LocalizedStringKey.ForgotPassword.title.localized).setTitle()

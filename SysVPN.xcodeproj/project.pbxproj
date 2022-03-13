@@ -18,6 +18,10 @@
 		AC4051E227CCB6860054F6AE /* ToastView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC4051E127CCB6860054F6AE /* ToastView.swift */; };
 		AC6074B027D8D24F00DD5667 /* ArrayExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC6074AF27D8D24F00DD5667 /* ArrayExtension.swift */; };
 		AC6074B227D8D2B200DD5667 /* CustomPopupView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC6074B127D8D2B200DD5667 /* CustomPopupView.swift */; };
+		AC6074D927DB74CC00DD5667 /* swiftgen.yml in Resources */ = {isa = PBXBuildFile; fileRef = AC6074D827DB74CB00DD5667 /* swiftgen.yml */; };
+		AC6074DD27DD014100DD5667 /* Colors.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = AC6074DC27DD014100DD5667 /* Colors.xcassets */; };
+		AC6074E227DD08D200DD5667 /* XCAssets+Generated.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC6074E127DD08D100DD5667 /* XCAssets+Generated.swift */; };
+		AC6074E627DDD06200DD5667 /* AssetsExtension+SwiftUI.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC6074E527DDD06200DD5667 /* AssetsExtension+SwiftUI.swift */; };
 		AC9A8F5B27D6236900FACD7D /* KeychainService.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC9A8F5A27D6236900FACD7D /* KeychainService.swift */; };
 		AC9A8F5D27D655C700FACD7D /* Constant+KeychainService.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC9A8F5C27D655C700FACD7D /* Constant+KeychainService.swift */; };
 		D71CE4FD27903D4F00E8731D /* SubscriptionIntroductionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D71CE4FC27903D4F00E8731D /* SubscriptionIntroductionView.swift */; };
@@ -223,6 +227,10 @@
 		AC4051E127CCB6860054F6AE /* ToastView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToastView.swift; sourceTree = "<group>"; };
 		AC6074AF27D8D24F00DD5667 /* ArrayExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArrayExtension.swift; sourceTree = "<group>"; };
 		AC6074B127D8D2B200DD5667 /* CustomPopupView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomPopupView.swift; sourceTree = "<group>"; };
+		AC6074D827DB74CB00DD5667 /* swiftgen.yml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.yaml; path = swiftgen.yml; sourceTree = SOURCE_ROOT; };
+		AC6074DC27DD014100DD5667 /* Colors.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Colors.xcassets; sourceTree = "<group>"; };
+		AC6074E127DD08D100DD5667 /* XCAssets+Generated.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "XCAssets+Generated.swift"; sourceTree = "<group>"; };
+		AC6074E527DDD06200DD5667 /* AssetsExtension+SwiftUI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AssetsExtension+SwiftUI.swift"; sourceTree = "<group>"; };
 		AC9A8F5A27D6236900FACD7D /* KeychainService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeychainService.swift; sourceTree = "<group>"; };
 		AC9A8F5C27D655C700FACD7D /* Constant+KeychainService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Constant+KeychainService.swift"; sourceTree = "<group>"; };
 		D71CE4FC27903D4F00E8731D /* SubscriptionIntroductionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubscriptionIntroductionView.swift; sourceTree = "<group>"; };
@@ -429,6 +437,23 @@
 			path = Board;
 			sourceTree = "<group>";
 		};
+		AC6074DB27DD011F00DD5667 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				D780449E2758C6FB0086E59D /* Assets.xcassets */,
+				AC6074DC27DD014100DD5667 /* Colors.xcassets */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
+		AC6074E027DD038200DD5667 /* Generated */ = {
+			isa = PBXGroup;
+			children = (
+				AC6074E127DD08D100DD5667 /* XCAssets+Generated.swift */,
+			);
+			path = Generated;
+			sourceTree = "<group>";
+		};
 		AC9A8F5927D6233700FACD7D /* KeychainService */ = {
 			isa = PBXGroup;
 			children = (
@@ -512,6 +537,7 @@
 		D78044932758C6F90086E59D = {
 			isa = PBXGroup;
 			children = (
+				AC6074D827DB74CB00DD5667 /* swiftgen.yml */,
 				D78C8FC92774914400D4A46F /* SysVPN (iOS).entitlements */,
 				D78C8FC827748EE200D4A46F /* SysVPN--iOS--Info.plist */,
 				D78044982758C6F90086E59D /* Shared */,
@@ -527,6 +553,8 @@
 		D78044982758C6F90086E59D /* Shared */ = {
 			isa = PBXGroup;
 			children = (
+				AC6074E027DD038200DD5667 /* Generated */,
+				AC6074DB27DD011F00DD5667 /* Resources */,
 				D7F0EAB127BF9B8200B41015 /* GoogleService */,
 				D75F936F2773705400E16981 /* Language */,
 				D795FFA6275F6E7D00E54206 /* Components */,
@@ -540,7 +568,6 @@
 				D780449C2758C6F90086E59D /* ContentView.swift */,
 				EE514CBA27CC707F00F82AD7 /* ContentViewModel.swift */,
 				D780449D2758C6F90086E59D /* Persistence.swift */,
-				D780449E2758C6FB0086E59D /* Assets.xcassets */,
 				D78044992758C6F90086E59D /* SysVPN.xcdatamodeld */,
 				D78044E22758F54A0086E59D /* AppDelegate.swift */,
 				D795FFAB275F9AC500E54206 /* LaunchScreen.storyboard */,
@@ -588,14 +615,15 @@
 		D78044DF2758F4FE0086E59D /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
+				AC6074AF27D8D24F00DD5667 /* ArrayExtension.swift */,
 				D78044EF27590E550086E59D /* ColorExtension.swift */,
-				D78044E02758F5110086E59D /* UIApplicationExtension.swift */,
-				D78044ED27590E480086E59D /* ViewExtension.swift */,
-				D78A35C7276B2F1400CC010D /* TextExtension.swift */,
-				D7A4AC462795743300C88162 /* NotificationNameExtension.swift */,
 				EE890FF7279558EC00ADF293 /* DateExtension.swift */,
 				D785C72827BD4F7C00E83C0F /* KeyedCodingKeyContainerExtension.swift */,
-				AC6074AF27D8D24F00DD5667 /* ArrayExtension.swift */,
+				D7A4AC462795743300C88162 /* NotificationNameExtension.swift */,
+				D78A35C7276B2F1400CC010D /* TextExtension.swift */,
+				D78044E02758F5110086E59D /* UIApplicationExtension.swift */,
+				D78044ED27590E480086E59D /* ViewExtension.swift */,
+				AC6074E527DDD06200DD5667 /* AssetsExtension+SwiftUI.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -930,6 +958,7 @@
 			buildConfigurationList = D78044D02758C6FC0086E59D /* Build configuration list for PBXNativeTarget "SysVPN (iOS)" */;
 			buildPhases = (
 				3506537919A78B79D04700A8 /* [CP] Check Pods Manifest.lock */,
+				AC6074DA27DC6B3800DD5667 /* SwiftGen */,
 				D780449F2758C6FB0086E59D /* Sources */,
 				D78044A02758C6FB0086E59D /* Frameworks */,
 				D78044A12758C6FB0086E59D /* Resources */,
@@ -1056,6 +1085,7 @@
 				D78848922775AB5600AF22C6 /* Register.strings in Resources */,
 				D7874DF5277AF04900ADC7AD /* ForgotPassword.strings in Resources */,
 				D75F9371277370AE00E16981 /* Introduction.strings in Resources */,
+				AC6074D927DB74CC00DD5667 /* swiftgen.yml in Resources */,
 				D795FFAC275F9AC500E54206 /* LaunchScreen.storyboard in Resources */,
 				D79E82972796FE03009E36F3 /* Welcome.strings in Resources */,
 				D71CE503279059C800E8731D /* PlanSelect.strings in Resources */,
@@ -1066,6 +1096,7 @@
 				D7F0EAB527BF9BB300B41015 /* GoogleService-Info-dev.plist in Resources */,
 				EE79F52F27741E4A006F0E5D /* Board.strings in Resources */,
 				EE89101B2797ADDE00ADF293 /* Settings.strings in Resources */,
+				AC6074DD27DD014100DD5667 /* Colors.xcassets in Resources */,
 				D76BDD002785CF0B002DF290 /* Notice.strings in Resources */,
 				D78044DD2758F46B0086E59D /* GoogleService-Info.plist in Resources */,
 			);
@@ -1161,6 +1192,24 @@
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
+		AC6074DA27DC6B3800DD5667 /* SwiftGen */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			name = SwiftGen;
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "if [[ -f \"${PODS_ROOT}/SwiftGen/bin/swiftgen\" ]]; then\n  \"${PODS_ROOT}/SwiftGen/bin/swiftgen\"\nelse\n  echo \"warning: SwiftGen is not installed. Run 'pod install --repo-update' to install it.\"\nfi\n";
+		};
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
@@ -1168,6 +1217,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				AC6074E227DD08D200DD5667 /* XCAssets+Generated.swift in Sources */,
 				D78044EE27590E480086E59D /* ViewExtension.swift in Sources */,
 				EE890FF8279558EC00ADF293 /* DateExtension.swift in Sources */,
 				AC6074B227D8D2B200DD5667 /* CustomPopupView.swift in Sources */,
@@ -1277,6 +1327,7 @@
 				EE85EE1627BDF5CB000F967A /* PaymentHistory.swift in Sources */,
 				EE8910122796B8CF00ADF293 /* DeviceCell.swift in Sources */,
 				D795FFAA275F6ED200E54206 /* Introduction.swift in Sources */,
+				AC6074E627DDD06200DD5667 /* AssetsExtension+SwiftUI.swift in Sources */,
 				EE79F53327758896006F0E5D /* StopWatch.swift in Sources */,
 				EE89100427967AA200ADF293 /* AccountStatusView.swift in Sources */,
 				EE891077279947FA00ADF293 /* ImageView.swift in Sources */,

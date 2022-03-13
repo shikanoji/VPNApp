@@ -137,23 +137,23 @@ struct Constant {
     }
     
     struct StaticIP {
-        static let iconS = Image("icon_static")
+        static let iconS = Asset.Assets.iconStatic.SuImage
         
         static let widthStatusStatic: CGFloat = 40
         static let heightStatusStatic: CGFloat = 8
     }
     
     struct MultiHop {
-        static let iconWhat = Image("icon_multihop_what")
-        static let iconExit = Image("icon_multihop_exit")
+        static let iconWhat = Asset.Assets.iconMultihopWhat.SuImage
+        static let iconExit = Asset.Assets.iconMultihopExit.SuImage
         static let sizeIcon: CGFloat = 24
     }
     
     struct Global {
-        static let errorImage = Image("japan")
-        static let iconCheck = Image("icon_checkbox")
-        static let iconUncheck = Image("icon_uncheck")
-        static let iconArrowRight = Image("icon_arrow_right")
+        static let errorImage = Asset.Assets.japan.SuImage
+        static let iconCheck = Asset.Assets.iconCheckbox.SuImage
+        static let iconUncheck = Asset.Assets.iconUncheck.SuImage
+        static let iconArrowRight = Asset.Assets.iconArrowRight.SuImage
     }
     
     struct Loading {

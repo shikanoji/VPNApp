@@ -18,26 +18,26 @@ struct SubscriptionIntroduction: View {
                 VStack(alignment: .center) {
                     Spacer().frame(height: 90)
                     Text(LocalizedStringKey.SubscriptionIntro.title.localized).setTitle()
-                    Image("Subscription-Intro-Image")
+                    Asset.Assets.subscriptionIntroImage.SuImage
                     Group {
                         Spacer().frame(height: 20)
                         HStack{
-                            Image("unlimited")
+                            Asset.Assets.unlimited.SuImage
                             Text(LocalizedStringKey.SubscriptionIntro.unlimited.localized).setDefault()
                             Spacer()
                         }.frame(width: 250)
                         HStack{
-                            Image("cash-return")
+                            Asset.Assets.cashReturn.SuImage
                             Text(LocalizedStringKey.SubscriptionIntro.cashback.localized).setDefault()
                             Spacer()
                         }.frame(width: 250)
                         HStack{
-                            Image("rocket-fast")
+                            Asset.Assets.rocketFast.SuImage
                             Text(LocalizedStringKey.SubscriptionIntro.rocketFast.localized).setDefault()
                             Spacer()
                         }.frame(width: 250)
                         HStack{
-                            Image("live-support")
+                            Asset.Assets.liveSupport.SuImage
                             Text(LocalizedStringKey.SubscriptionIntro.liveSupport.localized).setDefault()
                             Spacer()
                         }.frame(width: 250)

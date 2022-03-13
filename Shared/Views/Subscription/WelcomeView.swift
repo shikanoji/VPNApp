@@ -15,7 +15,7 @@ struct WelcomeView: View {
         Background {
             VStack {
                 Spacer().frame(height: 100)
-                Image("welcome")
+                Asset.Assets.welcome.SuImage
                 Spacer().frame(height: 10)
                 Text(LocalizedStringKey.Welcome.title.localized).setTitle()
                 Spacer().frame(height: 10)

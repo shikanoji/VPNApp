@@ -16,11 +16,11 @@ struct IntroductionPage: Hashable {
     
     static func getList() -> [IntroductionPage] {
         
-        let intro1 = IntroductionPage(image: Image("Introduction-1"), title: LocalizedStringKey.Introduction.intro1Title.localized, body: LocalizedStringKey.Introduction.intro1Body.localized)
+        let intro1 = IntroductionPage(image: Asset.Assets.introduction1.SuImage, title: LocalizedStringKey.Introduction.intro1Title.localized, body: LocalizedStringKey.Introduction.intro1Body.localized)
         
-        let intro2 = IntroductionPage(image: Image("Introduction-2"), title: LocalizedStringKey.Introduction.intro2Title.localized, body: LocalizedStringKey.Introduction.intro2Title.localized)
+        let intro2 = IntroductionPage(image: Asset.Assets.introduction2.SuImage, title: LocalizedStringKey.Introduction.intro2Title.localized, body: LocalizedStringKey.Introduction.intro2Title.localized)
         
-        let intro3 = IntroductionPage(image: Image("Introduction-3"), title: LocalizedStringKey.Introduction.intro3Title.localized, body: LocalizedStringKey.Introduction.intro3Body.localized)
+        let intro3 = IntroductionPage(image: Asset.Assets.introduction3.SuImage, title: LocalizedStringKey.Introduction.intro3Title.localized, body: LocalizedStringKey.Introduction.intro3Body.localized)
         
         return [intro1, intro2, intro3]
     }
@@ -47,7 +47,7 @@ struct IntroductionView: View {
                 Spacer().frame(height: 20)
                 HStack {
                     Spacer().frame(width: 10)
-                    Image("Logo-small")
+                    Asset.Assets.logoSmall.SuImage
                     Spacer()
                 }
                 PagingView(index: $index.animation(), maxIndex: IntroductionPage.getList().count - 1) {

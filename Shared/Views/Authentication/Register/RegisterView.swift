@@ -20,7 +20,7 @@ struct RegisterView: View {
                 ScrollView(.vertical, showsIndicators: false) {
                     VStack(alignment: .center) {
                         Spacer().frame(height: 100)
-                        Image("Logo-medium")
+                        Asset.Assets.logoMedium.SuImage
                         Group{
                             Spacer().frame(height: 50)
                             Text(LocalizedStringKey.Register.title.localized).setTitle()
@@ -55,11 +55,11 @@ struct RegisterView: View {
                                 }
                             }.disabled(viewModel.registerDisable)
                             Spacer().frame(height: 30)
-                            AppButton(style: .darkButton, width: 311, text: LocalizedStringKey.Register.signupWithGoogle.localized, icon: Image("google")) {
+                            AppButton(style: .darkButton, width: 311, text: LocalizedStringKey.Register.signupWithGoogle.localized, icon: Asset.Assets.google.SuImage) {
                                 viewModel.signupGoogle()
                             }
                             Spacer().frame(height: 10)
-                            AppButton(style: .darkButton, width: 311, text: LocalizedStringKey.Register.signupWithApple.localized, icon: Image("apple")) {
+                            AppButton(style: .darkButton, width: 311, text: LocalizedStringKey.Register.signupWithApple.localized, icon: Asset.Assets.apple.SuImage) {
                                 viewModel.signupApple()
                             }
                             Spacer().frame(height: 30)

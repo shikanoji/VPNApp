@@ -16,7 +16,7 @@ struct NoticeView: View {
             }
             
             VStack{
-                Image("Lock")
+                Asset.Assets.lock.SuImage
                 Spacer().frame(height: 20)
                 Text(LocalizedStringKey.Notice.title.localized).setTitle()
                 Group {
@@ -24,14 +24,14 @@ struct NoticeView: View {
                     Text(LocalizedStringKey.Notice.firstGraph.localized).setLightBlackText()
                     Spacer().frame(height: 20)
                     HStack(alignment: .firstTextBaseline) {
-                        Image("Checkmark")
+                        Asset.Assets.checkmark.SuImage
                         Spacer().frame(width: 10)
                         Text(LocalizedStringKey.Notice.firstTerm.localized).setLightBlackText()
                         Spacer()
                     }
                     Spacer().frame(height: 20)
                     HStack(alignment: .firstTextBaseline) {
-                        Image("Checkmark")
+                        Asset.Assets.checkmark.SuImage
                         Spacer().frame(width: 10)
                         Text(LocalizedStringKey.Notice.secondTerm.localized).setLightBlackText()
                         Spacer()

@@ -22,7 +22,7 @@ struct SetupVPNView: View {
                     Button {
                         presentationMode.wrappedValue.dismiss()
                     } label: {
-                        Image("close")
+                        Asset.Assets.close.SuImage
                     }
                     Spacer()
                 }

@@ -21,7 +21,7 @@ struct LoginView: View {
                         ScrollView(.vertical, showsIndicators: false) {
                             VStack(alignment: .center) {
                                 Spacer().frame(height: 100)
-                                Image("Logo-medium")
+                                Asset.Assets.logoMedium.SuImage
                                 Group{
                                     Spacer().frame(height: 50)
                                     Text(LocalizedStringKey.Login.title.localized).setTitle()
@@ -48,11 +48,11 @@ struct LoginView: View {
                                         }
                                     }.disabled(viewModel.loginDisable)
                                     Spacer().frame(height: 30)
-                                    AppButton(style: .darkButton, width: 311, text: LocalizedStringKey.Login.signinWithGoogle.localized, icon: Image("google")) {
+                                    AppButton(style: .darkButton, width: 311, text: LocalizedStringKey.Login.signinWithGoogle.localized, icon: Asset.Assets.google.SuImage) {
                                         viewModel.loginGoogle()
                                     }
                                     Spacer().frame(height: 10)
-                                    AppButton(style: .darkButton, width: 311, text: LocalizedStringKey.Login.signinWithApple.localized, icon: Image("apple")) {
+                                    AppButton(style: .darkButton, width: 311, text: LocalizedStringKey.Login.signinWithApple.localized, icon: Asset.Assets.apple.SuImage) {
                                         viewModel.loginApple()
                                     }
                                     Spacer().frame(height: 30)
