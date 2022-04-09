@@ -81,3 +81,9 @@ extension View {
         return customPopupView
     }
 }
+
+extension View {
+    func clearModalBackground()->some View {
+        self.modifier(ClearBackgroundViewModifier())
+    }
+}
