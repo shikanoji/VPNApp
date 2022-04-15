@@ -16,10 +16,16 @@ struct LoadingView: View {
     @State private var offSetRight = minRange
     @State private var offSetLeft = maxRange
     
+    private var opacity: CGFloat
+    
+    init(opacity: CGFloat = 0.8) {
+        self.opacity = opacity
+    }
+    
     var body: some View {
         ZStack {
             VisualEffectView(effect: UIBlurEffect(style: .dark))
-                .opacity(0.8)
+                .opacity(opacity)
             ZStack {
                 RoundedRectangle(cornerRadius: 16, style: .continuous)
                     .fill(AppColor.backgroundLoading)

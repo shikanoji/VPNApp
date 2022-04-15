@@ -180,6 +180,8 @@ public enum L10n {
     public static let cancel = L10n.tr("Global", "cancel")
     /// Default
     public static let `default` = L10n.tr("Global", "default")
+    /// Error
+    public static let error = L10n.tr("Global", "Error")
     /// Off
     public static let off = L10n.tr("Global", "off")
     /// OK
@@ -188,6 +190,8 @@ public enum L10n {
     public static let on = L10n.tr("Global", "on")
     /// Light is Faster, but We are Safer
     public static let slogan = L10n.tr("Global", "slogan")
+    /// Something went wrong
+    public static let somethingWrong = L10n.tr("Global", "SomethingWrong")
   }
   public enum Introduction {
     /// A good VPN service provides you a secure,

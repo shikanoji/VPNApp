@@ -119,6 +119,9 @@ struct Node: Identifiable, Codable {
             updateCity.countryName = name
             return updateCity
         }
+        
+        isCity = cityNodeList.count == 0
+        
     }
     
     init(id: Int = 0,

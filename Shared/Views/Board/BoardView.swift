@@ -67,10 +67,20 @@ struct BoardView: View {
                         }
                         .padding(/*@START_MENU_TOKEN@*/.all/*@END_MENU_TOKEN@*/)
                     }
+                    if viewModel.showProgressView {
+                        LoadingView(opacity: 0.5)
+                    }
                 }
                 .background(AppColor.background)
                 .frame(alignment: .top)
             }
+        }
+        .popup(isPresented: $viewModel.showAlert, type: .floater(verticalPadding: 10), position: .bottom, animation: .easeInOut, autohideIn: 10, closeOnTap: false, closeOnTapOutside: true) {
+            ToastView(title: viewModel.error?.title ?? "",
+                      message: viewModel.error?.description ?? "",
+                      cancelAction: {
+                viewModel.showAlert = false
+            })
         }
         .onChange(of: viewModel.nodeConnected, perform: { newValue in
             showAccount = false

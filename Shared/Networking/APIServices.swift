@@ -18,11 +18,12 @@ enum APIError: Error {
     case url(URLError?)
     case parsing(DecodingError?)
     case unknown
+    case identified(alert: String = L10n.Global.error, message: String = L10n.Global.somethingWrong)
     
     var localizedDescription: String {
         /// User feedback
         switch self {
-        case .badURL, .parsing, .unknown, .tokenError, .someError, .permissionError:
+        case .badURL, .parsing, .unknown, .tokenError, .someError, .permissionError, .identified:
             return "Sorry, something went wrong."
         case .badResponse(_):
             return "Sorry, the connection to our server failed."
@@ -48,6 +49,17 @@ enum APIError: Error {
             return "token error"
         case .permissionError:
             return "permission error"
+        case .identified(_ , let message):
+            return message
+        }
+    }
+    
+    var title: String {
+        switch self {
+        case .identified(let alert, _):
+            return alert
+        default:
+            return "Error"
         }
     }
 }
@@ -61,6 +73,7 @@ enum APIService {
     case forgotPassword(email: String)
     case ipInfo
     case ipInfoOptional
+    case getRequestCertificate
 }
 
 extension APIService: TargetType {
@@ -93,6 +106,18 @@ extension APIService: TargetType {
             return Constant.api.path.ipInfo
         case .ipInfoOptional:
             return ""
+        case .getRequestCertificate:
+            let path = Constant.api.path.requestCertificate
+            
+            guard let cityNodeSelect = NetworkManager.shared.cityNode else {
+                return path
+            }
+            
+            if cityNodeSelect.cityNodeList.count == 0 {
+                return path + "/\(cityNodeSelect.countryId ?? 0)/\(cityNodeSelect.id)/\(NetworkManager.shared.configVPN.description)/\(NetworkManager.shared.protocolVPN.description)/tun"
+            }
+            
+            return path + "/\(cityNodeSelect.id)/\(NetworkManager.shared.configVPN.description)/\(NetworkManager.shared.protocolVPN.description)/tun"
         }
     }
     
@@ -112,6 +137,8 @@ extension APIService: TargetType {
         case .forgotPassword:
             return .post
         case .ipInfo:
+            return .get
+        case .getRequestCertificate:
             return .get
         case .ipInfoOptional:
             return .get
@@ -159,14 +186,21 @@ extension APIService: TargetType {
             return .requestCompositeParameters(bodyParameters: body, bodyEncoding: JSONEncoding.prettyPrinted, urlParameters: [:])
         case .getCountryList:
             var param: [String: Any] = [:]
+            // Use "key" temporarily, after remove it
             param["key"] = "f11b69c57d5fe9555e29c57c1d863bf8"
             return .requestParameters(parameters: param, encoding: URLEncoding.queryString)
         case .ipInfo:
             var param: [String: Any] = [:]
+            // Use "key" temporarily, after remove it
             param["key"] = "f11b69c57d5fe9555e29c57c1d863bf8"
             return .requestParameters(parameters: param, encoding: URLEncoding.queryString)
         case .ipInfoOptional:
             return .requestPlain
+        case .getRequestCertificate:
+            var param: [String: Any] = [:]
+            // Use "key" temporarily, after remove it
+            param["key"] = "f11b69c57d5fe9555e29c57c1d863bf8"
+            return .requestParameters(parameters: param, encoding: URLEncoding.queryString)
         }
     }
     
@@ -176,7 +210,7 @@ extension APIService: TargetType {
         switch self {
         case .login, .register:
             return ["Content-type": "application/json"]
-        case .getCountryList:
+        case .getCountryList, .getRequestCertificate:
             return [
                 "Content-type": "application/json",
                 "Authorization": "Bearer \(AppSetting.shared.accessToken)"

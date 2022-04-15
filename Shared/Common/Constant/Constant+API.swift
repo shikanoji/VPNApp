@@ -19,6 +19,7 @@ extension Constant {
             static let forgotPassword = "/shared/module_auth/v1/forgot-password"
             static let getCountryList = "app/module_server/v1/country/get_list"
             static let ipInfo = "/shared/module_server/v1/app/ip_info"
+            static let requestCertificate = "/app/module_server/v1/vpn/request_certificate"
         }
     }
 }

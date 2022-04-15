@@ -20,8 +20,8 @@ struct NodePopupView: View {
                 .background(Constant.Board.NodePopupView.backgroudTriangle)
                 .cornerRadius(Constant.Board.NodePopupView.cornerRadius)
             Triangle()
-                .frame(width: Constant.Board.NodePopupView.widthTriangle * scale,
-                       height: Constant.Board.NodePopupView.heightTriangle * scale)
+                .frame(width: Constant.Board.NodePopupView.widthTriangle * scale * Constant.Board.Map.zoomCity,
+                       height: Constant.Board.NodePopupView.heightTriangle * scale * Constant.Board.Map.zoomCity)
                 .foregroundColor(Constant.Board.NodePopupView.backgroudTriangle)
         }
     }
@@ -30,7 +30,7 @@ struct NodePopupView: View {
         if node.isCity {
             return AnyView(
                 VStack(alignment: .center, spacing: 0) {
-                    Text(node.name)
+                    Text(node.countryName ?? "")
                         .font(.system(size: Constant.Board.NodePopupView.sizeFont * Constant.Board.Map.zoomCity * scale ,
                                       weight: Constant.Board.NodePopupView.weightFont))
                         .lineLimit(Constant.Board.NodePopupView.numberLineText)
@@ -39,27 +39,29 @@ struct NodePopupView: View {
                         .background(AppColor.backgroundCity)
                         .minimumScaleFactor(.leastNonzeroMagnitude)
                     HStack(spacing: 6) {
-                        Image(node.flag)
-                            .resizable()
+                        
+                        ImageView(withURL: node.flag, size: ensignSize * Constant.Board.Map.zoomCity * scale)
+                            .clipShape(Circle())
                             .frame(width: Constant.Board.NodePopupView.frameEnsign * Constant.Board.Map.zoomCity * scale,
                                    height: Constant.Board.NodePopupView.frameEnsign * Constant.Board.Map.zoomCity * scale)
-                        Text(node.subRegion)
+                        Text(node.name)
                             .font(.system(size: Constant.Board.NodePopupView.sizeFont * Constant.Board.Map.zoomCity * scale,
                                           weight: Constant.Board.NodePopupView.weightFont))
                             .lineLimit(Constant.Board.NodePopupView.numberLineText)
                     }
                     .frame(maxWidth: .infinity, maxHeight: .infinity)
-                    .padding(Constant.Board.NodePopupView.paddingContent)
+                    .padding(.vertical, Constant.Board.NodePopupView.paddingContent)
+                    .padding(.horizontal, Constant.Board.NodePopupView.paddingContent * 2)
                 }
                     .frame(height: Constant.Board.NodePopupView.heightContentPopupView * Constant.Board.Map.zoomCity * scale)
                     .fixedSize(horizontal: true, vertical: false)
             )
         } else {
             return AnyView(HStack {
-                ImageView(withURL: node.flag, size: ensignSize * scale)
+                ImageView(withURL: node.flag, size: ensignSize)
                     .clipShape(Circle())
                 Text(node.name)
-                    .font(.system(size: Constant.Board.NodePopupView.sizeFont * scale,
+                    .font(.system(size: Constant.Board.NodePopupView.sizeFont,
                                   weight: Constant.Board.NodePopupView.weightFont))
                     .lineLimit(Constant.Board.NodePopupView.numberLineText)
             }.padding(10))

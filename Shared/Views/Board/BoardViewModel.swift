@@ -8,6 +8,7 @@
 import Foundation
 import SwiftUI
 import RxSwift
+import TunnelKitManager
 
 class BoardViewModel: ObservableObject {
     
@@ -90,6 +91,11 @@ class BoardViewModel: ObservableObject {
     
     @Published var configMapView: ConfigMapView = ConfigMapView()
     
+    @Published var showAlert: Bool = false
+    @Published var showProgressView: Bool = false
+    
+    var error: APIError?
+    
     class ConfigMapView {
         var firstload = true
         var isConfig = false
@@ -105,10 +111,52 @@ class BoardViewModel: ObservableObject {
     
     init() {
         AppSetting.shared.updateDataMap ? getCountryList() : getDataFromLocal()
+        
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(VPNStatusDidChange(notification:)),
+            name: VPNNotification.didChangeStatus,
+            object: nil
+        )
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(VPNDidFail(notification:)),
+            name: VPNNotification.didFail,
+            object: nil
+        )
+
+        Task {
+            await OpenVPNManager.shared.vpn.prepare()
+        }
     }
     
     func connectVPN() {
-        self.state = .loading
+        if state == .notConnect {
+            getRequestCertificate()
+        } else {
+            NetworkManager.shared.disconnect()
+        }
+    }
+    
+    @objc private func VPNStatusDidChange(notification: Notification) {
+        
+        print("VPNStatusDidChange: \(notification.vpnStatus)")
+        
+        switch notification.vpnStatus {
+        case .connected:
+            state = .connected
+            
+        case .disconnected:
+            state = .notConnect
+            
+        case .disconnecting, .connecting:
+            state = .loading
+        }
+    }
+
+    @objc private func VPNDidFail(notification: Notification) {
+        print("VPNStatusDidFail: \(notification.vpnError.localizedDescription)")
+        state = .notConnect
     }
     
     func getCountryList() {
@@ -117,14 +165,63 @@ class BoardViewModel: ObservableObject {
                 guard let `self` = self else {
                     return
                 }
+                
                 if let result = response.result {
                     AppSetting.shared.saveDataMap(result)
                     self.configCountryList(result)
+                } else {
+                    let error = response.errors
+                    if error.count > 0, let message = error[0] as? String {
+                        self.error = APIError.identified(message: message)
+                        self.showAlert = true
+                    } else if !response.message.isEmpty {
+                        self.error = APIError.identified(message: response.message)
+                        self.showAlert = true
+                    }
                 }
             } onFailure: { error in
-                
+                self.error = APIError.identified(message: error.localizedDescription)
+                self.showAlert = true
             }
             .disposed(by: disposedBag)
+    }
+    
+    func getRequestCertificate() {
+        self.showProgressView = true
+        
+        APIManager.shared.getRequestCertificate()
+            .subscribe { [weak self] response in
+                guard let `self` = self else {
+                    return
+                }
+                
+                self.showProgressView = false
+                
+                if let result = response.result {
+                    NetworkManager.shared.requestCertificate = result
+                    NetworkManager.shared.connect()
+                } else {
+                    let error = response.errors
+                    if error.count > 0, let message = error[0] as? String {
+                        self.error = APIError.identified(message: message)
+                        self.showAlert = true
+                    } else if !response.message.isEmpty {
+                        self.error = APIError.identified(message: response.message)
+                        self.showAlert = true
+                    }
+                }
+            } onFailure: { error in
+                self.error = APIError.identified(message: error.localizedDescription)
+                self.showProgressView = false
+                self.showAlert = true
+            }
+            .disposed(by: disposedBag)
+    }
+    
+    func getAvaiableCity(_ cityNodes: [Node]) {
+        if cityNodes.count > 0 {
+            NetworkManager.shared.cityNode = cityNodes.first
+        }
     }
     
     func getDataFromLocal() {
@@ -146,5 +243,6 @@ class BoardViewModel: ObservableObject {
         ]
         
         staticIPData = result.staticServers
+        getAvaiableCity(cityNodes)
     }
 }

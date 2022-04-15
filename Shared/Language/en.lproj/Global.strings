@@ -11,4 +11,5 @@
 "default" = "Default";
 "cancel" = "Cancel";
 "ok" = "OK";
-
+"Error" = "Error";
+"SomethingWrong" = "Something went wrong";
