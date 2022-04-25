@@ -25,7 +25,7 @@ struct StatusLocationView: View {
                 NetworkWaveView(lineNumber: AppSetting.shared.lineNetwork)
                     .padding()
             } else {
-                Text(LocalizedStringKey.Board.backToMap.localized)
+                Text(L10n.Board.backToMap)
                     .foregroundColor(.white)
                     .font(Constant.BoardList.fontLocationStatus)
                     .padding()

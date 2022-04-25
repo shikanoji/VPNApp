@@ -9,34 +9,34 @@ import Foundation
 import SwiftUI
 
 struct AppColor {
-    static var themeColor = Color(hex: "66FFCC")
+    static var themeColor = Asset.Colors.darkThemeColor.SuColor
     static var textColor = Color.white
-    static var blackText = Color(hex: "15151C")
-    static var lightBlackText = Color(hex: "8C8D97")
-    static var lightBlack = Color(hex: "14141C")
-    static let green = Color(hex: "4CD964")
-    static var darkButton = Color(hex: "2E303D")
-    static var background = Color(hex: "1B1C26")
-    static var lightGray = Color(hex: "5B5F75")
-    static let navigationBar = Color(hex: "1B1C26")
+    static var blackText = Asset.Colors.blackText.SuColor
+    static var lightBlackText = Asset.Colors.lightBlackText.SuColor
+    static var lightBlack = Asset.Colors.lightBlack.SuColor
+    static let green = Asset.Colors.green.SuColor
+    static var darkButton = Asset.Colors.darkButton.SuColor
+    static var background = Asset.Colors.background.SuColor
+    static var lightGray = Asset.Colors.lightGray.SuColor
+    static let navigationBar = Asset.Colors.navigationBar.SuColor
     
     ///Board
-    static let backgroundStatusView = Color(hex: "4C4E5D")
-    static let VPNConnected = Color(hex: "66FFCC")
-    static let VPNUnconnect = Color(hex: "CA1D1D")
-    static let backgroundCity = Color(hex: "F2F2F2")
+    static let backgroundStatusView = Asset.Colors.backgroundStatusView.SuColor
+    static let VPNConnected = Asset.Colors.vpnConnected.SuColor
+    static let VPNUnconnect = Asset.Colors.vpnUnconnected.SuColor
+    static let backgroundCity = Asset.Colors.backgroundCity.SuColor
     
-    static let whiteStatus = Color(hex: "E7E8F0")
-    static let borderSearch = Color(hex: "4D4F5C")
-    static let greenGradient = Color(hex: "0CBC92")
-    static let yellowGradient = Color(hex: "CEA71B")
-    static let redradient = Color(hex: "BF1616")
+    static let whiteStatus = Asset.Colors.whiteStatus.SuColor
+    static let borderSearch = Asset.Colors.borderSearch.SuColor
+    static let greenGradient = Asset.Colors.greenGradient.SuColor
+    static let yellowGradient = Asset.Colors.yellowGradient.SuColor
+    static let redradient = Asset.Colors.redGradient.SuColor
     
     ///Toast
-    static let toastBackground = Color(hex: "2E303D")
+    static let toastBackground = Asset.Colors.toastBackground.SuColor
     
     ///Loading
-    static let rightCircle = Color(hex: "66FFCC")
-    static let leftCircle = Color(hex: "FFFFFF")
-    static let backgroundLoading = Color(hex: "0A0A0D")
+    static let rightCircle = Asset.Colors.rightCircle.SuColor
+    static let leftCircle = Asset.Colors.leftCircle.SuColor
+    static let backgroundLoading = Asset.Colors.backgroundLoading.SuColor
 }

@@ -1,0 +1,18 @@
+/* 
+  strings
+  SysVPN
+
+  Created by Nguyễn Đình Thạch on 24/12/2021.
+  
+*/
+
+"Title" = "Create an account";
+"Body" = "Start protecting yourself with SysVPN";
+"EmailPlaceholder" = "Your Email";
+"PasswordPlaceholder" = "Your Password";
+"RetypePassword" = "Retype Your Password";
+"Signup" = "Create An Account";
+"SignupWithGoogle" = "Sign up with Google";
+"SignupWithApple" = "Sign up with Apple";
+"HadAccountText" = "Already have an account?";
+"Signin" = "Sign In";

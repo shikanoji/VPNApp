@@ -10,7 +10,7 @@ import SwiftUI
 struct AlertConnectView: View {
     var body: some View {
         VStack(spacing: 0) {
-            Text(LocalizedStringKey.Board.connectedAlert.localized)
+            Text(L10n.Board.connectedAlert)
                 .font(.system(size: Constant.Board.Alert.sizeFont, weight: Constant.Board.Alert.weightFont))
                 .lineLimit(1)
                 .padding(5)

@@ -50,7 +50,7 @@ struct ToastView: View {
                         backgroundColor: Color.clear,
                         textColor: Color.white,
                         textSize: Size.bodyTextSize,
-                        text: LocalizedStringKey.Global.cancel.localized,
+                        text: L10n.Global.cancel,
                         borderWidth: 1,
                         borderColor: AppColor.lightGray) {
                             cancelAction?()
@@ -61,7 +61,7 @@ struct ToastView: View {
                         backgroundColor: Color.clear,
                         textColor: Color.white,
                         textSize: Size.bodyTextSize,
-                        text: LocalizedStringKey.Global.ok.localized,
+                        text: L10n.Global.ok,
                         borderWidth: 1,
                         borderColor: AppColor.lightGray) {
                             confirmAction?()

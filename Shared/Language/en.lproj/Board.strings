@@ -1,0 +1,40 @@
+/* 
+  strings
+  SysVPN
+
+  Created by Da Phan Van on 23/12/2021.
+  
+*/
+
+"IP" = "Your IP: ";
+"SubIP" = "Connect to VPN to online sercurity";
+"Unconnect" = "Unprotected";
+"Connected" = "Protected";
+"Connecting" = "Connecting..";
+"QuickUnConnect" = "Quick\nConnect";
+"NavigationTitleNotConnect" = "VPN not connected";
+"NavigationTitleConnecting" = "Connecting...";
+"NavigationTitleConnected" = "VPN connected";
+"LocationTitleTab" = "Locations";
+"StaticIPTitleTab" = "Static IP";
+"MultiHopTitleTab" = "MultiHop";
+"ConnectedAlert" = "Connected";
+"Speed" = "kb/s";
+"backToMap" = "Back to maps";
+"BoardList.Search" = "Search";
+"BoardList.RecentLocations" = "Recent locations";
+"BoardList.Recommended" = "Recommended";
+"BoardList.AllCountries" = "All countries";
+"BoardList.City" = "city";
+"BoardList.Cities" = "cities";
+"BoardList.Available" = "available";
+"BoardList.SingleLocation" = "Single location";
+"BoardList.CityOf" = "City of";
+"BoardList.MultiHop.What" = "What is multihop?";
+"BoardList.MultiHop.RecentConnections" = "Recent connections";
+"BoardList.MultiHop.SelectEntryLocation" = "Select entry location";
+"BoardList.MultiHop.SelectExitLocation" = "Select exit location";
+"BoardList.MultiHop.Connect" = "Connect";
+"BoardList.MultiHop.Exit" = "Exit location represents your main VPN server";
+"BoardList.MultiHop.ContentMultiHop" = "MultiHop enables you to connect via two different VPN servers. Most of the time, these are located in different countries. For example, you can make your VPN connection even more secure and private by connecting to a VPN server in Canada and then a second VPN server in Germany instead of just a Canadian server.";
+"BoardList.MultiHop.GotIt" = "Got it";

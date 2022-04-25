@@ -21,9 +21,7 @@ class Authentication: ObservableObject {
     }
     
     func logout() {
-        AppSetting.shared.ip = ""
-        AppSetting.shared.city = ""
-        AppSetting.shared.countryCode = ""
+        ///Should not clear ip, country code and city since it will make user unable to login again unless restarting app
         AppSetting.shared.email = ""
         AppSetting.shared.accessToken = ""
         AppSetting.shared.accessTokenExpires = ""

@@ -11,7 +11,11 @@ struct MapView: View {
     
     @State var progressingScale: CGFloat = 1
     @State var magScale: CGFloat = 1
-    @State var totalScale: CGFloat = 1
+    @State var totalScale: CGFloat = 1 {
+        didSet {
+            showCityNodes = totalScale > Constant.Board.Map.enableCityZoom
+        }
+    }
     
     @ObservedObject var mesh: Mesh
     @ObservedObject var selection: SelectionHandler
@@ -47,7 +51,7 @@ struct MapView: View {
     
     var body: some View {
         ZStack(alignment: .center) {
-            Image("map")
+            Asset.Assets.map.SuImage
                 .resizable()
                 .frame(width: widthMap * totalScale,
                        height: heightMap * totalScale)
@@ -66,6 +70,7 @@ struct MapView: View {
         .onReceive(selection.$selectedNodeIDs) {
             if let id = $0.first, let node = mesh.nodeWithID(id) {
                 moveToNode(node)
+                NetworkManager.shared.cityNode = node
             }
         }
         .onReceive(mesh.$clientCountryNode) {
@@ -124,7 +129,6 @@ struct MapView: View {
             progressingScale = newValue
             magScale = newValue
             progressingScale = 1
-            showCityNodes = newValue > Constant.Board.Map.enableCityZoom
             totalScale = progressingScale * magScale
         }
         checkCollision()

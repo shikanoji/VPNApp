@@ -28,8 +28,8 @@ struct SettingVPNView: View {
                 AppColor.darkButton
                     .frame(height: 10)
                 CustomNavigationView(
-                    leftTitle: LocalizedStringKey.Settings.title.localized,
-                    currentTitle: LocalizedStringKey.Settings.itemVPN.localized,
+                    leftTitle: L10n.Settings.title,
+                    currentTitle: L10n.Settings.itemVPN,
                     tapLeftButton: {
                         presentationMode.wrappedValue.dismiss()
                     }, tapRightButton: {

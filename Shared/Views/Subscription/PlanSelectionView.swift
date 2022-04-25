@@ -18,9 +18,9 @@ struct PlanSelectionView: View {
                 VStack {
                     Group {
                         Spacer().frame(height: 100)
-                        Text(LocalizedStringKey.PlanSelect.title.localized).setTitle()
+                        Text(L10n.PlanSelect.title).setTitle()
                         Spacer().frame(height: 10)
-                        Text(LocalizedStringKey.PlanSelect.body.localized).setDefault()
+                        Text(L10n.PlanSelect.body).setDefault()
                     }
                     Group {
                         Spacer().frame(height: 20)
@@ -29,7 +29,7 @@ struct PlanSelectionView: View {
                     }
                     NavigationLink(destination: WelcomeView().environmentObject(registerResult), isActive: $toWelcomeScreen) {
                     }
-                    AppButton(width: 311, text: LocalizedStringKey.PlanSelect.continueButton.localized) {
+                    AppButton(width: 311, text: L10n.PlanSelect.continueButton) {
                         self.toWelcomeScreen = true
                     }
                     Spacer().frame(height: 20)

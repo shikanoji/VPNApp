@@ -8,12 +8,43 @@
 import SwiftUI
 
 struct InfomationView: View {
-    
+    @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
     @Binding var showAccount: Bool
     @State var statusConnect: BoardViewModel.StateBoard = .connected
     @State var showChangePassword = false
+    @State var deleteAccount = false
     
-    @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
+    var deleteAccountButton: some View {
+        AppButton(style: .none, width: 343, height: 44, backgroundColor: AppColor.darkButton, textColor: AppColor.redradient, textSize: 14, text: L10n.Account.deleteAccount) {
+            deleteAccount = true
+        }.fullScreenCover(isPresented: $deleteAccount) {
+            DeleteAccountConfirmationView()
+        }
+    }
+
+    var itemList: some View {
+        VStack(spacing: 1) {
+            ItemRowCell(title: L10n.Account.Infomation.email,
+                        content: AppSetting.shared.email,
+                        position: .top)
+            ItemRowCell(title: L10n.Account.Infomation.member,
+                        content: AppSetting.shared.getDateMemberSince())
+            ItemRowCell(title: L10n.Account.Infomation.id,
+                        content: AppSetting.shared.idVPN)
+            ItemRowCell(title: L10n.Account.Infomation.security,
+                        content: L10n.Account.Infomation.tapToChangePassword,
+                        position: .bot)
+            .onTapGesture {
+                showChangePassword = true
+            }
+        }
+        .padding(Constant.Menu.hozitalPaddingCell)
+        .padding(.top, Constant.Menu.topPaddingCell)
+        .fullScreenCover(isPresented: $showChangePassword) {
+            ChangePasswordView(viewModel: ChangePasswordViewModel(), showChangePassword: $showChangePassword)
+                .clearModalBackground()
+        }
+    }
     
     var body: some View {
         ScrollView(.vertical, showsIndicators: false) {
@@ -22,37 +53,16 @@ struct InfomationView: View {
                     AppColor.darkButton
                         .frame(height: 10)
                     CustomNavigationView(
-                        leftTitle: LocalizedStringKey.Account.titleAccount.localized,
-                        currentTitle: LocalizedStringKey.Account.titleAccount.localized,
+                        leftTitle: L10n.Account.titleAccount,
+                        currentTitle: L10n.Account.titleAccount,
                         tapLeftButton: {
                             presentationMode.wrappedValue.dismiss()
                         }, tapRightButton: {
                             showAccount = false
                         }, statusConnect: statusConnect)
-                    VStack(spacing: 1) {
-                        ItemRowCell(title: LocalizedStringKey.Infomation.emailCell.localized,
-                                    content: AppSetting.shared.email,
-                                    position: .top)
-                        ItemRowCell(title: LocalizedStringKey.Infomation.memberCell.localized,
-                                    content: AppSetting.shared.getDateMemberSince())
-                        ItemRowCell(title: LocalizedStringKey.Infomation.idCell.localized,
-                                    content: AppSetting.shared.idVPN)
-                        ItemRowCell(title: LocalizedStringKey.Infomation.securityCell.localized,
-                                    content: LocalizedStringKey.Infomation.tapToChange.localized,
-                                    position: .bot)
-                            .onTapGesture {
-                                showChangePassword = true
-                            }
-                    }
-                    .padding(Constant.Menu.hozitalPaddingCell)
-                    .padding(.top, Constant.Menu.topPaddingCell)
-                    .fullScreenCover(isPresented: $showChangePassword) {
-
-                    } content: {
-                        ChangePasswordView(viewModel: ChangePasswordViewModel(), showChangePassword: $showChangePassword)
-                            .clearModalBackground()
-                    }
-
+                    itemList
+                    Spacer()
+                    deleteAccountButton
                 }
             }
         }
@@ -86,15 +96,10 @@ struct ClearBackgroundView: UIViewRepresentable {
 }
 
 struct ClearBackgroundViewModifier: ViewModifier {
-    
     func body(content: Content) -> some View {
         content
             .background(ClearBackgroundView())
     }
 }
 
-extension View {
-    func clearModalBackground()->some View {
-        self.modifier(ClearBackgroundViewModifier())
-    }
-}
+

@@ -15,13 +15,13 @@ struct WelcomeView: View {
         Background {
             VStack {
                 Spacer().frame(height: 100)
-                Image("welcome")
+                Asset.Assets.welcome.SuImage
                 Spacer().frame(height: 10)
-                Text(LocalizedStringKey.Welcome.title.localized).setTitle()
+                Text(L10n.Welcome.title).setTitle()
                 Spacer().frame(height: 10)
-                Text(LocalizedStringKey.Welcome.message.localized).setDefault()
+                Text(L10n.Welcome.message).setDefault()
                 Spacer()
-                AppButton(width: 311, text: LocalizedStringKey.Welcome.startButton.localized) {
+                AppButton(width: 311, text: L10n.Welcome.startButton) {
                     showingSetup = true
                 }
                 Spacer().frame(height: 20)

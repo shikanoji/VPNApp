@@ -31,11 +31,11 @@ struct StatusVPNView: View {
     
     func getStatusTextView() -> some View {
         VStack(alignment: .leading, spacing: 5) {
-            Text(LocalizedStringKey.Board.yourIP.localized + " \(ip) - ")
+            Text(L10n.Board.ip + " \(ip) - ")
             + Text(status.statusTitle)
                 .foregroundColor(status.statusColor)
                 .fontWeight(.semibold)
-            Text(LocalizedStringKey.Board.subIP.localized)
+            Text(L10n.Board.subIP)
         }
         .font(.system(size: Constant.Board.SubBoard.fontSize))
         .foregroundColor(Constant.Board.SubBoard.fontColor)

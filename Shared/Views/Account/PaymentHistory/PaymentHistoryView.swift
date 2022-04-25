@@ -23,8 +23,8 @@ struct PaymentHistoryView: View {
                     AppColor.darkButton
                         .frame(height: 10)
                     CustomNavigationView(
-                        leftTitle: LocalizedStringKey.AccountStatus.title.localized,
-                        currentTitle: LocalizedStringKey.AccountStatus.paymentHistory.localized,
+                        leftTitle: L10n.Account.AccountStatus.title,
+                        currentTitle: L10n.Account.AccountStatus.paymentHistory,
                         tapLeftButton: {
                             presentationMode.wrappedValue.dismiss()
                         }, tapRightButton: {
@@ -34,7 +34,7 @@ struct PaymentHistoryView: View {
                         ForEach(paymentHistoryList.indices) { i in
                             ItemRowCell(title: paymentHistoryList[i].pack,
                                         content: paymentHistoryList[i].contentStatus + " - " + paymentHistoryList[i].date,
-                                        alertContent: i == 0 ? LocalizedStringKey.Account.cancelSubscribe.localized : "",
+                                        alertContent: i == 0 ? L10n.Account.PaymentHistory.cancelSubscription : "",
                                         position: paymentHistoryList.getPosition(i))
                         }
                     }

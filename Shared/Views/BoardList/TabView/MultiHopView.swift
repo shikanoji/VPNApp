@@ -30,7 +30,7 @@ struct MultiHopView: View {
             } label: {
                 HStack {
                     Constant.MultiHop.iconWhat
-                    Text(LocalizedStringKey.MultiHop.whatIsMultiHop.localized)
+                    Text(L10n.Board.BoardList.MultiHop.what)
                         .foregroundColor(.white)
                         .font(Constant.BoardList.fontNodeList)
                 }
@@ -47,7 +47,7 @@ struct MultiHopView: View {
             Group {
                 Spacer()
                     .frame(height: 0)
-                AppButton(style: .themeButton, width: UIScreen.main.bounds.size.width - 32, text: LocalizedStringKey.MultiHop.connect.localized) {
+                AppButton(style: .themeButton, width: UIScreen.main.bounds.size.width - 32, text: L10n.Board.BoardList.MultiHop.connect) {
                     
                 }
                 Spacer()
@@ -57,7 +57,7 @@ struct MultiHopView: View {
                 } label: {
                     HStack {
                         Constant.MultiHop.iconExit
-                        Text(LocalizedStringKey.MultiHop.exit.localized)
+                        Text(L10n.Board.BoardList.MultiHop.exit)
                             .foregroundColor(.white)
                             .font(Constant.BoardList.fontNodeList)
                     }
@@ -66,10 +66,10 @@ struct MultiHopView: View {
             }
             NavigationLink(destination:
                             SelectLocationMultihopView(nodeList: $entryNodeList,
-                                                       leftText: LocalizedStringKey.MultiHop.selectEntryLocation.localized, nodeSelectClosure: { self.entryNodeSelect = $0 }),
+                                                       leftText: L10n.Board.BoardList.MultiHop.selectEntryLocation, nodeSelectClosure: { self.entryNodeSelect = $0 }),
                            isActive: $showEntryLocationView) { }
             NavigationLink(destination: SelectLocationMultihopView(nodeList: $exitNodeList,
-                                                                   leftText: LocalizedStringKey.MultiHop.selectExitLocation.localized, nodeSelectClosure: { self.exitNodeSelect = $0 }),
+                                                                   leftText: L10n.Board.BoardList.MultiHop.selectExitLocation, nodeSelectClosure: { self.exitNodeSelect = $0 }),
                            isActive: $showExitLocationView) { }
         }
         .padding()
@@ -87,7 +87,7 @@ struct MultiHopView: View {
     
     var recentConnectionsView: some View {
         VStack(alignment: .leading, spacing: 2) {
-            Text(LocalizedStringKey.MultiHop.recentConnections.localized)
+            Text(L10n.Board.BoardList.MultiHop.recentConnections)
                 .foregroundColor(AppColor.lightBlackText)
                 .font(Constant.BoardList.fontNodeList)
             Spacer()
@@ -121,7 +121,7 @@ struct MultiHopView: View {
     
     var selectView: some View {
         VStack(alignment: .leading, spacing: 15) {
-            Text(LocalizedStringKey.MultiHop.selectEntryLocation.localized)
+            Text(L10n.Board.BoardList.MultiHop.selectEntryLocation)
                 .foregroundColor(AppColor.lightBlackText)
                 .font(Constant.BoardList.fontNodeList)
             
@@ -140,7 +140,7 @@ struct MultiHopView: View {
                 }
             }
             
-            Text(LocalizedStringKey.MultiHop.selectExitLocation.localized)
+            Text(L10n.Board.BoardList.MultiHop.selectExitLocation)
                 .foregroundColor(AppColor.lightBlackText)
                 .font(Constant.BoardList.fontNodeList)
             

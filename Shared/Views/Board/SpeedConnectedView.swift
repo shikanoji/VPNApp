@@ -23,7 +23,7 @@ struct SpeedConnectedView: View {
                 Image(Constant.Board.Image.uploadSpeed)
                     .resizable()
                     .frame(width: Constant.Board.Speed.heightIcon, height: Constant.Board.Speed.heightIcon)
-                Text("\(Int(uploadSpeed))\(LocalizedStringKey.Board.speed.localized)")
+                Text("\(Int(uploadSpeed))\(L10n.Board.speed)")
                     .lineLimit(1)
                     .foregroundColor(.white)
             }
@@ -31,7 +31,7 @@ struct SpeedConnectedView: View {
                 Image(Constant.Board.Image.downloadSpeed)
                     .resizable()
                     .frame(width: Constant.Board.Speed.heightIcon, height: Constant.Board.Speed.heightIcon)
-                Text("\(Int(downLoadSpeed))\(LocalizedStringKey.Board.speed.localized)")
+                Text("\(Int(downLoadSpeed))\(L10n.Board.speed)")
                     .lineLimit(1)
                     .foregroundColor(.white)
             }

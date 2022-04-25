@@ -19,11 +19,11 @@ struct StaticIPListView: View {
                 .padding(.horizontal)
             ScrollView(showsIndicators: false) {
                 HStack {
-                    Text(LocalizedStringKey.StaticIP.staticIP.localized)
+                    Text(L10n.StaticIP.staticIP)
                         .foregroundColor(AppColor.lightBlackText)
                         .font(.system(size: 12))
                     Spacer()
-                    Text(LocalizedStringKey.StaticIP.currentLoad.localized)
+                    Text(L10n.StaticIP.currentLoad)
                         .foregroundColor(AppColor.backgroundStatusView)
                         .font(.system(size: 9))
                 }

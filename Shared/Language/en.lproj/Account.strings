@@ -1,0 +1,40 @@
+/* 
+  Settings.strings
+  SysVPN
+
+  Created by Da Phan Van on 14/01/2022.
+  
+*/
+
+"tapControl" = "Tap to control profile";
+"itemAccount" = "Account status:";
+"itemDevices" = "Devices";
+"itemQuestions" = "Frequently Asked Questions";
+"itemHelpCenter" = "Help Center";
+"itemSecurity" = "Sercurity level";
+"Account" = "My Account";
+"Support" = "Help & Support";
+"signout" = "Sign Out";
+"titleAccount" = "Account";
+"Infomation.email" = "Your email";
+"Infomation.member" = "Member since";
+"Infomation.id" = "SysVpn id";
+"Infomation.security" = "Account sercurity";
+"Infomation.changePassword" = "Change password";
+"Infomation.introChangePassword" = "Enter current & new password";
+"Infomation.currentPassword" = "Current Password";
+"Infomation.newPassword" = "New Password";
+"Infomation.retypePassword" = "Retype New Password";
+"Infomation.save" = "Save";
+"Infomation.tapToChangePassword" = "Tap to change password";
+"Infomation.title" = "Infomation";
+"AccountStatus.title" = "Your Subscription";
+"AccountStatus.paymentHistory" = "Payment history";
+"AccountStatus.tapToShow" = "Tap to show";
+"AccountStatus.extend" = "Extend Subscription";
+"PaymentHistory.cancelSubscription" = "Cancel Subscription";
+"contentTotalDevices" = "Multiple devices online";
+"deleteAccount" = "Delete your account";
+"DeleteAccount.note" = "Note: This action cannot be undone.";
+"DeleteAccount.message" = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.";
+"DeleteAccount.delete" = "Delete";

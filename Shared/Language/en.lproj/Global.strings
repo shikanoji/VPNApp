@@ -5,10 +5,11 @@
   Created by Nguyễn Đình Thạch on 06/12/2021.
   
 */
-"Global.slogan" = "Light is Faster, but We are Safer";
-"Global.on" = "On";
-"Global.off" = "Off";
-"Global.default" = "Default";
-"Global.cancel" = "Cancel";
-"Global.ok" = "OK";
-
+"slogan" = "Light is Faster, but We are Safer";
+"on" = "On";
+"off" = "Off";
+"default" = "Default";
+"cancel" = "Cancel";
+"ok" = "OK";
+"Error" = "Error";
+"SomethingWrong" = "Something went wrong";

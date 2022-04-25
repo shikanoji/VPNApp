@@ -17,31 +17,31 @@ struct ForgotPasswordView: View {
             ScrollView(.vertical, showsIndicators: false) {
                 VStack(alignment: .center) {
                     Spacer().frame(height: 100)
-                    Image("Logo-medium")
+                    Asset.Assets.logoMedium.SuImage
                     Group{
                         Spacer().frame(height: 50)
-                        Text(LocalizedStringKey.ForgotPassword.title.localized).setTitle()
+                        Text(L10n.ForgotPassword.title).setTitle()
                         Spacer().frame(height: 20)
-                        Text(LocalizedStringKey.ForgotPassword.body.localized).setDefault()
+                        Text(L10n.ForgotPassword.body).setDefault()
                         Spacer().frame(height: 40)
                     }
                     
                     Group{
-                        Form(placeholder: LocalizedStringKey.ForgotPassword.emailPlaceholder.localized, value: $viewModel.email)
+                        Form(placeholder: L10n.ForgotPassword.emailPlaceholder, value: $viewModel.email)
                         Spacer().frame(height: 20)
                     }
                     
                     Group {
-                        AppButton(style: .themeButton, width: 311, text: LocalizedStringKey.ForgotPassword.sendRequestButton.localized) {
+                        AppButton(style: .themeButton, width: 311, text: L10n.ForgotPassword.sendRequestButton) {
                             viewModel.sendRequest()
                         }
                     }.disabled(viewModel.sendRequestDisable)
                     Spacer().frame(height: 30)
                     Group {
                         HStack{
-                            Text(LocalizedStringKey.Register.hadAccountText.localized).setDefault()
+                            Text(L10n.Register.hadAccountText).setDefault()
                             Spacer().frame(width: 5)
-                            Text(LocalizedStringKey.Register.signin.localized).setDefaultBold().onTapGesture {
+                            Text(L10n.Register.signin).setDefaultBold().onTapGesture {
                                 presentationMode.wrappedValue.dismiss()
                             }
                         }

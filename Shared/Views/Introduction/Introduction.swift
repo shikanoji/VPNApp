@@ -16,11 +16,11 @@ struct IntroductionPage: Hashable {
     
     static func getList() -> [IntroductionPage] {
         
-        let intro1 = IntroductionPage(image: Image("Introduction-1"), title: LocalizedStringKey.Introduction.intro1Title.localized, body: LocalizedStringKey.Introduction.intro1Body.localized)
+        let intro1 = IntroductionPage(image: Asset.Assets.introduction1.SuImage, title: L10n.Introduction.intro1Title, body: L10n.Introduction.intro1Body)
         
-        let intro2 = IntroductionPage(image: Image("Introduction-2"), title: LocalizedStringKey.Introduction.intro2Title.localized, body: LocalizedStringKey.Introduction.intro2Title.localized)
+        let intro2 = IntroductionPage(image: Asset.Assets.introduction2.SuImage, title: L10n.Introduction.intro2Title, body: L10n.Introduction.intro2Title)
         
-        let intro3 = IntroductionPage(image: Image("Introduction-3"), title: LocalizedStringKey.Introduction.intro3Title.localized, body: LocalizedStringKey.Introduction.intro3Body.localized)
+        let intro3 = IntroductionPage(image: Asset.Assets.introduction3.SuImage, title: L10n.Introduction.intro3Title, body: L10n.Introduction.intro3Body)
         
         return [intro1, intro2, intro3]
     }
@@ -47,7 +47,7 @@ struct IntroductionView: View {
                 Spacer().frame(height: 20)
                 HStack {
                     Spacer().frame(width: 10)
-                    Image("Logo-small")
+                    Asset.Assets.logoSmall.SuImage
                     Spacer()
                 }
                 PagingView(index: $index.animation(), maxIndex: IntroductionPage.getList().count - 1) {
@@ -70,7 +70,7 @@ struct IntroductionView: View {
                 //                Stepper("Index: \(index)", value: $index.animation(.easeInOut), in: 0...images.count-1)
                 .font(Font.body.monospacedDigit())
                 //                NavigationLink(destination: SubscriptionIntroduction(), isActive: $trial) { }
-                AppButton(style: .themeButton, width: 300, height:50, text: LocalizedStringKey.Introduction.trialButton.localized) {
+                AppButton(style: .themeButton, width: 300, height:50, text: L10n.Introduction.trialButton) {
                     self.signIn = true
                 }
                 NavigationLink(destination: LoginView(viewModel: LoginViewModel()), isActive: $signIn) { }

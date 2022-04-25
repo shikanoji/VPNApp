@@ -1,0 +1,14 @@
+/* 
+  strings
+  SysVPN
+
+  Created by Nguyễn Đình Thạch on 18/01/2022.
+  
+*/
+
+"title" = "Welcome to SysVPN";
+"message" = "Now you can connect to VPN and enjoy\nultimate privacy and security online.";
+"startButton" = "Started";
+"setupVPN" = "Setup Your VPN";
+"setupVPNMessage" = "Your device will ask permission to complete the configuration.";
+"setupButton" = "Setup Now";

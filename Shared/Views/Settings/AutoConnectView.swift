@@ -21,8 +21,8 @@ struct AutoConnectView: View {
                     AppColor.darkButton
                         .frame(height: 10)
                     CustomNavigationView(
-                        leftTitle: LocalizedStringKey.Settings.itemVPN.localized,
-                        currentTitle: LocalizedStringKey.VPNSetting.itemAuto.localized,
+                        leftTitle: L10n.Settings.itemVPN,
+                        currentTitle: L10n.Settings.itemAuto,
                         tapLeftButton: {
                             presentationMode.wrappedValue.dismiss()
                         }, tapRightButton: {

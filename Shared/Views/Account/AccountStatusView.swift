@@ -22,8 +22,8 @@ struct AccountStatusView: View {
                     AppColor.darkButton
                         .frame(height: 10)
                     CustomNavigationView(
-                        leftTitle: LocalizedStringKey.Account.titleAccount.localized,
-                        currentTitle: LocalizedStringKey.AccountStatus.title.localized,
+                        leftTitle: L10n.Account.titleAccount,
+                        currentTitle: L10n.Account.AccountStatus.title,
                         tapLeftButton: {
                             presentationMode.wrappedValue.dismiss()
                         }, tapRightButton: {
@@ -41,7 +41,7 @@ struct AccountStatusView: View {
                                 self.showPayment = true
                             }
                         Spacer().frame(height: 32)
-                        AppButton(style: .themeButton, width: UIScreen.main.bounds.size.width - 32, text: LocalizedStringKey.AccountStatus.extendSub.localized) {
+                        AppButton(style: .themeButton, width: UIScreen.main.bounds.size.width - 32, text: L10n.Account.AccountStatus.extend) {
                             
                         }
                     }

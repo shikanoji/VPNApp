@@ -22,7 +22,7 @@ struct ContentView: View {
             AppColor.background
             if !viewModel.getIpInfoSuccess {
                 if viewModel.showProgressView {
-                    Image("map")
+                    Asset.Assets.map.SuImage
                         .resizable()
                         .aspectRatio(contentMode: .fit)
                     LoadingView()
