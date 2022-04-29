@@ -19,3 +19,10 @@ extension Array {
         }
     }
 }
+
+func getPosition<T: Equatable>(item: T, arr: [T]) -> PositionItemCell {
+    if arr.count > 0, let index = arr.firstIndex(of: item) {
+        return arr.getPosition(index)
+    }
+    return .all
+}

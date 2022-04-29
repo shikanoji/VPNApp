@@ -68,7 +68,7 @@ struct BoardView: View {
                         .padding(/*@START_MENU_TOKEN@*/.all/*@END_MENU_TOKEN@*/)
                     }
                     if viewModel.showProgressView {
-                        LoadingView(opacity: 0.5)
+                        // dont show loading
                     }
                 }
                 .background(AppColor.background)

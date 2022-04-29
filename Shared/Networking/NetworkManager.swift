@@ -26,8 +26,6 @@ class NetworkManager: ObservableObject {
         }
     }
     
-    var configVPN: ConfigVPN = .openVPN
-    
     enum ProtocolVPN {
         case udp
         case tcp
@@ -44,11 +42,15 @@ class NetworkManager: ObservableObject {
     
     var protocolVPN: ProtocolVPN = .tcp
     
-    private var selectConfig: ConfigVPN = .openVPN
+    var selectConfig: ConfigVPN = .wireguard
     
     var requestCertificate: RequestCertificateModel?
     
+    var obtainCertificate: ObtainCertificateModel?
+    
     var cityNode: Node?
+    
+    var staticServer: StaticServer?
     
     func connect() {
         switch selectConfig {

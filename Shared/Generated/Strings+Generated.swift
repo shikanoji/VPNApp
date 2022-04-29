@@ -376,6 +376,8 @@ public enum L10n {
     public static let onMobileConnect = L10n.tr("Settings", "onMobileConnect")
     /// On Wi-fi
     public static let onWifiConnect = L10n.tr("Settings", "onWifiConnect")
+    /// Open VPN
+    public static let openVPN = L10n.tr("Settings", "openVPN")
     /// Auto-connect to
     public static let sectionAutoConnect = L10n.tr("Settings", "sectionAutoConnect")
     /// Other Settings
@@ -386,6 +388,8 @@ public enum L10n {
     public static let settings = L10n.tr("Settings", "settings")
     /// Settings
     public static let title = L10n.tr("Settings", "title")
+    /// WireGuard
+    public static let wireGuard = L10n.tr("Settings", "wireGuard")
   }
   public enum StaticIP {
     /// CURRENT LOAD

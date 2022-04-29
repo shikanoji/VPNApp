@@ -74,6 +74,7 @@ enum APIService {
     case ipInfo
     case ipInfoOptional
     case getRequestCertificate
+    case getObtainCertificate
 }
 
 extension APIService: TargetType {
@@ -107,17 +108,9 @@ extension APIService: TargetType {
         case .ipInfoOptional:
             return ""
         case .getRequestCertificate:
-            let path = Constant.api.path.requestCertificate
-            
-            guard let cityNodeSelect = NetworkManager.shared.cityNode else {
-                return path
-            }
-            
-            if cityNodeSelect.cityNodeList.count == 0 {
-                return path + "/\(cityNodeSelect.countryId ?? 0)/\(cityNodeSelect.id)/\(NetworkManager.shared.configVPN.description)/\(NetworkManager.shared.protocolVPN.description)/tun"
-            }
-            
-            return path + "/\(cityNodeSelect.id)/\(NetworkManager.shared.configVPN.description)/\(NetworkManager.shared.protocolVPN.description)/tun"
+            return Constant.api.path.requestCertificate
+        case .getObtainCertificate:
+            return Constant.api.path.obtainCertificate + "/\(NetworkManager.shared.requestCertificate?.requestId ?? "")"
         }
     }
     
@@ -141,6 +134,8 @@ extension APIService: TargetType {
         case .getRequestCertificate:
             return .get
         case .ipInfoOptional:
+            return .get
+        case .getObtainCertificate:
             return .get
         }
     }
@@ -200,6 +195,29 @@ extension APIService: TargetType {
             var param: [String: Any] = [:]
             // Use "key" temporarily, after remove it
             param["key"] = "f11b69c57d5fe9555e29c57c1d863bf8"
+            
+            if let cityNodeSelect = NetworkManager.shared.cityNode {
+                if cityNodeSelect.cityNodeList.count > 0 {
+                    param["countryId"] = cityNodeSelect.id
+                } else {
+                    param["countryId"] = cityNodeSelect.countryId
+                    param["cityId"] = cityNodeSelect.id
+                }
+            }
+            
+            param["tech"] = NetworkManager.shared.selectConfig.description
+            param["proto"] = NetworkManager.shared.protocolVPN.description
+            param["dev"] = "tun"
+            
+            if let staticServer = NetworkManager.shared.staticServer {
+                  param["serverId"] = staticServer.id
+            }
+            
+            return .requestParameters(parameters: param, encoding: URLEncoding.queryString)
+        case .getObtainCertificate:
+            var param: [String: Any] = [:]
+            // Use "key" temporarily, after remove it
+            param["key"] = "f11b69c57d5fe9555e29c57c1d863bf8"
             return .requestParameters(parameters: param, encoding: URLEncoding.queryString)
         }
     }
@@ -210,7 +228,7 @@ extension APIService: TargetType {
         switch self {
         case .login, .register:
             return ["Content-type": "application/json"]
-        case .getCountryList, .getRequestCertificate:
+        case .getCountryList, .getRequestCertificate, .getObtainCertificate:
             return [
                 "Content-type": "application/json",
                 "Authorization": "Bearer \(AppSetting.shared.accessToken)"
