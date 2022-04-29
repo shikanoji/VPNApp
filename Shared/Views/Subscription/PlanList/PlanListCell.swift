@@ -39,9 +39,10 @@ struct PlanListCell: View {
                             .background(focus ? AppColor.background : Color.white)
                             .cornerRadius(10)
                     }
-                }.frame(width: 116, height: 120)
-                    .background(focus ? AppColor.themeColor : Color(hex: "4c4e5d"))
-                    .cornerRadius(15)
+                }
+                .frame(width: 116, height: 120)
+                .background(focus ? AppColor.themeColor : Asset.Colors.planListCellDeactiveBackground.SuColor)
+                .cornerRadius(15)
                 Spacer().frame(width: 0)
             }
         }

@@ -75,6 +75,7 @@ enum APIService {
     case ipInfoOptional
     case getRequestCertificate
     case getObtainCertificate
+    case changePassword(oldPassword: String, newPassword: String)
 }
 
 extension APIService: TargetType {
@@ -111,21 +112,18 @@ extension APIService: TargetType {
             return Constant.api.path.requestCertificate
         case .getObtainCertificate:
             return Constant.api.path.obtainCertificate + "/\(NetworkManager.shared.requestCertificate?.requestId ?? "")"
+        case .changePassword:
+                return Constant.api.path.changePassword
         }
+    
     }
     
     // Here we specify which method our calls should use.
     var method: Moya.Method {
         switch self {
-        case .getCountryList:
+        case .getCountryList, .ipInfo, .getRequestCertificate, .ipInfoOptional:
             return .get
-        case .register:
-            return .post
-        case .login:
-            return .post
-        case .logout:
-            return .post
-        case .refreshToken:
+        case .register, .login, .logout, .forgotPassword, .refreshToken:
             return .post
         case .forgotPassword:
             return .post
@@ -137,6 +135,8 @@ extension APIService: TargetType {
             return .get
         case .getObtainCertificate:
             return .get
+        case .changePassword:
+            return .put
         }
     }
     
@@ -219,6 +219,11 @@ extension APIService: TargetType {
             // Use "key" temporarily, after remove it
             param["key"] = "f11b69c57d5fe9555e29c57c1d863bf8"
             return .requestParameters(parameters: param, encoding: URLEncoding.queryString)
+        case .changePassword(let oldPassword, let newPassword):
+            var param: [String: Any] = [:]
+            param["oldPassword"] = oldPassword
+            param["newPassword"] = newPassword
+            return .requestCompositeParameters(bodyParameters: param, bodyEncoding: JSONEncoding.prettyPrinted, urlParameters: [:])
         }
     }
     
@@ -228,7 +233,7 @@ extension APIService: TargetType {
         switch self {
         case .login, .register:
             return ["Content-type": "application/json"]
-        case .getCountryList, .getRequestCertificate, .getObtainCertificate:
+        case .getCountryList, .getRequestCertificate, .getObtainCertificate, .changePassword:
             return [
                 "Content-type": "application/json",
                 "Authorization": "Bearer \(AppSetting.shared.accessToken)"
