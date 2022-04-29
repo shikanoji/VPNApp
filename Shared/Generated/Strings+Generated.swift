@@ -45,6 +45,12 @@ public enum L10n {
       /// Your Subscription
       public static let title = L10n.tr("Account", "AccountStatus.title")
     }
+    public enum ChangePassword {
+      /// Confirm password does not matche
+      public static let passwordNotMatch = L10n.tr("Account", "ChangePassword.passwordNotMatch")
+      /// Successfully changed password
+      public static let success = L10n.tr("Account", "ChangePassword.success")
+    }
     public enum DeleteAccount {
       /// Delete
       public static let delete = L10n.tr("Account", "DeleteAccount.delete")

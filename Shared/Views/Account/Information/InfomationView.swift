@@ -15,7 +15,9 @@ struct InfomationView: View {
     @State var deleteAccount = false
     
     var deleteAccountButton: some View {
-        AppButton(style: .none, width: 343, height: 44, backgroundColor: AppColor.darkButton, textColor: AppColor.redradient, textSize: 14, text: L10n.Account.deleteAccount) {
+        AppButton(style: .none, width: UIScreen.main.bounds.size.width - 30, height: 44,
+                  backgroundColor: AppColor.darkButton, textColor: AppColor.redradient,
+                  textSize: 14, text: L10n.Account.deleteAccount) {
             deleteAccount = true
         }.fullScreenCover(isPresented: $deleteAccount) {
             DeleteAccountConfirmationView()

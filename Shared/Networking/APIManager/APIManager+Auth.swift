@@ -34,12 +34,24 @@ extension APIManager {
             }
     }
     
-    func logout() -> Single<APIResponse<LogoutResult>> {
+    func logout() -> Single<APIResponse<EmptyResult>> {
         return provider.rx
             .request(.logout)
             .map { response in
-                let logoutResult = try JSONDecoder().decode(APIResponse<LogoutResult>.self, from: response.data)
+                let logoutResult = try JSONDecoder().decode(APIResponse<EmptyResult>.self, from: response.data)
                 return logoutResult
+            }
+            .catch { error in
+                throw APIError.someError
+            }
+    }
+    
+    func changePassword(oldPassword: String, newPassword: String) -> Single<APIResponse<EmptyResult>> {
+        return provider.rx
+            .request(.changePassword(oldPassword: oldPassword, newPassword: newPassword))
+            .map { response in
+                let result = try JSONDecoder().decode(APIResponse<EmptyResult>.self, from: response.data)
+                return result
             }
             .catch { error in
                 throw APIError.someError

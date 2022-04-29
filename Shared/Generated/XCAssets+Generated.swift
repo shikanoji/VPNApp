@@ -94,6 +94,7 @@ internal enum Asset {
     internal static let lightBlackText = ColorAsset(name: "lightBlackText")
     internal static let lightGray = ColorAsset(name: "lightGray")
     internal static let navigationBar = ColorAsset(name: "navigationBar")
+    internal static let planListCellDeactiveBackground = ColorAsset(name: "planListCellDeactiveBackground")
     internal static let redGradient = ColorAsset(name: "redGradient")
     internal static let rightCircle = ColorAsset(name: "rightCircle")
     internal static let toastBackground = ColorAsset(name: "toastBackground")

@@ -38,3 +38,5 @@
 "DeleteAccount.note" = "Note: This action cannot be undone.";
 "DeleteAccount.message" = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.";
 "DeleteAccount.delete" = "Delete";
+"ChangePassword.passwordNotMatch" = "Confirm password does not matche";
+"ChangePassword.success" = "Successfully changed password";

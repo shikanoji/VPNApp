@@ -52,9 +52,6 @@ struct ForgotPasswordView: View {
             }
             .autocapitalization(.none)
             .disabled(viewModel.showProgressView)
-            .onReceiveAlertWithAction(title: $viewModel.alertTitle, message: $viewModel.alertMessage, showing: $viewModel.showAlert) {
-                //Handle Alert Confirmation
-            }
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
     }

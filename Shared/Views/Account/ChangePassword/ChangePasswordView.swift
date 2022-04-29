@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import Combine
 
 struct VisualEffectView: UIViewRepresentable {
     var effect: UIVisualEffect?
@@ -16,6 +17,64 @@ struct VisualEffectView: UIViewRepresentable {
 struct ChangePasswordView: View {
     @StateObject var viewModel: ChangePasswordViewModel
     @Binding var showChangePassword: Bool
+    @State private var keyboardHeight: CGFloat = 0
+    
+    var header: some View {
+        VStack(alignment: .leading, spacing: 8) {
+            Text(L10n.Account.Infomation.changePassword)
+                .font(Constant.ChangePassWord.fontTitle)
+            Text(L10n.Account.Infomation.introChangePassword)
+                .font(Constant.ChangePassWord.fontSubContent)
+                .foregroundColor(Asset.Colors.lightBlackText.SuColor)
+        }
+        .padding(.vertical)
+    }
+    
+    var passwordForms: some View {
+        VStack {
+            Form(placeholder: L10n.Account.Infomation.currentPassword,
+                 value: $viewModel.password,
+                 isPassword: true,
+                 shouldAnimate: false)
+            Spacer().frame(height: 16)
+            Form(placeholder: L10n.Account.Infomation.newPassword,
+                 value: $viewModel.newPassword,
+                 isPassword: true,
+                 shouldAnimate: false)
+            Spacer().frame(height: 16)
+            Form(placeholder: L10n.Account.Infomation.retypePassword,
+                 value: $viewModel.retypePassword,
+                 isPassword: true,
+                 shouldAnimate: false)
+            Spacer().frame(height: 16)
+        }
+    }
+    
+    var submitButton: some View {
+        AppButton(style: .themeButton, width: 311, text: L10n.Account.Infomation.save) {
+            viewModel.changePassword { result in
+                if result == .success {
+                    self.showChangePassword = false
+                }
+            }
+        }
+    }
+    
+    var content: some View {
+        VStack(alignment: .leading) {
+            Spacer().frame(height: 20)
+            header
+            passwordForms
+            Spacer().frame(height: 20)
+            submitButton
+            Spacer().frame(height: 40)
+        }
+        .frame(maxWidth: .infinity)
+        .foregroundColor(.white)
+        .background(AppColor.darkButton)
+        .cornerRadius(radius: Constant.Menu.radiusCell * 2, corners: [PositionItemCell.top.rectCorner])
+        .padding(.top, -Constant.Menu.radiusCell * 2)
+    }
     
     var body: some View {
         ZStack {
@@ -32,37 +91,8 @@ struct ChangePasswordView: View {
                     }
                     .padding(.top, 35.0)
                 }
-                VStack(alignment: .leading) {
-                    VStack(alignment: .leading, spacing: 8) {
-                        Text(L10n.Account.Infomation.changePassword)
-                            .font(Constant.ChangePassWord.fontTitle)
-                        Text(L10n.Account.Infomation.introChangePassword)
-                            .font(Constant.ChangePassWord.fontSubContent)
-                    }
-                    .padding(.vertical)
-                    Group{
-                        Form(placeholder: L10n.Account.Infomation.currentPassword, value: $viewModel.password,
-                             isPassword: true)
-                        Spacer().frame(height: 16)
-                        Form(placeholder: L10n.Account.Infomation.newPassword, value: $viewModel.newPassword, isPassword: true)
-                        Spacer().frame(height: 16)
-                        Form(placeholder: L10n.Account.Infomation.retypePassword, value: $viewModel.newPassword, isPassword: true)
-                        Spacer().frame(height: 16)
-                        if viewModel.showProgressView {
-                            ProgressView().progressViewStyle(CircularProgressViewStyle(tint: Color.white))
-                        }
-                        Spacer().frame(height: 20)
-                        AppButton(style: .themeButton, width: 311, text: L10n.Account.Infomation.save) {
-                            self.showChangePassword = false
-                        }
-                        Spacer().frame(height: 40)
-                    }
-                }
-                .frame(maxWidth: .infinity)
-                .foregroundColor(.white)
-                .background(AppColor.darkButton)
-                .cornerRadius(radius: Constant.Menu.radiusCell * 2, corners: [PositionItemCell.top.rectCorner])
-                .padding(.top, -Constant.Menu.radiusCell * 2)
+                content
+                Spacer().frame(height: keyboardHeight)
             }
             if viewModel.showProgressView {
                 ProgressView().progressViewStyle(CircularProgressViewStyle(tint: Color.white))
@@ -70,6 +100,20 @@ struct ChangePasswordView: View {
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         .ignoresSafeArea()
+        .onReceive(Publishers.keyboardHeight) { self.keyboardHeight = $0 }
+        .popup(isPresented: $viewModel.showAlert,
+               type: .floater(verticalPadding: 10),
+               position: .bottom,
+               animation: .easeInOut,
+               autohideIn: 10,
+               closeOnTap: false,
+               closeOnTapOutside: true) {
+            ToastView(title: viewModel.alertTitle,
+                      message: viewModel.alertMessage,
+                      cancelAction: {
+                viewModel.showAlert = false
+            })
+        }
     }
 }
 

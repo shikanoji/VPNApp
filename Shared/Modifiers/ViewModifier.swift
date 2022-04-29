@@ -7,48 +7,7 @@
 
 import Foundation
 import SwiftUI
-
-struct ReceiveAlert: ViewModifier {
-    @Binding var title: String
-    @Binding var message: String
-    @Binding var showing: Bool
-    func body(content: Content) -> some View {
-        content.alert(isPresented: $showing) {
-            Alert(
-                title: Text(title),
-                message: Text(message)
-            )
-        }
-    }
-}
-
-struct ReceiveAlertWithAction: ViewModifier {
-    @Binding var title: String
-    @Binding var message: String
-    @Binding var showing: Bool
-    var onConfirmation: () -> Void
-    
-    func body(content: Content) -> some View {
-        content.alert(isPresented: $showing) {
-            Alert(
-                title: Text(title),
-                message: Text(message),
-                primaryButton: .destructive(Text("OK")) {
-                                 onConfirmation()
-                                },
-                secondaryButton: .cancel()
-            )
-        }
-    }
-}
-
-struct EndEditingOnTappingOutside: ViewModifier {
-    func body(content: Content) -> some View {
-        content.onTapGesture {
-            UIApplication.shared.endEditing()
-        }
-    }
-}
+import Combine
 
 struct CornerRadiusStyle: ViewModifier {
     var radius: CGFloat
@@ -66,5 +25,15 @@ struct CornerRadiusStyle: ViewModifier {
     func body(content: Content) -> some View {
         content
             .clipShape(CornerRadiusShape(radius: radius, corners: corners))
+    }
+}
+
+struct KeyboardAdaptive: ViewModifier {
+    @State private var keyboardHeight: CGFloat = 0
+
+    func body(content: Content) -> some View {
+        content
+            .padding(.bottom, keyboardHeight)
+            .onReceive(Publishers.keyboardHeight) { self.keyboardHeight = $0 }
     }
 }

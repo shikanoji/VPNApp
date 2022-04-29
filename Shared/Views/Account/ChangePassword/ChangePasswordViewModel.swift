@@ -6,22 +6,48 @@
 //
 
 import Foundation
+import RxSwift
 
 class ChangePasswordViewModel: NSObject, ObservableObject {
     @Published var password = ""
     @Published var newPassword = ""
     @Published var retypePassword = ""
     @Published var showProgressView: Bool = false
+    @Published var showAlert: Bool = false
+    var alertTitle: String = ""
+    var alertMessage: String = ""
+    let disposedBag = DisposeBag()
     
     func changePassword(completion: @escaping (LoginResult) -> Void) {
-        //        alertTitle = "Login Success"
-        //        alertMessage = "Congrats!"
-        //        showAlert = true
-        showProgressView = true
+        guard newPassword == retypePassword else {
+            alertMessage = L10n.Account.ChangePassword.passwordNotMatch
+            showAlert = true
+            return
+        }
         
-        DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(3), execute: { [self] in
-            self.showProgressView = false
-            completion(.success)
-        })
+        showProgressView = true
+        APIManager.shared.changePassword(oldPassword: password, newPassword: newPassword)
+            .subscribe(onSuccess: { [self] response in
+                self.showProgressView = false
+                if let _ = response.result {
+                    alertMessage = L10n.Account.ChangePassword.success
+                    showAlert = true
+                    completion(.success)
+                } else {
+                    let error = response.errors
+                    if error.count > 0, let message = error[0] as? String {
+                        alertMessage = message
+                        showAlert = true
+                    } else if !response.message.isEmpty {
+                        alertMessage = response.message
+                        showAlert = true
+                    }
+                    completion(.error)
+                }
+            }, onFailure: { error in
+                self.showProgressView = false
+                completion(.accountNotExist)
+            })
+            .disposed(by: disposedBag)
     }
 }
