@@ -24,11 +24,9 @@ class WireGuardManager: ObservableObject {
     
     func connect() {
         do {
-            let path = Bundle.main.path(forResource: "wg_ios_client", ofType: "conf")
+            let string = NetworkManager.shared.obtainCertificate?.convertToString()
             
-            let string = try String(contentsOfFile: path!, encoding: String.Encoding.utf8)
-            
-            guard let cfg = configuretionParaseFromContents(lines: string.trimmedLines()) else {
+            guard let cfg = configuretionParaseFromContents(lines: string!.trimmedLines()) else {
                 print("Configuration incomplete")
                 return
             }

@@ -47,6 +47,18 @@ struct APIManager {
                 throw APIError.someError
             }
     }
+    
+    func getObtainCertificate() -> Single<APIResponse<ObtainCertificateModel>> {
+        return provider.rx
+            .request(.getObtainCertificate)
+            .map { response in
+                let result = try JSONDecoder().decode(APIResponse<ObtainCertificateModel>.self, from: response.data)
+                return result
+            }
+            .catch { error in
+                throw APIError.someError
+            }
+    }
 }
 
 extension MoyaProvider {

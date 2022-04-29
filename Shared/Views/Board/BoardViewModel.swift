@@ -186,6 +186,63 @@ class BoardViewModel: ObservableObject {
             .disposed(by: disposedBag)
     }
     
+    func prepareConnect(completion: @escaping (Bool) -> Void) {
+        if NetworkManager.shared.selectConfig == .openVPN {
+            completion(true)
+        } else {
+            numberCallObtainCer = 0
+            getObtainCertificate() {
+                completion($0)
+            }
+        }
+    }
+    
+    let maximumCallObtainCer = 50
+    var numberCallObtainCer = 0
+    
+    func getObtainCertificate(completion: @escaping (Bool) -> Void) {
+        
+        numberCallObtainCer += 1
+        
+        APIManager.shared.getObtainCertificate()
+            .subscribe { [weak self] response in
+                guard let `self` = self else {
+                    return
+                }
+                
+                self.showProgressView = false
+                
+                if let result = response.result {
+                    NetworkManager.shared.obtainCertificate = result
+                    completion(true)
+                } else if response.success {
+                    if self.numberCallObtainCer >= self.maximumCallObtainCer {
+                        completion(false)
+                    } else {
+                        self.getObtainCertificate() {
+                            completion($0)
+                        }
+                    }
+                } else {
+                    let error = response.errors
+                    if error.count > 0, let message = error[0] as? String {
+                        self.error = APIError.identified(message: message)
+                        self.showAlert = true
+                    } else if !response.message.isEmpty {
+                        self.error = APIError.identified(message: response.message)
+                        self.showAlert = true
+                    }
+                    completion(false)
+                }
+            } onFailure: { error in
+                self.error = APIError.identified(message: error.localizedDescription)
+                self.showProgressView = false
+                self.showAlert = true
+                completion(false)
+            }
+            .disposed(by: disposedBag)
+    }
+    
     func getRequestCertificate() {
         self.showProgressView = true
         
@@ -199,7 +256,11 @@ class BoardViewModel: ObservableObject {
                 
                 if let result = response.result {
                     NetworkManager.shared.requestCertificate = result
-                    NetworkManager.shared.connect()
+                    self.prepareConnect() { start in
+                        if start {
+                            NetworkManager.shared.connect()
+                        }
+                    }
                 } else {
                     let error = response.errors
                     if error.count > 0, let message = error[0] as? String {
@@ -243,6 +304,9 @@ class BoardViewModel: ObservableObject {
         ]
         
         staticIPData = result.staticServers
+        
+        NetworkManager.shared.staticServer = staticIPData.first
+        
         getAvaiableCity(cityNodes)
     }
 }

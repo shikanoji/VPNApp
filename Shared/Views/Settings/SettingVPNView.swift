@@ -11,6 +11,7 @@ struct SettingVPNView: View {
     @Binding var showSettings: Bool
     @State var statusConnect: BoardViewModel.StateBoard = .connected
     @State var showAutoConnect = false
+    @State var showProtocolConnect = false
     @State var itemList: [ItemCellType] = [
         .autoConnet,
         .protocolConnect,
@@ -45,6 +46,8 @@ struct SettingVPNView: View {
                                 switch itemList[i] {
                                 case .autoConnet:
                                     showAutoConnect = true
+                                case .protocolConnect:
+                                    showProtocolConnect = true
                                 default:
                                     return
                                 }
@@ -56,6 +59,7 @@ struct SettingVPNView: View {
                 Spacer().frame(height: 20)
             }
             NavigationLink(destination: AutoConnectView(showSettings: $showSettings, statusConnect: statusConnect), isActive: $showAutoConnect) { }
+            NavigationLink(destination: ProtocolSettingView(showSettings: $showSettings, viewModel: ProtocolSettingViewModel()), isActive: $showProtocolConnect) { }
         }
         .navigationBarHidden(true)
         .background(AppColor.background)
