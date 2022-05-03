@@ -14,7 +14,7 @@ struct WelcomeView: View {
     var body: some View {
         Background {
             VStack {
-                Spacer().frame(height: 100)
+                Spacer()
                 Asset.Assets.welcome.SuImage
                 Spacer().frame(height: 10)
                 Text(L10n.Welcome.title).setTitle()
@@ -24,7 +24,7 @@ struct WelcomeView: View {
                 AppButton(width: 311, text: L10n.Welcome.startButton) {
                     showingSetup = true
                 }
-                Spacer().frame(height: 20)
+                Spacer()
             }
         }.fullScreenCover(isPresented: $showingSetup) {
             SetupVPNView().environmentObject(registerResult)
