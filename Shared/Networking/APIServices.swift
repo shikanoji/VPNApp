@@ -125,14 +125,6 @@ extension APIService: TargetType {
             return .get
         case .register, .login, .logout, .forgotPassword, .refreshToken:
             return .post
-        case .forgotPassword:
-            return .post
-        case .ipInfo:
-            return .get
-        case .getRequestCertificate:
-            return .get
-        case .ipInfoOptional:
-            return .get
         case .getObtainCertificate:
             return .get
         case .changePassword:
