@@ -73,7 +73,7 @@ enum APIService {
     case forgotPassword(email: String)
     case ipInfo
     case ipInfoOptional
-    case getRequestCertificate
+    case getRequestCertificate(currentTab: BoardViewModel.StateTab)
     case getObtainCertificate
     case changePassword(oldPassword: String, newPassword: String)
 }
@@ -183,26 +183,37 @@ extension APIService: TargetType {
             return .requestParameters(parameters: param, encoding: URLEncoding.queryString)
         case .ipInfoOptional:
             return .requestPlain
-        case .getRequestCertificate:
+        case .getRequestCertificate(let currentTab):
             var param: [String: Any] = [:]
             // Use "key" temporarily, after remove it
             param["key"] = "f11b69c57d5fe9555e29c57c1d863bf8"
-            
-            if let cityNodeSelect = NetworkManager.shared.cityNode {
-                if cityNodeSelect.cityNodeList.count > 0 {
-                    param["countryId"] = cityNodeSelect.id
-                } else {
-                    param["countryId"] = cityNodeSelect.countryId
-                    param["cityId"] = cityNodeSelect.id
-                }
-            }
             
             param["tech"] = NetworkManager.shared.selectConfig.description
             param["proto"] = NetworkManager.shared.protocolVPN.description
             param["dev"] = "tun"
             
-            if let staticServer = NetworkManager.shared.staticServer {
-                  param["serverId"] = staticServer.id
+            switch currentTab {
+            case .location:
+                if let cityNodeSelect = NetworkManager.shared.selectNode {
+                    if cityNodeSelect.cityNodeList.count > 0 {
+                        param["countryId"] = cityNodeSelect.id
+                    } else {
+                        param["countryId"] = cityNodeSelect.countryId
+                        param["cityId"] = cityNodeSelect.id
+                    }
+                }
+                
+                if let staticServer = NetworkManager.shared.selectStaticServer {
+                    param["serverId"] = staticServer.id
+                }
+            case .staticIP:
+                if let staticServer = NetworkManager.shared.selectStaticServer {
+                    param["serverId"] = staticServer.id
+                    param["countryId"] = staticServer.countryId
+                }
+                
+            case .multiHop:
+                break
             }
             
             return .requestParameters(parameters: param, encoding: URLEncoding.queryString)

@@ -35,9 +35,9 @@ struct APIManager {
             }
     }
     
-    func getRequestCertificate() -> Single<APIResponse<RequestCertificateModel>> {
+    func getRequestCertificate(currentTab: BoardViewModel.StateTab) -> Single<APIResponse<RequestCertificateModel>> {
         return provider.rx
-            .request(.getRequestCertificate)
+            .request(.getRequestCertificate(currentTab: currentTab))
             .map { response in
                 let result = try JSONDecoder().decode(APIResponse<RequestCertificateModel>.self, from: response.data)
                 return result

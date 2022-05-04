@@ -13,7 +13,7 @@ struct MapView: View {
     @State var magScale: CGFloat = 1
     @State var totalScale: CGFloat = 1 {
         didSet {
-            showCityNodes = totalScale > Constant.Board.Map.enableCityZoom
+            mesh.showCityNodes = totalScale > Constant.Board.Map.enableCityZoom
         }
     }
     
@@ -23,10 +23,11 @@ struct MapView: View {
     @State var widthMap: CGFloat = Constant.Board.Map.widthScreen
     @State var heightMap: CGFloat = Constant.Board.Map.widthScreen / Constant.Board.Map.ration
     
+    @State private var location: CGPoint = CGPoint(
+        x: Constant.Board.Map.widthScreen / 2,
+        y: Constant.Board.Map.widthScreen
+    )
     
-    @Binding var showCityNodes: Bool
-    
-    @State private var location: CGPoint = CGPoint(x: Constant.Board.Map.widthScreen / 2, y: Constant.Board.Map.widthScreen)
     @GestureState private var fingerLocation: CGPoint? = nil
     @GestureState private var startLocation: CGPoint? = nil
     
@@ -57,26 +58,41 @@ struct MapView: View {
                        height: heightMap * totalScale)
                 .aspectRatio(contentMode: .fit)
                 .position(location)
-            NodeMapView(selection: selection,
-                        nodes: $mesh.nodes,
-                        cityNodes: $mesh.cityNodes,
-                        showCityNode: $showCityNodes,
-                        scale: $totalScale)
+            switch mesh.currentTab {
+            case .location, .multiHop:
+                NodeMapView(selection: selection,
+                            mesh: mesh,
+                            scale: $totalScale)
                 .frame(width: widthMap * totalScale,
                        height: heightMap * totalScale)
                 .position(x: location.x + totalScale,
                           y: location.y + totalScale)
+            case .staticIP:
+                StaticNodeMapView(selection: selection,
+                                  mesh: mesh,
+                                  scale: $totalScale)
+                .frame(width: widthMap * totalScale,
+                       height: heightMap * totalScale)
+                .position(x: location.x + totalScale,
+                          y: location.y + totalScale)
+            }
         }
         .onReceive(selection.$selectedNodeIDs) {
             if let id = $0.first, let node = mesh.nodeWithID(id) {
-                moveToNode(node)
-                NetworkManager.shared.cityNode = node
+                moveToNode(x: node.x, y: node.y)
+                NetworkManager.shared.selectNode = node
+            }
+        }
+        .onReceive(selection.$selectedStaticNodeIDs) {
+            if let id = $0.first, let node = mesh.staticNodeWithID(id) {
+                moveToNode(x: node.x, y: node.y)
+                NetworkManager.shared.selectStaticServer = node
             }
         }
         .onReceive(mesh.$clientCountryNode) {
             if configMapView.firstload, let node = $0 {
-                totalScale = 3
-                moveToNode(node)
+                totalScale = 2
+                moveToNode(x: node.x, y: node.y)
                 configMapView.firstload = false
             }
         }
@@ -166,9 +182,9 @@ struct MapView: View {
         }
     }
     
-    func moveToNode(_ node: Node) {
-        let xNode = node.convertXToMap()
-        let yNode = node.convertYToMap()
+    func moveToNode(x: CGFloat, y: CGFloat) {
+        let xNode = Constant.convertXToMap(x)
+        let yNode = Constant.convertYToMap(y)
         let x = totalScale * (widthMap / 2 - xNode) + Constant.Board.Map.widthScreen / 2
         let y = totalScale * (heightMap / 2 - yNode) + Constant.Board.Map.widthScreen
         
@@ -186,7 +202,7 @@ struct MapView_Previews: PreviewProvider {
     
     static var previews: some View {
         let mesh = Mesh.sampleMesh()
-        return MapView(mesh: mesh, selection: SelectionHandler(), showCityNodes: $value, configMapView: configMapView)
+        return MapView(mesh: mesh, selection: SelectionHandler(), configMapView: configMapView)
     }
 }
 

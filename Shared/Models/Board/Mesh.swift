@@ -9,16 +9,21 @@ import Foundation
 import CoreGraphics
 
 class Mesh: ObservableObject {
-    @Published var nodes: [Node] = []
+    @Published var countryNodes: [Node] = []
     @Published var cityNodes: [Node] = []
+    @Published var staticNodes: [StaticServer] = []
     @Published var clientCountryNode: Node?
+    
+    var showCityNodes: Bool = false
+    
+    var currentTab: BoardViewModel.StateTab = .location
     
     init() {
         
     }
     
     func nodeWithID(_ nodeID: NodeID) -> Node? {
-        let node = nodes.filter({ $0.id == nodeID }).first
+        let node = countryNodes.filter({ $0.id == nodeID }).first
         let cityNode = cityNodes.filter({ $0.id == nodeID }).first
         if (node != nil) {
             return node
@@ -29,24 +34,42 @@ class Mesh: ObservableObject {
         return nil
     }
     
-    func replace(_ node: Node, with replacement: Node) {
-        var newSet = nodes.filter { $0.id != node.id }
-        newSet.append(replacement)
-        nodes = newSet
+    func staticNodeWithID(_ nodeID: Int) -> StaticServer? {
+        let node = staticNodes.filter({ $0.id == nodeID }).first
+        if (node != nil) {
+            return node
+        }
+        return nil
     }
     
-    func configNode(nodes: [Node] = [],
+    func replace(_ node: Node, with replacement: Node) {
+        var newSet = countryNodes.filter { $0.id != node.id }
+        newSet.append(replacement)
+        countryNodes = newSet
+    }
+    
+    func configNode(countryNodes: [Node] = [],
                     cityNodes: [Node] = [],
+                    staticNodes: [StaticServer] = [],
                     clientCountryNode: Node?) {
-        self.nodes = nodes
+        self.countryNodes = countryNodes
         self.cityNodes = cityNodes
+        self.staticNodes = staticNodes
         self.clientCountryNode = clientCountryNode
+    }
+    
+    func updateCurrentTab(_ tab: BoardViewModel.StateTab) {
+        currentTab = tab
+    }
+    
+    func getNodeViewShow() -> [Node] {
+        return showCityNodes ? cityNodes : countryNodes
     }
 }
 
 extension Mesh {
     func addNode(_ node: Node) {
-        nodes.append(node)
+        countryNodes.append(node)
     }
     
     static func sampleMesh() -> Mesh {

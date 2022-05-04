@@ -20,15 +20,13 @@ class SelectionHandler: ObservableObject {
         return selectedNodeIDs.contains(node.id)
     }
     
-    func selectedNodes(in mesh: Mesh) -> [Node] {
-        return selectedNodeIDs.compactMap { mesh.nodeWithID($0) }
+    @Published private(set) var selectedStaticNodeIDs: [Int] = []
+    
+    func selectStaticNode(_ node: StaticServer) {
+        selectedStaticNodeIDs = [node.id]
     }
     
-    func onlySelectedNode(in mesh: Mesh) -> Node? {
-        let selectedNodes = self.selectedNodes(in: mesh)
-        if selectedNodes.count == 1 {
-            return selectedNodes.first
-        }
-        return nil
+    func isStaticNodeSelected(_ node: StaticServer) -> Bool {
+        return selectedStaticNodeIDs.contains(node.id)
     }
 }

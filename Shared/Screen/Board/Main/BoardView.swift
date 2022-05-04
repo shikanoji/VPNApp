@@ -41,10 +41,16 @@ struct BoardView: View {
             } else {
                 ZStack(alignment: .top) {
                     GeometryReader { geometry in
-                        MapView(mesh: viewModel.mesh,
-                                selection: selection,
-                                showCityNodes: $viewModel.showCityNodes,
-                                configMapView: viewModel.configMapView)
+                        ZStack {
+                            MapView(mesh: viewModel.mesh,
+                                    selection: selection,
+                                    configMapView: viewModel.configMapView)
+                            if viewModel.state == .connected {
+                                Asset.Assets.logoConnected.SuImage
+                                    .resizable()
+                                    .aspectRatio(contentMode: .fit)
+                            }
+                        }
                         VStack {
                             BoardNavigationView(status: viewModel.state,
                                                 tapLeftIcon: {

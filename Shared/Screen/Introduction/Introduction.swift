@@ -50,7 +50,7 @@ struct IntroductionView: View {
                     Asset.Assets.logoSmall.SuImage
                     Spacer()
                 }
-                PagingView(index: $index.animation(), maxIndex: IntroductionPage.getList().count - 1) {
+                PagingView(index: $index, maxIndex: IntroductionPage.getList().count - 1) {
                     ForEach(IntroductionPage.getList(), id: \.self) { intro in
                         VStack{
                             intro.image
