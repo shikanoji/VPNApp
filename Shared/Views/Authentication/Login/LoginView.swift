@@ -41,9 +41,7 @@ struct LoginView: View {
     
     var loginButton: some View {
         AppButton(style: .themeButton, width: 311, text: L10n.Login.signin) {
-            viewModel.login() {result in
-                
-            }
+            viewModel.login()
         }.disabled(viewModel.loginDisable)
     }
     

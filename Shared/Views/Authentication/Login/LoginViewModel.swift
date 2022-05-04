@@ -12,13 +12,6 @@ import GoogleSignIn
 import AuthenticationServices
 import RxSwift
 
-enum LoginResult {
-    case success
-    case wrongPassword
-    case accountNotExist
-    case error
-}
-
 class LoginViewModel: NSObject, ObservableObject {
     @Published var email: String = ""
     @Published var password: String = ""
@@ -33,15 +26,14 @@ class LoginViewModel: NSObject, ObservableObject {
         email.isEmpty || password.isEmpty
     }
     
-    func login(completion: @escaping (LoginResult) -> Void) {
+    func login() {
         showProgressView = true
         
         APIManager.shared.login(email: email, password: password)
             .subscribe(onSuccess: { [self] response in
                 self.showProgressView = false
-                if let result = response.result, !result.tokens.access.token.isEmpty, !result.tokens.refresh.token.isEmpty {
-                    authentication?.login(email: email, accessToken: result.tokens.access, refreshToken: result.tokens.refresh)
-                    completion(.success)
+                if let result = response.result {
+                    authentication?.login(withLoginData: result)
                 } else {
                     let error = response.errors
                     if error.count > 0, let message = error[0] as? String {
@@ -51,14 +43,11 @@ class LoginViewModel: NSObject, ObservableObject {
                         alertMessage = response.message
                         showAlert = true
                     }
-                    completion(.error)
                 }
             }, onFailure: { error in
                 self.showProgressView = false
-                completion(.accountNotExist)
             })
             .disposed(by: disposedBag)
-        
     }
     
     //MARK: - Login with Google

@@ -18,7 +18,7 @@ class ChangePasswordViewModel: NSObject, ObservableObject {
     var alertMessage: String = ""
     let disposedBag = DisposeBag()
     
-    func changePassword(completion: @escaping (LoginResult) -> Void) {
+    func changePassword() {
         guard newPassword == retypePassword else {
             alertMessage = L10n.Account.ChangePassword.passwordNotMatch
             showAlert = true
@@ -32,7 +32,6 @@ class ChangePasswordViewModel: NSObject, ObservableObject {
                 if let _ = response.result {
                     alertMessage = L10n.Account.ChangePassword.success
                     showAlert = true
-                    completion(.success)
                 } else {
                     let error = response.errors
                     if error.count > 0, let message = error[0] as? String {
@@ -42,11 +41,9 @@ class ChangePasswordViewModel: NSObject, ObservableObject {
                         alertMessage = response.message
                         showAlert = true
                     }
-                    completion(.error)
                 }
             }, onFailure: { error in
                 self.showProgressView = false
-                completion(.accountNotExist)
             })
             .disposed(by: disposedBag)
     }
