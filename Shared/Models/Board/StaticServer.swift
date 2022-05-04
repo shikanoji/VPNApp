@@ -119,3 +119,7 @@ extension StaticServer: Equatable {
         return lhs.serverId == rhs.serverId
     }
 }
+
+extension StaticServer {
+    static let simple = [StaticServer()]
+}

@@ -70,10 +70,15 @@ class BoardViewModel: ObservableObject {
     @Published var ip = AppSetting.shared.ip
     @Published var nodes: [Node] = []
     @Published var errorMessage: String? = nil
-    @Published var tab: StateTab = .location
+    
+    @Published var tab: StateTab = .location {
+        didSet {
+            mesh.currentTab = tab
+        }
+    }
+    
     @Published var uploadSpeed: CGFloat = 0.0
     @Published var downloadSpeed: CGFloat = 0.0
-    @Published var showCityNodes: Bool = false
     @Published var nodeConnected: Node? = nil
     
     @Published var locationData: [NodeGroup] = []
@@ -91,7 +96,13 @@ class BoardViewModel: ObservableObject {
     
     @Published var configMapView: ConfigMapView = ConfigMapView()
     
-    @Published var showAlert: Bool = false
+    @Published var showAlert: Bool = false {
+        didSet {
+            if showAlert {
+                state = .notConnect
+            }
+        }
+    }
     @Published var showProgressView: Bool = false
     
     var error: APIError?
@@ -132,6 +143,7 @@ class BoardViewModel: ObservableObject {
     
     func connectVPN() {
         if state == .notConnect {
+            state = .loading
             getRequestCertificate()
         } else {
             NetworkManager.shared.disconnect()
@@ -246,7 +258,7 @@ class BoardViewModel: ObservableObject {
     func getRequestCertificate() {
         self.showProgressView = true
         
-        APIManager.shared.getRequestCertificate()
+        APIManager.shared.getRequestCertificate(currentTab: tab)
             .subscribe { [weak self] response in
                 guard let `self` = self else {
                     return
@@ -281,7 +293,7 @@ class BoardViewModel: ObservableObject {
     
     func getAvaiableCity(_ cityNodes: [Node]) {
         if cityNodes.count > 0 {
-            NetworkManager.shared.cityNode = cityNodes.first
+            NetworkManager.shared.selectNode = cityNodes.first
         }
     }
     
@@ -296,7 +308,6 @@ class BoardViewModel: ObservableObject {
         let countryNodes = result.availableCountries
         var cityNodes = [Node]()
         countryNodes.forEach { cityNodes.append(contentsOf: $0.cityNodeList) }
-        self.mesh.configNode(nodes: countryNodes, cityNodes: cityNodes, clientCountryNode: result.clientCountryDetail)
         
         locationData = [
             NodeGroup(nodeList: result.recommendedCountries, type: .recommend),
@@ -305,7 +316,12 @@ class BoardViewModel: ObservableObject {
         
         staticIPData = result.staticServers
         
-        NetworkManager.shared.staticServer = staticIPData.first
+        NetworkManager.shared.selectStaticServer = staticIPData.first
+        
+        self.mesh.configNode(countryNodes: countryNodes,
+                             cityNodes: cityNodes,
+                             staticNodes: staticIPData,
+                             clientCountryNode: result.clientCountryDetail)
         
         getAvaiableCity(cityNodes)
     }

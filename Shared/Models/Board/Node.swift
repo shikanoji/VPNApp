@@ -155,14 +155,6 @@ struct Node: Identifiable, Codable {
         self.countryName = countryName
         self.countryId = countryId
     }
-    
-    func convertXToMap() -> CGFloat {
-        return (x / Constant.Board.Map.widthMapOrigin) * Constant.Board.Map.widthScreen
-    }
-    
-    func convertYToMap() -> CGFloat {
-        return (y / Constant.Board.Map.heightMapOrigin) * (Constant.Board.Map.widthScreen / Constant.Board.Map.ration)
-    }
 }
 
 extension Node {

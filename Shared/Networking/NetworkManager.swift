@@ -48,9 +48,9 @@ class NetworkManager: ObservableObject {
     
     var obtainCertificate: ObtainCertificateModel?
     
-    var cityNode: Node?
+    var selectNode: Node?
     
-    var staticServer: StaticServer?
+    var selectStaticServer: StaticServer?
     
     func connect() {
         switch selectConfig {

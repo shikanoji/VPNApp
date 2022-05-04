@@ -160,4 +160,12 @@ struct Constant {
         static let sizeCircle: CGFloat = 17.15
         static let sizeLoading: CGFloat = 64
     }
+    
+    static func convertXToMap(_ x: CGFloat) -> CGFloat {
+        return (x / Constant.Board.Map.widthMapOrigin) * Constant.Board.Map.widthScreen
+    }
+    
+    static func convertYToMap(_ y: CGFloat) -> CGFloat {
+        return (y / Constant.Board.Map.heightMapOrigin) * (Constant.Board.Map.widthScreen / Constant.Board.Map.ration)
+    }
 }
