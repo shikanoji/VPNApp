@@ -24,22 +24,22 @@ struct Tokens: Decodable {
 }
 
 struct Token: Decodable {
-    init(token: String = "", expires: String = "") {
+    init(token: String = "", expires: Int? = nil) {
         self.token = token
         self.expires = expires
     }
     
     var token: String
-    var expires: String
+    var expires: Int?
 }
 
 struct User: Decodable {
     init(id: Int64 = 0,
-         created_at: String = "",
-         updated_at: String = "",
+         created_at: Int? = nil,
+         updated_at: Int? = nil,
          email: String = "",
          password: String = "",
-         premiumExpire: String? = nil,
+         premiumExpire: Int? = nil,
          isPremium: Bool = false,
          name: String? = nil) {
         self.id = id
@@ -66,17 +66,19 @@ struct User: Decodable {
     init(from decoder: Decoder) throws {
         let values = try decoder.container(keyedBy: CodingKeys.self)
         id = try values.decode(Int64.self, forKey: .id)
-        created_at = try values.decode(String.self, forKey: .created_at)
+        if values.contains(.created_at) {
+            created_at = try values.decode(Int.self, forKey: .created_at)
+        }
         email = try values.decode(String.self, forKey: .email)
         if values.contains(.premium_expire) {
-            premium_expire = try values.decode(String?.self, forKey: .premium_expire)
+            premium_expire = try values.decode(Int?.self, forKey: .premium_expire)
         }
         is_premium = try values.decode(Bool.self, forKey: .is_premium)
         if values.contains(.name) {
             name = try values.decode(String?.self, forKey: .name)
         }
         if values.contains(.updated_at) {
-            updated_at = try values.decode(String.self, forKey: .updated_at)
+            updated_at = try values.decode(Int.self, forKey: .updated_at)
         }
         if values.contains(.password) {
             password = try values.decode(String.self, forKey: .password)
@@ -84,11 +86,11 @@ struct User: Decodable {
     }
     
     var id: Int64 = 0
-    var created_at: String = ""
-    var updated_at: String = ""
+    var created_at: Int? = nil
+    var updated_at: Int? = nil
     var email: String = ""
     var password: String = ""
     var name: String? = nil
     var is_premium: Bool = false
-    var premium_expire: String? = nil
+    var premium_expire: Int? = nil
 }

@@ -52,11 +52,7 @@ struct ChangePasswordView: View {
     
     var submitButton: some View {
         AppButton(style: .themeButton, width: 311, text: L10n.Account.Infomation.save) {
-            viewModel.changePassword { result in
-                if result == .success {
-                    self.showChangePassword = false
-                }
-            }
+            viewModel.changePassword()
         }
     }
     

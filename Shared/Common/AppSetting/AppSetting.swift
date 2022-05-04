@@ -7,10 +7,14 @@
 
 import Foundation
 import SwiftUI
+import SwiftDate
 
 enum AppKeys: String {
     ///Auth Keys
     case email = "email"
+    case isPremium = "isPremium"
+    case premiumExpires = "premiumExpires"
+    case name = "name"
     case accessToken = "accessToken"
     case refreshToken = "refreshToken"
     case accessTokenExpires = "accessTokenExpires"
@@ -56,6 +60,33 @@ struct AppSetting {
         }
     }
     
+    var isPremium: Bool {
+        get {
+            return UserDefaults.standard.bool(forKey: AppKeys.isPremium.rawValue)
+        }
+        set {
+            UserDefaults.standard.setValue(newValue, forKey: AppKeys.isPremium.rawValue)
+        }
+    }
+    
+    var premiumExpires: Int? {
+        get {
+            return UserDefaults.standard.integer(forKey: AppKeys.premiumExpires.rawValue)
+        }
+        set {
+            UserDefaults.standard.setValue(newValue, forKey: AppKeys.premiumExpires.rawValue)
+        }
+    }
+    
+    var name: String? {
+        get {
+            return UserDefaults.standard.string(forKey: AppKeys.name.rawValue)
+        }
+        set {
+            UserDefaults.standard.setValue(newValue, forKey: AppKeys.name.rawValue)
+        }
+    }
+    
     var accessToken: String {
         get {
             return UserDefaults.standard.string(forKey: AppKeys.accessToken.rawValue) ?? ""
@@ -74,18 +105,18 @@ struct AppSetting {
         }
     }
     
-    var refreshTokenExpires: String {
+    var refreshTokenExpires: Int? {
         get {
-            return UserDefaults.standard.string(forKey: AppKeys.refreshTokenExpires.rawValue) ?? ""
+            return UserDefaults.standard.integer(forKey: AppKeys.refreshTokenExpires.rawValue)
         }
         set {
             UserDefaults.standard.setValue(newValue, forKey: AppKeys.refreshTokenExpires.rawValue)
         }
     }
     
-    var accessTokenExpires: String {
+    var accessTokenExpires: Int? {
         get {
-            return UserDefaults.standard.string(forKey: AppKeys.accessTokenExpires.rawValue) ?? ""
+            return UserDefaults.standard.integer(forKey: AppKeys.accessTokenExpires.rawValue)
         }
         set {
             UserDefaults.standard.setValue(newValue, forKey: AppKeys.accessTokenExpires.rawValue)
@@ -147,5 +178,29 @@ struct AppSetting {
         set {
             UserDefaults.standard.setValue(newValue, forKey: AppKeys.updateDataMap.rawValue)
         }
+    }
+    
+    var isRefreshTokenValid: Bool {
+        guard !refreshToken.isEmpty else {
+            return false
+        }
+        guard let refreshTokenExpiresSeconds = refreshTokenExpires else {
+            return false
+        }
+        let seconds = TimeInterval(refreshTokenExpiresSeconds)
+        let expireDate = DateInRegion(seconds: seconds, region: .local)
+        return Date().convertTo(region: .local) < expireDate
+    }
+    
+    var isAccessTokenValid: Bool {
+        guard !accessToken.isEmpty else {
+            return false
+        }
+        guard let refreshTokenExpiresSeconds = accessTokenExpires else {
+            return false
+        }
+        let seconds = TimeInterval(refreshTokenExpiresSeconds)
+        let expireDate = DateInRegion(seconds: seconds, region: .local)
+        return Date().convertTo(region: .local) < expireDate
     }
 }

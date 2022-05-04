@@ -9,7 +9,6 @@ import RxSwift
 import Moya
 import SwiftyJSON
 import SwiftUI
-import SwiftDate
 
 struct APIManager {
     
@@ -69,7 +68,7 @@ extension MoyaProvider {
             let request = try! endpoint.urlRequest()
             if (request.headers.value(for: "Authorization") != nil) {
                 //assume you have saved the existing token somewhere
-                if !AppSetting.shared.accessToken.isEmpty, let expiresDate = AppSetting.shared.accessTokenExpires.toDate(), Date().convertTo(region: .local) < expiresDate {
+                if AppSetting.shared.isRefreshTokenValid {
                     // Token is valid, so just resume the original request
                     closure(.success(request))
                     return

@@ -12,12 +12,6 @@ import GoogleSignIn
 import AuthenticationServices
 import RxSwift
 
-enum RegisterResult {
-    case success
-    case emailExisted
-    case error
-}
-
 class RegisterViewModel: NSObject, ObservableObject {
     @Published var email: String = ""
     @Published var password: String = ""
@@ -32,24 +26,24 @@ class RegisterViewModel: NSObject, ObservableObject {
     }
     var disposedBag = DisposeBag()
     
-    func signup(completion: @escaping (RegisterResult, RegisterResultModel?) -> Void) {
+    func signup(completion: @escaping (RegisterResultModel?) -> Void) {
         showProgressView = true
         APIManager.shared.register(email: email, password: password)
             .subscribe(onSuccess: { [self] response in
                 self.showProgressView = false
                 if let result = response.result, !result.tokens.access.token.isEmpty, !result.tokens.refresh.token.isEmpty {
-                    completion(.success, result)
+                    completion(result)
                 } else {
                     let error = response.errors
                     if error.count > 0, let message = error[0] as? String {
                         alertMessage = message
                         showAlert = true
                     }
-                    completion(.error, nil)
+                    completion(nil)
                 }
             }, onFailure: { error in
                 self.showProgressView = false
-                completion(.error, nil)
+                completion(nil)
             })
             .disposed(by: disposedBag)
     }
@@ -94,7 +88,6 @@ extension RegisterViewModel: ASAuthorizationControllerDelegate {
             guard let token = appleIdCredential.identityToken?.base64EncodedString()  else {
                 return
             }
-            
             // MARK: TODO
             /// 1. Set token here
             /// 2. Perform tasks to do after login
