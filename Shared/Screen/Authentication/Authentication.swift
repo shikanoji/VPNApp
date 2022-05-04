@@ -12,26 +12,22 @@ class Authentication: ObservableObject {
     @Published var isValidated: Bool = AppSetting.shared.isRefreshTokenValid
     
     func login(withLoginData data: LoginResultModel) {
-        AppSetting.shared.email = data.user.email
-        AppSetting.shared.accessToken = data.tokens.access.token
-        AppSetting.shared.accessTokenExpires = data.tokens.access.expires
-        AppSetting.shared.refreshToken = data.tokens.refresh.token
-        AppSetting.shared.refreshTokenExpires = data.tokens.refresh.expires
-        AppSetting.shared.isPremium = data.user.is_premium
-        AppSetting.shared.premiumExpires = data.user.premium_expire
-        AppSetting.shared.name = data.user.name
-        isValidated = AppSetting.shared.isRefreshTokenValid
+        login(user: data.user, tokens: data.tokens)
     }
     
     func login(withRegisterData data: RegisterResultModel) {
-        AppSetting.shared.email = data.user.email
-        AppSetting.shared.accessToken = data.tokens.access.token
-        AppSetting.shared.accessTokenExpires = data.tokens.access.expires
-        AppSetting.shared.refreshToken = data.tokens.refresh.token
-        AppSetting.shared.refreshTokenExpires = data.tokens.refresh.expires
-        AppSetting.shared.isPremium = data.user.is_premium
-        AppSetting.shared.premiumExpires = data.user.premium_expire
-        AppSetting.shared.name = data.user.name
+        login(user: data.user, tokens: data.tokens)
+    }
+    
+    private func login(user: User, tokens: Tokens) {
+        AppSetting.shared.email = user.email
+        AppSetting.shared.accessToken = tokens.access.token
+        AppSetting.shared.accessTokenExpires = tokens.access.expires
+        AppSetting.shared.refreshToken = tokens.refresh.token
+        AppSetting.shared.refreshTokenExpires = tokens.refresh.expires
+        AppSetting.shared.isPremium = user.is_premium
+        AppSetting.shared.premiumExpires = user.premium_expire
+        AppSetting.shared.name = user.name
         isValidated = AppSetting.shared.isRefreshTokenValid
     }
     

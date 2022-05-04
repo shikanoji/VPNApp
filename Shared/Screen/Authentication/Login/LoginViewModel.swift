@@ -20,7 +20,7 @@ class LoginViewModel: NSObject, ObservableObject {
     var alertTitle: String = ""
     var alertMessage: String = ""
     var appleToken: String = ""
-    var disposedBag = DisposeBag()
+    private let disposedBag = DisposeBag()
     var authentication: Authentication?
     var loginDisable: Bool {
         email.isEmpty || password.isEmpty

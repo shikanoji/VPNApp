@@ -101,4 +101,16 @@ extension APIManager {
                 throw APIError.someError
             }
     }
+    
+    func forgotPassword(email: String) -> Single<APIResponse<EmptyResult>> {
+        return provider.rx
+            .request(.forgotPassword(email: email))
+            .map { response in
+                let result = try JSONDecoder().decode(APIResponse<EmptyResult>.self, from: response.data)
+                return result
+            }
+            .catch { error in
+                throw APIError.someError
+            }
+    }
 }

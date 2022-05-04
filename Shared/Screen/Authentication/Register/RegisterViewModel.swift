@@ -24,7 +24,7 @@ class RegisterViewModel: NSObject, ObservableObject {
     var registerDisable: Bool {
         email.isEmpty || password.isEmpty || retypePassword.isEmpty
     }
-    var disposedBag = DisposeBag()
+    private let disposedBag = DisposeBag()
     
     func signup(completion: @escaping (RegisterResultModel?) -> Void) {
         showProgressView = true
