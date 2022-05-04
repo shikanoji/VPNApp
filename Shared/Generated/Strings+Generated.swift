@@ -178,6 +178,8 @@ public enum L10n {
     public static let emailPlaceholder = L10n.tr("ForgotPassword", "EmailPlaceholder")
     /// Send request
     public static let sendRequestButton = L10n.tr("ForgotPassword", "SendRequestButton")
+    /// Successfully sent request. Pleae check your e-mail for confirmation.
+    public static let success = L10n.tr("ForgotPassword", "Success")
     /// Forgot Password
     public static let title = L10n.tr("ForgotPassword", "Title")
   }

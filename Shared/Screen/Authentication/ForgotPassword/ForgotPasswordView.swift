@@ -11,6 +11,35 @@ import SwiftUI
 struct ForgotPasswordView: View {
     @StateObject var viewModel: ForgotPasswordViewModel
     @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
+    var header: some View {
+        Group{
+            Spacer().frame(height: 50)
+            Text(L10n.ForgotPassword.title).setTitle()
+            Spacer().frame(height: 20)
+            Text(L10n.ForgotPassword.body).setDefault()
+            Spacer().frame(height: 40)
+        }
+    }
+    
+    var emailForm: some View {
+        Form(placeholder: L10n.ForgotPassword.emailPlaceholder, value: $viewModel.email)
+    }
+    
+    var submitButton: some View {
+        AppButton(style: .themeButton, width: 311, text: L10n.ForgotPassword.sendRequestButton) {
+            viewModel.sendRequest()
+        }.disabled(viewModel.sendRequestDisable)
+    }
+    
+    var footer: some View {
+        HStack{
+            Text(L10n.Register.hadAccountText).setDefault()
+            Spacer().frame(width: 5)
+            Text(L10n.Register.signin).setDefaultBold().onTapGesture {
+                presentationMode.wrappedValue.dismiss()
+            }
+        }
+    }
     
     var body: some View {
         Background() {
@@ -18,34 +47,12 @@ struct ForgotPasswordView: View {
                 VStack(alignment: .center) {
                     Spacer().frame(height: 100)
                     Asset.Assets.logoMedium.SuImage
-                    Group{
-                        Spacer().frame(height: 50)
-                        Text(L10n.ForgotPassword.title).setTitle()
-                        Spacer().frame(height: 20)
-                        Text(L10n.ForgotPassword.body).setDefault()
-                        Spacer().frame(height: 40)
-                    }
-                    
-                    Group{
-                        Form(placeholder: L10n.ForgotPassword.emailPlaceholder, value: $viewModel.email)
-                        Spacer().frame(height: 20)
-                    }
-                    
-                    Group {
-                        AppButton(style: .themeButton, width: 311, text: L10n.ForgotPassword.sendRequestButton) {
-                            viewModel.sendRequest()
-                        }
-                    }.disabled(viewModel.sendRequestDisable)
+                    header
+                    emailForm
+                    Spacer().frame(height: 20)
+                    submitButton
                     Spacer().frame(height: 30)
-                    Group {
-                        HStack{
-                            Text(L10n.Register.hadAccountText).setDefault()
-                            Spacer().frame(width: 5)
-                            Text(L10n.Register.signin).setDefaultBold().onTapGesture {
-                                presentationMode.wrappedValue.dismiss()
-                            }
-                        }
-                    }
+                    footer
                     Spacer().frame(height: 50)
                 }
                 
@@ -54,6 +61,18 @@ struct ForgotPasswordView: View {
             .disabled(viewModel.showProgressView)
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
+        .popup(isPresented: $viewModel.showAlert,
+               type: .floater(verticalPadding: 10),
+               position: .bottom,
+               animation: .easeInOut,
+               closeOnTap: false,
+               closeOnTapOutside: true) {
+            ToastView(title: viewModel.alertTitle,
+                      message: viewModel.alertMessage,
+                      cancelAction: {
+                viewModel.showAlert = false
+            })
+        }
     }
 }
 
