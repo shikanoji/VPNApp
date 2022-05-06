@@ -434,16 +434,10 @@
 		D7F9695B27B2AC980037A3D0 /* FAQView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FAQView.swift; sourceTree = "<group>"; };
 		D7F9695E27B2B8590037A3D0 /* QuestionModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuestionModel.swift; sourceTree = "<group>"; };
 		EE034413280827D6003DFB64 /* OpenVPNManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpenVPNManager.swift; sourceTree = "<group>"; };
-		EE03441D28082ABD003DFB64 /* PacketTunnelProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PacketTunnelProvider.swift; sourceTree = "<group>"; };
-		EE03441F28082ABD003DFB64 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		EE03442028082ABD003DFB64 /* OpenVPN_Tunnel.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = OpenVPN_Tunnel.entitlements; sourceTree = "<group>"; };
-		EE03442F28090A32003DFB64 /* PacketTunnelProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PacketTunnelProvider.swift; sourceTree = "<group>"; };
-		EE03443128090A32003DFB64 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		EE03443228090A32003DFB64 /* TunnelKit_iOS_daz.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = TunnelKit_iOS_daz.entitlements; sourceTree = "<group>"; };
 		EE03443D28090AB7003DFB64 /* OpenVPN.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = OpenVPN.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		EE03444028090AB7003DFB64 /* OpenVPNPacketTunnelProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpenVPNPacketTunnelProvider.swift; sourceTree = "<group>"; };
 		EE03444228090AB7003DFB64 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		EE03444328090AB7003DFB64 /* OpenVPN_daz.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = OpenVPN_daz.entitlements; sourceTree = "<group>"; };
+		EE03444328090AB7003DFB64 /* OpenVPN.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = OpenVPN.entitlements; sourceTree = "<group>"; };
 		EE0344592809204E003DFB64 /* NetworkExtension.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = NetworkExtension.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS15.4.sdk/System/Library/Frameworks/NetworkExtension.framework; sourceTree = DEVELOPER_DIR; };
 		EE2D6BF12819276C008E1431 /* ProtocolSettingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProtocolSettingView.swift; sourceTree = "<group>"; };
 		EE2D6BF428193D08008E1431 /* ProtocolSettingViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProtocolSettingViewModel.swift; sourceTree = "<group>"; };
@@ -715,9 +709,7 @@
 				D78044AA2758C6FB0086E59D /* macOS */,
 				D78044B32758C6FC0086E59D /* Tests iOS */,
 				D78044BF2758C6FC0086E59D /* Tests macOS */,
-				EE03441C28082ABD003DFB64 /* OpenVPN.Tunnel */,
-				EE03442E28090A32003DFB64 /* TunnelKit-iOS.daz */,
-				EE03443F28090AB7003DFB64 /* OpenVPN.daz */,
+				EE03443F28090AB7003DFB64 /* OpenVPN */,
 				EE46BCCD280963F4003C4FEB /* WireGuard */,
 				D78044A42758C6FB0086E59D /* Products */,
 				60447A13D44C4DCD26907C7E /* Pods */,
@@ -1044,34 +1036,14 @@
 			path = VPN;
 			sourceTree = "<group>";
 		};
-		EE03441C28082ABD003DFB64 /* OpenVPN.Tunnel */ = {
-			isa = PBXGroup;
-			children = (
-				EE03441D28082ABD003DFB64 /* PacketTunnelProvider.swift */,
-				EE03441F28082ABD003DFB64 /* Info.plist */,
-				EE03442028082ABD003DFB64 /* OpenVPN_Tunnel.entitlements */,
-			);
-			path = OpenVPN.Tunnel;
-			sourceTree = "<group>";
-		};
-		EE03442E28090A32003DFB64 /* TunnelKit-iOS.daz */ = {
-			isa = PBXGroup;
-			children = (
-				EE03442F28090A32003DFB64 /* PacketTunnelProvider.swift */,
-				EE03443128090A32003DFB64 /* Info.plist */,
-				EE03443228090A32003DFB64 /* TunnelKit_iOS_daz.entitlements */,
-			);
-			path = "TunnelKit-iOS.daz";
-			sourceTree = "<group>";
-		};
-		EE03443F28090AB7003DFB64 /* OpenVPN.daz */ = {
+		EE03443F28090AB7003DFB64 /* OpenVPN */ = {
 			isa = PBXGroup;
 			children = (
 				EE03444028090AB7003DFB64 /* OpenVPNPacketTunnelProvider.swift */,
 				EE03444228090AB7003DFB64 /* Info.plist */,
-				EE03444328090AB7003DFB64 /* OpenVPN_daz.entitlements */,
+				EE03444328090AB7003DFB64 /* OpenVPN.entitlements */,
 			);
-			path = OpenVPN.daz;
+			path = OpenVPN;
 			sourceTree = "<group>";
 		};
 		EE3246DF2822359B0070FB91 /* SubView */ = {
@@ -2369,15 +2341,15 @@
 		EE03444828090AB7003DFB64 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CODE_SIGN_ENTITLEMENTS = OpenVPN.daz/OpenVPN_daz.entitlements;
+				CODE_SIGN_ENTITLEMENTS = OpenVPN/OpenVPN.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = L7MX3GZ5BY;
 				ENABLE_BITCODE = NO;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = OpenVPN.daz/Info.plist;
-				INFOPLIST_KEY_CFBundleDisplayName = OpenVPN.daz;
+				INFOPLIST_FILE = OpenVPN/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = OpenVPN;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
 				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -2400,15 +2372,15 @@
 		EE03444928090AB7003DFB64 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CODE_SIGN_ENTITLEMENTS = OpenVPN.daz/OpenVPN_daz.entitlements;
+				CODE_SIGN_ENTITLEMENTS = OpenVPN/OpenVPN.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = L7MX3GZ5BY;
 				ENABLE_BITCODE = NO;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = OpenVPN.daz/Info.plist;
-				INFOPLIST_KEY_CFBundleDisplayName = OpenVPN.daz;
+				INFOPLIST_FILE = OpenVPN/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = OpenVPN;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
 				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				LD_RUNPATH_SEARCH_PATHS = (
