@@ -31,7 +31,9 @@ struct AccountStatusView: View {
                         }, statusConnect: statusConnect)
                     VStack(spacing: 1) {
                         ItemRowCell(title: ItemCellType.statusAccount.title,
-                                    content: AppSetting.shared.email,
+                                    content: AppSetting.shared.isPremium ?
+                                    "\(L10n.Account.expire) \(AppSetting.shared.premiumExpireDate?.toFormat("dd-MM-yyyy") ?? "")"
+                                    : "\(L10n.Account.AccountStatus.joined): \(AppSetting.shared.joinedDate?.toFormat("dd-MM-yyyy") ?? "")",
                                     position: .top)
                         ItemRowCell(title: ItemCellType.paymentHistory.title,
                                     content: ItemCellType.paymentHistory.content,
@@ -41,7 +43,7 @@ struct AccountStatusView: View {
                                 self.showPayment = true
                             }
                         Spacer().frame(height: 32)
-                        AppButton(style: .themeButton, width: UIScreen.main.bounds.size.width - 32, text: L10n.Account.AccountStatus.extend) {
+                        AppButton(style: .themeButton, width: UIScreen.main.bounds.size.width - 32, text: AppSetting.shared.isPremium ? L10n.Account.AccountStatus.extend : L10n.Account.AccountStatus.upgradeToPremium) {
                             
                         }
                     }

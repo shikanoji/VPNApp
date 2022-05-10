@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import SwiftDate
 
 struct DataSection: Equatable, Identifiable {
     var id: UUID = UUID()
@@ -133,7 +134,7 @@ enum ItemCellType: Decodable {
         case .paymentHistory:
             return L10n.Account.AccountStatus.paymentHistory
         case .statusAccount:
-            return L10n.Account.itemAccount + " " + AppSetting.shared.statusAccoutn
+            return L10n.Account.itemAccount + " " + (AppSetting.shared.isPremium ? L10n.Account.premium : L10n.Account.freePlan)
         case .totalDevice:
             return L10n.Account.itemDevices + ": \(AppSetting.shared.currentNumberDevice)/\(AppSetting.shared.totalNumberDevices)"
         case .questions:
@@ -214,12 +215,13 @@ enum ItemCellType: Decodable {
         }
     }
     
-    
-    
     var content: String {
         switch self {
         case .statusAccount:
-            return AppSetting.shared.getDateMemberSince()
+            guard AppSetting.shared.isPremium else {
+                return L10n.Account.premiumOffer
+            }
+            return "\(L10n.Account.expire) \(AppSetting.shared.premiumExpireDate)"
         case .paymentHistory:
             return L10n.Account.AccountStatus.tapToShow
         case .totalDevice:

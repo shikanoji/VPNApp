@@ -27,6 +27,88 @@ struct AccountView: View {
         DataSection(type: .helpSupport)
     ]
     
+    var header: some View {
+        HStack(spacing: 25) {
+            Image(Constant.Account.iconProfile)
+                .padding(.leading, 20.0)
+                .frame(height: Constant.Account.heightIconProfile)
+            VStack(alignment: .leading, spacing: 8) {
+                Text(verbatim: AppSetting.shared.email)
+                    .font(Constant.Account.fontEmail)
+                Text(L10n.Account.tapControl)
+                    .font(Constant.Account.fontSubEmail)
+            }
+            .foregroundColor(Color.white)
+            Spacer()
+        }
+        .onTapGesture {
+            showInfomation.toggle()
+        }
+        .frame(height: Constant.Account.heightCellProfile)
+        .background(AppColor.darkButton)
+    }
+    
+    var content: some View {
+        GeometryReader { geometry in
+            ScrollView(showsIndicators: false) {
+                VStack(spacing: 0) {
+                    sectionsView
+                    Spacer()
+                    AppButton(style: .darkButton, width: UIScreen.main.bounds.size.width - 30, text: L10n.Account.signout) {
+                        viewModel.logout()
+                    }
+                    Spacer()
+                        .frame(height: 34)
+                    navigationLinks
+                }
+                .frame(
+                    minHeight: geometry.size.height,
+                    maxHeight: .infinity,
+                    alignment: .bottom
+                )
+            }
+        }
+        .background(AppColor.background)
+        .ignoresSafeArea().frame(
+            maxHeight: .infinity,
+            alignment: .bottom
+        )
+    }
+    
+    var sectionsView: some View {
+        ForEach(sections, id: \.id) { section in
+            VStack(alignment: .leading, spacing: 10) {
+                Text(section.type.title)
+                    .font(Constant.Menu.fontSectionTitle)
+                    .foregroundColor(AppColor.lightBlackText)
+                ForEach(section.type.items) { item in
+                    Button {
+                        switch item.type {
+                        case .statusAccount:
+                            self.showAccountStatus = true
+                        case .totalDevice:
+                            self.showTotalDevice = true
+                        default:
+                            return
+                        }
+                    } label: {
+                        ItemRowView(item: item)
+                    }
+                }
+            }
+        }
+        .padding([.top, .leading])
+    }
+    
+    var navigationLinks: some View {
+        Group {
+            NavigationLink(destination: InfomationView(showAccount: $showAccount, statusConnect: statusConnect), isActive: $showInfomation) { }
+            NavigationLink(destination: AccountStatusView(showAccount: $showAccount, statusConnect: statusConnect), isActive: $showAccountStatus) { }
+            NavigationLink(destination: DevicesView(showAccount: $showAccount, statusConnect: statusConnect, viewModel: DeviceViewModel()), isActive: $showTotalDevice) { }
+            NavigationLink(destination: FAQView(showAccount: $showAccount, statusConnect: statusConnect, viewModel: FAQViewModel()), isActive: $showFAQ) { }
+        }
+    }
+    
     var body: some View {
         VStack {
             AppColor.darkButton
@@ -37,73 +119,8 @@ struct AccountView: View {
                 }, tapRightButton: {
                     showAccount = false
                 }, statusConnect: statusConnect)
-            HStack(spacing: 25) {
-                Image(Constant.Account.iconProfile)
-                    .padding(.leading, 20.0)
-                    .frame(height: Constant.Account.heightIconProfile)
-                VStack(alignment: .leading, spacing: 8) {
-                    Text(verbatim: "flashkick2001@gmail.com")
-                        .font(Constant.Account.fontEmail)
-                    //                    Text(AppSetting.shared.email)
-                    Text(L10n.Account.tapControl)
-                        .font(Constant.Account.fontSubEmail)
-                }
-                .foregroundColor(Color.white)
-                Spacer()
-            }
-            .onTapGesture {
-                showInfomation.toggle()
-            }
-            .frame(height: Constant.Account.heightCellProfile)
-            .background(AppColor.darkButton)
-            GeometryReader { geometry in
-                ScrollView(showsIndicators: false) {
-                    VStack(spacing: 0) {
-                        ForEach(sections, id: \.id) { section in
-                            VStack(alignment: .leading, spacing: 10) {
-                                Text(section.type.title)
-                                    .font(Constant.Menu.fontSectionTitle)
-                                    .foregroundColor(AppColor.lightBlackText)
-                                ForEach(section.type.items) { item in
-                                    Button {
-                                        switch item.type {
-                                        case .statusAccount:
-                                            self.showAccountStatus = true
-                                        case .totalDevice:
-                                            self.showTotalDevice = true
-                                        default:
-                                            return
-                                        }
-                                    } label: {
-                                        ItemRowView(item: item)
-                                    }
-                                }
-                            }
-                        }
-                        .padding([.top, .leading])
-                        Spacer()
-                        AppButton(style: .darkButton, width: UIScreen.main.bounds.size.width - 30, text: L10n.Account.signout) {
-                            viewModel.logout()
-                        }
-                        Spacer()
-                            .frame(height: 34)
-                        NavigationLink(destination: InfomationView(showAccount: $showAccount, statusConnect: statusConnect), isActive: $showInfomation) { }
-                        NavigationLink(destination: AccountStatusView(showAccount: $showAccount, statusConnect: statusConnect), isActive: $showAccountStatus) { }
-                        NavigationLink(destination: DevicesView(showAccount: $showAccount, statusConnect: statusConnect, viewModel: DeviceViewModel()), isActive: $showTotalDevice) { }
-                        NavigationLink(destination: FAQView(showAccount: $showAccount, statusConnect: statusConnect, viewModel: FAQViewModel()), isActive: $showFAQ) { }
-                    }
-                    .frame(
-                        minHeight: geometry.size.height,
-                        maxHeight: .infinity,
-                        alignment: .bottom
-                    )
-                }
-            }
-            .background(AppColor.background)
-            .ignoresSafeArea().frame(
-                maxHeight: .infinity,
-                alignment: .bottom
-            )
+            header
+            content
         }
         .background(AppColor.background)
         .onAppear() {
