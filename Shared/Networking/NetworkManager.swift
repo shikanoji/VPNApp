@@ -42,7 +42,7 @@ class NetworkManager: ObservableObject {
     
     var protocolVPN: ProtocolVPN = .tcp
     
-    var selectConfig: ConfigVPN = .wireguard
+    var selectConfig: ConfigVPN = .openVPN
     
     var requestCertificate: RequestCertificateModel?
     
@@ -68,53 +68,5 @@ class NetworkManager: ObservableObject {
         case .wireguard:
             WireGuardManager.shared.disconnect()
         }
-    }
-    
-    func changeSelectConfig() {
-        
-    }
-    
-    func getBandWithInternet() {
-        
-    }
-    
-    func testSpeed()  {
-        let url = URL(string: "http://my_image_on_web_server.jpg")
-        let request = URLRequest(url: url!)
-        
-        let session = URLSession.shared
-        
-        let startTime = Date()
-        
-        let task =  session.dataTask(with: request) { (data, resp, error) in
-            
-            guard error == nil && data != nil else{
-                
-                print("connection error or data is nill")
-                
-                return
-            }
-            
-            guard resp != nil else{
-                
-                print("respons is nill")
-                return
-            }
-            
-            let length  = CGFloat( (resp?.expectedContentLength)!) / 1000000.0
-            
-            print(length)
-            
-            
-            
-            let elapsed = CGFloat( Date().timeIntervalSince(startTime))
-            
-            print("elapsed: \(elapsed)")
-            
-            print("Speed: \(length/elapsed) Mb/sec")
-            
-        }
-        
-        task.resume()
     }
 }
