@@ -21,13 +21,14 @@ struct ItemRowView: View {
             VStack(alignment: .leading, spacing: 8) {
                 Text(item.type.title + subTitle)
                     .font(Constant.Menu.fontItem)
+                    .foregroundColor(Color.white)
                 if subContent != "" || item.type.content != "" {
                     Text(subContent != "" ? subContent : item.type.content)
                         .font(Constant.Menu.fontSubItem)
+                        .foregroundColor(AppColor.lightBlackText)
                 }
             }
             .frame(height: Constant.Menu.heightItemMenu)
-            .foregroundColor(Color.white)
             Spacer()
             Image(Constant.Account.rightButton)
             .padding()

@@ -30,7 +30,7 @@ struct InfomationView: View {
                         content: AppSetting.shared.email,
                         position: .top)
             ItemRowCell(title: L10n.Account.Infomation.member,
-                        content: AppSetting.shared.getDateMemberSince())
+                        content: AppSetting.shared.joinedDate?.toFormat("dd-MM-yyyy") ?? "")
             ItemRowCell(title: L10n.Account.Infomation.id,
                         content: AppSetting.shared.idVPN)
             ItemRowCell(title: L10n.Account.Infomation.security,

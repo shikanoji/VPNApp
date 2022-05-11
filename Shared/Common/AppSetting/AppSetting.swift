@@ -17,6 +17,7 @@ enum AppKeys: String {
     case name = "name"
     case accessToken = "accessToken"
     case refreshToken = "refreshToken"
+    case accountCreatedTime = "accountCreatedTime"
     case accessTokenExpires = "accessTokenExpires"
     case refreshTokenExpires = "refreshTokenExpires"
     case country = "country"
@@ -26,7 +27,6 @@ enum AppKeys: String {
     case showedNotice = "showedNotice"
     case dateMember = "dateMember"
     case idVPN = "idVPN"
-    case statusAccoutn = "statusAccoutn"
     case currentNumberDevice = "currentNumberDevice"
     case totalNumberDevices = "totalNumberDevices"
     case appShourtcuts = "appShourtcuts"
@@ -84,6 +84,15 @@ struct AppSetting {
         }
         set {
             UserDefaults.standard.setValue(newValue, forKey: AppKeys.name.rawValue)
+        }
+    }
+    
+    var accountCreatedTime: Int? {
+        get {
+            return UserDefaults.standard.integer(forKey: AppKeys.accountCreatedTime.rawValue)
+        }
+        set {
+            UserDefaults.standard.setValue(newValue, forKey: AppKeys.accountCreatedTime.rawValue)
         }
     }
     
@@ -202,5 +211,23 @@ struct AppSetting {
         let seconds = TimeInterval(refreshTokenExpiresSeconds)
         let expireDate = DateInRegion(seconds: seconds, region: .local)
         return Date().convertTo(region: .local) < expireDate
+    }
+    
+    var premiumExpireDate: DateInRegion? {
+        guard isPremium, let expireSecond = premiumExpires else {
+            return nil
+        }
+        let expireInteval = TimeInterval(expireSecond)
+        let expireDate = DateInRegion(seconds: expireInteval, region: .local)
+        return expireDate
+    }
+    
+    var joinedDate: DateInRegion? {
+        guard let accountCreatedSecond = accountCreatedTime else {
+            return nil
+        }
+        let accountCreatedTimeInteval = TimeInterval(accountCreatedSecond)
+        let joinedDate = DateInRegion(seconds: accountCreatedTimeInteval, region: .local)
+        return joinedDate
     }
 }

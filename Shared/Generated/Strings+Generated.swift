@@ -17,6 +17,10 @@ public enum L10n {
     public static let contentTotalDevices = L10n.tr("Account", "contentTotalDevices")
     /// Delete your account
     public static let deleteAccount = L10n.tr("Account", "deleteAccount")
+    /// Expire on
+    public static let expire = L10n.tr("Account", "expire")
+    /// Free plan
+    public static let freePlan = L10n.tr("Account", "freePlan")
     /// Account status:
     public static let itemAccount = L10n.tr("Account", "itemAccount")
     /// Devices
@@ -27,6 +31,10 @@ public enum L10n {
     public static let itemQuestions = L10n.tr("Account", "itemQuestions")
     /// Sercurity level
     public static let itemSecurity = L10n.tr("Account", "itemSecurity")
+    /// Premium
+    public static let premium = L10n.tr("Account", "premium")
+    /// Premium plan only $3/month
+    public static let premiumOffer = L10n.tr("Account", "premiumOffer")
     /// Sign Out
     public static let signout = L10n.tr("Account", "signout")
     /// Help & Support
@@ -38,12 +46,16 @@ public enum L10n {
     public enum AccountStatus {
       /// Extend Subscription
       public static let extend = L10n.tr("Account", "AccountStatus.extend")
+      /// Joined
+      public static let joined = L10n.tr("Account", "AccountStatus.joined")
       /// Payment history
       public static let paymentHistory = L10n.tr("Account", "AccountStatus.paymentHistory")
       /// Tap to show
       public static let tapToShow = L10n.tr("Account", "AccountStatus.tapToShow")
       /// Your Subscription
       public static let title = L10n.tr("Account", "AccountStatus.title")
+      /// Premium plan only $3/month
+      public static let upgradeToPremium = L10n.tr("Account", "AccountStatus.upgradeToPremium")
     }
     public enum ChangePassword {
       /// Confirm password does not matche
