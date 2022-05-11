@@ -9,6 +9,7 @@ import Foundation
 import SwiftUI
 import RxSwift
 import TunnelKitManager
+import TunnelKitCore
 
 class BoardViewModel: ObservableObject {
     
@@ -157,15 +158,45 @@ class BoardViewModel: ObservableObject {
         switch notification.vpnStatus {
         case .connected:
             state = .connected
+            if let iPVPN = NetworkManager.shared.obtainCertificate?.server?.ipAddress {
+                ip = iPVPN
+            }
+            getSpeedRealTime()
             
         case .disconnected:
             state = .notConnect
+            ip = AppSetting.shared.ip
+            stopSpeedTimer()
             
         case .disconnecting, .connecting:
             state = .loading
         }
     }
-
+    
+    var speedTimer: DispatchSourceTimer?
+    
+    func getSpeedRealTime() {
+        let queue = DispatchQueue.main
+        speedTimer = DispatchSource.makeTimerSource(queue: queue)
+        speedTimer!.schedule(deadline: .now(), repeating: .seconds(1))
+        speedTimer!.setEventHandler { [weak self] in
+            if NetworkManager.shared.selectConfig == .openVPN,
+               let dataCount = OpenVPNManager.shared.getDataCount() {
+                self?.uploadSpeed = CGFloat(dataCount.sent) * 0.001
+                self?.downloadSpeed = CGFloat(dataCount.received) * 0.001
+            }
+        }
+        speedTimer!.resume()
+    }
+    
+    func stopSpeedTimer() {
+        speedTimer = nil
+    }
+    
+    deinit {
+        stopSpeedTimer()
+    }
+    
     @objc private func VPNDidFail(notification: Notification) {
         print("VPNStatusDidFail: \(notification.vpnError.localizedDescription)")
         state = .notConnect

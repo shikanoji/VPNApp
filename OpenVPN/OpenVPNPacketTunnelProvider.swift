@@ -9,4 +9,8 @@ import NetworkExtension
 import TunnelKitOpenVPNAppExtension
 
 class PacketTunnelProvider: OpenVPNTunnelProvider {
+    override init() {
+        super.init()
+        dataCountInterval = 1000
+    }
 }

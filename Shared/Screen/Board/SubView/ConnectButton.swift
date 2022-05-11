@@ -83,20 +83,17 @@ struct DocAnimationView: View {
         Circle()
             .frame(width: Constant.Board.QuickButton.sizeDoc,
                    height: Constant.Board.QuickButton.sizeDoc)
-            .modifier(AnimatingMoveDoc(yOffSet: change ? 5 : -5))
+            .offset(y: change ? 5 : -5)
             .foregroundColor(Color.black)
             .onAppear {
-                DispatchQueue.main.asyncAfter(deadline: .now() + timeWait) {
-                    withAnimation(.linear(duration: 0.5).repeatForever()) {
-                        self.change.toggle()
-                    }
-                }
+                self.change.toggle()
             }
+            .animation(Animation.linear(duration: 0.5).repeatForever().delay(timeWait))
     }
 }
 
 struct TimeConnectedView: View {
-    @ObservedObject var stopWatch = StopWatch()
+    @StateObject var stopWatch = StopWatch()
     
     var body: some View {
         Text(self.stopWatch.stopWatchTime)
@@ -109,19 +106,6 @@ struct TimeConnectedView: View {
             .onAppear {
                 self.stopWatch.start()
             }
-    }
-}
-
-struct AnimatingMoveDoc: AnimatableModifier {
-    var yOffSet: CGFloat = 0
-    
-    var animatableData: CGFloat {
-        get { yOffSet }
-        set { yOffSet = newValue }
-    }
-    
-    func body(content: Content) -> some View {
-        content.offset(y: yOffSet)
     }
 }
 

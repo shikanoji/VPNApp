@@ -9,13 +9,8 @@ import SwiftUI
 
 struct SpeedConnectedView: View {
     
-    @State private var uploadSpeed: CGFloat
-    @State private var downLoadSpeed: CGFloat
-    
-    init(uploadSpeed: CGFloat = 0.0, downLoadSpeed: CGFloat = 0.0) {
-        self.uploadSpeed = uploadSpeed
-        self.downLoadSpeed = downLoadSpeed
-    }
+    var uploadSpeed: CGFloat
+    var downLoadSpeed: CGFloat
     
     var body: some View {
         VStack(alignment: .leading, spacing: 0) {
@@ -41,7 +36,7 @@ struct SpeedConnectedView: View {
 
 struct SpeedConnectedView_Previews: PreviewProvider {
     static var previews: some View {
-        SpeedConnectedView(uploadSpeed: 1000, downLoadSpeed: 300)
+        SpeedConnectedView(uploadSpeed: 100, downLoadSpeed: 100)
             .preferredColorScheme(.dark)
     }
 }
