@@ -10,6 +10,7 @@ import SwiftUI
 struct InfomationView: View {
     @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
     @Binding var showAccount: Bool
+    @Binding var showInfomation: Bool
     @State var statusConnect: BoardViewModel.StateBoard = .connected
     @State var showChangePassword = false
     @State var deleteAccount = false
@@ -60,6 +61,7 @@ struct InfomationView: View {
                         tapLeftButton: {
                             presentationMode.wrappedValue.dismiss()
                         }, tapRightButton: {
+                            showInfomation = false
                             showAccount = false
                         }, statusConnect: statusConnect)
                     itemList
@@ -81,7 +83,7 @@ struct SettingInfomationView_Previews: PreviewProvider {
     @State static var value: BoardViewModel.StateBoard = .connected
     
     static var previews: some View {
-        InfomationView(showAccount: $showAccount)
+        InfomationView(showAccount: $showAccount, showInfomation: $showAccount)
     }
 }
 

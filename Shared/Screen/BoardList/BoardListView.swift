@@ -54,6 +54,7 @@ struct BoardListView: View {
         .navigationBarHidden(true)
         .background(AppColor.background)
         .ignoresSafeArea()
+        .animation(nil)
     }
 }
 

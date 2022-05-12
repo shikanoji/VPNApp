@@ -203,9 +203,9 @@ extension APIService: TargetType {
                     }
                 }
                 
-                if let staticServer = NetworkManager.shared.selectStaticServer {
-                    param["serverId"] = staticServer.id
-                }
+//                if let staticServer = NetworkManager.shared.selectStaticServer {
+//                    param["serverId"] = staticServer.id
+//                }
             case .staticIP:
                 if let staticServer = NetworkManager.shared.selectStaticServer {
                     param["serverId"] = staticServer.id

@@ -9,6 +9,8 @@ import SwiftUI
 
 struct SettingVPNView: View {
     @Binding var showSettings: Bool
+    @Binding var showVPNSetting: Bool
+    
     @State var statusConnect: BoardViewModel.StateBoard = .connected
     @State var showAutoConnect = false
     @State var showProtocolConnect = false
@@ -35,6 +37,7 @@ struct SettingVPNView: View {
                         presentationMode.wrappedValue.dismiss()
                     }, tapRightButton: {
                         showSettings = false
+                        presentationMode.wrappedValue.dismiss()
                     }, statusConnect: statusConnect)
                 VStack(spacing: 1) {
                     ForEach(itemList.indices) { i in
@@ -58,8 +61,17 @@ struct SettingVPNView: View {
                 .padding(.top, Constant.Menu.topPaddingCell)
                 Spacer().frame(height: 20)
             }
-            NavigationLink(destination: AutoConnectView(showSettings: $showSettings, statusConnect: statusConnect), isActive: $showAutoConnect) { }
-            NavigationLink(destination: ProtocolSettingView(showSettings: $showSettings, viewModel: ProtocolSettingViewModel()), isActive: $showProtocolConnect) { }
+            NavigationLink(destination:
+                            AutoConnectView(
+                                showSettings: $showSettings,
+                                showVPNSetting: $showVPNSetting,
+                                statusConnect: statusConnect),
+                           isActive: $showAutoConnect) { }
+            NavigationLink(destination:
+                            ProtocolSettingView(
+                                showSettings: $showSettings,
+                                viewModel: ProtocolSettingViewModel()),
+                           isActive: $showProtocolConnect) { }
         }
         .navigationBarHidden(true)
         .background(AppColor.background)
@@ -72,6 +84,6 @@ struct SettingVPNView_Previews: PreviewProvider {
     @State static var showAccount = true
     
     static var previews: some View {
-        SettingVPNView(showSettings: $showAccount)
+        SettingVPNView(showSettings: $showAccount, showVPNSetting: $showAccount)
     }
 }

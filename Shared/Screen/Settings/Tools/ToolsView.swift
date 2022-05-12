@@ -60,6 +60,7 @@ struct ToolsView: View {
                         presentationMode.wrappedValue.dismiss()
                     }, tapRightButton: {
                         showSettings = false
+                        presentationMode.wrappedValue.dismiss()
                     }, statusConnect: statusConnect)
                 VStack(spacing: 1) {
                     cyberSecItem

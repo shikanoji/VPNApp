@@ -69,6 +69,7 @@ class BoardViewModel: ObservableObject {
     
     @Published var state: StateBoard = .notConnect
     @Published var ip = AppSetting.shared.ip
+    @Published var flag = ""
     @Published var nodes: [Node] = []
     @Published var errorMessage: String? = nil
     
@@ -80,12 +81,26 @@ class BoardViewModel: ObservableObject {
     
     @Published var uploadSpeed: CGFloat = 0.0
     @Published var downloadSpeed: CGFloat = 0.0
-    @Published var nodeConnected: Node? = nil
+    @Published var nodeConnected: Node? = nil {
+        didSet {
+            if let node = nodeConnected {
+                NetworkManager.shared.selectNode = node
+                self.connectVPN()
+            }
+        }
+    }
     
     @Published var locationData: [NodeGroup] = []
     
     @Published var staticIPData: [StaticServer] = []
-    @Published var staticIPNodeSelecte: StaticServer? = nil
+    @Published var staticIPNodeSelecte: StaticServer? = nil {
+        didSet {
+            if let staticIP = staticIPNodeSelecte {
+                NetworkManager.shared.selectStaticServer = staticIP
+                self.connectVPN()
+            }
+        }
+    }
     
     @Published var mutilhopData: [(Node, Node)] = [(Node.country, Node.tokyo), (Node.country, Node.tokyo)]
     
@@ -94,8 +109,6 @@ class BoardViewModel: ObservableObject {
     @Published var entryNodeSelectMutilhop: Node = Node.country
     @Published var exitNodeSelectMutilhop: Node = Node.tokyo
     @Published var mesh: Mesh = Mesh()
-    
-    @Published var configMapView: ConfigMapView = ConfigMapView()
     
     @Published var showAlert: Bool = false {
         didSet {
@@ -107,17 +120,6 @@ class BoardViewModel: ObservableObject {
     @Published var showProgressView: Bool = false
     
     var error: APIError?
-    
-    class ConfigMapView {
-        var firstload = true
-        var isConfig = false
-        var progressingScale: CGFloat = 1
-        var magScale: CGFloat = 1
-        var totalScale: CGFloat = 1
-        var location: CGPoint = CGPoint(
-            x: Constant.Board.Map.widthScreen / 2,
-            y: Constant.Board.Map.widthScreen)
-    }
     
     let disposedBag = DisposeBag()
     
@@ -144,7 +146,6 @@ class BoardViewModel: ObservableObject {
     
     func connectVPN() {
         if state == .notConnect {
-            state = .loading
             getRequestCertificate()
         } else {
             NetworkManager.shared.disconnect()
@@ -158,14 +159,28 @@ class BoardViewModel: ObservableObject {
         switch notification.vpnStatus {
         case .connected:
             state = .connected
-            if let iPVPN = NetworkManager.shared.obtainCertificate?.server?.ipAddress {
-                ip = iPVPN
+            switch NetworkManager.shared.selectConfig {
+            case .openVPN:
+                if let iPVPN = NetworkManager.shared.requestCertificate?.server?.ipAddress {
+                    ip = iPVPN
+                }
+                
+                flag = NetworkManager.shared.selectNode?.flag ?? ""
+                
+            case .wireguard:
+                if let iPWireguard = NetworkManager.shared.obtainCertificate?.server?.ipAddress {
+                    ip = iPWireguard
+                }
+                
+                flag = NetworkManager.shared.selectStaticServer?.flag ?? ""
             }
+            
             getSpeedRealTime()
             
         case .disconnected:
             state = .notConnect
             ip = AppSetting.shared.ip
+            flag = ""
             stopSpeedTimer()
             
         case .disconnecting, .connecting:
@@ -288,7 +303,6 @@ class BoardViewModel: ObservableObject {
     
     func getRequestCertificate() {
         self.showProgressView = true
-        
         APIManager.shared.getRequestCertificate(currentTab: tab)
             .subscribe { [weak self] response in
                 guard let `self` = self else {

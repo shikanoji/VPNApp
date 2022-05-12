@@ -11,7 +11,7 @@ struct MapView: View {
     
     @State var progressingScale: CGFloat = 1
     @State var magScale: CGFloat = 1
-    @State var totalScale: CGFloat = 1 {
+    @State var totalScale: CGFloat = 2 {
         didSet {
             mesh.showCityNodes = totalScale > Constant.Board.Map.enableCityZoom
         }
@@ -31,7 +31,7 @@ struct MapView: View {
     @GestureState private var fingerLocation: CGPoint? = nil
     @GestureState private var startLocation: CGPoint? = nil
     
-    @State var configMapView: BoardViewModel.ConfigMapView
+    @Binding var statusConnect: BoardViewModel.StateBoard
     
     var simpleDrag: some Gesture {
         DragGesture()
@@ -50,6 +50,19 @@ struct MapView: View {
             }
     }
     
+    func getNodeMapView() -> some View {
+        switch mesh.currentTab {
+        case .location, .multiHop:
+            return AnyView(NodeMapView(selection: selection,
+                                       mesh: mesh,
+                                       scale: $totalScale))
+        case .staticIP:
+            return AnyView(StaticNodeMapView(selection: selection,
+                                             mesh: mesh,
+                                             scale: $totalScale))
+        }
+    }
+    
     var body: some View {
         ZStack(alignment: .center) {
             Asset.Assets.map.SuImage
@@ -58,24 +71,12 @@ struct MapView: View {
                        height: heightMap * totalScale)
                 .aspectRatio(contentMode: .fit)
                 .position(location)
-            switch mesh.currentTab {
-            case .location, .multiHop:
-                NodeMapView(selection: selection,
-                            mesh: mesh,
-                            scale: $totalScale)
+            getNodeMapView()
                 .frame(width: widthMap * totalScale,
                        height: heightMap * totalScale)
                 .position(x: location.x + totalScale,
                           y: location.y + totalScale)
-            case .staticIP:
-                StaticNodeMapView(selection: selection,
-                                  mesh: mesh,
-                                  scale: $totalScale)
-                .frame(width: widthMap * totalScale,
-                       height: heightMap * totalScale)
-                .position(x: location.x + totalScale,
-                          y: location.y + totalScale)
-            }
+                .opacity(statusConnect == .connected ? 0 : 1)
         }
         .onReceive(selection.$selectedNodeIDs) {
             if let id = $0.first, let node = mesh.nodeWithID(id) {
@@ -90,10 +91,10 @@ struct MapView: View {
             }
         }
         .onReceive(mesh.$clientCountryNode) {
-            if configMapView.firstload, let node = $0 {
-                totalScale = 2
+            if selection.selectedNodeIDs.count == 0
+                && selection.selectedStaticNodeIDs.count == 0,
+               let node = $0 {
                 moveToNode(x: node.x, y: node.y)
-                configMapView.firstload = false
             }
         }
         .animation(.easeIn)
@@ -107,28 +108,20 @@ struct MapView: View {
                     if validateZoom(self.magScale * $0) {
                         progressingScale = $0
                     }
-                    totalScale = progressingScale * magScale
+                    let updateScale = progressingScale * magScale
+                    
+                    if  updateScale < Constant.Board.Map.minZoom {
+                        totalScale = Constant.Board.Map.minZoom
+                    } else if updateScale > Constant.Board.Map.maxZoom {
+                        totalScale = Constant.Board.Map.maxZoom
+                    } else {
+                        totalScale = updateScale
+                    }
                 }
                 .onEnded {
                     onEndedZoom($0)
                 })
         .background(AppColor.background)
-        .onAppear {
-            if configMapView.isConfig {
-                progressingScale = configMapView.progressingScale
-                magScale = configMapView.magScale
-                totalScale = configMapView.totalScale
-                location = configMapView.location
-                configMapView.isConfig = false
-            }
-        }
-        .onDisappear {
-            configMapView.isConfig = true
-            configMapView.progressingScale = progressingScale
-            configMapView.magScale = magScale
-            configMapView.totalScale = totalScale
-            configMapView.location = location
-        }
     }
     
     private func onChangedZoom(_ newValue: CGFloat) {
@@ -197,12 +190,13 @@ struct MapView: View {
 }
 
 struct MapView_Previews: PreviewProvider {
-    @State static var configMapView = BoardViewModel.ConfigMapView()
     @State static var value = false
+    @State static var statusConnect: BoardViewModel.StateBoard = .connected
     
     static var previews: some View {
         let mesh = Mesh.sampleMesh()
-        return MapView(mesh: mesh, selection: SelectionHandler(), configMapView: configMapView)
+        return MapView(mesh: mesh, selection: SelectionHandler(),
+                       statusConnect: $statusConnect)
     }
 }
 

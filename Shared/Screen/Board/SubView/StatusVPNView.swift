@@ -10,23 +10,19 @@ import SwiftUI
 struct StatusVPNView: View {
     var ip: String
     var status: BoardViewModel.StateBoard
+    var flag: String
     
     var body: some View {
         ZStack(alignment: .leading) {
             RoundedRectangle(cornerRadius: Constant.Board.SubBoard.radius)
                 .foregroundColor(AppColor.backgroundStatusView)
             HStack(spacing: 15) {
-                Image(Constant.Board.Image.locationDefault)
+                ImageView(withURL: flag, size: 32, placeholder: UIImage(named: Constant.Board.Image.locationDefault))
                 getStatusTextView()
             }
             .padding()
         }
         .frame(height: Constant.Board.SubBoard.height)
-    }
-    
-    init(ip: String, status: BoardViewModel.StateBoard) {
-        self.ip = ip
-        self.status = status
     }
     
     func getStatusTextView() -> some View {
@@ -43,8 +39,9 @@ struct StatusVPNView: View {
 }
 
 struct StatusVPNView_Previews: PreviewProvider {
+    
     static var previews: some View {
-        StatusVPNView(ip: "199.199.199.8", status: .notConnect)
+        StatusVPNView(ip: "199.199.199.8", status: .notConnect, flag: "")
             .previewLayout(.fixed(width: /*@START_MENU_TOKEN@*/343.0/*@END_MENU_TOKEN@*/, height: /*@START_MENU_TOKEN@*/68.0/*@END_MENU_TOKEN@*/))
     }
 }

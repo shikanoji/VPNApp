@@ -9,6 +9,8 @@ import SwiftUI
 
 struct DevicesView: View {
     @Binding var showAccount: Bool
+    @Binding var showTotalDevice: Bool
+    
     @State var toogle: Bool = false
     @State var statusConnect: BoardViewModel.StateBoard = .connected
     @StateObject var viewModel: DeviceViewModel
@@ -27,15 +29,10 @@ struct DevicesView: View {
                         tapLeftButton: {
                             presentationMode.wrappedValue.dismiss()
                         }, tapRightButton: {
+                            showTotalDevice = false
                             showAccount = false
                         }, statusConnect: statusConnect)
                     VStack(spacing: 1) {
-//                        ForEach(Array(viewModel.deviceList.enumerated()), id: \.offset) { index, item in
-//                            DeviceCell(deviceOnline: item,
-//                                       position: viewModel.deviceList.getPosition(index)) {
-//                                viewModel.deviceList.remove(at: index)
-//                            }
-//                        }
                         ForEach(viewModel.deviceList) { item in
                             DeviceCell(deviceOnline: item, position: viewModel.getDeviceCellPosition(device: item)) {
                                 viewModel.remove(device: item)
@@ -57,6 +54,6 @@ struct DevicesView_Previews: PreviewProvider {
     @State static var showAccount = true
     
     static var previews: some View {
-        DevicesView(showAccount: $showAccount, viewModel: DeviceViewModel())
+        DevicesView(showAccount: $showAccount, showTotalDevice: $showAccount, viewModel: DeviceViewModel())
     }
 }
