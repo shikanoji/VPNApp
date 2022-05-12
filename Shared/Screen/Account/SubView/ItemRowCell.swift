@@ -48,10 +48,12 @@ struct ItemRowCell: View {
     
     @State var position: PositionItemCell = .middle
     
-    @State private var changeValue = true
+    @State var switchValue: Bool = false
+    var onSwitchValueChange: ((Bool) -> Void)?
     
     var body: some View {
         HStack {
+            Spacer().frame(width: 16)
             VStack(alignment: .leading, spacing: 6) {
                 Text(title)
                     .font(Constant.Menu.fontItem)
@@ -67,24 +69,31 @@ struct ItemRowCell: View {
                         .foregroundColor(AppColor.VPNUnconnect)
                 }
             }
-            .padding(.leading, 16.0)
             Spacer()
-            if showRightButton {
-                Image(Constant.Account.rightButton)
-                    .padding()
-            } else if showSwitch {
-                Toggle(isOn: $changeValue) {
-                    
+            Group {
+                if showRightButton {
+                    Image(Constant.Account.rightButton)
+                        .padding()
+                } else if showSwitch {
+                    Toggle(isOn: $switchValue) {}
+                        .onChange(of: switchValue) { value in
+                            if let action = onSwitchValueChange {
+                                action(value)
+                            }
+                        }
+                        .toggleStyle(CheckmarkToggleStyle())
+                } else if showSelect {
+                    Toggle(isOn: $switchValue) {}
+                        .onChange(of: switchValue) { value in
+                            if let action = onSwitchValueChange {
+                                action(value)
+                            }
+                        }
+                        .toggleStyle(SelectToggleStyle())
                 }
-                .toggleStyle(CheckmarkToggleStyle())
-                .padding(.trailing, 15.0)
-            } else if showSelect {
-                Toggle(isOn: $changeValue) {
-                    
-                }
-                .toggleStyle(SelectToggleStyle())
-                .padding(.trailing, 15.0)
             }
+            .frame(width: 50)
+            Spacer().frame(width: 15)
         }
         .padding(.vertical, 8.0)
         .frame(minHeight: Constant.Menu.heightItemMenu)
@@ -96,7 +105,7 @@ struct ItemRowCell: View {
 
 struct SettingRow_Previews: PreviewProvider {
     static var previews: some View {
-        ItemRowCell(title: "Your email", content: "", showRightButton: false, showSwitch: false, showSelect: true)
+        ItemRowCell(title: "Your email", content: "", showRightButton: false, showSwitch: false, showSelect: true, switchValue: true)
             .previewLayout(.fixed(width: /*@START_MENU_TOKEN@*/343.0/*@END_MENU_TOKEN@*/, height: Constant.Menu.heightItemCell + 200))
     }
 }
