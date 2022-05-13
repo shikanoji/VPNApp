@@ -410,6 +410,34 @@ public enum L10n {
     public static let title = L10n.tr("Settings", "title")
     /// WireGuard
     public static let wireGuard = L10n.tr("Settings", "wireGuard")
+    public enum Tools {
+      /// CyberSec
+      public static let cyberSec = L10n.tr("Settings", "Tools.cyberSec")
+      /// Dark Web Monitors
+      public static let darkWebMonitors = L10n.tr("Settings", "Tools.darkWebMonitors")
+      /// Kill Switch
+      public static let killSwitch = L10n.tr("Settings", "Tools.killSwitch")
+      /// Tapjacking protection
+      public static let tapJackingProtection = L10n.tr("Settings", "Tools.tapJackingProtection")
+      /// Tools
+      public static let title = L10n.tr("Settings", "Tools.title")
+      public enum CyberSec {
+        /// Protects you from cyber threats by blocking malicious website.
+        public static let note = L10n.tr("Settings", "Tools.cyberSec.note")
+      }
+      public enum DarkWebMonitors {
+        /// Sends alerts if your credentials get publicly exposed online.
+        public static let note = L10n.tr("Settings", "Tools.darkWebMonitors.note")
+      }
+      public enum KillSwitch {
+        /// Blocks unprotected traffic if VPN connection drops.
+        public static let note = L10n.tr("Settings", "Tools.killSwitch.note")
+      }
+      public enum TapJackingProtection {
+        /// Warns you if a malicous app adds a screen overlay to trick you into unintended action.
+        public static let note = L10n.tr("Settings", "Tools.tapJackingProtection.note")
+      }
+    }
   }
   public enum StaticIP {
     /// CURRENT LOAD

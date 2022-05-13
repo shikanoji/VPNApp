@@ -12,7 +12,7 @@ struct SettingsView: View {
     
     @Binding var statusConnect: BoardViewModel.StateBoard
     @State var showVPNSetting = false
-    
+    @State var showToolsSetting = false
     @State var sections: [DataSection] = [
         DataSection(type: .vpnSetting),
         DataSection(type: .otherSetting)
@@ -40,6 +40,8 @@ struct SettingsView: View {
                                     switch item.type {
                                     case .vpnConnection:
                                         self.showVPNSetting = true
+                                    case .tools:
+                                        self.showToolsSetting = true
                                     default:
                                         return
                                     }
@@ -52,6 +54,7 @@ struct SettingsView: View {
                     .padding([.top, .leading])
                     Spacer().frame(height: 34)
                     NavigationLink(destination: SettingVPNView(showSettings: $showSettings, statusConnect: statusConnect), isActive: $showVPNSetting) { }
+                    NavigationLink(destination: ToolsView(showSettings: $showSettings, statusConnect: statusConnect), isActive: $showToolsSetting) { }
                 }
             }
             .frame(maxHeight: .infinity)

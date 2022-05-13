@@ -43,6 +43,8 @@
 		AC60751027DE431F00DD5667 /* Settings.strings in Resources */ = {isa = PBXBuildFile; fileRef = AC60751227DE431F00DD5667 /* Settings.strings */; };
 		AC60751327DE432300DD5667 /* FAQ.strings in Resources */ = {isa = PBXBuildFile; fileRef = AC60751627DE432300DD5667 /* FAQ.strings */; };
 		AC60751427DE432300DD5667 /* FAQ.strings in Resources */ = {isa = PBXBuildFile; fileRef = AC60751627DE432300DD5667 /* FAQ.strings */; };
+		AC79CE09282CFA7800E1E874 /* ToolsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC79CE08282CFA7800E1E874 /* ToolsView.swift */; };
+		AC79CE0B282CFB9600E1E874 /* ToolsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC79CE0A282CFB9600E1E874 /* ToolsViewModel.swift */; };
 		AC87539B2801ED10004C5F43 /* DeleteAccountConfirmationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC87539A2801ED10004C5F43 /* DeleteAccountConfirmationView.swift */; };
 		AC87539C2801ED10004C5F43 /* DeleteAccountConfirmationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC87539A2801ED10004C5F43 /* DeleteAccountConfirmationView.swift */; };
 		AC9A8F5B27D6236900FACD7D /* KeychainService.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC9A8F5A27D6236900FACD7D /* KeychainService.swift */; };
@@ -360,6 +362,8 @@
 		AC60750D27DE431C00DD5667 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Account.strings; sourceTree = "<group>"; };
 		AC60751127DE431F00DD5667 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Settings.strings; sourceTree = "<group>"; };
 		AC60751527DE432300DD5667 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/FAQ.strings; sourceTree = "<group>"; };
+		AC79CE08282CFA7800E1E874 /* ToolsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToolsView.swift; sourceTree = "<group>"; };
+		AC79CE0A282CFB9600E1E874 /* ToolsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToolsViewModel.swift; sourceTree = "<group>"; };
 		AC87539A2801ED10004C5F43 /* DeleteAccountConfirmationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeleteAccountConfirmationView.swift; sourceTree = "<group>"; };
 		AC9A8F5A27D6236900FACD7D /* KeychainService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeychainService.swift; sourceTree = "<group>"; };
 		AC9A8F5C27D655C700FACD7D /* Constant+KeychainService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Constant+KeychainService.swift"; sourceTree = "<group>"; };
@@ -615,6 +619,15 @@
 				AC6074E127DD08D100DD5667 /* XCAssets+Generated.swift */,
 			);
 			path = Generated;
+			sourceTree = "<group>";
+		};
+		AC79CE07282CFA6D00E1E874 /* Tools */ = {
+			isa = PBXGroup;
+			children = (
+				AC79CE08282CFA7800E1E874 /* ToolsView.swift */,
+				AC79CE0A282CFB9600E1E874 /* ToolsViewModel.swift */,
+			);
+			path = Tools;
 			sourceTree = "<group>";
 		};
 		AC9A8F5927D6233700FACD7D /* KeychainService */ = {
@@ -1179,6 +1192,7 @@
 		EE8910142797AC3000ADF293 /* Settings */ = {
 			isa = PBXGroup;
 			children = (
+				AC79CE07282CFA6D00E1E874 /* Tools */,
 				EE8910152797AC3D00ADF293 /* SettingsView.swift */,
 				EE89101D2797F25200ADF293 /* SettingVPNView.swift */,
 				EE8910202797F6D400ADF293 /* AutoConnectView.swift */,
@@ -1637,6 +1651,7 @@
 				EE890FE027910FBD00ADF293 /* AccountView.swift in Sources */,
 				EE79F5392775AFF3006F0E5D /* AlertConnectView.swift in Sources */,
 				EE8910162797AC3D00ADF293 /* SettingsView.swift in Sources */,
+				AC79CE09282CFA7800E1E874 /* ToolsView.swift in Sources */,
 				AC490873281B9FFB00DB430B /* PublisherExtension.swift in Sources */,
 				D72E50512771D023002357E8 /* Connectivity.swift in Sources */,
 				D79C225127BE31CE00B54613 /* RegisterResult.swift in Sources */,
@@ -1713,6 +1728,7 @@
 				EE85EE1027BDF5B6000F967A /* DataList.swift in Sources */,
 				EE85EE1827BE3C4C000F967A /* CountryListResultModel.swift in Sources */,
 				D7F9695C27B2AC980037A3D0 /* FAQView.swift in Sources */,
+				AC79CE0B282CFB9600E1E874 /* ToolsViewModel.swift in Sources */,
 				EE79F53127742B21006F0E5D /* BoardTabView.swift in Sources */,
 				D79BF76B27BD31CD00E76C37 /* LoginResult.swift in Sources */,
 				6384B4F5276C374E00E904D2 /* BoardView.swift in Sources */,
