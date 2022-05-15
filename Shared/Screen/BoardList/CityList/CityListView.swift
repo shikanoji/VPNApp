@@ -37,11 +37,12 @@ struct CityListView: View {
             ScrollView(showsIndicators: false) {
                 VStack(alignment: .leading) {
                     ForEach(node.cityNodeList) { city in
-                        CityCellView(node: city, subName: L10n.Board.BoardList.cityOf + " \(node.name)")
-                            .onTapGesture {
-                                nodeSelect = city
-                                presentationMode.wrappedValue.dismiss()
-                            }
+                        Button {
+                            nodeSelect = city
+                            presentationMode.wrappedValue.dismiss()
+                        } label: {
+                            CityCellView(node: city, subName: L10n.Board.BoardList.cityOf + " \(node.name)")
+                        }
                     }
                 }
             }

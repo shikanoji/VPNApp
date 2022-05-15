@@ -9,6 +9,8 @@ import SwiftUI
 
 struct AutoConnectView: View {
     @Binding var showSettings: Bool
+    @Binding var showVPNSetting: Bool
+    
     @State var statusConnect: BoardViewModel.StateBoard = .connected
     
     @State var sectionList: [SectionType] = [.typeAutoConnect, .autoConnect]
@@ -27,6 +29,7 @@ struct AutoConnectView: View {
                             presentationMode.wrappedValue.dismiss()
                         }, tapRightButton: {
                             showSettings = false
+                            showVPNSetting = false
                         }, statusConnect: statusConnect)
                     VStack(alignment: .leading, spacing: 1) {
                         ForEach(sectionList.indices) { i in
@@ -59,6 +62,6 @@ struct AutoConnectView_Previews: PreviewProvider {
     @State static var show = true
     
     static var previews: some View {
-        AutoConnectView(showSettings: $show)
+        AutoConnectView(showSettings: $show, showVPNSetting: $show)
     }
 }

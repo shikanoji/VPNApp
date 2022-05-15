@@ -10,6 +10,7 @@ import SwiftUI
 struct PaymentHistoryView: View {
     
     @Binding var showAccount: Bool
+    @Binding var showAccountStatus: Bool
     @State var statusConnect: BoardViewModel.StateBoard = .connected
     
     @State var paymentHistoryList = [PaymentHistory(cancel: true), PaymentHistory(), PaymentHistory()]
@@ -28,6 +29,7 @@ struct PaymentHistoryView: View {
                         tapLeftButton: {
                             presentationMode.wrappedValue.dismiss()
                         }, tapRightButton: {
+                            showAccountStatus = false
                             showAccount = false
                         }, statusConnect: statusConnect)
                     VStack(spacing: 1) {
@@ -53,6 +55,6 @@ struct PaymentHistoryView_Previews: PreviewProvider {
     @State static var showAccount = true
     
     static var previews: some View {
-        PaymentHistoryView(showAccount: $showAccount)
+        PaymentHistoryView(showAccount: $showAccount, showAccountStatus: $showAccount)
     }
 }

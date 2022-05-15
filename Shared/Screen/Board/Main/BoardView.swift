@@ -19,67 +19,15 @@ struct BoardView: View {
     @State var showBoardList = false
     
     var body: some View {
-        VStack(spacing: 0.0) {
-            if showAccount {
-                AccountView(showAccount: $showAccount,
-                            statusConnect: $viewModel.state, viewModel: AccountViewModel())
-            } else if showSettings{
-                SettingsView(showSettings: $showSettings,
-                             statusConnect: $viewModel.state)
-            } else if showBoardList {
-                BoardListView(showBoardList: $showBoardList,
-                              currentTab: $viewModel.tab,
-                              node: $viewModel.nodeConnected,
-                              locationData: $viewModel.locationData,
-                              staticIPData: $viewModel.staticIPData,
-                              staticNode: $viewModel.staticIPNodeSelecte,
-                              multihopData: $viewModel.mutilhopData,
-                              entryNodeList: $viewModel.entryNodeListMutilhop,
-                              exitNodeList: $viewModel.exitNodeListMutilhop,
-                              entryNodeSelect: $viewModel.entryNodeSelectMutilhop,
-                              exitNodeSelect: $viewModel.exitNodeSelectMutilhop)
-            } else {
-                ZStack(alignment: .top) {
-                    GeometryReader { geometry in
-                        ZStack {
-                            MapView(mesh: viewModel.mesh,
-                                    selection: selection,
-                                    configMapView: viewModel.configMapView)
-                            if viewModel.state == .connected {
-                                Asset.Assets.logoConnected.SuImage
-                                    .resizable()
-                                    .aspectRatio(contentMode: .fit)
-                            }
-                        }
-                        VStack {
-                            BoardNavigationView(status: viewModel.state,
-                                                tapLeftIcon: {
-                                handlerTapLeftNavigation()
-                            }, tapRightIcon: {
-                                handlerTapRightNavigation()
-                            })
-                            StatusVPNView(ip: viewModel.ip, status: viewModel.state)
-                            Spacer()
-                            ConnectButton(status: viewModel.state,
-                                          uploadSpeed: viewModel.uploadSpeed,
-                                          downloadSpeed: viewModel.downloadSpeed)
-                                .onTapGesture {
-                                    viewModel.connectVPN()
-                                }
-                            Spacer()
-                                .frame(height: Constant.Board.Tabs.topPadding)
-                            BoardTabView(tab: $viewModel.tab, showBoardList: $showBoardList)
-                                .padding(.bottom)
-                        }
-                        .padding(/*@START_MENU_TOKEN@*/.all/*@END_MENU_TOKEN@*/)
-                    }
-                    if viewModel.showProgressView {
-                        // dont show loading
-                    }
-                }
-                .background(AppColor.background)
-                .frame(alignment: .top)
-            }
+        ZStack {
+            accountView()
+                .opacity(showAccount ? 1 : 0)
+            settingView()
+                .opacity(showSettings ? 1 : 0)
+            boardListView()
+                .opacity(showBoardList ? 1 : 0)
+            contentMapView()
+                .opacity((!showAccount && !showSettings && !showBoardList) ? 1 : 0)
         }
         .popup(isPresented: $viewModel.showAlert, type: .floater(verticalPadding: 10), position: .bottom, animation: .easeInOut, autohideIn: 10, closeOnTap: false, closeOnTapOutside: true) {
             ToastView(title: viewModel.error?.title ?? "",
@@ -105,6 +53,74 @@ struct BoardView: View {
     
     func handlerTapRightNavigation() {
         showAccount = true
+    }
+    
+    func accountView() -> some View {
+        AccountView(showAccount: $showAccount,
+                    statusConnect: $viewModel.state, viewModel: AccountViewModel())
+    }
+    
+    func settingView() -> some View {
+        SettingsView(showSettings: $showSettings,
+                     statusConnect: $viewModel.state)
+    }
+    
+    func boardListView() -> some View {
+        BoardListView(showBoardList: $showBoardList,
+                      currentTab: $viewModel.tab,
+                      node: $viewModel.nodeConnected,
+                      locationData: $viewModel.locationData,
+                      staticIPData: $viewModel.staticIPData,
+                      staticNode: $viewModel.staticIPNodeSelecte,
+                      multihopData: $viewModel.mutilhopData,
+                      entryNodeList: $viewModel.entryNodeListMutilhop,
+                      exitNodeList: $viewModel.exitNodeListMutilhop,
+                      entryNodeSelect: $viewModel.entryNodeSelectMutilhop,
+                      exitNodeSelect: $viewModel.exitNodeSelectMutilhop)
+    }
+    
+    func contentMapView() -> some View {
+        ZStack(alignment: .top) {
+            GeometryReader { geometry in
+                ZStack {
+                    MapView(mesh: viewModel.mesh,
+                            selection: selection,
+                            statusConnect: $viewModel.state)
+                    if viewModel.state == .connected {
+                        Asset.Assets.logoConnected.SuImage
+                            .resizable()
+                            .aspectRatio(contentMode: .fit)
+                    }
+                }
+                VStack {
+                    BoardNavigationView(status: viewModel.state,
+                                        tapLeftIcon: {
+                        handlerTapLeftNavigation()
+                    }, tapRightIcon: {
+                        handlerTapRightNavigation()
+                    })
+                    StatusVPNView(ip: viewModel.ip, status: viewModel.state, flag: viewModel.flag)
+                    Spacer()
+                    ConnectButton(status: viewModel.state,
+                                  uploadSpeed: viewModel.uploadSpeed,
+                                  downloadSpeed: viewModel.downloadSpeed)
+                        .onTapGesture {
+                            viewModel.connectVPN()
+                        }
+                    Spacer()
+                        .frame(height: Constant.Board.Tabs.topPadding)
+                    BoardTabView(tab: $viewModel.tab, showBoardList: $showBoardList)
+                        .padding(.bottom)
+                }
+                .padding(/*@START_MENU_TOKEN@*/.all/*@END_MENU_TOKEN@*/)
+            }
+            if viewModel.showProgressView {
+                // dont show loading
+            }
+        }
+        .background(AppColor.background)
+        .frame(alignment: .top)
+        .animation(nil)
     }
 }
 

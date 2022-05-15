@@ -68,6 +68,7 @@ struct AccountView: View {
                 )
             }
         }
+        .animation(nil)
         .background(AppColor.background)
         .ignoresSafeArea().frame(
             maxHeight: .infinity,
@@ -102,10 +103,34 @@ struct AccountView: View {
     
     var navigationLinks: some View {
         Group {
-            NavigationLink(destination: InfomationView(showAccount: $showAccount, statusConnect: statusConnect), isActive: $showInfomation) { }
-            NavigationLink(destination: AccountStatusView(showAccount: $showAccount, statusConnect: statusConnect), isActive: $showAccountStatus) { }
-            NavigationLink(destination: DevicesView(showAccount: $showAccount, statusConnect: statusConnect, viewModel: DeviceViewModel()), isActive: $showTotalDevice) { }
-            NavigationLink(destination: FAQView(showAccount: $showAccount, statusConnect: statusConnect, viewModel: FAQViewModel()), isActive: $showFAQ) { }
+            NavigationLink(destination:
+                            InfomationView(
+                                showAccount: $showAccount,
+                                showInfomation: $showInfomation,
+                                statusConnect: statusConnect),
+                           isActive: $showInfomation) { }
+            
+            NavigationLink(destination:
+                            AccountStatusView(
+                                showAccount: $showAccount,
+                                showAccountStatus: $showAccountStatus,
+                                statusConnect: statusConnect),
+                           isActive: $showAccountStatus) { }
+            
+            NavigationLink(destination:
+                            DevicesView(
+                                showAccount: $showAccount,
+                                showTotalDevice: $showTotalDevice,
+                                statusConnect: statusConnect,
+                                viewModel: DeviceViewModel()),
+                           isActive: $showTotalDevice) { }
+            
+            NavigationLink(destination:
+                            FAQView(
+                                showAccount: $showAccount,
+                                statusConnect: statusConnect,
+                                viewModel: FAQViewModel()),
+                           isActive: $showFAQ) { }
         }
     }
     

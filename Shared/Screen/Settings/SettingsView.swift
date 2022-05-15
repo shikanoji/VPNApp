@@ -53,8 +53,16 @@ struct SettingsView: View {
                     }
                     .padding([.top, .leading])
                     Spacer().frame(height: 34)
-                    NavigationLink(destination: SettingVPNView(showSettings: $showSettings, statusConnect: statusConnect), isActive: $showVPNSetting) { }
-                    NavigationLink(destination: ToolsView(showSettings: $showSettings, statusConnect: statusConnect), isActive: $showToolsSetting) { }
+                    NavigationLink(destination:
+                                    SettingVPNView(
+                                        showSettings: $showSettings,
+                                        showVPNSetting: $showVPNSetting,
+                                        statusConnect: statusConnect),
+                                   isActive: $showVPNSetting) { }
+                    NavigationLink(destination:
+                                    ToolsView(showSettings: $showSettings,
+                                              statusConnect: statusConnect),
+                                   isActive: $showToolsSetting) { }
                 }
             }
             .frame(maxHeight: .infinity)
@@ -62,6 +70,7 @@ struct SettingsView: View {
             .ignoresSafeArea()
         }
         .background(AppColor.background)
+        .animation(nil)
     }
 }
 

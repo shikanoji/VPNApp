@@ -9,6 +9,7 @@ import SwiftUI
 
 struct AccountStatusView: View {
     @Binding var showAccount: Bool
+    @Binding var showAccountStatus: Bool
     
     @State var showPayment = false
     @State var statusConnect: BoardViewModel.StateBoard = .connected
@@ -27,6 +28,7 @@ struct AccountStatusView: View {
                         tapLeftButton: {
                             presentationMode.wrappedValue.dismiss()
                         }, tapRightButton: {
+                            showAccountStatus = false
                             showAccount = false
                         }, statusConnect: statusConnect)
                     VStack(spacing: 1) {
@@ -51,7 +53,12 @@ struct AccountStatusView: View {
                     .padding(.top, Constant.Menu.topPaddingCell)
                 }
             }
-            NavigationLink(destination: PaymentHistoryView(showAccount: $showAccount, statusConnect: statusConnect), isActive: $showPayment) { }
+            NavigationLink(destination:
+                            PaymentHistoryView(
+                                showAccount: $showAccount,
+                                showAccountStatus: $showAccountStatus,
+                                statusConnect: statusConnect),
+                           isActive: $showPayment) { }
         }
         .navigationBarHidden(true)
         .background(AppColor.background)
@@ -63,6 +70,6 @@ struct AccountStatusView_Previews: PreviewProvider {
     @State static var show = true
     
     static var previews: some View {
-        AccountStatusView(showAccount: $show)
+        AccountStatusView(showAccount: $show, showAccountStatus: $show)
     }
 }
