@@ -13,7 +13,7 @@ struct AccountStatusView: View {
     
     @State var showPayment = false
     @State var statusConnect: BoardViewModel.StateBoard = .connected
-    
+    @State var showPlanListView: Bool = false
     @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
     
     var body: some View {
@@ -46,7 +46,11 @@ struct AccountStatusView: View {
                             }
                         Spacer().frame(height: 32)
                         AppButton(style: .themeButton, width: UIScreen.main.bounds.size.width - 32, text: AppSetting.shared.isPremium ? L10n.Account.AccountStatus.extend : L10n.Account.AccountStatus.upgradeToPremium) {
-                            
+                            if AppSetting.shared.isPremium {
+                                //Handle extend premium
+                            } else {
+                                self.showPlanListView = true
+                            }
                         }
                     }
                     .padding(Constant.Menu.hozitalPaddingCell)
@@ -59,6 +63,8 @@ struct AccountStatusView: View {
                                 showAccountStatus: $showAccountStatus,
                                 statusConnect: statusConnect),
                            isActive: $showPayment) { }
+            NavigationLink(destination: PlanSelectionView().environmentObject(RegisterResultModel()),
+                                       isActive: $showPlanListView) { }
         }
         .navigationBarHidden(true)
         .background(AppColor.background)
