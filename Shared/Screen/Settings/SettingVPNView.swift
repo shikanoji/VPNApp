@@ -70,6 +70,7 @@ struct SettingVPNView: View {
             NavigationLink(destination:
                             ProtocolSettingView(
                                 showSettings: $showSettings,
+                                showVPNSetting: $showVPNSetting,
                                 viewModel: ProtocolSettingViewModel()),
                            isActive: $showProtocolConnect) { }
         }

@@ -21,6 +21,16 @@ target 'SysVPN (iOS)' do
   pod 'SwiftGen', '~> 6.0'
 end
 
+target 'OpenVPN' do
+  use_frameworks!
+  pod 'SwiftDate'
+end
+
+target 'WireGuard' do
+  use_frameworks!
+  pod 'SwiftDate'
+end
+
 target 'SysVPN (macOS)' do
   # Comment the next line if you don't want to use dynamic frameworks
   use_frameworks!

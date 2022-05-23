@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		291F1A836112E32F8EA189DA /* Pods_WireGuard.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5E104DDBC34A2E2A2EBEE722 /* Pods_WireGuard.framework */; };
 		6353F842276F333900B42334 /* StatusVPNView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6353F841276F333900B42334 /* StatusVPNView.swift */; };
 		6353F844276F3E8500B42334 /* BoardNavigationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6353F843276F3E8500B42334 /* BoardNavigationView.swift */; };
 		6384B4F5276C374E00E904D2 /* BoardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6384B4F4276C374E00E904D2 /* BoardView.swift */; };
@@ -14,6 +15,7 @@
 		6384B4F8276C43DD00E904D2 /* BoardViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6384B4F7276C43DD00E904D2 /* BoardViewModel.swift */; };
 		6384B4F9276C43DD00E904D2 /* BoardViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6384B4F7276C43DD00E904D2 /* BoardViewModel.swift */; };
 		6F0CD61FF3AFF3CA9797036C /* Pods_SysVPN__iOS_.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0AE9DF7C938744F5B3604B33 /* Pods_SysVPN__iOS_.framework */; };
+		7CE7703BC45FFB67D75B5F6B /* Pods_OpenVPN.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E5501EB54E470D0780031D15 /* Pods_OpenVPN.framework */; };
 		AC4051E227CCB6860054F6AE /* ToastView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC4051E127CCB6860054F6AE /* ToastView.swift */; };
 		AC490871281B9FC600DB430B /* NotificationExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC490870281B9FC600DB430B /* NotificationExtension.swift */; };
 		AC490873281B9FFB00DB430B /* PublisherExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC490872281B9FFB00DB430B /* PublisherExtension.swift */; };
@@ -268,6 +270,8 @@
 		EE8B373B2812514400D14E1F /* AssetsExtension+SwiftUI.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC6074E527DDD06200DD5667 /* AssetsExtension+SwiftUI.swift */; };
 		EE8B373C28125E3D00D14E1F /* RequestCertificateModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE78F77D2811526B00F49903 /* RequestCertificateModel.swift */; };
 		EE8B373D28125E3E00D14E1F /* RequestCertificateModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE78F77D2811526B00F49903 /* RequestCertificateModel.swift */; };
+		EE9B77B5283B7AED00240E89 /* AppSetting.swift in Sources */ = {isa = PBXBuildFile; fileRef = D78044F3275912AC0086E59D /* AppSetting.swift */; };
+		EE9B77B6283B7AED00240E89 /* AppSetting.swift in Sources */ = {isa = PBXBuildFile; fileRef = D78044F3275912AC0086E59D /* AppSetting.swift */; };
 		EE9B8B5627C37C320077BCFC /* LinearGradientStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE9B8B5527C37C320077BCFC /* LinearGradientStatus.swift */; };
 		EE9B8B5827C387C50077BCFC /* StaticServer.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE9B8B5727C387C50077BCFC /* StaticServer.swift */; };
 		EEAD5C512779C2D3008181E3 /* SpeedConnectedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEAD5C502779C2D3008181E3 /* SpeedConnectedView.swift */; };
@@ -332,12 +336,17 @@
 
 /* Begin PBXFileReference section */
 		0AE9DF7C938744F5B3604B33 /* Pods_SysVPN__iOS_.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SysVPN__iOS_.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		100360239926848DE08F2D2D /* Pods-OpenVPN.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-OpenVPN.release.xcconfig"; path = "Target Support Files/Pods-OpenVPN/Pods-OpenVPN.release.xcconfig"; sourceTree = "<group>"; };
 		1997CD4A5319D476BAAF0200 /* Pods-SysVPN (macOS).debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SysVPN (macOS).debug.xcconfig"; path = "Target Support Files/Pods-SysVPN (macOS)/Pods-SysVPN (macOS).debug.xcconfig"; sourceTree = "<group>"; };
+		480BA49969B2CD8E199D5DEC /* Pods-OpenVPN.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-OpenVPN.debug.xcconfig"; path = "Target Support Files/Pods-OpenVPN/Pods-OpenVPN.debug.xcconfig"; sourceTree = "<group>"; };
+		5E104DDBC34A2E2A2EBEE722 /* Pods_WireGuard.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_WireGuard.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		6353F841276F333900B42334 /* StatusVPNView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatusVPNView.swift; sourceTree = "<group>"; };
 		6353F843276F3E8500B42334 /* BoardNavigationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoardNavigationView.swift; sourceTree = "<group>"; };
 		6384B4F4276C374E00E904D2 /* BoardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoardView.swift; sourceTree = "<group>"; };
 		6384B4F7276C43DD00E904D2 /* BoardViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoardViewModel.swift; sourceTree = "<group>"; };
+		6642C43C25C5CB1222F221FA /* Pods-WireGuard.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-WireGuard.debug.xcconfig"; path = "Target Support Files/Pods-WireGuard/Pods-WireGuard.debug.xcconfig"; sourceTree = "<group>"; };
 		72EB358C2FDC72EB6B3F3EC0 /* Pods_SysVPN__macOS_.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SysVPN__macOS_.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		9C14946349D2D183F4694F71 /* Pods-WireGuard.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-WireGuard.release.xcconfig"; path = "Target Support Files/Pods-WireGuard/Pods-WireGuard.release.xcconfig"; sourceTree = "<group>"; };
 		AC4051E127CCB6860054F6AE /* ToastView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToastView.swift; sourceTree = "<group>"; };
 		AC490870281B9FC600DB430B /* NotificationExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationExtension.swift; sourceTree = "<group>"; };
 		AC490872281B9FFB00DB430B /* PublisherExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PublisherExtension.swift; sourceTree = "<group>"; };
@@ -437,6 +446,7 @@
 		D7F9695727B262190037A3D0 /* DeviceViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviceViewModel.swift; sourceTree = "<group>"; };
 		D7F9695B27B2AC980037A3D0 /* FAQView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FAQView.swift; sourceTree = "<group>"; };
 		D7F9695E27B2B8590037A3D0 /* QuestionModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuestionModel.swift; sourceTree = "<group>"; };
+		E5501EB54E470D0780031D15 /* Pods_OpenVPN.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_OpenVPN.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		EE034413280827D6003DFB64 /* OpenVPNManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpenVPNManager.swift; sourceTree = "<group>"; };
 		EE03443D28090AB7003DFB64 /* OpenVPN.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = OpenVPN.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		EE03444028090AB7003DFB64 /* OpenVPNPacketTunnelProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpenVPNPacketTunnelProvider.swift; sourceTree = "<group>"; };
@@ -561,6 +571,7 @@
 				EE46BCE928096969003C4FEB /* TunnelKitOpenVPNAppExtension in Frameworks */,
 				EE46BCEB2809716C003C4FEB /* TunnelKitOpenVPN in Frameworks */,
 				EE78F76F2811056600F49903 /* TunnelKitLZO in Frameworks */,
+				7CE7703BC45FFB67D75B5F6B /* Pods_OpenVPN.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -575,6 +586,7 @@
 				EE78F7752811068C00F49903 /* TunnelKitLZO in Frameworks */,
 				EE78F7772811068C00F49903 /* TunnelKitOpenVPN in Frameworks */,
 				EE78F77B2811068C00F49903 /* TunnelKitWireGuard in Frameworks */,
+				291F1A836112E32F8EA189DA /* Pods_WireGuard.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -588,6 +600,10 @@
 				F769815A7665E84ED7BC329C /* Pods-SysVPN (iOS).release.xcconfig */,
 				1997CD4A5319D476BAAF0200 /* Pods-SysVPN (macOS).debug.xcconfig */,
 				EFABE55777A0F7411F17A1D0 /* Pods-SysVPN (macOS).release.xcconfig */,
+				480BA49969B2CD8E199D5DEC /* Pods-OpenVPN.debug.xcconfig */,
+				100360239926848DE08F2D2D /* Pods-OpenVPN.release.xcconfig */,
+				6642C43C25C5CB1222F221FA /* Pods-WireGuard.debug.xcconfig */,
+				9C14946349D2D183F4694F71 /* Pods-WireGuard.release.xcconfig */,
 			);
 			path = Pods;
 			sourceTree = "<group>";
@@ -1037,6 +1053,8 @@
 				EE0344592809204E003DFB64 /* NetworkExtension.framework */,
 				0AE9DF7C938744F5B3604B33 /* Pods_SysVPN__iOS_.framework */,
 				72EB358C2FDC72EB6B3F3EC0 /* Pods_SysVPN__macOS_.framework */,
+				E5501EB54E470D0780031D15 /* Pods_OpenVPN.framework */,
+				5E104DDBC34A2E2A2EBEE722 /* Pods_WireGuard.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -1332,6 +1350,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = EE03444728090AB7003DFB64 /* Build configuration list for PBXNativeTarget "OpenVPN" */;
 			buildPhases = (
+				9F921C9611B9D7BAB28C7450 /* [CP] Check Pods Manifest.lock */,
 				EE03443928090AB7003DFB64 /* Sources */,
 				EE03443A28090AB7003DFB64 /* Frameworks */,
 				EE03443B28090AB7003DFB64 /* Resources */,
@@ -1357,6 +1376,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = EE46BCD5280963F4003C4FEB /* Build configuration list for PBXNativeTarget "WireGuard" */;
 			buildPhases = (
+				522B1A5599F534DF0095A935 /* [CP] Check Pods Manifest.lock */,
 				EE46BCC7280963F4003C4FEB /* Sources */,
 				EE46BCC8280963F4003C4FEB /* Frameworks */,
 				EE46BCC9280963F4003C4FEB /* Resources */,
@@ -1541,6 +1561,50 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-SysVPN (iOS)/Pods-SysVPN (iOS)-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		522B1A5599F534DF0095A935 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-WireGuard-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		9F921C9611B9D7BAB28C7450 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-OpenVPN-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
 		A619A9CAAA4E1D1F2936E719 /* [CP] Check Pods Manifest.lock */ = {
@@ -1822,6 +1886,7 @@
 			files = (
 				EE8B37362812512300D14E1F /* Constant.swift in Sources */,
 				EE78F77F2812500C00F49903 /* Node.swift in Sources */,
+				EE9B77B5283B7AED00240E89 /* AppSetting.swift in Sources */,
 				EE2D6BE92812A810008E1431 /* NetworkManager.swift in Sources */,
 				EE8B37382812513300D14E1F /* XCAssets+Generated.swift in Sources */,
 				EE2D6BFE281BD78A008E1431 /* ObtainCertificateModel.swift in Sources */,
@@ -1842,6 +1907,7 @@
 			files = (
 				EE8B37372812512400D14E1F /* Constant.swift in Sources */,
 				EE2D6BEA2812A810008E1431 /* NetworkManager.swift in Sources */,
+				EE9B77B6283B7AED00240E89 /* AppSetting.swift in Sources */,
 				EE78F7802812500C00F49903 /* Node.swift in Sources */,
 				EE2D6BFD281BD789008E1431 /* ObtainCertificateModel.swift in Sources */,
 				EE8B37392812513300D14E1F /* XCAssets+Generated.swift in Sources */,
@@ -2356,6 +2422,7 @@
 		};
 		EE03444828090AB7003DFB64 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 480BA49969B2CD8E199D5DEC /* Pods-OpenVPN.debug.xcconfig */;
 			buildSettings = {
 				CODE_SIGN_ENTITLEMENTS = OpenVPN/OpenVPN.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
@@ -2387,6 +2454,7 @@
 		};
 		EE03444928090AB7003DFB64 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 100360239926848DE08F2D2D /* Pods-OpenVPN.release.xcconfig */;
 			buildSettings = {
 				CODE_SIGN_ENTITLEMENTS = OpenVPN/OpenVPN.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
@@ -2419,6 +2487,7 @@
 		};
 		EE46BCD6280963F4003C4FEB /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 6642C43C25C5CB1222F221FA /* Pods-WireGuard.debug.xcconfig */;
 			buildSettings = {
 				CODE_SIGN_ENTITLEMENTS = WireGuard/WireGuard.entitlements;
 				CODE_SIGN_STYLE = Automatic;
@@ -2448,6 +2517,7 @@
 		};
 		EE46BCD7280963F4003C4FEB /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 9C14946349D2D183F4694F71 /* Pods-WireGuard.release.xcconfig */;
 			buildSettings = {
 				CODE_SIGN_ENTITLEMENTS = WireGuard/WireGuard.entitlements;
 				CODE_SIGN_STYLE = Automatic;

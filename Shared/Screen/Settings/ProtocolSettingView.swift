@@ -9,7 +9,7 @@ import SwiftUI
 
 struct ProtocolSettingView: View {
     @Binding var showSettings: Bool
-    
+    @Binding var showVPNSetting: Bool
     @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
     
     @StateObject var viewModel: ProtocolSettingViewModel
@@ -26,6 +26,7 @@ struct ProtocolSettingView: View {
                     tapLeftButton: {
                         presentationMode.wrappedValue.dismiss()
                     }, tapRightButton: {
+                        showVPNSetting = false
                         showSettings = false
                     }, statusConnect: statusConnect)
                 VStack(alignment: .leading, spacing: 1) {
@@ -51,6 +52,6 @@ struct ProtocolSettingView_Previews: PreviewProvider {
     @State static var show = true
     
     static var previews: some View {
-        ProtocolSettingView(showSettings: $show, viewModel: ProtocolSettingViewModel())
+        ProtocolSettingView(showSettings: $show, showVPNSetting: $show, viewModel: ProtocolSettingViewModel())
     }
 }
