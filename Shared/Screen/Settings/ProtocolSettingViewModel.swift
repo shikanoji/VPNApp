@@ -13,6 +13,30 @@ class ProtocolSettingViewModel: ObservableObject {
     
     @Published var itemList: [ItemCell] = SectionType.protocolConnect.items
     
+    init() {
+        itemList = itemList.map { item in
+            let selectConfig = NetworkManager.shared.selectConfig
+            var updateItem = item
+            switch item.type {
+            case .recommend:
+                if selectConfig == .recommend {
+                    updateItem.select = true
+                }
+            case .openVPN:
+                if selectConfig == .openVPN {
+                    updateItem.select = true
+                }
+            case .wireGuard:
+                if selectConfig == .wireguard {
+                    updateItem.select = true
+                }
+            default:
+                break
+            }
+            return updateItem
+        }
+    }
+    
     func updateItem(_ item: ItemCell) {
         if item.select {
             itemList = itemList.map { item in
@@ -31,7 +55,7 @@ class ProtocolSettingViewModel: ObservableObject {
             case .wireGuard:
                 NetworkManager.shared.selectConfig = .wireguard
             case .recommend:
-                NetworkManager.shared.selectConfig = .openVPN
+                NetworkManager.shared.selectConfig = .recommend
             default:
                 break
             }

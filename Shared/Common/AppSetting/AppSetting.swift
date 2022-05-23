@@ -43,6 +43,8 @@ enum AppKeys: String {
     ///Last Time when Data Map Update
     case lastChange = "lastChange"
     case updateDataMap = "updateDataMap"
+    
+    case selectConfig = "selectConfig"
 }
 
 struct AppSetting {
@@ -186,6 +188,15 @@ struct AppSetting {
         }
         set {
             UserDefaults.standard.setValue(newValue, forKey: AppKeys.updateDataMap.rawValue)
+        }
+    }
+    
+    var selectConfig: Int {
+        get {
+            UserDefaults.standard.integer(forKey: AppKeys.selectConfig.rawValue)
+        }
+        set {
+            UserDefaults.standard.setValue(newValue, forKey: AppKeys.selectConfig.rawValue)
         }
     }
     

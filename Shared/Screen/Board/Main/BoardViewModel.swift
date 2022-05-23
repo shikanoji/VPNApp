@@ -160,7 +160,7 @@ class BoardViewModel: ObservableObject {
         case .connected:
             state = .connected
             switch NetworkManager.shared.selectConfig {
-            case .openVPN:
+            case .openVPN, .recommend:
                 if let iPVPN = NetworkManager.shared.requestCertificate?.server?.ipAddress {
                     ip = iPVPN
                 }

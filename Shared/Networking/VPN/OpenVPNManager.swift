@@ -10,8 +10,6 @@ import TunnelKit
 import TunnelKitManager
 import TunnelKitOpenVPNCore
 import TunnelKitOpenVPNManager
-//import TunnelKitOpenVPNAppExtension
-//import TunnelKitOpenVPNProtocol
 import TunnelKitCore
 
 private let appGroup = "group.com.ilg.SysVPN.dev.daz"
