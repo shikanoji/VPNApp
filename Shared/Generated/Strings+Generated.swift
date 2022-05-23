@@ -294,7 +294,7 @@ public enum L10n {
       public static let note = L10n.tr("PlanSelect", "PlanA.note")
       /// $3.67
       public static let price = L10n.tr("PlanSelect", "PlanA.price")
-      /// Save 69%
+      /// Save 69
       public static let savingText = L10n.tr("PlanSelect", "PlanA.savingText")
       /// 2-Years plan
       public static let title = L10n.tr("PlanSelect", "PlanA.title")
@@ -307,7 +307,7 @@ public enum L10n {
       public static let note = L10n.tr("PlanSelect", "PlanB.note")
       /// $4.92
       public static let price = L10n.tr("PlanSelect", "PlanB.price")
-      /// Save 69%
+      /// Save 69
       public static let savingText = L10n.tr("PlanSelect", "PlanB.savingText")
       /// 1-Year Plan
       public static let title = L10n.tr("PlanSelect", "PlanB.title")
