@@ -28,13 +28,13 @@ struct PlanListCell: View {
                     Spacer().frame(height: 5)
                     HStack() {
                         Spacer()
-                        Text("/ month").font(.system(size: 12)).foregroundColor(focus ? AppColor.blackText : Color.white)
+                        Text("/ " + L10n.PlanSelect.month).font(.system(size: 12)).foregroundColor(focus ? AppColor.blackText : Color.white)
                         Spacer().frame(width : 25)
                     }
                     Spacer().frame(height: 20)
                     if !plan.savingText.isEmpty {
                         VStack{
-                            Text(plan.savingText).foregroundColor(focus ? Color.white : AppColor.blackText).font(.system(size: 11, weight: .semibold))
+                            Text(plan.savingText + "%").foregroundColor(focus ? Color.white : AppColor.blackText).font(.system(size: 11, weight: .semibold))
                         }.frame(width: 93, height: 20)
                             .background(focus ? AppColor.background : Color.white)
                             .cornerRadius(10)
