@@ -27,15 +27,6 @@ extension AppSetting {
         }
     }
     
-    var statusAccoutn: String {
-        get {
-            return UserDefaults.standard.string(forKey: AppKeys.statusAccoutn.rawValue) ?? "Premium"
-        }
-        set {
-            UserDefaults.standard.setValue(newValue, forKey: AppKeys.statusAccoutn.rawValue)
-        }
-    }
-    
     var currentNumberDevice: Int {
         get {
             return UserDefaults.standard.integer(forKey: AppKeys.currentNumberDevice.rawValue)

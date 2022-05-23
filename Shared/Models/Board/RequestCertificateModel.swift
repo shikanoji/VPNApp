@@ -198,10 +198,12 @@ struct ConnectionDetails: Codable {
 struct RequestCertificateModel: Codable {
     var server: Server?
     var connectionDetails: ConnectionDetails?
+    var requestId: String?
     
     enum CodingKeys: String, CodingKey {
         case server
         case connectionDetails
+        case requestId
     }
     
     init(from decoder: Decoder) throws {
@@ -217,6 +219,12 @@ struct RequestCertificateModel: Codable {
             connectionDetails = _connectionDetails
         } else {
             connectionDetails = nil
+        }
+        
+        if let _requestId = try? values.decode(String.self, forKey: .requestId) {
+            requestId = _requestId
+        } else {
+            requestId = nil
         }
     }
     

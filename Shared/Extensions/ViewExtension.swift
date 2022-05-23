@@ -47,16 +47,6 @@ extension View {
 }
 
 extension View {
-    func onReceiveAlert(title: Binding<String>, message: Binding<String>, showing: Binding<Bool>) -> some View { modifier(ReceiveAlert(title: title, message: message, showing: showing))}
-    
-    func onReceiveAlertWithAction(title: Binding<String>, message: Binding<String>, showing: Binding<Bool>, onConfirm: @escaping () -> Void) -> some View {
-        modifier(ReceiveAlertWithAction(title: title, message: message, showing: showing, onConfirmation: onConfirm))
-    }
-    
-    func endEditingOnTappingOutside() -> some View {
-        modifier(EndEditingOnTappingOutside())
-    }
-    
     func navigationAppearance(backgroundColor: UIColor, foregroundColor: UIColor, tintColor: UIColor? = nil, hideSeparator: Bool = false) -> some View {
         self.modifier(NavAppearanceModifier(backgroundColor: backgroundColor, foregroundColor: foregroundColor, tintColor: tintColor, hideSeparator: hideSeparator))
     }
@@ -85,5 +75,11 @@ extension View {
 extension View {
     func clearModalBackground()->some View {
         self.modifier(ClearBackgroundViewModifier())
+    }
+}
+
+extension View {
+    func keyboardAdaptive() -> some View {
+        ModifiedContent(content: self, modifier: KeyboardAdaptive())
     }
 }

@@ -15,13 +15,15 @@ struct Form: View {
     var isPassword: Bool = false
     @State private var isRevealed: Bool
     @State private var isFocused: Bool
+    let shouldAnimate: Bool
     
-    init(placeholder: String = "", value: Binding<String>, isPassword: Bool = false){
+    init(placeholder: String = "", value: Binding<String>, isPassword: Bool = false, shouldAnimate: Bool = true){
         self.placeholder = placeholder
         _value = value
         self.isPassword = isPassword
         isRevealed = !self.isPassword
         isFocused = false
+        self.shouldAnimate = shouldAnimate
     }
     
     var body: some View {
@@ -37,7 +39,7 @@ struct Form: View {
         .background(Color.clear)
         .overlay(isFocused ? RoundedRectangle(cornerRadius: 5).stroke(Color.white.opacity(0.8), lineWidth: 3) : RoundedRectangle(cornerRadius: 5).stroke(Color.white.opacity(0.2), lineWidth: 3))
         .cornerRadius(5)
-        .animation(Animation.interpolatingSpring(stiffness: 50, damping: 15))
+        .animation(shouldAnimate ? Animation.interpolatingSpring(stiffness: 50, damping: 15) : nil)
     }
 }
 

@@ -19,6 +19,8 @@
 "settings" = "settings";
 "itemAuto" = "Auto-connect";
 "itemProtocol" = "Protocol";
+"openVPN" = "Open VPN";
+"wireGuard" = "WireGuard";
 "itemSplit" = "Split tunneling";
 "itemDNS" = "DNS";
 "itemLocalNetwork" = "Local network discovery";
@@ -34,3 +36,14 @@
 "sectionAutoConnect" = "Auto-connect to";
 "fastestConnect" = "Fastest server";
 "contentRecommend" = "Recommend";
+
+//Tools
+"Tools.title" = "Tools";
+"Tools.cyberSec" = "CyberSec";
+"Tools.cyberSec.note" = "Protects you from cyber threats by blocking malicious website.";
+"Tools.killSwitch" = "Kill Switch";
+"Tools.killSwitch.note" = "Blocks unprotected traffic if VPN connection drops.";
+"Tools.darkWebMonitors" = "Dark Web Monitors";
+"Tools.darkWebMonitors.note" = "Sends alerts if your credentials get publicly exposed online.";
+"Tools.tapJackingProtection" = "Tapjacking protection";
+"Tools.tapJackingProtection.note" = "Warns you if a malicous app adds a screen overlay to trick you into unintended action.";

@@ -73,7 +73,9 @@ enum APIService {
     case forgotPassword(email: String)
     case ipInfo
     case ipInfoOptional
-    case getRequestCertificate
+    case getRequestCertificate(currentTab: BoardViewModel.StateTab)
+    case getObtainCertificate
+    case changePassword(oldPassword: String, newPassword: String)
 }
 
 extension APIService: TargetType {
@@ -107,41 +109,26 @@ extension APIService: TargetType {
         case .ipInfoOptional:
             return ""
         case .getRequestCertificate:
-            let path = Constant.api.path.requestCertificate
-            
-            guard let cityNodeSelect = NetworkManager.shared.cityNode else {
-                return path
-            }
-            
-            if cityNodeSelect.cityNodeList.count == 0 {
-                return path + "/\(cityNodeSelect.countryId ?? 0)/\(cityNodeSelect.id)/\(NetworkManager.shared.configVPN.description)/\(NetworkManager.shared.protocolVPN.description)/tun"
-            }
-            
-            return path + "/\(cityNodeSelect.id)/\(NetworkManager.shared.configVPN.description)/\(NetworkManager.shared.protocolVPN.description)/tun"
+            return Constant.api.path.requestCertificate
+        case .getObtainCertificate:
+            return Constant.api.path.obtainCertificate + "/\(NetworkManager.shared.requestCertificate?.requestId ?? "")"
+        case .changePassword:
+                return Constant.api.path.changePassword
         }
+    
     }
     
     // Here we specify which method our calls should use.
     var method: Moya.Method {
         switch self {
-        case .getCountryList:
+        case .getCountryList, .ipInfo, .getRequestCertificate, .ipInfoOptional:
             return .get
-        case .register:
+        case .register, .login, .logout, .forgotPassword, .refreshToken:
             return .post
-        case .login:
-            return .post
-        case .logout:
-            return .post
-        case .refreshToken:
-            return .post
-        case .forgotPassword:
-            return .post
-        case .ipInfo:
+        case .getObtainCertificate:
             return .get
-        case .getRequestCertificate:
-            return .get
-        case .ipInfoOptional:
-            return .get
+        case .changePassword:
+            return .put
         }
     }
     
@@ -196,11 +183,50 @@ extension APIService: TargetType {
             return .requestParameters(parameters: param, encoding: URLEncoding.queryString)
         case .ipInfoOptional:
             return .requestPlain
-        case .getRequestCertificate:
+        case .getRequestCertificate(let currentTab):
+            var param: [String: Any] = [:]
+            // Use "key" temporarily, after remove it
+            param["key"] = "f11b69c57d5fe9555e29c57c1d863bf8"
+            
+            param["tech"] = NetworkManager.shared.selectConfig.description
+            param["proto"] = NetworkManager.shared.protocolVPN.description
+            param["dev"] = "tun"
+            
+            switch currentTab {
+            case .location:
+                if let cityNodeSelect = NetworkManager.shared.selectNode {
+                    if cityNodeSelect.cityNodeList.count > 0 {
+                        param["countryId"] = cityNodeSelect.id
+                    } else {
+                        param["countryId"] = cityNodeSelect.countryId
+                        param["cityId"] = cityNodeSelect.id
+                    }
+                }
+                
+//                if let staticServer = NetworkManager.shared.selectStaticServer {
+//                    param["serverId"] = staticServer.id
+//                }
+            case .staticIP:
+                if let staticServer = NetworkManager.shared.selectStaticServer {
+                    param["serverId"] = staticServer.id
+                    param["countryId"] = staticServer.countryId
+                }
+                
+            case .multiHop:
+                break
+            }
+            
+            return .requestParameters(parameters: param, encoding: URLEncoding.queryString)
+        case .getObtainCertificate:
             var param: [String: Any] = [:]
             // Use "key" temporarily, after remove it
             param["key"] = "f11b69c57d5fe9555e29c57c1d863bf8"
             return .requestParameters(parameters: param, encoding: URLEncoding.queryString)
+        case .changePassword(let oldPassword, let newPassword):
+            var param: [String: Any] = [:]
+            param["oldPassword"] = oldPassword
+            param["newPassword"] = newPassword
+            return .requestCompositeParameters(bodyParameters: param, bodyEncoding: JSONEncoding.prettyPrinted, urlParameters: [:])
         }
     }
     
@@ -210,7 +236,7 @@ extension APIService: TargetType {
         switch self {
         case .login, .register:
             return ["Content-type": "application/json"]
-        case .getCountryList, .getRequestCertificate:
+        case .getCountryList, .getRequestCertificate, .getObtainCertificate, .changePassword:
             return [
                 "Content-type": "application/json",
                 "Authorization": "Bearer \(AppSetting.shared.accessToken)"

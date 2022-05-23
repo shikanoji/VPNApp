@@ -10,6 +10,7 @@ import TunnelKit
 import TunnelKitManager
 import TunnelKitOpenVPNCore
 import TunnelKitOpenVPNManager
+import TunnelKitCore
 
 private let appGroup = "group.com.ilg.SysVPN.dev.daz"
 
@@ -41,6 +42,10 @@ class OpenVPNManager: ObservableObject {
         } catch {
             print(error)
         }
+    }
+    
+    func getDataCount() -> DataCount? {
+        return self.cfg?.dataCount
     }
     
     init() {

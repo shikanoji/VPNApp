@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import SwiftDate
 
 struct DataSection: Equatable, Identifiable {
     var id: UUID = UUID()
@@ -16,6 +17,7 @@ struct ItemCell: Equatable, Identifiable {
     var id: UUID = UUID()
     var type: ItemCellType
     var content = ""
+    var select = false
 }
 
 enum SectionType: Decodable {
@@ -28,6 +30,7 @@ enum SectionType: Decodable {
     
     case autoConnect
     case typeAutoConnect
+    case protocolConnect
     
     var items: [ItemCell] {
         switch self {
@@ -65,6 +68,13 @@ enum SectionType: Decodable {
             return [
                 ItemCell(type: .faster)
             ]
+            
+        case .protocolConnect:
+            return [
+                ItemCell(type: .recommend),
+                ItemCell(type: .openVPN),
+                ItemCell(type: .wireGuard)
+            ]
         }
     }
     
@@ -81,6 +91,8 @@ enum SectionType: Decodable {
         case .autoConnect:
             return L10n.Settings.sectionAutoConnect
         case .typeAutoConnect:
+            return ""
+        default:
             return ""
         }
     }
@@ -113,12 +125,16 @@ enum ItemCellType: Decodable {
     case off
     case faster
     
+    case recommend
+    case openVPN
+    case wireGuard
+    
     var title: String {
         switch self {
         case .paymentHistory:
             return L10n.Account.AccountStatus.paymentHistory
         case .statusAccount:
-            return L10n.Account.itemAccount + " " + AppSetting.shared.statusAccoutn
+            return L10n.Account.itemAccount + " " + (AppSetting.shared.isPremium ? L10n.Account.premium : L10n.Account.freePlan)
         case .totalDevice:
             return L10n.Account.itemDevices + ": \(AppSetting.shared.currentNumberDevice)/\(AppSetting.shared.totalNumberDevices)"
         case .questions:
@@ -161,6 +177,12 @@ enum ItemCellType: Decodable {
             return L10n.Settings.offConnect
         case .faster:
             return L10n.Settings.fastestConnect
+        case .recommend:
+            return L10n.Settings.contentRecommend
+        case .openVPN:
+            return L10n.Settings.openVPN
+        case .wireGuard:
+            return L10n.Settings.wireGuard
         }
     }
     
@@ -193,12 +215,13 @@ enum ItemCellType: Decodable {
         }
     }
     
-    
-    
     var content: String {
         switch self {
         case .statusAccount:
-            return AppSetting.shared.getDateMemberSince()
+            guard AppSetting.shared.isPremium else {
+                return L10n.Account.premiumOffer
+            }
+            return "\(L10n.Account.expire) \(AppSetting.shared.premiumExpireDate)"
         case .paymentHistory:
             return L10n.Account.AccountStatus.tapToShow
         case .totalDevice:
@@ -259,6 +282,8 @@ enum ItemCellType: Decodable {
     var showSelect: Bool {
         switch self {
         case .always, .onWifi, .onMobile, .off:
+            return true
+        case .recommend, .openVPN, .wireGuard:
             return true
         default:
             return false

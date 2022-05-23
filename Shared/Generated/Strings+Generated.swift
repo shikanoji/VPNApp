@@ -17,6 +17,10 @@ public enum L10n {
     public static let contentTotalDevices = L10n.tr("Account", "contentTotalDevices")
     /// Delete your account
     public static let deleteAccount = L10n.tr("Account", "deleteAccount")
+    /// Expire on
+    public static let expire = L10n.tr("Account", "expire")
+    /// Free plan
+    public static let freePlan = L10n.tr("Account", "freePlan")
     /// Account status:
     public static let itemAccount = L10n.tr("Account", "itemAccount")
     /// Devices
@@ -27,6 +31,10 @@ public enum L10n {
     public static let itemQuestions = L10n.tr("Account", "itemQuestions")
     /// Sercurity level
     public static let itemSecurity = L10n.tr("Account", "itemSecurity")
+    /// Premium
+    public static let premium = L10n.tr("Account", "premium")
+    /// Premium plan only $3/month
+    public static let premiumOffer = L10n.tr("Account", "premiumOffer")
     /// Sign Out
     public static let signout = L10n.tr("Account", "signout")
     /// Help & Support
@@ -38,12 +46,22 @@ public enum L10n {
     public enum AccountStatus {
       /// Extend Subscription
       public static let extend = L10n.tr("Account", "AccountStatus.extend")
+      /// Joined
+      public static let joined = L10n.tr("Account", "AccountStatus.joined")
       /// Payment history
       public static let paymentHistory = L10n.tr("Account", "AccountStatus.paymentHistory")
       /// Tap to show
       public static let tapToShow = L10n.tr("Account", "AccountStatus.tapToShow")
       /// Your Subscription
       public static let title = L10n.tr("Account", "AccountStatus.title")
+      /// Premium plan only $3/month
+      public static let upgradeToPremium = L10n.tr("Account", "AccountStatus.upgradeToPremium")
+    }
+    public enum ChangePassword {
+      /// Confirm password does not matche
+      public static let passwordNotMatch = L10n.tr("Account", "ChangePassword.passwordNotMatch")
+      /// Successfully changed password
+      public static let success = L10n.tr("Account", "ChangePassword.success")
     }
     public enum DeleteAccount {
       /// Delete
@@ -172,6 +190,8 @@ public enum L10n {
     public static let emailPlaceholder = L10n.tr("ForgotPassword", "EmailPlaceholder")
     /// Send request
     public static let sendRequestButton = L10n.tr("ForgotPassword", "SendRequestButton")
+    /// Successfully sent request. Pleae check your e-mail for confirmation.
+    public static let success = L10n.tr("ForgotPassword", "Success")
     /// Forgot Password
     public static let title = L10n.tr("ForgotPassword", "Title")
   }
@@ -274,7 +294,7 @@ public enum L10n {
       public static let note = L10n.tr("PlanSelect", "PlanA.note")
       /// $3.67
       public static let price = L10n.tr("PlanSelect", "PlanA.price")
-      /// Save 69%
+      /// Save 69
       public static let savingText = L10n.tr("PlanSelect", "PlanA.savingText")
       /// 2-Years plan
       public static let title = L10n.tr("PlanSelect", "PlanA.title")
@@ -287,7 +307,7 @@ public enum L10n {
       public static let note = L10n.tr("PlanSelect", "PlanB.note")
       /// $4.92
       public static let price = L10n.tr("PlanSelect", "PlanB.price")
-      /// Save 69%
+      /// Save 69
       public static let savingText = L10n.tr("PlanSelect", "PlanB.savingText")
       /// 1-Year Plan
       public static let title = L10n.tr("PlanSelect", "PlanB.title")
@@ -376,6 +396,8 @@ public enum L10n {
     public static let onMobileConnect = L10n.tr("Settings", "onMobileConnect")
     /// On Wi-fi
     public static let onWifiConnect = L10n.tr("Settings", "onWifiConnect")
+    /// Open VPN
+    public static let openVPN = L10n.tr("Settings", "openVPN")
     /// Auto-connect to
     public static let sectionAutoConnect = L10n.tr("Settings", "sectionAutoConnect")
     /// Other Settings
@@ -386,6 +408,36 @@ public enum L10n {
     public static let settings = L10n.tr("Settings", "settings")
     /// Settings
     public static let title = L10n.tr("Settings", "title")
+    /// WireGuard
+    public static let wireGuard = L10n.tr("Settings", "wireGuard")
+    public enum Tools {
+      /// CyberSec
+      public static let cyberSec = L10n.tr("Settings", "Tools.cyberSec")
+      /// Dark Web Monitors
+      public static let darkWebMonitors = L10n.tr("Settings", "Tools.darkWebMonitors")
+      /// Kill Switch
+      public static let killSwitch = L10n.tr("Settings", "Tools.killSwitch")
+      /// Tapjacking protection
+      public static let tapJackingProtection = L10n.tr("Settings", "Tools.tapJackingProtection")
+      /// Tools
+      public static let title = L10n.tr("Settings", "Tools.title")
+      public enum CyberSec {
+        /// Protects you from cyber threats by blocking malicious website.
+        public static let note = L10n.tr("Settings", "Tools.cyberSec.note")
+      }
+      public enum DarkWebMonitors {
+        /// Sends alerts if your credentials get publicly exposed online.
+        public static let note = L10n.tr("Settings", "Tools.darkWebMonitors.note")
+      }
+      public enum KillSwitch {
+        /// Blocks unprotected traffic if VPN connection drops.
+        public static let note = L10n.tr("Settings", "Tools.killSwitch.note")
+      }
+      public enum TapJackingProtection {
+        /// Warns you if a malicous app adds a screen overlay to trick you into unintended action.
+        public static let note = L10n.tr("Settings", "Tools.tapJackingProtection.note")
+      }
+    }
   }
   public enum StaticIP {
     /// CURRENT LOAD

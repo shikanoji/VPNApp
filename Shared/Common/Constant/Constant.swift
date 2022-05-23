@@ -48,7 +48,7 @@ struct Constant {
         }
         
         struct Alert {
-            static let sizeFont: CGFloat = 12
+            static let sizeFont: CGFloat = 15
             static let weightFont: Font.Weight = .semibold
         }
         
@@ -77,7 +77,7 @@ struct Constant {
         struct Map {
             static let minZoom: CGFloat = 1
             static let maxZoom: CGFloat = 4
-            static let enableCityZoom: CGFloat = 2
+            static let enableCityZoom: CGFloat = 2.5
             static let zoomCity: CGFloat = 0.5
             static let widthScreen = UIScreen.main.bounds.width
             static let heightScreen = UIScreen.main.bounds.height
@@ -159,5 +159,13 @@ struct Constant {
     struct Loading {
         static let sizeCircle: CGFloat = 17.15
         static let sizeLoading: CGFloat = 64
+    }
+    
+    static func convertXToMap(_ x: CGFloat) -> CGFloat {
+        return (x / Constant.Board.Map.widthMapOrigin) * Constant.Board.Map.widthScreen
+    }
+    
+    static func convertYToMap(_ y: CGFloat) -> CGFloat {
+        return (y / Constant.Board.Map.heightMapOrigin) * (Constant.Board.Map.widthScreen / Constant.Board.Map.ration)
     }
 }

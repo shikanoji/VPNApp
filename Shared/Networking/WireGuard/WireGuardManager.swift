@@ -21,28 +21,19 @@ class WireGuardManager: ObservableObject {
     private var vpnStatus: VPNStatus = .disconnected
     
     static var shared = WireGuardManager()
+    private var cfg: WireGuard.ProviderConfiguration?
     
     func connect() {
-        do {
-            let path = Bundle.main.path(forResource: "wg_ios_client", ofType: "conf")
-            
-            let string = try String(contentsOfFile: path!, encoding: String.Encoding.utf8)
-            
-            guard let cfg = configuretionParaseFromContents(lines: string.trimmedLines()) else {
-                print("Configuration incomplete")
-                return
-            }
-            
-            Task {
-                try await vpn.reconnect(
-                    tunnelIdentifier,
-                    configuration: cfg,
-                    extra: nil,
-                    after: .seconds(2)
-                )
-            }
-        } catch {
-            print(error)
+        let string = NetworkManager.shared.obtainCertificate?.convertToString()
+        cfg = configuretionParaseFromContents(lines: string!.trimmedLines())
+        
+        Task {
+            try await vpn.reconnect(
+                tunnelIdentifier,
+                configuration: cfg!,
+                extra: nil,
+                after: .seconds(2)
+            )
         }
     }
     

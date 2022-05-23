@@ -9,7 +9,6 @@ import RxSwift
 import Moya
 import SwiftyJSON
 import SwiftUI
-import SwiftDate
 
 struct APIManager {
     
@@ -36,11 +35,23 @@ struct APIManager {
             }
     }
     
-    func getRequestCertificate() -> Single<APIResponse<RequestCertificateModel>> {
+    func getRequestCertificate(currentTab: BoardViewModel.StateTab) -> Single<APIResponse<RequestCertificateModel>> {
         return provider.rx
-            .request(.getRequestCertificate)
+            .request(.getRequestCertificate(currentTab: currentTab))
             .map { response in
                 let result = try JSONDecoder().decode(APIResponse<RequestCertificateModel>.self, from: response.data)
+                return result
+            }
+            .catch { error in
+                throw APIError.someError
+            }
+    }
+    
+    func getObtainCertificate() -> Single<APIResponse<ObtainCertificateModel>> {
+        return provider.rx
+            .request(.getObtainCertificate)
+            .map { response in
+                let result = try JSONDecoder().decode(APIResponse<ObtainCertificateModel>.self, from: response.data)
                 return result
             }
             .catch { error in
@@ -57,7 +68,7 @@ extension MoyaProvider {
             let request = try! endpoint.urlRequest()
             if (request.headers.value(for: "Authorization") != nil) {
                 //assume you have saved the existing token somewhere
-                if !AppSetting.shared.accessToken.isEmpty, let expiresDate = AppSetting.shared.accessTokenExpires.toDate(), Date().convertTo(region: .local) < expiresDate {
+                if AppSetting.shared.isRefreshTokenValid {
                     // Token is valid, so just resume the original request
                     closure(.success(request))
                     return

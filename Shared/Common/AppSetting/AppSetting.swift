@@ -7,12 +7,17 @@
 
 import Foundation
 import SwiftUI
+import SwiftDate
 
 enum AppKeys: String {
     ///Auth Keys
     case email = "email"
+    case isPremium = "isPremium"
+    case premiumExpires = "premiumExpires"
+    case name = "name"
     case accessToken = "accessToken"
     case refreshToken = "refreshToken"
+    case accountCreatedTime = "accountCreatedTime"
     case accessTokenExpires = "accessTokenExpires"
     case refreshTokenExpires = "refreshTokenExpires"
     case country = "country"
@@ -22,7 +27,6 @@ enum AppKeys: String {
     case showedNotice = "showedNotice"
     case dateMember = "dateMember"
     case idVPN = "idVPN"
-    case statusAccoutn = "statusAccoutn"
     case currentNumberDevice = "currentNumberDevice"
     case totalNumberDevices = "totalNumberDevices"
     case appShourtcuts = "appShourtcuts"
@@ -39,6 +43,8 @@ enum AppKeys: String {
     ///Last Time when Data Map Update
     case lastChange = "lastChange"
     case updateDataMap = "updateDataMap"
+    
+    case selectConfig = "selectConfig"
 }
 
 struct AppSetting {
@@ -53,6 +59,42 @@ struct AppSetting {
         }
         set {
             UserDefaults.standard.setValue(newValue, forKey: AppKeys.email.rawValue)
+        }
+    }
+    
+    var isPremium: Bool {
+        get {
+            return UserDefaults.standard.bool(forKey: AppKeys.isPremium.rawValue)
+        }
+        set {
+            UserDefaults.standard.setValue(newValue, forKey: AppKeys.isPremium.rawValue)
+        }
+    }
+    
+    var premiumExpires: Int? {
+        get {
+            return UserDefaults.standard.integer(forKey: AppKeys.premiumExpires.rawValue)
+        }
+        set {
+            UserDefaults.standard.setValue(newValue, forKey: AppKeys.premiumExpires.rawValue)
+        }
+    }
+    
+    var name: String? {
+        get {
+            return UserDefaults.standard.string(forKey: AppKeys.name.rawValue)
+        }
+        set {
+            UserDefaults.standard.setValue(newValue, forKey: AppKeys.name.rawValue)
+        }
+    }
+    
+    var accountCreatedTime: Int? {
+        get {
+            return UserDefaults.standard.integer(forKey: AppKeys.accountCreatedTime.rawValue)
+        }
+        set {
+            UserDefaults.standard.setValue(newValue, forKey: AppKeys.accountCreatedTime.rawValue)
         }
     }
     
@@ -74,18 +116,18 @@ struct AppSetting {
         }
     }
     
-    var refreshTokenExpires: String {
+    var refreshTokenExpires: Int? {
         get {
-            return UserDefaults.standard.string(forKey: AppKeys.refreshTokenExpires.rawValue) ?? ""
+            return UserDefaults.standard.integer(forKey: AppKeys.refreshTokenExpires.rawValue)
         }
         set {
             UserDefaults.standard.setValue(newValue, forKey: AppKeys.refreshTokenExpires.rawValue)
         }
     }
     
-    var accessTokenExpires: String {
+    var accessTokenExpires: Int? {
         get {
-            return UserDefaults.standard.string(forKey: AppKeys.accessTokenExpires.rawValue) ?? ""
+            return UserDefaults.standard.integer(forKey: AppKeys.accessTokenExpires.rawValue)
         }
         set {
             UserDefaults.standard.setValue(newValue, forKey: AppKeys.accessTokenExpires.rawValue)
@@ -147,5 +189,56 @@ struct AppSetting {
         set {
             UserDefaults.standard.setValue(newValue, forKey: AppKeys.updateDataMap.rawValue)
         }
+    }
+    
+    var selectConfig: Int {
+        get {
+            UserDefaults.standard.integer(forKey: AppKeys.selectConfig.rawValue)
+        }
+        set {
+            UserDefaults.standard.setValue(newValue, forKey: AppKeys.selectConfig.rawValue)
+        }
+    }
+    
+    var isRefreshTokenValid: Bool {
+        guard !refreshToken.isEmpty else {
+            return false
+        }
+        guard let refreshTokenExpiresSeconds = refreshTokenExpires else {
+            return false
+        }
+        let seconds = TimeInterval(refreshTokenExpiresSeconds)
+        let expireDate = DateInRegion(seconds: seconds, region: .local)
+        return Date().convertTo(region: .local) < expireDate
+    }
+    
+    var isAccessTokenValid: Bool {
+        guard !accessToken.isEmpty else {
+            return false
+        }
+        guard let refreshTokenExpiresSeconds = accessTokenExpires else {
+            return false
+        }
+        let seconds = TimeInterval(refreshTokenExpiresSeconds)
+        let expireDate = DateInRegion(seconds: seconds, region: .local)
+        return Date().convertTo(region: .local) < expireDate
+    }
+    
+    var premiumExpireDate: DateInRegion? {
+        guard isPremium, let expireSecond = premiumExpires else {
+            return nil
+        }
+        let expireInteval = TimeInterval(expireSecond)
+        let expireDate = DateInRegion(seconds: expireInteval, region: .local)
+        return expireDate
+    }
+    
+    var joinedDate: DateInRegion? {
+        guard let accountCreatedSecond = accountCreatedTime else {
+            return nil
+        }
+        let accountCreatedTimeInteval = TimeInterval(accountCreatedSecond)
+        let joinedDate = DateInRegion(seconds: accountCreatedTimeInteval, region: .local)
+        return joinedDate
     }
 }

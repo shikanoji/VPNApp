@@ -18,6 +18,7 @@ struct SysVPNApp: App {
             ContentView()
                 .environment(\.managedObjectContext, persistenceController.container.viewContext)
                 .environmentObject(authentication)
+                .onAppear(perform: UIApplication.shared.addTapGestureRecognizer)
         }
     }
 }
