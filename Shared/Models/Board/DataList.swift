@@ -49,7 +49,7 @@ enum SectionType: Decodable {
             return [
                 ItemCell(type: .vpnConnection),
                 ItemCell(type: .tools),
-                ItemCell(type: .general)
+                //ItemCell(type: .general)
             ]
         case .otherSetting:
             return [
