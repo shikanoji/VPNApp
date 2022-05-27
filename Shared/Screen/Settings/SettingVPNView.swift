@@ -17,10 +17,10 @@ struct SettingVPNView: View {
     @State var itemList: [ItemCellType] = [
         .autoConnet,
         .protocolConnect,
-        .split,
+        //.split,
         .dns,
-        .localNetwork,
-        .metered
+        //.localNetwork,
+        //.metered
     ]
     
     @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>

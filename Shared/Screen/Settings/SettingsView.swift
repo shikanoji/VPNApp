@@ -15,7 +15,7 @@ struct SettingsView: View {
     @State var showToolsSetting = false
     @State var sections: [DataSection] = [
         DataSection(type: .vpnSetting),
-        DataSection(type: .otherSetting)
+       // DataSection(type: .otherSetting)
     ]
     
     var body: some View {
