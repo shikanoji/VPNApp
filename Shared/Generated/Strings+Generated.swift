@@ -208,6 +208,8 @@ public enum L10n {
     public static let ok = L10n.tr("Global", "ok")
     /// On
     public static let on = L10n.tr("Global", "on")
+    /// Saved successfully!
+    public static let saveSuccess = L10n.tr("Global", "SaveSuccess")
     /// Light is Faster, but We are Safer
     public static let slogan = L10n.tr("Global", "slogan")
     /// Something went wrong
@@ -410,6 +412,16 @@ public enum L10n {
     public static let title = L10n.tr("Settings", "title")
     /// WireGuard
     public static let wireGuard = L10n.tr("Settings", "wireGuard")
+    public enum Dns {
+      /// Custom
+      public static let custom = L10n.tr("Settings", "DNS.custom")
+      /// Default
+      public static let `default` = L10n.tr("Settings", "DNS.default")
+      /// Save
+      public static let save = L10n.tr("Settings", "DNS.save")
+      /// DNS
+      public static let title = L10n.tr("Settings", "DNS.title")
+    }
     public enum Tools {
       /// CyberSec
       public static let cyberSec = L10n.tr("Settings", "Tools.cyberSec")

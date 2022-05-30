@@ -47,3 +47,9 @@
 "Tools.darkWebMonitors.note" = "Sends alerts if your credentials get publicly exposed online.";
 "Tools.tapJackingProtection" = "Tapjacking protection";
 "Tools.tapJackingProtection.note" = "Warns you if a malicous app adds a screen overlay to trick you into unintended action.";
+
+//DNS
+"DNS.title" = "DNS";
+"DNS.default" = "Default";
+"DNS.custom" = "Custom";
+"DNS.save" = "Save";
