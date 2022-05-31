@@ -6,12 +6,14 @@
 //
 
 import SwiftUI
+import TunnelKitManager
 
 struct SettingVPNView: View {
     @Binding var showSettings: Bool
     @Binding var showVPNSetting: Bool
+    @Binding var instantlyShowAutoConnect: Bool
     
-    @State var statusConnect: BoardViewModel.StateBoard = .connected
+    @State var statusConnect: VPNStatus = .connected
     @State var showAutoConnect = false
     @State var showProtocolConnect = false
     @State var showDNSSetting = false
@@ -69,7 +71,9 @@ struct SettingVPNView: View {
                             AutoConnectView(
                                 showSettings: $showSettings,
                                 showVPNSetting: $showVPNSetting,
-                                statusConnect: statusConnect),
+                                statusConnect: statusConnect,
+                                viewModel: AutoConnectViewModel(),
+                                instantlyShowAutoConnect: $instantlyShowAutoConnect),
                            isActive: $showAutoConnect) { }
             NavigationLink(destination:
                             ProtocolSettingView(
@@ -95,6 +99,6 @@ struct SettingVPNView_Previews: PreviewProvider {
     @State static var showAccount = true
     
     static var previews: some View {
-        SettingVPNView(showSettings: $showAccount, showVPNSetting: $showAccount)
+        SettingVPNView(showSettings: $showAccount, showVPNSetting: $showAccount, instantlyShowAutoConnect: $showAccount)
     }
 }

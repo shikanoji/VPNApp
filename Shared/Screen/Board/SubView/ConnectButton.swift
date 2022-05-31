@@ -7,9 +7,10 @@
 
 import SwiftUI
 import Combine
+import TunnelKitManager
 
 struct ConnectButton: View {
-    var status: BoardViewModel.StateBoard
+    var status: VPNStatus
     var uploadSpeed: CGFloat
     var downloadSpeed: CGFloat
     
@@ -48,13 +49,13 @@ struct ConnectButton: View {
     
     func getContentButton() -> some View {
         switch status {
-        case .notConnect:
+        case .disconnected:
             return AnyView(Text(L10n.Board.quickUnConnect)
                             .foregroundColor(Color.black)
                             .multilineTextAlignment(.center)
                             .font(.system(size: 14, weight: .bold))
                             .padding())
-        case .loading:
+        case .connecting, .disconnecting:
             return AnyView(getDocAnimation()
                             .padding())
         case .connected:
@@ -104,7 +105,9 @@ struct TimeConnectedView: View {
             .frame(width: Constant.Board.QuickButton.heightSize + 5,
                    height: Constant.Board.QuickButton.heightSize + 5)
             .onAppear {
-                self.stopWatch.start()
+                if self.stopWatch.isPaused() {
+                    self.stopWatch.start()
+                }
             }
     }
 }

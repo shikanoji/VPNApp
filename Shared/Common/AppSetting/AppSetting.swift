@@ -45,10 +45,10 @@ enum AppKeys: String {
     case updateDataMap = "updateDataMap"
     
     case selectConfig = "selectConfig"
-    
     //DNS
     case dnsSetting = "dnsSetting"
     case customDNSValue = "customDNSValue"
+    case selectAutoConnect = "selectAutoConnect"
 }
 
 struct AppSetting {
@@ -201,6 +201,15 @@ struct AppSetting {
         }
         set {
             UserDefaults.standard.setValue(newValue, forKey: AppKeys.selectConfig.rawValue)
+        }
+    }
+    
+    var selectAutoConnect: Int {
+        get {
+            UserDefaults.standard.integer(forKey: AppKeys.selectAutoConnect.rawValue)
+        }
+        set {
+            UserDefaults.standard.setValue(newValue, forKey: AppKeys.selectAutoConnect.rawValue)
         }
     }
     

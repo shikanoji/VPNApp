@@ -7,10 +7,11 @@
 
 import Foundation
 import SwiftUI
+import TunnelKitManager
 
 struct FAQView: View {
     @Binding var showAccount: Bool
-    @State var statusConnect: BoardViewModel.StateBoard = .connected
+    @State var statusConnect: VPNStatus = .connected
     @StateObject var viewModel: FAQViewModel
     
     @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>

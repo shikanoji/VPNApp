@@ -6,13 +6,14 @@
 //
 
 import SwiftUI
+import TunnelKitManager
 
 struct AccountStatusView: View {
     @Binding var showAccount: Bool
     @Binding var showAccountStatus: Bool
     
     @State var showPayment = false
-    @State var statusConnect: BoardViewModel.StateBoard = .connected
+    @State var statusConnect: VPNStatus = .connected
     @State var showPlanListView: Bool = false
     @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
     

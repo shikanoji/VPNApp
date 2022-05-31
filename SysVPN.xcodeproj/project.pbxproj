@@ -143,10 +143,6 @@
 		EE03445A2809204E003DFB64 /* NetworkExtension.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EE0344592809204E003DFB64 /* NetworkExtension.framework */; };
 		EE2D6BEF2818EFA4008E1431 /* StaticServer.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE9B8B5727C387C50077BCFC /* StaticServer.swift */; };
 		EE2D6BF02818EFA4008E1431 /* StaticServer.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE9B8B5727C387C50077BCFC /* StaticServer.swift */; };
-		EE2D6BF22819276C008E1431 /* ProtocolSettingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE2D6BF12819276C008E1431 /* ProtocolSettingView.swift */; };
-		EE2D6BF32819276C008E1431 /* ProtocolSettingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE2D6BF12819276C008E1431 /* ProtocolSettingView.swift */; };
-		EE2D6BF528193D08008E1431 /* ProtocolSettingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE2D6BF428193D08008E1431 /* ProtocolSettingViewModel.swift */; };
-		EE2D6BF628193D08008E1431 /* ProtocolSettingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE2D6BF428193D08008E1431 /* ProtocolSettingViewModel.swift */; };
 		EE2D6BF8281BA902008E1431 /* ProtocolSettingCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE2D6BF7281BA902008E1431 /* ProtocolSettingCellView.swift */; };
 		EE2D6BF9281BA902008E1431 /* ProtocolSettingCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE2D6BF7281BA902008E1431 /* ProtocolSettingCellView.swift */; };
 		EE2D6BFB281BD77D008E1431 /* ObtainCertificateModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE2D6BFA281BD77D008E1431 /* ObtainCertificateModel.swift */; };
@@ -241,10 +237,6 @@
 		EE8910132796B8CF00ADF293 /* DeviceCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE8910112796B8CF00ADF293 /* DeviceCell.swift */; };
 		EE8910162797AC3D00ADF293 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE8910152797AC3D00ADF293 /* SettingsView.swift */; };
 		EE8910172797AC3D00ADF293 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE8910152797AC3D00ADF293 /* SettingsView.swift */; };
-		EE89101E2797F25200ADF293 /* SettingVPNView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE89101D2797F25200ADF293 /* SettingVPNView.swift */; };
-		EE89101F2797F25200ADF293 /* SettingVPNView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE89101D2797F25200ADF293 /* SettingVPNView.swift */; };
-		EE8910212797F6D400ADF293 /* AutoConnectView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE8910202797F6D400ADF293 /* AutoConnectView.swift */; };
-		EE8910222797F6D400ADF293 /* AutoConnectView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE8910202797F6D400ADF293 /* AutoConnectView.swift */; };
 		EE8910682798129600ADF293 /* BoardListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE8910672798129600ADF293 /* BoardListView.swift */; };
 		EE8910692798129600ADF293 /* BoardListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE8910672798129600ADF293 /* BoardListView.swift */; };
 		EE89106B2798142A00ADF293 /* StatusLocationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE89106A2798142A00ADF293 /* StatusLocationView.swift */; };
@@ -266,6 +258,14 @@
 		EE8B373B2812514400D14E1F /* AssetsExtension+SwiftUI.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC6074E527DDD06200DD5667 /* AssetsExtension+SwiftUI.swift */; };
 		EE8B373C28125E3D00D14E1F /* RequestCertificateModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE78F77D2811526B00F49903 /* RequestCertificateModel.swift */; };
 		EE8B373D28125E3E00D14E1F /* RequestCertificateModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE78F77D2811526B00F49903 /* RequestCertificateModel.swift */; };
+		EE9B77B8283F2F3B00240E89 /* AutoConnectViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE9B77B7283F2F3B00240E89 /* AutoConnectViewModel.swift */; };
+		EE9B77B9283F2F3B00240E89 /* AutoConnectViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE9B77B7283F2F3B00240E89 /* AutoConnectViewModel.swift */; };
+		EE9B77BF28460AC700240E89 /* ProtocolSettingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE9B77BD28460AC600240E89 /* ProtocolSettingView.swift */; };
+		EE9B77C028460AC700240E89 /* ProtocolSettingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE9B77BD28460AC600240E89 /* ProtocolSettingView.swift */; };
+		EE9B77C128460AC700240E89 /* ProtocolSettingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE9B77BE28460AC700240E89 /* ProtocolSettingViewModel.swift */; };
+		EE9B77C228460AC700240E89 /* ProtocolSettingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE9B77BE28460AC700240E89 /* ProtocolSettingViewModel.swift */; };
+		EE9B77C428460BA100240E89 /* SettingVPNView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE9B77C328460BA100240E89 /* SettingVPNView.swift */; };
+		EE9B77C628460BB400240E89 /* AutoConnectView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE9B77C528460BB400240E89 /* AutoConnectView.swift */; };
 		EE9B8B5627C37C320077BCFC /* LinearGradientStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE9B8B5527C37C320077BCFC /* LinearGradientStatus.swift */; };
 		EE9B8B5827C387C50077BCFC /* StaticServer.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE9B8B5727C387C50077BCFC /* StaticServer.swift */; };
 		EEAD5C512779C2D3008181E3 /* SpeedConnectedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEAD5C502779C2D3008181E3 /* SpeedConnectedView.swift */; };
@@ -449,9 +449,7 @@
 		EE03444228090AB7003DFB64 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		EE03444328090AB7003DFB64 /* OpenVPN.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = OpenVPN.entitlements; sourceTree = "<group>"; };
 		EE0344592809204E003DFB64 /* NetworkExtension.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = NetworkExtension.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS15.4.sdk/System/Library/Frameworks/NetworkExtension.framework; sourceTree = DEVELOPER_DIR; };
-		EE2D6BF12819276C008E1431 /* ProtocolSettingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProtocolSettingView.swift; sourceTree = "<group>"; };
-		EE2D6BF428193D08008E1431 /* ProtocolSettingViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProtocolSettingViewModel.swift; sourceTree = "<group>"; };
-		EE2D6BF7281BA902008E1431 /* ProtocolSettingCellView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProtocolSettingCellView.swift; sourceTree = "<group>"; };
+		EE2D6BF7281BA902008E1431 /* ProtocolSettingCellView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ProtocolSettingCellView.swift; path = ../../ProtocolSettingCellView.swift; sourceTree = "<group>"; };
 		EE2D6BFA281BD77D008E1431 /* ObtainCertificateModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ObtainCertificateModel.swift; sourceTree = "<group>"; };
 		EE3246E12822362C0070FB91 /* StaticNodeMapView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StaticNodeMapView.swift; sourceTree = "<group>"; };
 		EE3246E52822373D0070FB91 /* StaticNodeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StaticNodeView.swift; sourceTree = "<group>"; };
@@ -500,14 +498,17 @@
 		EE89100E2796B54700ADF293 /* DevicesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DevicesView.swift; sourceTree = "<group>"; };
 		EE8910112796B8CF00ADF293 /* DeviceCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviceCell.swift; sourceTree = "<group>"; };
 		EE8910152797AC3D00ADF293 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
-		EE89101D2797F25200ADF293 /* SettingVPNView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingVPNView.swift; sourceTree = "<group>"; };
-		EE8910202797F6D400ADF293 /* AutoConnectView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AutoConnectView.swift; sourceTree = "<group>"; };
 		EE8910672798129600ADF293 /* BoardListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoardListView.swift; sourceTree = "<group>"; };
 		EE89106A2798142A00ADF293 /* StatusLocationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatusLocationView.swift; sourceTree = "<group>"; };
 		EE89106D2798164500ADF293 /* NetworkWaveView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkWaveView.swift; sourceTree = "<group>"; };
 		EE8910702798FBD500ADF293 /* SearchBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchBar.swift; sourceTree = "<group>"; };
 		EE8910732799458A00ADF293 /* NodeCellView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NodeCellView.swift; sourceTree = "<group>"; };
 		EE891076279947FA00ADF293 /* ImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageView.swift; sourceTree = "<group>"; };
+		EE9B77B7283F2F3B00240E89 /* AutoConnectViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AutoConnectViewModel.swift; sourceTree = "<group>"; };
+		EE9B77BD28460AC600240E89 /* ProtocolSettingView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProtocolSettingView.swift; sourceTree = "<group>"; };
+		EE9B77BE28460AC700240E89 /* ProtocolSettingViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProtocolSettingViewModel.swift; sourceTree = "<group>"; };
+		EE9B77C328460BA100240E89 /* SettingVPNView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingVPNView.swift; sourceTree = "<group>"; };
+		EE9B77C528460BB400240E89 /* AutoConnectView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AutoConnectView.swift; sourceTree = "<group>"; };
 		EE9B8B5527C37C320077BCFC /* LinearGradientStatus.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LinearGradientStatus.swift; sourceTree = "<group>"; };
 		EE9B8B5727C387C50077BCFC /* StaticServer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StaticServer.swift; sourceTree = "<group>"; };
 		EEAD5C502779C2D3008181E3 /* SpeedConnectedView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpeedConnectedView.swift; sourceTree = "<group>"; };
@@ -627,7 +628,7 @@
 		AC1195D728451AC6002230F0 /* VNPSettings */ = {
 			isa = PBXGroup;
 			children = (
-				EE89101D2797F25200ADF293 /* SettingVPNView.swift */,
+				EE9B77C328460BA100240E89 /* SettingVPNView.swift */,
 				AC1195D928451B0A002230F0 /* ProtocolSetting */,
 				AC1195D828451AFB002230F0 /* AutoConnect */,
 				AC1195D02844D70D002230F0 /* DNS */,
@@ -638,7 +639,7 @@
 		AC1195D828451AFB002230F0 /* AutoConnect */ = {
 			isa = PBXGroup;
 			children = (
-				EE8910202797F6D400ADF293 /* AutoConnectView.swift */,
+				EE9B77C528460BB400240E89 /* AutoConnectView.swift */,
 			);
 			path = AutoConnect;
 			sourceTree = "<group>";
@@ -646,8 +647,8 @@
 		AC1195D928451B0A002230F0 /* ProtocolSetting */ = {
 			isa = PBXGroup;
 			children = (
-				EE2D6BF12819276C008E1431 /* ProtocolSettingView.swift */,
-				EE2D6BF428193D08008E1431 /* ProtocolSettingViewModel.swift */,
+				EE9B77BD28460AC600240E89 /* ProtocolSettingView.swift */,
+				EE9B77BE28460AC700240E89 /* ProtocolSettingViewModel.swift */,
 				EE2D6BF7281BA902008E1431 /* ProtocolSettingCellView.swift */,
 			);
 			path = ProtocolSetting;
@@ -1247,6 +1248,7 @@
 				AC1195D728451AC6002230F0 /* VNPSettings */,
 				AC79CE07282CFA6D00E1E874 /* Tools */,
 				EE8910152797AC3D00ADF293 /* SettingsView.swift */,
+				EE9B77B7283F2F3B00240E89 /* AutoConnectViewModel.swift */,
 			);
 			path = Settings;
 			sourceTree = "<group>";
@@ -1714,7 +1716,6 @@
 				AC6074B227D8D2B200DD5667 /* CustomPopupView.swift in Sources */,
 				D78044E32758F54A0086E59D /* AppDelegate.swift in Sources */,
 				D785DFBF27B3B26F001FC84B /* FAQViewModel.swift in Sources */,
-				EE89101E2797F25200ADF293 /* SettingVPNView.swift in Sources */,
 				EE514CBF27CCC14500F82AD7 /* LoadingView.swift in Sources */,
 				EE85EE1227BDF5B6000F967A /* Node.swift in Sources */,
 				D78044F4275912AC0086E59D /* AppSetting.swift in Sources */,
@@ -1722,17 +1723,17 @@
 				EE3246E8282237580070FB91 /* StaticNodePopupView.swift in Sources */,
 				AC6074EE27DE42C100DD5667 /* Strings+Generated.swift in Sources */,
 				EE8910012796792400ADF293 /* PaymentHistoryView.swift in Sources */,
+				EE9B77BF28460AC700240E89 /* ProtocolSettingView.swift in Sources */,
 				AC6074B027D8D24F00DD5667 /* ArrayExtension.swift in Sources */,
 				EE514CBD27CC71DC00F82AD7 /* IpInfoResult.swift in Sources */,
 				EE89100F2796B54700ADF293 /* DevicesView.swift in Sources */,
 				EE890FEF2795101300ADF293 /* InfomationView.swift in Sources */,
 				D795FFA8275F6E9A00E54206 /* PagingView.swift in Sources */,
 				D78044C62758C6FC0086E59D /* SysVPNApp.swift in Sources */,
+				EE9B77C128460AC700240E89 /* ProtocolSettingViewModel.swift in Sources */,
 				D78F47262761A53A0064A764 /* AppColor.swift in Sources */,
-				EE8910212797F6D400ADF293 /* AutoConnectView.swift in Sources */,
 				D78F76C52769D84700919AA6 /* ViewModifier.swift in Sources */,
 				D7874DF8277AFED200ADC7AD /* ForgotPasswordView.swift in Sources */,
-				EE2D6BF22819276C008E1431 /* ProtocolSettingView.swift in Sources */,
 				EE3246E22822362C0070FB91 /* StaticNodeMapView.swift in Sources */,
 				D79E829927970649009E36F3 /* SetupVPNView.swift in Sources */,
 				D75F936E2773486900E16981 /* NavigationModifier.swift in Sources */,
@@ -1789,6 +1790,7 @@
 				D79BF75E27BD10D700E76C37 /* Constant+API.swift in Sources */,
 				EE78F768280FB6CE00F49903 /* NetworkManager.swift in Sources */,
 				D79BF76627BD27E000E76C37 /* APIResponse.swift in Sources */,
+				EE9B77C428460BA100240E89 /* SettingVPNView.swift in Sources */,
 				EE85EDC327B37120000F967A /* NodeCellStaticView.swift in Sources */,
 				D7874DFA277AFEE200ADC7AD /* ForgotPasswordViewModel.swift in Sources */,
 				D78F47282761D1840064A764 /* LoginView.swift in Sources */,
@@ -1802,7 +1804,6 @@
 				EE890FFE27956E0E00ADF293 /* ChangePasswordViewModel.swift in Sources */,
 				EE85EE1127BDF5B6000F967A /* SelectionHandler.swift in Sources */,
 				EE85EDC527B374AA000F967A /* SelectLocationMultihopView.swift in Sources */,
-				EE2D6BF528193D08008E1431 /* ProtocolSettingViewModel.swift in Sources */,
 				EEAD5C512779C2D3008181E3 /* SpeedConnectedView.swift in Sources */,
 				D7F9695F27B2B8590037A3D0 /* QuestionModel.swift in Sources */,
 				D7A4AC4327952C5900C88162 /* PlanListViewModel.swift in Sources */,
@@ -1817,6 +1818,7 @@
 				D78044C82758C6FC0086E59D /* ContentView.swift in Sources */,
 				AC87539B2801ED10004C5F43 /* DeleteAccountConfirmationView.swift in Sources */,
 				EEEAF2192785834200A96114 /* NodePopupView.swift in Sources */,
+				EE9B77C628460BB400240E89 /* AutoConnectView.swift in Sources */,
 				D78044EA27590DB70086E59D /* APIManager.swift in Sources */,
 				D78A35CC276B9D5A00CC010D /* Background.swift in Sources */,
 				EE890FEC2791310000ADF293 /* ItemRowView.swift in Sources */,
@@ -1834,6 +1836,7 @@
 				D795FFAA275F6ED200E54206 /* Introduction.swift in Sources */,
 				AC6074E627DDD06200DD5667 /* AssetsExtension+SwiftUI.swift in Sources */,
 				EE79F53327758896006F0E5D /* StopWatch.swift in Sources */,
+				EE9B77B8283F2F3B00240E89 /* AutoConnectViewModel.swift in Sources */,
 				EE89100427967AA200ADF293 /* AccountStatusView.swift in Sources */,
 				EE891077279947FA00ADF293 /* ImageView.swift in Sources */,
 				EE85EDB927B21F7A000F967A /* LocationListView.swift in Sources */,
@@ -1851,18 +1854,15 @@
 				EE890FF9279558EC00ADF293 /* DateExtension.swift in Sources */,
 				EE8910132796B8CF00ADF293 /* DeviceCell.swift in Sources */,
 				EE890FF627951A6100ADF293 /* ItemRowCell.swift in Sources */,
-				EE2D6BF32819276C008E1431 /* ProtocolSettingView.swift in Sources */,
 				D78044C72758C6FC0086E59D /* SysVPNApp.swift in Sources */,
 				D78044CB2758C6FC0086E59D /* Persistence.swift in Sources */,
 				EE890FFF27956E0E00ADF293 /* ChangePasswordViewModel.swift in Sources */,
 				D7F9695D27B2AC980037A3D0 /* FAQView.swift in Sources */,
-				EE89101F2797F25200ADF293 /* SettingVPNView.swift in Sources */,
 				EE89106C2798142A00ADF293 /* StatusLocationView.swift in Sources */,
 				EE89100527967AA200ADF293 /* AccountStatusView.swift in Sources */,
 				EE890FE42791101E00ADF293 /* CustomNavigationView.swift in Sources */,
 				EE8910692798129600ADF293 /* BoardListView.swift in Sources */,
 				6384B4F6276C374E00E904D2 /* BoardView.swift in Sources */,
-				EE2D6BF628193D08008E1431 /* ProtocolSettingViewModel.swift in Sources */,
 				D78848932775D82B00AF22C6 /* AppColor.swift in Sources */,
 				D78848952775D85200AF22C6 /* BoardNavigationView.swift in Sources */,
 				EE890FF02795101300ADF293 /* InfomationView.swift in Sources */,
@@ -1873,6 +1873,7 @@
 				EE8910752799458A00ADF293 /* NodeCellView.swift in Sources */,
 				D785DFC327B3F447001FC84B /* FAQCell.swift in Sources */,
 				D785DFC027B3B26F001FC84B /* FAQViewModel.swift in Sources */,
+				EE9B77C228460AC700240E89 /* ProtocolSettingViewModel.swift in Sources */,
 				AC6074EF27DE42C100DD5667 /* Strings+Generated.swift in Sources */,
 				EE89106F2798164500ADF293 /* NetworkWaveView.swift in Sources */,
 				EE8910022796792400ADF293 /* PaymentHistoryView.swift in Sources */,
@@ -1880,11 +1881,12 @@
 				EE8910102796B54700ADF293 /* DevicesView.swift in Sources */,
 				EE890FFC27956B9100ADF293 /* ChangePasswordView.swift in Sources */,
 				EE2D6BFC281BD77D008E1431 /* ObtainCertificateModel.swift in Sources */,
-				EE8910222797F6D400ADF293 /* AutoConnectView.swift in Sources */,
 				EE85EDBF27B36963000F967A /* DescriptionMultihopView.swift in Sources */,
 				D78044C92758C6FC0086E59D /* ContentView.swift in Sources */,
 				6384B4F9276C43DD00E904D2 /* BoardViewModel.swift in Sources */,
+				EE9B77C028460AC700240E89 /* ProtocolSettingView.swift in Sources */,
 				EE85EDB427B2146B000F967A /* CityListView.swift in Sources */,
+				EE9B77B9283F2F3B00240E89 /* AutoConnectViewModel.swift in Sources */,
 				AC87539C2801ED10004C5F43 /* DeleteAccountConfirmationView.swift in Sources */,
 				D79C224F27BE0FA100B54613 /* AppSetting+Board.swift in Sources */,
 				D78848942775D84900AF22C6 /* Authentication.swift in Sources */,

@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import TunnelKitManager
 
 struct CustomNavigationView: View {
     
@@ -15,7 +16,7 @@ struct CustomNavigationView: View {
     let tapLeftButton: () -> Void
     let tapRightButton: () -> Void
     
-    @State var statusConnect: BoardViewModel.StateBoard
+    @State var statusConnect: VPNStatus
     
     var body: some View {
         VStack {

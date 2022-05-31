@@ -20,6 +20,25 @@ struct ItemCell: Equatable, Identifiable {
     var select = false
 }
 
+struct SectionCell: Equatable, Identifiable {
+    var id: UUID = UUID()
+    var type: SectionType
+    var items: [ItemCell] = []
+    
+    init(_ type: SectionType) {
+        self.type = type
+        self.items = type.items
+    }
+    
+    mutating func updateSelectedItemList(_ cell: ItemCell) {
+        items = items.map {
+            var updateItem = $0
+            updateItem.select = cell.type.title == $0.type.title
+            return updateItem
+        }
+    }
+}
+
 enum SectionType: Decodable {
     
     case myAccount
@@ -98,7 +117,7 @@ enum SectionType: Decodable {
     }
 }
 
-enum ItemCellType: Decodable {
+enum ItemCellType: Int, Decodable {
     case statusAccount
     case totalDevice
     case questions
@@ -237,7 +256,10 @@ enum ItemCellType: Decodable {
         case .help:
             return AppSetting.shared.help ? L10n.Settings.enabled : L10n.Settings.disabled
         case .autoConnet:
-            return AppSetting.shared.autoConnect ? L10n.Global.on : L10n.Global.off
+            if let type = ItemCellType(rawValue: AppSetting.shared.selectAutoConnect) {
+                return type.title
+            }
+            return L10n.Global.off
         case .protocolConnect:
             return L10n.Settings.contentItemProtocol
         case .split:

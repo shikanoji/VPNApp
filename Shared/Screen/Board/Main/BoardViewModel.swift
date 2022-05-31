@@ -11,55 +11,51 @@ import RxSwift
 import TunnelKitManager
 import TunnelKitCore
 
-class BoardViewModel: ObservableObject {
-    
-    enum StateBoard {
-        case notConnect
-        case loading
-        case connected
-        
-        var title: String {
-            switch self {
-            case .notConnect:
-                return L10n.Board.navigationTitleNotConnect
-            case .loading:
-                return L10n.Board.connecting
-            case .connected:
-                return L10n.Board.connected
-            }
-        }
-        
-        var statusTitle: String {
-            switch self {
-            case .notConnect:
-                return L10n.Board.unconnect
-            case .loading:
-                return L10n.Board.connecting
-            case .connected:
-                return L10n.Board.connected
-            }
-        }
-        
-        var statusColor: Color {
-            switch self {
-            case .notConnect, .loading:
-                return AppColor.VPNUnconnect
-            case .connected:
-                return AppColor.VPNConnected
-            }
-        }
-        
-        var titleButton: String {
-            switch self {
-            case .notConnect:
-                return L10n.Board.unconnect
-            case .loading:
-                return L10n.Board.connecting
-            case .connected:
-                return L10n.Board.connected
-            }
+extension VPNStatus {
+    var title: String {
+        switch self {
+        case .connected:
+            return L10n.Board.connected
+        case .connecting, .disconnecting:
+            return L10n.Board.connecting
+        case .disconnected:
+            return L10n.Board.navigationTitleNotConnect
         }
     }
+    
+    var statusTitle: String {
+        switch self {
+        case .disconnected:
+            return L10n.Board.unconnect
+        case .connecting, .disconnecting:
+            return L10n.Board.connecting
+        case .connected:
+            return L10n.Board.connected
+        }
+    }
+    
+    var statusColor: Color {
+        switch self {
+        case .disconnected, .connecting, .disconnecting:
+            return AppColor.VPNUnconnect
+        case .connected:
+            return AppColor.VPNConnected
+        }
+    }
+    
+    var titleButton: String {
+        switch self {
+        case .disconnected:
+            return L10n.Board.unconnect
+        case .connecting, .disconnecting:
+            return L10n.Board.connecting
+        case .connected:
+            return L10n.Board.connected
+        }
+    }
+}
+
+class BoardViewModel: ObservableObject {
     
     enum StateTab: Int {
         case location = 0
@@ -67,7 +63,7 @@ class BoardViewModel: ObservableObject {
         case multiHop = 2
     }
     
-    @Published var state: StateBoard = .notConnect
+    @Published var state: VPNStatus = .disconnected
     @Published var ip = AppSetting.shared.ip
     @Published var flag = ""
     @Published var nodes: [Node] = []
@@ -113,10 +109,13 @@ class BoardViewModel: ObservableObject {
     @Published var showAlert: Bool = false {
         didSet {
             if showAlert {
-                state = .notConnect
+                state = .disconnected
             }
         }
     }
+    
+    @Published var showAlertAutoConnectSetting: Bool = false
+    
     @Published var showProgressView: Bool = false
     
     var error: APIError?
@@ -138,54 +137,165 @@ class BoardViewModel: ObservableObject {
             name: VPNNotification.didFail,
             object: nil
         )
+        
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(checkAutoconnectIfNeeded),
+            name: UIApplication.willEnterForegroundNotification,
+            object: nil
+        )
 
         Task {
             await OpenVPNManager.shared.vpn.prepare()
         }
+        
+        checkInternetRealTime()
+    }
+    
+    var isProcessingVPN = false
+    
+    @Published var instantlyShowAutoConnect = false {
+        didSet {
+            if ItemCellType(rawValue: AppSetting.shared.selectAutoConnect) == .off {
+                stopAutoconnectTimer()
+                NetworkManager.shared.disconnect()
+            } else {
+                checkInternetRealTime()
+            }
+        }
+    }
+    
+    @objc private func checkAutoconnectIfNeeded() {
+        if let type = ItemCellType(rawValue: AppSetting.shared.selectAutoConnect) {
+            if type != .off {
+                if state == .disconnected, !isProcessingVPN {
+                    print("xxx checkAutoconnectIfNeeded \(type)")
+                    if Connectivity.sharedInstance.isReachable {
+                        switch type {
+                        case .always:
+                            connectVPN()
+                        case .onWifi:
+                            if Connectivity.sharedInstance.isReachableOnEthernetOrWiFi {
+                                connectVPN()
+                            }
+                        case .onMobile:
+                            if Connectivity.sharedInstance.isReachableOnCellular {
+                                connectVPN()
+                            }
+                        default:
+                            stopAutoconnectTimer()
+                        }
+                    }
+                }
+            } else {
+                stopAutoconnectTimer()
+            }
+        }
     }
     
     func connectVPN() {
-        if state == .notConnect {
+        if state == .disconnected {
             getRequestCertificate()
         } else {
-            NetworkManager.shared.disconnect()
+            if let type = ItemCellType(rawValue: AppSetting.shared.selectAutoConnect),
+               (type == .always || type == .onMobile || type == .onWifi) {
+                showAlertAutoConnectSetting = true
+            } else {
+                NetworkManager.shared.disconnect()
+            }
         }
     }
+    
+    let maximumReonnect = 7
+    var numberReconnect = 0
+    var disconnectByUser = false
     
     @objc private func VPNStatusDidChange(notification: Notification) {
         
         print("VPNStatusDidChange: \(notification.vpnStatus)")
-        
         switch notification.vpnStatus {
         case .connected:
+            guard isProcessingVPN else {
+                return
+            }
+            
+            guard state == .connecting else {
+                return
+            }
+            
             state = .connected
+            numberReconnect = 0
+            disconnectByUser = false
+            stopSpeedTimer()
+            
             switch NetworkManager.shared.selectConfig {
             case .openVPN, .recommend:
                 if let iPVPN = NetworkManager.shared.requestCertificate?.server?.ipAddress {
                     ip = iPVPN
                 }
-                
+
                 flag = NetworkManager.shared.selectNode?.flag ?? ""
-                
+
             case .wireguard:
                 if let iPWireguard = NetworkManager.shared.obtainCertificate?.server?.ipAddress {
                     ip = iPWireguard
                 }
-                
+
                 flag = NetworkManager.shared.selectStaticServer?.flag ?? ""
             }
-            
             getSpeedRealTime()
             
-        case .disconnected:
-            state = .notConnect
-            ip = AppSetting.shared.ip
-            flag = ""
-            stopSpeedTimer()
+            isProcessingVPN = false
             
-        case .disconnecting, .connecting:
-            state = .loading
+        case .disconnected:
+            guard isProcessingVPN else {
+                return
+            }
+            
+            if state == .disconnecting {
+                state = .disconnected
+                ip = AppSetting.shared.ip
+                flag = ""
+                stopSpeedTimer()
+                disconnectByUser = true
+                
+                isProcessingVPN = false
+                
+                if numberReconnect < maximumReonnect, !disconnectByUser {
+                    numberReconnect += 1
+                    connectVPN()
+                }
+            }
+            
+        default:
+            state = notification.vpnStatus
+            isProcessingVPN = true
         }
+    }
+    
+    @MainActor @objc private func VPNDidFail(notification: Notification) {
+        print("VPNStatusDidFail: \(notification.vpnError.localizedDescription)")
+        
+        stopSpeedTimer()
+        state = .disconnected
+        
+        if numberReconnect < maximumReonnect, !disconnectByUser  {
+            connectVPN()
+            numberReconnect += 1
+        }
+    }
+    
+    var checkInternetTimer: DispatchSourceTimer?
+    
+    func checkInternetRealTime() {
+        stopAutoconnectTimer()
+        let queue = DispatchQueue.main
+        checkInternetTimer = DispatchSource.makeTimerSource(queue: queue)
+        checkInternetTimer!.schedule(deadline: .now(), repeating: .seconds(5))
+        checkInternetTimer!.setEventHandler { [weak self] in
+            self?.checkAutoconnectIfNeeded()
+        }
+        checkInternetTimer!.resume()
     }
     
     var speedTimer: DispatchSourceTimer?
@@ -208,16 +318,27 @@ class BoardViewModel: ObservableObject {
         speedTimer = nil
     }
     
-    deinit {
-        stopSpeedTimer()
+    func stopAutoconnectTimer() {
+        checkInternetTimer = nil
     }
     
-    @objc private func VPNDidFail(notification: Notification) {
-        print("VPNStatusDidFail: \(notification.vpnError.localizedDescription)")
-        state = .notConnect
+    deinit {
+        stopSpeedTimer()
+        stopAutoconnectTimer()
+    }
+    
+    func internetNotAvaiable() {
+        self.error = APIError.noInternet
+        self.showProgressView = false
+        self.showAlert = true
     }
     
     func getCountryList() {
+        guard Connectivity.sharedInstance.isReachable else {
+            internetNotAvaiable()
+            return
+        }
+        
         APIManager.shared.getCountryList()
             .subscribe { [weak self] response in
                 guard let `self` = self else {
@@ -259,7 +380,10 @@ class BoardViewModel: ObservableObject {
     var numberCallObtainCer = 0
     
     func getObtainCertificate(completion: @escaping (Bool) -> Void) {
-        
+        guard Connectivity.sharedInstance.isReachable else {
+            internetNotAvaiable()
+            return
+        }
         numberCallObtainCer += 1
         
         APIManager.shared.getObtainCertificate()
@@ -302,6 +426,10 @@ class BoardViewModel: ObservableObject {
     }
     
     func getRequestCertificate() {
+        guard Connectivity.sharedInstance.isReachable else {
+            internetNotAvaiable()
+            return
+        }
         self.showProgressView = true
         APIManager.shared.getRequestCertificate(currentTab: tab)
             .subscribe { [weak self] response in

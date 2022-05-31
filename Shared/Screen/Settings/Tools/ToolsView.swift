@@ -7,10 +7,11 @@
 
 import Foundation
 import SwiftUI
+import TunnelKitManager
 
 struct ToolsView: View {
     @Binding var showSettings: Bool
-    @State var statusConnect: BoardViewModel.StateBoard = .connected
+    @State var statusConnect: VPNStatus = .connected
     @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
     
     var cyberSecItem: some View {

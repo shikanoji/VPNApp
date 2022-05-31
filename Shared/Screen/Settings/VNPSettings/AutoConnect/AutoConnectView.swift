@@ -6,62 +6,67 @@
 //
 
 import SwiftUI
+import TunnelKitManager
 
 struct AutoConnectView: View {
     @Binding var showSettings: Bool
     @Binding var showVPNSetting: Bool
     
-    @State var statusConnect: BoardViewModel.StateBoard = .connected
-    
-    @State var sectionList: [SectionType] = [.typeAutoConnect, .autoConnect]
-    
+    @State var statusConnect: VPNStatus = .connected
+    @State var sectionList: [SectionCell] = []
+    @StateObject var viewModel: AutoConnectViewModel
     @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
+    
+    @Binding var instantlyShowAutoConnect: Bool
     
     var body: some View {
         ScrollView(.vertical, showsIndicators: false) {
-                VStack() {
-                    AppColor.darkButton
-                        .frame(height: 10)
-                    CustomNavigationView(
-                        leftTitle: L10n.Settings.itemVPN,
-                        currentTitle: L10n.Settings.itemAuto,
-                        tapLeftButton: {
-                            presentationMode.wrappedValue.dismiss()
-                        }, tapRightButton: {
-                            showSettings = false
-                            showVPNSetting = false
-                        }, statusConnect: statusConnect)
-                    VStack(alignment: .leading, spacing: 1) {
-                        ForEach(sectionList.indices) { i in
-                            if sectionList[i].title != "" {
-                                Text(sectionList[i].title)
-                                    .padding(.vertical)
-                                    .foregroundColor(AppColor.lightBlackText)
-                                    .font(Font.system(size: 12))
-                            }
-                            ForEach(sectionList[i].items.indices) { j in
-                                ItemRowCell(title: sectionList[i].items[j].type.title,
-                                            content: sectionList[i].items[j].type.content,
-                                            showRightButton: sectionList[i].items[j].type.showRightButton,
-                                            showSwitch: sectionList[i].items[j].type.showSwitch,
-                                            showSelect: sectionList[i].items[j].type.showSelect,
-                                            position: sectionList[i].items.getPosition(j))
-                            }
+            VStack() {
+                AppColor.darkButton
+                    .frame(height: 10)
+                CustomNavigationView(
+                    leftTitle: L10n.Settings.itemVPN,
+                    currentTitle: L10n.Settings.itemAuto,
+                    tapLeftButton: {
+                        instantlyShowAutoConnect = false
+                        presentationMode.wrappedValue.dismiss()
+                    }, tapRightButton: {
+                        instantlyShowAutoConnect = false
+                        showSettings = false
+                        showVPNSetting = false
+                    }, statusConnect: statusConnect)
+                VStack(alignment: .leading, spacing: 1) {
+                    ForEach(viewModel.sectionList, id: \.id) { section in
+                        if section.type.title != "" {
+                            Text(section.type.title)
+                                .padding(.vertical)
+                                .foregroundColor(AppColor.lightBlackText)
+                                .font(Font.system(size: 12))
+                        }
+                        ForEach(section.items, id: \.id) { item in
+                            ItemRowCell(title: item.type.title,
+                                        content: item.type.content,
+                                        showRightButton: item.type.showRightButton,
+                                        showSwitch: item.type.showSwitch,
+                                        showSelect: item.type.showSelect,
+                                        position: getPosition(item: item, arr: section.items),
+                                        switchValue: item.select,
+                                        onSwitchValueChange: { value in
+                                if value {
+                                    viewModel.updateItem(item: item)
+                                    instantlyShowAutoConnect = true
+                                }
+                            })
+                            .environmentObject(viewModel)
                         }
                     }
-                    .padding(Constant.Menu.hozitalPaddingCell)
-                    .padding(.top, Constant.Menu.topPaddingCell)
+                }
+                .padding(Constant.Menu.hozitalPaddingCell)
+                 .padding(.top, Constant.Menu.topPaddingCell)
             }
         }
         .navigationBarHidden(true)
         .background(AppColor.background)
         .ignoresSafeArea()
-    }
-}
-struct AutoConnectView_Previews: PreviewProvider {
-    @State static var show = true
-    
-    static var previews: some View {
-        AutoConnectView(showSettings: $show, showVPNSetting: $show)
     }
 }

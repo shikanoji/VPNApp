@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import TunnelKitManager
 
 struct MapView: View {
     
@@ -31,7 +32,7 @@ struct MapView: View {
     @GestureState private var fingerLocation: CGPoint? = nil
     @GestureState private var startLocation: CGPoint? = nil
     
-    @Binding var statusConnect: BoardViewModel.StateBoard
+    @Binding var statusConnect: VPNStatus
     
     var simpleDrag: some Gesture {
         DragGesture()
@@ -191,7 +192,7 @@ struct MapView: View {
 
 struct MapView_Previews: PreviewProvider {
     @State static var value = false
-    @State static var statusConnect: BoardViewModel.StateBoard = .connected
+    @State static var statusConnect: VPNStatus = .connected
     
     static var previews: some View {
         let mesh = Mesh.sampleMesh()
