@@ -6,13 +6,14 @@
 //
 
 import SwiftUI
+import TunnelKitManager
 
 struct DevicesView: View {
     @Binding var showAccount: Bool
     @Binding var showTotalDevice: Bool
     
     @State var toogle: Bool = false
-    @State var statusConnect: BoardViewModel.StateBoard = .connected
+    @State var statusConnect: VPNStatus = .connected
     @StateObject var viewModel: DeviceViewModel
     
     @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>

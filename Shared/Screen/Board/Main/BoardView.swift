@@ -28,6 +28,18 @@ struct BoardView: View {
                 .opacity(showBoardList ? 1 : 0)
             contentMapView()
                 .opacity((!showAccount && !showSettings && !showBoardList) ? 1 : 0)
+            AutoConnectView(
+                showSettings: Binding<Bool>(
+                    get: { true },
+                    set: { _ in
+                    }),
+                showVPNSetting: Binding<Bool>(
+                    get: { true },
+                    set: { _ in
+                    }
+                ), viewModel: AutoConnectViewModel(),
+                instantlyShowAutoConnect: $viewModel.instantlyShowAutoConnect)
+            .opacity(viewModel.instantlyShowAutoConnect ? 1 : 0)
         }
         .popup(isPresented: $viewModel.showAlert, type: .floater(verticalPadding: 10), position: .bottom, animation: .easeInOut, autohideIn: 10, closeOnTap: false, closeOnTapOutside: true) {
             ToastView(title: viewModel.error?.title ?? "",
@@ -36,15 +48,30 @@ struct BoardView: View {
                 viewModel.showAlert = false
             })
         }
-        .onChange(of: viewModel.nodeConnected, perform: { newValue in
-            showAccount = false
-            showSettings = false
-            showBoardList = false
-        })
-        .animation(Animation.linear(duration: 0.25))
-        .preferredColorScheme(.dark)
-        .navigationBarHidden(true)
-        .edgesIgnoringSafeArea(.all)
+        .popup(isPresented: $viewModel.showAlertAutoConnectSetting,
+               type: .floater(verticalPadding: 10),
+               position: .bottom,
+               animation: .easeInOut,
+               autohideIn: 5,
+               closeOnTap: false,
+               closeOnTapOutside: true) {
+            ToastView(title: "Disable auto-conenct",
+                      message: "Open Setting",
+                      cancelAction: {
+                viewModel.instantlyShowAutoConnect = false
+            }, confirmAction: {
+                viewModel.instantlyShowAutoConnect = true
+            })
+        }
+               .onChange(of: viewModel.nodeConnected, perform: { newValue in
+                   showAccount = false
+                   showSettings = false
+                   showBoardList = false
+               })
+               .animation(Animation.linear(duration: 0.25))
+               .preferredColorScheme(.dark)
+               .navigationBarHidden(true)
+               .edgesIgnoringSafeArea(.all)
     }
     
     func handlerTapLeftNavigation() {
@@ -62,7 +89,8 @@ struct BoardView: View {
     
     func settingView() -> some View {
         SettingsView(showSettings: $showSettings,
-                     statusConnect: $viewModel.state)
+                     statusConnect: $viewModel.state,
+                     instantlyShowAutoConnect: $viewModel.instantlyShowAutoConnect)
     }
     
     func boardListView() -> some View {
@@ -105,6 +133,7 @@ struct BoardView: View {
                                   uploadSpeed: viewModel.uploadSpeed,
                                   downloadSpeed: viewModel.downloadSpeed)
                         .onTapGesture {
+                            viewModel.disconnectByUser = true
                             viewModel.connectVPN()
                         }
                     Spacer()

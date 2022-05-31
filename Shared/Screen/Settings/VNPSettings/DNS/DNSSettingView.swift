@@ -8,6 +8,7 @@
 import Foundation
 import SwiftUI
 import ExytePopupView
+import TunnelKitManager
 
 enum DNSSetting: String {
     case system = "default"
@@ -42,7 +43,7 @@ struct DNSSettingView: View {
     @Binding var showSettings: Bool
     @Binding var showDNSSetting: Bool
     @StateObject var viewModel: DNSSettingViewModel
-    @State var statusConnect: BoardViewModel.StateBoard = .connected
+    @State var statusConnect: VPNStatus = .connected
     
     @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
     @State var dnsSetting: DNSSetting {

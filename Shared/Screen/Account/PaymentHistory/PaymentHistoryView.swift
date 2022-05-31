@@ -6,12 +6,13 @@
 //
 
 import SwiftUI
+import TunnelKitManager
 
 struct PaymentHistoryView: View {
     
     @Binding var showAccount: Bool
     @Binding var showAccountStatus: Bool
-    @State var statusConnect: BoardViewModel.StateBoard = .connected
+    @State var statusConnect: VPNStatus = .connected
     
     @State var paymentHistoryList = [PaymentHistory(cancel: true), PaymentHistory(), PaymentHistory()]
     

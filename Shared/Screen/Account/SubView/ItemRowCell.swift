@@ -48,7 +48,7 @@ struct ItemRowCell: View {
     
     @State var position: PositionItemCell = .middle
     
-    @State var switchValue: Bool = false
+    var switchValue: Bool = false
     var onSwitchValueChange: ((Bool) -> Void)?
     
     var body: some View {
@@ -75,20 +75,25 @@ struct ItemRowCell: View {
                     Image(Constant.Account.rightButton)
                         .padding()
                 } else if showSwitch {
-                    Toggle(isOn: $switchValue) {}
-                        .onChange(of: switchValue) { value in
+                    Toggle(isOn: Binding<Bool>(
+                        get: { switchValue },
+                        set: { value in
                             if let action = onSwitchValueChange {
                                 action(value)
                             }
                         }
+                    )) {}
                         .toggleStyle(CheckmarkToggleStyle())
-                } else if showSelect {
-                    Toggle(isOn: $switchValue) {}
-                        .onChange(of: switchValue) { value in
+                } else
+                if showSelect {
+                    Toggle(isOn: Binding<Bool>(
+                        get: { switchValue },
+                        set: { value in
                             if let action = onSwitchValueChange {
                                 action(value)
                             }
                         }
+                    )) {}
                         .toggleStyle(SelectToggleStyle())
                 }
             }

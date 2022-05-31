@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import TunnelKitManager
 
 struct ProtocolSettingView: View {
     @Binding var showSettings: Bool
@@ -13,7 +14,7 @@ struct ProtocolSettingView: View {
     @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
     
     @StateObject var viewModel: ProtocolSettingViewModel
-    @State var statusConnect: BoardViewModel.StateBoard = .connected
+    @State var statusConnect: VPNStatus = .connected
     
     var body: some View {
         ScrollView(.vertical, showsIndicators: false) {

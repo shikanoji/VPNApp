@@ -19,6 +19,7 @@ enum APIError: Error {
     case parsing(DecodingError?)
     case unknown
     case identified(alert: String = L10n.Global.error, message: String = L10n.Global.somethingWrong)
+    case noInternet
     
     var localizedDescription: String {
         /// User feedback
@@ -29,6 +30,8 @@ enum APIError: Error {
             return "Sorry, the connection to our server failed."
         case .url(let error):
             return error?.localizedDescription ?? "Something went wrong."
+        case .noInternet:
+            return "No internet connection"
         }
     }
     
@@ -51,6 +54,8 @@ enum APIError: Error {
             return "permission error"
         case .identified(_ , let message):
             return message
+        case .noInternet:
+            return "No internet connection"
         }
     }
     
