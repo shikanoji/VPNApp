@@ -45,6 +45,10 @@ enum AppKeys: String {
     case updateDataMap = "updateDataMap"
     
     case selectConfig = "selectConfig"
+    
+    //DNS
+    case dnsSetting = "dnsSetting"
+    case customDNSValue = "customDNSValue"
 }
 
 struct AppSetting {
@@ -240,5 +244,26 @@ struct AppSetting {
         let accountCreatedTimeInteval = TimeInterval(accountCreatedSecond)
         let joinedDate = DateInRegion(seconds: accountCreatedTimeInteval, region: .local)
         return joinedDate
+    }
+    
+    var dnsSetting: DNSSetting {
+        get {
+            guard let settingString = UserDefaults.standard.string(forKey: AppKeys.dnsSetting.rawValue) else {
+                return .system
+            }
+            return DNSSetting(rawValue: settingString) ?? .custom
+        }
+        set {
+            UserDefaults.standard.setValue(newValue.rawValue, forKey: AppKeys.dnsSetting.rawValue)
+        }
+    }
+    
+    var customDNSValue: String {
+        get {
+            UserDefaults.standard.string(forKey: AppKeys.customDNSValue.rawValue) ?? ""
+        }
+        set {
+            UserDefaults.standard.setValue(newValue, forKey: AppKeys.customDNSValue.rawValue)
+        }
     }
 }

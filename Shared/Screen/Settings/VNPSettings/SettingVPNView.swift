@@ -14,6 +14,8 @@ struct SettingVPNView: View {
     @State var statusConnect: BoardViewModel.StateBoard = .connected
     @State var showAutoConnect = false
     @State var showProtocolConnect = false
+    @State var showDNSSetting = false
+
     @State var itemList: [ItemCellType] = [
         .autoConnet,
         .protocolConnect,
@@ -51,6 +53,8 @@ struct SettingVPNView: View {
                                     showAutoConnect = true
                                 case .protocolConnect:
                                     showProtocolConnect = true
+                                case .dns:
+                                    showDNSSetting = true
                                 default:
                                     return
                                 }
@@ -73,6 +77,12 @@ struct SettingVPNView: View {
                                 showVPNSetting: $showVPNSetting,
                                 viewModel: ProtocolSettingViewModel()),
                            isActive: $showProtocolConnect) { }
+            NavigationLink(destination:
+                            DNSSettingView(showSettings: $showSettings,
+                                           showDNSSetting: $showDNSSetting,
+                                           viewModel: DNSSettingViewModel(),
+                                           dnsSetting: AppSetting.shared.dnsSetting),
+                           isActive: $showDNSSetting) { }
         }
         .navigationBarHidden(true)
         .background(AppColor.background)

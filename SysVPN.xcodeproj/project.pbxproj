@@ -16,6 +16,8 @@
 		6384B4F9276C43DD00E904D2 /* BoardViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6384B4F7276C43DD00E904D2 /* BoardViewModel.swift */; };
 		6F0CD61FF3AFF3CA9797036C /* Pods_SysVPN__iOS_.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0AE9DF7C938744F5B3604B33 /* Pods_SysVPN__iOS_.framework */; };
 		7CE7703BC45FFB67D75B5F6B /* Pods_OpenVPN.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E5501EB54E470D0780031D15 /* Pods_OpenVPN.framework */; };
+		AC1195D22844D71D002230F0 /* DNSSettingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC1195D12844D71D002230F0 /* DNSSettingView.swift */; };
+		AC1195DB28452313002230F0 /* DNSSettingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC1195DA28452313002230F0 /* DNSSettingViewModel.swift */; };
 		AC4051E227CCB6860054F6AE /* ToastView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC4051E127CCB6860054F6AE /* ToastView.swift */; };
 		AC490871281B9FC600DB430B /* NotificationExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC490870281B9FC600DB430B /* NotificationExtension.swift */; };
 		AC490873281B9FFB00DB430B /* PublisherExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC490872281B9FFB00DB430B /* PublisherExtension.swift */; };
@@ -139,10 +141,6 @@
 		EE03444128090AB7003DFB64 /* OpenVPNPacketTunnelProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE03444028090AB7003DFB64 /* OpenVPNPacketTunnelProvider.swift */; };
 		EE03444628090AB7003DFB64 /* OpenVPN.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = EE03443D28090AB7003DFB64 /* OpenVPN.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		EE03445A2809204E003DFB64 /* NetworkExtension.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EE0344592809204E003DFB64 /* NetworkExtension.framework */; };
-		EE269072282902820078AC3B /* OpenVPNManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE034413280827D6003DFB64 /* OpenVPNManager.swift */; };
-		EE2D6BE82812A807008E1431 /* OpenVPNManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE034413280827D6003DFB64 /* OpenVPNManager.swift */; };
-		EE2D6BE92812A810008E1431 /* NetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE78F767280FB6CE00F49903 /* NetworkManager.swift */; };
-		EE2D6BEA2812A810008E1431 /* NetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE78F767280FB6CE00F49903 /* NetworkManager.swift */; };
 		EE2D6BEF2818EFA4008E1431 /* StaticServer.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE9B8B5727C387C50077BCFC /* StaticServer.swift */; };
 		EE2D6BF02818EFA4008E1431 /* StaticServer.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE9B8B5727C387C50077BCFC /* StaticServer.swift */; };
 		EE2D6BF22819276C008E1431 /* ProtocolSettingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE2D6BF12819276C008E1431 /* ProtocolSettingView.swift */; };
@@ -182,7 +180,6 @@
 		EE78F73E280E732700F49903 /* wg_ios_client.conf in Resources */ = {isa = PBXBuildFile; fileRef = EE78F73A280E732700F49903 /* wg_ios_client.conf */; };
 		EE78F73F280E732700F49903 /* wg_ios_client.conf in Resources */ = {isa = PBXBuildFile; fileRef = EE78F73A280E732700F49903 /* wg_ios_client.conf */; };
 		EE78F740280E732700F49903 /* wg_ios_client.conf in Resources */ = {isa = PBXBuildFile; fileRef = EE78F73A280E732700F49903 /* wg_ios_client.conf */; };
-		EE78F748280E763400F49903 /* WireGuardManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE78F742280E763400F49903 /* WireGuardManager.swift */; };
 		EE78F74A280E781100F49903 /* WireGuardManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE78F742280E763400F49903 /* WireGuardManager.swift */; };
 		EE78F750280FA08100F49903 /* TunnelKit in Frameworks */ = {isa = PBXBuildFile; productRef = EE78F74F280FA08100F49903 /* TunnelKit */; };
 		EE78F768280FB6CE00F49903 /* NetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE78F767280FB6CE00F49903 /* NetworkManager.swift */; };
@@ -194,7 +191,6 @@
 		EE78F7772811068C00F49903 /* TunnelKitOpenVPN in Frameworks */ = {isa = PBXBuildFile; productRef = EE78F7762811068C00F49903 /* TunnelKitOpenVPN */; };
 		EE78F7792811068C00F49903 /* TunnelKitOpenVPNAppExtension in Frameworks */ = {isa = PBXBuildFile; productRef = EE78F7782811068C00F49903 /* TunnelKitOpenVPNAppExtension */; };
 		EE78F77B2811068C00F49903 /* TunnelKitWireGuard in Frameworks */ = {isa = PBXBuildFile; productRef = EE78F77A2811068C00F49903 /* TunnelKitWireGuard */; };
-		EE78F77C281106AC00F49903 /* WireGuardManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE78F742280E763400F49903 /* WireGuardManager.swift */; };
 		EE78F77E2811526C00F49903 /* RequestCertificateModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE78F77D2811526B00F49903 /* RequestCertificateModel.swift */; };
 		EE78F77F2812500C00F49903 /* Node.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE85EE0E27BDF5B6000F967A /* Node.swift */; };
 		EE78F7802812500C00F49903 /* Node.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE85EE0E27BDF5B6000F967A /* Node.swift */; };
@@ -270,8 +266,6 @@
 		EE8B373B2812514400D14E1F /* AssetsExtension+SwiftUI.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC6074E527DDD06200DD5667 /* AssetsExtension+SwiftUI.swift */; };
 		EE8B373C28125E3D00D14E1F /* RequestCertificateModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE78F77D2811526B00F49903 /* RequestCertificateModel.swift */; };
 		EE8B373D28125E3E00D14E1F /* RequestCertificateModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE78F77D2811526B00F49903 /* RequestCertificateModel.swift */; };
-		EE9B77B5283B7AED00240E89 /* AppSetting.swift in Sources */ = {isa = PBXBuildFile; fileRef = D78044F3275912AC0086E59D /* AppSetting.swift */; };
-		EE9B77B6283B7AED00240E89 /* AppSetting.swift in Sources */ = {isa = PBXBuildFile; fileRef = D78044F3275912AC0086E59D /* AppSetting.swift */; };
 		EE9B8B5627C37C320077BCFC /* LinearGradientStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE9B8B5527C37C320077BCFC /* LinearGradientStatus.swift */; };
 		EE9B8B5827C387C50077BCFC /* StaticServer.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE9B8B5727C387C50077BCFC /* StaticServer.swift */; };
 		EEAD5C512779C2D3008181E3 /* SpeedConnectedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEAD5C502779C2D3008181E3 /* SpeedConnectedView.swift */; };
@@ -347,6 +341,8 @@
 		6642C43C25C5CB1222F221FA /* Pods-WireGuard.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-WireGuard.debug.xcconfig"; path = "Target Support Files/Pods-WireGuard/Pods-WireGuard.debug.xcconfig"; sourceTree = "<group>"; };
 		72EB358C2FDC72EB6B3F3EC0 /* Pods_SysVPN__macOS_.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SysVPN__macOS_.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		9C14946349D2D183F4694F71 /* Pods-WireGuard.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-WireGuard.release.xcconfig"; path = "Target Support Files/Pods-WireGuard/Pods-WireGuard.release.xcconfig"; sourceTree = "<group>"; };
+		AC1195D12844D71D002230F0 /* DNSSettingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DNSSettingView.swift; sourceTree = "<group>"; };
+		AC1195DA28452313002230F0 /* DNSSettingViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DNSSettingViewModel.swift; sourceTree = "<group>"; };
 		AC4051E127CCB6860054F6AE /* ToastView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToastView.swift; sourceTree = "<group>"; };
 		AC490870281B9FC600DB430B /* NotificationExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationExtension.swift; sourceTree = "<group>"; };
 		AC490872281B9FFB00DB430B /* PublisherExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PublisherExtension.swift; sourceTree = "<group>"; };
@@ -617,6 +613,44 @@
 				EE3246DF2822359B0070FB91 /* SubView */,
 			);
 			path = Board;
+			sourceTree = "<group>";
+		};
+		AC1195D02844D70D002230F0 /* DNS */ = {
+			isa = PBXGroup;
+			children = (
+				AC1195D12844D71D002230F0 /* DNSSettingView.swift */,
+				AC1195DA28452313002230F0 /* DNSSettingViewModel.swift */,
+			);
+			path = DNS;
+			sourceTree = "<group>";
+		};
+		AC1195D728451AC6002230F0 /* VNPSettings */ = {
+			isa = PBXGroup;
+			children = (
+				EE89101D2797F25200ADF293 /* SettingVPNView.swift */,
+				AC1195D928451B0A002230F0 /* ProtocolSetting */,
+				AC1195D828451AFB002230F0 /* AutoConnect */,
+				AC1195D02844D70D002230F0 /* DNS */,
+			);
+			path = VNPSettings;
+			sourceTree = "<group>";
+		};
+		AC1195D828451AFB002230F0 /* AutoConnect */ = {
+			isa = PBXGroup;
+			children = (
+				EE8910202797F6D400ADF293 /* AutoConnectView.swift */,
+			);
+			path = AutoConnect;
+			sourceTree = "<group>";
+		};
+		AC1195D928451B0A002230F0 /* ProtocolSetting */ = {
+			isa = PBXGroup;
+			children = (
+				EE2D6BF12819276C008E1431 /* ProtocolSettingView.swift */,
+				EE2D6BF428193D08008E1431 /* ProtocolSettingViewModel.swift */,
+				EE2D6BF7281BA902008E1431 /* ProtocolSettingCellView.swift */,
+			);
+			path = ProtocolSetting;
 			sourceTree = "<group>";
 		};
 		AC6074DB27DD011F00DD5667 /* Resources */ = {
@@ -1210,13 +1244,9 @@
 		EE8910142797AC3000ADF293 /* Settings */ = {
 			isa = PBXGroup;
 			children = (
+				AC1195D728451AC6002230F0 /* VNPSettings */,
 				AC79CE07282CFA6D00E1E874 /* Tools */,
 				EE8910152797AC3D00ADF293 /* SettingsView.swift */,
-				EE89101D2797F25200ADF293 /* SettingVPNView.swift */,
-				EE8910202797F6D400ADF293 /* AutoConnectView.swift */,
-				EE2D6BF12819276C008E1431 /* ProtocolSettingView.swift */,
-				EE2D6BF428193D08008E1431 /* ProtocolSettingViewModel.swift */,
-				EE2D6BF7281BA902008E1431 /* ProtocolSettingCellView.swift */,
 			);
 			path = Settings;
 			sourceTree = "<group>";
@@ -1723,6 +1753,7 @@
 				D71CE4FD27903D4F00E8731D /* SubscriptionIntroductionView.swift in Sources */,
 				EE9B8B5827C387C50077BCFC /* StaticServer.swift in Sources */,
 				D788B18927635BC000855C24 /* AppButton.swift in Sources */,
+				AC1195DB28452313002230F0 /* DNSSettingViewModel.swift in Sources */,
 				D78044E12758F5110086E59D /* UIApplicationExtension.swift in Sources */,
 				6353F842276F333900B42334 /* StatusVPNView.swift in Sources */,
 				EEAD5C53277AC968008181E3 /* MapView.swift in Sources */,
@@ -1766,6 +1797,7 @@
 				D7A4AC4527954A7900C88162 /* PlanListCell.swift in Sources */,
 				EE85EDC127B369B6000F967A /* StaticIPListView.swift in Sources */,
 				EE890FFB27956B9100ADF293 /* ChangePasswordView.swift in Sources */,
+				AC1195D22844D71D002230F0 /* DNSSettingView.swift in Sources */,
 				D78044F62759133A0086E59D /* Constant.swift in Sources */,
 				EE890FFE27956E0E00ADF293 /* ChangePasswordViewModel.swift in Sources */,
 				EE85EE1127BDF5B6000F967A /* SelectionHandler.swift in Sources */,
@@ -1886,14 +1918,10 @@
 			files = (
 				EE8B37362812512300D14E1F /* Constant.swift in Sources */,
 				EE78F77F2812500C00F49903 /* Node.swift in Sources */,
-				EE9B77B5283B7AED00240E89 /* AppSetting.swift in Sources */,
-				EE2D6BE92812A810008E1431 /* NetworkManager.swift in Sources */,
 				EE8B37382812513300D14E1F /* XCAssets+Generated.swift in Sources */,
 				EE2D6BFE281BD78A008E1431 /* ObtainCertificateModel.swift in Sources */,
 				EE8B37342812511800D14E1F /* Strings+Generated.swift in Sources */,
 				EE2D6BEF2818EFA4008E1431 /* StaticServer.swift in Sources */,
-				EE2D6BE82812A807008E1431 /* OpenVPNManager.swift in Sources */,
-				EE78F77C281106AC00F49903 /* WireGuardManager.swift in Sources */,
 				EE8B373C28125E3D00D14E1F /* RequestCertificateModel.swift in Sources */,
 				EE3246F528226A9F0070FB91 /* AppColor.swift in Sources */,
 				EE8B373A2812514400D14E1F /* AssetsExtension+SwiftUI.swift in Sources */,
@@ -1906,8 +1934,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				EE8B37372812512400D14E1F /* Constant.swift in Sources */,
-				EE2D6BEA2812A810008E1431 /* NetworkManager.swift in Sources */,
-				EE9B77B6283B7AED00240E89 /* AppSetting.swift in Sources */,
 				EE78F7802812500C00F49903 /* Node.swift in Sources */,
 				EE2D6BFD281BD789008E1431 /* ObtainCertificateModel.swift in Sources */,
 				EE8B37392812513300D14E1F /* XCAssets+Generated.swift in Sources */,
@@ -1916,9 +1942,7 @@
 				EE46BCCF280963F4003C4FEB /* WireGuardPacketTunnelProvider.swift in Sources */,
 				EE8B373D28125E3E00D14E1F /* RequestCertificateModel.swift in Sources */,
 				EE3246F628226AA00070FB91 /* AppColor.swift in Sources */,
-				EE269072282902820078AC3B /* OpenVPNManager.swift in Sources */,
 				EE8B373B2812514400D14E1F /* AssetsExtension+SwiftUI.swift in Sources */,
-				EE78F748280E763400F49903 /* WireGuardManager.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
