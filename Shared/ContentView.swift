@@ -26,7 +26,7 @@ struct ContentView: View {
                         .resizable()
                         .aspectRatio(contentMode: .fit)
                     Asset.Assets.logoMedium.SuImage
-//                    LoadingView()
+                    //                    LoadingView()
                 }
             } else {
                 NavigationView {
@@ -40,8 +40,10 @@ struct ContentView: View {
                         NoticeView()
                     }
                     
-                }.navigationBarTitleDisplayMode(.inline)
-                    .navigationAppearance(backgroundColor: UIColor(AppColor.background), foregroundColor: UIColor.white, tintColor: UIColor.white, hideSeparator: true)
+                }
+                .navigationViewStyle(StackNavigationViewStyle())
+                .navigationBarTitleDisplayMode(.inline)
+                .navigationAppearance(backgroundColor: UIColor(AppColor.background), foregroundColor: UIColor.white, tintColor: UIColor.white, hideSeparator: true)
             }
         }.ignoresSafeArea()
     }

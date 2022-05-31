@@ -62,7 +62,9 @@ class BoardViewModel: ObservableObject {
         case staticIP = 1
         case multiHop = 2
     }
-    
+    @Published var showAutoConnect: Bool = false
+    @Published var showProtocolConnect: Bool = false
+    @Published var showDNSSetting: Bool = false
     @Published var state: VPNStatus = .disconnected
     @Published var ip = AppSetting.shared.ip
     @Published var flag = ""
@@ -154,7 +156,7 @@ class BoardViewModel: ObservableObject {
     
     var isProcessingVPN = false
     
-    @Published var instantlyShowAutoConnect = false {
+    @Published var shouldHideAutoConnect = true {
         didSet {
             if ItemCellType(rawValue: AppSetting.shared.selectAutoConnect) == .off {
                 stopAutoconnectTimer()

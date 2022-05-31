@@ -131,7 +131,7 @@ enum ItemCellType: Int, Decodable {
     case protection
     case help
     
-    case autoConnet
+    case autoConnect
     case protocolConnect
     case split
     case dns
@@ -174,7 +174,7 @@ enum ItemCellType: Int, Decodable {
             return L10n.Settings.itemProtec
         case .help:
             return L10n.Settings.itemHelp
-        case .autoConnet:
+        case .autoConnect:
             return L10n.Settings.itemAuto
         case .protocolConnect:
             return L10n.Settings.itemProtocol
@@ -255,7 +255,7 @@ enum ItemCellType: Int, Decodable {
             return AppSetting.shared.protection ? L10n.Settings.enabled : L10n.Settings.disabled
         case .help:
             return AppSetting.shared.help ? L10n.Settings.enabled : L10n.Settings.disabled
-        case .autoConnet:
+        case .autoConnect:
             if let type = ItemCellType(rawValue: AppSetting.shared.selectAutoConnect) {
                 return type.title
             }

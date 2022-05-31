@@ -43,7 +43,7 @@ struct DNSSettingView: View {
     @Binding var showSettings: Bool
     @Binding var showDNSSetting: Bool
     @StateObject var viewModel: DNSSettingViewModel
-    @State var statusConnect: VPNStatus = .connected
+    @Binding var statusConnect: VPNStatus
     
     @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
     @State var dnsSetting: DNSSetting {
@@ -63,8 +63,8 @@ struct DNSSettingView: View {
                     tapLeftButton: {
                         presentationMode.wrappedValue.dismiss()
                     }, tapRightButton: {
-                        showSettings = false
                         showDNSSetting = false
+                        showSettings = false
                     }, statusConnect: statusConnect)
                 VStack(alignment: .leading, spacing: 1) {
                     StaticOptionCell(title: L10n.Settings.Dns.default,

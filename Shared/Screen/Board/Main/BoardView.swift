@@ -29,17 +29,16 @@ struct BoardView: View {
             contentMapView()
                 .opacity((!showAccount && !showSettings && !showBoardList) ? 1 : 0)
             AutoConnectView(
-                showSettings: Binding<Bool>(
-                    get: { true },
-                    set: { _ in
-                    }),
+                showSettings: .constant(true),
                 showVPNSetting: Binding<Bool>(
                     get: { true },
                     set: { _ in
                     }
-                ), viewModel: AutoConnectViewModel(),
-                instantlyShowAutoConnect: $viewModel.instantlyShowAutoConnect)
-            .opacity(viewModel.instantlyShowAutoConnect ? 1 : 0)
+                ),
+                shouldHideAutoConnect: $viewModel.shouldHideAutoConnect,
+                statusConnect: viewModel.state,
+                viewModel: AutoConnectViewModel())
+            .opacity(viewModel.shouldHideAutoConnect ? 0 : 1)
         }
         .popup(isPresented: $viewModel.showAlert, type: .floater(verticalPadding: 10), position: .bottom, animation: .easeInOut, autohideIn: 10, closeOnTap: false, closeOnTapOutside: true) {
             ToastView(title: viewModel.error?.title ?? "",
@@ -58,9 +57,10 @@ struct BoardView: View {
             ToastView(title: "Disable auto-conenct",
                       message: "Open Setting",
                       cancelAction: {
-                viewModel.instantlyShowAutoConnect = false
+                viewModel.showAlertAutoConnectSetting = false
             }, confirmAction: {
-                viewModel.instantlyShowAutoConnect = true
+                viewModel.showAlertAutoConnectSetting = false
+                viewModel.shouldHideAutoConnect = false
             })
         }
                .onChange(of: viewModel.nodeConnected, perform: { newValue in
@@ -90,7 +90,9 @@ struct BoardView: View {
     func settingView() -> some View {
         SettingsView(showSettings: $showSettings,
                      statusConnect: $viewModel.state,
-                     instantlyShowAutoConnect: $viewModel.instantlyShowAutoConnect)
+                     showAutoConnect: $viewModel.showAutoConnect,
+                     showProtocolConnect: $viewModel.showProtocolConnect,
+                     showDNSSetting: $viewModel.showDNSSetting)
     }
     
     func boardListView() -> some View {
@@ -132,10 +134,10 @@ struct BoardView: View {
                     ConnectButton(status: viewModel.state,
                                   uploadSpeed: viewModel.uploadSpeed,
                                   downloadSpeed: viewModel.downloadSpeed)
-                        .onTapGesture {
-                            viewModel.disconnectByUser = true
-                            viewModel.connectVPN()
-                        }
+                    .onTapGesture {
+                        viewModel.disconnectByUser = true
+                        viewModel.connectVPN()
+                    }
                     Spacer()
                         .frame(height: Constant.Board.Tabs.topPadding)
                     BoardTabView(tab: $viewModel.tab, showBoardList: $showBoardList)
