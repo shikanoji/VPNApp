@@ -15,30 +15,6 @@ enum DNSSetting: String {
     case custom = "custom"
 }
 
-struct StaticOptionCell: View {
-    let title: String
-    let position: PositionItemCell
-    @Binding var isOn: Bool
-    var body: some View {
-        HStack {
-            VStack(alignment: .leading, spacing: 6) {
-                Text(title)
-                    .font(Constant.Menu.fontItem)
-            }
-            .padding(.leading, 16.0)
-            Spacer()
-            Toggle(isOn: $isOn, label: {})
-                .toggleStyle(SelectToggleStyle())
-                .padding(.trailing, 15.0)
-        }
-        .padding(.vertical, 8.0)
-        .frame(minHeight: Constant.Menu.heightItemMenu)
-        .frame(maxWidth: .infinity)
-        .background(AppColor.darkButton)
-        .cornerRadius(radius: Constant.Menu.radiusCell, corners: [position.rectCorner])
-    }
-}
-
 struct DNSSettingView: View {
     @Binding var showSettings: Bool
     @Binding var showDNSSetting: Bool
@@ -52,6 +28,34 @@ struct DNSSettingView: View {
         }
     }
     private let componentWidth = UIScreen.main.bounds.width - 2 * Constant.Menu.hozitalPaddingCell
+    
+    private var customDNSSection: some View {
+        VStack {
+            Spacer().frame(height: 30)
+            HStack {
+                Text(L10n.Settings.Dns.Custom.title)
+                    .font(.system(size: 16, weight: .bold))
+                    .foregroundColor(Color.white)
+                Spacer()
+            }.frame(width: componentWidth)
+            Spacer().frame(height: 20)
+            Form(placeholder: L10n.Settings.Dns.Custom.primaryDNS,
+                 value: $viewModel.primaryDNSValue,
+                 width: componentWidth)
+            Spacer().frame(height: 20)
+            Form(placeholder: L10n.Settings.Dns.Custom.secondaryDNS,
+                 value: $viewModel.secondaryDNSValue,
+                 width: componentWidth)
+            Spacer().frame(height: 20)
+            AppButton(style: .themeButton,
+                      width: componentWidth,
+                      text: L10n.Settings.Dns.save,
+                      action: {
+                viewModel.save()
+            })
+        }
+    }
+    
     var body: some View {
         ScrollView(.vertical, showsIndicators: false) {
             VStack() {
@@ -67,32 +71,17 @@ struct DNSSettingView: View {
                         showSettings = false
                     }, statusConnect: statusConnect)
                 VStack(alignment: .leading, spacing: 1) {
-                    StaticOptionCell(title: L10n.Settings.Dns.default,
-                                     position: .top,
-                                     isOn: $viewModel.selectedDefaultDns)
-                    
-                    StaticOptionCell(title: L10n.Settings.Dns.custom,
-                                     position: .bot,
-                                     isOn: $viewModel.selectedCustomDns)
+                    ItemRowCell(title: L10n.Settings.Dns.default, content: L10n.Settings.Dns.Default.content, showSwitch: true,  position: .all, switchValue: viewModel.selectedDefaultDns, onSwitchValueChange: { value in
+                        viewModel.selectedDefaultDns = value
+                    })
                 }
                 .onChange(of: viewModel.selectedValue) { value in
                     dnsSetting = value
                 }
                 .padding(Constant.Menu.hozitalPaddingCell)
                 .padding(.top, Constant.Menu.topPaddingCell)
-                if viewModel.selectedCustomDns {
-                    Form(placeholder: L10n.Settings.Dns.title,
-                         value: $viewModel.customDNSValue,
-                         width: componentWidth)
-                    Spacer().frame(height: 20)
-                    AppButton(style: .themeButton,
-                              width: componentWidth,
-                              text: L10n.Settings.Dns.save,
-                              action: {
-                        AppSetting.shared.customDNSValue = viewModel.customDNSValue
-                        viewModel.alertMessage = L10n.Global.saveSuccess
-                        viewModel.showAlert = true
-                    })
+                if !viewModel.selectedDefaultDns {
+                    customDNSSection
                 }
             }
         }

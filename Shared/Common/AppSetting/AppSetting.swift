@@ -47,7 +47,8 @@ enum AppKeys: String {
     case selectConfig = "selectConfig"
     //DNS
     case dnsSetting = "dnsSetting"
-    case customDNSValue = "customDNSValue"
+    case primaryDNSValue = "primaryDNSValue"
+    case secondaryDNSValue = "secondaryDNSValue"
     case selectAutoConnect = "selectAutoConnect"
 }
 
@@ -267,12 +268,21 @@ struct AppSetting {
         }
     }
     
-    var customDNSValue: String {
+    var primaryDNSValue: String {
         get {
-            UserDefaults.standard.string(forKey: AppKeys.customDNSValue.rawValue) ?? ""
+            UserDefaults.standard.string(forKey: AppKeys.primaryDNSValue.rawValue) ?? ""
         }
         set {
-            UserDefaults.standard.setValue(newValue, forKey: AppKeys.customDNSValue.rawValue)
+            UserDefaults.standard.setValue(newValue, forKey: AppKeys.primaryDNSValue.rawValue)
+        }
+    }
+    
+    var secondaryDNSValue: String {
+        get {
+            UserDefaults.standard.string(forKey: AppKeys.secondaryDNSValue.rawValue) ?? ""
+        }
+        set {
+            UserDefaults.standard.setValue(newValue, forKey: AppKeys.secondaryDNSValue.rawValue)
         }
     }
 }
