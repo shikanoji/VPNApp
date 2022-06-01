@@ -419,8 +419,20 @@ public enum L10n {
       public static let `default` = L10n.tr("Settings", "DNS.default")
       /// Save
       public static let save = L10n.tr("Settings", "DNS.save")
-      /// DNS
+      /// DNS Settings
       public static let title = L10n.tr("Settings", "DNS.title")
+      public enum Custom {
+        /// Primary DNS
+        public static let primaryDNS = L10n.tr("Settings", "DNS.custom.primaryDNS")
+        /// Secondary DNS
+        public static let secondaryDNS = L10n.tr("Settings", "DNS.custom.secondaryDNS")
+        /// Custom DNS server
+        public static let title = L10n.tr("Settings", "DNS.custom.title")
+      }
+      public enum Default {
+        /// Use default gateway on remote network
+        public static let content = L10n.tr("Settings", "DNS.default.content")
+      }
     }
     public enum Tools {
       /// CyberSec

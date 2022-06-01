@@ -11,23 +11,52 @@ class DNSSettingViewModel: ObservableObject {
     @Published var selectedDefaultDns: Bool = AppSetting.shared.dnsSetting == .system {
         didSet {
             if selectedDefaultDns {
-                selectedCustomDns = false
                 selectedValue = .system
-            }
-        }
-    }
-    @Published var selectedCustomDns: Bool = AppSetting.shared.dnsSetting == .custom {
-        didSet {
-            if selectedCustomDns {
-                selectedDefaultDns = false
+                AppSetting.shared.dnsSetting = .system
+            } else {
                 selectedValue = .custom
+                AppSetting.shared.dnsSetting = .custom
             }
         }
     }
     
     @Published var selectedValue: DNSSetting = AppSetting.shared.dnsSetting
-    @Published var customDNSValue: String = AppSetting.shared.customDNSValue
+    @Published var primaryDNSValue: String = AppSetting.shared.primaryDNSValue
+    @Published var secondaryDNSValue: String = AppSetting.shared.secondaryDNSValue
     @Published var showAlert: Bool = false
     var alertTitle: String = ""
     var alertMessage: String = ""
+    let validIpAddressRegex = "^(([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\\.){3}([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])$"
+    
+    func save() {
+        guard !primaryDNSValue.isEmpty else {
+            alertMessage = "Can not leave Primary DNS empty"
+            showAlert = true
+            return
+        }
+        
+        guard primaryDNSValue.range(of: validIpAddressRegex, options: .regularExpression) != nil else {
+            alertMessage = "Invalid DNS format"
+            showAlert = true
+            return
+        }
+        
+        if secondaryDNSValue.isEmpty {
+            AppSetting.shared.primaryDNSValue = primaryDNSValue
+            alertMessage = L10n.Global.saveSuccess
+            showAlert = true
+            return
+        }
+        
+        guard secondaryDNSValue.range(of: validIpAddressRegex, options: .regularExpression) != nil else {
+            alertMessage = "Invalid DNS format"
+            showAlert = true
+            return
+        }
+        
+        AppSetting.shared.primaryDNSValue = primaryDNSValue
+        AppSetting.shared.secondaryDNSValue = secondaryDNSValue
+        alertMessage = L10n.Global.saveSuccess
+        showAlert = true
+    }
 }

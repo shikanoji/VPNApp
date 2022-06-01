@@ -49,7 +49,11 @@
 "Tools.tapJackingProtection.note" = "Warns you if a malicous app adds a screen overlay to trick you into unintended action.";
 
 //DNS
-"DNS.title" = "DNS";
+"DNS.title" = "DNS Settings";
 "DNS.default" = "Default";
+"DNS.default.content" = "Use default gateway on remote network";
 "DNS.custom" = "Custom";
+"DNS.custom.title" = "Custom DNS server";
+"DNS.custom.primaryDNS" = "Primary DNS";
+"DNS.custom.secondaryDNS" = "Secondary DNS";
 "DNS.save" = "Save";
