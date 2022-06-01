@@ -13,9 +13,11 @@ struct SettingsView: View {
     
     @Binding var statusConnect: VPNStatus
     @State var showVPNSetting = false
-    @Binding var instantlyShowAutoConnect: Bool
     @State var showToolsSetting = false
-    @State var sections: [DataSection] = [
+    @Binding var showAutoConnect: Bool
+    @Binding var showProtocolConnect: Bool
+    @Binding var showDNSSetting: Bool
+    var sections: [DataSection] = [
         DataSection(type: .vpnSetting),
        // DataSection(type: .otherSetting)
     ]
@@ -59,8 +61,10 @@ struct SettingsView: View {
                                     SettingVPNView(
                                         showSettings: $showSettings,
                                         showVPNSetting: $showVPNSetting,
-                                        instantlyShowAutoConnect: $instantlyShowAutoConnect,
-                                        statusConnect: statusConnect),
+                                        statusConnect: $statusConnect,
+                                        showAutoConnect: $showAutoConnect,
+                                        showProtocolConnect: $showProtocolConnect,
+                                        showDNSSetting: $showDNSSetting),
                                    isActive: $showVPNSetting) { }
                     NavigationLink(destination:
                                     ToolsView(showSettings: $showSettings,
@@ -77,16 +81,3 @@ struct SettingsView: View {
     }
 }
 
-
-
-struct SettingsView_Previews: PreviewProvider {
-    
-    @State static var showMenu = true
-    @State static var value: VPNStatus = .connected
-    
-    static var previews: some View {
-        SettingsView(showSettings: $showMenu,
-                     statusConnect: $value,
-                     instantlyShowAutoConnect: $showMenu)
-    }
-}

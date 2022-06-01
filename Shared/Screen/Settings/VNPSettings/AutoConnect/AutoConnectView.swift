@@ -11,14 +11,13 @@ import TunnelKitManager
 struct AutoConnectView: View {
     @Binding var showSettings: Bool
     @Binding var showVPNSetting: Bool
+    @Binding var shouldHideAutoConnect: Bool
     
-    @State var statusConnect: VPNStatus = .connected
-    @State var sectionList: [SectionCell] = []
+    var statusConnect: VPNStatus
+    var sectionList: [SectionCell] = []
     @StateObject var viewModel: AutoConnectViewModel
     @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
-    
-    @Binding var instantlyShowAutoConnect: Bool
-    
+        
     var body: some View {
         ScrollView(.vertical, showsIndicators: false) {
             VStack() {
@@ -28,12 +27,12 @@ struct AutoConnectView: View {
                     leftTitle: L10n.Settings.itemVPN,
                     currentTitle: L10n.Settings.itemAuto,
                     tapLeftButton: {
-                        instantlyShowAutoConnect = false
                         presentationMode.wrappedValue.dismiss()
+                        shouldHideAutoConnect = true
                     }, tapRightButton: {
-                        instantlyShowAutoConnect = false
-                        showSettings = false
                         showVPNSetting = false
+                        showSettings = false
+                        shouldHideAutoConnect = true
                     }, statusConnect: statusConnect)
                 VStack(alignment: .leading, spacing: 1) {
                     ForEach(viewModel.sectionList, id: \.id) { section in
@@ -54,7 +53,6 @@ struct AutoConnectView: View {
                                         onSwitchValueChange: { value in
                                 if value {
                                     viewModel.updateItem(item: item)
-                                    instantlyShowAutoConnect = true
                                 }
                             })
                             .environmentObject(viewModel)
