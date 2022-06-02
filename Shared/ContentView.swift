@@ -25,8 +25,8 @@ struct ContentView: View {
                     Asset.Assets.map.SuImage
                         .resizable()
                         .aspectRatio(contentMode: .fit)
-                    Asset.Assets.logoMedium.SuImage
-                    //                    LoadingView()
+                    //                    Asset.Assets.logoMedium.SuImage
+                    LoadingView()
                 }
             } else {
                 NavigationView {

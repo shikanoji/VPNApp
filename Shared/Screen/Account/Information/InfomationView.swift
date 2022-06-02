@@ -65,7 +65,7 @@ struct InfomationView: View {
                         }, tapRightButton: {
                             showInfomation = false
                             showAccount = false
-                        }, statusConnect: statusConnect)
+                        }, statusConnect: $statusConnect)
                     itemList
                     Spacer()
                     deleteAccountButton

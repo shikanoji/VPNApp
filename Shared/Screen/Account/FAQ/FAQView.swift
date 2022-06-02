@@ -28,7 +28,7 @@ struct FAQView: View {
                             presentationMode.wrappedValue.dismiss()
                         }, tapRightButton: {
                             showAccount = false
-                        }, statusConnect: statusConnect)
+                        }, statusConnect: $statusConnect)
                     VStack(spacing: 1) {
                         ForEach(Array(viewModel.questions.enumerated()), id: \.offset) { index, item in
                             FAQCell(question: item, position: viewModel.questions.getPosition(index), onTap: {

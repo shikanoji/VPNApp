@@ -256,16 +256,15 @@
 		EE8B37392812513300D14E1F /* XCAssets+Generated.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC6074E127DD08D100DD5667 /* XCAssets+Generated.swift */; };
 		EE8B373A2812514400D14E1F /* AssetsExtension+SwiftUI.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC6074E527DDD06200DD5667 /* AssetsExtension+SwiftUI.swift */; };
 		EE8B373B2812514400D14E1F /* AssetsExtension+SwiftUI.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC6074E527DDD06200DD5667 /* AssetsExtension+SwiftUI.swift */; };
-		EE8B373C28125E3D00D14E1F /* RequestCertificateModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE78F77D2811526B00F49903 /* RequestCertificateModel.swift */; };
-		EE8B373D28125E3E00D14E1F /* RequestCertificateModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE78F77D2811526B00F49903 /* RequestCertificateModel.swift */; };
 		EE9B77B8283F2F3B00240E89 /* AutoConnectViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE9B77B7283F2F3B00240E89 /* AutoConnectViewModel.swift */; };
-		EE9B77B9283F2F3B00240E89 /* AutoConnectViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE9B77B7283F2F3B00240E89 /* AutoConnectViewModel.swift */; };
 		EE9B77BF28460AC700240E89 /* ProtocolSettingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE9B77BD28460AC600240E89 /* ProtocolSettingView.swift */; };
 		EE9B77C028460AC700240E89 /* ProtocolSettingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE9B77BD28460AC600240E89 /* ProtocolSettingView.swift */; };
 		EE9B77C128460AC700240E89 /* ProtocolSettingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE9B77BE28460AC700240E89 /* ProtocolSettingViewModel.swift */; };
 		EE9B77C228460AC700240E89 /* ProtocolSettingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE9B77BE28460AC700240E89 /* ProtocolSettingViewModel.swift */; };
 		EE9B77C428460BA100240E89 /* SettingVPNView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE9B77C328460BA100240E89 /* SettingVPNView.swift */; };
 		EE9B77C628460BB400240E89 /* AutoConnectView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE9B77C528460BB400240E89 /* AutoConnectView.swift */; };
+		EE9B77CD2848B0B400240E89 /* RequestCertificateModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE78F77D2811526B00F49903 /* RequestCertificateModel.swift */; };
+		EE9B77CE2848B0B500240E89 /* RequestCertificateModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE78F77D2811526B00F49903 /* RequestCertificateModel.swift */; };
 		EE9B8B5627C37C320077BCFC /* LinearGradientStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE9B8B5527C37C320077BCFC /* LinearGradientStatus.swift */; };
 		EE9B8B5827C387C50077BCFC /* StaticServer.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE9B8B5727C387C50077BCFC /* StaticServer.swift */; };
 		EEAD5C512779C2D3008181E3 /* SpeedConnectedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEAD5C502779C2D3008181E3 /* SpeedConnectedView.swift */; };
@@ -639,6 +638,7 @@
 		AC1195D828451AFB002230F0 /* AutoConnect */ = {
 			isa = PBXGroup;
 			children = (
+				EE9B77B7283F2F3B00240E89 /* AutoConnectViewModel.swift */,
 				EE9B77C528460BB400240E89 /* AutoConnectView.swift */,
 			);
 			path = AutoConnect;
@@ -1248,7 +1248,6 @@
 				AC1195D728451AC6002230F0 /* VNPSettings */,
 				AC79CE07282CFA6D00E1E874 /* Tools */,
 				EE8910152797AC3D00ADF293 /* SettingsView.swift */,
-				EE9B77B7283F2F3B00240E89 /* AutoConnectViewModel.swift */,
 			);
 			path = Settings;
 			sourceTree = "<group>";
@@ -1886,7 +1885,6 @@
 				6384B4F9276C43DD00E904D2 /* BoardViewModel.swift in Sources */,
 				EE9B77C028460AC700240E89 /* ProtocolSettingView.swift in Sources */,
 				EE85EDB427B2146B000F967A /* CityListView.swift in Sources */,
-				EE9B77B9283F2F3B00240E89 /* AutoConnectViewModel.swift in Sources */,
 				AC87539C2801ED10004C5F43 /* DeleteAccountConfirmationView.swift in Sources */,
 				D79C224F27BE0FA100B54613 /* AppSetting+Board.swift in Sources */,
 				D78848942775D84900AF22C6 /* Authentication.swift in Sources */,
@@ -1924,8 +1922,8 @@
 				EE2D6BFE281BD78A008E1431 /* ObtainCertificateModel.swift in Sources */,
 				EE8B37342812511800D14E1F /* Strings+Generated.swift in Sources */,
 				EE2D6BEF2818EFA4008E1431 /* StaticServer.swift in Sources */,
-				EE8B373C28125E3D00D14E1F /* RequestCertificateModel.swift in Sources */,
 				EE3246F528226A9F0070FB91 /* AppColor.swift in Sources */,
+				EE9B77CD2848B0B400240E89 /* RequestCertificateModel.swift in Sources */,
 				EE8B373A2812514400D14E1F /* AssetsExtension+SwiftUI.swift in Sources */,
 				EE03444128090AB7003DFB64 /* OpenVPNPacketTunnelProvider.swift in Sources */,
 			);
@@ -1942,7 +1940,7 @@
 				EE2D6BF02818EFA4008E1431 /* StaticServer.swift in Sources */,
 				EE8B37352812511800D14E1F /* Strings+Generated.swift in Sources */,
 				EE46BCCF280963F4003C4FEB /* WireGuardPacketTunnelProvider.swift in Sources */,
-				EE8B373D28125E3E00D14E1F /* RequestCertificateModel.swift in Sources */,
+				EE9B77CE2848B0B500240E89 /* RequestCertificateModel.swift in Sources */,
 				EE3246F628226AA00070FB91 /* AppColor.swift in Sources */,
 				EE8B373B2812514400D14E1F /* AssetsExtension+SwiftUI.swift in Sources */,
 			);

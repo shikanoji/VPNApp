@@ -13,7 +13,8 @@ struct AutoConnectView: View {
     @Binding var showVPNSetting: Bool
     @Binding var shouldHideAutoConnect: Bool
     
-    var statusConnect: VPNStatus
+    @Binding var statusConnect: VPNStatus
+    
     var sectionList: [SectionCell] = []
     @StateObject var viewModel: AutoConnectViewModel
     @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
@@ -33,7 +34,7 @@ struct AutoConnectView: View {
                         showVPNSetting = false
                         showSettings = false
                         shouldHideAutoConnect = true
-                    }, statusConnect: statusConnect)
+                    }, statusConnect: $statusConnect)
                 VStack(alignment: .leading, spacing: 1) {
                     ForEach(viewModel.sectionList, id: \.id) { section in
                         if section.type.title != "" {

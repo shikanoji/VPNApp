@@ -168,4 +168,8 @@ struct Constant {
     static func convertYToMap(_ y: CGFloat) -> CGFloat {
         return (y / Constant.Board.Map.heightMapOrigin) * (Constant.Board.Map.widthScreen / Constant.Board.Map.ration)
     }
+    
+    struct NameNotification {
+        static let checkAutoconnect = Notification.Name("CheckAutoconnectIfNeeded")
+    }
 }

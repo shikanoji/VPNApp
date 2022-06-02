@@ -11,7 +11,7 @@ import TunnelKitManager
 
 struct ToolsView: View {
     @Binding var showSettings: Bool
-    @State var statusConnect: VPNStatus = .connected
+    @Binding var statusConnect: VPNStatus
     @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
     
     var cyberSecItem: some View {
@@ -62,7 +62,7 @@ struct ToolsView: View {
                     }, tapRightButton: {
                         showSettings = false
                         presentationMode.wrappedValue.dismiss()
-                    }, statusConnect: statusConnect)
+                    }, statusConnect: $statusConnect)
                 VStack(spacing: 1) {
                     cyberSecItem
 //                    killSwitchItem
@@ -78,5 +78,4 @@ struct ToolsView: View {
         .background(AppColor.background)
         .ignoresSafeArea()
     }
-    
 }

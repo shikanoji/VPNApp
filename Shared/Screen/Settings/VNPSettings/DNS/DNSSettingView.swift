@@ -69,7 +69,7 @@ struct DNSSettingView: View {
                     }, tapRightButton: {
                         showDNSSetting = false
                         showSettings = false
-                    }, statusConnect: statusConnect)
+                    }, statusConnect: $statusConnect)
                 VStack(alignment: .leading, spacing: 1) {
                     ItemRowCell(title: L10n.Settings.Dns.default, content: L10n.Settings.Dns.Default.content, showSwitch: true,  position: .all, switchValue: viewModel.selectedDefaultDns, onSwitchValueChange: { value in
                         viewModel.selectedDefaultDns = value

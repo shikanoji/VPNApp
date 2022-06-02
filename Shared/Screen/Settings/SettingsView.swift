@@ -12,11 +12,14 @@ struct SettingsView: View {
     @Binding var showSettings: Bool
     
     @Binding var statusConnect: VPNStatus
+    
     @State var showVPNSetting = false
     @State var showToolsSetting = false
+    
     @Binding var showAutoConnect: Bool
     @Binding var showProtocolConnect: Bool
     @Binding var showDNSSetting: Bool
+    
     var sections: [DataSection] = [
         DataSection(type: .vpnSetting),
        // DataSection(type: .otherSetting)
@@ -31,7 +34,7 @@ struct SettingsView: View {
                     showSettings = false
                 }, tapRightButton: {
                     showSettings = false
-                }, statusConnect: statusConnect)
+                }, statusConnect: $statusConnect)
             ScrollView(showsIndicators: false) {
                 VStack {
                     ForEach(sections, id: \.id) { section in
@@ -63,9 +66,10 @@ struct SettingsView: View {
                                         showVPNSetting: $showVPNSetting,
                                         statusConnect: $statusConnect),
                                    isActive: $showVPNSetting) { }
+                        .isDetailLink(false)
                     NavigationLink(destination:
                                     ToolsView(showSettings: $showSettings,
-                                              statusConnect: statusConnect),
+                                              statusConnect: $statusConnect),
                                    isActive: $showToolsSetting) { }
                 }
             }

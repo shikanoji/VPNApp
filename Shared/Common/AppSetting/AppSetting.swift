@@ -211,7 +211,36 @@ struct AppSetting {
         }
         set {
             UserDefaults.standard.setValue(newValue, forKey: AppKeys.selectAutoConnect.rawValue)
+            NotificationCenter.default.post(name: Constant.NameNotification.checkAutoconnect, object: nil)
         }
+    }
+    
+    mutating func getConfigProtocol() -> ItemCellType {
+        if let type = ItemCellType(rawValue: AppSetting.shared.selectConfig) {
+            if type != .recommend && type != .wireGuard && type != .openVPN {
+                AppSetting.shared.selectConfig = ItemCellType.recommend.rawValue
+                if let typeNew = ItemCellType(rawValue: selectConfig) {
+                    return typeNew
+                }
+            }
+            return type
+        }
+        
+        return .recommend
+    }
+    
+    mutating func getAutoConnectProtocol() -> ItemCellType {
+        if let type = ItemCellType(rawValue: AppSetting.shared.selectAutoConnect) {
+            if type != .always && type != .onWifi && type != .onMobile && type != .off {
+                AppSetting.shared.selectAutoConnect = ItemCellType.recommend.rawValue
+                if let typeNew = ItemCellType(rawValue: selectAutoConnect) {
+                    return typeNew
+                }
+            }
+            return type
+        }
+        
+        return .off
     }
     
     var isRefreshTokenValid: Bool {

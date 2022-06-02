@@ -30,13 +30,9 @@ struct BoardView: View {
                 .opacity((!showAccount && !showSettings && !showBoardList) ? 1 : 0)
             AutoConnectView(
                 showSettings: .constant(true),
-                showVPNSetting: Binding<Bool>(
-                    get: { true },
-                    set: { _ in
-                    }
-                ),
+                showVPNSetting: .constant(true),
                 shouldHideAutoConnect: $viewModel.shouldHideAutoConnect,
-                statusConnect: viewModel.state,
+                statusConnect: $viewModel.state,
                 viewModel: AutoConnectViewModel())
             .opacity(viewModel.shouldHideAutoConnect ? 0 : 1)
         }
@@ -51,14 +47,14 @@ struct BoardView: View {
                type: .floater(verticalPadding: 10),
                position: .bottom,
                animation: .easeInOut,
-               autohideIn: 5,
-               closeOnTap: false,
+               autohideIn: 3,
+               closeOnTap: true,
                closeOnTapOutside: true) {
             ToastView(title: "Disable auto-conenct",
-                      message: "Open Setting",
-                      cancelAction: {
-                viewModel.showAlertAutoConnectSetting = false
-            }, confirmAction: {
+                      message: "",
+                      confirmTitle: "Open Setting",
+                      oneChossing: true,
+                      confirmAction: {
                 viewModel.showAlertAutoConnectSetting = false
                 viewModel.shouldHideAutoConnect = false
             })

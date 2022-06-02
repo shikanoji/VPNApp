@@ -8,24 +8,22 @@
 import Foundation
 import UIKit
 
+extension ItemCellType {
+    var getConfigParam: String {
+        switch self {
+        case .openVPN, .recommend:
+            return "ovpn"
+        case .wireGuard:
+            return "wg"
+        default:
+            return ""
+        }
+    }
+}
+
 class NetworkManager: ObservableObject {
     
     static var shared = NetworkManager()
-    
-    enum ConfigVPN: Int {
-        case openVPN
-        case wireguard
-        case recommend
-        
-        var description: String {
-            switch self {
-            case .openVPN, .recommend:
-                return "ovpn"
-            case .wireguard:
-                return "wg"
-            }
-        }
-    }
     
     enum ProtocolVPN {
         case udp
@@ -43,9 +41,9 @@ class NetworkManager: ObservableObject {
     
     var protocolVPN: ProtocolVPN = .tcp
     
-    var selectConfig: ConfigVPN {
+    var selectConfig: ItemCellType {
         get {
-            return ConfigVPN(rawValue: AppSetting.shared.selectConfig) ?? .recommend
+            return AppSetting.shared.getConfigProtocol()
         }
         set {
             AppSetting.shared.selectConfig = newValue.rawValue
@@ -64,8 +62,10 @@ class NetworkManager: ObservableObject {
         switch selectConfig {
         case .openVPN, .recommend:
             OpenVPNManager.shared.connect()
-        case .wireguard:
+        case .wireGuard:
             WireGuardManager.shared.connect()
+        default:
+            break
         }
     }
     
@@ -73,8 +73,10 @@ class NetworkManager: ObservableObject {
         switch selectConfig {
         case .openVPN, .recommend:
             OpenVPNManager.shared.disconnect()
-        case .wireguard:
+        case .wireGuard:
             WireGuardManager.shared.disconnect()
+        default:
+            break
         }
     }
 }

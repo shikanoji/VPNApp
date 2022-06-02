@@ -13,7 +13,7 @@ struct AccountStatusView: View {
     @Binding var showAccountStatus: Bool
     
     @State var showPayment = false
-    @State var statusConnect: VPNStatus = .connected
+    @Binding var statusConnect: VPNStatus
     @State var showPlanListView: Bool = false
     @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
     
@@ -31,7 +31,7 @@ struct AccountStatusView: View {
                         }, tapRightButton: {
                             showAccountStatus = false
                             showAccount = false
-                        }, statusConnect: statusConnect)
+                        }, statusConnect: $statusConnect)
                     VStack(spacing: 1) {
                         ItemRowCell(title: ItemCellType.statusAccount.title,
                                     content: AppSetting.shared.isPremium ?
@@ -62,7 +62,7 @@ struct AccountStatusView: View {
                             PaymentHistoryView(
                                 showAccount: $showAccount,
                                 showAccountStatus: $showAccountStatus,
-                                statusConnect: statusConnect),
+                                statusConnect: $statusConnect),
                            isActive: $showPayment) { }
             NavigationLink(destination: PlanSelectionView().environmentObject(RegisterResultModel()),
                                        isActive: $showPlanListView) { }
@@ -77,6 +77,6 @@ struct AccountStatusView_Previews: PreviewProvider {
     @State static var show = true
     
     static var previews: some View {
-        AccountStatusView(showAccount: $show, showAccountStatus: $show)
+        AccountStatusView(showAccount: $show, showAccountStatus: $show, statusConnect: .constant(.connected))
     }
 }

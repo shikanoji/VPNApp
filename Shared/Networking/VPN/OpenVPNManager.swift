@@ -27,8 +27,8 @@ class OpenVPNManager: ObservableObject {
     
     func connect() {
         do {
-            let string = NetworkManager.shared.requestCertificate?.convertToString()
-            let config = try OpenVPN.ConfigurationParser.parsed(fromContents: string!).configuration
+            let string = (NetworkManager.shared.requestCertificate?.convertToString() ?? "") + getDNS()
+            let config = try OpenVPN.ConfigurationParser.parsed(fromContents: string).configuration
             cfg = OpenVPN.ProviderConfiguration.init("openVPN", appGroup: appGroup, configuration: config)
             
             Task {
@@ -58,5 +58,16 @@ class OpenVPNManager: ObservableObject {
         Task {
             await vpn.disconnect()
         }
+    }
+    
+    func getDNS() -> String {
+        var stringData = ""
+        if AppSetting.shared.primaryDNSValue != "" {
+            stringData += "dhcp-option DNS " + AppSetting.shared.primaryDNSValue + "\r\n"
+        }
+        if AppSetting.shared.secondaryDNSValue != "" {
+            stringData += "dhcp-option DNS " + AppSetting.shared.secondaryDNSValue + "\r\n"
+        }
+        return stringData
     }
 }

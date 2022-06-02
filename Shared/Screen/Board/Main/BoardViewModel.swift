@@ -142,8 +142,15 @@ class BoardViewModel: ObservableObject {
         
         NotificationCenter.default.addObserver(
             self,
-            selector: #selector(checkAutoconnectIfNeeded),
+            selector: #selector(checkInternetRealTime),
             name: UIApplication.willEnterForegroundNotification,
+            object: nil
+        )
+        
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(checkInternetRealTime),
+            name: Constant.NameNotification.checkAutoconnect,
             object: nil
         )
 
@@ -156,22 +163,12 @@ class BoardViewModel: ObservableObject {
     
     var isProcessingVPN = false
     
-    @Published var shouldHideAutoConnect = true {
-        didSet {
-            if ItemCellType(rawValue: AppSetting.shared.selectAutoConnect) == .off {
-                stopAutoconnectTimer()
-                NetworkManager.shared.disconnect()
-            } else {
-                checkInternetRealTime()
-            }
-        }
-    }
+    @Published var shouldHideAutoConnect = true
     
     @objc private func checkAutoconnectIfNeeded() {
         if let type = ItemCellType(rawValue: AppSetting.shared.selectAutoConnect) {
             if type != .off {
                 if state == .disconnected, !isProcessingVPN {
-                    print("xxx checkAutoconnectIfNeeded \(type)")
                     if Connectivity.sharedInstance.isReachable {
                         switch type {
                         case .always:
@@ -189,7 +186,8 @@ class BoardViewModel: ObservableObject {
                         }
                     }
                 }
-            } else {
+            } else if type == .off {
+                NetworkManager.shared.disconnect()
                 stopAutoconnectTimer()
             }
         }
@@ -238,12 +236,14 @@ class BoardViewModel: ObservableObject {
 
                 flag = NetworkManager.shared.selectNode?.flag ?? ""
 
-            case .wireguard:
+            case .wireGuard:
                 if let iPWireguard = NetworkManager.shared.obtainCertificate?.server?.ipAddress {
                     ip = iPWireguard
                 }
 
                 flag = NetworkManager.shared.selectStaticServer?.flag ?? ""
+            default:
+                break
             }
             getSpeedRealTime()
             
@@ -289,7 +289,7 @@ class BoardViewModel: ObservableObject {
     
     var checkInternetTimer: DispatchSourceTimer?
     
-    func checkInternetRealTime() {
+    @objc func checkInternetRealTime() {
         stopAutoconnectTimer()
         let queue = DispatchQueue.main
         checkInternetTimer = DispatchSource.makeTimerSource(queue: queue)
@@ -368,13 +368,16 @@ class BoardViewModel: ObservableObject {
     }
     
     func prepareConnect(completion: @escaping (Bool) -> Void) {
-        if NetworkManager.shared.selectConfig == .openVPN {
+        switch NetworkManager.shared.selectConfig {
+        case .openVPN, .recommend:
             completion(true)
-        } else {
+        case .wireGuard:
             numberCallObtainCer = 0
             getObtainCertificate() {
                 completion($0)
             }
+        default:
+            break
         }
     }
     
