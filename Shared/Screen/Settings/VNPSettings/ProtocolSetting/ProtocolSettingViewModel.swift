@@ -27,7 +27,7 @@ class ProtocolSettingViewModel: ObservableObject {
                     updateItem.select = true
                 }
             case .wireGuard:
-                if selectConfig == .wireguard {
+                if selectConfig == .wireGuard {
                     updateItem.select = true
                 }
             default:
@@ -53,7 +53,7 @@ class ProtocolSettingViewModel: ObservableObject {
             case .openVPN:
                 NetworkManager.shared.selectConfig = .openVPN
             case .wireGuard:
-                NetworkManager.shared.selectConfig = .wireguard
+                NetworkManager.shared.selectConfig = .wireGuard
             case .recommend:
                 NetworkManager.shared.selectConfig = .recommend
             default:

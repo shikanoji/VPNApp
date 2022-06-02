@@ -16,7 +16,7 @@ struct CustomNavigationView: View {
     let tapLeftButton: () -> Void
     let tapRightButton: () -> Void
     
-    @State var statusConnect: VPNStatus
+    @Binding var statusConnect: VPNStatus
     
     var body: some View {
         VStack {
@@ -39,10 +39,14 @@ struct CustomNavigationView: View {
                 Button  {
                     tapRightButton()
                 } label: {
-                    Text("VPN Connected")
-                        .foregroundColor(AppColor.VPNConnected)
-                        .font(Constant.Account.fontRightNavigation)
+                    Text(statusConnect.statusTitle)
+                        .foregroundColor(statusConnect.statusColor)
+                        .font(Constant.Account.fontSubEmail)
+                        .fontWeight(.semibold)
                     Image(Constant.CustomNavigation.iconRightConnect)
+                        .renderingMode(.template)
+                        .foregroundColor(statusConnect.statusColor)
+                        .font(Constant.Account.fontSubEmail)
                 }
                 .padding()
             }
@@ -63,12 +67,14 @@ struct CustomNavigationView: View {
 }
 
 struct CustomNavigationView_Previews: PreviewProvider {
+    @State static var status: VPNStatus = .connected
+    
     static var previews: some View {
         CustomNavigationView(currentTitle: "Information",tapLeftButton: {
             
         }, tapRightButton: {
             
-        }, statusConnect: .connected)
+        }, statusConnect: $status)
             .previewLayout(.fixed(width: /*@START_MENU_TOKEN@*/365.0/*@END_MENU_TOKEN@*/, height: Constant.Board.Navigation.heightNavigationBar + ("Information" != "" ? Constant.CustomNavigation.heightCurrentTitle : 0)))
     }
 }

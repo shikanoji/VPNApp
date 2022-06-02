@@ -32,7 +32,7 @@ struct DevicesView: View {
                         }, tapRightButton: {
                             showTotalDevice = false
                             showAccount = false
-                        }, statusConnect: statusConnect)
+                        }, statusConnect: $statusConnect)
                     VStack(spacing: 1) {
                         ForEach(viewModel.deviceList) { item in
                             DeviceCell(deviceOnline: item, position: viewModel.getDeviceCellPosition(device: item)) {

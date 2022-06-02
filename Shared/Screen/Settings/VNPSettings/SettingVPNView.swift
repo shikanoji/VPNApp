@@ -40,7 +40,7 @@ struct SettingVPNView: View {
                     }, tapRightButton: {
                         showSettings = false
                         presentationMode.wrappedValue.dismiss()
-                    }, statusConnect: statusConnect)
+                    }, statusConnect: $statusConnect)
                 VStack(spacing: 1) {
                     ForEach(itemList.indices) { i in
                         ItemRowCell(title: itemList[i].title,
@@ -70,14 +70,16 @@ struct SettingVPNView: View {
                                 showSettings: $showSettings,
                                 showVPNSetting: $showVPNSetting,
                                 shouldHideAutoConnect: .constant(false),
-                                statusConnect: statusConnect,
+                                statusConnect: $statusConnect,
                                 viewModel: AutoConnectViewModel()),
                            isActive: $showAutoConnect) { }
+                .isDetailLink(false)
             NavigationLink(destination:
                             ProtocolSettingView(
                                 showSettings: $showSettings,
                                 showVPNSetting: $showVPNSetting,
-                                viewModel: ProtocolSettingViewModel()),
+                                viewModel: ProtocolSettingViewModel(),
+                                statusConnect: $statusConnect),
                            isActive: $showProtocolConnect) { }
             NavigationLink(destination:
                             DNSSettingView(showSettings: $showSettings,

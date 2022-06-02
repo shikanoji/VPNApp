@@ -193,7 +193,7 @@ extension APIService: TargetType {
             // Use "key" temporarily, after remove it
             param["key"] = "f11b69c57d5fe9555e29c57c1d863bf8"
             
-            param["tech"] = NetworkManager.shared.selectConfig.description
+            param["tech"] = NetworkManager.shared.selectConfig.getConfigParam
             param["proto"] = NetworkManager.shared.protocolVPN.description
             param["dev"] = "tun"
             

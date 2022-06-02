@@ -116,7 +116,7 @@ struct AccountView: View {
                             AccountStatusView(
                                 showAccount: $showAccount,
                                 showAccountStatus: $showAccountStatus,
-                                statusConnect: statusConnect),
+                                statusConnect: $statusConnect),
                            isActive: $showAccountStatus) { }
             
             NavigationLink(destination:
@@ -145,7 +145,7 @@ struct AccountView: View {
                     showAccount = false
                 }, tapRightButton: {
                     showAccount = false
-                }, statusConnect: statusConnect)
+                }, statusConnect: $statusConnect)
             header
             content
         }

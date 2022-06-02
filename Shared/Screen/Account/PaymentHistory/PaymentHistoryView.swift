@@ -12,7 +12,7 @@ struct PaymentHistoryView: View {
     
     @Binding var showAccount: Bool
     @Binding var showAccountStatus: Bool
-    @State var statusConnect: VPNStatus = .connected
+    @Binding var statusConnect: VPNStatus
     
     @State var paymentHistoryList = [PaymentHistory(cancel: true), PaymentHistory(), PaymentHistory()]
     
@@ -32,7 +32,7 @@ struct PaymentHistoryView: View {
                         }, tapRightButton: {
                             showAccountStatus = false
                             showAccount = false
-                        }, statusConnect: statusConnect)
+                        }, statusConnect: $statusConnect)
                     VStack(spacing: 1) {
                         ForEach(paymentHistoryList.indices) { i in
                             ItemRowCell(title: paymentHistoryList[i].pack,
@@ -56,6 +56,6 @@ struct PaymentHistoryView_Previews: PreviewProvider {
     @State static var showAccount = true
     
     static var previews: some View {
-        PaymentHistoryView(showAccount: $showAccount, showAccountStatus: $showAccount)
+        PaymentHistoryView(showAccount: $showAccount, showAccountStatus: $showAccount, statusConnect: .constant(.connected))
     }
 }

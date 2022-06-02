@@ -256,12 +256,9 @@ enum ItemCellType: Int, Decodable {
         case .help:
             return AppSetting.shared.help ? L10n.Settings.enabled : L10n.Settings.disabled
         case .autoConnect:
-            if let type = ItemCellType(rawValue: AppSetting.shared.selectAutoConnect) {
-                return type.title
-            }
-            return L10n.Global.off
+            return AppSetting.shared.getAutoConnectProtocol().title
         case .protocolConnect:
-            return L10n.Settings.contentItemProtocol
+            return AppSetting.shared.getConfigProtocol().title
         case .split:
             return L10n.Settings.contentItemSplit
         case .dns:
