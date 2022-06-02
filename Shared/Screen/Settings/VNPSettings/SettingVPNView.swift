@@ -14,9 +14,9 @@ struct SettingVPNView: View {
     @Binding var showVPNSetting: Bool
     
     @Binding var statusConnect: VPNStatus
-    @Binding var showAutoConnect: Bool
-    @Binding var showProtocolConnect: Bool
-    @Binding var showDNSSetting: Bool
+    @State var showAutoConnect: Bool = false
+    @State var showProtocolConnect: Bool = false
+    @State var showDNSSetting: Bool = false
 
     var itemList: [ItemCellType] = [
         .autoConnect,
