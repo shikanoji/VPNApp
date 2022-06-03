@@ -29,27 +29,14 @@ class DNSSettingViewModel: ObservableObject {
     let validIpAddressRegex = "^(([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\\.){3}([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])$"
     
     func save() {
-        guard !primaryDNSValue.isEmpty else {
-            alertMessage = "Can not leave Primary DNS empty"
+        guard !primaryDNSValue.isEmpty, !secondaryDNSValue.isEmpty else {
+            alertMessage = "Can not leave DNS empty!"
             showAlert = true
             return
         }
         
-        guard primaryDNSValue.range(of: validIpAddressRegex, options: .regularExpression) != nil else {
-            alertMessage = "Invalid DNS format"
-            showAlert = true
-            return
-        }
-        
-        if secondaryDNSValue.isEmpty {
-            AppSetting.shared.primaryDNSValue = primaryDNSValue
-            alertMessage = L10n.Global.saveSuccess
-            showAlert = true
-            return
-        }
-        
-        guard secondaryDNSValue.range(of: validIpAddressRegex, options: .regularExpression) != nil else {
-            alertMessage = "Invalid DNS format"
+        guard [primaryDNSValue, secondaryDNSValue].allSatisfy({ $0.range(of: validIpAddressRegex, options: .regularExpression) != nil }) else {
+            alertMessage = "Invalid DNS format!"
             showAlert = true
             return
         }
