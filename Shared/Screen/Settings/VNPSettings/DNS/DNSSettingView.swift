@@ -22,11 +22,8 @@ struct DNSSettingView: View {
     @Binding var statusConnect: VPNStatus
     
     @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
-    @State var dnsSetting: DNSSetting {
-        didSet {
-            AppSetting.shared.dnsSetting = dnsSetting
-        }
-    }
+    @State var dnsSetting: DNSSetting
+    
     private let componentWidth = UIScreen.main.bounds.width - 2 * Constant.Menu.hozitalPaddingCell
     
     private var customDNSSection: some View {

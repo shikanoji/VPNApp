@@ -15,7 +15,6 @@ class DNSSettingViewModel: ObservableObject {
                 AppSetting.shared.dnsSetting = .system
             } else {
                 selectedValue = .custom
-                AppSetting.shared.dnsSetting = .custom
             }
         }
     }
@@ -43,6 +42,7 @@ class DNSSettingViewModel: ObservableObject {
         
         AppSetting.shared.primaryDNSValue = primaryDNSValue
         AppSetting.shared.secondaryDNSValue = secondaryDNSValue
+        AppSetting.shared.dnsSetting = selectedDefaultDns ? .system : .custom
         alertMessage = L10n.Global.saveSuccess
         showAlert = true
     }

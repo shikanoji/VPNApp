@@ -64,7 +64,8 @@ struct SettingsView: View {
                                     SettingVPNView(
                                         showSettings: $showSettings,
                                         showVPNSetting: $showVPNSetting,
-                                        statusConnect: $statusConnect),
+                                        statusConnect: $statusConnect,
+                                        viewModel: SettingVPNViewModel()),
                                    isActive: $showVPNSetting) { }
                         .isDetailLink(false)
                     NavigationLink(destination:

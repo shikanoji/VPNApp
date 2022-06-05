@@ -11,6 +11,7 @@ import SwiftDate
 
 enum AppKeys: String {
     ///Auth Keys
+    case idUser = "idUser"
     case email = "email"
     case isPremium = "isPremium"
     case premiumExpires = "premiumExpires"
@@ -20,8 +21,8 @@ enum AppKeys: String {
     case accountCreatedTime = "accountCreatedTime"
     case accessTokenExpires = "accessTokenExpires"
     case refreshTokenExpires = "refreshTokenExpires"
-    case country = "country"
-    case city = "city"
+    case countryName = "countryName"
+    case cityName = "cityName"
     
     ///Board Keys
     case showedNotice = "showedNotice"
@@ -50,6 +51,7 @@ enum AppKeys: String {
     case primaryDNSValue = "primaryDNSValue"
     case secondaryDNSValue = "secondaryDNSValue"
     case selectAutoConnect = "selectAutoConnect"
+    case wasJailBreak = "wasJailBreak"
 }
 
 struct AppSetting {
@@ -58,12 +60,21 @@ struct AppSetting {
     init() {}
     
     /// Auth Settings
+    ///
     var email: String {
         get {
             return UserDefaults.standard.string(forKey: AppKeys.email.rawValue) ?? ""
         }
         set {
             UserDefaults.standard.setValue(newValue, forKey: AppKeys.email.rawValue)
+        }
+    }
+    var idUser: Int {
+        get {
+            return UserDefaults.standard.integer(forKey: AppKeys.idUser.rawValue)
+        }
+        set {
+            UserDefaults.standard.setValue(newValue, forKey: AppKeys.idUser.rawValue)
         }
     }
     
@@ -166,14 +177,12 @@ struct AppSetting {
         }
     }
     
-    var city: String {
+    var cityName: String {
         get {
-            /// Fake City
-            return "Hanoi"
-            return UserDefaults.standard.string(forKey: AppKeys.city.rawValue) ?? ""
+            return UserDefaults.standard.string(forKey: AppKeys.cityName.rawValue) ?? ""
         }
         set {
-            UserDefaults.standard.setValue(newValue, forKey: AppKeys.city.rawValue)
+            UserDefaults.standard.setValue(newValue, forKey: AppKeys.cityName.rawValue)
         }
     }
     
@@ -212,6 +221,24 @@ struct AppSetting {
         set {
             UserDefaults.standard.setValue(newValue, forKey: AppKeys.selectAutoConnect.rawValue)
             NotificationCenter.default.post(name: Constant.NameNotification.checkAutoconnect, object: nil)
+        }
+    }
+    
+    var wasJailBreak: Int {
+        get {
+            UserDefaults.standard.integer(forKey: AppKeys.wasJailBreak.rawValue)
+        }
+        set {
+            UserDefaults.standard.setValue(newValue, forKey: AppKeys.wasJailBreak.rawValue)
+        }
+    }
+    
+    var countryName: String {
+        get {
+            return UserDefaults.standard.string(forKey: AppKeys.countryName.rawValue) ?? ""
+        }
+        set {
+            UserDefaults.standard.setValue(newValue, forKey: AppKeys.countryName.rawValue)
         }
     }
     
@@ -313,5 +340,18 @@ struct AppSetting {
         set {
             UserDefaults.standard.setValue(newValue, forKey: AppKeys.secondaryDNSValue.rawValue)
         }
+    }
+    
+    func getContentDNSCell() -> String {
+        var defaultContent = L10n.Settings.Dns.default
+        if dnsSetting == .custom {
+            if primaryDNSValue != "" {
+                defaultContent = primaryDNSValue
+            }
+            if secondaryDNSValue != "" {
+                defaultContent = ", " + secondaryDNSValue
+            }
+        }
+        return defaultContent
     }
 }

@@ -14,6 +14,10 @@ class ProtocolSettingViewModel: ObservableObject {
     @Published var itemList: [ItemCell] = SectionType.protocolConnect.items
     
     init() {
+        refreshItem()
+    }
+    
+    func refreshItem() {
         itemList = itemList.map { item in
             let selectConfig = NetworkManager.shared.selectConfig
             var updateItem = item
