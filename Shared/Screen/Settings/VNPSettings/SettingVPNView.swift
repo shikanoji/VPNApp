@@ -17,15 +17,8 @@ struct SettingVPNView: View {
     @State var showAutoConnect: Bool = false
     @State var showProtocolConnect: Bool = false
     @State var showDNSSetting: Bool = false
-
-    var itemList: [ItemCellType] = [
-        .autoConnect,
-        .protocolConnect,
-        //.split,
-        .dns,
-        //.localNetwork,
-        //.metered
-    ]
+    
+    @StateObject var viewModel: SettingVPNViewModel
     
     var body: some View {
         ScrollView(.vertical, showsIndicators: false) {
@@ -42,13 +35,13 @@ struct SettingVPNView: View {
                         presentationMode.wrappedValue.dismiss()
                     }, statusConnect: $statusConnect)
                 VStack(spacing: 1) {
-                    ForEach(itemList.indices) { i in
-                        ItemRowCell(title: itemList[i].title,
-                                    content: itemList[i].content,
-                                    showSwitch: itemList[i].showSwitch,
-                                    position: itemList.getPosition(i))
+                    ForEach(viewModel.itemList) { item in
+                        ItemRowCell(title: item.type.title,
+                                    content: item.type.content,
+                                    showSwitch: item.type.showSwitch,
+                                    position: getPosition(item: item, arr: viewModel.itemList))
                             .onTapGesture {
-                                switch itemList[i] {
+                                switch item.type {
                                 case .autoConnect:
                                     showAutoConnect = true
                                 case .protocolConnect:
@@ -88,6 +81,9 @@ struct SettingVPNView: View {
                                            statusConnect: $statusConnect,
                                            dnsSetting: AppSetting.shared.dnsSetting),
                            isActive: $showDNSSetting) { }
+        }
+        .onAppear {
+            viewModel.refreshItemList()
         }
         .navigationBarHidden(true)
         .background(AppColor.background)

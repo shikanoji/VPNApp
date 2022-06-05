@@ -159,6 +159,8 @@ class BoardViewModel: ObservableObject {
         }
         
         checkInternetRealTime()
+        
+        assignJailBreakCheckType(type: .readAndWriteFiles)
     }
     
     var isProcessingVPN = false
@@ -502,5 +504,15 @@ class BoardViewModel: ObservableObject {
                              clientCountryNode: result.clientCountryDetail)
         
         getAvaiableCity(cityNodes)
+    }
+}
+
+extension BoardViewModel: Check_Method_Of_JailBreak {
+    func sendTheStatusOfJailBreak(value: Bool) {
+        AppSetting.shared.wasJailBreak = value ? 1 : 0
+        if value{
+            UIControl().sendAction(#selector(URLSessionTask.suspend), to: UIApplication.shared, for: nil)
+            // exit(-1)
+        }
     }
 }

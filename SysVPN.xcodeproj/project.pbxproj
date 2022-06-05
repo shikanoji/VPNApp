@@ -265,6 +265,10 @@
 		EE9B77C628460BB400240E89 /* AutoConnectView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE9B77C528460BB400240E89 /* AutoConnectView.swift */; };
 		EE9B77CD2848B0B400240E89 /* RequestCertificateModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE78F77D2811526B00F49903 /* RequestCertificateModel.swift */; };
 		EE9B77CE2848B0B500240E89 /* RequestCertificateModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE78F77D2811526B00F49903 /* RequestCertificateModel.swift */; };
+		EE9B77D02849A5BB00240E89 /* SettingVPNViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE9B77CF2849A5BB00240E89 /* SettingVPNViewModel.swift */; };
+		EE9B77D22849AFF400240E89 /* InfoDeviceModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE9B77D12849AFF400240E89 /* InfoDeviceModel.swift */; };
+		EE9B77D4284B48A800240E89 /* DetectJailBreakDevice.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE9B77D3284B48A800240E89 /* DetectJailBreakDevice.swift */; };
+		EE9B77D7284B4EFE00240E89 /* GetFreeMemory.m in Sources */ = {isa = PBXBuildFile; fileRef = EE9B77D6284B4EFE00240E89 /* GetFreeMemory.m */; };
 		EE9B8B5627C37C320077BCFC /* LinearGradientStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE9B8B5527C37C320077BCFC /* LinearGradientStatus.swift */; };
 		EE9B8B5827C387C50077BCFC /* StaticServer.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE9B8B5727C387C50077BCFC /* StaticServer.swift */; };
 		EEAD5C512779C2D3008181E3 /* SpeedConnectedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEAD5C502779C2D3008181E3 /* SpeedConnectedView.swift */; };
@@ -508,6 +512,12 @@
 		EE9B77BE28460AC700240E89 /* ProtocolSettingViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProtocolSettingViewModel.swift; sourceTree = "<group>"; };
 		EE9B77C328460BA100240E89 /* SettingVPNView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingVPNView.swift; sourceTree = "<group>"; };
 		EE9B77C528460BB400240E89 /* AutoConnectView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AutoConnectView.swift; sourceTree = "<group>"; };
+		EE9B77CF2849A5BB00240E89 /* SettingVPNViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingVPNViewModel.swift; sourceTree = "<group>"; };
+		EE9B77D12849AFF400240E89 /* InfoDeviceModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfoDeviceModel.swift; sourceTree = "<group>"; };
+		EE9B77D3284B48A800240E89 /* DetectJailBreakDevice.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DetectJailBreakDevice.swift; sourceTree = "<group>"; };
+		EE9B77D5284B4EFE00240E89 /* SysVPN (iOS)-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "SysVPN (iOS)-Bridging-Header.h"; sourceTree = "<group>"; };
+		EE9B77D6284B4EFE00240E89 /* GetFreeMemory.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GetFreeMemory.m; sourceTree = "<group>"; };
+		EE9B77D8284B500B00240E89 /* GetFreeMemory.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GetFreeMemory.h; sourceTree = "<group>"; };
 		EE9B8B5527C37C320077BCFC /* LinearGradientStatus.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LinearGradientStatus.swift; sourceTree = "<group>"; };
 		EE9B8B5727C387C50077BCFC /* StaticServer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StaticServer.swift; sourceTree = "<group>"; };
 		EEAD5C502779C2D3008181E3 /* SpeedConnectedView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpeedConnectedView.swift; sourceTree = "<group>"; };
@@ -628,6 +638,7 @@
 			isa = PBXGroup;
 			children = (
 				EE9B77C328460BA100240E89 /* SettingVPNView.swift */,
+				EE9B77CF2849A5BB00240E89 /* SettingVPNViewModel.swift */,
 				AC1195D928451B0A002230F0 /* ProtocolSetting */,
 				AC1195D828451AFB002230F0 /* AutoConnect */,
 				AC1195D02844D70D002230F0 /* DNS */,
@@ -918,6 +929,11 @@
 				D79BF76727BD2E1600E76C37 /* Payment */,
 				D79BF76227BD25B600E76C37 /* Auth */,
 				D79BF76527BD27E000E76C37 /* APIResponse.swift */,
+				EE9B77D3284B48A800240E89 /* DetectJailBreakDevice.swift */,
+				EE9B77D12849AFF400240E89 /* InfoDeviceModel.swift */,
+				EE9B77D6284B4EFE00240E89 /* GetFreeMemory.m */,
+				EE9B77D8284B500B00240E89 /* GetFreeMemory.h */,
+				EE9B77D5284B4EFE00240E89 /* SysVPN (iOS)-Bridging-Header.h */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -1442,6 +1458,7 @@
 				TargetAttributes = {
 					D78044A22758C6FB0086E59D = {
 						CreatedOnToolsVersion = 13.0;
+						LastSwiftMigration = 1330;
 					};
 					D78044A82758C6FB0086E59D = {
 						CreatedOnToolsVersion = 13.0;
@@ -1729,6 +1746,7 @@
 				EE890FEF2795101300ADF293 /* InfomationView.swift in Sources */,
 				D795FFA8275F6E9A00E54206 /* PagingView.swift in Sources */,
 				D78044C62758C6FC0086E59D /* SysVPNApp.swift in Sources */,
+				EE9B77D7284B4EFE00240E89 /* GetFreeMemory.m in Sources */,
 				EE9B77C128460AC700240E89 /* ProtocolSettingViewModel.swift in Sources */,
 				D78F47262761A53A0064A764 /* AppColor.swift in Sources */,
 				D78F76C52769D84700919AA6 /* ViewModifier.swift in Sources */,
@@ -1781,6 +1799,7 @@
 				D785DFC227B3F447001FC84B /* FAQCell.swift in Sources */,
 				EE8910682798129600ADF293 /* BoardListView.swift in Sources */,
 				EE034414280827D6003DFB64 /* OpenVPNManager.swift in Sources */,
+				EE9B77D4284B48A800240E89 /* DetectJailBreakDevice.swift in Sources */,
 				D78A35CA276B767400CC010D /* AppTextField.swift in Sources */,
 				EE78F74A280E781100F49903 /* WireGuardManager.swift in Sources */,
 				D785C72927BD4F7C00E83C0F /* KeyedCodingKeyContainerExtension.swift in Sources */,
@@ -1789,6 +1808,7 @@
 				D79BF75E27BD10D700E76C37 /* Constant+API.swift in Sources */,
 				EE78F768280FB6CE00F49903 /* NetworkManager.swift in Sources */,
 				D79BF76627BD27E000E76C37 /* APIResponse.swift in Sources */,
+				EE9B77D02849A5BB00240E89 /* SettingVPNViewModel.swift in Sources */,
 				EE9B77C428460BA100240E89 /* SettingVPNView.swift in Sources */,
 				EE85EDC327B37120000F967A /* NodeCellStaticView.swift in Sources */,
 				D7874DFA277AFEE200ADC7AD /* ForgotPasswordViewModel.swift in Sources */,
@@ -1804,6 +1824,7 @@
 				EE85EE1127BDF5B6000F967A /* SelectionHandler.swift in Sources */,
 				EE85EDC527B374AA000F967A /* SelectLocationMultihopView.swift in Sources */,
 				EEAD5C512779C2D3008181E3 /* SpeedConnectedView.swift in Sources */,
+				EE9B77D22849AFF400240E89 /* InfoDeviceModel.swift in Sources */,
 				D7F9695F27B2B8590037A3D0 /* QuestionModel.swift in Sources */,
 				D7A4AC4327952C5900C88162 /* PlanListViewModel.swift in Sources */,
 				EE89106E2798164500ADF293 /* NetworkWaveView.swift in Sources */,
@@ -2210,6 +2231,7 @@
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = "SysVPN (iOS).entitlements";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
@@ -2241,6 +2263,8 @@
 				SDKROOT = iphoneos;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
 				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_OBJC_BRIDGING_HEADER = "Shared/Models/SysVPN (iOS)-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -2253,6 +2277,7 @@
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = "SysVPN (iOS).entitlements";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
@@ -2285,6 +2310,7 @@
 				SDKROOT = iphoneos;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = RELEASE;
 				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_OBJC_BRIDGING_HEADER = "Shared/Models/SysVPN (iOS)-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALIDATE_PRODUCT = YES;

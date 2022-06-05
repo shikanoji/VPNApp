@@ -43,6 +43,9 @@ struct ProtocolSettingView: View {
                 .padding(.top, Constant.Menu.topPaddingCell)
             }
         }
+        .onAppear {
+            viewModel.refreshItem()
+        }
         .navigationBarHidden(true)
         .background(AppColor.background)
         .ignoresSafeArea()

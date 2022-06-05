@@ -262,7 +262,7 @@ enum ItemCellType: Int, Decodable {
         case .split:
             return L10n.Settings.contentItemSplit
         case .dns:
-            return AppSetting.shared.dnsSetting == .system ? L10n.Settings.Dns.default : L10n.Settings.Dns.custom
+            return AppSetting.shared.getContentDNSCell()
         case .localNetwork:
             return L10n.Settings.contentItemLocalNetwork
         case .metered:

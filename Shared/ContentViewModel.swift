@@ -77,8 +77,9 @@ class ContentViewModel: ObservableObject {
     
     func configIpInfo(_ ipInfo: IpInfoResultModel) {
         AppSetting.shared.ip = ipInfo.ip
-        AppSetting.shared.countryCode = ipInfo.country
-        AppSetting.shared.city = ipInfo.city
+        AppSetting.shared.countryCode = ipInfo.countryCode
+        AppSetting.shared.countryName = ipInfo.countryName
+        AppSetting.shared.cityName = ipInfo.city
         AppSetting.shared.lastChange = ipInfo.lastChange ?? 0
     }
 }

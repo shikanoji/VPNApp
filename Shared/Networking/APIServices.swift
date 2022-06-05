@@ -148,7 +148,7 @@ extension APIService: TargetType {
             body["password"] = password
             body["ip"] = AppSetting.shared.ip
             body["country"] = AppSetting.shared.countryCode
-            body["city"] = AppSetting.shared.city
+            body["city"] = AppSetting.shared.cityName
             return .requestCompositeParameters(bodyParameters: body, bodyEncoding: JSONEncoding.prettyPrinted, urlParameters: [:])
         case .login(let email, let password):
             var body: [String: Any] = [:]
@@ -156,7 +156,7 @@ extension APIService: TargetType {
             body["password"] = password
             body["ip"] = AppSetting.shared.ip
             body["country"] = AppSetting.shared.countryCode
-            body["city"] = AppSetting.shared.city
+            body["city"] = AppSetting.shared.cityName
             return .requestCompositeParameters(bodyParameters: body, bodyEncoding: JSONEncoding.prettyPrinted, urlParameters: [:])
         case .logout:
             var body: [String: Any] = [:]
@@ -167,14 +167,14 @@ extension APIService: TargetType {
             body["refreshToken"] = AppSetting.shared.refreshToken
             body["ip"] = AppSetting.shared.ip
             body["country"] = AppSetting.shared.countryCode
-            body["city"] = AppSetting.shared.city
+            body["city"] = AppSetting.shared.cityName
             return .requestCompositeParameters(bodyParameters: body, bodyEncoding: JSONEncoding.prettyPrinted, urlParameters: [:])
         case .forgotPassword(let email):
             var body: [String: Any] = [:]
             body["email"] = email
             body["ip"] = AppSetting.shared.ip
             body["country"] = AppSetting.shared.countryCode
-            body["city"] = AppSetting.shared.city
+            body["city"] = AppSetting.shared.cityName
             return .requestCompositeParameters(bodyParameters: body, bodyEncoding: JSONEncoding.prettyPrinted, urlParameters: [:])
         case .getCountryList:
             var param: [String: Any] = [:]
@@ -241,11 +241,23 @@ extension APIService: TargetType {
         switch self {
         case .login, .register:
             return ["Content-type": "application/json"]
-        case .getCountryList, .getRequestCertificate, .getObtainCertificate, .changePassword:
+        case .getCountryList, .getObtainCertificate, .changePassword:
             return [
                 "Content-type": "application/json",
                 "Authorization": "Bearer \(AppSetting.shared.accessToken)"
             ]
+        case .getRequestCertificate:
+            var baseHeader = [
+                "Content-type": "application/json",
+                "Authorization": "Bearer \(AppSetting.shared.accessToken)"
+            ]
+            
+            if getInfoDevice() != "" {
+                baseHeader["x-device-info"] = getInfoDevice()
+            }
+            baseHeader["x-user-info"] = "{\"id\": \(AppSetting.shared.idUser)}"
+            
+            return baseHeader
         default:
             return ["Content-type": "application/json"]
         }
@@ -257,4 +269,32 @@ extension APIService: TargetType {
         return Data()
     }
     
+    
+    func getInfoDevice() -> String {
+
+        let info = InfoDeviceModel(
+            ipAddress: AppSetting.shared.ip,
+            deviceId: UIDevice.current.identifierForVendor!.uuidString,
+            deviceBrand: UIDevice.modelName,
+            deviceOs: "iOS",
+            deviceModel: UIDevice.current.model,
+            deviceIsRoot: AppSetting.shared.wasJailBreak,
+            deviceManufacture: "Apple",
+            deviceFreeMemory: Int(GetFreeMemory().get_free_memory()),
+            osBuildNumber: UIDevice.current.systemVersion,
+            appVersion: Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String,
+            appBundleId: Bundle.main.bundleIdentifier,
+            isEmulator: TARGET_OS_SIMULATOR != 0 ? 1 : 0,
+            isTablet: UIDevice.current.userInterfaceIdiom == .pad ? 1 : 0,
+            userCountryCode: AppSetting.shared.countryCode,
+            userCountryName: AppSetting.shared.countryName)
+        
+        let jsonEncoder = JSONEncoder()
+        if let jsonData = try? jsonEncoder.encode(info),
+           let json = String(data: jsonData, encoding: String.Encoding.utf8) {
+            return json
+        }
+        
+        return ""
+    }
 }

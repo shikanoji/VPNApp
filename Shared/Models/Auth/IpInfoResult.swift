@@ -11,14 +11,18 @@ import SwiftyJSON
 struct IpInfoResultModel: Decodable {
     var ip: String
     var lastChange: Double?
-    var country: String
+    var countryName: String
+    var countryCode: String
     var city: String
+    var isp: String
     
     enum CodingKeys: String, CodingKey {
         case ip
         case lastChange
-        case country
+        case countryName
+        case countryCode
         case city
+        case isp
     }
 
     init(from decoder: Decoder) throws {
@@ -35,16 +39,28 @@ struct IpInfoResultModel: Decodable {
             self.lastChange = nil
         }
         
-        if let _country = try? values.decode(String.self, forKey: .country){
-            self.country = _country
+        if let _countryName = try? values.decode(String.self, forKey: .countryName){
+            self.countryName = _countryName
         } else {
-            self.country = ""
+            self.countryName = ""
+        }
+        
+        if let _countryCode = try? values.decode(String.self, forKey: .countryCode){
+            self.countryCode = _countryCode
+        } else {
+            self.countryCode = ""
         }
         
         if let _city = try? values.decode(String.self, forKey: .city){
             self.city = _city
         } else {
             self.city = ""
+        }
+        
+        if let _isp = try? values.decode(String.self, forKey: .isp){
+            self.isp = _isp
+        } else {
+            self.isp = ""
         }
     }
 }
