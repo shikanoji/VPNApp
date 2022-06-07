@@ -199,11 +199,13 @@ struct RequestCertificateModel: Codable {
     var server: Server?
     var connectionDetails: ConnectionDetails?
     var requestId: String?
+    var sessionId: String?
     
     enum CodingKeys: String, CodingKey {
         case server
         case connectionDetails
         case requestId
+        case sessionId
     }
     
     init(from decoder: Decoder) throws {
@@ -225,6 +227,12 @@ struct RequestCertificateModel: Codable {
             requestId = _requestId
         } else {
             requestId = nil
+        }
+        
+        if let _sessionId = try? values.decode(String.self, forKey: .sessionId) {
+            sessionId = _sessionId
+        } else {
+            sessionId = nil
         }
     }
     

@@ -57,6 +57,8 @@ extension VPNStatus {
 
 class BoardViewModel: ObservableObject {
     
+    // MARK: Variable
+    
     enum StateTab: Int {
         case location = 0
         case staticIP = 1
@@ -77,8 +79,8 @@ class BoardViewModel: ObservableObject {
         }
     }
     
-    @Published var uploadSpeed: CGFloat = 0.0
-    @Published var downloadSpeed: CGFloat = 0.0
+    @Published var uploadSpeed: String = "0"
+    @Published var downloadSpeed: String = "0"
     @Published var nodeConnected: Node? = nil {
         didSet {
             if let node = nodeConnected {
@@ -124,6 +126,8 @@ class BoardViewModel: ObservableObject {
     
     let disposedBag = DisposeBag()
     
+    // MARK: Function
+    
     init() {
         AppSetting.shared.updateDataMap ? getCountryList() : getDataFromLocal()
         
@@ -142,7 +146,7 @@ class BoardViewModel: ObservableObject {
         
         NotificationCenter.default.addObserver(
             self,
-            selector: #selector(checkInternetRealTime),
+            selector: #selector(checkInternetRealTimeForeground),
             name: UIApplication.willEnterForegroundNotification,
             object: nil
         )
@@ -167,6 +171,12 @@ class BoardViewModel: ObservableObject {
     
     @Published var shouldHideAutoConnect = true
     
+    @objc private func checkInternetRealTimeForeground() {
+        if state != .connected {
+            checkInternetRealTime()
+        }
+    }
+    
     @objc private func checkAutoconnectIfNeeded() {
         if let type = ItemCellType(rawValue: AppSetting.shared.selectAutoConnect) {
             if type != .off {
@@ -189,6 +199,7 @@ class BoardViewModel: ObservableObject {
                     }
                 }
             } else if type == .off {
+                disconnectSession()
                 NetworkManager.shared.disconnect()
                 stopAutoconnectTimer()
             }
@@ -204,6 +215,9 @@ class BoardViewModel: ObservableObject {
                 showAlertAutoConnectSetting = true
             } else {
                 NetworkManager.shared.disconnect()
+                if disconnectByUser {
+                    disconnectSession()
+                }
             }
         }
     }
@@ -311,8 +325,8 @@ class BoardViewModel: ObservableObject {
         speedTimer!.setEventHandler { [weak self] in
             if NetworkManager.shared.selectConfig == .openVPN,
                let dataCount = OpenVPNManager.shared.getDataCount() {
-                self?.uploadSpeed = CGFloat(dataCount.sent) * 0.001
-                self?.downloadSpeed = CGFloat(dataCount.received) * 0.001
+                self?.uploadSpeed = dataCount.sent.descriptionAsDataUnit
+                self?.downloadSpeed = dataCount.received.descriptionAsDataUnit
             }
         }
         speedTimer!.resume()
@@ -372,6 +386,7 @@ class BoardViewModel: ObservableObject {
     func prepareConnect(completion: @escaping (Bool) -> Void) {
         switch NetworkManager.shared.selectConfig {
         case .openVPN, .recommend:
+            AppSetting.shared.currentSessionId = NetworkManager.shared.requestCertificate?.sessionId ?? ""
             completion(true)
         case .wireGuard:
             numberCallObtainCer = 0
@@ -403,6 +418,7 @@ class BoardViewModel: ObservableObject {
                 
                 if let result = response.result {
                     NetworkManager.shared.obtainCertificate = result
+                    AppSetting.shared.currentSessionId = result.sessionId ?? ""
                     completion(true)
                 } else if response.success {
                     if self.numberCallObtainCer >= self.maximumCallObtainCer {
@@ -504,6 +520,34 @@ class BoardViewModel: ObservableObject {
                              clientCountryNode: result.clientCountryDetail)
         
         getAvaiableCity(cityNodes)
+    }
+    
+    func disconnectSession() {
+        APIManager.shared.disconnectSession(AppSetting.shared.currentSessionId)
+            .subscribe { [weak self] response in
+                guard let `self` = self else {
+                    return
+                }
+                
+                self.showProgressView = false
+                
+                if response.success {
+                  
+                } else {
+                    let error = response.errors
+                    if error.count > 0, let message = error[0] as? String {
+                        self.error = APIError.identified(message: message)
+                        self.showAlert = true
+                    } else if !response.message.isEmpty {
+                        self.error = APIError.identified(message: response.message)
+                        self.showAlert = true
+                    }
+                }
+            } onFailure: { error in
+                self.error = APIError.identified(message: error.localizedDescription)
+                self.showAlert = true
+            }
+            .disposed(by: disposedBag)
     }
 }
 

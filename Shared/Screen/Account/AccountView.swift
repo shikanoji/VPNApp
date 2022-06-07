@@ -120,11 +120,11 @@ struct AccountView: View {
                            isActive: $showAccountStatus) { }
             
             NavigationLink(destination:
-                            DevicesView(
+                            SessionVPNView(
                                 showAccount: $showAccount,
                                 showTotalDevice: $showTotalDevice,
                                 statusConnect: statusConnect,
-                                viewModel: DeviceViewModel()),
+                                viewModel: SessionVPNViewModel()),
                            isActive: $showTotalDevice) { }
             
             NavigationLink(destination:

@@ -11,8 +11,8 @@ import TunnelKitManager
 
 struct ConnectButton: View {
     var status: VPNStatus
-    var uploadSpeed: CGFloat
-    var downloadSpeed: CGFloat
+    var uploadSpeed: String
+    var downloadSpeed: String
     
     let widthSpeed = (UIScreen.main.bounds.width - Constant.Board.QuickButton.widthSize - 30) / 2
     
@@ -109,12 +109,5 @@ struct TimeConnectedView: View {
                     self.stopWatch.start()
                 }
             }
-    }
-}
-
-struct ConnectButton_Previews: PreviewProvider {
-    static var previews: some View {
-        ConnectButton(status: .connected, uploadSpeed: 100, downloadSpeed: 900)
-            .preferredColorScheme(.dark)
     }
 }

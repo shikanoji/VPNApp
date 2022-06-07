@@ -29,7 +29,6 @@ enum AppKeys: String {
     case dateMember = "dateMember"
     case idVPN = "idVPN"
     case currentNumberDevice = "currentNumberDevice"
-    case totalNumberDevices = "totalNumberDevices"
     case appShourtcuts = "appShourtcuts"
     case protection = "protection"
     case help = "help"
@@ -52,12 +51,23 @@ enum AppKeys: String {
     case secondaryDNSValue = "secondaryDNSValue"
     case selectAutoConnect = "selectAutoConnect"
     case wasJailBreak = "wasJailBreak"
+    
+    case currentSessionId = "currentSessionId"
 }
 
 struct AppSetting {
     static var shared = AppSetting()
     
     init() {}
+    
+    var currentSessionId: String {
+        get {
+            return UserDefaults.standard.string(forKey: AppKeys.currentSessionId.rawValue) ?? ""
+        }
+        set {
+            UserDefaults.standard.setValue(newValue, forKey: AppKeys.currentSessionId.rawValue)
+        }
+    }
     
     /// Auth Settings
     ///
@@ -220,7 +230,6 @@ struct AppSetting {
         }
         set {
             UserDefaults.standard.setValue(newValue, forKey: AppKeys.selectAutoConnect.rawValue)
-            NotificationCenter.default.post(name: Constant.NameNotification.checkAutoconnect, object: nil)
         }
     }
     
@@ -242,13 +251,10 @@ struct AppSetting {
         }
     }
     
-    mutating func getConfigProtocol() -> ItemCellType {
+    func getConfigProtocol() -> ItemCellType {
         if let type = ItemCellType(rawValue: AppSetting.shared.selectConfig) {
             if type != .recommend && type != .wireGuard && type != .openVPN {
-                AppSetting.shared.selectConfig = ItemCellType.recommend.rawValue
-                if let typeNew = ItemCellType(rawValue: selectConfig) {
-                    return typeNew
-                }
+                return .recommend
             }
             return type
         }
@@ -256,17 +262,13 @@ struct AppSetting {
         return .recommend
     }
     
-    mutating func getAutoConnectProtocol() -> ItemCellType {
+    func getAutoConnectProtocol() -> ItemCellType {
         if let type = ItemCellType(rawValue: AppSetting.shared.selectAutoConnect) {
             if type != .always && type != .onWifi && type != .onMobile && type != .off {
-                AppSetting.shared.selectAutoConnect = ItemCellType.recommend.rawValue
-                if let typeNew = ItemCellType(rawValue: selectAutoConnect) {
-                    return typeNew
-                }
+                return .recommend
             }
             return type
         }
-        
         return .off
     }
     

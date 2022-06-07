@@ -155,7 +155,7 @@ enum ItemCellType: Int, Decodable {
         case .statusAccount:
             return L10n.Account.itemAccount + " " + (AppSetting.shared.isPremium ? L10n.Account.premium : L10n.Account.freePlan)
         case .totalDevice:
-            return L10n.Account.itemDevices + ": \(AppSetting.shared.currentNumberDevice)/\(AppSetting.shared.totalNumberDevices)"
+            return L10n.Account.itemDevices + ": \(AppSetting.shared.currentNumberDevice)/\(AppSetting.shared.maxNumberDevices)"
         case .questions:
             return L10n.Account.itemQuestions
         case .helpCenter:

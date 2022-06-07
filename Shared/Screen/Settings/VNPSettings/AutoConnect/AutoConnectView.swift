@@ -53,7 +53,7 @@ struct AutoConnectView: View {
                                         switchValue: item.select,
                                         onSwitchValueChange: { value in
                                 if value {
-                                    viewModel.updateItem(item: item)
+                                    viewModel.configItem(item)
                                 }
                             })
                             .environmentObject(viewModel)

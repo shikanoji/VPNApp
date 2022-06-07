@@ -9,8 +9,8 @@ import SwiftUI
 
 struct SpeedConnectedView: View {
     
-    var uploadSpeed: CGFloat
-    var downLoadSpeed: CGFloat
+    var uploadSpeed: String
+    var downLoadSpeed: String
     
     var body: some View {
         VStack(alignment: .leading, spacing: 0) {
@@ -18,7 +18,7 @@ struct SpeedConnectedView: View {
                 Image(Constant.Board.Image.uploadSpeed)
                     .resizable()
                     .frame(width: Constant.Board.Speed.heightIcon, height: Constant.Board.Speed.heightIcon)
-                Text("\(Int(uploadSpeed))\(L10n.Board.speed)")
+                Text("\(uploadSpeed)\(L10n.Board.speed)")
                     .lineLimit(1)
                     .foregroundColor(.white)
             }
@@ -26,17 +26,10 @@ struct SpeedConnectedView: View {
                 Image(Constant.Board.Image.downloadSpeed)
                     .resizable()
                     .frame(width: Constant.Board.Speed.heightIcon, height: Constant.Board.Speed.heightIcon)
-                Text("\(Int(downLoadSpeed))\(L10n.Board.speed)")
+                Text("\(downLoadSpeed)\(L10n.Board.speed)")
                     .lineLimit(1)
                     .foregroundColor(.white)
             }
         }
-    }
-}
-
-struct SpeedConnectedView_Previews: PreviewProvider {
-    static var previews: some View {
-        SpeedConnectedView(uploadSpeed: 100, downLoadSpeed: 100)
-            .preferredColorScheme(.dark)
     }
 }

@@ -43,7 +43,9 @@ class NetworkManager: ObservableObject {
     
     var selectConfig: ItemCellType {
         get {
-            return AppSetting.shared.getConfigProtocol()
+            let type = AppSetting.shared.getConfigProtocol()
+            AppSetting.shared.selectConfig = type.rawValue
+            return type
         }
         set {
             AppSetting.shared.selectConfig = newValue.rawValue
