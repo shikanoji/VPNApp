@@ -47,3 +47,13 @@
 "Tools.darkWebMonitors.note" = "Sends alerts if your credentials get publicly exposed online.";
 "Tools.tapJackingProtection" = "Tapjacking protection";
 "Tools.tapJackingProtection.note" = "Warns you if a malicous app adds a screen overlay to trick you into unintended action.";
+
+//DNS
+"DNS.title" = "DNS Settings";
+"DNS.default" = "Default";
+"DNS.default.content" = "Use default gateway on remote network";
+"DNS.custom" = "Custom";
+"DNS.custom.title" = "Custom DNS server";
+"DNS.custom.primaryDNS" = "Primary DNS";
+"DNS.custom.secondaryDNS" = "Secondary DNS";
+"DNS.save" = "Save";

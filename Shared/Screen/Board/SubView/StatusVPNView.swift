@@ -6,10 +6,11 @@
 //
 
 import SwiftUI
+import TunnelKitManager
 
 struct StatusVPNView: View {
     var ip: String
-    var status: BoardViewModel.StateBoard
+    var status: VPNStatus
     var flag: String
     
     var body: some View {
@@ -41,7 +42,7 @@ struct StatusVPNView: View {
 struct StatusVPNView_Previews: PreviewProvider {
     
     static var previews: some View {
-        StatusVPNView(ip: "199.199.199.8", status: .notConnect, flag: "")
+        StatusVPNView(ip: "199.199.199.8", status: .disconnected, flag: "")
             .previewLayout(.fixed(width: /*@START_MENU_TOKEN@*/343.0/*@END_MENU_TOKEN@*/, height: /*@START_MENU_TOKEN@*/68.0/*@END_MENU_TOKEN@*/))
     }
 }

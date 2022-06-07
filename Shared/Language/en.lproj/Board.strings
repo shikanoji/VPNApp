@@ -19,7 +19,7 @@
 "StaticIPTitleTab" = "Static IP";
 "MultiHopTitleTab" = "MultiHop";
 "ConnectedAlert" = "Connected";
-"Speed" = "kb/s";
+"Speed" = "/s";
 "backToMap" = "Back to maps";
 "BoardList.Search" = "Search";
 "BoardList.RecentLocations" = "Recent locations";

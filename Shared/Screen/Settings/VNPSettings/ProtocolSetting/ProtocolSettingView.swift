@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import TunnelKitManager
 
 struct ProtocolSettingView: View {
     @Binding var showSettings: Bool
@@ -13,7 +14,7 @@ struct ProtocolSettingView: View {
     @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
     
     @StateObject var viewModel: ProtocolSettingViewModel
-    @State var statusConnect: BoardViewModel.StateBoard = .connected
+    @Binding var statusConnect: VPNStatus
     
     var body: some View {
         ScrollView(.vertical, showsIndicators: false) {
@@ -28,7 +29,7 @@ struct ProtocolSettingView: View {
                     }, tapRightButton: {
                         showVPNSetting = false
                         showSettings = false
-                    }, statusConnect: statusConnect)
+                    }, statusConnect: $statusConnect)
                 VStack(alignment: .leading, spacing: 1) {
                     ForEach(viewModel.itemList) { item in
                         ProtocolSettingCellView(title: item.type.title,
@@ -42,6 +43,9 @@ struct ProtocolSettingView: View {
                 .padding(.top, Constant.Menu.topPaddingCell)
             }
         }
+        .onAppear {
+            viewModel.refreshItem()
+        }
         .navigationBarHidden(true)
         .background(AppColor.background)
         .ignoresSafeArea()
@@ -50,8 +54,9 @@ struct ProtocolSettingView: View {
 
 struct ProtocolSettingView_Previews: PreviewProvider {
     @State static var show = true
+    @State static var status: VPNStatus = .connected
     
     static var previews: some View {
-        ProtocolSettingView(showSettings: $show, showVPNSetting: $show, viewModel: ProtocolSettingViewModel())
+        ProtocolSettingView(showSettings: $show, showVPNSetting: $show, viewModel: ProtocolSettingViewModel(), statusConnect: $status)
     }
 }

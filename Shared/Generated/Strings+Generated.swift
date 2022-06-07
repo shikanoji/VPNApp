@@ -126,7 +126,7 @@ public enum L10n {
     /// Quick
     /// Connect
     public static let quickUnConnect = L10n.tr("Board", "QuickUnConnect")
-    /// kb/s
+    /// /s
     public static let speed = L10n.tr("Board", "Speed")
     /// Static IP
     public static let staticIPTitleTab = L10n.tr("Board", "StaticIPTitleTab")
@@ -208,6 +208,8 @@ public enum L10n {
     public static let ok = L10n.tr("Global", "ok")
     /// On
     public static let on = L10n.tr("Global", "on")
+    /// Saved successfully!
+    public static let saveSuccess = L10n.tr("Global", "SaveSuccess")
     /// Light is Faster, but We are Safer
     public static let slogan = L10n.tr("Global", "slogan")
     /// Something went wrong
@@ -410,6 +412,28 @@ public enum L10n {
     public static let title = L10n.tr("Settings", "title")
     /// WireGuard
     public static let wireGuard = L10n.tr("Settings", "wireGuard")
+    public enum Dns {
+      /// Custom
+      public static let custom = L10n.tr("Settings", "DNS.custom")
+      /// Default
+      public static let `default` = L10n.tr("Settings", "DNS.default")
+      /// Save
+      public static let save = L10n.tr("Settings", "DNS.save")
+      /// DNS Settings
+      public static let title = L10n.tr("Settings", "DNS.title")
+      public enum Custom {
+        /// Primary DNS
+        public static let primaryDNS = L10n.tr("Settings", "DNS.custom.primaryDNS")
+        /// Secondary DNS
+        public static let secondaryDNS = L10n.tr("Settings", "DNS.custom.secondaryDNS")
+        /// Custom DNS server
+        public static let title = L10n.tr("Settings", "DNS.custom.title")
+      }
+      public enum Default {
+        /// Use default gateway on remote network
+        public static let content = L10n.tr("Settings", "DNS.default.content")
+      }
+    }
     public enum Tools {
       /// CyberSec
       public static let cyberSec = L10n.tr("Settings", "Tools.cyberSec")

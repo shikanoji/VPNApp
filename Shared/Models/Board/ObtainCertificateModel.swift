@@ -101,11 +101,13 @@ struct ObtainCertificateModel: Codable {
     var server: Server?
     var interface: Interface?
     var peer: Peer?
+    var sessionId: String?
     
     enum CodingKeys: String, CodingKey {
         case server
         case interface = "Interface"
         case peer = "Peer"
+        case sessionId
     }
     
     init(from decoder: Decoder) throws {
@@ -127,6 +129,12 @@ struct ObtainCertificateModel: Codable {
             peer = _peer
         } else {
             peer = nil
+        }
+        
+        if let _sessionId = try? values.decode(String.self, forKey: .sessionId) {
+            sessionId = _sessionId
+        } else {
+            sessionId = nil
         }
     }
     

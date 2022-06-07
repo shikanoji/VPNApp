@@ -7,10 +7,11 @@
 
 import Foundation
 import SwiftUI
+import TunnelKitManager
 
 struct FAQView: View {
     @Binding var showAccount: Bool
-    @State var statusConnect: BoardViewModel.StateBoard = .connected
+    @State var statusConnect: VPNStatus = .connected
     @StateObject var viewModel: FAQViewModel
     
     @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
@@ -27,7 +28,7 @@ struct FAQView: View {
                             presentationMode.wrappedValue.dismiss()
                         }, tapRightButton: {
                             showAccount = false
-                        }, statusConnect: statusConnect)
+                        }, statusConnect: $statusConnect)
                     VStack(spacing: 1) {
                         ForEach(Array(viewModel.questions.enumerated()), id: \.offset) { index, item in
                             FAQCell(question: item, position: viewModel.questions.getPosition(index), onTap: {

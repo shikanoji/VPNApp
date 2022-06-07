@@ -16,8 +16,15 @@ struct ToastView: View {
     }
     let title: String
     let message: String
+    
+    var cacnelTitle = ""
+    var confirmTitle = ""
+    
+    var oneChossing = false
+    
     var cancelAction: (() -> Void)? = nil
     var confirmAction: (() -> Void)? = nil
+    
     var body: some View {
         VStack {
             Spacer().frame(height: 20)
@@ -28,40 +35,46 @@ struct ToastView: View {
                         Text(title).setDefaultBold()
                         Spacer().frame(height: 5)
                     }
+                    if !message.isEmpty {
                     Text(message)
                         .font(.system(size: Size.bodyTextSize, weight: .semibold))
                         .foregroundColor(AppColor.textColor)
                         .multilineTextAlignment(.center)
+                    }
                 }.frame(maxWidth: .infinity)
                 Spacer().frame(width: 10)
-                Image(systemName: "xmark.circle")
-                    .foregroundColor(Color.white)
-                    .onTapGesture {
-                        cancelAction?()
-                    }
+                if !oneChossing {
+                    Image(systemName: "xmark.circle")
+                        .foregroundColor(Color.white)
+                        .onTapGesture {
+                            cancelAction?()
+                        }
+                }
                 Spacer().frame(width: 10)
             }
             if confirmAction != nil {
                 Spacer().frame(height: 10)
                 HStack {
+                    if cancelAction != nil {
+                        Spacer()
+                        AppButton(
+                            width: Size.buttonWidth, height: Size.buttonHeight,
+                            backgroundColor: Color.clear,
+                            textColor: Color.white,
+                            textSize: Size.bodyTextSize,
+                            text: cacnelTitle == "" ? L10n.Global.cancel : cacnelTitle,
+                            borderWidth: 1,
+                            borderColor: AppColor.lightGray) {
+                                cancelAction?()
+                            }
+                    }
                     Spacer()
                     AppButton(
                         width: Size.buttonWidth, height: Size.buttonHeight,
                         backgroundColor: Color.clear,
                         textColor: Color.white,
                         textSize: Size.bodyTextSize,
-                        text: L10n.Global.cancel,
-                        borderWidth: 1,
-                        borderColor: AppColor.lightGray) {
-                            cancelAction?()
-                        }
-                    Spacer()
-                    AppButton(
-                        width: Size.buttonWidth, height: Size.buttonHeight,
-                        backgroundColor: Color.clear,
-                        textColor: Color.white,
-                        textSize: Size.bodyTextSize,
-                        text: L10n.Global.ok,
+                        text: confirmTitle == "" ? L10n.Global.ok : confirmTitle,
                         borderWidth: 1,
                         borderColor: AppColor.lightGray) {
                             confirmAction?()

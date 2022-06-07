@@ -11,6 +11,7 @@ import SwiftDate
 
 enum AppKeys: String {
     ///Auth Keys
+    case idUser = "idUser"
     case email = "email"
     case isPremium = "isPremium"
     case premiumExpires = "premiumExpires"
@@ -20,15 +21,14 @@ enum AppKeys: String {
     case accountCreatedTime = "accountCreatedTime"
     case accessTokenExpires = "accessTokenExpires"
     case refreshTokenExpires = "refreshTokenExpires"
-    case country = "country"
-    case city = "city"
+    case countryName = "countryName"
+    case cityName = "cityName"
     
     ///Board Keys
     case showedNotice = "showedNotice"
     case dateMember = "dateMember"
     case idVPN = "idVPN"
     case currentNumberDevice = "currentNumberDevice"
-    case totalNumberDevices = "totalNumberDevices"
     case appShourtcuts = "appShourtcuts"
     case protection = "protection"
     case help = "help"
@@ -45,6 +45,14 @@ enum AppKeys: String {
     case updateDataMap = "updateDataMap"
     
     case selectConfig = "selectConfig"
+    //DNS
+    case dnsSetting = "dnsSetting"
+    case primaryDNSValue = "primaryDNSValue"
+    case secondaryDNSValue = "secondaryDNSValue"
+    case selectAutoConnect = "selectAutoConnect"
+    case wasJailBreak = "wasJailBreak"
+    
+    case currentSessionId = "currentSessionId"
 }
 
 struct AppSetting {
@@ -52,13 +60,31 @@ struct AppSetting {
     
     init() {}
     
+    var currentSessionId: String {
+        get {
+            return UserDefaults.standard.string(forKey: AppKeys.currentSessionId.rawValue) ?? ""
+        }
+        set {
+            UserDefaults.standard.setValue(newValue, forKey: AppKeys.currentSessionId.rawValue)
+        }
+    }
+    
     /// Auth Settings
+    ///
     var email: String {
         get {
             return UserDefaults.standard.string(forKey: AppKeys.email.rawValue) ?? ""
         }
         set {
             UserDefaults.standard.setValue(newValue, forKey: AppKeys.email.rawValue)
+        }
+    }
+    var idUser: Int {
+        get {
+            return UserDefaults.standard.integer(forKey: AppKeys.idUser.rawValue)
+        }
+        set {
+            UserDefaults.standard.setValue(newValue, forKey: AppKeys.idUser.rawValue)
         }
     }
     
@@ -161,14 +187,12 @@ struct AppSetting {
         }
     }
     
-    var city: String {
+    var cityName: String {
         get {
-            /// Fake City
-            return "Hanoi"
-            return UserDefaults.standard.string(forKey: AppKeys.city.rawValue) ?? ""
+            return UserDefaults.standard.string(forKey: AppKeys.cityName.rawValue) ?? ""
         }
         set {
-            UserDefaults.standard.setValue(newValue, forKey: AppKeys.city.rawValue)
+            UserDefaults.standard.setValue(newValue, forKey: AppKeys.cityName.rawValue)
         }
     }
     
@@ -198,6 +222,54 @@ struct AppSetting {
         set {
             UserDefaults.standard.setValue(newValue, forKey: AppKeys.selectConfig.rawValue)
         }
+    }
+    
+    var selectAutoConnect: Int {
+        get {
+            UserDefaults.standard.integer(forKey: AppKeys.selectAutoConnect.rawValue)
+        }
+        set {
+            UserDefaults.standard.setValue(newValue, forKey: AppKeys.selectAutoConnect.rawValue)
+        }
+    }
+    
+    var wasJailBreak: Int {
+        get {
+            UserDefaults.standard.integer(forKey: AppKeys.wasJailBreak.rawValue)
+        }
+        set {
+            UserDefaults.standard.setValue(newValue, forKey: AppKeys.wasJailBreak.rawValue)
+        }
+    }
+    
+    var countryName: String {
+        get {
+            return UserDefaults.standard.string(forKey: AppKeys.countryName.rawValue) ?? ""
+        }
+        set {
+            UserDefaults.standard.setValue(newValue, forKey: AppKeys.countryName.rawValue)
+        }
+    }
+    
+    func getConfigProtocol() -> ItemCellType {
+        if let type = ItemCellType(rawValue: AppSetting.shared.selectConfig) {
+            if type != .recommend && type != .wireGuard && type != .openVPN {
+                return .recommend
+            }
+            return type
+        }
+        
+        return .recommend
+    }
+    
+    func getAutoConnectProtocol() -> ItemCellType {
+        if let type = ItemCellType(rawValue: AppSetting.shared.selectAutoConnect) {
+            if type != .always && type != .onWifi && type != .onMobile && type != .off {
+                return .recommend
+            }
+            return type
+        }
+        return .off
     }
     
     var isRefreshTokenValid: Bool {
@@ -240,5 +312,48 @@ struct AppSetting {
         let accountCreatedTimeInteval = TimeInterval(accountCreatedSecond)
         let joinedDate = DateInRegion(seconds: accountCreatedTimeInteval, region: .local)
         return joinedDate
+    }
+    
+    var dnsSetting: DNSSetting {
+        get {
+            guard let settingString = UserDefaults.standard.string(forKey: AppKeys.dnsSetting.rawValue) else {
+                return .system
+            }
+            return DNSSetting(rawValue: settingString) ?? .custom
+        }
+        set {
+            UserDefaults.standard.setValue(newValue.rawValue, forKey: AppKeys.dnsSetting.rawValue)
+        }
+    }
+    
+    var primaryDNSValue: String {
+        get {
+            UserDefaults.standard.string(forKey: AppKeys.primaryDNSValue.rawValue) ?? ""
+        }
+        set {
+            UserDefaults.standard.setValue(newValue, forKey: AppKeys.primaryDNSValue.rawValue)
+        }
+    }
+    
+    var secondaryDNSValue: String {
+        get {
+            UserDefaults.standard.string(forKey: AppKeys.secondaryDNSValue.rawValue) ?? ""
+        }
+        set {
+            UserDefaults.standard.setValue(newValue, forKey: AppKeys.secondaryDNSValue.rawValue)
+        }
+    }
+    
+    func getContentDNSCell() -> String {
+        var defaultContent = L10n.Settings.Dns.default
+        if dnsSetting == .custom {
+            if primaryDNSValue != "" {
+                defaultContent = primaryDNSValue
+            }
+            if secondaryDNSValue != "" {
+                defaultContent = ", " + secondaryDNSValue
+            }
+        }
+        return defaultContent
     }
 }

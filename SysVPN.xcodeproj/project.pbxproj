@@ -16,6 +16,8 @@
 		6384B4F9276C43DD00E904D2 /* BoardViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6384B4F7276C43DD00E904D2 /* BoardViewModel.swift */; };
 		6F0CD61FF3AFF3CA9797036C /* Pods_SysVPN__iOS_.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0AE9DF7C938744F5B3604B33 /* Pods_SysVPN__iOS_.framework */; };
 		7CE7703BC45FFB67D75B5F6B /* Pods_OpenVPN.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E5501EB54E470D0780031D15 /* Pods_OpenVPN.framework */; };
+		AC1195D22844D71D002230F0 /* DNSSettingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC1195D12844D71D002230F0 /* DNSSettingView.swift */; };
+		AC1195DB28452313002230F0 /* DNSSettingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC1195DA28452313002230F0 /* DNSSettingViewModel.swift */; };
 		AC4051E227CCB6860054F6AE /* ToastView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC4051E127CCB6860054F6AE /* ToastView.swift */; };
 		AC490871281B9FC600DB430B /* NotificationExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC490870281B9FC600DB430B /* NotificationExtension.swift */; };
 		AC490873281B9FFB00DB430B /* PublisherExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC490872281B9FFB00DB430B /* PublisherExtension.swift */; };
@@ -124,8 +126,8 @@
 		D7A4AC4527954A7900C88162 /* PlanListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7A4AC4427954A7900C88162 /* PlanListCell.swift */; };
 		D7A4AC472795743300C88162 /* NotificationNameExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7A4AC462795743300C88162 /* NotificationNameExtension.swift */; };
 		D7F0EAB527BF9BB300B41015 /* GoogleService-Info-dev.plist in Resources */ = {isa = PBXBuildFile; fileRef = D7F0EAB427BF9BB300B41015 /* GoogleService-Info-dev.plist */; };
-		D7F9695827B262190037A3D0 /* DeviceViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7F9695727B262190037A3D0 /* DeviceViewModel.swift */; };
-		D7F9695927B262190037A3D0 /* DeviceViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7F9695727B262190037A3D0 /* DeviceViewModel.swift */; };
+		D7F9695827B262190037A3D0 /* SessionVPNViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7F9695727B262190037A3D0 /* SessionVPNViewModel.swift */; };
+		D7F9695927B262190037A3D0 /* SessionVPNViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7F9695727B262190037A3D0 /* SessionVPNViewModel.swift */; };
 		D7F9695C27B2AC980037A3D0 /* FAQView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7F9695B27B2AC980037A3D0 /* FAQView.swift */; };
 		D7F9695D27B2AC980037A3D0 /* FAQView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7F9695B27B2AC980037A3D0 /* FAQView.swift */; };
 		D7F9695F27B2B8590037A3D0 /* QuestionModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7F9695E27B2B8590037A3D0 /* QuestionModel.swift */; };
@@ -139,16 +141,8 @@
 		EE03444128090AB7003DFB64 /* OpenVPNPacketTunnelProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE03444028090AB7003DFB64 /* OpenVPNPacketTunnelProvider.swift */; };
 		EE03444628090AB7003DFB64 /* OpenVPN.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = EE03443D28090AB7003DFB64 /* OpenVPN.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		EE03445A2809204E003DFB64 /* NetworkExtension.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EE0344592809204E003DFB64 /* NetworkExtension.framework */; };
-		EE269072282902820078AC3B /* OpenVPNManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE034413280827D6003DFB64 /* OpenVPNManager.swift */; };
-		EE2D6BE82812A807008E1431 /* OpenVPNManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE034413280827D6003DFB64 /* OpenVPNManager.swift */; };
-		EE2D6BE92812A810008E1431 /* NetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE78F767280FB6CE00F49903 /* NetworkManager.swift */; };
-		EE2D6BEA2812A810008E1431 /* NetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE78F767280FB6CE00F49903 /* NetworkManager.swift */; };
 		EE2D6BEF2818EFA4008E1431 /* StaticServer.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE9B8B5727C387C50077BCFC /* StaticServer.swift */; };
 		EE2D6BF02818EFA4008E1431 /* StaticServer.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE9B8B5727C387C50077BCFC /* StaticServer.swift */; };
-		EE2D6BF22819276C008E1431 /* ProtocolSettingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE2D6BF12819276C008E1431 /* ProtocolSettingView.swift */; };
-		EE2D6BF32819276C008E1431 /* ProtocolSettingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE2D6BF12819276C008E1431 /* ProtocolSettingView.swift */; };
-		EE2D6BF528193D08008E1431 /* ProtocolSettingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE2D6BF428193D08008E1431 /* ProtocolSettingViewModel.swift */; };
-		EE2D6BF628193D08008E1431 /* ProtocolSettingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE2D6BF428193D08008E1431 /* ProtocolSettingViewModel.swift */; };
 		EE2D6BF8281BA902008E1431 /* ProtocolSettingCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE2D6BF7281BA902008E1431 /* ProtocolSettingCellView.swift */; };
 		EE2D6BF9281BA902008E1431 /* ProtocolSettingCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE2D6BF7281BA902008E1431 /* ProtocolSettingCellView.swift */; };
 		EE2D6BFB281BD77D008E1431 /* ObtainCertificateModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE2D6BFA281BD77D008E1431 /* ObtainCertificateModel.swift */; };
@@ -182,7 +176,6 @@
 		EE78F73E280E732700F49903 /* wg_ios_client.conf in Resources */ = {isa = PBXBuildFile; fileRef = EE78F73A280E732700F49903 /* wg_ios_client.conf */; };
 		EE78F73F280E732700F49903 /* wg_ios_client.conf in Resources */ = {isa = PBXBuildFile; fileRef = EE78F73A280E732700F49903 /* wg_ios_client.conf */; };
 		EE78F740280E732700F49903 /* wg_ios_client.conf in Resources */ = {isa = PBXBuildFile; fileRef = EE78F73A280E732700F49903 /* wg_ios_client.conf */; };
-		EE78F748280E763400F49903 /* WireGuardManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE78F742280E763400F49903 /* WireGuardManager.swift */; };
 		EE78F74A280E781100F49903 /* WireGuardManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE78F742280E763400F49903 /* WireGuardManager.swift */; };
 		EE78F750280FA08100F49903 /* TunnelKit in Frameworks */ = {isa = PBXBuildFile; productRef = EE78F74F280FA08100F49903 /* TunnelKit */; };
 		EE78F768280FB6CE00F49903 /* NetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE78F767280FB6CE00F49903 /* NetworkManager.swift */; };
@@ -194,7 +187,6 @@
 		EE78F7772811068C00F49903 /* TunnelKitOpenVPN in Frameworks */ = {isa = PBXBuildFile; productRef = EE78F7762811068C00F49903 /* TunnelKitOpenVPN */; };
 		EE78F7792811068C00F49903 /* TunnelKitOpenVPNAppExtension in Frameworks */ = {isa = PBXBuildFile; productRef = EE78F7782811068C00F49903 /* TunnelKitOpenVPNAppExtension */; };
 		EE78F77B2811068C00F49903 /* TunnelKitWireGuard in Frameworks */ = {isa = PBXBuildFile; productRef = EE78F77A2811068C00F49903 /* TunnelKitWireGuard */; };
-		EE78F77C281106AC00F49903 /* WireGuardManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE78F742280E763400F49903 /* WireGuardManager.swift */; };
 		EE78F77E2811526C00F49903 /* RequestCertificateModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE78F77D2811526B00F49903 /* RequestCertificateModel.swift */; };
 		EE78F77F2812500C00F49903 /* Node.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE85EE0E27BDF5B6000F967A /* Node.swift */; };
 		EE78F7802812500C00F49903 /* Node.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE85EE0E27BDF5B6000F967A /* Node.swift */; };
@@ -216,7 +208,7 @@
 		EE85EE1027BDF5B6000F967A /* DataList.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE85EE0C27BDF5B6000F967A /* DataList.swift */; };
 		EE85EE1127BDF5B6000F967A /* SelectionHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE85EE0D27BDF5B6000F967A /* SelectionHandler.swift */; };
 		EE85EE1227BDF5B6000F967A /* Node.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE85EE0E27BDF5B6000F967A /* Node.swift */; };
-		EE85EE1427BDF5C7000F967A /* DeviceOnline.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE85EE1327BDF5C7000F967A /* DeviceOnline.swift */; };
+		EE85EE1427BDF5C7000F967A /* SessionVPN.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE85EE1327BDF5C7000F967A /* SessionVPN.swift */; };
 		EE85EE1627BDF5CB000F967A /* PaymentHistory.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE85EE1527BDF5CB000F967A /* PaymentHistory.swift */; };
 		EE85EE1827BE3C4C000F967A /* CountryListResultModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE85EE1727BE3C4C000F967A /* CountryListResultModel.swift */; };
 		EE890FE027910FBD00ADF293 /* AccountView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE890FDF27910FBD00ADF293 /* AccountView.swift */; };
@@ -239,16 +231,12 @@
 		EE8910022796792400ADF293 /* PaymentHistoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE8910002796792400ADF293 /* PaymentHistoryView.swift */; };
 		EE89100427967AA200ADF293 /* AccountStatusView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE89100327967AA200ADF293 /* AccountStatusView.swift */; };
 		EE89100527967AA200ADF293 /* AccountStatusView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE89100327967AA200ADF293 /* AccountStatusView.swift */; };
-		EE89100F2796B54700ADF293 /* DevicesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE89100E2796B54700ADF293 /* DevicesView.swift */; };
-		EE8910102796B54700ADF293 /* DevicesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE89100E2796B54700ADF293 /* DevicesView.swift */; };
-		EE8910122796B8CF00ADF293 /* DeviceCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE8910112796B8CF00ADF293 /* DeviceCell.swift */; };
-		EE8910132796B8CF00ADF293 /* DeviceCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE8910112796B8CF00ADF293 /* DeviceCell.swift */; };
+		EE89100F2796B54700ADF293 /* SessionVPNView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE89100E2796B54700ADF293 /* SessionVPNView.swift */; };
+		EE8910102796B54700ADF293 /* SessionVPNView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE89100E2796B54700ADF293 /* SessionVPNView.swift */; };
+		EE8910122796B8CF00ADF293 /* SessionVPNCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE8910112796B8CF00ADF293 /* SessionVPNCell.swift */; };
+		EE8910132796B8CF00ADF293 /* SessionVPNCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE8910112796B8CF00ADF293 /* SessionVPNCell.swift */; };
 		EE8910162797AC3D00ADF293 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE8910152797AC3D00ADF293 /* SettingsView.swift */; };
 		EE8910172797AC3D00ADF293 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE8910152797AC3D00ADF293 /* SettingsView.swift */; };
-		EE89101E2797F25200ADF293 /* SettingVPNView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE89101D2797F25200ADF293 /* SettingVPNView.swift */; };
-		EE89101F2797F25200ADF293 /* SettingVPNView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE89101D2797F25200ADF293 /* SettingVPNView.swift */; };
-		EE8910212797F6D400ADF293 /* AutoConnectView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE8910202797F6D400ADF293 /* AutoConnectView.swift */; };
-		EE8910222797F6D400ADF293 /* AutoConnectView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE8910202797F6D400ADF293 /* AutoConnectView.swift */; };
 		EE8910682798129600ADF293 /* BoardListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE8910672798129600ADF293 /* BoardListView.swift */; };
 		EE8910692798129600ADF293 /* BoardListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE8910672798129600ADF293 /* BoardListView.swift */; };
 		EE89106B2798142A00ADF293 /* StatusLocationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE89106A2798142A00ADF293 /* StatusLocationView.swift */; };
@@ -268,10 +256,19 @@
 		EE8B37392812513300D14E1F /* XCAssets+Generated.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC6074E127DD08D100DD5667 /* XCAssets+Generated.swift */; };
 		EE8B373A2812514400D14E1F /* AssetsExtension+SwiftUI.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC6074E527DDD06200DD5667 /* AssetsExtension+SwiftUI.swift */; };
 		EE8B373B2812514400D14E1F /* AssetsExtension+SwiftUI.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC6074E527DDD06200DD5667 /* AssetsExtension+SwiftUI.swift */; };
-		EE8B373C28125E3D00D14E1F /* RequestCertificateModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE78F77D2811526B00F49903 /* RequestCertificateModel.swift */; };
-		EE8B373D28125E3E00D14E1F /* RequestCertificateModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE78F77D2811526B00F49903 /* RequestCertificateModel.swift */; };
-		EE9B77B5283B7AED00240E89 /* AppSetting.swift in Sources */ = {isa = PBXBuildFile; fileRef = D78044F3275912AC0086E59D /* AppSetting.swift */; };
-		EE9B77B6283B7AED00240E89 /* AppSetting.swift in Sources */ = {isa = PBXBuildFile; fileRef = D78044F3275912AC0086E59D /* AppSetting.swift */; };
+		EE9B77B8283F2F3B00240E89 /* AutoConnectViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE9B77B7283F2F3B00240E89 /* AutoConnectViewModel.swift */; };
+		EE9B77BF28460AC700240E89 /* ProtocolSettingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE9B77BD28460AC600240E89 /* ProtocolSettingView.swift */; };
+		EE9B77C028460AC700240E89 /* ProtocolSettingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE9B77BD28460AC600240E89 /* ProtocolSettingView.swift */; };
+		EE9B77C128460AC700240E89 /* ProtocolSettingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE9B77BE28460AC700240E89 /* ProtocolSettingViewModel.swift */; };
+		EE9B77C228460AC700240E89 /* ProtocolSettingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE9B77BE28460AC700240E89 /* ProtocolSettingViewModel.swift */; };
+		EE9B77C428460BA100240E89 /* SettingVPNView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE9B77C328460BA100240E89 /* SettingVPNView.swift */; };
+		EE9B77C628460BB400240E89 /* AutoConnectView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE9B77C528460BB400240E89 /* AutoConnectView.swift */; };
+		EE9B77CD2848B0B400240E89 /* RequestCertificateModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE78F77D2811526B00F49903 /* RequestCertificateModel.swift */; };
+		EE9B77CE2848B0B500240E89 /* RequestCertificateModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE78F77D2811526B00F49903 /* RequestCertificateModel.swift */; };
+		EE9B77D02849A5BB00240E89 /* SettingVPNViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE9B77CF2849A5BB00240E89 /* SettingVPNViewModel.swift */; };
+		EE9B77D22849AFF400240E89 /* InfoDeviceModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE9B77D12849AFF400240E89 /* InfoDeviceModel.swift */; };
+		EE9B77D4284B48A800240E89 /* DetectJailBreakDevice.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE9B77D3284B48A800240E89 /* DetectJailBreakDevice.swift */; };
+		EE9B77D7284B4EFE00240E89 /* GetFreeMemory.m in Sources */ = {isa = PBXBuildFile; fileRef = EE9B77D6284B4EFE00240E89 /* GetFreeMemory.m */; };
 		EE9B8B5627C37C320077BCFC /* LinearGradientStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE9B8B5527C37C320077BCFC /* LinearGradientStatus.swift */; };
 		EE9B8B5827C387C50077BCFC /* StaticServer.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE9B8B5727C387C50077BCFC /* StaticServer.swift */; };
 		EEAD5C512779C2D3008181E3 /* SpeedConnectedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEAD5C502779C2D3008181E3 /* SpeedConnectedView.swift */; };
@@ -347,6 +344,8 @@
 		6642C43C25C5CB1222F221FA /* Pods-WireGuard.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-WireGuard.debug.xcconfig"; path = "Target Support Files/Pods-WireGuard/Pods-WireGuard.debug.xcconfig"; sourceTree = "<group>"; };
 		72EB358C2FDC72EB6B3F3EC0 /* Pods_SysVPN__macOS_.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SysVPN__macOS_.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		9C14946349D2D183F4694F71 /* Pods-WireGuard.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-WireGuard.release.xcconfig"; path = "Target Support Files/Pods-WireGuard/Pods-WireGuard.release.xcconfig"; sourceTree = "<group>"; };
+		AC1195D12844D71D002230F0 /* DNSSettingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DNSSettingView.swift; sourceTree = "<group>"; };
+		AC1195DA28452313002230F0 /* DNSSettingViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DNSSettingViewModel.swift; sourceTree = "<group>"; };
 		AC4051E127CCB6860054F6AE /* ToastView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToastView.swift; sourceTree = "<group>"; };
 		AC490870281B9FC600DB430B /* NotificationExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationExtension.swift; sourceTree = "<group>"; };
 		AC490872281B9FFB00DB430B /* PublisherExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PublisherExtension.swift; sourceTree = "<group>"; };
@@ -443,7 +442,7 @@
 		D7A4AC4427954A7900C88162 /* PlanListCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlanListCell.swift; sourceTree = "<group>"; };
 		D7A4AC462795743300C88162 /* NotificationNameExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationNameExtension.swift; sourceTree = "<group>"; };
 		D7F0EAB427BF9BB300B41015 /* GoogleService-Info-dev.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info-dev.plist"; sourceTree = "<group>"; };
-		D7F9695727B262190037A3D0 /* DeviceViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviceViewModel.swift; sourceTree = "<group>"; };
+		D7F9695727B262190037A3D0 /* SessionVPNViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionVPNViewModel.swift; sourceTree = "<group>"; };
 		D7F9695B27B2AC980037A3D0 /* FAQView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FAQView.swift; sourceTree = "<group>"; };
 		D7F9695E27B2B8590037A3D0 /* QuestionModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuestionModel.swift; sourceTree = "<group>"; };
 		E5501EB54E470D0780031D15 /* Pods_OpenVPN.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_OpenVPN.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -453,9 +452,7 @@
 		EE03444228090AB7003DFB64 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		EE03444328090AB7003DFB64 /* OpenVPN.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = OpenVPN.entitlements; sourceTree = "<group>"; };
 		EE0344592809204E003DFB64 /* NetworkExtension.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = NetworkExtension.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS15.4.sdk/System/Library/Frameworks/NetworkExtension.framework; sourceTree = DEVELOPER_DIR; };
-		EE2D6BF12819276C008E1431 /* ProtocolSettingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProtocolSettingView.swift; sourceTree = "<group>"; };
-		EE2D6BF428193D08008E1431 /* ProtocolSettingViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProtocolSettingViewModel.swift; sourceTree = "<group>"; };
-		EE2D6BF7281BA902008E1431 /* ProtocolSettingCellView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProtocolSettingCellView.swift; sourceTree = "<group>"; };
+		EE2D6BF7281BA902008E1431 /* ProtocolSettingCellView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ProtocolSettingCellView.swift; path = ../../ProtocolSettingCellView.swift; sourceTree = "<group>"; };
 		EE2D6BFA281BD77D008E1431 /* ObtainCertificateModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ObtainCertificateModel.swift; sourceTree = "<group>"; };
 		EE3246E12822362C0070FB91 /* StaticNodeMapView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StaticNodeMapView.swift; sourceTree = "<group>"; };
 		EE3246E52822373D0070FB91 /* StaticNodeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StaticNodeView.swift; sourceTree = "<group>"; };
@@ -488,7 +485,7 @@
 		EE85EE0C27BDF5B6000F967A /* DataList.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataList.swift; sourceTree = "<group>"; };
 		EE85EE0D27BDF5B6000F967A /* SelectionHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SelectionHandler.swift; sourceTree = "<group>"; };
 		EE85EE0E27BDF5B6000F967A /* Node.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Node.swift; sourceTree = "<group>"; };
-		EE85EE1327BDF5C7000F967A /* DeviceOnline.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DeviceOnline.swift; sourceTree = "<group>"; };
+		EE85EE1327BDF5C7000F967A /* SessionVPN.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SessionVPN.swift; sourceTree = "<group>"; };
 		EE85EE1527BDF5CB000F967A /* PaymentHistory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PaymentHistory.swift; sourceTree = "<group>"; };
 		EE85EE1727BE3C4C000F967A /* CountryListResultModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountryListResultModel.swift; sourceTree = "<group>"; };
 		EE890FDF27910FBD00ADF293 /* AccountView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountView.swift; sourceTree = "<group>"; };
@@ -501,17 +498,26 @@
 		EE890FFD27956E0E00ADF293 /* ChangePasswordViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChangePasswordViewModel.swift; sourceTree = "<group>"; };
 		EE8910002796792400ADF293 /* PaymentHistoryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaymentHistoryView.swift; sourceTree = "<group>"; };
 		EE89100327967AA200ADF293 /* AccountStatusView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountStatusView.swift; sourceTree = "<group>"; };
-		EE89100E2796B54700ADF293 /* DevicesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DevicesView.swift; sourceTree = "<group>"; };
-		EE8910112796B8CF00ADF293 /* DeviceCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviceCell.swift; sourceTree = "<group>"; };
+		EE89100E2796B54700ADF293 /* SessionVPNView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionVPNView.swift; sourceTree = "<group>"; };
+		EE8910112796B8CF00ADF293 /* SessionVPNCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionVPNCell.swift; sourceTree = "<group>"; };
 		EE8910152797AC3D00ADF293 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
-		EE89101D2797F25200ADF293 /* SettingVPNView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingVPNView.swift; sourceTree = "<group>"; };
-		EE8910202797F6D400ADF293 /* AutoConnectView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AutoConnectView.swift; sourceTree = "<group>"; };
 		EE8910672798129600ADF293 /* BoardListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoardListView.swift; sourceTree = "<group>"; };
 		EE89106A2798142A00ADF293 /* StatusLocationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatusLocationView.swift; sourceTree = "<group>"; };
 		EE89106D2798164500ADF293 /* NetworkWaveView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkWaveView.swift; sourceTree = "<group>"; };
 		EE8910702798FBD500ADF293 /* SearchBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchBar.swift; sourceTree = "<group>"; };
 		EE8910732799458A00ADF293 /* NodeCellView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NodeCellView.swift; sourceTree = "<group>"; };
 		EE891076279947FA00ADF293 /* ImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageView.swift; sourceTree = "<group>"; };
+		EE9B77B7283F2F3B00240E89 /* AutoConnectViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AutoConnectViewModel.swift; sourceTree = "<group>"; };
+		EE9B77BD28460AC600240E89 /* ProtocolSettingView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProtocolSettingView.swift; sourceTree = "<group>"; };
+		EE9B77BE28460AC700240E89 /* ProtocolSettingViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProtocolSettingViewModel.swift; sourceTree = "<group>"; };
+		EE9B77C328460BA100240E89 /* SettingVPNView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingVPNView.swift; sourceTree = "<group>"; };
+		EE9B77C528460BB400240E89 /* AutoConnectView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AutoConnectView.swift; sourceTree = "<group>"; };
+		EE9B77CF2849A5BB00240E89 /* SettingVPNViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingVPNViewModel.swift; sourceTree = "<group>"; };
+		EE9B77D12849AFF400240E89 /* InfoDeviceModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfoDeviceModel.swift; sourceTree = "<group>"; };
+		EE9B77D3284B48A800240E89 /* DetectJailBreakDevice.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DetectJailBreakDevice.swift; sourceTree = "<group>"; };
+		EE9B77D5284B4EFE00240E89 /* SysVPN (iOS)-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "SysVPN (iOS)-Bridging-Header.h"; sourceTree = "<group>"; };
+		EE9B77D6284B4EFE00240E89 /* GetFreeMemory.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GetFreeMemory.m; sourceTree = "<group>"; };
+		EE9B77D8284B500B00240E89 /* GetFreeMemory.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GetFreeMemory.h; sourceTree = "<group>"; };
 		EE9B8B5527C37C320077BCFC /* LinearGradientStatus.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LinearGradientStatus.swift; sourceTree = "<group>"; };
 		EE9B8B5727C387C50077BCFC /* StaticServer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StaticServer.swift; sourceTree = "<group>"; };
 		EEAD5C502779C2D3008181E3 /* SpeedConnectedView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpeedConnectedView.swift; sourceTree = "<group>"; };
@@ -617,6 +623,46 @@
 				EE3246DF2822359B0070FB91 /* SubView */,
 			);
 			path = Board;
+			sourceTree = "<group>";
+		};
+		AC1195D02844D70D002230F0 /* DNS */ = {
+			isa = PBXGroup;
+			children = (
+				AC1195D12844D71D002230F0 /* DNSSettingView.swift */,
+				AC1195DA28452313002230F0 /* DNSSettingViewModel.swift */,
+			);
+			path = DNS;
+			sourceTree = "<group>";
+		};
+		AC1195D728451AC6002230F0 /* VNPSettings */ = {
+			isa = PBXGroup;
+			children = (
+				EE9B77C328460BA100240E89 /* SettingVPNView.swift */,
+				EE9B77CF2849A5BB00240E89 /* SettingVPNViewModel.swift */,
+				AC1195D928451B0A002230F0 /* ProtocolSetting */,
+				AC1195D828451AFB002230F0 /* AutoConnect */,
+				AC1195D02844D70D002230F0 /* DNS */,
+			);
+			path = VNPSettings;
+			sourceTree = "<group>";
+		};
+		AC1195D828451AFB002230F0 /* AutoConnect */ = {
+			isa = PBXGroup;
+			children = (
+				EE9B77B7283F2F3B00240E89 /* AutoConnectViewModel.swift */,
+				EE9B77C528460BB400240E89 /* AutoConnectView.swift */,
+			);
+			path = AutoConnect;
+			sourceTree = "<group>";
+		};
+		AC1195D928451B0A002230F0 /* ProtocolSetting */ = {
+			isa = PBXGroup;
+			children = (
+				EE9B77BD28460AC600240E89 /* ProtocolSettingView.swift */,
+				EE9B77BE28460AC700240E89 /* ProtocolSettingViewModel.swift */,
+				EE2D6BF7281BA902008E1431 /* ProtocolSettingCellView.swift */,
+			);
+			path = ProtocolSetting;
 			sourceTree = "<group>";
 		};
 		AC6074DB27DD011F00DD5667 /* Resources */ = {
@@ -883,6 +929,11 @@
 				D79BF76727BD2E1600E76C37 /* Payment */,
 				D79BF76227BD25B600E76C37 /* Auth */,
 				D79BF76527BD27E000E76C37 /* APIResponse.swift */,
+				EE9B77D3284B48A800240E89 /* DetectJailBreakDevice.swift */,
+				EE9B77D12849AFF400240E89 /* InfoDeviceModel.swift */,
+				EE9B77D6284B4EFE00240E89 /* GetFreeMemory.m */,
+				EE9B77D8284B500B00240E89 /* GetFreeMemory.h */,
+				EE9B77D5284B4EFE00240E89 /* SysVPN (iOS)-Bridging-Header.h */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -972,7 +1023,7 @@
 		D79BF76827BD2E2500E76C37 /* Devices */ = {
 			isa = PBXGroup;
 			children = (
-				EE85EE1327BDF5C7000F967A /* DeviceOnline.swift */,
+				EE85EE1327BDF5C7000F967A /* SessionVPN.swift */,
 			);
 			path = Devices;
 			sourceTree = "<group>";
@@ -1200,9 +1251,9 @@
 		EE89100D2796B53700ADF293 /* Devices */ = {
 			isa = PBXGroup;
 			children = (
-				EE89100E2796B54700ADF293 /* DevicesView.swift */,
-				EE8910112796B8CF00ADF293 /* DeviceCell.swift */,
-				D7F9695727B262190037A3D0 /* DeviceViewModel.swift */,
+				EE89100E2796B54700ADF293 /* SessionVPNView.swift */,
+				EE8910112796B8CF00ADF293 /* SessionVPNCell.swift */,
+				D7F9695727B262190037A3D0 /* SessionVPNViewModel.swift */,
 			);
 			path = Devices;
 			sourceTree = "<group>";
@@ -1210,13 +1261,9 @@
 		EE8910142797AC3000ADF293 /* Settings */ = {
 			isa = PBXGroup;
 			children = (
+				AC1195D728451AC6002230F0 /* VNPSettings */,
 				AC79CE07282CFA6D00E1E874 /* Tools */,
 				EE8910152797AC3D00ADF293 /* SettingsView.swift */,
-				EE89101D2797F25200ADF293 /* SettingVPNView.swift */,
-				EE8910202797F6D400ADF293 /* AutoConnectView.swift */,
-				EE2D6BF12819276C008E1431 /* ProtocolSettingView.swift */,
-				EE2D6BF428193D08008E1431 /* ProtocolSettingViewModel.swift */,
-				EE2D6BF7281BA902008E1431 /* ProtocolSettingCellView.swift */,
 			);
 			path = Settings;
 			sourceTree = "<group>";
@@ -1411,6 +1458,7 @@
 				TargetAttributes = {
 					D78044A22758C6FB0086E59D = {
 						CreatedOnToolsVersion = 13.0;
+						LastSwiftMigration = 1330;
 					};
 					D78044A82758C6FB0086E59D = {
 						CreatedOnToolsVersion = 13.0;
@@ -1684,7 +1732,6 @@
 				AC6074B227D8D2B200DD5667 /* CustomPopupView.swift in Sources */,
 				D78044E32758F54A0086E59D /* AppDelegate.swift in Sources */,
 				D785DFBF27B3B26F001FC84B /* FAQViewModel.swift in Sources */,
-				EE89101E2797F25200ADF293 /* SettingVPNView.swift in Sources */,
 				EE514CBF27CCC14500F82AD7 /* LoadingView.swift in Sources */,
 				EE85EE1227BDF5B6000F967A /* Node.swift in Sources */,
 				D78044F4275912AC0086E59D /* AppSetting.swift in Sources */,
@@ -1692,17 +1739,18 @@
 				EE3246E8282237580070FB91 /* StaticNodePopupView.swift in Sources */,
 				AC6074EE27DE42C100DD5667 /* Strings+Generated.swift in Sources */,
 				EE8910012796792400ADF293 /* PaymentHistoryView.swift in Sources */,
+				EE9B77BF28460AC700240E89 /* ProtocolSettingView.swift in Sources */,
 				AC6074B027D8D24F00DD5667 /* ArrayExtension.swift in Sources */,
 				EE514CBD27CC71DC00F82AD7 /* IpInfoResult.swift in Sources */,
-				EE89100F2796B54700ADF293 /* DevicesView.swift in Sources */,
+				EE89100F2796B54700ADF293 /* SessionVPNView.swift in Sources */,
 				EE890FEF2795101300ADF293 /* InfomationView.swift in Sources */,
 				D795FFA8275F6E9A00E54206 /* PagingView.swift in Sources */,
 				D78044C62758C6FC0086E59D /* SysVPNApp.swift in Sources */,
+				EE9B77D7284B4EFE00240E89 /* GetFreeMemory.m in Sources */,
+				EE9B77C128460AC700240E89 /* ProtocolSettingViewModel.swift in Sources */,
 				D78F47262761A53A0064A764 /* AppColor.swift in Sources */,
-				EE8910212797F6D400ADF293 /* AutoConnectView.swift in Sources */,
 				D78F76C52769D84700919AA6 /* ViewModifier.swift in Sources */,
 				D7874DF8277AFED200ADC7AD /* ForgotPasswordView.swift in Sources */,
-				EE2D6BF22819276C008E1431 /* ProtocolSettingView.swift in Sources */,
 				EE3246E22822362C0070FB91 /* StaticNodeMapView.swift in Sources */,
 				D79E829927970649009E36F3 /* SetupVPNView.swift in Sources */,
 				D75F936E2773486900E16981 /* NavigationModifier.swift in Sources */,
@@ -1723,6 +1771,7 @@
 				D71CE4FD27903D4F00E8731D /* SubscriptionIntroductionView.swift in Sources */,
 				EE9B8B5827C387C50077BCFC /* StaticServer.swift in Sources */,
 				D788B18927635BC000855C24 /* AppButton.swift in Sources */,
+				AC1195DB28452313002230F0 /* DNSSettingViewModel.swift in Sources */,
 				D78044E12758F5110086E59D /* UIApplicationExtension.swift in Sources */,
 				6353F842276F333900B42334 /* StatusVPNView.swift in Sources */,
 				EEAD5C53277AC968008181E3 /* MapView.swift in Sources */,
@@ -1736,7 +1785,7 @@
 				D78044F227590E990086E59D /* TextModifier.swift in Sources */,
 				EE2D6BF8281BA902008E1431 /* ProtocolSettingCellView.swift in Sources */,
 				D79E82952796F671009E36F3 /* WelcomeView.swift in Sources */,
-				EE85EE1427BDF5C7000F967A /* DeviceOnline.swift in Sources */,
+				EE85EE1427BDF5C7000F967A /* SessionVPN.swift in Sources */,
 				D78AC3E527858D860056FCC0 /* NoticeView.swift in Sources */,
 				AC490871281B9FC600DB430B /* NotificationExtension.swift in Sources */,
 				6353F844276F3E8500B42334 /* BoardNavigationView.swift in Sources */,
@@ -1750,6 +1799,7 @@
 				D785DFC227B3F447001FC84B /* FAQCell.swift in Sources */,
 				EE8910682798129600ADF293 /* BoardListView.swift in Sources */,
 				EE034414280827D6003DFB64 /* OpenVPNManager.swift in Sources */,
+				EE9B77D4284B48A800240E89 /* DetectJailBreakDevice.swift in Sources */,
 				D78A35CA276B767400CC010D /* AppTextField.swift in Sources */,
 				EE78F74A280E781100F49903 /* WireGuardManager.swift in Sources */,
 				D785C72927BD4F7C00E83C0F /* KeyedCodingKeyContainerExtension.swift in Sources */,
@@ -1758,20 +1808,23 @@
 				D79BF75E27BD10D700E76C37 /* Constant+API.swift in Sources */,
 				EE78F768280FB6CE00F49903 /* NetworkManager.swift in Sources */,
 				D79BF76627BD27E000E76C37 /* APIResponse.swift in Sources */,
+				EE9B77D02849A5BB00240E89 /* SettingVPNViewModel.swift in Sources */,
+				EE9B77C428460BA100240E89 /* SettingVPNView.swift in Sources */,
 				EE85EDC327B37120000F967A /* NodeCellStaticView.swift in Sources */,
 				D7874DFA277AFEE200ADC7AD /* ForgotPasswordViewModel.swift in Sources */,
 				D78F47282761D1840064A764 /* LoginView.swift in Sources */,
-				D7F9695827B262190037A3D0 /* DeviceViewModel.swift in Sources */,
+				D7F9695827B262190037A3D0 /* SessionVPNViewModel.swift in Sources */,
 				EE85EDB627B21711000F967A /* CityCellView.swift in Sources */,
 				D7A4AC4527954A7900C88162 /* PlanListCell.swift in Sources */,
 				EE85EDC127B369B6000F967A /* StaticIPListView.swift in Sources */,
 				EE890FFB27956B9100ADF293 /* ChangePasswordView.swift in Sources */,
+				AC1195D22844D71D002230F0 /* DNSSettingView.swift in Sources */,
 				D78044F62759133A0086E59D /* Constant.swift in Sources */,
 				EE890FFE27956E0E00ADF293 /* ChangePasswordViewModel.swift in Sources */,
 				EE85EE1127BDF5B6000F967A /* SelectionHandler.swift in Sources */,
 				EE85EDC527B374AA000F967A /* SelectLocationMultihopView.swift in Sources */,
-				EE2D6BF528193D08008E1431 /* ProtocolSettingViewModel.swift in Sources */,
 				EEAD5C512779C2D3008181E3 /* SpeedConnectedView.swift in Sources */,
+				EE9B77D22849AFF400240E89 /* InfoDeviceModel.swift in Sources */,
 				D7F9695F27B2B8590037A3D0 /* QuestionModel.swift in Sources */,
 				D7A4AC4327952C5900C88162 /* PlanListViewModel.swift in Sources */,
 				EE89106E2798164500ADF293 /* NetworkWaveView.swift in Sources */,
@@ -1785,6 +1838,7 @@
 				D78044C82758C6FC0086E59D /* ContentView.swift in Sources */,
 				AC87539B2801ED10004C5F43 /* DeleteAccountConfirmationView.swift in Sources */,
 				EEEAF2192785834200A96114 /* NodePopupView.swift in Sources */,
+				EE9B77C628460BB400240E89 /* AutoConnectView.swift in Sources */,
 				D78044EA27590DB70086E59D /* APIManager.swift in Sources */,
 				D78A35CC276B9D5A00CC010D /* Background.swift in Sources */,
 				EE890FEC2791310000ADF293 /* ItemRowView.swift in Sources */,
@@ -1798,10 +1852,11 @@
 				6384B4F5276C374E00E904D2 /* BoardView.swift in Sources */,
 				EE79F52D27731A63006F0E5D /* ConnectButton.swift in Sources */,
 				EE85EE1627BDF5CB000F967A /* PaymentHistory.swift in Sources */,
-				EE8910122796B8CF00ADF293 /* DeviceCell.swift in Sources */,
+				EE8910122796B8CF00ADF293 /* SessionVPNCell.swift in Sources */,
 				D795FFAA275F6ED200E54206 /* Introduction.swift in Sources */,
 				AC6074E627DDD06200DD5667 /* AssetsExtension+SwiftUI.swift in Sources */,
 				EE79F53327758896006F0E5D /* StopWatch.swift in Sources */,
+				EE9B77B8283F2F3B00240E89 /* AutoConnectViewModel.swift in Sources */,
 				EE89100427967AA200ADF293 /* AccountStatusView.swift in Sources */,
 				EE891077279947FA00ADF293 /* ImageView.swift in Sources */,
 				EE85EDB927B21F7A000F967A /* LocationListView.swift in Sources */,
@@ -1817,20 +1872,17 @@
 			files = (
 				D78848962775D87E00AF22C6 /* AppSetting.swift in Sources */,
 				EE890FF9279558EC00ADF293 /* DateExtension.swift in Sources */,
-				EE8910132796B8CF00ADF293 /* DeviceCell.swift in Sources */,
+				EE8910132796B8CF00ADF293 /* SessionVPNCell.swift in Sources */,
 				EE890FF627951A6100ADF293 /* ItemRowCell.swift in Sources */,
-				EE2D6BF32819276C008E1431 /* ProtocolSettingView.swift in Sources */,
 				D78044C72758C6FC0086E59D /* SysVPNApp.swift in Sources */,
 				D78044CB2758C6FC0086E59D /* Persistence.swift in Sources */,
 				EE890FFF27956E0E00ADF293 /* ChangePasswordViewModel.swift in Sources */,
 				D7F9695D27B2AC980037A3D0 /* FAQView.swift in Sources */,
-				EE89101F2797F25200ADF293 /* SettingVPNView.swift in Sources */,
 				EE89106C2798142A00ADF293 /* StatusLocationView.swift in Sources */,
 				EE89100527967AA200ADF293 /* AccountStatusView.swift in Sources */,
 				EE890FE42791101E00ADF293 /* CustomNavigationView.swift in Sources */,
 				EE8910692798129600ADF293 /* BoardListView.swift in Sources */,
 				6384B4F6276C374E00E904D2 /* BoardView.swift in Sources */,
-				EE2D6BF628193D08008E1431 /* ProtocolSettingViewModel.swift in Sources */,
 				D78848932775D82B00AF22C6 /* AppColor.swift in Sources */,
 				D78848952775D85200AF22C6 /* BoardNavigationView.swift in Sources */,
 				EE890FF02795101300ADF293 /* InfomationView.swift in Sources */,
@@ -1841,23 +1893,24 @@
 				EE8910752799458A00ADF293 /* NodeCellView.swift in Sources */,
 				D785DFC327B3F447001FC84B /* FAQCell.swift in Sources */,
 				D785DFC027B3B26F001FC84B /* FAQViewModel.swift in Sources */,
+				EE9B77C228460AC700240E89 /* ProtocolSettingViewModel.swift in Sources */,
 				AC6074EF27DE42C100DD5667 /* Strings+Generated.swift in Sources */,
 				EE89106F2798164500ADF293 /* NetworkWaveView.swift in Sources */,
 				EE8910022796792400ADF293 /* PaymentHistoryView.swift in Sources */,
 				D7F9696027B2B8590037A3D0 /* QuestionModel.swift in Sources */,
-				EE8910102796B54700ADF293 /* DevicesView.swift in Sources */,
+				EE8910102796B54700ADF293 /* SessionVPNView.swift in Sources */,
 				EE890FFC27956B9100ADF293 /* ChangePasswordView.swift in Sources */,
 				EE2D6BFC281BD77D008E1431 /* ObtainCertificateModel.swift in Sources */,
-				EE8910222797F6D400ADF293 /* AutoConnectView.swift in Sources */,
 				EE85EDBF27B36963000F967A /* DescriptionMultihopView.swift in Sources */,
 				D78044C92758C6FC0086E59D /* ContentView.swift in Sources */,
 				6384B4F9276C43DD00E904D2 /* BoardViewModel.swift in Sources */,
+				EE9B77C028460AC700240E89 /* ProtocolSettingView.swift in Sources */,
 				EE85EDB427B2146B000F967A /* CityListView.swift in Sources */,
 				AC87539C2801ED10004C5F43 /* DeleteAccountConfirmationView.swift in Sources */,
 				D79C224F27BE0FA100B54613 /* AppSetting+Board.swift in Sources */,
 				D78848942775D84900AF22C6 /* Authentication.swift in Sources */,
 				EE890FE127910FBD00ADF293 /* AccountView.swift in Sources */,
-				D7F9695927B262190037A3D0 /* DeviceViewModel.swift in Sources */,
+				D7F9695927B262190037A3D0 /* SessionVPNViewModel.swift in Sources */,
 				EE8910172797AC3D00ADF293 /* SettingsView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1886,16 +1939,12 @@
 			files = (
 				EE8B37362812512300D14E1F /* Constant.swift in Sources */,
 				EE78F77F2812500C00F49903 /* Node.swift in Sources */,
-				EE9B77B5283B7AED00240E89 /* AppSetting.swift in Sources */,
-				EE2D6BE92812A810008E1431 /* NetworkManager.swift in Sources */,
 				EE8B37382812513300D14E1F /* XCAssets+Generated.swift in Sources */,
 				EE2D6BFE281BD78A008E1431 /* ObtainCertificateModel.swift in Sources */,
 				EE8B37342812511800D14E1F /* Strings+Generated.swift in Sources */,
 				EE2D6BEF2818EFA4008E1431 /* StaticServer.swift in Sources */,
-				EE2D6BE82812A807008E1431 /* OpenVPNManager.swift in Sources */,
-				EE78F77C281106AC00F49903 /* WireGuardManager.swift in Sources */,
-				EE8B373C28125E3D00D14E1F /* RequestCertificateModel.swift in Sources */,
 				EE3246F528226A9F0070FB91 /* AppColor.swift in Sources */,
+				EE9B77CD2848B0B400240E89 /* RequestCertificateModel.swift in Sources */,
 				EE8B373A2812514400D14E1F /* AssetsExtension+SwiftUI.swift in Sources */,
 				EE03444128090AB7003DFB64 /* OpenVPNPacketTunnelProvider.swift in Sources */,
 			);
@@ -1906,19 +1955,15 @@
 			buildActionMask = 2147483647;
 			files = (
 				EE8B37372812512400D14E1F /* Constant.swift in Sources */,
-				EE2D6BEA2812A810008E1431 /* NetworkManager.swift in Sources */,
-				EE9B77B6283B7AED00240E89 /* AppSetting.swift in Sources */,
 				EE78F7802812500C00F49903 /* Node.swift in Sources */,
 				EE2D6BFD281BD789008E1431 /* ObtainCertificateModel.swift in Sources */,
 				EE8B37392812513300D14E1F /* XCAssets+Generated.swift in Sources */,
 				EE2D6BF02818EFA4008E1431 /* StaticServer.swift in Sources */,
 				EE8B37352812511800D14E1F /* Strings+Generated.swift in Sources */,
 				EE46BCCF280963F4003C4FEB /* WireGuardPacketTunnelProvider.swift in Sources */,
-				EE8B373D28125E3E00D14E1F /* RequestCertificateModel.swift in Sources */,
+				EE9B77CE2848B0B500240E89 /* RequestCertificateModel.swift in Sources */,
 				EE3246F628226AA00070FB91 /* AppColor.swift in Sources */,
-				EE269072282902820078AC3B /* OpenVPNManager.swift in Sources */,
 				EE8B373B2812514400D14E1F /* AssetsExtension+SwiftUI.swift in Sources */,
-				EE78F748280E763400F49903 /* WireGuardManager.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2186,6 +2231,7 @@
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = "SysVPN (iOS).entitlements";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
@@ -2217,6 +2263,8 @@
 				SDKROOT = iphoneos;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
 				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_OBJC_BRIDGING_HEADER = "Shared/Models/SysVPN (iOS)-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -2229,6 +2277,7 @@
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = "SysVPN (iOS).entitlements";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
@@ -2261,6 +2310,7 @@
 				SDKROOT = iphoneos;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = RELEASE;
 				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_OBJC_BRIDGING_HEADER = "Shared/Models/SysVPN (iOS)-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALIDATE_PRODUCT = YES;

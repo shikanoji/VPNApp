@@ -19,6 +19,7 @@ enum APIError: Error {
     case parsing(DecodingError?)
     case unknown
     case identified(alert: String = L10n.Global.error, message: String = L10n.Global.somethingWrong)
+    case noInternet
     
     var localizedDescription: String {
         /// User feedback
@@ -29,6 +30,8 @@ enum APIError: Error {
             return "Sorry, the connection to our server failed."
         case .url(let error):
             return error?.localizedDescription ?? "Something went wrong."
+        case .noInternet:
+            return "No internet connection"
         }
     }
     
@@ -51,6 +54,8 @@ enum APIError: Error {
             return "permission error"
         case .identified(_ , let message):
             return message
+        case .noInternet:
+            return "No internet connection"
         }
     }
     
@@ -76,6 +81,8 @@ enum APIService {
     case getRequestCertificate(currentTab: BoardViewModel.StateTab)
     case getObtainCertificate
     case changePassword(oldPassword: String, newPassword: String)
+    case getListSession(page: Int = 1, limit: Int = 20, isActive: Int = 1)
+    case disconnectSession(sessionId: String)
 }
 
 extension APIService: TargetType {
@@ -113,15 +120,18 @@ extension APIService: TargetType {
         case .getObtainCertificate:
             return Constant.api.path.obtainCertificate + "/\(NetworkManager.shared.requestCertificate?.requestId ?? "")"
         case .changePassword:
-                return Constant.api.path.changePassword
+            return Constant.api.path.changePassword
+        case .getListSession:
+            return Constant.api.path.getListSession
+        case .disconnectSession:
+            return Constant.api.path.disconnectSession
         }
-    
     }
     
     // Here we specify which method our calls should use.
     var method: Moya.Method {
         switch self {
-        case .getCountryList, .ipInfo, .getRequestCertificate, .ipInfoOptional:
+        case .getCountryList, .ipInfo, .getRequestCertificate, .ipInfoOptional, .getListSession:
             return .get
         case .register, .login, .logout, .forgotPassword, .refreshToken:
             return .post
@@ -129,6 +139,8 @@ extension APIService: TargetType {
             return .get
         case .changePassword:
             return .put
+        case .disconnectSession:
+            return .patch
         }
     }
     
@@ -143,7 +155,7 @@ extension APIService: TargetType {
             body["password"] = password
             body["ip"] = AppSetting.shared.ip
             body["country"] = AppSetting.shared.countryCode
-            body["city"] = AppSetting.shared.city
+            body["city"] = AppSetting.shared.cityName
             return .requestCompositeParameters(bodyParameters: body, bodyEncoding: JSONEncoding.prettyPrinted, urlParameters: [:])
         case .login(let email, let password):
             var body: [String: Any] = [:]
@@ -151,7 +163,7 @@ extension APIService: TargetType {
             body["password"] = password
             body["ip"] = AppSetting.shared.ip
             body["country"] = AppSetting.shared.countryCode
-            body["city"] = AppSetting.shared.city
+            body["city"] = AppSetting.shared.cityName
             return .requestCompositeParameters(bodyParameters: body, bodyEncoding: JSONEncoding.prettyPrinted, urlParameters: [:])
         case .logout:
             var body: [String: Any] = [:]
@@ -162,14 +174,14 @@ extension APIService: TargetType {
             body["refreshToken"] = AppSetting.shared.refreshToken
             body["ip"] = AppSetting.shared.ip
             body["country"] = AppSetting.shared.countryCode
-            body["city"] = AppSetting.shared.city
+            body["city"] = AppSetting.shared.cityName
             return .requestCompositeParameters(bodyParameters: body, bodyEncoding: JSONEncoding.prettyPrinted, urlParameters: [:])
         case .forgotPassword(let email):
             var body: [String: Any] = [:]
             body["email"] = email
             body["ip"] = AppSetting.shared.ip
             body["country"] = AppSetting.shared.countryCode
-            body["city"] = AppSetting.shared.city
+            body["city"] = AppSetting.shared.cityName
             return .requestCompositeParameters(bodyParameters: body, bodyEncoding: JSONEncoding.prettyPrinted, urlParameters: [:])
         case .getCountryList:
             var param: [String: Any] = [:]
@@ -188,7 +200,7 @@ extension APIService: TargetType {
             // Use "key" temporarily, after remove it
             param["key"] = "f11b69c57d5fe9555e29c57c1d863bf8"
             
-            param["tech"] = NetworkManager.shared.selectConfig.description
+            param["tech"] = NetworkManager.shared.selectConfig.getConfigParam
             param["proto"] = NetworkManager.shared.protocolVPN.description
             param["dev"] = "tun"
             
@@ -227,6 +239,31 @@ extension APIService: TargetType {
             param["oldPassword"] = oldPassword
             param["newPassword"] = newPassword
             return .requestCompositeParameters(bodyParameters: param, bodyEncoding: JSONEncoding.prettyPrinted, urlParameters: [:])
+        case .getListSession(let page, let limit, let isActive):
+            var param: [String: Any] = [:]
+            param["page"] = page
+            param["limit"] = limit
+            param["isActive"] = isActive
+            param["sortBy"] = "createdAt:desc"
+            
+            // Use "key" temporarily, after remove it
+            param["key"] = "f11b69c57d5fe9555e29c57c1d863bf8"
+            
+            return .requestParameters(parameters: param, encoding: URLEncoding.queryString)
+            
+        case .disconnectSession(let sessionId):
+            var param: [String: Any] = [:]
+            
+            // Use "key" temporarily, after remove it
+            param["key"] = "f11b69c57d5fe9555e29c57c1d863bf8"
+            
+            var body: [String: Any] = [:]
+            body["sessionId"] = sessionId
+            
+            return .requestCompositeParameters(
+                bodyParameters: body,
+                bodyEncoding: JSONEncoding.prettyPrinted,
+                urlParameters: param)
         }
     }
     
@@ -236,11 +273,23 @@ extension APIService: TargetType {
         switch self {
         case .login, .register:
             return ["Content-type": "application/json"]
-        case .getCountryList, .getRequestCertificate, .getObtainCertificate, .changePassword:
+        case .getCountryList, .getObtainCertificate, .changePassword, .getListSession:
             return [
                 "Content-type": "application/json",
                 "Authorization": "Bearer \(AppSetting.shared.accessToken)"
             ]
+        case .getRequestCertificate:
+            var baseHeader = [
+                "Content-type": "application/json",
+                "Authorization": "Bearer \(AppSetting.shared.accessToken)"
+            ]
+            
+            if getInfoDevice() != "" {
+                baseHeader["x-device-info"] = getInfoDevice()
+            }
+            baseHeader["x-user-info"] = "{\"id\": \(AppSetting.shared.idUser)}"
+            
+            return baseHeader
         default:
             return ["Content-type": "application/json"]
         }
@@ -252,4 +301,32 @@ extension APIService: TargetType {
         return Data()
     }
     
+    
+    func getInfoDevice() -> String {
+
+        let info = InfoDeviceModel(
+            ipAddress: AppSetting.shared.ip,
+            deviceId: UIDevice.current.identifierForVendor!.uuidString,
+            deviceBrand: UIDevice.modelName,
+            deviceOs: "iOS",
+            deviceModel: UIDevice.current.model,
+            deviceIsRoot: AppSetting.shared.wasJailBreak,
+            deviceManufacture: "Apple",
+            deviceFreeMemory: Int(GetFreeMemory().get_free_memory()),
+            osBuildNumber: UIDevice.current.systemVersion,
+            appVersion: Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String,
+            appBundleId: Bundle.main.bundleIdentifier,
+            isEmulator: TARGET_OS_SIMULATOR != 0 ? 1 : 0,
+            isTablet: UIDevice.current.userInterfaceIdiom == .pad ? 1 : 0,
+            userCountryCode: AppSetting.shared.countryCode,
+            userCountryName: AppSetting.shared.countryName)
+        
+        let jsonEncoder = JSONEncoder()
+        if let jsonData = try? jsonEncoder.encode(info),
+           let json = String(data: jsonData, encoding: String.Encoding.utf8) {
+            return json
+        }
+        
+        return ""
+    }
 }

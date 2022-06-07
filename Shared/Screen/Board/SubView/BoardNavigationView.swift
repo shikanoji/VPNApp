@@ -6,9 +6,10 @@
 //
 
 import SwiftUI
+import TunnelKitManager
 
 struct BoardNavigationView: View {
-    var status: BoardViewModel.StateBoard
+    var status: VPNStatus
     
     let tapLeftIcon: () -> Void
     let tapRightIcon: () -> Void
@@ -41,7 +42,7 @@ struct BoardNavigationView: View {
 
 struct BoardNavigationView_Previews: PreviewProvider {
     static var previews: some View {
-        BoardNavigationView(status: .loading, tapLeftIcon: {
+        BoardNavigationView(status: .connected, tapLeftIcon: {
             
         }, tapRightIcon: {
             

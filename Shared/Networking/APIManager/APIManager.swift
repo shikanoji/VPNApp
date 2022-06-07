@@ -58,6 +58,30 @@ struct APIManager {
                 throw APIError.someError
             }
     }
+    
+    func getListSession(page: Int = 1, limit: Int = 20) -> Single<APIResponse<SessionResult>> {
+        return provider.rx
+            .request(.getListSession(page: page, limit: limit))
+            .map { response in
+                let result = try JSONDecoder().decode(APIResponse<SessionResult>.self, from: response.data)
+                return result
+            }
+            .catch { error in
+                throw APIError.someError
+            }
+    }
+    
+    func disconnectSession(_ sessionId: String) -> Single<APIResponse<EmptyResult>> {
+        return provider.rx
+            .request(.disconnectSession(sessionId: sessionId))
+            .map { response in
+                let result = try JSONDecoder().decode(APIResponse<EmptyResult>.self, from: response.data)
+                return result
+            }
+            .catch { error in
+                throw APIError.someError
+            }
+    }
 }
 
 extension MoyaProvider {

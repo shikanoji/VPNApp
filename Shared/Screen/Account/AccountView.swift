@@ -5,12 +5,14 @@
 //
 
 import SwiftUI
+import TunnelKitManager
+import TunnelKitCore
 
 struct AccountView: View {
     @EnvironmentObject var authentication: Authentication
     @Binding var showAccount: Bool
     
-    @Binding var statusConnect: BoardViewModel.StateBoard
+    @Binding var statusConnect: VPNStatus
     
     @State private var showInfomation = false
     
@@ -114,15 +116,15 @@ struct AccountView: View {
                             AccountStatusView(
                                 showAccount: $showAccount,
                                 showAccountStatus: $showAccountStatus,
-                                statusConnect: statusConnect),
+                                statusConnect: $statusConnect),
                            isActive: $showAccountStatus) { }
             
             NavigationLink(destination:
-                            DevicesView(
+                            SessionVPNView(
                                 showAccount: $showAccount,
                                 showTotalDevice: $showTotalDevice,
                                 statusConnect: statusConnect,
-                                viewModel: DeviceViewModel()),
+                                viewModel: SessionVPNViewModel()),
                            isActive: $showTotalDevice) { }
             
             NavigationLink(destination:
@@ -143,7 +145,7 @@ struct AccountView: View {
                     showAccount = false
                 }, tapRightButton: {
                     showAccount = false
-                }, statusConnect: statusConnect)
+                }, statusConnect: $statusConnect)
             header
             content
         }
@@ -156,7 +158,7 @@ struct AccountView: View {
 
 struct AccountView_Previews: PreviewProvider {
     @State static var showMenu = true
-    @State static var value: BoardViewModel.StateBoard = .connected
+    @State static var value: VPNStatus = .connected
     
     static var previews: some View {
         AccountView(showAccount: $showMenu, statusConnect: $value, viewModel: AccountViewModel())

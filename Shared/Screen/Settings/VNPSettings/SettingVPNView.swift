@@ -6,24 +6,19 @@
 //
 
 import SwiftUI
+import TunnelKitManager
 
 struct SettingVPNView: View {
+    @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
     @Binding var showSettings: Bool
     @Binding var showVPNSetting: Bool
     
-    @State var statusConnect: BoardViewModel.StateBoard = .connected
-    @State var showAutoConnect = false
-    @State var showProtocolConnect = false
-    @State var itemList: [ItemCellType] = [
-        .autoConnet,
-        .protocolConnect,
-        .split,
-        .dns,
-        .localNetwork,
-        .metered
-    ]
+    @Binding var statusConnect: VPNStatus
+    @State var showAutoConnect: Bool = false
+    @State var showProtocolConnect: Bool = false
+    @State var showDNSSetting: Bool = false
     
-    @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
+    @StateObject var viewModel: SettingVPNViewModel
     
     var body: some View {
         ScrollView(.vertical, showsIndicators: false) {
@@ -38,19 +33,21 @@ struct SettingVPNView: View {
                     }, tapRightButton: {
                         showSettings = false
                         presentationMode.wrappedValue.dismiss()
-                    }, statusConnect: statusConnect)
+                    }, statusConnect: $statusConnect)
                 VStack(spacing: 1) {
-                    ForEach(itemList.indices) { i in
-                        ItemRowCell(title: itemList[i].title,
-                                    content: itemList[i].content,
-                                    showSwitch: itemList[i].showSwitch,
-                                    position: itemList.getPosition(i))
+                    ForEach(viewModel.itemList) { item in
+                        ItemRowCell(title: item.type.title,
+                                    content: item.type.content,
+                                    showSwitch: item.type.showSwitch,
+                                    position: getPosition(item: item, arr: viewModel.itemList))
                             .onTapGesture {
-                                switch itemList[i] {
-                                case .autoConnet:
+                                switch item.type {
+                                case .autoConnect:
                                     showAutoConnect = true
                                 case .protocolConnect:
                                     showProtocolConnect = true
+                                case .dns:
+                                    showDNSSetting = true
                                 default:
                                     return
                                 }
@@ -65,26 +62,30 @@ struct SettingVPNView: View {
                             AutoConnectView(
                                 showSettings: $showSettings,
                                 showVPNSetting: $showVPNSetting,
-                                statusConnect: statusConnect),
+                                shouldHideAutoConnect: .constant(false),
+                                statusConnect: $statusConnect,
+                                viewModel: AutoConnectViewModel()),
                            isActive: $showAutoConnect) { }
             NavigationLink(destination:
                             ProtocolSettingView(
                                 showSettings: $showSettings,
                                 showVPNSetting: $showVPNSetting,
-                                viewModel: ProtocolSettingViewModel()),
+                                viewModel: ProtocolSettingViewModel(),
+                                statusConnect: $statusConnect),
                            isActive: $showProtocolConnect) { }
+            NavigationLink(destination:
+                            DNSSettingView(showSettings: $showSettings,
+                                           showDNSSetting: $showDNSSetting,
+                                           viewModel: DNSSettingViewModel(),
+                                           statusConnect: $statusConnect,
+                                           dnsSetting: AppSetting.shared.dnsSetting),
+                           isActive: $showDNSSetting) { }
+        }
+        .onAppear {
+            viewModel.refreshItemList()
         }
         .navigationBarHidden(true)
         .background(AppColor.background)
         .ignoresSafeArea()
-    }
-}
-
-
-struct SettingVPNView_Previews: PreviewProvider {
-    @State static var showAccount = true
-    
-    static var previews: some View {
-        SettingVPNView(showSettings: $showAccount, showVPNSetting: $showAccount)
     }
 }

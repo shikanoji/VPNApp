@@ -14,6 +14,10 @@ class ProtocolSettingViewModel: ObservableObject {
     @Published var itemList: [ItemCell] = SectionType.protocolConnect.items
     
     init() {
+        refreshItem()
+    }
+    
+    func refreshItem() {
         itemList = itemList.map { item in
             let selectConfig = NetworkManager.shared.selectConfig
             var updateItem = item
@@ -27,7 +31,7 @@ class ProtocolSettingViewModel: ObservableObject {
                     updateItem.select = true
                 }
             case .wireGuard:
-                if selectConfig == .wireguard {
+                if selectConfig == .wireGuard {
                     updateItem.select = true
                 }
             default:
@@ -45,7 +49,7 @@ class ProtocolSettingViewModel: ObservableObject {
                 return uncheckItem
             }
             
-            if let row = itemList.firstIndex(where: {$0.type.title == item.type.title}) {
+            if let row = itemList.firstIndex(where: {$0.type == item.type}) {
                 itemList[row] = item
             }
             
@@ -53,7 +57,7 @@ class ProtocolSettingViewModel: ObservableObject {
             case .openVPN:
                 NetworkManager.shared.selectConfig = .openVPN
             case .wireGuard:
-                NetworkManager.shared.selectConfig = .wireguard
+                NetworkManager.shared.selectConfig = .wireGuard
             case .recommend:
                 NetworkManager.shared.selectConfig = .recommend
             default:

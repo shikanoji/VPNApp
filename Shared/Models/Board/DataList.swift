@@ -20,6 +20,25 @@ struct ItemCell: Equatable, Identifiable {
     var select = false
 }
 
+struct SectionCell: Equatable, Identifiable {
+    var id: UUID = UUID()
+    var type: SectionType
+    var items: [ItemCell] = []
+    
+    init(_ type: SectionType) {
+        self.type = type
+        self.items = type.items
+    }
+    
+    mutating func updateSelectedItemList(_ cell: ItemCell) {
+        items = items.map {
+            var updateItem = $0
+            updateItem.select = cell.type.title == $0.type.title
+            return updateItem
+        }
+    }
+}
+
 enum SectionType: Decodable {
     
     case myAccount
@@ -49,7 +68,7 @@ enum SectionType: Decodable {
             return [
                 ItemCell(type: .vpnConnection),
                 ItemCell(type: .tools),
-                ItemCell(type: .general)
+                //ItemCell(type: .general)
             ]
         case .otherSetting:
             return [
@@ -98,7 +117,7 @@ enum SectionType: Decodable {
     }
 }
 
-enum ItemCellType: Decodable {
+enum ItemCellType: Int, Decodable {
     case statusAccount
     case totalDevice
     case questions
@@ -112,7 +131,7 @@ enum ItemCellType: Decodable {
     case protection
     case help
     
-    case autoConnet
+    case autoConnect
     case protocolConnect
     case split
     case dns
@@ -136,7 +155,7 @@ enum ItemCellType: Decodable {
         case .statusAccount:
             return L10n.Account.itemAccount + " " + (AppSetting.shared.isPremium ? L10n.Account.premium : L10n.Account.freePlan)
         case .totalDevice:
-            return L10n.Account.itemDevices + ": \(AppSetting.shared.currentNumberDevice)/\(AppSetting.shared.totalNumberDevices)"
+            return L10n.Account.itemDevices + ": \(AppSetting.shared.currentNumberDevice)/\(AppSetting.shared.maxNumberDevices)"
         case .questions:
             return L10n.Account.itemQuestions
         case .helpCenter:
@@ -155,7 +174,7 @@ enum ItemCellType: Decodable {
             return L10n.Settings.itemProtec
         case .help:
             return L10n.Settings.itemHelp
-        case .autoConnet:
+        case .autoConnect:
             return L10n.Settings.itemAuto
         case .protocolConnect:
             return L10n.Settings.itemProtocol
@@ -236,14 +255,14 @@ enum ItemCellType: Decodable {
             return AppSetting.shared.protection ? L10n.Settings.enabled : L10n.Settings.disabled
         case .help:
             return AppSetting.shared.help ? L10n.Settings.enabled : L10n.Settings.disabled
-        case .autoConnet:
-            return AppSetting.shared.autoConnect ? L10n.Global.on : L10n.Global.off
+        case .autoConnect:
+            return AppSetting.shared.getAutoConnectProtocol().title
         case .protocolConnect:
-            return L10n.Settings.contentItemProtocol
+            return AppSetting.shared.getConfigProtocol().title
         case .split:
             return L10n.Settings.contentItemSplit
         case .dns:
-            return L10n.Global.default
+            return AppSetting.shared.getContentDNSCell()
         case .localNetwork:
             return L10n.Settings.contentItemLocalNetwork
         case .metered:

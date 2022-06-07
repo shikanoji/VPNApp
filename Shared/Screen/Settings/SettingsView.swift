@@ -6,16 +6,23 @@
 //
 
 import SwiftUI
+import TunnelKitManager
 
 struct SettingsView: View {
     @Binding var showSettings: Bool
     
-    @Binding var statusConnect: BoardViewModel.StateBoard
+    @Binding var statusConnect: VPNStatus
+    
     @State var showVPNSetting = false
     @State var showToolsSetting = false
-    @State var sections: [DataSection] = [
+    
+    @Binding var showAutoConnect: Bool
+    @Binding var showProtocolConnect: Bool
+    @Binding var showDNSSetting: Bool
+    
+    var sections: [DataSection] = [
         DataSection(type: .vpnSetting),
-        DataSection(type: .otherSetting)
+       // DataSection(type: .otherSetting)
     ]
     
     var body: some View {
@@ -27,7 +34,7 @@ struct SettingsView: View {
                     showSettings = false
                 }, tapRightButton: {
                     showSettings = false
-                }, statusConnect: statusConnect)
+                }, statusConnect: $statusConnect)
             ScrollView(showsIndicators: false) {
                 VStack {
                     ForEach(sections, id: \.id) { section in
@@ -57,11 +64,13 @@ struct SettingsView: View {
                                     SettingVPNView(
                                         showSettings: $showSettings,
                                         showVPNSetting: $showVPNSetting,
-                                        statusConnect: statusConnect),
+                                        statusConnect: $statusConnect,
+                                        viewModel: SettingVPNViewModel()),
                                    isActive: $showVPNSetting) { }
+                        .isDetailLink(false)
                     NavigationLink(destination:
                                     ToolsView(showSettings: $showSettings,
-                                              statusConnect: statusConnect),
+                                              statusConnect: $statusConnect),
                                    isActive: $showToolsSetting) { }
                 }
             }
@@ -74,14 +83,3 @@ struct SettingsView: View {
     }
 }
 
-
-
-struct SettingsView_Previews: PreviewProvider {
-    
-    @State static var showMenu = true
-    @State static var value: BoardViewModel.StateBoard = .connected
-    
-    static var previews: some View {
-        SettingsView(showSettings: $showMenu, statusConnect: $value)
-    }
-}

@@ -6,12 +6,14 @@
 //
 
 import SwiftUI
+import TunnelKitManager
+import TunnelKitCore
 
 struct InfomationView: View {
     @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
     @Binding var showAccount: Bool
     @Binding var showInfomation: Bool
-    @State var statusConnect: BoardViewModel.StateBoard = .connected
+    @State var statusConnect: VPNStatus = .connected
     @State var showChangePassword = false
     @State var deleteAccount = false
     
@@ -63,7 +65,7 @@ struct InfomationView: View {
                         }, tapRightButton: {
                             showInfomation = false
                             showAccount = false
-                        }, statusConnect: statusConnect)
+                        }, statusConnect: $statusConnect)
                     itemList
                     Spacer()
                     deleteAccountButton
@@ -80,7 +82,7 @@ struct SettingInfomationView_Previews: PreviewProvider {
     
     @State static var showChangePassword = false
     @State static var showAccount = true
-    @State static var value: BoardViewModel.StateBoard = .connected
+    @State static var value: VPNStatus = .connected
     
     static var previews: some View {
         InfomationView(showAccount: $showAccount, showInfomation: $showAccount)

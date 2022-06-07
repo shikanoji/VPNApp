@@ -7,46 +7,47 @@
 
 import Foundation
 import SwiftUI
+import TunnelKitManager
 
 struct ToolsView: View {
     @Binding var showSettings: Bool
-    @State var statusConnect: BoardViewModel.StateBoard = .connected
+    @Binding var statusConnect: VPNStatus
     @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
     
     var cyberSecItem: some View {
         ItemRowCell(title: L10n.Settings.Tools.cyberSec,
                     content: L10n.Settings.Tools.CyberSec.note,
                     showSwitch: true,
-                    position: .top,
+                    position: .all,
                     switchValue: true, onSwitchValueChange: { value in
             print("Cyber Sec = \(value)")
         })
     }
     
-    var killSwitchItem: some View {
-        ItemRowCell(title: L10n.Settings.Tools.killSwitch,
-                    content: L10n.Settings.Tools.KillSwitch.note,
-                    showSwitch: false,
-                    position: .middle)
-    }
-    
-    var darkWebMonitorItem: some View {
-        ItemRowCell(title: L10n.Settings.Tools.darkWebMonitors,
-                    content: L10n.Settings.Tools.DarkWebMonitors.note,
-                    showSwitch: true,
-                    position: .middle, onSwitchValueChange: { value in
-            print("Dark Web Monitors = \(value)")
-        })
-    }
-    
-    var tapJackingItem: some View {
-        ItemRowCell(title: L10n.Settings.Tools.tapJackingProtection,
-                    content: L10n.Settings.Tools.TapJackingProtection.note,
-                    showSwitch: true,
-                    position: .bot, onSwitchValueChange: { value in
-            print("Tap Jacking Protection = \(value)")
-        })
-    }
+//    var killSwitchItem: some View {
+//        ItemRowCell(title: L10n.Settings.Tools.killSwitch,
+//                    content: L10n.Settings.Tools.KillSwitch.note,
+//                    showSwitch: false,
+//                    position: .middle)
+//    }
+//
+//    var darkWebMonitorItem: some View {
+//        ItemRowCell(title: L10n.Settings.Tools.darkWebMonitors,
+//                    content: L10n.Settings.Tools.DarkWebMonitors.note,
+//                    showSwitch: true,
+//                    position: .middle, onSwitchValueChange: { value in
+//            print("Dark Web Monitors = \(value)")
+//        })
+//    }
+//
+//    var tapJackingItem: some View {
+//        ItemRowCell(title: L10n.Settings.Tools.tapJackingProtection,
+//                    content: L10n.Settings.Tools.TapJackingProtection.note,
+//                    showSwitch: true,
+//                    position: .bot, onSwitchValueChange: { value in
+//            print("Tap Jacking Protection = \(value)")
+//        })
+//    }
     
     var body: some View {
         ScrollView(.vertical, showsIndicators: false) {
@@ -61,12 +62,12 @@ struct ToolsView: View {
                     }, tapRightButton: {
                         showSettings = false
                         presentationMode.wrappedValue.dismiss()
-                    }, statusConnect: statusConnect)
+                    }, statusConnect: $statusConnect)
                 VStack(spacing: 1) {
                     cyberSecItem
-                    killSwitchItem
-                    darkWebMonitorItem
-                    tapJackingItem
+//                    killSwitchItem
+//                    darkWebMonitorItem
+//                    tapJackingItem
                 }
                 .padding(Constant.Menu.hozitalPaddingCell)
                 .padding(.top, Constant.Menu.topPaddingCell)
@@ -77,5 +78,4 @@ struct ToolsView: View {
         .background(AppColor.background)
         .ignoresSafeArea()
     }
-    
 }

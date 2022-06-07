@@ -35,6 +35,16 @@ class WireGuardManager: ObservableObject {
                 after: .seconds(2)
             )
         }
+        
+        x()
+    }
+    
+    func x() {
+        
+        DispatchQueue.main.asyncAfter(deadline: .now() + 4) {
+            
+            self.x()
+        }
     }
     
     init() {
