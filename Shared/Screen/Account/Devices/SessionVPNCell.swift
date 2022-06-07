@@ -7,9 +7,11 @@
 
 import SwiftUI
 
-struct DeviceCell: View {
+struct SessionVPNCell: View {
     
-    @State var deviceOnline: DeviceOnline
+    @State var sessionVPN: SessionVPN
+    
+    @ObservedObject var viewModel: SessionVPNViewModel
     
     var position: PositionItemCell = .middle
     
@@ -19,16 +21,16 @@ struct DeviceCell: View {
         HStack {
             VStack(alignment: .leading, spacing: 6) {
                 HStack {
-                    Text(deviceOnline.name)
+                    Text(sessionVPN.deviceBrand)
                         .font(Constant.Menu.fontItem)
                         .foregroundColor(.white)
-                    if deviceOnline.active {
+                    if sessionVPN.isActive == 1 {
                         Circle()
                             .fill(AppColor.green)
                             .frame(width: 8, height: 8)
                     }
                 }
-                Text(deviceOnline.ip + " - " + deviceOnline.location)
+                Text(sessionVPN.getSubContent())
                     .font(Constant.Menu.fontSubItem)
                     .foregroundColor(AppColor.lightBlackText)
             }
@@ -40,15 +42,17 @@ struct DeviceCell: View {
                     removeDevice?()
                 }
         }
+        .onAppear {
+            if position == .bot {
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+                    viewModel.getListSession(loadMore: true)
+                }
+            }
+        }
+        .padding(.bottom, 0)
         .frame(height: Constant.Menu.heightItemCell)
         .frame(maxWidth: .infinity)
         .background(AppColor.darkButton)
         .cornerRadius(radius: Constant.Menu.radiusCell, corners: [position.rectCorner])
-    }
-}
-
-struct DeviceCell_Previews: PreviewProvider {
-    static var previews: some View {
-        DeviceCell(deviceOnline: DeviceOnline.example1()).previewLayout(.fixed(width: /*@START_MENU_TOKEN@*/343.0/*@END_MENU_TOKEN@*/, height: Constant.Menu.heightItemCell + 40))
     }
 }

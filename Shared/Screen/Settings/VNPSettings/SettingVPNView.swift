@@ -66,7 +66,6 @@ struct SettingVPNView: View {
                                 statusConnect: $statusConnect,
                                 viewModel: AutoConnectViewModel()),
                            isActive: $showAutoConnect) { }
-                .isDetailLink(false)
             NavigationLink(destination:
                             ProtocolSettingView(
                                 showSettings: $showSettings,

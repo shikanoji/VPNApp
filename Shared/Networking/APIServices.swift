@@ -81,6 +81,8 @@ enum APIService {
     case getRequestCertificate(currentTab: BoardViewModel.StateTab)
     case getObtainCertificate
     case changePassword(oldPassword: String, newPassword: String)
+    case getListSession(page: Int = 1, limit: Int = 20, isActive: Int = 1)
+    case disconnectSession(sessionId: String)
 }
 
 extension APIService: TargetType {
@@ -118,15 +120,18 @@ extension APIService: TargetType {
         case .getObtainCertificate:
             return Constant.api.path.obtainCertificate + "/\(NetworkManager.shared.requestCertificate?.requestId ?? "")"
         case .changePassword:
-                return Constant.api.path.changePassword
+            return Constant.api.path.changePassword
+        case .getListSession:
+            return Constant.api.path.getListSession
+        case .disconnectSession:
+            return Constant.api.path.disconnectSession
         }
-    
     }
     
     // Here we specify which method our calls should use.
     var method: Moya.Method {
         switch self {
-        case .getCountryList, .ipInfo, .getRequestCertificate, .ipInfoOptional:
+        case .getCountryList, .ipInfo, .getRequestCertificate, .ipInfoOptional, .getListSession:
             return .get
         case .register, .login, .logout, .forgotPassword, .refreshToken:
             return .post
@@ -134,6 +139,8 @@ extension APIService: TargetType {
             return .get
         case .changePassword:
             return .put
+        case .disconnectSession:
+            return .patch
         }
     }
     
@@ -232,6 +239,31 @@ extension APIService: TargetType {
             param["oldPassword"] = oldPassword
             param["newPassword"] = newPassword
             return .requestCompositeParameters(bodyParameters: param, bodyEncoding: JSONEncoding.prettyPrinted, urlParameters: [:])
+        case .getListSession(let page, let limit, let isActive):
+            var param: [String: Any] = [:]
+            param["page"] = page
+            param["limit"] = limit
+            param["isActive"] = isActive
+            param["sortBy"] = "createdAt:desc"
+            
+            // Use "key" temporarily, after remove it
+            param["key"] = "f11b69c57d5fe9555e29c57c1d863bf8"
+            
+            return .requestParameters(parameters: param, encoding: URLEncoding.queryString)
+            
+        case .disconnectSession(let sessionId):
+            var param: [String: Any] = [:]
+            
+            // Use "key" temporarily, after remove it
+            param["key"] = "f11b69c57d5fe9555e29c57c1d863bf8"
+            
+            var body: [String: Any] = [:]
+            body["sessionId"] = sessionId
+            
+            return .requestCompositeParameters(
+                bodyParameters: body,
+                bodyEncoding: JSONEncoding.prettyPrinted,
+                urlParameters: param)
         }
     }
     
@@ -241,7 +273,7 @@ extension APIService: TargetType {
         switch self {
         case .login, .register:
             return ["Content-type": "application/json"]
-        case .getCountryList, .getObtainCertificate, .changePassword:
+        case .getCountryList, .getObtainCertificate, .changePassword, .getListSession:
             return [
                 "Content-type": "application/json",
                 "Authorization": "Bearer \(AppSetting.shared.accessToken)"

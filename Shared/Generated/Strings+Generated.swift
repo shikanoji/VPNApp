@@ -126,7 +126,7 @@ public enum L10n {
     /// Quick
     /// Connect
     public static let quickUnConnect = L10n.tr("Board", "QuickUnConnect")
-    /// kb/s
+    /// /s
     public static let speed = L10n.tr("Board", "Speed")
     /// Static IP
     public static let staticIPTitleTab = L10n.tr("Board", "StaticIPTitleTab")

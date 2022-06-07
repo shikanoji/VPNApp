@@ -49,7 +49,7 @@ class ProtocolSettingViewModel: ObservableObject {
                 return uncheckItem
             }
             
-            if let row = itemList.firstIndex(where: {$0.type.title == item.type.title}) {
+            if let row = itemList.firstIndex(where: {$0.type == item.type}) {
                 itemList[row] = item
             }
             

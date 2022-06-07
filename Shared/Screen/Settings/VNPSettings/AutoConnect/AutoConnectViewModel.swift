@@ -11,32 +11,28 @@ class AutoConnectViewModel: ObservableObject {
     @Published var sectionList: [SectionCell] = [SectionCell(.typeAutoConnect), SectionCell(.autoConnect)]
     
     init() {
-        configItem()
-        
-        NotificationCenter.default.addObserver(
-            self,
-            selector: #selector(configItem),
-            name: Constant.NameNotification.checkAutoconnect,
-            object: nil
-        )
+        configItem(nil)
     }
     
-    @objc func configItem() {
-        let type =  AppSetting.shared.getAutoConnectProtocol()
-        sectionList = sectionList.map { section in
-            var updateSection = section
-            updateSection.updateSelectedItemList(ItemCell(type: type, select: true))
-            return updateSection
-        }
-    }
-    
-    func updateItem(item: ItemCell) {
-        sectionList = sectionList.map { section in
-            var updateSection = section
-            updateSection.updateSelectedItemList(item)
-            return updateSection
+    func configItem(_ item: ItemCell?) {
+        var defaultItem: ItemCell?
+        
+        if let updateItem = item {
+            defaultItem = updateItem
+        } else {
+            defaultItem = ItemCell(type: AppSetting.shared.getAutoConnectProtocol())
         }
         
-        AppSetting.shared.selectAutoConnect = item.type.rawValue
+        guard let exitItem = defaultItem else {
+            return
+        }
+        
+        AppSetting.shared.selectAutoConnect = exitItem.type.rawValue
+        sectionList = sectionList.map { section in
+            var updateSection = section
+            updateSection.updateSelectedItemList(exitItem)
+            return updateSection
+        }
+        NotificationCenter.default.post(name: Constant.NameNotification.checkAutoconnect, object: nil)
     }
 }
