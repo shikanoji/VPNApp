@@ -13,6 +13,7 @@ struct RegisterView: View {
     @StateObject var registerResult: RegisterResultModel = RegisterResultModel()
     @State var toPlanSelection: Bool = false
     @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
+    @EnvironmentObject var authentication: Authentication
     
     var normalRegisterButton: some View {
         AppButton(style: .themeButton, width: 311, text: L10n.Register.signup) {
@@ -98,6 +99,10 @@ struct RegisterView: View {
                 }
                 .frame(maxWidth: .infinity, maxHeight: .infinity)
             }.environmentObject(registerResult)
+        }
+        .onAppear {
+            /// Pass authentication to view model because Environment object only receivable through view
+            viewModel.authentication = authentication
         }
         .popup(isPresented: $viewModel.showAlert,
                type: .floater(verticalPadding: 10),
