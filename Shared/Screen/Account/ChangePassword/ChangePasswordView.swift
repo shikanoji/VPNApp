@@ -32,11 +32,13 @@ struct ChangePasswordView: View {
     
     var passwordForms: some View {
         VStack {
-            Form(placeholder: L10n.Account.Infomation.currentPassword,
-                 value: $viewModel.password,
-                 isPassword: true,
-                 shouldAnimate: false)
-            Spacer().frame(height: 16)
+            if AppSetting.shared.hasPassword {
+                Form(placeholder: L10n.Account.Infomation.currentPassword,
+                     value: $viewModel.password,
+                     isPassword: true,
+                     shouldAnimate: false)
+                Spacer().frame(height: 16)
+            }
             Form(placeholder: L10n.Account.Infomation.newPassword,
                  value: $viewModel.newPassword,
                  isPassword: true,

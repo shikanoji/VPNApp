@@ -23,6 +23,7 @@ enum AppKeys: String {
     case refreshTokenExpires = "refreshTokenExpires"
     case countryName = "countryName"
     case cityName = "cityName"
+    case hasPassword = "hasPassword"
     
     ///Board Keys
     case showedNotice = "showedNotice"
@@ -193,6 +194,15 @@ struct AppSetting {
         }
         set {
             UserDefaults.standard.setValue(newValue, forKey: AppKeys.cityName.rawValue)
+        }
+    }
+    
+    var hasPassword: Bool {
+        get {
+            return UserDefaults.standard.bool(forKey: AppKeys.hasPassword.rawValue) 
+        }
+        set {
+            UserDefaults.standard.setValue(newValue, forKey: AppKeys.hasPassword.rawValue)
         }
     }
     

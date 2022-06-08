@@ -73,6 +73,7 @@ enum APIService {
     case getCountryList
     case register(email: String, password: String)
     case login(email: String, password: String)
+    case loginSocial(socialProvider: String, token: String)
     case logout
     case refreshToken
     case forgotPassword(email: String)
@@ -125,6 +126,8 @@ extension APIService: TargetType {
             return Constant.api.path.getListSession
         case .disconnectSession:
             return Constant.api.path.disconnectSession
+        case .loginSocial:
+            return Constant.api.path.loginSocial
         }
     }
     
@@ -133,7 +136,7 @@ extension APIService: TargetType {
         switch self {
         case .getCountryList, .ipInfo, .getRequestCertificate, .ipInfoOptional, .getListSession:
             return .get
-        case .register, .login, .logout, .forgotPassword, .refreshToken:
+        case .register, .login, .loginSocial, .logout, .forgotPassword, .refreshToken:
             return .post
         case .getObtainCertificate:
             return .get
@@ -161,6 +164,14 @@ extension APIService: TargetType {
             var body: [String: Any] = [:]
             body["email"] = email
             body["password"] = password
+            body["ip"] = AppSetting.shared.ip
+            body["country"] = AppSetting.shared.countryCode
+            body["city"] = AppSetting.shared.cityName
+            return .requestCompositeParameters(bodyParameters: body, bodyEncoding: JSONEncoding.prettyPrinted, urlParameters: [:])
+        case .loginSocial(let socialProvider, let token):
+            var body: [String: Any] = [:]
+            body["provider"] = socialProvider
+            body["token"] = token
             body["ip"] = AppSetting.shared.ip
             body["country"] = AppSetting.shared.countryCode
             body["city"] = AppSetting.shared.cityName
