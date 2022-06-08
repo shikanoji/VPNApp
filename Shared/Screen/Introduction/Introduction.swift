@@ -61,7 +61,6 @@ struct IntroductionView: View {
                             Spacer().frame(height: 10)
                             Text(intro.body).setDefault()
                         }
-                        
                     }
                 }
                 .aspectRatio(3/4, contentMode: .fit)

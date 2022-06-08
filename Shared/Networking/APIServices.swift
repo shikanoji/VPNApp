@@ -247,7 +247,9 @@ extension APIService: TargetType {
             return .requestParameters(parameters: param, encoding: URLEncoding.queryString)
         case .changePassword(let oldPassword, let newPassword):
             var param: [String: Any] = [:]
-            param["oldPassword"] = oldPassword
+            if !oldPassword.isEmpty {
+                param["oldPassword"] = oldPassword
+            }
             param["newPassword"] = newPassword
             return .requestCompositeParameters(bodyParameters: param, bodyEncoding: JSONEncoding.prettyPrinted, urlParameters: [:])
         case .getListSession(let page, let limit, let isActive):
