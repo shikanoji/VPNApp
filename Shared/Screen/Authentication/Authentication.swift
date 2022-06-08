@@ -29,6 +29,7 @@ class Authentication: ObservableObject {
         AppSetting.shared.premiumExpires = user.premium_expire
         AppSetting.shared.name = user.name
         AppSetting.shared.accountCreatedTime = user.created_at
+        AppSetting.shared.hasPassword = user.has_password
         isValidated = AppSetting.shared.isRefreshTokenValid
     }
     
@@ -43,6 +44,7 @@ class Authentication: ObservableObject {
         AppSetting.shared.isPremium = false
         AppSetting.shared.premiumExpires = nil
         AppSetting.shared.accountCreatedTime = nil
+        AppSetting.shared.hasPassword = false
         isValidated = AppSetting.shared.isRefreshTokenValid
     }
 }

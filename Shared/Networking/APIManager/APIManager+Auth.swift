@@ -22,6 +22,18 @@ extension APIManager {
             }
     }
     
+    func loginSocial(socialProvider: String, token: String) -> Single<APIResponse<LoginResultModel>> {
+        return provider.rx
+            .request(.loginSocial(socialProvider: socialProvider, token: token))
+            .map { response in
+                let loginResult = try JSONDecoder().decode(APIResponse<LoginResultModel>.self, from: response.data)
+                return loginResult
+            }
+            .catch { error in
+                throw APIError.someError
+            }
+    }
+    
     func register(email: String, password: String) -> Single<APIResponse<RegisterResultModel>> {
         return provider.rx
             .request(.register(email: email, password: password))

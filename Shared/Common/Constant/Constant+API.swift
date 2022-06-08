@@ -15,6 +15,7 @@ extension Constant {
             static let register = "/shared/module_auth/v1/register"
             static let logout = "/shared/module_auth/v1/logout"
             static let login = "/shared/module_auth/v1/login"
+            static let loginSocial = "/shared/module_auth/v1/login-social"
             static let refreshToken = "/shared/module_auth/v1/refresh-tokens"
             static let forgotPassword = "/shared/module_auth/v1/forgot-password"
             static let getCountryList = "app/module_server/v1/country/get_list"
