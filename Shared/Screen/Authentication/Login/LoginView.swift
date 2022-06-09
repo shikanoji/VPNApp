@@ -14,6 +14,7 @@ struct LoginView: View {
     @EnvironmentObject var authentication: Authentication
     @State var createNewAccount: Bool = false
     @State var forgotPassword: Bool = false
+    @State var toPlanSelection: Bool = false
     
     var header: some View {
         VStack {
