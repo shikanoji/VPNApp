@@ -10,20 +10,13 @@ import ExytePopupView
 
 struct RegisterView: View {
     @StateObject var viewModel: RegisterViewModel
-    @StateObject var registerResult: RegisterResultModel = RegisterResultModel()
     @State var toPlanSelection: Bool = false
     @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
     @EnvironmentObject var authentication: Authentication
     
     var normalRegisterButton: some View {
         AppButton(style: .themeButton, width: 311, text: L10n.Register.signup) {
-            viewModel.signup(){ register in
-                if let _register = register {
-                    registerResult.user = _register.user
-                    registerResult.tokens = _register.tokens
-                    toPlanSelection = true
-                }
-            }
+            viewModel.signup()
         }.disabled(viewModel.registerDisable)
     }
     
@@ -54,7 +47,9 @@ struct RegisterView: View {
     
     var registerButtons: some View {
         Group {
-            NavigationLink(destination: SubscriptionIntroduction().environmentObject(registerResult), isActive: $toPlanSelection) {
+            NavigationLink(destination: SubscriptionIntroduction()
+                                            .navigationBarHidden(true),
+                           isActive: $toPlanSelection) {
             }
             normalRegisterButton
             Spacer().frame(height: 30)
@@ -98,7 +93,7 @@ struct RegisterView: View {
                     .disabled(viewModel.showProgressView)
                 }
                 .frame(maxWidth: .infinity, maxHeight: .infinity)
-            }.environmentObject(registerResult)
+            }
         }
         .onAppear {
             /// Pass authentication to view model because Environment object only receivable through view

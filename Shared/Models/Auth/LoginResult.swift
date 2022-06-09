@@ -11,6 +11,10 @@ import SwiftyJSON
 struct LoginResultModel: Decodable {
     var user: User
     var tokens: Tokens
+    
+    func convertToRegisterModel() -> RegisterResultModel {
+        return RegisterResultModel(user: user, tokens: tokens)
+    }
 }
 
 struct Tokens: Decodable {

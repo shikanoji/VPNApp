@@ -32,7 +32,11 @@ struct ContentView: View {
                 NavigationView {
                     if AppSetting.shared.showedNotice {
                         if authentication.isValidated {
-                            BoardView(viewModel: BoardViewModel())
+                            if authentication.isPremium {
+                                BoardView(viewModel: BoardViewModel())
+                            } else {
+                                SubscriptionIntroduction()
+                            }
                         } else {
                             IntroductionView()
                         }

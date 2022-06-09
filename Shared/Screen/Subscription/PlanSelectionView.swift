@@ -10,7 +10,6 @@ import SwiftUI
 
 struct PlanSelectionView: View {
     @Environment(\.presentationMode) var presentationMode
-    @EnvironmentObject var registerResult: RegisterResultModel
     @ObservedObject var planListViewModel = PlanListViewModel()
     @State var toWelcomeScreen = false
     var body: some View {
@@ -28,14 +27,10 @@ struct PlanSelectionView: View {
                         PlanListView(viewModel: planListViewModel)
                         Spacer().frame(height: 20)
                     }
-                    NavigationLink(destination: WelcomeView().environmentObject(registerResult), isActive: $toWelcomeScreen) {
+                    NavigationLink(destination: WelcomeView(), isActive: $toWelcomeScreen) {
                     }
                     AppButton(width: 311, text: L10n.PlanSelect.continueButton) {
-                        if registerResult.tokens.access.token.isEmpty {
-                            presentationMode.wrappedValue.dismiss()
-                        } else {
-                            self.toWelcomeScreen = true
-                        }
+                        self.toWelcomeScreen = true
                     }
                     Spacer().frame(height: 20)
                     Text(planListViewModel.selectedPlan?.note ?? "")

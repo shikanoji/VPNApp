@@ -10,7 +10,6 @@ import SwiftUI
 
 struct WelcomeView: View {
     @State var showingSetup: Bool = false
-    @EnvironmentObject var registerResult: RegisterResultModel
     var body: some View {
         Background {
             VStack {
@@ -27,7 +26,7 @@ struct WelcomeView: View {
                 Spacer()
             }
         }.fullScreenCover(isPresented: $showingSetup) {
-            SetupVPNView().environmentObject(registerResult)
+            SetupVPNView()
         }
     }
 }
