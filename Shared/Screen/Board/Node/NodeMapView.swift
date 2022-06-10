@@ -19,7 +19,8 @@ struct NodeMapView: View {
         ZStack {
             ForEach(mesh.getNodeViewShow()) { node in
                 NodeView(scale: $scale, node: node, selection: self.selection)
-                    .position(x: Constant.convertXToMap(node.x) * scale, y: Constant.convertYToMap(node.y) * scale - (scale - 0.8) * 8 - 18)
+                    .position(x: Constant.convertXToMap(node.x) * scale,
+                              y: Constant.convertYToMap(node.y) * scale - 20)
                     .onTapGesture {
                         self.selection.selectNode(node)
                     }

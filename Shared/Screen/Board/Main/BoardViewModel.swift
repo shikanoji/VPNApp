@@ -199,8 +199,10 @@ class BoardViewModel: ObservableObject {
                     }
                 }
             } else if type == .off {
-                disconnectSession()
-                NetworkManager.shared.disconnect()
+                if state == .connected {
+                    disconnectSession()
+                    NetworkManager.shared.disconnect()
+                }
                 stopAutoconnectTimer()
             }
         }

@@ -28,7 +28,6 @@ internal enum Asset {
     internal static let iconAccountItemHelpCenter = ImageAsset(name: "icon_account_item_helpCenter")
     internal static let iconAccountItemQuestion = ImageAsset(name: "icon_account_item_question")
     internal static let iconAccountItemSecurity = ImageAsset(name: "icon_account_item_security")
-    internal static let sweden = ImageAsset(name: "Sweden")
     internal static let iconBoardCity = ImageAsset(name: "icon_board_city")
     internal static let iconBoardDownSpeed = ImageAsset(name: "icon_board_down_speed")
     internal static let iconBoardUpSpeed = ImageAsset(name: "icon_board_up_speed")

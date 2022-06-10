@@ -12,7 +12,7 @@ struct MapView: View {
     
     @State var progressingScale: CGFloat = 1
     @State var magScale: CGFloat = 1
-    @State var totalScale: CGFloat = 2 {
+    @State var totalScale: CGFloat = 1 {
         didSet {
             mesh.showCityNodes = totalScale > Constant.Board.Map.enableCityZoom
         }
@@ -21,8 +21,8 @@ struct MapView: View {
     @ObservedObject var mesh: Mesh
     @ObservedObject var selection: SelectionHandler
     
-    @State var widthMap: CGFloat = Constant.Board.Map.widthScreen
-    @State var heightMap: CGFloat = Constant.Board.Map.widthScreen / Constant.Board.Map.ration
+    @State var widthMap: CGFloat = Constant.Board.Map.heightScreen * Constant.Board.Map.ration
+    @State var heightMap: CGFloat = Constant.Board.Map.heightScreen
     
     @State private var location: CGPoint = CGPoint(
         x: Constant.Board.Map.widthScreen / 2,
@@ -108,15 +108,16 @@ struct MapView: View {
                 .onChanged {
                     if validateZoom(self.magScale * $0) {
                         progressingScale = $0
-                    }
-                    let updateScale = progressingScale * magScale
-                    
-                    if  updateScale < Constant.Board.Map.minZoom {
-                        totalScale = Constant.Board.Map.minZoom
-                    } else if updateScale > Constant.Board.Map.maxZoom {
-                        totalScale = Constant.Board.Map.maxZoom
-                    } else {
-                        totalScale = updateScale
+                        
+                        let updateScale = progressingScale * magScale
+                        
+                        if  updateScale < Constant.Board.Map.minZoom {
+                            totalScale = Constant.Board.Map.minZoom
+                        } else if updateScale > Constant.Board.Map.maxZoom {
+                            totalScale = Constant.Board.Map.maxZoom
+                        } else {
+                            totalScale = updateScale
+                        }
                     }
                 }
                 .onEnded {
@@ -149,30 +150,56 @@ struct MapView: View {
     }
     
     func checkCollision() {
-        let rangeWidth = widthMap * totalScale * 0.5
-        
-        if location.x >= rangeWidth {
-            self.location.x = rangeWidth
-        } else if location.x <= (widthMap - rangeWidth) {
-            location.x = widthMap - rangeWidth
-        }
+//        let rangeWidth = widthMap * totalScale * 0.5
+//
+//        if location.x >= rangeWidth {
+//            self.location.x = rangeWidth
+//        } else if location.x <= (widthMap - rangeWidth) {
+//            location.x = widthMap - rangeWidth
+//        }
 
         let rangeHeight = heightMap * totalScale * 0.5
         
-        if rangeHeight * 2 > Constant.Board.Map.heightScreen {
-            if location.y <= Constant.Board.Map.heightScreen - rangeHeight {
-                location.y = Constant.Board.Map.heightScreen - rangeHeight
-            } else if location.y >= rangeHeight {
-                location.y = rangeHeight
+        if location.y >= rangeHeight + 40 {
+            self.location.y = rangeHeight + 40
+        } else if location.y <= (heightMap - rangeHeight) {
+            location.y = heightMap - rangeHeight
+        }
+        
+//        let rangeHeight = heightMap * totalScale * 0.5
+//
+//        if rangeHeight * 2 > Constant.Board.Map.heightScreen {
+//            if location.y <= Constant.Board.Map.heightScreen - rangeHeight {
+//                location.y = Constant.Board.Map.heightScreen - rangeHeight
+//            } else if location.y >= rangeHeight {
+//                location.y = rangeHeight
+//            }
+//        } else if totalScale > 1 {
+//            if location.y <= rangeHeight {
+//                self.location.y = rangeHeight
+//            } else if location.y >= (Constant.Board.Map.heightScreen - rangeHeight){
+//                location.y = Constant.Board.Map.heightScreen - rangeHeight
+//            }
+//        } else {
+//            location.y = Constant.Board.Map.widthScreen
+//        }
+        
+        let rangeWidth = widthMap * totalScale * 0.5
+        
+        if rangeWidth * 2 > Constant.Board.Map.widthScreen {
+            if location.x <= Constant.Board.Map.widthScreen - rangeWidth {
+                location.x = Constant.Board.Map.widthScreen - rangeWidth
+            } else if location.x >= rangeHeight {
+                location.x = rangeHeight
             }
         } else if totalScale > 1 {
-            if location.y <= rangeHeight {
-                self.location.y = rangeHeight
-            } else if location.y >= (Constant.Board.Map.heightScreen - rangeHeight){
-                location.y = Constant.Board.Map.heightScreen - rangeHeight
+            if location.x <= rangeWidth {
+                self.location.x = rangeWidth
+            } else if location.x >= (Constant.Board.Map.widthScreen - rangeWidth){
+                location.x = Constant.Board.Map.widthScreen - rangeWidth
             }
         } else {
-            location.y = Constant.Board.Map.widthScreen
+            location.x = Constant.Board.Map.widthScreen
         }
     }
     
