@@ -36,6 +36,7 @@ struct SessionVPNView: View {
                     if viewModel.showProgressView {
                         LoadingView()
                             .padding(.top, UIScreen.main.bounds.size.height / 3)
+                            .opacity(0.3)
                     } else {
                         ForEach(viewModel.deviceList.indices, id: \.self) { i in
                             SessionVPNCell(sessionVPN: viewModel.deviceList[i],

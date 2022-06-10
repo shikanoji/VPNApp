@@ -76,8 +76,8 @@ struct Constant {
         
         struct Map {
             static let minZoom: CGFloat = 1
-            static let maxZoom: CGFloat = 4
-            static let enableCityZoom: CGFloat = 2.5
+            static let maxZoom: CGFloat = 3
+            static let enableCityZoom: CGFloat = 1.5
             static let zoomCity: CGFloat = 0.5
             static let widthScreen = UIScreen.main.bounds.width
             static let heightScreen = UIScreen.main.bounds.height
@@ -162,11 +162,11 @@ struct Constant {
     }
     
     static func convertXToMap(_ x: CGFloat) -> CGFloat {
-        return (x / Constant.Board.Map.widthMapOrigin) * Constant.Board.Map.widthScreen
+        return (x / Constant.Board.Map.widthMapOrigin) * (Constant.Board.Map.heightScreen * Constant.Board.Map.ration)
     }
     
     static func convertYToMap(_ y: CGFloat) -> CGFloat {
-        return (y / Constant.Board.Map.heightMapOrigin) * (Constant.Board.Map.widthScreen / Constant.Board.Map.ration)
+        return (y / Constant.Board.Map.heightMapOrigin) * Constant.Board.Map.heightScreen
     }
     
     struct NameNotification {
