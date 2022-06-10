@@ -47,11 +47,7 @@ struct AccountStatusView: View {
                             }
                         Spacer().frame(height: 32)
                         AppButton(style: .themeButton, width: UIScreen.main.bounds.size.width - 32, text: AppSetting.shared.isPremium ? L10n.Account.AccountStatus.extend : L10n.Account.AccountStatus.upgradeToPremium) {
-                            if AppSetting.shared.isPremium {
-                                //Handle extend premium
-                            } else {
-                                self.showPlanListView = true
-                            }
+                            self.showPlanListView = true
                         }
                     }
                     .padding(Constant.Menu.hozitalPaddingCell)

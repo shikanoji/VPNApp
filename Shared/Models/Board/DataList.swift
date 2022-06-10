@@ -240,7 +240,7 @@ enum ItemCellType: Int, Decodable {
             guard AppSetting.shared.isPremium else {
                 return L10n.Account.premiumOffer
             }
-            return "\(L10n.Account.expire) \(AppSetting.shared.premiumExpireDate)"
+            return "\(L10n.Account.expire) \(AppSetting.shared.premiumExpireDate?.toFormat("dd-MM-yyyy") ?? "")"
         case .paymentHistory:
             return L10n.Account.AccountStatus.tapToShow
         case .totalDevice:
