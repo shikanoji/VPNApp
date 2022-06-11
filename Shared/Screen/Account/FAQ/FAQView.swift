@@ -11,7 +11,7 @@ import TunnelKitManager
 
 struct FAQView: View {
     @Binding var showAccount: Bool
-    @State var statusConnect: VPNStatus = .connected
+    @Binding var statusConnect: VPNStatus
     @StateObject var viewModel: FAQViewModel
     
     @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
@@ -52,7 +52,7 @@ struct FAQView: View {
 struct FAQViewPreview: PreviewProvider {
     @State static var showAccount = true
     static var previews: some View {
-        FAQView(showAccount: $showAccount, viewModel: FAQViewModel())
+        FAQView(showAccount: $showAccount, statusConnect: .constant(.connected), viewModel: FAQViewModel())
     }
 }
 #endif

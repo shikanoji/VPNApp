@@ -12,42 +12,9 @@ import TunnelKitManager
 struct ToolsView: View {
     @Binding var showSettings: Bool
     @Binding var statusConnect: VPNStatus
+    @StateObject var viewModel: ToolsViewModel
     @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
     
-    var cyberSecItem: some View {
-        ItemRowCell(title: L10n.Settings.Tools.cyberSec,
-                    content: L10n.Settings.Tools.CyberSec.note,
-                    showSwitch: true,
-                    position: .all,
-                    switchValue: true, onSwitchValueChange: { value in
-            print("Cyber Sec = \(value)")
-        })
-    }
-    
-//    var killSwitchItem: some View {
-//        ItemRowCell(title: L10n.Settings.Tools.killSwitch,
-//                    content: L10n.Settings.Tools.KillSwitch.note,
-//                    showSwitch: false,
-//                    position: .middle)
-//    }
-//
-//    var darkWebMonitorItem: some View {
-//        ItemRowCell(title: L10n.Settings.Tools.darkWebMonitors,
-//                    content: L10n.Settings.Tools.DarkWebMonitors.note,
-//                    showSwitch: true,
-//                    position: .middle, onSwitchValueChange: { value in
-//            print("Dark Web Monitors = \(value)")
-//        })
-//    }
-//
-//    var tapJackingItem: some View {
-//        ItemRowCell(title: L10n.Settings.Tools.tapJackingProtection,
-//                    content: L10n.Settings.Tools.TapJackingProtection.note,
-//                    showSwitch: true,
-//                    position: .bot, onSwitchValueChange: { value in
-//            print("Tap Jacking Protection = \(value)")
-//        })
-//    }
     
     var body: some View {
         ScrollView(.vertical, showsIndicators: false) {
@@ -64,10 +31,19 @@ struct ToolsView: View {
                         presentationMode.wrappedValue.dismiss()
                     }, statusConnect: $statusConnect)
                 VStack(spacing: 1) {
-                    cyberSecItem
-//                    killSwitchItem
-//                    darkWebMonitorItem
-//                    tapJackingItem
+                    ForEach(viewModel.section.items, id: \.id) { item in
+                        ItemRowCell(title: item.type.title,
+                                    content: item.type.content,
+                                    showSwitch: item.type.showSwitch,
+                                    position: viewModel.section.items.getPosition(item),
+                                    switchValue: item.select,
+                                    onSwitchValueChange: { value in
+                            var changeItem = item
+                            changeItem.select = value
+                            viewModel.configItem(changeItem)
+                        })
+                        .environmentObject(viewModel)
+                    }
                 }
                 .padding(Constant.Menu.hozitalPaddingCell)
                 .padding(.top, Constant.Menu.topPaddingCell)

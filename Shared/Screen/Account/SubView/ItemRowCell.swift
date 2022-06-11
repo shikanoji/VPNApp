@@ -39,8 +39,8 @@ enum PositionItemCell {
 
 struct ItemRowCell: View {
     
-    @State var title: String
-    @State var content: String
+    @State var title: String = ""
+    @State var content: String = ""
     @State var showRightButton = false
     @State var showSwitch = false
     @State var showSelect = false

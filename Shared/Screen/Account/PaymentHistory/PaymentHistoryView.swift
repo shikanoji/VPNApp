@@ -34,11 +34,11 @@ struct PaymentHistoryView: View {
                             showAccount = false
                         }, statusConnect: $statusConnect)
                     VStack(spacing: 1) {
-                        ForEach(paymentHistoryList.indices) { i in
-                            ItemRowCell(title: paymentHistoryList[i].pack,
-                                        content: paymentHistoryList[i].contentStatus + " - " + paymentHistoryList[i].date,
-                                        alertContent: i == 0 ? L10n.Account.PaymentHistory.cancelSubscription : "",
-                                        position: paymentHistoryList.getPosition(i))
+                        ForEach(paymentHistoryList, id: \.id) { item in
+                            ItemRowCell(title: item.pack,
+                                        content: item.contentStatus + " - " + item.date,
+                                        alertContent: item.alert ? L10n.Account.PaymentHistory.cancelSubscription : "",
+                                        position: paymentHistoryList.getPosition(item))
                         }
                     }
                     .padding(Constant.Menu.hozitalPaddingCell)

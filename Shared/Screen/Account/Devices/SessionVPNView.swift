@@ -12,7 +12,7 @@ struct SessionVPNView: View {
     @Binding var showAccount: Bool
     @Binding var showTotalDevice: Bool
     
-    @State var statusConnect: VPNStatus = .connected
+    @Binding var statusConnect: VPNStatus
     @StateObject var viewModel: SessionVPNViewModel
     
     @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
@@ -67,6 +67,6 @@ struct DevicesView_Previews: PreviewProvider {
     @State static var showAccount = true
     
     static var previews: some View {
-        SessionVPNView(showAccount: $showAccount, showTotalDevice: $showAccount, viewModel: SessionVPNViewModel())
+        SessionVPNView(showAccount: $showAccount, showTotalDevice: $showAccount, statusConnect: .constant(.connected), viewModel: SessionVPNViewModel())
     }
 }

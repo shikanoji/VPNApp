@@ -70,7 +70,8 @@ struct SettingsView: View {
                         .isDetailLink(false)
                     NavigationLink(destination:
                                     ToolsView(showSettings: $showSettings,
-                                              statusConnect: $statusConnect),
+                                              statusConnect: $statusConnect,
+                                              viewModel: ToolsViewModel()),
                                    isActive: $showToolsSetting) { }
                 }
             }

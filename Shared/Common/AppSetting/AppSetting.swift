@@ -54,6 +54,7 @@ enum AppKeys: String {
     case wasJailBreak = "wasJailBreak"
     
     case currentSessionId = "currentSessionId"
+    case selectCyberSec = "selectCyberSec"
 }
 
 struct AppSetting {
@@ -365,5 +366,14 @@ struct AppSetting {
             }
         }
         return defaultContent
+    }
+    
+    var selectCyberSec: Bool {
+        get {
+            UserDefaults.standard.bool(forKey: AppKeys.selectCyberSec.rawValue)
+        }
+        set {
+            UserDefaults.standard.setValue(newValue, forKey: AppKeys.selectCyberSec.rawValue)
+        }
     }
 }
