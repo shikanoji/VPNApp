@@ -25,7 +25,7 @@ struct MapView: View {
     @State var heightMap: CGFloat = Constant.Board.Map.heightScreen
     
     @State private var location: CGPoint = CGPoint(
-        x: Constant.Board.Map.widthScreen / 2,
+        x: Constant.Board.Map.widthScreen / 4,
         y: Constant.Board.Map.widthScreen
     )
     

@@ -31,20 +31,25 @@ struct ProtocolSettingView: View {
                         showSettings = false
                     }, statusConnect: $statusConnect)
                 VStack(alignment: .leading, spacing: 1) {
-                    ForEach(viewModel.itemList) { item in
-                        ProtocolSettingCellView(title: item.type.title,
-                                                position: getPosition(item: item, arr: viewModel.itemList),
-                                                changeValue: item.select,
-                                                item: item)
+                    ForEach(viewModel.section.items) { item in
+                        ItemRowCell(title: item.type.title,
+                                    content: item.type.content,
+                                    showRightButton: item.type.showRightButton,
+                                    showSwitch: item.type.showSwitch,
+                                    showSelect: item.type.showSelect,
+                                    position: viewModel.section.items.getPosition(item),
+                                    switchValue: item.select,
+                                    onSwitchValueChange: { value in
+                            if value {
+                                viewModel.configItem(item)
+                            }
+                        })
                         .environmentObject(viewModel)
                     }
                 }
                 .padding(Constant.Menu.hozitalPaddingCell)
                 .padding(.top, Constant.Menu.topPaddingCell)
             }
-        }
-        .onAppear {
-            viewModel.refreshItem()
         }
         .navigationBarHidden(true)
         .background(AppColor.background)

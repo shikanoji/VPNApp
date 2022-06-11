@@ -20,9 +20,11 @@ extension Array {
     }
 }
 
-func getPosition<T: Equatable>(item: T, arr: [T]) -> PositionItemCell {
-    if arr.count > 0, let index = arr.firstIndex(of: item) {
-        return arr.getPosition(index)
+extension Array where Element: Equatable {
+    func getPosition<T: Equatable>(_ item: T) -> PositionItemCell {
+        if count > 0, let index = firstIndex(of: item as! Element) {
+            return getPosition(index)
+        }
+        return .all
     }
-    return .all
 }

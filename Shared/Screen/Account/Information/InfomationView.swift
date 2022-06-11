@@ -13,9 +13,11 @@ struct InfomationView: View {
     @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
     @Binding var showAccount: Bool
     @Binding var showInfomation: Bool
-    @State var statusConnect: VPNStatus = .connected
+    @Binding var statusConnect: VPNStatus
     @State var showChangePassword = false
     @State var deleteAccount = false
+    
+    @StateObject var viewModel: InfomationViewModel
     
     var deleteAccountButton: some View {
         AppButton(style: .none, width: UIScreen.main.bounds.size.width - 30, height: 44,
@@ -29,16 +31,12 @@ struct InfomationView: View {
 
     var itemList: some View {
         VStack(spacing: 1) {
-            ItemRowCell(title: L10n.Account.Infomation.email,
-                        content: AppSetting.shared.email,
-                        position: .top)
-            ItemRowCell(title: L10n.Account.Infomation.member,
-                        content: AppSetting.shared.joinedDate?.toFormat("dd-MM-yyyy") ?? "")
-            ItemRowCell(title: L10n.Account.Infomation.id,
-                        content: AppSetting.shared.idVPN)
-            ItemRowCell(title: L10n.Account.Infomation.security,
-                        content: L10n.Account.Infomation.tapToChangePassword,
-                        position: .bot)
+            ForEach(viewModel.section.items, id: \.id) { item in
+                ItemRowCell(title: item.type.title,
+                            content: item.type.content,
+                            position: viewModel.section.items.getPosition(item))
+                .environmentObject(viewModel)
+            }
             .onTapGesture {
                 showChangePassword = true
             }
@@ -85,7 +83,7 @@ struct SettingInfomationView_Previews: PreviewProvider {
     @State static var value: VPNStatus = .connected
     
     static var previews: some View {
-        InfomationView(showAccount: $showAccount, showInfomation: $showAccount)
+        InfomationView(showAccount: $showAccount, showInfomation: $showAccount, statusConnect: .constant(.connected), viewModel: InfomationViewModel())
     }
 }
 
