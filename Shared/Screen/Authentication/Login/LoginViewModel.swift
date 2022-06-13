@@ -26,6 +26,14 @@ class LoginViewModel: NSObject, ObservableObject {
         email.isEmpty || password.isEmpty
     }
     
+    func fullLogin() {
+        AppSetting.shared.prepareForIpInfo { message in
+            if (message ?? "").isEmpty {
+                self.login()
+            }
+        }
+    }
+    
     func login() {
         showProgressView = true
         

@@ -98,11 +98,8 @@ struct BoardView: View {
                       locationData: $viewModel.locationData,
                       staticIPData: $viewModel.staticIPData,
                       staticNode: $viewModel.staticIPNodeSelecte,
-                      multihopData: $viewModel.mutilhopData,
-                      entryNodeList: $viewModel.entryNodeListMutilhop,
-                      exitNodeList: $viewModel.exitNodeListMutilhop,
-                      entryNodeSelect: $viewModel.entryNodeSelectMutilhop,
-                      exitNodeSelect: $viewModel.exitNodeSelectMutilhop)
+                      mutilhopList: $viewModel.mutilhopList,
+                      multihopSelect: $viewModel.multihopSelect)
     }
     
     func contentMapView() -> some View {

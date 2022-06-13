@@ -36,9 +36,11 @@ struct InfomationView: View {
                             content: item.type.content,
                             position: viewModel.section.items.getPosition(item))
                 .environmentObject(viewModel)
-            }
-            .onTapGesture {
-                showChangePassword = true
+                .onTapGesture {
+                    if item.type == .accountSecurity {
+                        showChangePassword = true
+                    }
+                }
             }
         }
         .padding(Constant.Menu.hozitalPaddingCell)

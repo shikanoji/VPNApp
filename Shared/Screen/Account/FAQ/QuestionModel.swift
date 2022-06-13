@@ -7,34 +7,74 @@
 
 import Foundation
 
-struct QuestionModel: Codable, Identifiable {
-    static var mockQuestionList: [QuestionModel] {
-        return [QuestionModel(id: "1", question: "What is a VPN?", answer: ""),
-                QuestionModel(id: "2", question: "What can I do with a VPN?", answer: ""),
-                QuestionModel(id: "3", question: "What services can I access with a VPN?", answer: ""),
-                QuestionModel(id: "4", question: "Will a VPN slow my internet connection?", answer: ""),]
-    }
-    var id: String
-    var question: String
-    var answer: String
+struct QuestionModel: Codable, Identifiable, Equatable {
+    
+    var id: Int? = nil
+    var title = ""
+    var url = ""
     
     enum CodingKeys: String, CodingKey {
         case id
-        case question
-        case answer
+        case title
+        case url
     }
     
     init(from decoder: Decoder) throws {
         let values = try decoder.container(keyedBy: CodingKeys.self)
-        id = try values.decode(String.self, forKey: .id)
-        question = try values.decode(String.self, forKey: .question)
-        answer = try values.decode(String.self, forKey: .answer)
-
+        
+        if let _id = try? values.decode(Int.self, forKey: .id) {
+            self.id = _id
+        } else {
+            self.id = nil
+        }
+        
+        if let _title = try? values.decode(String.self, forKey: .title) {
+            self.title = _title
+        } else {
+            self.title = ""
+        }
+        
+        if let _url = try? values.decode(String.self, forKey: .url) {
+            self.url = _url
+        } else {
+            self.url = ""
+        }
     }
     
-    init(id: String, question: String, answer: String) {
-        self.id = id
-        self.question = question
-        self.answer = answer
+    init() { }
+}
+
+struct TopicQuestionModel: Codable, Identifiable, Equatable {
+    
+    var id: Int?
+    var name: String
+    var faqs: [QuestionModel]
+    
+    enum CodingKeys: String, CodingKey {
+        case id
+        case name
+        case faqs
+    }
+    
+    init(from decoder: Decoder) throws {
+        let values = try decoder.container(keyedBy: CodingKeys.self)
+        
+        if let _id = try? values.decode(Int.self, forKey: .id) {
+            self.id = _id
+        } else {
+            self.id = nil
+        }
+        
+        if let _name = try? values.decode(String.self, forKey: .name) {
+            self.name = _name
+        } else {
+            self.name = ""
+        }
+        
+        if let _faqs = try? values.decode([QuestionModel].self, forKey: .faqs) {
+            self.faqs = _faqs
+        } else {
+            self.faqs = []
+        }
     }
 }

@@ -91,6 +91,8 @@ struct AccountView: View {
                             self.showAccountStatus = true
                         case .totalDevice:
                             self.showTotalDevice = true
+                        case .questions:
+                            self.showFAQ = true
                         default:
                             return
                         }
@@ -131,6 +133,7 @@ struct AccountView: View {
             NavigationLink(destination:
                             FAQView(
                                 showAccount: $showAccount,
+                                showFAQ: $showFAQ,
                                 statusConnect: $statusConnect,
                                 viewModel: FAQViewModel()),
                            isActive: $showFAQ) { }

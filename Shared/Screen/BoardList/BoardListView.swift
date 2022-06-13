@@ -17,13 +17,8 @@ struct BoardListView: View {
     @Binding var staticIPData: [StaticServer]
     @Binding var staticNode: StaticServer?
     
-    @Binding var multihopData: [(Node, Node)]
-    
-    @Binding var entryNodeList: [Node]
-    @Binding var exitNodeList: [Node]
-    
-    @Binding var entryNodeSelect: Node
-    @Binding var exitNodeSelect: Node
+    @Binding var mutilhopList: [MultihopModel]
+    @Binding var multihopSelect: MultihopModel?
     
     var body: some View {
         VStack(spacing: 8) {
@@ -43,11 +38,8 @@ struct BoardListView: View {
             case .staticIP:
                 StaticIPListView(staticIPData: $staticIPData, selectStaticServer: $staticNode)
             case .multiHop:
-                 MultiHopView(nodeRecentList: $multihopData,
-                              entryNodeList: $entryNodeList,
-                              exitNodeList: $exitNodeList,
-                              entryNodeSelect: $entryNodeSelect,
-                              exitNodeSelect: $exitNodeSelect)
+                MultiHopView(mutilhopList: $mutilhopList,
+                              multihopSelect: $multihopSelect)
             }
         }
         .frame(maxHeight: .infinity)
@@ -55,34 +47,5 @@ struct BoardListView: View {
         .background(AppColor.background)
         .ignoresSafeArea()
         .animation(nil)
-    }
-}
-
-
-struct BoardListView_Previews: PreviewProvider {
-    @State static var show = true
-    @State static var node: Node? = Node.country
-    @State static var nodeTabList: [NodeGroup] = [NodeGroup.init(nodeList: Node.cityNodeList, type: .all)]
-    @State static var nodeMultihop =  [(Node.country, Node.tokyo), (Node.country, Node.tokyo)]
-    
-    @State static var nodeStaticList = [StaticServer()]
-    @State static var staticNode: StaticServer? = nil
-    
-    @State static var nodeList = Node.all
-    @State static var nodeSelectMultihop1 = Node.country
-    @State static var nodeSelectMultihop2 = Node.tokyo
-    
-    static var previews: some View {
-        BoardListView(showBoardList: $show,
-                      currentTab: Binding<BoardViewModel.StateTab>.constant(.location),
-                      node: $node,
-                      locationData: $nodeTabList,
-                      staticIPData: $nodeStaticList,
-                      staticNode: $staticNode,
-                      multihopData: $nodeMultihop,
-                      entryNodeList: $nodeList,
-                      exitNodeList: $nodeList,
-                      entryNodeSelect: $nodeSelectMultihop1,
-                      exitNodeSelect: $nodeSelectMultihop2)
     }
 }
