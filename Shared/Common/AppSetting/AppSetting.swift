@@ -8,6 +8,7 @@
 import Foundation
 import SwiftUI
 import SwiftDate
+import RxSwift
 
 enum AppKeys: String {
     ///Auth Keys
@@ -40,6 +41,7 @@ enum AppKeys: String {
     case countryCode = "countryCode"
     case ip = "ip"
     case listNodeGroup = "listNodeGroup"
+    case mutilhopList = "mutilhopList"
     
     ///Last Time when Data Map Update
     case lastChange = "lastChange"
@@ -375,5 +377,64 @@ struct AppSetting {
         set {
             UserDefaults.standard.setValue(newValue, forKey: AppKeys.selectCyberSec.rawValue)
         }
+    }
+    
+    var disposedBag = DisposeBag()
+    
+    /// api get ip info in app
+    func getIpInfo(completion: @escaping (String?) -> Void) {
+        
+        APIManager.shared.getIpInfo()
+            .subscribe(onSuccess: { [self] response in
+                if let result = response.result{
+                    configIpInfo(result)
+                    completion(nil)
+                } else {
+                    let error = response.errors
+                    if error.count > 0, let message = error[0] as? String {
+                        completion(message)
+                    } else if !response.message.isEmpty {
+                        completion(response.message)
+                    }
+                    self.getIpInfoOptional { errorOption in
+                        completion(errorOption)
+                    }
+                }
+            }, onFailure: { error in
+                self.getIpInfoOptional { errorOption in
+                    completion(errorOption)
+                }
+            })
+            .disposed(by: disposedBag)
+    }
+    
+    /// api get ip info optional
+    func getIpInfoOptional(completion: @escaping (String?) -> Void) {
+        
+        APIManager.shared.getIpInfoOptional()
+            .subscribe(onSuccess: { [self] response in
+                configIpInfo(response)
+                completion(nil)
+            }, onFailure: { error in
+                completion(error.localizedDescription)
+            })
+            .disposed(by: disposedBag)
+    }
+    
+    func configIpInfo(_ ipInfo: IpInfoResultModel) {
+        AppSetting.shared.ip = ipInfo.ip
+        AppSetting.shared.countryCode = ipInfo.countryCode
+        AppSetting.shared.countryName = ipInfo.countryName
+        AppSetting.shared.cityName = ipInfo.city
+        AppSetting.shared.lastChange = ipInfo.lastChange ?? 0
+    }
+    
+    func prepareForIpInfo(completion: @escaping (String?) -> Void) {
+        if AppSetting.shared.ip == "" {
+            AppSetting.shared.getIpInfo { message in
+                completion(message)
+            }
+        }
+        completion(nil)
     }
 }

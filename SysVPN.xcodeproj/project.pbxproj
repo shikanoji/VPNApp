@@ -274,6 +274,9 @@
 		EEAD5C5B277D9654008181E3 /* NodeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEAD5C5A277D9654008181E3 /* NodeView.swift */; };
 		EED4F59F285448BC0098DF47 /* InfomationViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EED4F59E285448BC0098DF47 /* InfomationViewModel.swift */; };
 		EED4F5A0285448BC0098DF47 /* InfomationViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EED4F59E285448BC0098DF47 /* InfomationViewModel.swift */; };
+		EED4F5A52855A5600098DF47 /* FAQDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EED4F5A42855A5600098DF47 /* FAQDetailView.swift */; };
+		EED4F5A92855A5DA0098DF47 /* WebView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EED4F5A82855A5DA0098DF47 /* WebView.swift */; };
+		EED4F5AB2855D2A90098DF47 /* MultiopNodeModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EED4F5AA2855D2A90098DF47 /* MultiopNodeModel.swift */; };
 		EEEAF2172782E1A100A96114 /* NodeMapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEEAF2162782E1A100A96114 /* NodeMapView.swift */; };
 		EEEAF2192785834200A96114 /* NodePopupView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEEAF2182785834200A96114 /* NodePopupView.swift */; };
 /* End PBXBuildFile section */
@@ -523,6 +526,9 @@
 		EEAD5C52277AC968008181E3 /* MapView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapView.swift; sourceTree = "<group>"; };
 		EEAD5C5A277D9654008181E3 /* NodeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NodeView.swift; sourceTree = "<group>"; };
 		EED4F59E285448BC0098DF47 /* InfomationViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfomationViewModel.swift; sourceTree = "<group>"; };
+		EED4F5A42855A5600098DF47 /* FAQDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FAQDetailView.swift; sourceTree = "<group>"; };
+		EED4F5A82855A5DA0098DF47 /* WebView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebView.swift; sourceTree = "<group>"; };
+		EED4F5AA2855D2A90098DF47 /* MultiopNodeModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MultiopNodeModel.swift; sourceTree = "<group>"; };
 		EEEAF2162782E1A100A96114 /* NodeMapView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NodeMapView.swift; sourceTree = "<group>"; };
 		EEEAF2182785834200A96114 /* NodePopupView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NodePopupView.swift; sourceTree = "<group>"; };
 		EFABE55777A0F7411F17A1D0 /* Pods-SysVPN (macOS).release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SysVPN (macOS).release.xcconfig"; path = "Target Support Files/Pods-SysVPN (macOS)/Pods-SysVPN (macOS).release.xcconfig"; sourceTree = "<group>"; };
@@ -1039,6 +1045,7 @@
 				EE85EE1727BE3C4C000F967A /* CountryListResultModel.swift */,
 				EE78F77D2811526B00F49903 /* RequestCertificateModel.swift */,
 				EE2D6BFA281BD77D008E1431 /* ObtainCertificateModel.swift */,
+				EED4F5AA2855D2A90098DF47 /* MultiopNodeModel.swift */,
 			);
 			path = Board;
 			sourceTree = "<group>";
@@ -1090,6 +1097,7 @@
 		D7F9695A27B2AC860037A3D0 /* FAQ */ = {
 			isa = PBXGroup;
 			children = (
+				EED4F5A12855A5400098DF47 /* FAQDetail */,
 				D7F9695B27B2AC980037A3D0 /* FAQView.swift */,
 				D7F9695E27B2B8590037A3D0 /* QuestionModel.swift */,
 				D785DFBE27B3B26F001FC84B /* FAQViewModel.swift */,
@@ -1287,6 +1295,15 @@
 				EE8910672798129600ADF293 /* BoardListView.swift */,
 			);
 			path = BoardList;
+			sourceTree = "<group>";
+		};
+		EED4F5A12855A5400098DF47 /* FAQDetail */ = {
+			isa = PBXGroup;
+			children = (
+				EED4F5A42855A5600098DF47 /* FAQDetailView.swift */,
+				EED4F5A82855A5DA0098DF47 /* WebView.swift */,
+			);
+			path = FAQDetail;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -1752,6 +1769,7 @@
 				D78F47262761A53A0064A764 /* AppColor.swift in Sources */,
 				D78F76C52769D84700919AA6 /* ViewModifier.swift in Sources */,
 				D7874DF8277AFED200ADC7AD /* ForgotPasswordView.swift in Sources */,
+				EED4F5A52855A5600098DF47 /* FAQDetailView.swift in Sources */,
 				EE3246E22822362C0070FB91 /* StaticNodeMapView.swift in Sources */,
 				D79E829927970649009E36F3 /* SetupVPNView.swift in Sources */,
 				D75F936E2773486900E16981 /* NavigationModifier.swift in Sources */,
@@ -1794,6 +1812,7 @@
 				EE85EE0F27BDF5B6000F967A /* Mesh.swift in Sources */,
 				EE89106B2798142A00ADF293 /* StatusLocationView.swift in Sources */,
 				EE890FE32791101E00ADF293 /* CustomNavigationView.swift in Sources */,
+				EED4F5AB2855D2A90098DF47 /* MultiopNodeModel.swift in Sources */,
 				D767F27F276780C1005F7AA5 /* Form.swift in Sources */,
 				D78044C42758C6FC0086E59D /* SysVPN.xcdatamodeld in Sources */,
 				D785DFC227B3F447001FC84B /* FAQCell.swift in Sources */,
@@ -1834,6 +1853,7 @@
 				D79BF76127BD173600E76C37 /* APIManager+Auth.swift in Sources */,
 				EEAD5C5B277D9654008181E3 /* NodeView.swift in Sources */,
 				EE9B8B5627C37C320077BCFC /* LinearGradientStatus.swift in Sources */,
+				EED4F5A92855A5DA0098DF47 /* WebView.swift in Sources */,
 				D79E829B27971299009E36F3 /* PopupBackgroundView.swift in Sources */,
 				D78044C82758C6FC0086E59D /* ContentView.swift in Sources */,
 				AC87539B2801ED10004C5F43 /* DeleteAccountConfirmationView.swift in Sources */,

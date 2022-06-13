@@ -11,8 +11,11 @@ import TunnelKitManager
 
 struct FAQView: View {
     @Binding var showAccount: Bool
+    @Binding var showFAQ: Bool
     @Binding var statusConnect: VPNStatus
     @StateObject var viewModel: FAQViewModel
+    @State var showFAQDetail = false
+    @State var faqSelect: QuestionModel!
     
     @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
     var body: some View {
@@ -27,17 +30,36 @@ struct FAQView: View {
                         tapLeftButton: {
                             presentationMode.wrappedValue.dismiss()
                         }, tapRightButton: {
+                            showFAQ = false
                             showAccount = false
                         }, statusConnect: $statusConnect)
-                    VStack(spacing: 1) {
-                        ForEach(Array(viewModel.questions.enumerated()), id: \.offset) { index, item in
-                            FAQCell(question: item, position: viewModel.questions.getPosition(index), onTap: {
-                                //Handle tapping question
-                            })
+                    if viewModel.showProgressView {
+                        LoadingView()
+                            .padding(.top, UIScreen.main.bounds.size.height / 3)
+                    } else {
+                        VStack(spacing: 1) {
+                            ForEach(viewModel.topicQuestionList, id: \.id) { topic in
+                                Text(topic.name)
+                                    .font(Constant.Menu.fontSectionTitle)
+                                    .foregroundColor(AppColor.lightBlackText)
+                                    .frame(maxWidth: .infinity, alignment: .leading)
+                                    .padding(Constant.Menu.hozitalPaddingCell)
+                                    .padding(.top, Constant.Menu.topPaddingCell)
+                                VStack(spacing: 1) {
+                                    ForEach(topic.faqs, id: \.id) { faq in
+                                        Button(action: {
+                                            faqSelect = faq
+                                            showFAQDetail = true
+                                        }, label: {
+                                            FAQCell(question: faq,
+                                                    position: topic.faqs.getPosition(faq))
+                                        })
+                                    }
+                                }
+                                .padding(.horizontal , Constant.Menu.hozitalPaddingCell)
+                            }
                         }
                     }
-                    .padding(Constant.Menu.hozitalPaddingCell)
-                    .padding(.top, Constant.Menu.topPaddingCell)
                     Spacer()
                 }
             }
@@ -45,6 +67,19 @@ struct FAQView: View {
         .navigationBarHidden(true)
         .background(AppColor.background)
         .ignoresSafeArea()
+        .popup(isPresented: $viewModel.showAlert, type: .floater(verticalPadding: 10), position: .bottom, animation: .easeInOut, autohideIn: 10, closeOnTap: false, closeOnTapOutside: true) {
+            ToastView(title: viewModel.error?.title ?? "",
+                      message: viewModel.error?.description ?? "",
+                      cancelAction: {
+                viewModel.showAlert = false
+            })
+        }
+        NavigationLink(destination:
+                        FAQDetailView(
+                            showAccount: $showAccount,
+                            statusConnect: $statusConnect,
+                            question: .constant(faqSelect ?? QuestionModel())),
+                       isActive: $showFAQDetail) { }
     }
 }
 
@@ -52,7 +87,7 @@ struct FAQView: View {
 struct FAQViewPreview: PreviewProvider {
     @State static var showAccount = true
     static var previews: some View {
-        FAQView(showAccount: $showAccount, statusConnect: .constant(.connected), viewModel: FAQViewModel())
+        FAQView(showAccount: $showAccount, showFAQ: .constant(false), statusConnect: .constant(.connected), viewModel: FAQViewModel())
     }
 }
 #endif

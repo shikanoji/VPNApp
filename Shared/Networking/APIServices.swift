@@ -84,6 +84,8 @@ enum APIService {
     case changePassword(oldPassword: String, newPassword: String)
     case getListSession(page: Int = 1, limit: Int = 20, isActive: Int = 1)
     case disconnectSession(sessionId: String)
+    case getTopicQuestionList
+    case getMultihopList
 }
 
 extension APIService: TargetType {
@@ -92,6 +94,9 @@ extension APIService: TargetType {
         switch self {
         case .ipInfoOptional:
             return URL(string: Constant.api.ipInfoOptional)!
+        case .getTopicQuestionList:
+            // update soon
+            return URL(string: "https://sysvpn.com/app/module_faq/v1/faqs")!
         default:
             return URL(string: Constant.api.root)!
         }
@@ -100,6 +105,11 @@ extension APIService: TargetType {
     // This is the path of each operation that will be appended to our base URL.
     var path: String {
         switch self {
+        case .getMultihopList:
+            return Constant.api.path.getMultihopList
+        case .getTopicQuestionList:
+            return ""
+//            return Constant.api.path.getTopicFaq
         case .register:
             return Constant.api.path.register
         case .login:
@@ -134,7 +144,7 @@ extension APIService: TargetType {
     // Here we specify which method our calls should use.
     var method: Moya.Method {
         switch self {
-        case .getCountryList, .ipInfo, .getRequestCertificate, .ipInfoOptional, .getListSession:
+        case .getCountryList, .ipInfo, .getRequestCertificate, .ipInfoOptional, .getListSession, .getTopicQuestionList, .getMultihopList:
             return .get
         case .register, .login, .loginSocial, .logout, .forgotPassword, .refreshToken:
             return .post
@@ -152,6 +162,16 @@ extension APIService: TargetType {
     // In this example we will not pass anything in the body of the request.
     var task: Task {
         switch self {
+        case .getMultihopList:
+            var param: [String: Any] = [:]
+            // Use "key" temporarily, after remove it
+            param["key"] = "f11b69c57d5fe9555e29c57c1d863bf8"
+            return .requestParameters(parameters: param, encoding: URLEncoding.queryString)
+        case .getTopicQuestionList:
+            var param: [String: Any] = [:]
+            // Use "key" temporarily, after remove it
+            param["key"] = "f11b69c57d5fe9555e29c57c1d863bf8"
+            return .requestParameters(parameters: param, encoding: URLEncoding.queryString)
         case .register(let email, let password):
             var body: [String: Any] = [:]
             body["email"] = email
@@ -286,7 +306,7 @@ extension APIService: TargetType {
         switch self {
         case .login, .register:
             return ["Content-type": "application/json"]
-        case .getCountryList, .getObtainCertificate, .changePassword, .getListSession:
+        case .getCountryList, .getObtainCertificate, .changePassword, .getListSession, .getTopicQuestionList, .getMultihopList:
             return [
                 "Content-type": "application/json",
                 "Authorization": "Bearer \(AppSetting.shared.accessToken)"
