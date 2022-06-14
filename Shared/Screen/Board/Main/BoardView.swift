@@ -32,7 +32,7 @@ struct BoardView: View {
                 showSettings: .constant(true),
                 showVPNSetting: .constant(true),
                 shouldHideAutoConnect: $viewModel.shouldHideAutoConnect,
-                statusConnect: $viewModel.state,
+                statusConnect: $viewModel.stateUI,
                 viewModel: AutoConnectViewModel())
             .opacity(viewModel.shouldHideAutoConnect ? 0 : 1)
         }
@@ -80,12 +80,12 @@ struct BoardView: View {
     
     func accountView() -> some View {
         AccountView(showAccount: $showAccount,
-                    statusConnect: $viewModel.state, viewModel: AccountViewModel())
+                    statusConnect: $viewModel.stateUI, viewModel: AccountViewModel())
     }
     
     func settingView() -> some View {
         SettingsView(showSettings: $showSettings,
-                     statusConnect: $viewModel.state,
+                     statusConnect: $viewModel.stateUI,
                      showAutoConnect: $viewModel.showAutoConnect,
                      showProtocolConnect: $viewModel.showProtocolConnect,
                      showDNSSetting: $viewModel.showDNSSetting)
@@ -108,23 +108,23 @@ struct BoardView: View {
                 ZStack {
                     MapView(mesh: viewModel.mesh,
                             selection: selection,
-                            statusConnect: $viewModel.state)
-                    if viewModel.state == .connected {
+                            statusConnect: $viewModel.stateUI)
+                    if viewModel.stateUI == .connected {
                         Asset.Assets.logoConnected.SuImage
                             .resizable()
                             .aspectRatio(contentMode: .fit)
                     }
                 }
                 VStack {
-                    BoardNavigationView(status: viewModel.state,
+                    BoardNavigationView(status: viewModel.stateUI,
                                         tapLeftIcon: {
                         handlerTapLeftNavigation()
                     }, tapRightIcon: {
                         handlerTapRightNavigation()
                     })
-                    StatusVPNView(ip: viewModel.ip, status: viewModel.state, flag: viewModel.flag)
+                    StatusVPNView(ip: viewModel.ip, status: viewModel.stateUI, flag: viewModel.flag)
                     Spacer()
-                    ConnectButton(status: viewModel.state,
+                    ConnectButton(status: viewModel.stateUI,
                                   uploadSpeed: viewModel.uploadSpeed,
                                   downloadSpeed: viewModel.downloadSpeed)
                     .onTapGesture {
