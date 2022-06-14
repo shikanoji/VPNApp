@@ -306,7 +306,7 @@ extension APIService: TargetType {
         switch self {
         case .login, .register:
             return ["Content-type": "application/json"]
-        case .getCountryList, .getObtainCertificate, .changePassword, .getListSession, .getTopicQuestionList, .getMultihopList:
+        case .getCountryList, .getObtainCertificate, .changePassword, .getListSession, .getTopicQuestionList, .getMultihopList, .disconnectSession:
             return [
                 "Content-type": "application/json",
                 "Authorization": "Bearer \(AppSetting.shared.accessToken)"

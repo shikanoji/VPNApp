@@ -67,6 +67,7 @@ class BoardViewModel: ObservableObject {
     @Published var showAutoConnect: Bool = false
     @Published var showProtocolConnect: Bool = false
     @Published var showDNSSetting: Bool = false
+    @Published var stateUI: VPNStatus = .disconnected
     @Published var state: VPNStatus = .disconnected
     @Published var ip = AppSetting.shared.ip
     @Published var flag = ""
@@ -222,16 +223,15 @@ class BoardViewModel: ObservableObject {
     
     func connectVPN() {
         if state == .disconnected {
+            stateUI = .connecting
             getRequestCertificate()
         } else {
             if let type = ItemCellType(rawValue: AppSetting.shared.selectAutoConnect),
                (type == .always || type == .onMobile || type == .onWifi) {
                 showAlertAutoConnectSetting = true
             } else {
+                stateUI = .disconnecting
                 NetworkManager.shared.disconnect()
-                if disconnectByUser {
-                    disconnectSession()
-                }
             }
         }
     }
@@ -254,6 +254,7 @@ class BoardViewModel: ObservableObject {
             }
             
             state = .connected
+            stateUI = .connected
             numberReconnect = 0
             disconnectByUser = false
             stopSpeedTimer()
@@ -296,6 +297,11 @@ class BoardViewModel: ObservableObject {
                 if numberReconnect < maximumReonnect, !disconnectByUser {
                     numberReconnect += 1
                     connectVPN()
+                } else {
+                    if disconnectByUser {
+                        stateUI = .disconnected
+                        disconnectSession()
+                    }
                 }
             }
             
