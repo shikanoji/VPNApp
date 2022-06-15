@@ -12,6 +12,7 @@ import FirebaseMessaging
 import GoogleSignIn
 
 class AppDelegate: NSObject, UIApplicationDelegate, MessagingDelegate {
+    static var orientationLock = UIInterfaceOrientationMask.portrait
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey : Any]? = nil) -> Bool {
         Messaging.messaging().delegate = self
         var filePath:String!
@@ -26,6 +27,10 @@ class AppDelegate: NSObject, UIApplicationDelegate, MessagingDelegate {
         }
         FirebaseApp.configure(options: fileopts)
         return true
+    }
+    
+    func application(_ application: UIApplication, supportedInterfaceOrientationsFor window: UIWindow?) -> UIInterfaceOrientationMask {
+        return AppDelegate.orientationLock
     }
     
     func registerForPushNotifications() {
