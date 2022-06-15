@@ -15,7 +15,7 @@ struct SubscriptionIntroduction: View {
         Background {
             ScrollView(.vertical, showsIndicators: false) {
                 VStack(alignment: .center) {
-                    Spacer().frame(height: 90)
+                    Spacer()
                     Text(L10n.SubscriptionIntro.title).setTitle()
                     Asset.Assets.subscriptionIntroImage.SuImage
                     Group {
@@ -57,8 +57,9 @@ struct SubscriptionIntroduction: View {
                         Spacer().frame(height: 15)
                     }
                     Text(L10n.SubscriptionIntro.note).foregroundColor(AppColor.lightBlackText).font(.system(size: 11)).frame(width: 300)
-                    Spacer().frame(height: 20)
+                    Spacer()
                 }
+                .frame(minHeight: UIScreen.main.bounds.height)
             }
         }
     }

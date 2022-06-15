@@ -14,10 +14,10 @@ struct PlanSelectionView: View {
     @State var toWelcomeScreen = false
     var body: some View {
         Background {
-            ScrollView(.vertical, showsIndicators: false) {
                 VStack {
+                    Spacer()
+                    Spacer().frame(height: 50)
                     Group {
-                        Spacer().frame(height: 100)
                         Text(L10n.PlanSelect.title).setTitle()
                         Spacer().frame(height: 10)
                         Text(L10n.PlanSelect.body).setDefault()
@@ -36,10 +36,9 @@ struct PlanSelectionView: View {
                     Text(planListViewModel.selectedPlan?.note ?? "")
                         .font(.system(size: 11))
                         .foregroundColor(Color.white)
-                        .frame(width: 320)
-                    Spacer().frame(height: 20)
+                        .frame(width: 320, height: 40)
+                    Spacer()
                 }
-            }
         }
     }
 }
