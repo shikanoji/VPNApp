@@ -67,5 +67,8 @@ struct AutoConnectView: View {
         .navigationBarHidden(true)
         .background(AppColor.background)
         .ignoresSafeArea()
+        .onAppear {
+            viewModel.configItem()
+        }
     }
 }
