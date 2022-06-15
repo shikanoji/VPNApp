@@ -118,6 +118,7 @@ struct MapView: View {
                         } else {
                             totalScale = updateScale
                         }
+                        checkCollision()
                     }
                 }
                 .onEnded {

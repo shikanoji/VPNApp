@@ -48,6 +48,7 @@ internal enum Asset {
     internal static let japan = ImageAsset(name: "japan")
     internal static let loading = ImageAsset(name: "loading")
     internal static let logoConnected = ImageAsset(name: "logo_connected")
+    internal static let logoConnectedBackground = ImageAsset(name: "logo_connected_background")
     internal static let map = ImageAsset(name: "map")
     internal static let checkmark = ImageAsset(name: "Checkmark")
     internal static let introduction1 = ImageAsset(name: "Introduction-1")

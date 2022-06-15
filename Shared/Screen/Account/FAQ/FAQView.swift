@@ -19,48 +19,50 @@ struct FAQView: View {
     
     @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
     var body: some View {
-        ScrollView(.vertical, showsIndicators: false) {
-            ZStack(alignment: .top) {
-                VStack {
-                    AppColor.darkButton
-                        .frame(height: 10)
-                    CustomNavigationView(
-                        leftTitle: L10n.Account.AccountStatus.title,
-                        currentTitle: L10n.Faq.title,
-                        tapLeftButton: {
-                            presentationMode.wrappedValue.dismiss()
-                        }, tapRightButton: {
-                            showFAQ = false
-                            showAccount = false
-                        }, statusConnect: $statusConnect)
-                    if viewModel.showProgressView {
-                        LoadingView()
-                            .padding(.top, UIScreen.main.bounds.size.height / 3)
-                    } else {
-                        VStack(spacing: 1) {
-                            ForEach(viewModel.topicQuestionList, id: \.id) { topic in
-                                Text(topic.name)
-                                    .font(Constant.Menu.fontSectionTitle)
-                                    .foregroundColor(AppColor.lightBlackText)
-                                    .frame(maxWidth: .infinity, alignment: .leading)
-                                    .padding(Constant.Menu.hozitalPaddingCell)
-                                    .padding(.top, Constant.Menu.topPaddingCell)
-                                VStack(spacing: 1) {
-                                    ForEach(topic.faqs, id: \.id) { faq in
-                                        Button(action: {
-                                            faqSelect = faq
-                                            showFAQDetail = true
-                                        }, label: {
-                                            FAQCell(question: faq,
-                                                    position: topic.faqs.getPosition(faq))
-                                        })
+        VStack {
+            AppColor.darkButton
+                .frame(height: 10)
+            CustomNavigationView(
+                leftTitle: L10n.Account.AccountStatus.title,
+                currentTitle: L10n.Faq.title,
+                tapLeftButton: {
+                    presentationMode.wrappedValue.dismiss()
+                }, tapRightButton: {
+                    showFAQ = false
+                    showAccount = false
+                }, statusConnect: $statusConnect)
+            ScrollView(.vertical, showsIndicators: false) {
+                ZStack(alignment: .top) {
+                    VStack {
+                        if viewModel.showProgressView {
+                            LoadingView()
+                                .padding(.top, UIScreen.main.bounds.size.height / 3)
+                        } else {
+                            VStack(spacing: 1) {
+                                ForEach(viewModel.topicQuestionList, id: \.id) { topic in
+                                    Text(topic.name)
+                                        .font(Constant.Menu.fontSectionTitle)
+                                        .foregroundColor(AppColor.lightBlackText)
+                                        .frame(maxWidth: .infinity, alignment: .leading)
+                                        .padding(Constant.Menu.hozitalPaddingCell)
+                                        .padding(.top, Constant.Menu.topPaddingCell)
+                                    VStack(spacing: 1) {
+                                        ForEach(topic.faqs, id: \.id) { faq in
+                                            Button(action: {
+                                                faqSelect = faq
+                                                showFAQDetail = true
+                                            }, label: {
+                                                FAQCell(question: faq,
+                                                        position: topic.faqs.getPosition(faq))
+                                            })
+                                        }
                                     }
+                                    .padding(.horizontal , Constant.Menu.hozitalPaddingCell)
                                 }
-                                .padding(.horizontal , Constant.Menu.hozitalPaddingCell)
                             }
                         }
+                        Spacer()
                     }
-                    Spacer()
                 }
             }
         }

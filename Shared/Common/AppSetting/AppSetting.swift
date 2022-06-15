@@ -278,7 +278,7 @@ struct AppSetting {
     func getAutoConnectProtocol() -> ItemCellType {
         if let type = ItemCellType(rawValue: AppSetting.shared.selectAutoConnect) {
             if type != .always && type != .onWifi && type != .onMobile && type != .off {
-                return .recommend
+                return .off
             }
             return type
         }

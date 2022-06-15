@@ -16,13 +16,24 @@ struct ConnectButton: View {
     
     let widthSpeed = (UIScreen.main.bounds.width - Constant.Board.QuickButton.widthSize - 30) / 2
     
+    @State var startAlertScroll = false
+    
     var body: some View {
         HStack(spacing: 0) {
             Spacer()
                 .frame(width: widthSpeed)
             VStack(spacing: 10) {
-                getConnectAlert()
-                    .opacity(status == .connected ? 1 : 0)
+                if status == .connected {
+                    getConnectAlert()
+                        .padding(.bottom, startAlertScroll ? 0 : Constant.Board.Map.heightScreen / 3)
+                        .onAppear {
+                            startAlertScroll = true
+                        }
+                        .onDisappear {
+                            startAlertScroll = false
+                        }
+                        .animation(Animation.easeInOut(duration: 1))
+                }
                 ZStack {
                     Circle()
                         .strokeBorder(Color.white, lineWidth: Constant.Board.QuickButton.widthBorderMax)
