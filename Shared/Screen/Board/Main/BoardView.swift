@@ -102,6 +102,8 @@ struct BoardView: View {
                       multihopSelect: $viewModel.multihopSelect)
     }
     
+    @State var zoomLogo = false
+    
     func contentMapView() -> some View {
         ZStack(alignment: .top) {
             GeometryReader { geometry in
@@ -110,9 +112,18 @@ struct BoardView: View {
                             selection: selection,
                             statusConnect: $viewModel.stateUI)
                     if viewModel.stateUI == .connected {
+                        Asset.Assets.logoConnectedBackground.SuImage
+                            .resizable()
+                            .aspectRatio(contentMode: .fit)
                         Asset.Assets.logoConnected.SuImage
                             .resizable()
                             .aspectRatio(contentMode: .fit)
+                            .frame(width: 150, height: 150)
+                            .scaleEffect(zoomLogo ? 0.9 : 1.1)
+                            .onAppear {
+                                zoomLogo = !zoomLogo
+                            }
+                            .animation(Animation.easeInOut(duration: 0.7).repeatForever(autoreverses: true))
                     }
                 }
                 VStack {
