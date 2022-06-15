@@ -524,6 +524,7 @@ class BoardViewModel: ObservableObject {
                     }
                 } else {
                     self.stateUI = .disconnected
+                    NetworkManager.shared.disconnect()
                     let error = response.errors
                     if error.count > 0, let message = error[0] as? String {
                         self.error = APIError.identified(message: message)
@@ -534,6 +535,8 @@ class BoardViewModel: ObservableObject {
                     }
                 }
             } onFailure: { error in
+                self.stateUI = .disconnected
+                NetworkManager.shared.disconnect()
                 self.stateUI = .disconnected
                 self.error = APIError.identified(message: error.localizedDescription)
                 self.showProgressView = false
