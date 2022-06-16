@@ -57,7 +57,7 @@ struct AccountView: View {
                     sectionsView
                     Spacer()
                     AppButton(style: .darkButton, width: UIScreen.main.bounds.size.width - 30, text: L10n.Account.signout) {
-                        viewModel.logout()
+                        viewModel.showLogoutConfirmation = true
                     }
                     Spacer()
                         .frame(height: 34)
@@ -156,6 +156,21 @@ struct AccountView: View {
         .background(AppColor.background)
         .onAppear() {
             viewModel.authentication = authentication
+        }
+        .popup(isPresented: $viewModel.showLogoutConfirmation,
+               type: .floater(verticalPadding: 10),
+               position: .bottom,
+               animation: .easeInOut,
+               closeOnTap: true,
+               closeOnTapOutside: true) {
+            ToastView(title: "Are you sure want to logout?",
+                      message: "",
+                      confirmTitle: "Confirm",
+                      oneChossing: true,
+                      confirmAction: {
+                viewModel.showLogoutConfirmation = false
+                viewModel.logout()
+            })
         }
     }
 }
