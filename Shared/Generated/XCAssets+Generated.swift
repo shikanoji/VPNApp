@@ -56,6 +56,7 @@ internal enum Asset {
     internal static let introduction3 = ImageAsset(name: "Introduction-3")
     internal static let lock = ImageAsset(name: "Lock")
     internal static let launchScreen = ImageAsset(name: "LaunchScreen")
+    internal static let launchScreenIpad = ImageAsset(name: "LaunchScreenIpad")
     internal static let apple = ImageAsset(name: "apple")
     internal static let google = ImageAsset(name: "google")
     internal static let logoMedium = ImageAsset(name: "Logo-medium")

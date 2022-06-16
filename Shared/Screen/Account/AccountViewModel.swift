@@ -10,17 +10,16 @@ import RxSwift
 
 class AccountViewModel: ObservableObject {
     @Published var showAlert = false
+    @Published var showLogoutConfirmation = false
     var disposedBag = DisposeBag()
     var alertTitle: String = ""
     var alertMessage: String = ""
     var authentication: Authentication?
     func logout(){
         APIManager.shared.logout().subscribe { result in
-            if result.success {
-                self.authentication?.logout()
-            }
+            self.authentication?.logout()
         } onFailure: { error in
-            
+            self.authentication?.logout()
         }.disposed(by: disposedBag)
     }
 }

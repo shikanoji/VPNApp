@@ -45,7 +45,7 @@ struct ForgotPasswordView: View {
         Background() {
             ScrollView(.vertical, showsIndicators: false) {
                 VStack(alignment: .center) {
-                    Spacer().frame(height: 100)
+                    Spacer().frame(minHeight: 20)
                     Asset.Assets.logoMedium.SuImage
                     header
                     emailForm
@@ -53,9 +53,9 @@ struct ForgotPasswordView: View {
                     submitButton
                     Spacer().frame(height: 30)
                     footer
-                    Spacer().frame(height: 50)
+                    Spacer().frame(minHeight: 20)
                 }
-                
+                .frame(minHeight: UIScreen.main.bounds.height)
             }
             .autocapitalization(.none)
             .disabled(viewModel.showProgressView)

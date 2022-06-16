@@ -22,10 +22,9 @@ struct ContentView: View {
             AppColor.background
             if !viewModel.getIpInfoSuccess {
                 if viewModel.showProgressView {
-                    Asset.Assets.map.SuImage
+                    Asset.Assets.launchScreenIpad.SuImage
                         .resizable()
                         .aspectRatio(contentMode: .fit)
-                    //                    Asset.Assets.logoMedium.SuImage
                     LoadingView()
                 }
             } else {
@@ -49,7 +48,8 @@ struct ContentView: View {
                 .navigationBarTitleDisplayMode(.inline)
                 .navigationAppearance(backgroundColor: UIColor(AppColor.background), foregroundColor: UIColor.white, tintColor: UIColor.white, hideSeparator: true)
             }
-        }.ignoresSafeArea()
+        }
+        .ignoresSafeArea()
     }
 }
 

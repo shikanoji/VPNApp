@@ -81,14 +81,15 @@ struct RegisterView: View {
             Background() {
                 ScrollView(.vertical, showsIndicators: false) {
                     VStack(alignment: .center) {
-                        Spacer().frame(height: 100)
+                        Spacer().frame(minHeight: 100)
                         Asset.Assets.logoMedium.SuImage
                         header
                         forms
                         registerButtons
                         backToLoginLink
-                        Spacer().frame(height: 50)
+                        Spacer().frame(minHeight: 100)
                     }
+                    .frame(minHeight: UIScreen.main.bounds.height)
                     .autocapitalization(.none)
                     .disabled(viewModel.showProgressView)
                 }
