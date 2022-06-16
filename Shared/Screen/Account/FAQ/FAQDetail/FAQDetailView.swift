@@ -27,7 +27,7 @@ struct FAQDetailView: View {
             Text(question.title)
                 .font(Constant.CustomNavigation.fontTitleNavigation)
                 .foregroundColor(.white)
-                .padding()
+                .padding([.leading, .trailing, .bottom], 10)
                 .frame(maxWidth: .infinity, alignment: .center)
                 .background(AppColor.darkButton)
             ScrollView(.vertical, showsIndicators: false) {
