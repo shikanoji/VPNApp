@@ -22,7 +22,7 @@ struct ContentView: View {
             AppColor.background
             if !viewModel.getIpInfoSuccess {
                 if viewModel.showProgressView {
-                    Asset.Assets.launchScreenIpad.SuImage
+                    Asset.Assets.launchScreen.SuImage
                         .resizable()
                         .aspectRatio(contentMode: .fit)
                     LoadingView()

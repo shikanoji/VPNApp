@@ -2,18 +2,28 @@
   "images" : [
     {
       "filename" : "Flash.png",
-      "idiom" : "universal",
+      "idiom" : "iphone",
       "scale" : "1x"
     },
     {
       "filename" : "Flash@2x.png",
-      "idiom" : "universal",
+      "idiom" : "iphone",
       "scale" : "2x"
     },
     {
       "filename" : "Flash@3x.png",
-      "idiom" : "universal",
+      "idiom" : "iphone",
       "scale" : "3x"
+    },
+    {
+      "filename" : "launch-screen-ipad@1x.png",
+      "idiom" : "ipad",
+      "scale" : "1x"
+    },
+    {
+      "filename" : "launch-screen-ipad@2x.png",
+      "idiom" : "ipad",
+      "scale" : "2x"
     }
   ],
   "info" : {
