@@ -60,6 +60,8 @@ class NetworkManager: ObservableObject {
     
     var selectStaticServer: StaticServer?
     
+    var selectMultihop: MultihopModel?
+    
     func connect() {
         switch selectConfig {
         case .openVPN, .recommend:

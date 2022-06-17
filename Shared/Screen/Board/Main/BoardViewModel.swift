@@ -104,9 +104,12 @@ class BoardViewModel: ObservableObject {
     }
     
     @Published var mutilhopList: [MultihopModel] = []
-    @Published var multihopSelect: MultihopModel? {
+    @Published var multihopSelect: MultihopModel? = nil {
         didSet {
-            print("Connect Multihop")
+            if let multihop = multihopSelect {
+                NetworkManager.shared.selectMultihop = multihop
+                self.connectVPN()
+            }
         }
     }
     
@@ -287,6 +290,7 @@ class BoardViewModel: ObservableObject {
             
             if state == .disconnecting {
                 state = .disconnected
+                stateUI = .disconnected
                 ip = AppSetting.shared.ip
                 flag = ""
                 stopSpeedTimer()
@@ -299,7 +303,6 @@ class BoardViewModel: ObservableObject {
                     connectVPN()
                 } else {
                     if disconnectByUser {
-                        stateUI = .disconnected
                         disconnectSession()
                     }
                 }
