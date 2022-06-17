@@ -60,3 +60,8 @@ struct MultihopModel: Codable, Identifiable {
     }
 }
 
+extension MultihopModel: Equatable {
+    static func == (lhs: MultihopModel, rhs: MultihopModel) -> Bool {
+        lhs.id == rhs.id
+    }
+}

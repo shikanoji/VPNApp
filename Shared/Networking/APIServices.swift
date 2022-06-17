@@ -237,6 +237,7 @@ extension APIService: TargetType {
             
             switch currentTab {
             case .location:
+                param["isHop"] = 0
                 if let cityNodeSelect = NetworkManager.shared.selectNode {
                     if cityNodeSelect.cityNodeList.count > 0 {
                         param["countryId"] = cityNodeSelect.id
@@ -250,12 +251,20 @@ extension APIService: TargetType {
 //                    param["serverId"] = staticServer.id
 //                }
             case .staticIP:
+                param["isHop"] = 0
                 if let staticServer = NetworkManager.shared.selectStaticServer {
                     param["serverId"] = staticServer.id
                     param["countryId"] = staticServer.countryId
                 }
                 
             case .multiHop:
+                param["isHop"] = 1
+                if let multihop = NetworkManager.shared.selectMultihop,
+                   let serverId = multihop.entry?.serverId,
+                   let countryId = multihop.exit?.node?.id {
+                    param["serverId"] = serverId
+                    param["countryId"] = countryId
+                }
                 break
             }
             

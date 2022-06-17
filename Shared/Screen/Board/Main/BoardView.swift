@@ -64,6 +64,16 @@ struct BoardView: View {
                    showSettings = false
                    showBoardList = false
                })
+               .onChange(of: viewModel.staticIPNodeSelecte, perform: { newValue in
+                   showAccount = false
+                   showSettings = false
+                   showBoardList = false
+               })
+               .onChange(of: viewModel.multihopSelect, perform: { newValue in
+                   showAccount = false
+                   showSettings = false
+                   showBoardList = false
+               })
                .animation(Animation.linear(duration: 0.25))
                .preferredColorScheme(.dark)
                .navigationBarHidden(true)
