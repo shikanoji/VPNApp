@@ -79,6 +79,7 @@ struct FAQView: View {
         NavigationLink(destination:
                         FAQDetailView(
                             showAccount: $showAccount,
+                            showFAQView: $showFAQ,
                             statusConnect: $statusConnect,
                             question: .constant(faqSelect ?? QuestionModel())),
                        isActive: $showFAQDetail) { }

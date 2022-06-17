@@ -10,6 +10,7 @@ import TunnelKitManager
 
 struct FAQDetailView: View {
     @Binding var showAccount: Bool
+    @Binding var showFAQView: Bool
     @Binding var statusConnect: VPNStatus
     @Binding var question: QuestionModel
     @State var webViewFinishedLoading = false
@@ -33,6 +34,7 @@ struct FAQDetailView: View {
                     presentationMode.wrappedValue.dismiss()
                 }, tapRightButton: {
                     showAccount = false
+                    showFAQView = false
                 }, statusConnect: $statusConnect)
             title
             ScrollView(.vertical, showsIndicators: false) {
