@@ -24,8 +24,8 @@ struct LoadingView: View {
     
     var body: some View {
         ZStack {
-            VisualEffectView(effect: UIBlurEffect(style: .dark))
-                .opacity(opacity)
+//            VisualEffectView(effect: UIBlurEffect(style: .dark))
+            //                .opacity(opacity)
             ZStack {
                 RoundedRectangle(cornerRadius: 16, style: .continuous)
                     .fill(AppColor.backgroundLoading)

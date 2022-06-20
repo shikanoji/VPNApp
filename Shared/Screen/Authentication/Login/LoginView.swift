@@ -14,6 +14,7 @@ struct LoginView: View {
     @EnvironmentObject var authentication: Authentication
     @State var createNewAccount: Bool = false
     @State var forgotPassword: Bool = false
+    @State var toPlanSelection: Bool = false
     
     var header: some View {
         VStack {
@@ -41,7 +42,7 @@ struct LoginView: View {
     
     var loginButton: some View {
         AppButton(style: .themeButton, width: 311, text: L10n.Login.signin) {
-            viewModel.login()
+            viewModel.fullLogin()
         }.disabled(viewModel.loginDisable)
     }
     
@@ -85,7 +86,7 @@ struct LoginView: View {
             Background() {
                 ScrollView(.vertical, showsIndicators: false) {
                     VStack(alignment: .center) {
-                        Spacer().frame(height: 100)
+                        Spacer().frame(minHeight: 100)
                         header
                         forms
                         Group {
@@ -101,8 +102,9 @@ struct LoginView: View {
                             Spacer().frame(height: 20)
                             forgotPasswordLink
                         }
-                        Spacer().frame(height: 50)
+                        Spacer().frame(minHeight: 100)
                     }
+                    .frame(minHeight: UIScreen.main.bounds.height)
                     .autocapitalization(.none)
                     .disabled(viewModel.showProgressView)
                 }

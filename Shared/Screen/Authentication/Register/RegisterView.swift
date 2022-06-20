@@ -10,19 +10,13 @@ import ExytePopupView
 
 struct RegisterView: View {
     @StateObject var viewModel: RegisterViewModel
-    @StateObject var registerResult: RegisterResultModel = RegisterResultModel()
     @State var toPlanSelection: Bool = false
     @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
+    @EnvironmentObject var authentication: Authentication
     
     var normalRegisterButton: some View {
         AppButton(style: .themeButton, width: 311, text: L10n.Register.signup) {
-            viewModel.signup(){ register in
-                if let _register = register {
-                    registerResult.user = _register.user
-                    registerResult.tokens = _register.tokens
-                    toPlanSelection = true
-                }
-            }
+            viewModel.signup()
         }.disabled(viewModel.registerDisable)
     }
     
@@ -53,7 +47,9 @@ struct RegisterView: View {
     
     var registerButtons: some View {
         Group {
-            NavigationLink(destination: SubscriptionIntroduction().environmentObject(registerResult), isActive: $toPlanSelection) {
+            NavigationLink(destination: SubscriptionIntroduction()
+                                            .navigationBarHidden(true),
+                           isActive: $toPlanSelection) {
             }
             normalRegisterButton
             Spacer().frame(height: 30)
@@ -85,19 +81,24 @@ struct RegisterView: View {
             Background() {
                 ScrollView(.vertical, showsIndicators: false) {
                     VStack(alignment: .center) {
-                        Spacer().frame(height: 100)
+                        Spacer().frame(minHeight: 100)
                         Asset.Assets.logoMedium.SuImage
                         header
                         forms
                         registerButtons
                         backToLoginLink
-                        Spacer().frame(height: 50)
+                        Spacer().frame(minHeight: 100)
                     }
+                    .frame(minHeight: UIScreen.main.bounds.height)
                     .autocapitalization(.none)
                     .disabled(viewModel.showProgressView)
                 }
                 .frame(maxWidth: .infinity, maxHeight: .infinity)
-            }.environmentObject(registerResult)
+            }
+        }
+        .onAppear {
+            /// Pass authentication to view model because Environment object only receivable through view
+            viewModel.authentication = authentication
         }
         .popup(isPresented: $viewModel.showAlert,
                type: .floater(verticalPadding: 10),

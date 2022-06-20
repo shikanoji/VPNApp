@@ -11,40 +11,78 @@ import TunnelKitManager
 
 struct FAQView: View {
     @Binding var showAccount: Bool
-    @State var statusConnect: VPNStatus = .connected
+    @Binding var showFAQ: Bool
+    @Binding var statusConnect: VPNStatus
     @StateObject var viewModel: FAQViewModel
+    @State var showFAQDetail = false
+    @State var faqSelect: QuestionModel!
     
     @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
     var body: some View {
-        ScrollView(.vertical, showsIndicators: false) {
-            ZStack(alignment: .top) {
-                VStack {
-                    AppColor.darkButton
-                        .frame(height: 10)
-                    CustomNavigationView(
-                        leftTitle: L10n.Account.AccountStatus.title,
-                        currentTitle: L10n.Faq.title,
-                        tapLeftButton: {
-                            presentationMode.wrappedValue.dismiss()
-                        }, tapRightButton: {
-                            showAccount = false
-                        }, statusConnect: $statusConnect)
-                    VStack(spacing: 1) {
-                        ForEach(Array(viewModel.questions.enumerated()), id: \.offset) { index, item in
-                            FAQCell(question: item, position: viewModel.questions.getPosition(index), onTap: {
-                                //Handle tapping question
-                            })
+        VStack {
+            AppColor.darkButton
+                .frame(height: 10)
+            CustomNavigationView(
+                leftTitle: L10n.Account.AccountStatus.title,
+                currentTitle: L10n.Faq.title,
+                tapLeftButton: {
+                    presentationMode.wrappedValue.dismiss()
+                }, tapRightButton: {
+                    showFAQ = false
+                    showAccount = false
+                }, statusConnect: $statusConnect)
+            ScrollView(.vertical, showsIndicators: false) {
+                ZStack(alignment: .top) {
+                    VStack {
+                        if viewModel.showProgressView {
+                            LoadingView()
+                                .padding(.top, UIScreen.main.bounds.size.height / 3)
+                        } else {
+                            VStack(spacing: 1) {
+                                ForEach(viewModel.topicQuestionList, id: \.id) { topic in
+                                    Text(topic.name)
+                                        .font(Constant.Menu.fontSectionTitle)
+                                        .foregroundColor(AppColor.lightBlackText)
+                                        .frame(maxWidth: .infinity, alignment: .leading)
+                                        .padding(Constant.Menu.hozitalPaddingCell)
+                                        .padding(.top, Constant.Menu.topPaddingCell)
+                                    VStack(spacing: 1) {
+                                        ForEach(topic.faqs, id: \.id) { faq in
+                                            Button(action: {
+                                                faqSelect = faq
+                                                showFAQDetail = true
+                                            }, label: {
+                                                FAQCell(question: faq,
+                                                        position: topic.faqs.getPosition(faq))
+                                            })
+                                        }
+                                    }
+                                    .padding(.horizontal , Constant.Menu.hozitalPaddingCell)
+                                }
+                            }
                         }
+                        Spacer()
                     }
-                    .padding(Constant.Menu.hozitalPaddingCell)
-                    .padding(.top, Constant.Menu.topPaddingCell)
-                    Spacer()
                 }
             }
         }
         .navigationBarHidden(true)
         .background(AppColor.background)
         .ignoresSafeArea()
+        .popup(isPresented: $viewModel.showAlert, type: .floater(verticalPadding: 10), position: .bottom, animation: .easeInOut, autohideIn: 10, closeOnTap: false, closeOnTapOutside: true) {
+            ToastView(title: viewModel.error?.title ?? "",
+                      message: viewModel.error?.description ?? "",
+                      cancelAction: {
+                viewModel.showAlert = false
+            })
+        }
+        NavigationLink(destination:
+                        FAQDetailView(
+                            showAccount: $showAccount,
+                            showFAQView: $showFAQ,
+                            statusConnect: $statusConnect,
+                            question: .constant(faqSelect ?? QuestionModel())),
+                       isActive: $showFAQDetail) { }
     }
 }
 
@@ -52,7 +90,7 @@ struct FAQView: View {
 struct FAQViewPreview: PreviewProvider {
     @State static var showAccount = true
     static var previews: some View {
-        FAQView(showAccount: $showAccount, viewModel: FAQViewModel())
+        FAQView(showAccount: $showAccount, showFAQ: .constant(false), statusConnect: .constant(.connected), viewModel: FAQViewModel())
     }
 }
 #endif

@@ -27,4 +27,9 @@ struct PaymentHistory {
     }
     var date = "20:22 20210-12-25"
     var cancel = false
+    var alert = false
+}
+
+extension PaymentHistory: Identifiable, Equatable {
+    
 }

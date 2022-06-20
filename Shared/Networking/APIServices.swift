@@ -73,6 +73,7 @@ enum APIService {
     case getCountryList
     case register(email: String, password: String)
     case login(email: String, password: String)
+    case loginSocial(socialProvider: String, token: String)
     case logout
     case refreshToken
     case forgotPassword(email: String)
@@ -83,6 +84,8 @@ enum APIService {
     case changePassword(oldPassword: String, newPassword: String)
     case getListSession(page: Int = 1, limit: Int = 20, isActive: Int = 1)
     case disconnectSession(sessionId: String)
+    case getTopicQuestionList
+    case getMultihopList
 }
 
 extension APIService: TargetType {
@@ -91,6 +94,9 @@ extension APIService: TargetType {
         switch self {
         case .ipInfoOptional:
             return URL(string: Constant.api.ipInfoOptional)!
+        case .getTopicQuestionList:
+            // update soon
+            return URL(string: "https://sysvpn.com/app/module_faq/v1/faqs")!
         default:
             return URL(string: Constant.api.root)!
         }
@@ -99,6 +105,11 @@ extension APIService: TargetType {
     // This is the path of each operation that will be appended to our base URL.
     var path: String {
         switch self {
+        case .getMultihopList:
+            return Constant.api.path.getMultihopList
+        case .getTopicQuestionList:
+            return ""
+//            return Constant.api.path.getTopicFaq
         case .register:
             return Constant.api.path.register
         case .login:
@@ -125,15 +136,17 @@ extension APIService: TargetType {
             return Constant.api.path.getListSession
         case .disconnectSession:
             return Constant.api.path.disconnectSession
+        case .loginSocial:
+            return Constant.api.path.loginSocial
         }
     }
     
     // Here we specify which method our calls should use.
     var method: Moya.Method {
         switch self {
-        case .getCountryList, .ipInfo, .getRequestCertificate, .ipInfoOptional, .getListSession:
+        case .getCountryList, .ipInfo, .getRequestCertificate, .ipInfoOptional, .getListSession, .getTopicQuestionList, .getMultihopList:
             return .get
-        case .register, .login, .logout, .forgotPassword, .refreshToken:
+        case .register, .login, .loginSocial, .logout, .forgotPassword, .refreshToken:
             return .post
         case .getObtainCertificate:
             return .get
@@ -149,6 +162,16 @@ extension APIService: TargetType {
     // In this example we will not pass anything in the body of the request.
     var task: Task {
         switch self {
+        case .getMultihopList:
+            var param: [String: Any] = [:]
+            // Use "key" temporarily, after remove it
+            param["key"] = "f11b69c57d5fe9555e29c57c1d863bf8"
+            return .requestParameters(parameters: param, encoding: URLEncoding.queryString)
+        case .getTopicQuestionList:
+            var param: [String: Any] = [:]
+            // Use "key" temporarily, after remove it
+            param["key"] = "f11b69c57d5fe9555e29c57c1d863bf8"
+            return .requestParameters(parameters: param, encoding: URLEncoding.queryString)
         case .register(let email, let password):
             var body: [String: Any] = [:]
             body["email"] = email
@@ -161,6 +184,14 @@ extension APIService: TargetType {
             var body: [String: Any] = [:]
             body["email"] = email
             body["password"] = password
+            body["ip"] = AppSetting.shared.ip
+            body["country"] = AppSetting.shared.countryCode
+            body["city"] = AppSetting.shared.cityName
+            return .requestCompositeParameters(bodyParameters: body, bodyEncoding: JSONEncoding.prettyPrinted, urlParameters: [:])
+        case .loginSocial(let socialProvider, let token):
+            var body: [String: Any] = [:]
+            body["provider"] = socialProvider
+            body["token"] = token
             body["ip"] = AppSetting.shared.ip
             body["country"] = AppSetting.shared.countryCode
             body["city"] = AppSetting.shared.cityName
@@ -206,6 +237,7 @@ extension APIService: TargetType {
             
             switch currentTab {
             case .location:
+                param["isHop"] = 0
                 if let cityNodeSelect = NetworkManager.shared.selectNode {
                     if cityNodeSelect.cityNodeList.count > 0 {
                         param["countryId"] = cityNodeSelect.id
@@ -219,12 +251,20 @@ extension APIService: TargetType {
 //                    param["serverId"] = staticServer.id
 //                }
             case .staticIP:
+                param["isHop"] = 0
                 if let staticServer = NetworkManager.shared.selectStaticServer {
                     param["serverId"] = staticServer.id
                     param["countryId"] = staticServer.countryId
                 }
                 
             case .multiHop:
+                param["isHop"] = 1
+                if let multihop = NetworkManager.shared.selectMultihop,
+                   let serverId = multihop.entry?.serverId,
+                   let countryId = multihop.exit?.node?.id {
+                    param["serverId"] = serverId
+                    param["countryId"] = countryId
+                }
                 break
             }
             
@@ -236,7 +276,9 @@ extension APIService: TargetType {
             return .requestParameters(parameters: param, encoding: URLEncoding.queryString)
         case .changePassword(let oldPassword, let newPassword):
             var param: [String: Any] = [:]
-            param["oldPassword"] = oldPassword
+            if !oldPassword.isEmpty {
+                param["oldPassword"] = oldPassword
+            }
             param["newPassword"] = newPassword
             return .requestCompositeParameters(bodyParameters: param, bodyEncoding: JSONEncoding.prettyPrinted, urlParameters: [:])
         case .getListSession(let page, let limit, let isActive):
@@ -273,7 +315,7 @@ extension APIService: TargetType {
         switch self {
         case .login, .register:
             return ["Content-type": "application/json"]
-        case .getCountryList, .getObtainCertificate, .changePassword, .getListSession:
+        case .getCountryList, .getObtainCertificate, .changePassword, .getListSession, .getTopicQuestionList, .getMultihopList, .disconnectSession:
             return [
                 "Content-type": "application/json",
                 "Authorization": "Bearer \(AppSetting.shared.accessToken)"

@@ -39,7 +39,7 @@ struct SettingVPNView: View {
                         ItemRowCell(title: item.type.title,
                                     content: item.type.content,
                                     showSwitch: item.type.showSwitch,
-                                    position: getPosition(item: item, arr: viewModel.itemList))
+                                    position: viewModel.itemList.getPosition(item))
                             .onTapGesture {
                                 switch item.type {
                                 case .autoConnect:

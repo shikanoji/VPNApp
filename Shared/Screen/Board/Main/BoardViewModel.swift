@@ -67,6 +67,7 @@ class BoardViewModel: ObservableObject {
     @Published var showAutoConnect: Bool = false
     @Published var showProtocolConnect: Bool = false
     @Published var showDNSSetting: Bool = false
+    @Published var stateUI: VPNStatus = .disconnected
     @Published var state: VPNStatus = .disconnected
     @Published var ip = AppSetting.shared.ip
     @Published var flag = ""
@@ -102,12 +103,16 @@ class BoardViewModel: ObservableObject {
         }
     }
     
-    @Published var mutilhopData: [(Node, Node)] = [(Node.country, Node.tokyo), (Node.country, Node.tokyo)]
+    @Published var mutilhopList: [MultihopModel] = []
+    @Published var multihopSelect: MultihopModel? = nil {
+        didSet {
+            if let multihop = multihopSelect {
+                NetworkManager.shared.selectMultihop = multihop
+                self.connectVPN()
+            }
+        }
+    }
     
-    @Published var entryNodeListMutilhop: [Node] = Node.all
-    @Published var exitNodeListMutilhop: [Node] = Node.all
-    @Published var entryNodeSelectMutilhop: Node = Node.country
-    @Published var exitNodeSelectMutilhop: Node = Node.tokyo
     @Published var mesh: Mesh = Mesh()
     
     @Published var showAlert: Bool = false {
@@ -129,7 +134,10 @@ class BoardViewModel: ObservableObject {
     // MARK: Function
     
     init() {
-        AppSetting.shared.updateDataMap ? getCountryList() : getDataFromLocal()
+        
+        AppSetting.shared.updateDataMap ? getDataUpdate() : getDataFromLocal()
+        
+        getMultihopList()
         
         NotificationCenter.default.addObserver(
             self,
@@ -167,6 +175,14 @@ class BoardViewModel: ObservableObject {
         assignJailBreakCheckType(type: .readAndWriteFiles)
     }
     
+    func getDataUpdate() {
+        AppSetting.shared.prepareForIpInfo { message in
+            if (message ?? "").isEmpty {
+                self.getCountryList()
+            }
+        }
+    }
+    
     var isProcessingVPN = false
     
     @Published var shouldHideAutoConnect = true
@@ -199,8 +215,10 @@ class BoardViewModel: ObservableObject {
                     }
                 }
             } else if type == .off {
-                disconnectSession()
-                NetworkManager.shared.disconnect()
+                if state == .connected {
+                    disconnectSession()
+                    NetworkManager.shared.disconnect()
+                }
                 stopAutoconnectTimer()
             }
         }
@@ -208,16 +226,15 @@ class BoardViewModel: ObservableObject {
     
     func connectVPN() {
         if state == .disconnected {
+            stateUI = .connecting
             getRequestCertificate()
         } else {
             if let type = ItemCellType(rawValue: AppSetting.shared.selectAutoConnect),
                (type == .always || type == .onMobile || type == .onWifi) {
                 showAlertAutoConnectSetting = true
             } else {
+                stateUI = .disconnecting
                 NetworkManager.shared.disconnect()
-                if disconnectByUser {
-                    disconnectSession()
-                }
             }
         }
     }
@@ -240,6 +257,7 @@ class BoardViewModel: ObservableObject {
             }
             
             state = .connected
+            stateUI = .connected
             numberReconnect = 0
             disconnectByUser = false
             stopSpeedTimer()
@@ -272,6 +290,7 @@ class BoardViewModel: ObservableObject {
             
             if state == .disconnecting {
                 state = .disconnected
+                stateUI = .disconnected
                 ip = AppSetting.shared.ip
                 flag = ""
                 stopSpeedTimer()
@@ -282,6 +301,10 @@ class BoardViewModel: ObservableObject {
                 if numberReconnect < maximumReonnect, !disconnectByUser {
                     numberReconnect += 1
                     connectVPN()
+                } else {
+                    if disconnectByUser {
+                        disconnectSession()
+                    }
                 }
             }
             
@@ -366,6 +389,39 @@ class BoardViewModel: ObservableObject {
                 if let result = response.result {
                     AppSetting.shared.saveDataMap(result)
                     self.configCountryList(result)
+                } else {
+                    let error = response.errors
+                    if error.count > 0, let message = error[0] as? String {
+                        self.error = APIError.identified(message: message)
+                        self.showAlert = true
+                    } else if !response.message.isEmpty {
+                        self.error = APIError.identified(message: response.message)
+                        self.showAlert = true
+                    }
+                }
+            } onFailure: { error in
+                self.error = APIError.identified(message: error.localizedDescription)
+                self.showAlert = true
+            }
+            .disposed(by: disposedBag)
+    }
+    
+    func getMultihopList() {
+        guard Connectivity.sharedInstance.isReachable else {
+            internetNotAvaiable()
+            return
+        }
+        
+        APIManager.shared.getMutihopList()
+            .subscribe { [weak self] response in
+                guard let `self` = self else {
+                    return
+                }
+                
+                if let result = response.result {
+                    AppSetting.shared.saveMutilhopList(result)
+                    self.mutilhopList = result
+                    
                 } else {
                     let error = response.errors
                     if error.count > 0, let message = error[0] as? String {
@@ -470,6 +526,8 @@ class BoardViewModel: ObservableObject {
                         }
                     }
                 } else {
+                    self.stateUI = .disconnected
+                    NetworkManager.shared.disconnect()
                     let error = response.errors
                     if error.count > 0, let message = error[0] as? String {
                         self.error = APIError.identified(message: message)
@@ -480,6 +538,9 @@ class BoardViewModel: ObservableObject {
                     }
                 }
             } onFailure: { error in
+                self.stateUI = .disconnected
+                NetworkManager.shared.disconnect()
+                self.stateUI = .disconnected
                 self.error = APIError.identified(message: error.localizedDescription)
                 self.showProgressView = false
                 self.showAlert = true
@@ -496,6 +557,10 @@ class BoardViewModel: ObservableObject {
     func getDataFromLocal() {
         if let dataMapLocal = AppSetting.shared.getDataMap() {
             configCountryList(dataMapLocal)
+        }
+        
+        if let multihopListLocal = AppSetting.shared.getMutilhopList() {
+            mutilhopList = multihopListLocal
         }
     }
     

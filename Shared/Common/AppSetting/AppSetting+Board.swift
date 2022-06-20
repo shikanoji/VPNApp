@@ -121,4 +121,17 @@ extension AppSetting {
         }
         return nil
     }
+    
+    func saveMutilhopList(_ arr: [MultihopModel]) {
+        let data = try! JSONEncoder().encode(arr)
+        UserDefaults.standard.set(data, forKey: AppKeys.mutilhopList.rawValue)
+    }
+    
+    func getMutilhopList() -> [MultihopModel]? {
+        if let mutilhopListData = UserDefaults.standard.data(forKey: AppKeys.mutilhopList.rawValue) {
+            let mutilhopList = try! JSONDecoder().decode([MultihopModel].self, from: mutilhopListData)
+            return mutilhopList
+        }
+        return nil
+    }
 }

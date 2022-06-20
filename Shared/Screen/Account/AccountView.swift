@@ -57,7 +57,7 @@ struct AccountView: View {
                     sectionsView
                     Spacer()
                     AppButton(style: .darkButton, width: UIScreen.main.bounds.size.width - 30, text: L10n.Account.signout) {
-                        viewModel.logout()
+                        viewModel.showLogoutConfirmation = true
                     }
                     Spacer()
                         .frame(height: 34)
@@ -91,6 +91,8 @@ struct AccountView: View {
                             self.showAccountStatus = true
                         case .totalDevice:
                             self.showTotalDevice = true
+                        case .questions:
+                            self.showFAQ = true
                         default:
                             return
                         }
@@ -109,7 +111,8 @@ struct AccountView: View {
                             InfomationView(
                                 showAccount: $showAccount,
                                 showInfomation: $showInfomation,
-                                statusConnect: statusConnect),
+                                statusConnect: $statusConnect,
+                                viewModel: InfomationViewModel()),
                            isActive: $showInfomation) { }
             
             NavigationLink(destination:
@@ -123,14 +126,15 @@ struct AccountView: View {
                             SessionVPNView(
                                 showAccount: $showAccount,
                                 showTotalDevice: $showTotalDevice,
-                                statusConnect: statusConnect,
+                                statusConnect: $statusConnect,
                                 viewModel: SessionVPNViewModel()),
                            isActive: $showTotalDevice) { }
             
             NavigationLink(destination:
                             FAQView(
                                 showAccount: $showAccount,
-                                statusConnect: statusConnect,
+                                showFAQ: $showFAQ,
+                                statusConnect: $statusConnect,
                                 viewModel: FAQViewModel()),
                            isActive: $showFAQ) { }
         }
@@ -152,6 +156,21 @@ struct AccountView: View {
         .background(AppColor.background)
         .onAppear() {
             viewModel.authentication = authentication
+        }
+        .popup(isPresented: $viewModel.showLogoutConfirmation,
+               type: .floater(verticalPadding: 10),
+               position: .bottom,
+               animation: .easeInOut,
+               closeOnTap: true,
+               closeOnTapOutside: true) {
+            ToastView(title: "Are you sure want to logout?",
+                      message: "",
+                      confirmTitle: "Confirm",
+                      oneChossing: true,
+                      confirmAction: {
+                viewModel.showLogoutConfirmation = false
+                viewModel.logout()
+            })
         }
     }
 }

@@ -26,6 +26,14 @@ class LoginViewModel: NSObject, ObservableObject {
         email.isEmpty || password.isEmpty
     }
     
+    func fullLogin() {
+        AppSetting.shared.prepareForIpInfo { message in
+            if (message ?? "").isEmpty {
+                self.login()
+            }
+        }
+    }
+    
     func login() {
         showProgressView = true
         
@@ -56,7 +64,7 @@ class LoginViewModel: NSObject, ObservableObject {
         // Create Google Sign In configuration object.
         let config = GIDConfiguration(clientID: clientID)
         if let rootView = UIApplication.shared.rootViewController {
-            GIDSignIn.sharedInstance.signIn(with: config, presenting: rootView) { [unowned self] user, error in
+            GIDSignIn.sharedInstance.signIn(with: config, presenting: rootView) {[unowned self] user, error in
                 if let _ = error {
                     // ...
                     return
@@ -65,10 +73,31 @@ class LoginViewModel: NSObject, ObservableObject {
                     let authentication = user?.authentication,
                     let idToken = authentication.idToken
                 else {
+                    alertMessage = L10n.Global.somethingWrong
+                    showAlert = true
                     return
                 }
-                let credential = GoogleAuthProvider.credential(withIDToken: idToken, accessToken: authentication.accessToken)
-                print(credential)
+//                let credential = GoogleAuthProvider.credential(withIDToken: idToken, accessToken: authentication.accessToken)
+                self.showProgressView = true
+                APIManager.shared.loginSocial(socialProvider: "google", token: idToken)
+                    .subscribe(onSuccess: { [self] response in
+                        self.showProgressView = false
+                        if let result = response.result {
+                            self.authentication?.login(withLoginData: result)
+                        } else {
+                            let error = response.errors
+                            if error.count > 0, let message = error[0] as? String {
+                                alertMessage = message
+                                showAlert = true
+                            } else if !response.message.isEmpty {
+                                alertMessage = response.message
+                                showAlert = true
+                            }
+                        }
+                    }, onFailure: { error in
+                        self.showProgressView = false
+                    })
+                    .disposed(by: self.disposedBag)
             }
         }
     }
@@ -89,6 +118,8 @@ extension LoginViewModel: ASAuthorizationControllerDelegate {
                                  didCompleteWithAuthorization authorization: ASAuthorization) {
         if let appleIdCredential = authorization.credential as? ASAuthorizationAppleIDCredential {
             guard let token = appleIdCredential.identityToken?.base64EncodedString()  else {
+                alertMessage = L10n.Global.somethingWrong
+                showAlert = true
                 return
             }
             
@@ -96,6 +127,26 @@ extension LoginViewModel: ASAuthorizationControllerDelegate {
             /// 1. Set token here
             /// 2. Perform tasks to do after login
             self.appleToken = token
+            self.showProgressView = true
+            APIManager.shared.loginSocial(socialProvider: "apple", token: token)
+                .subscribe(onSuccess: { [self] response in
+                    self.showProgressView = false
+                    if let result = response.result {
+                        authentication?.login(withLoginData: result)
+                    } else {
+                        let error = response.errors
+                        if error.count > 0, let message = error[0] as? String {
+                            alertMessage = message
+                            showAlert = true
+                        } else if !response.message.isEmpty {
+                            alertMessage = response.message
+                            showAlert = true
+                        }
+                    }
+                }, onFailure: { error in
+                    self.showProgressView = false
+                })
+                .disposed(by: disposedBag)
         }
     }
 }

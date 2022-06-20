@@ -22,17 +22,20 @@ struct ContentView: View {
             AppColor.background
             if !viewModel.getIpInfoSuccess {
                 if viewModel.showProgressView {
-                    Asset.Assets.map.SuImage
+                    Asset.Assets.launchScreen.SuImage
                         .resizable()
                         .aspectRatio(contentMode: .fit)
-                    //                    Asset.Assets.logoMedium.SuImage
                     LoadingView()
                 }
             } else {
                 NavigationView {
                     if AppSetting.shared.showedNotice {
                         if authentication.isValidated {
-                            BoardView(viewModel: BoardViewModel())
+                            if authentication.isPremium {
+                                BoardView(viewModel: BoardViewModel())
+                            } else {
+                                SubscriptionIntroduction()
+                            }
                         } else {
                             IntroductionView()
                         }
@@ -45,7 +48,8 @@ struct ContentView: View {
                 .navigationBarTitleDisplayMode(.inline)
                 .navigationAppearance(backgroundColor: UIColor(AppColor.background), foregroundColor: UIColor.white, tintColor: UIColor.white, hideSeparator: true)
             }
-        }.ignoresSafeArea()
+        }
+        .ignoresSafeArea()
     }
 }
 

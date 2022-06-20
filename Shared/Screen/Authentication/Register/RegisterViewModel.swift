@@ -18,6 +18,7 @@ class RegisterViewModel: NSObject, ObservableObject {
     @Published var retypePassword: String = ""
     @Published var showAlert: Bool = false
     @Published var showProgressView: Bool = false
+    var authentication: Authentication?
     var alertTitle: String = ""
     var alertMessage: String = ""
     var appleToken: String = ""
@@ -26,24 +27,22 @@ class RegisterViewModel: NSObject, ObservableObject {
     }
     private let disposedBag = DisposeBag()
     
-    func signup(completion: @escaping (RegisterResultModel?) -> Void) {
+    func signup() {
         showProgressView = true
         APIManager.shared.register(email: email, password: password)
-            .subscribe(onSuccess: { [self] response in
-                self.showProgressView = false
+            .subscribe(onSuccess: { [weak self] response in
+                self?.showProgressView = false
                 if let result = response.result, !result.tokens.access.token.isEmpty, !result.tokens.refresh.token.isEmpty {
-                    completion(result)
+                    self?.authentication?.login(withLoginData: result.convertToLoginModel())
                 } else {
                     let error = response.errors
                     if error.count > 0, let message = error[0] as? String {
-                        alertMessage = message
-                        showAlert = true
+                        self?.alertMessage = message
+                        self?.showAlert = true
                     }
-                    completion(nil)
                 }
             }, onFailure: { error in
                 self.showProgressView = false
-                completion(nil)
             })
             .disposed(by: disposedBag)
     }
@@ -55,8 +54,9 @@ class RegisterViewModel: NSObject, ObservableObject {
         let config = GIDConfiguration(clientID: clientID)
         if let rootView = UIApplication.shared.rootViewController {
             GIDSignIn.sharedInstance.signIn(with: config, presenting: rootView) { [unowned self] user, error in
-                if let error = error {
-                    // ...
+                if let _ = error {
+                    alertMessage = L10n.Global.somethingWrong
+                    showAlert = true
                     return
                 }
                 guard
@@ -65,7 +65,27 @@ class RegisterViewModel: NSObject, ObservableObject {
                 else {
                     return
                 }
-                let credential = GoogleAuthProvider.credential(withIDToken: idToken, accessToken: authentication.accessToken)
+//                let credential = GoogleAuthProvider.credential(withIDToken: idToken, accessToken: authentication.accessToken)
+                self.showProgressView = true
+                APIManager.shared.loginSocial(socialProvider: "google", token: idToken)
+                    .subscribe(onSuccess: { [weak self] response in
+                        self?.showProgressView = false
+                        if let result = response.result {
+                            self?.authentication?.login(withLoginData: result)
+                        } else {
+                            let error = response.errors
+                            if error.count > 0, let message = error[0] as? String {
+                                self?.alertMessage = message
+                                self?.showAlert = true
+                            } else if !response.message.isEmpty {
+                                self?.alertMessage = response.message
+                                self?.showAlert = true
+                            }
+                        }
+                    }, onFailure: { error in
+                        self.showProgressView = false
+                    })
+                    .disposed(by: self.disposedBag)
             }
         }
     }
@@ -86,12 +106,34 @@ extension RegisterViewModel: ASAuthorizationControllerDelegate {
                                  didCompleteWithAuthorization authorization: ASAuthorization) {
         if let appleIdCredential = authorization.credential as? ASAuthorizationAppleIDCredential {
             guard let token = appleIdCredential.identityToken?.base64EncodedString()  else {
+                alertMessage = L10n.Global.somethingWrong
+                showAlert = true
                 return
             }
             // MARK: TODO
             /// 1. Set token here
             /// 2. Perform tasks to do after login
             self.appleToken = token
+            self.showProgressView = true
+            APIManager.shared.loginSocial(socialProvider: "apple", token: token)
+                .subscribe(onSuccess: { [weak self] response in
+                    self?.showProgressView = false
+                    if let result = response.result {
+                        self?.authentication?.login(withLoginData: result)
+                    } else {
+                        let error = response.errors
+                        if error.count > 0, let message = error[0] as? String {
+                            self?.alertMessage = message
+                            self?.showAlert = true
+                        } else if !response.message.isEmpty {
+                            self?.alertMessage = response.message
+                            self?.showAlert = true
+                        }
+                    }
+                }, onFailure: { error in
+                    self.showProgressView = false
+                })
+                .disposed(by: disposedBag)
         }
     }
 }

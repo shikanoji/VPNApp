@@ -32,7 +32,7 @@ struct BoardView: View {
                 showSettings: .constant(true),
                 showVPNSetting: .constant(true),
                 shouldHideAutoConnect: $viewModel.shouldHideAutoConnect,
-                statusConnect: $viewModel.state,
+                statusConnect: $viewModel.stateUI,
                 viewModel: AutoConnectViewModel())
             .opacity(viewModel.shouldHideAutoConnect ? 0 : 1)
         }
@@ -64,6 +64,16 @@ struct BoardView: View {
                    showSettings = false
                    showBoardList = false
                })
+               .onChange(of: viewModel.staticIPNodeSelecte, perform: { newValue in
+                   showAccount = false
+                   showSettings = false
+                   showBoardList = false
+               })
+               .onChange(of: viewModel.multihopSelect, perform: { newValue in
+                   showAccount = false
+                   showSettings = false
+                   showBoardList = false
+               })
                .animation(Animation.linear(duration: 0.25))
                .preferredColorScheme(.dark)
                .navigationBarHidden(true)
@@ -80,12 +90,12 @@ struct BoardView: View {
     
     func accountView() -> some View {
         AccountView(showAccount: $showAccount,
-                    statusConnect: $viewModel.state, viewModel: AccountViewModel())
+                    statusConnect: $viewModel.stateUI, viewModel: AccountViewModel())
     }
     
     func settingView() -> some View {
         SettingsView(showSettings: $showSettings,
-                     statusConnect: $viewModel.state,
+                     statusConnect: $viewModel.stateUI,
                      showAutoConnect: $viewModel.showAutoConnect,
                      showProtocolConnect: $viewModel.showProtocolConnect,
                      showDNSSetting: $viewModel.showDNSSetting)
@@ -98,12 +108,11 @@ struct BoardView: View {
                       locationData: $viewModel.locationData,
                       staticIPData: $viewModel.staticIPData,
                       staticNode: $viewModel.staticIPNodeSelecte,
-                      multihopData: $viewModel.mutilhopData,
-                      entryNodeList: $viewModel.entryNodeListMutilhop,
-                      exitNodeList: $viewModel.exitNodeListMutilhop,
-                      entryNodeSelect: $viewModel.entryNodeSelectMutilhop,
-                      exitNodeSelect: $viewModel.exitNodeSelectMutilhop)
+                      mutilhopList: $viewModel.mutilhopList,
+                      multihopSelect: $viewModel.multihopSelect)
     }
+    
+    @State var zoomLogo = false
     
     func contentMapView() -> some View {
         ZStack(alignment: .top) {
@@ -111,23 +120,32 @@ struct BoardView: View {
                 ZStack {
                     MapView(mesh: viewModel.mesh,
                             selection: selection,
-                            statusConnect: $viewModel.state)
-                    if viewModel.state == .connected {
+                            statusConnect: $viewModel.stateUI)
+                    if viewModel.stateUI == .connected {
+                        Asset.Assets.logoConnectedBackground.SuImage
+                            .resizable()
+                            .aspectRatio(contentMode: .fit)
                         Asset.Assets.logoConnected.SuImage
                             .resizable()
                             .aspectRatio(contentMode: .fit)
+                            .frame(width: 150, height: 150)
+                            .scaleEffect(zoomLogo ? 0.9 : 1.1)
+                            .onAppear {
+                                zoomLogo = !zoomLogo
+                            }
+                            .animation(Animation.easeInOut(duration: 0.7).repeatForever(autoreverses: true))
                     }
                 }
                 VStack {
-                    BoardNavigationView(status: viewModel.state,
+                    BoardNavigationView(status: viewModel.stateUI,
                                         tapLeftIcon: {
                         handlerTapLeftNavigation()
                     }, tapRightIcon: {
                         handlerTapRightNavigation()
                     })
-                    StatusVPNView(ip: viewModel.ip, status: viewModel.state, flag: viewModel.flag)
+                    StatusVPNView(ip: viewModel.ip, status: viewModel.stateUI, flag: viewModel.flag)
                     Spacer()
-                    ConnectButton(status: viewModel.state,
+                    ConnectButton(status: viewModel.stateUI,
                                   uploadSpeed: viewModel.uploadSpeed,
                                   downloadSpeed: viewModel.downloadSpeed)
                     .onTapGesture {

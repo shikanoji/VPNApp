@@ -8,6 +8,7 @@
 import Foundation
 import SwiftUI
 import SwiftDate
+import RxSwift
 
 enum AppKeys: String {
     ///Auth Keys
@@ -23,6 +24,7 @@ enum AppKeys: String {
     case refreshTokenExpires = "refreshTokenExpires"
     case countryName = "countryName"
     case cityName = "cityName"
+    case hasPassword = "hasPassword"
     
     ///Board Keys
     case showedNotice = "showedNotice"
@@ -39,6 +41,7 @@ enum AppKeys: String {
     case countryCode = "countryCode"
     case ip = "ip"
     case listNodeGroup = "listNodeGroup"
+    case mutilhopList = "mutilhopList"
     
     ///Last Time when Data Map Update
     case lastChange = "lastChange"
@@ -53,6 +56,7 @@ enum AppKeys: String {
     case wasJailBreak = "wasJailBreak"
     
     case currentSessionId = "currentSessionId"
+    case selectCyberSec = "selectCyberSec"
 }
 
 struct AppSetting {
@@ -196,6 +200,15 @@ struct AppSetting {
         }
     }
     
+    var hasPassword: Bool {
+        get {
+            return UserDefaults.standard.bool(forKey: AppKeys.hasPassword.rawValue) 
+        }
+        set {
+            UserDefaults.standard.setValue(newValue, forKey: AppKeys.hasPassword.rawValue)
+        }
+    }
+    
     var lastChange: Double {
         get {
             return UserDefaults.standard.double(forKey: AppKeys.lastChange.rawValue)
@@ -265,7 +278,7 @@ struct AppSetting {
     func getAutoConnectProtocol() -> ItemCellType {
         if let type = ItemCellType(rawValue: AppSetting.shared.selectAutoConnect) {
             if type != .always && type != .onWifi && type != .onMobile && type != .off {
-                return .recommend
+                return .off
             }
             return type
         }
@@ -355,5 +368,73 @@ struct AppSetting {
             }
         }
         return defaultContent
+    }
+    
+    var selectCyberSec: Bool {
+        get {
+            UserDefaults.standard.bool(forKey: AppKeys.selectCyberSec.rawValue)
+        }
+        set {
+            UserDefaults.standard.setValue(newValue, forKey: AppKeys.selectCyberSec.rawValue)
+        }
+    }
+    
+    var disposedBag = DisposeBag()
+    
+    /// api get ip info in app
+    func getIpInfo(completion: @escaping (String?) -> Void) {
+        
+        APIManager.shared.getIpInfo()
+            .subscribe(onSuccess: { [self] response in
+                if let result = response.result{
+                    configIpInfo(result)
+                    completion(nil)
+                } else {
+                    let error = response.errors
+                    if error.count > 0, let message = error[0] as? String {
+                        completion(message)
+                    } else if !response.message.isEmpty {
+                        completion(response.message)
+                    }
+                    self.getIpInfoOptional { errorOption in
+                        completion(errorOption)
+                    }
+                }
+            }, onFailure: { error in
+                self.getIpInfoOptional { errorOption in
+                    completion(errorOption)
+                }
+            })
+            .disposed(by: disposedBag)
+    }
+    
+    /// api get ip info optional
+    func getIpInfoOptional(completion: @escaping (String?) -> Void) {
+        
+        APIManager.shared.getIpInfoOptional()
+            .subscribe(onSuccess: { [self] response in
+                configIpInfo(response)
+                completion(nil)
+            }, onFailure: { error in
+                completion(error.localizedDescription)
+            })
+            .disposed(by: disposedBag)
+    }
+    
+    func configIpInfo(_ ipInfo: IpInfoResultModel) {
+        AppSetting.shared.ip = ipInfo.ip
+        AppSetting.shared.countryCode = ipInfo.countryCode
+        AppSetting.shared.countryName = ipInfo.countryName
+        AppSetting.shared.cityName = ipInfo.city
+        AppSetting.shared.lastChange = ipInfo.lastChange ?? 0
+    }
+    
+    func prepareForIpInfo(completion: @escaping (String?) -> Void) {
+        if AppSetting.shared.ip == "" {
+            AppSetting.shared.getIpInfo { message in
+                completion(message)
+            }
+        }
+        completion(nil)
     }
 }

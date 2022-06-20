@@ -10,15 +10,14 @@ import SwiftUI
 
 struct PlanSelectionView: View {
     @Environment(\.presentationMode) var presentationMode
-    @EnvironmentObject var registerResult: RegisterResultModel
     @ObservedObject var planListViewModel = PlanListViewModel()
     @State var toWelcomeScreen = false
     var body: some View {
         Background {
-            ScrollView(.vertical, showsIndicators: false) {
                 VStack {
+                    Spacer()
+                    Spacer().frame(height: 50)
                     Group {
-                        Spacer().frame(height: 100)
                         Text(L10n.PlanSelect.title).setTitle()
                         Spacer().frame(height: 10)
                         Text(L10n.PlanSelect.body).setDefault()
@@ -28,23 +27,18 @@ struct PlanSelectionView: View {
                         PlanListView(viewModel: planListViewModel)
                         Spacer().frame(height: 20)
                     }
-                    NavigationLink(destination: WelcomeView().environmentObject(registerResult), isActive: $toWelcomeScreen) {
+                    NavigationLink(destination: WelcomeView(), isActive: $toWelcomeScreen) {
                     }
                     AppButton(width: 311, text: L10n.PlanSelect.continueButton) {
-                        if registerResult.tokens.access.token.isEmpty {
-                            presentationMode.wrappedValue.dismiss()
-                        } else {
-                            self.toWelcomeScreen = true
-                        }
+                        self.toWelcomeScreen = true
                     }
                     Spacer().frame(height: 20)
                     Text(planListViewModel.selectedPlan?.note ?? "")
                         .font(.system(size: 11))
                         .foregroundColor(Color.white)
-                        .frame(width: 320)
-                    Spacer().frame(height: 20)
+                        .frame(width: 320, height: 40)
+                    Spacer()
                 }
-            }
         }
     }
 }

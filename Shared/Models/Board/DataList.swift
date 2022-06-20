@@ -16,8 +16,8 @@ struct DataSection: Equatable, Identifiable {
 struct ItemCell: Equatable, Identifiable {
     var id: UUID = UUID()
     var type: ItemCellType
-    var content = ""
     var select = false
+    var alert = ""
 }
 
 struct SectionCell: Equatable, Identifiable {
@@ -30,11 +30,17 @@ struct SectionCell: Equatable, Identifiable {
         self.items = type.items
     }
     
-    mutating func updateSelectedItemList(_ cell: ItemCell) {
+    mutating func updateSelectedItemListAndUnSelectOther(_ cell: ItemCell) {
         items = items.map {
             var updateItem = $0
-            updateItem.select = cell.type.title == $0.type.title
+            updateItem.select = cell.type == $0.type
             return updateItem
+        }
+    }
+    
+    mutating func updateItem(_ item: ItemCell) {
+        items = items.map {
+            return $0.type == item.type ? item : $0
         }
     }
 }
@@ -44,12 +50,16 @@ enum SectionType: Decodable {
     case myAccount
     case helpSupport
     
+    case tools
+    
     case vpnSetting
     case otherSetting
     
     case autoConnect
     case typeAutoConnect
     case protocolConnect
+    
+    case infomation
     
     var items: [ItemCell] {
         switch self {
@@ -93,6 +103,22 @@ enum SectionType: Decodable {
                 ItemCell(type: .recommend),
                 ItemCell(type: .openVPN),
                 ItemCell(type: .wireGuard)
+            ]
+            
+        case .tools:
+            return [
+                ItemCell(type: .cyberSec)
+//                ,ItemCell(type: .killSwitch)
+//                ,ItemCell(type: .darkWebMonitor)
+//                ,ItemCell(type: .tapJacking)
+            ]
+            
+        case .infomation:
+            return [
+                ItemCell(type: .email),
+                ItemCell(type: .joinMember),
+                ItemCell(type: .sysVPNId),
+                ItemCell(type: .accountSecurity),
             ]
         }
     }
@@ -148,8 +174,34 @@ enum ItemCellType: Int, Decodable {
     case openVPN
     case wireGuard
     
+    case cyberSec
+    case killSwitch
+    case darkWebMonitor
+    case tapJacking
+    
+    case email
+    case joinMember
+    case sysVPNId
+    case accountSecurity
+    
     var title: String {
         switch self {
+        case .email:
+            return L10n.Account.Infomation.email
+        case .joinMember:
+            return L10n.Account.Infomation.member
+        case .sysVPNId:
+            return L10n.Account.Infomation.id
+        case .accountSecurity:
+            return L10n.Account.Infomation.security
+        case .cyberSec:
+            return L10n.Settings.Tools.cyberSec
+        case .killSwitch:
+            return L10n.Settings.Tools.killSwitch
+        case .darkWebMonitor:
+            return L10n.Settings.Tools.darkWebMonitors
+        case .tapJacking:
+            return L10n.Settings.Tools.tapJackingProtection
         case .paymentHistory:
             return L10n.Account.AccountStatus.paymentHistory
         case .statusAccount:
@@ -236,17 +288,34 @@ enum ItemCellType: Int, Decodable {
     
     var content: String {
         switch self {
+        case .email:
+            return AppSetting.shared.email
+        case .joinMember:
+            return AppSetting.shared.joinedDate?.toFormat("dd-MM-yyyy") ?? ""
+        case .sysVPNId:
+            return AppSetting.shared.idVPN
+        case .accountSecurity:
+            return L10n.Account.Infomation.tapToChangePassword
+            
+        case .cyberSec:
+            return L10n.Settings.Tools.CyberSec.note
+        case .killSwitch:
+            return L10n.Settings.Tools.KillSwitch.note
+        case .darkWebMonitor:
+            return L10n.Settings.Tools.DarkWebMonitors.note
+        case .tapJacking:
+            return L10n.Settings.Tools.TapJackingProtection.note
         case .statusAccount:
             guard AppSetting.shared.isPremium else {
                 return L10n.Account.premiumOffer
             }
-            return "\(L10n.Account.expire) \(AppSetting.shared.premiumExpireDate)"
+            return "\(L10n.Account.expire) \(AppSetting.shared.premiumExpireDate?.toFormat("dd-MM-yyyy") ?? "")"
         case .paymentHistory:
             return L10n.Account.AccountStatus.tapToShow
         case .totalDevice:
             return L10n.Account.contentTotalDevices
         case .vpnConnection:
-            return "6 " + L10n.Settings.settings
+            return "3 " + L10n.Settings.settings
         case .general:
             return "3 " + L10n.Settings.settings
         case .apps:
@@ -293,6 +362,8 @@ enum ItemCellType: Int, Decodable {
             return true
 //        case .always, .onWifi, .onMobile, .off:
 //            return true
+        case .cyberSec:
+            return true
         default:
             return false
         }

@@ -9,14 +9,13 @@ import Foundation
 import SwiftUI
 
 struct SubscriptionIntroduction: View {
-    @EnvironmentObject var registerResult: RegisterResultModel
     @State var toPlanSelection: Bool = false
     @State var toWelcomeScreen: Bool = false
     var body: some View {
         Background {
             ScrollView(.vertical, showsIndicators: false) {
                 VStack(alignment: .center) {
-                    Spacer().frame(height: 90)
+                    Spacer().frame(minHeight: 10)
                     Text(L10n.SubscriptionIntro.title).setTitle()
                     Asset.Assets.subscriptionIntroImage.SuImage
                     Group {
@@ -44,22 +43,23 @@ struct SubscriptionIntroduction: View {
                         Spacer().frame(height: 30)
                     }
                     Group {
-                        NavigationLink(destination: PlanSelectionView().environmentObject(registerResult), isActive: $toPlanSelection) {
+                        NavigationLink(destination: PlanSelectionView(), isActive: $toPlanSelection) {
                         }
                         AppButton(width: 300, text: L10n.SubscriptionIntro.startFreeTrial) {
                             toPlanSelection = true
                         }
                         Spacer().frame(height: 20)
-                        NavigationLink(destination: WelcomeView().environmentObject(registerResult), isActive: $toWelcomeScreen) {
+                        NavigationLink(destination: WelcomeView(), isActive: $toWelcomeScreen) {
                         }
-                        AppButton(width: 250, backgroundColor: Color.clear, textColor: AppColor.lightBlackText, text: L10n.SubscriptionIntro.continueWithoutSub) {
-                            toWelcomeScreen = true
-                        }
+//                        AppButton(width: 250, backgroundColor: Color.clear, textColor: AppColor.lightBlackText, text: L10n.SubscriptionIntro.continueWithoutSub) {
+//                            toWelcomeScreen = true
+//                        }
                         Spacer().frame(height: 15)
                     }
                     Text(L10n.SubscriptionIntro.note).foregroundColor(AppColor.lightBlackText).font(.system(size: 11)).frame(width: 300)
-                    Spacer().frame(height: 20)
+                    Spacer().frame(minHeight: 10)
                 }
+                .frame(minHeight: UIScreen.main.bounds.height)
             }
         }
     }

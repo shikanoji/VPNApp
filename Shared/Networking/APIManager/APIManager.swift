@@ -82,6 +82,30 @@ struct APIManager {
                 throw APIError.someError
             }
     }
+    
+    func getTopicQuestionList() -> Single<APIResponse<[TopicQuestionModel]>> {
+        return provider.rx
+            .request(.getTopicQuestionList)
+            .map { response in
+                let result = try JSONDecoder().decode(APIResponse<[TopicQuestionModel]>.self, from: response.data)
+                return result
+            }
+            .catch { error in
+                throw APIError.someError
+            }
+    }
+    
+    func getMutihopList() -> Single<APIResponse<[MultihopModel]>> {
+        return provider.rx
+            .request(.getMultihopList)
+            .map { response in
+                let result = try JSONDecoder().decode(APIResponse<[MultihopModel]>.self, from: response.data)
+                return result
+            }
+            .catch { error in
+                throw APIError.someError
+            }
+    }
 }
 
 extension MoyaProvider {

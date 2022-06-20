@@ -15,6 +15,7 @@ extension Constant {
             static let register = "/shared/module_auth/v1/register"
             static let logout = "/shared/module_auth/v1/logout"
             static let login = "/shared/module_auth/v1/login"
+            static let loginSocial = "/shared/module_auth/v1/login-social"
             static let refreshToken = "/shared/module_auth/v1/refresh-tokens"
             static let forgotPassword = "/shared/module_auth/v1/forgot-password"
             static let getCountryList = "app/module_server/v1/country/get_list"
@@ -24,6 +25,8 @@ extension Constant {
             static let changePassword = "/shared/module_user/v1/change-password"
             static let getListSession = "/log/module_session/v1/sessions"
             static let disconnectSession = "/shared/module_server/v1/vpn/disconnect_session"
+            static let getTopicFaq = "shared/app/module_faq/v1/faqs"
+            static let getMultihopList = "app/module_server/v1/multi_hop/get_list"
         }
     }
 }

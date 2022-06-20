@@ -10,6 +10,7 @@ import SwiftUI
 
 class Authentication: ObservableObject {
     @Published var isValidated: Bool = AppSetting.shared.isRefreshTokenValid
+    @Published var isPremium: Bool = AppSetting.shared.isPremium
     
     func login(withLoginData data: LoginResultModel) {
         login(user: data.user, tokens: data.tokens)
@@ -29,7 +30,9 @@ class Authentication: ObservableObject {
         AppSetting.shared.premiumExpires = user.premium_expire
         AppSetting.shared.name = user.name
         AppSetting.shared.accountCreatedTime = user.created_at
+        AppSetting.shared.hasPassword = user.has_password
         isValidated = AppSetting.shared.isRefreshTokenValid
+        isPremium = AppSetting.shared.isPremium
     }
     
     func logout() {
@@ -43,6 +46,8 @@ class Authentication: ObservableObject {
         AppSetting.shared.isPremium = false
         AppSetting.shared.premiumExpires = nil
         AppSetting.shared.accountCreatedTime = nil
+        AppSetting.shared.hasPassword = false
         isValidated = AppSetting.shared.isRefreshTokenValid
+        isPremium = AppSetting.shared.isPremium
     }
 }

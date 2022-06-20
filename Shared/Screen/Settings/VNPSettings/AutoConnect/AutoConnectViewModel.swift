@@ -11,10 +11,10 @@ class AutoConnectViewModel: ObservableObject {
     @Published var sectionList: [SectionCell] = [SectionCell(.typeAutoConnect), SectionCell(.autoConnect)]
     
     init() {
-        configItem(nil)
+        configItem()
     }
     
-    func configItem(_ item: ItemCell?) {
+    func configItem(_ item: ItemCell? = nil) {
         var defaultItem: ItemCell?
         
         if let updateItem = item {
@@ -30,7 +30,7 @@ class AutoConnectViewModel: ObservableObject {
         AppSetting.shared.selectAutoConnect = exitItem.type.rawValue
         sectionList = sectionList.map { section in
             var updateSection = section
-            updateSection.updateSelectedItemList(exitItem)
+            updateSection.updateSelectedItemListAndUnSelectOther(exitItem)
             return updateSection
         }
         NotificationCenter.default.post(name: Constant.NameNotification.checkAutoconnect, object: nil)

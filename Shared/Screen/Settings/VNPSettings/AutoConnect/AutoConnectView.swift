@@ -49,7 +49,7 @@ struct AutoConnectView: View {
                                         showRightButton: item.type.showRightButton,
                                         showSwitch: item.type.showSwitch,
                                         showSelect: item.type.showSelect,
-                                        position: getPosition(item: item, arr: section.items),
+                                        position: section.items.getPosition(item),
                                         switchValue: item.select,
                                         onSwitchValueChange: { value in
                                 if value {
@@ -61,11 +61,14 @@ struct AutoConnectView: View {
                     }
                 }
                 .padding(Constant.Menu.hozitalPaddingCell)
-                 .padding(.top, Constant.Menu.topPaddingCell)
+                .padding(.top, Constant.Menu.topPaddingCell)
             }
         }
         .navigationBarHidden(true)
         .background(AppColor.background)
         .ignoresSafeArea()
+        .onAppear {
+            viewModel.configItem()
+        }
     }
 }

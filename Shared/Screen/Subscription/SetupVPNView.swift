@@ -10,7 +10,6 @@ import SwiftUI
 
 struct SetupVPNView: View {
     @Environment(\.presentationMode) var presentationMode
-    @EnvironmentObject var registerResult: RegisterResultModel
     @EnvironmentObject var authentication: Authentication
 
     var body: some View {
@@ -34,7 +33,8 @@ struct SetupVPNView: View {
                     Spacer().frame(height: 30)
                     AppButton(width: 311, text: L10n.Welcome.setupButton) {
                         presentationMode.wrappedValue.dismiss()
-                        authentication.login(withRegisterData: registerResult)
+                        AppSetting.shared.isPremium = true
+                        authentication.isPremium = AppSetting.shared.isPremium
                     }
                     Spacer().frame(height: 5)
                 }

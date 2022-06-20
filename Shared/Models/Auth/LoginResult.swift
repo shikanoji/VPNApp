@@ -11,6 +11,10 @@ import SwiftyJSON
 struct LoginResultModel: Decodable {
     var user: User
     var tokens: Tokens
+    
+    func convertToRegisterModel() -> RegisterResultModel {
+        return RegisterResultModel(user: user, tokens: tokens)
+    }
 }
 
 struct Tokens: Decodable {
@@ -41,7 +45,8 @@ struct User: Decodable {
          password: String = "",
          premiumExpire: Int? = nil,
          isPremium: Bool = false,
-         name: String? = nil) {
+         name: String? = nil,
+         has_password: Bool = true) {
         self.id = id
         self.created_at = created_at
         self.updated_at = updated_at
@@ -50,6 +55,7 @@ struct User: Decodable {
         self.premium_expire = premiumExpire
         self.is_premium = isPremium
         self.name = name
+        self.has_password = has_password
     }
 
     enum CodingKeys: String, CodingKey {
@@ -61,6 +67,7 @@ struct User: Decodable {
         case premium_expire = "premium_expire"
         case is_premium = "is_premium"
         case name = "name"
+        case has_password = "has_password"
     }
 
     init(from decoder: Decoder) throws {
@@ -73,7 +80,9 @@ struct User: Decodable {
         if values.contains(.premium_expire) {
             premium_expire = try values.decode(Int?.self, forKey: .premium_expire)
         }
-        is_premium = try values.decode(Bool.self, forKey: .is_premium)
+        if values.contains(.is_premium) {
+            is_premium = try values.decode(Bool.self, forKey: .is_premium)
+        }
         if values.contains(.name) {
             name = try values.decode(String?.self, forKey: .name)
         }
@@ -82,6 +91,9 @@ struct User: Decodable {
         }
         if values.contains(.password) {
             password = try values.decode(String.self, forKey: .password)
+        }
+        if values.contains(.has_password) {
+            has_password = try values.decode(Bool.self, forKey: .has_password)
         }
     }
     
@@ -93,4 +105,5 @@ struct User: Decodable {
     var name: String? = nil
     var is_premium: Bool = false
     var premium_expire: Int? = nil
+    var has_password: Bool = true
 }

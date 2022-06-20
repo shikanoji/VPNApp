@@ -11,17 +11,10 @@ struct MultiHopView: View {
     
     let sizeIcon = Constant.MultiHop.sizeIcon
     
-    @Binding var nodeRecentList: [(Node, Node)]
+    @Binding var mutilhopList: [MultihopModel]
+    @Binding var multihopSelect: MultihopModel?
     
     @State var showDescriptionMultihop = false
-    @State var showEntryLocationView = false
-    @State var showExitLocationView = false
-    
-    @Binding var entryNodeList: [Node]
-    @Binding var exitNodeList: [Node]
-    
-    @Binding var entryNodeSelect: Node
-    @Binding var exitNodeSelect: Node
     
     var body: some View {
         VStack(alignment: .leading, spacing: 8) {
@@ -38,39 +31,7 @@ struct MultiHopView: View {
             Spacer()
                 .frame(height: 4)
             recentConnectionsView
-            Rectangle()
-                .foregroundColor(AppColor.darkButton)
-                .frame(height: 1)
-            selectView
             Spacer()
-                .frame(height: 4)
-            Group {
-                Spacer()
-                    .frame(height: 0)
-                AppButton(style: .themeButton, width: UIScreen.main.bounds.size.width - 32, text: L10n.Board.BoardList.MultiHop.connect) {
-                    
-                }
-                Spacer()
-                    .frame(height: 0)
-                Button {
-                    print("Connect")
-                } label: {
-                    HStack {
-                        Constant.MultiHop.iconExit
-                        Text(L10n.Board.BoardList.MultiHop.exit)
-                            .foregroundColor(.white)
-                            .font(Constant.BoardList.fontNodeList)
-                    }
-                }
-                Spacer()
-            }
-            NavigationLink(destination:
-                            SelectLocationMultihopView(nodeList: $entryNodeList,
-                                                       leftText: L10n.Board.BoardList.MultiHop.selectEntryLocation, nodeSelectClosure: { self.entryNodeSelect = $0 }),
-                           isActive: $showEntryLocationView) { }
-            NavigationLink(destination: SelectLocationMultihopView(nodeList: $exitNodeList,
-                                                                   leftText: L10n.Board.BoardList.MultiHop.selectExitLocation, nodeSelectClosure: { self.exitNodeSelect = $0 }),
-                           isActive: $showExitLocationView) { }
         }
         .padding()
         .frame(maxHeight: .infinity)
@@ -92,88 +53,34 @@ struct MultiHopView: View {
                 .font(Constant.BoardList.fontNodeList)
             Spacer()
                 .frame(height: 10)
-            ForEach((0..<nodeRecentList.count), id: \.self) { i in
-                let nodeStart = nodeRecentList[i].0
-                let nodeEnd = nodeRecentList[i].1
-                HStack {
-                    ImageView(withURL: nodeStart.flag)
-                        .frame(width: sizeIcon, height: sizeIcon)
-                        .clipShape(Circle())
-                    Text(nodeStart.name)
-                        .foregroundColor(.white)
-                        .font(Constant.BoardList.fontNodeList)
-                    Spacer()
-                    Constant.Global.iconArrowRight
-                        .frame(width: 20, height: 20)
-                    Spacer()
-                    ImageView(withURL: nodeEnd.flag)
-                        .frame(width: sizeIcon, height: sizeIcon)
-                        .clipShape(Circle())
-                    Text(nodeEnd.name)
-                        .foregroundColor(.white)
-                        .font(Constant.BoardList.fontNodeList)
-                    Spacer()
-                }
-                .padding(.vertical, 5)
-            }
-        }
-    }
-    
-    var selectView: some View {
-        VStack(alignment: .leading, spacing: 15) {
-            Text(L10n.Board.BoardList.MultiHop.selectEntryLocation)
-                .foregroundColor(AppColor.lightBlackText)
-                .font(Constant.BoardList.fontNodeList)
-            
-            Button {
-                showEntryLocationView = true
-            } label: {
-                HStack {
-                    ImageView(withURL: entryNodeSelect.flag)
-                        .frame(width: sizeIcon, height: sizeIcon)
-                        .clipShape(Circle())
-                    Text(entryNodeSelect.name)
-                        .foregroundColor(.white)
-                        .font(Constant.BoardList.fontNodeList)
-                    Spacer()
-                    Image(Constant.Account.rightButton)
-                }
-            }
-            
-            Text(L10n.Board.BoardList.MultiHop.selectExitLocation)
-                .foregroundColor(AppColor.lightBlackText)
-                .font(Constant.BoardList.fontNodeList)
-            
-            Button {
-                showExitLocationView = true
-            } label: {
-                HStack {
-                    ImageView(withURL: exitNodeSelect.flag)
-                        .frame(width: sizeIcon, height: sizeIcon)
-                        .clipShape(Circle())
-                    Text(exitNodeSelect.name)
-                        .foregroundColor(.white)
-                        .font(Constant.BoardList.fontNodeList)
-                    Spacer()
-                    Image(Constant.Account.rightButton)
+            VStack {
+                ForEach(mutilhopList) { item in
+                    if let nodeEntry = item.entry?.node,
+                       let nodeExit = item.exit?.node {
+                        Button {
+                            multihopSelect = item
+                        } label: {
+                            HStack {
+                                ImageView(withURL: nodeEntry.flag, size: sizeIcon - 8)
+                                    .clipShape(Circle())
+                                    .brightness(-0.5)
+                                    .padding(.trailing, -5)
+                                ImageView(withURL: nodeExit.flag, size: sizeIcon)
+                                    .clipShape(Circle())
+                                Text(nodeEntry.name)
+                                    .foregroundColor(.gray)
+                                    .font(Constant.BoardList.fontNodeList)
+                                Image(Constant.Account.rightButton)
+                                Text(nodeExit.name)
+                                    .foregroundColor(.white)
+                                    .font(Constant.BoardList.fontNameCity)
+                                Spacer()
+                            }
+                            .padding(.vertical, 5)
+                        }
+                    }
                 }
             }
         }
-    }
-}
-
-struct MultiHopView_Previews: PreviewProvider {
-    @State static var nodeMultihopList = [(Node.country, Node.tokyo), (Node.country, Node.tokyo)]
-    
-    @State static var entryNode = Node.country
-    @State static var exitNode = Node.tokyo
-    @State static var nodeList = Node.all
-    
-    static var previews: some View {
-        MultiHopView(nodeRecentList: $nodeMultihopList,
-                     entryNodeList: $nodeList,
-                     exitNodeList: $nodeList,
-                     entryNodeSelect: $entryNode,
-                     exitNodeSelect: $exitNode)
     }
 }

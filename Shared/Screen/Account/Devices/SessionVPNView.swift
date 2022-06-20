@@ -12,7 +12,7 @@ struct SessionVPNView: View {
     @Binding var showAccount: Bool
     @Binding var showTotalDevice: Bool
     
-    @State var statusConnect: VPNStatus = .connected
+    @Binding var statusConnect: VPNStatus
     @StateObject var viewModel: SessionVPNViewModel
     
     @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
@@ -20,7 +20,7 @@ struct SessionVPNView: View {
     var body: some View {
         ScrollView(.vertical, showsIndicators: false) {
             ZStack(alignment: .top) {
-                VStack {
+                VStack(spacing: 1) {
                     AppColor.darkButton
                         .frame(height: 10)
                     CustomNavigationView(
@@ -36,16 +36,16 @@ struct SessionVPNView: View {
                     if viewModel.showProgressView {
                         LoadingView()
                             .padding(.top, UIScreen.main.bounds.size.height / 3)
-                    } else {
-                        ForEach(viewModel.deviceList.indices, id: \.self) { i in
-                            SessionVPNCell(sessionVPN: viewModel.deviceList[i],
+                    }
+                    ForEach(viewModel.deviceList.indices, id: \.self) { i in
+                        SessionVPNCell(sessionVPN: viewModel.deviceList[i],
                                        viewModel: viewModel,
                                        position: viewModel.deviceList.getPosition(i)) {
-                                viewModel.disconnectSession(viewModel.deviceList[i])
-                            }
+                            viewModel.disconnectSession(viewModel.deviceList[i])
                         }
-                        .padding(.horizontal, Constant.Menu.hozitalPaddingCell)
                     }
+                    .padding(.horizontal, Constant.Menu.hozitalPaddingCell)
+                    
                 }
             }
         }
@@ -66,6 +66,6 @@ struct DevicesView_Previews: PreviewProvider {
     @State static var showAccount = true
     
     static var previews: some View {
-        SessionVPNView(showAccount: $showAccount, showTotalDevice: $showAccount, viewModel: SessionVPNViewModel())
+        SessionVPNView(showAccount: $showAccount, showTotalDevice: $showAccount, statusConnect: .constant(.connected), viewModel: SessionVPNViewModel())
     }
 }

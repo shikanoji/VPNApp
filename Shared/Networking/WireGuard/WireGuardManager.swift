@@ -35,16 +35,6 @@ class WireGuardManager: ObservableObject {
                 after: .seconds(2)
             )
         }
-        
-        x()
-    }
-    
-    func x() {
-        
-        DispatchQueue.main.asyncAfter(deadline: .now() + 4) {
-            
-            self.x()
-        }
     }
     
     init() {
@@ -99,7 +89,7 @@ class WireGuardManager: ObservableObject {
             builder.addresses = [clientAddress]
             builder.dnsServers = [dns]
             
-            try builder.addPeer(serverPublicKey, endpoint: endPoint)
+            try builder.addPeer(serverPublicKey, endpoint: endPoint, allowedIPs: [allowedIPs])
             builder.addAllowedIP(allowedIPs, toPeer: 0)
             
             let cfg = builder.build()
