@@ -12,9 +12,9 @@ import TunnelKitOpenVPNCore
 import TunnelKitOpenVPNManager
 import TunnelKitCore
 
-private let appGroup = "group.com.ilg.SysVPN.dev.daz"
+private let appGroup = "group.com.ilg.SysVPN"
 
-private let tunnelIdentifier = "com.ilg.SysVPN.dev.daz.OpenVPN"
+private let tunnelIdentifier = "com.ilg.SysVPN.OpenVPN"
 
 class OpenVPNManager: ObservableObject {
     
@@ -62,12 +62,23 @@ class OpenVPNManager: ObservableObject {
     
     func getDNS() -> String {
         var stringData = ""
-        if AppSetting.shared.primaryDNSValue != "" {
-            stringData += "dhcp-option DNS " + AppSetting.shared.primaryDNSValue + "\r\n"
+        
+        guard let dnsCyberSec = NetworkManager.shared.requestCertificate?.dns,
+              dnsCyberSec.count > 0 else {
+            if AppSetting.shared.primaryDNSValue != "" {
+                stringData += "dhcp-option DNS " + AppSetting.shared.primaryDNSValue + "\r\n"
+            }
+            if AppSetting.shared.secondaryDNSValue != "" {
+                stringData += "dhcp-option DNS " + AppSetting.shared.secondaryDNSValue + "\r\n"
+            }
+            
+            return stringData
         }
-        if AppSetting.shared.secondaryDNSValue != "" {
-            stringData += "dhcp-option DNS " + AppSetting.shared.secondaryDNSValue + "\r\n"
+        
+        dnsCyberSec.forEach {
+            stringData += "dhcp-option DNS " + $0 + "\r\n"
         }
+       
         return stringData
     }
 }
