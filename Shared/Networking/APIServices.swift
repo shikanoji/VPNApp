@@ -234,6 +234,7 @@ extension APIService: TargetType {
             param["tech"] = NetworkManager.shared.selectConfig.getConfigParam
             param["proto"] = NetworkManager.shared.protocolVPN.description
             param["dev"] = "tun"
+            param["cybersec"] = AppSetting.shared.selectCyberSec ? 1 : 0
             
             switch currentTab {
             case .location:
