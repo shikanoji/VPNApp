@@ -281,45 +281,42 @@ public enum L10n {
     public static let continueButton = L10n.tr("PlanSelect", "continueButton")
     /// month
     public static let month = L10n.tr("PlanSelect", "month")
-    /// Pay after 7 days. Subscription auto-renews every 2 years
+    /// Pay after 7 days. Subscription auto-renews every 1 years
     /// until canceled.
     public static let note = L10n.tr("PlanSelect", "note")
     /// Select a plan
     public static let title = L10n.tr("PlanSelect", "title")
     public enum PlanA {
-      /// $99.00 for the first 2 years.
-      /// Then $105.00/year
-      /// 7-day free trial
+      /// $83.99 billed every year.
       public static let description = L10n.tr("PlanSelect", "PlanA.description")
-      /// Pay after 7 days. Subscription auto-renews every 2 years
+      /// Pay after 7 days. Subscription auto-renews every year
       /// until canceled.
       public static let note = L10n.tr("PlanSelect", "PlanA.note")
-      /// $3.67
+      /// $6.99
       public static let price = L10n.tr("PlanSelect", "PlanA.price")
-      /// Save 69
+      /// Save 12.5
       public static let savingText = L10n.tr("PlanSelect", "PlanA.savingText")
-      /// 2-Years plan
+      /// 1-Year plan
       public static let title = L10n.tr("PlanSelect", "PlanA.title")
     }
     public enum PlanB {
-      /// $105.00 for the first year.
-      /// Then $120.00/year
+      /// $44.99 billed every 6 months.
       public static let description = L10n.tr("PlanSelect", "PlanB.description")
-      /// Subscription auto-renews each year until canceled.
+      /// Subscription auto-renews every 6 months until canceled.
       public static let note = L10n.tr("PlanSelect", "PlanB.note")
-      /// $4.92
+      /// $7.49
       public static let price = L10n.tr("PlanSelect", "PlanB.price")
-      /// Save 69
+      /// Save 6
       public static let savingText = L10n.tr("PlanSelect", "PlanB.savingText")
-      /// 1-Year Plan
+      /// 6-Months Plan
       public static let title = L10n.tr("PlanSelect", "PlanB.title")
     }
     public enum PlanC {
-      /// $11.95 billed every month
+      /// $7.99 billed every month.
       public static let description = L10n.tr("PlanSelect", "PlanC.description")
       /// 
       public static let note = L10n.tr("PlanSelect", "PlanC.note")
-      /// $11.95
+      /// $7.99
       public static let price = L10n.tr("PlanSelect", "PlanC.price")
       /// 
       public static let savingText = L10n.tr("PlanSelect", "PlanC.savingText")
