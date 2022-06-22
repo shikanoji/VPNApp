@@ -44,12 +44,13 @@ struct IntroductionView: View {
     var body: some View {
         Background() {
             VStack(spacing: 10) {
-                Spacer()
+                Spacer().frame(height: 20)
                 HStack {
                     Spacer().frame(width: 10)
                     Asset.Assets.logoSmall.SuImage
                     Spacer()
                 }
+                Spacer()
                 PagingView(index: $index, maxIndex: IntroductionPage.getList().count - 1) {
                     ForEach(IntroductionPage.getList(), id: \.self) { intro in
                         VStack{
@@ -65,10 +66,9 @@ struct IntroductionView: View {
                 }
                 .aspectRatio(3/4, contentMode: .fit)
                 .clipShape(RoundedRectangle(cornerRadius: 15))
-                
-                //                Stepper("Index: \(index)", value: $index.animation(.easeInOut), in: 0...images.count-1)
                 .font(Font.body.monospacedDigit())
-                //                NavigationLink(destination: SubscriptionIntroduction(), isActive: $trial) { }
+                .frame(maxWidth: 400)
+                
                 AppButton(style: .themeButton, width: 300, height:50, text: L10n.Introduction.trialButton) {
                     self.signIn = true
                 }
