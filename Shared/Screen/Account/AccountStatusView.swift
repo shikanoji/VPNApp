@@ -60,7 +60,7 @@ struct AccountStatusView: View {
                                 showAccountStatus: $showAccountStatus,
                                 statusConnect: $statusConnect),
                            isActive: $showPayment) { }
-            NavigationLink(destination: PlanSelectionView().environmentObject(RegisterResultModel()),
+            NavigationLink(destination: PlanSelectionView(viewModel: PlanSelectionViewModel()).environmentObject(RegisterResultModel()),
                                        isActive: $showPlanListView) { }
         }
         .navigationBarHidden(true)

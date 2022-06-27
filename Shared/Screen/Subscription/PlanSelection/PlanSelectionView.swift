@@ -10,10 +10,11 @@ import SwiftUI
 
 struct PlanSelectionView: View {
     @Environment(\.presentationMode) var presentationMode
-    @ObservedObject var planListViewModel = PlanListViewModel()
+    @StateObject var viewModel: PlanSelectionViewModel
     @State var toWelcomeScreen = false
     var body: some View {
-        Background {
+        LoadingScreen(isShowing: $viewModel.showProgressView) {
+            Background {
                 VStack {
                     Spacer()
                     Spacer().frame(height: 50)
@@ -22,23 +23,28 @@ struct PlanSelectionView: View {
                         Spacer().frame(height: 10)
                         Text(L10n.PlanSelect.body).setDefault()
                     }
+                    
                     Group {
                         Spacer().frame(height: 20)
-                        PlanListView(viewModel: planListViewModel)
+                        PlanListView(viewModel: viewModel.planListViewModel)
                         Spacer().frame(height: 20)
                     }
-                    NavigationLink(destination: WelcomeView(), isActive: $toWelcomeScreen) {
+                    NavigationLink(destination: WelcomeView().navigationBarHidden(true),
+                                   isActive: $viewModel.toWelcomeScreen) {
                     }
                     AppButton(width: 311, text: L10n.PlanSelect.continueButton) {
-                        self.toWelcomeScreen = true
+                        viewModel.purchasePlan()
                     }
                     Spacer().frame(height: 20)
-                    Text(planListViewModel.selectedPlan?.note ?? "")
+                    Text(viewModel.planListViewModel.selectedPlan?.note ?? "")
                         .font(.system(size: 11))
                         .foregroundColor(Color.white)
                         .frame(width: 320, height: 40)
                     Spacer()
                 }
+            }.onAppear(perform: {
+                viewModel.loadPlans()
+            })
         }
     }
 }
@@ -46,7 +52,7 @@ struct PlanSelectionView: View {
 #if DEBUG
 struct PlanSelectionView_Preview: PreviewProvider {
     static var previews: some View {
-        PlanSelectionView()
+        PlanSelectionView(viewModel: PlanSelectionViewModel())
     }
 }
 #endif
