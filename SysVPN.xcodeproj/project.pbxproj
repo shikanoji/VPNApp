@@ -19,8 +19,10 @@
 		AC1195D22844D71D002230F0 /* DNSSettingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC1195D12844D71D002230F0 /* DNSSettingView.swift */; };
 		AC1195DB28452313002230F0 /* DNSSettingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC1195DA28452313002230F0 /* DNSSettingViewModel.swift */; };
 		AC4051E227CCB6860054F6AE /* ToastView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC4051E127CCB6860054F6AE /* ToastView.swift */; };
+		AC489252286405F6003F2795 /* PurchaseService.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC489251286405F6003F2795 /* PurchaseService.swift */; };
 		AC490871281B9FC600DB430B /* NotificationExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC490870281B9FC600DB430B /* NotificationExtension.swift */; };
 		AC490873281B9FFB00DB430B /* PublisherExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC490872281B9FFB00DB430B /* PublisherExtension.swift */; };
+		AC516FCE2869A91F00BEBC81 /* LoadingScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC516FCD2869A91F00BEBC81 /* LoadingScreen.swift */; };
 		AC6074B027D8D24F00DD5667 /* ArrayExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC6074AF27D8D24F00DD5667 /* ArrayExtension.swift */; };
 		AC6074B227D8D2B200DD5667 /* CustomPopupView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC6074B127D8D2B200DD5667 /* CustomPopupView.swift */; };
 		AC6074D927DB74CC00DD5667 /* swiftgen.yml in Resources */ = {isa = PBXBuildFile; fileRef = AC6074D827DB74CB00DD5667 /* swiftgen.yml */; };
@@ -351,8 +353,10 @@
 		AC1195D12844D71D002230F0 /* DNSSettingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DNSSettingView.swift; sourceTree = "<group>"; };
 		AC1195DA28452313002230F0 /* DNSSettingViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DNSSettingViewModel.swift; sourceTree = "<group>"; };
 		AC4051E127CCB6860054F6AE /* ToastView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToastView.swift; sourceTree = "<group>"; };
+		AC489251286405F6003F2795 /* PurchaseService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PurchaseService.swift; sourceTree = "<group>"; };
 		AC490870281B9FC600DB430B /* NotificationExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationExtension.swift; sourceTree = "<group>"; };
 		AC490872281B9FFB00DB430B /* PublisherExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PublisherExtension.swift; sourceTree = "<group>"; };
+		AC516FCD2869A91F00BEBC81 /* LoadingScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingScreen.swift; sourceTree = "<group>"; };
 		AC6074AF27D8D24F00DD5667 /* ArrayExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArrayExtension.swift; sourceTree = "<group>"; };
 		AC6074B127D8D2B200DD5667 /* CustomPopupView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomPopupView.swift; sourceTree = "<group>"; };
 		AC6074D827DB74CB00DD5667 /* swiftgen.yml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.yaml; path = swiftgen.yml; sourceTree = SOURCE_ROOT; };
@@ -712,6 +716,7 @@
 			children = (
 				ACF77633285C8989001ACB39 /* PlanSelectionViewModel.swift */,
 				ACF77631285C8981001ACB39 /* PlanSelectionView.swift */,
+				AC489251286405F6003F2795 /* PurchaseService.swift */,
 			);
 			path = PlanSelection;
 			sourceTree = "<group>";
@@ -933,6 +938,7 @@
 				6384B4F3276C372300E904D2 /* Board */,
 				D762EC142759C6EC00023ABF /* Introduction */,
 				D762EC102759B53B00023ABF /* Authentication */,
+				AC516FCD2869A91F00BEBC81 /* LoadingScreen.swift */,
 			);
 			path = Screen;
 			sourceTree = "<group>";
@@ -1752,6 +1758,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				AC516FCE2869A91F00BEBC81 /* LoadingScreen.swift in Sources */,
 				EED4F59F285448BC0098DF47 /* InfomationViewModel.swift in Sources */,
 				EE2D6BFB281BD77D008E1431 /* ObtainCertificateModel.swift in Sources */,
 				AC6074E227DD08D200DD5667 /* XCAssets+Generated.swift in Sources */,
@@ -1844,6 +1851,7 @@
 				D7874DFA277AFEE200ADC7AD /* ForgotPasswordViewModel.swift in Sources */,
 				D78F47282761D1840064A764 /* LoginView.swift in Sources */,
 				D7F9695827B262190037A3D0 /* SessionVPNViewModel.swift in Sources */,
+				AC489252286405F6003F2795 /* PurchaseService.swift in Sources */,
 				EE85EDB627B21711000F967A /* CityCellView.swift in Sources */,
 				D7A4AC4527954A7900C88162 /* PlanListCell.swift in Sources */,
 				EE85EDC127B369B6000F967A /* StaticIPListView.swift in Sources */,
