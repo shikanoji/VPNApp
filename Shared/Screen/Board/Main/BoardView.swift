@@ -18,6 +18,8 @@ struct BoardView: View {
     @State var showSettings = false
     @State var showBoardList = false
     
+    @State var showPopup = false
+    
     var body: some View {
         ZStack {
             accountView()
@@ -35,28 +37,72 @@ struct BoardView: View {
                 statusConnect: $viewModel.stateUI,
                 viewModel: AutoConnectViewModel())
             .opacity(viewModel.shouldHideAutoConnect ? 0 : 1)
-        }
-        .popup(isPresented: $viewModel.showAlert, type: .floater(verticalPadding: 10), position: .bottom, animation: .easeInOut, autohideIn: 10, closeOnTap: false, closeOnTapOutside: true) {
-            ToastView(title: viewModel.error?.title ?? "",
-                      message: viewModel.error?.description ?? "",
-                      cancelAction: {
-                viewModel.showAlert = false
+            SessionVPNView(
+                showAccount: .constant(true),
+                showTotalDevice: .constant(true),
+                statusConnect: $viewModel.stateUI,
+                viewModel: SessionVPNViewModel(),
+                shouldHideSessionList: $viewModel.shouldHideSession)
+            .opacity(viewModel.shouldHideSession ? 0 : 1)
+            VStack{
+                Spacer()
+                ToastView(title: viewModel.error?.title ?? "",
+                          message: viewModel.error?.description ?? "",
+                          cancelAction: {
+                    viewModel.showAlert = false
+                })
+                .frame(alignment: .bottom)
+                .padding(.bottom, 20)
+            }
+            .opacity(viewModel.showAlert ? 1 : 0)
+            .onChange(of: viewModel.showAlert, perform: { newValue in
+                if newValue {
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 5.0) {
+                        viewModel.showAlert = false
+                    }
+                }
             })
-        }
-        .popup(isPresented: $viewModel.showAlertAutoConnectSetting,
-               type: .floater(verticalPadding: 10),
-               position: .bottom,
-               animation: .easeInOut,
-               autohideIn: 3,
-               closeOnTap: true,
-               closeOnTapOutside: true) {
-            ToastView(title: "Disable auto-conenct",
-                      message: "",
-                      confirmTitle: "Open Setting",
-                      oneChossing: true,
-                      confirmAction: {
-                viewModel.showAlertAutoConnectSetting = false
-                viewModel.shouldHideAutoConnect = false
+            VStack{
+                Spacer()
+                ToastView(title: "Need terminal some sessions",
+                          message: "",
+                          confirmTitle: "Open Sessions",
+                          oneChossing: true,
+                          confirmAction: {
+                    viewModel.showAlertSessionSetting = false
+                    viewModel.shouldHideSession = false
+                })
+                .frame(alignment: .bottom)
+                .padding(.bottom, 20)
+            }
+            .opacity(viewModel.showAlertSessionSetting ? 1 : 0)
+            .onChange(of: viewModel.showAlertSessionSetting, perform: { newValue in
+                if newValue {
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 5.0) {
+                        viewModel.showAlertSessionSetting = false
+                    }
+                }
+            })
+            VStack{
+                Spacer()
+                ToastView(title: "Disable auto-conenct",
+                          message: "",
+                          confirmTitle: "Open Setting",
+                          oneChossing: true,
+                          confirmAction: {
+                    viewModel.showAlertAutoConnectSetting = false
+                    viewModel.shouldHideAutoConnect = false
+                })
+                .frame(alignment: .bottom)
+                .padding(.bottom, 20)
+            }
+            .opacity(viewModel.showAlertAutoConnectSetting ? 1 : 0)
+            .onChange(of: viewModel.showAlertAutoConnectSetting, perform: { newValue in
+                if newValue {
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 5.0) {
+                        viewModel.showAlertAutoConnectSetting = false
+                    }
+                }
             })
         }
                .onChange(of: viewModel.nodeConnected, perform: { newValue in
@@ -121,6 +167,7 @@ struct BoardView: View {
                     MapView(mesh: viewModel.mesh,
                             selection: selection,
                             statusConnect: $viewModel.stateUI)
+                    .allowsHitTesting(viewModel.stateUI != .connected)
                     if viewModel.stateUI == .connected {
                         Asset.Assets.logoConnectedBackground.SuImage
                             .resizable()

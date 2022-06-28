@@ -83,7 +83,7 @@ enum APIService {
     case getObtainCertificate
     case changePassword(oldPassword: String, newPassword: String)
     case getListSession(page: Int = 1, limit: Int = 20, isActive: Int = 1)
-    case disconnectSession(sessionId: String)
+    case disconnectSession(sessionId: String, terminal: Bool)
     case getTopicQuestionList
     case getMultihopList
 }
@@ -232,7 +232,7 @@ extension APIService: TargetType {
             param["key"] = "f11b69c57d5fe9555e29c57c1d863bf8"
             
             param["tech"] = NetworkManager.shared.selectConfig.getConfigParam
-            param["proto"] = NetworkManager.shared.protocolVPN.description
+            
             param["dev"] = "tun"
             param["cybersec"] = AppSetting.shared.selectCyberSec ? 1 : 0
             
@@ -269,6 +269,20 @@ extension APIService: TargetType {
                 break
             }
             
+            var prevSessionId = ""
+            switch NetworkManager.shared.selectConfig {
+            case .openVPNTCP, .openVPNUDP:
+                prevSessionId = NetworkManager.shared.requestCertificate?.sessionId ?? ""
+                param["proto"] = NetworkManager.shared.selectConfig.getProtocolVPN
+            case .wireGuard:
+                prevSessionId = NetworkManager.shared.obtainCertificate?.sessionId ?? ""
+            default:
+                break
+            }
+            if prevSessionId != "" {
+                param["prevSessionId"] = prevSessionId
+            }
+            
             return .requestParameters(parameters: param, encoding: URLEncoding.queryString)
         case .getObtainCertificate:
             var param: [String: Any] = [:]
@@ -288,13 +302,13 @@ extension APIService: TargetType {
             param["limit"] = limit
             param["isActive"] = isActive
             param["sortBy"] = "createdAt:desc"
-            
+            param["userId"] = AppSetting.shared.idUser
             // Use "key" temporarily, after remove it
             param["key"] = "f11b69c57d5fe9555e29c57c1d863bf8"
             
             return .requestParameters(parameters: param, encoding: URLEncoding.queryString)
             
-        case .disconnectSession(let sessionId):
+        case .disconnectSession(let sessionId, let terminal):
             var param: [String: Any] = [:]
             
             // Use "key" temporarily, after remove it
@@ -302,6 +316,7 @@ extension APIService: TargetType {
             
             var body: [String: Any] = [:]
             body["sessionId"] = sessionId
+            body["disconnectedBy"] = terminal ? "client_terminate" : "client"
             
             return .requestCompositeParameters(
                 bodyParameters: body,

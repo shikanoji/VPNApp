@@ -9,14 +9,12 @@ import SwiftUI
 import TunnelKitManager
 
 struct MapView: View {
-    
-    @State var progressingScale: CGFloat = 1
-    @State var magScale: CGFloat = 1
-    @State var totalScale: CGFloat = 1 {
+    @State var currentAmount = 0.0 {
         didSet {
-            mesh.showCityNodes = totalScale > Constant.Board.Map.enableCityZoom
+            mesh.showCityNodes = (currentAmount + finalAmount) > Constant.Board.Map.enableCityZoom
         }
     }
+    @State var finalAmount = 1.0
     
     @ObservedObject var mesh: Mesh
     @ObservedObject var selection: SelectionHandler
@@ -25,8 +23,8 @@ struct MapView: View {
     @State var heightMap: CGFloat = Constant.Board.Map.heightScreen
     
     @State private var location: CGPoint = CGPoint(
-        x: Constant.Board.Map.widthScreen / 4,
-        y: Constant.Board.Map.widthScreen
+        x: Constant.Board.Map.widthScreen / 2,
+        y: Constant.Board.Map.heightScreen / 2
     )
     
     @GestureState private var fingerLocation: CGPoint? = nil
@@ -52,15 +50,21 @@ struct MapView: View {
     }
     
     func getNodeMapView() -> some View {
+        let binding = Binding(
+            get: { CGFloat(finalAmount + currentAmount) },
+            set: { _ in }
+        )
+        
         switch mesh.currentTab {
         case .location, .multiHop:
+            
             return AnyView(NodeMapView(selection: selection,
                                        mesh: mesh,
-                                       scale: $totalScale))
+                                       scale: binding))
         case .staticIP:
             return AnyView(StaticNodeMapView(selection: selection,
                                              mesh: mesh,
-                                             scale: $totalScale))
+                                             scale: binding))
         }
     }
     
@@ -68,15 +72,15 @@ struct MapView: View {
         ZStack(alignment: .center) {
             Asset.Assets.map.SuImage
                 .resizable()
-                .frame(width: widthMap * totalScale,
-                       height: heightMap * totalScale)
+                .frame(width: widthMap * (finalAmount + currentAmount),
+                       height: heightMap * (finalAmount + currentAmount))
                 .aspectRatio(contentMode: .fit)
                 .position(location)
             getNodeMapView()
-                .frame(width: widthMap * totalScale,
-                       height: heightMap * totalScale)
-                .position(x: location.x + totalScale,
-                          y: location.y + totalScale)
+                .frame(width: widthMap * (finalAmount + currentAmount),
+                       height: heightMap * (finalAmount + currentAmount))
+                .position(x: location.x,
+                          y: location.y)
                 .opacity(statusConnect == .connected ? 0 : 1)
         }
         .onReceive(selection.$selectedNodeIDs) {
@@ -105,45 +109,21 @@ struct MapView: View {
         )
         .gesture(
             MagnificationGesture()
-                .onChanged {
-                    if validateZoom(self.magScale * $0) {
-                        progressingScale = $0
-                        
-                        let updateScale = progressingScale * magScale
-                        
-                        if  updateScale < Constant.Board.Map.minZoom {
-                            totalScale = Constant.Board.Map.minZoom
-                        } else if updateScale > Constant.Board.Map.maxZoom {
-                            totalScale = Constant.Board.Map.maxZoom
-                        } else {
-                            totalScale = updateScale
-                        }
+                .onChanged { amount in
+                    if validateZoom(amount - 1 + finalAmount) {
+                        currentAmount = amount - 1
                         checkCollision()
                     }
                 }
-                .onEnded {
-                    onEndedZoom($0)
-                })
+                .onEnded { amount in
+                    if validateZoom(currentAmount + finalAmount) {
+                        finalAmount += currentAmount
+                        currentAmount = 0
+                        checkCollision()
+                    }
+                }
+        )
         .background(AppColor.background)
-    }
-    
-    private func onChangedZoom(_ newValue: CGFloat) {
-        let newValue = self.magScale * progressingScale
-        
-        if validateZoom(newValue) {
-            progressingScale = newValue
-        }
-    }
-    
-    private func onEndedZoom(_ newValue: CGFloat) {
-        let newValue = self.magScale * newValue
-        if validateZoom(newValue) {
-            progressingScale = newValue
-            magScale = newValue
-            progressingScale = 1
-            totalScale = progressingScale * magScale
-        }
-        checkCollision()
     }
     
     private func validateZoom(_ newValue: CGFloat) -> Bool {
@@ -151,68 +131,34 @@ struct MapView: View {
     }
     
     func checkCollision() {
-//        let rangeWidth = widthMap * totalScale * 0.5
-//
-//        if location.x >= rangeWidth {
-//            self.location.x = rangeWidth
-//        } else if location.x <= (widthMap - rangeWidth) {
-//            location.x = widthMap - rangeWidth
-//        }
+        let rangeHeight = heightMap * (finalAmount + currentAmount) * 0.5
 
-        let rangeHeight = heightMap * totalScale * 0.5
-        
-        if location.y >= rangeHeight + 40 {
-            self.location.y = rangeHeight + 40
-        } else if location.y <= (heightMap - rangeHeight) {
+        if location.y >= rangeHeight {
+            self.location.y = rangeHeight
+        }
+        else if location.y <= (heightMap - rangeHeight) {
             location.y = heightMap - rangeHeight
         }
         
-//        let rangeHeight = heightMap * totalScale * 0.5
-//
-//        if rangeHeight * 2 > Constant.Board.Map.heightScreen {
-//            if location.y <= Constant.Board.Map.heightScreen - rangeHeight {
-//                location.y = Constant.Board.Map.heightScreen - rangeHeight
-//            } else if location.y >= rangeHeight {
-//                location.y = rangeHeight
-//            }
-//        } else if totalScale > 1 {
-//            if location.y <= rangeHeight {
-//                self.location.y = rangeHeight
-//            } else if location.y >= (Constant.Board.Map.heightScreen - rangeHeight){
-//                location.y = Constant.Board.Map.heightScreen - rangeHeight
-//            }
-//        } else {
-//            location.y = Constant.Board.Map.widthScreen
-//        }
-        
-        let rangeWidth = widthMap * totalScale * 0.5
-        
-        if rangeWidth * 2 > Constant.Board.Map.widthScreen {
-            if location.x <= Constant.Board.Map.widthScreen - rangeWidth {
-                location.x = Constant.Board.Map.widthScreen - rangeWidth
-            } else if location.x >= rangeHeight {
-                location.x = rangeHeight
-            }
-        } else if totalScale > 1 {
-            if location.x <= rangeWidth {
-                self.location.x = rangeWidth
-            } else if location.x >= (Constant.Board.Map.widthScreen - rangeWidth){
-                location.x = Constant.Board.Map.widthScreen - rangeWidth
-            }
-        } else {
-            location.x = Constant.Board.Map.widthScreen
+        let rangeWidth = widthMap * (finalAmount + currentAmount) * 0.5
+         
+        if location.x >= rangeWidth {
+            location.x = rangeWidth
+        } else if location.x <= Constant.Board.Map.widthScreen - rangeWidth {
+            location.x = Constant.Board.Map.widthScreen - rangeWidth
         }
     }
     
     func moveToNode(x: CGFloat, y: CGFloat) {
         let xNode = Constant.convertXToMap(x)
         let yNode = Constant.convertYToMap(y)
-        let x = totalScale * (widthMap / 2 - xNode) + Constant.Board.Map.widthScreen / 2
-        let y = totalScale * (heightMap / 2 - yNode) + Constant.Board.Map.widthScreen
         
+        let x = (finalAmount + currentAmount) * (widthMap / 2 - xNode) + Constant.Board.Map.widthScreen / 2
+        let y = (finalAmount + currentAmount) * (heightMap / 2 - yNode) + Constant.Board.Map.heightScreen / 2
         location = CGPoint(
             x: x,
-            y: y)
+            y: y
+        )
         
         checkCollision()
     }

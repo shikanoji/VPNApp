@@ -266,7 +266,7 @@ struct AppSetting {
     
     func getConfigProtocol() -> ItemCellType {
         if let type = ItemCellType(rawValue: AppSetting.shared.selectConfig) {
-            if type != .recommend && type != .wireGuard && type != .openVPN {
+            if type != .recommend && type != .wireGuard && type != .openVPNTCP && type != .openVPNUDP {
                 return .recommend
             }
             return type

@@ -21,6 +21,8 @@ struct APIManager {
     private init() {
         let plugin = NetworkLoggerPlugin(configuration: .init(logOptions: .formatRequestAscURL))
         self.provider = MoyaProvider<APIService>(requestClosure: MoyaProvider<APIService>.endpointResolver(), plugins: [plugin])
+        self.provider.session.sessionConfiguration.timeoutIntervalForRequest = 10
+        self.provider.session.sessionConfiguration.timeoutIntervalForResource = 10
     }
     
     func getCountryList() -> Single<APIResponse<CountryListResultModel>> {
@@ -71,9 +73,9 @@ struct APIManager {
             }
     }
     
-    func disconnectSession(_ sessionId: String) -> Single<APIResponse<EmptyResult>> {
+    func disconnectSession(sessionId: String, terminal: Bool) -> Single<APIResponse<EmptyResult>> {
         return provider.rx
-            .request(.disconnectSession(sessionId: sessionId))
+            .request(.disconnectSession(sessionId: sessionId, terminal: terminal))
             .map { response in
                 let result = try JSONDecoder().decode(APIResponse<EmptyResult>.self, from: response.data)
                 return result
