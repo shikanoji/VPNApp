@@ -14,6 +14,7 @@ struct SessionVPNView: View {
     
     @Binding var statusConnect: VPNStatus
     @StateObject var viewModel: SessionVPNViewModel
+    @Binding var shouldHideSessionList: Bool
     
     @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
     
@@ -22,21 +23,19 @@ struct SessionVPNView: View {
             ZStack(alignment: .top) {
                 VStack(spacing: 1) {
                     AppColor.darkButton
-                        .frame(height: 10)
+                        .frame(height: 20)
                     CustomNavigationView(
                         leftTitle: L10n.Account.AccountStatus.title,
                         currentTitle: L10n.Account.itemDevices + " (\(viewModel.currentNumberDevice)/\(AppSetting.shared.maxNumberDevices))",
                         tapLeftButton: {
                             presentationMode.wrappedValue.dismiss()
+                            shouldHideSessionList = true
                         }, tapRightButton: {
                             showTotalDevice = false
                             showAccount = false
+                            shouldHideSessionList = true
                         }, statusConnect: $statusConnect)
                     .padding(.bottom, Constant.Menu.topPaddingCell)
-                    if viewModel.showProgressView {
-                        LoadingView()
-                            .padding(.top, UIScreen.main.bounds.size.height / 3)
-                    }
                     ForEach(viewModel.deviceList.indices, id: \.self) { i in
                         SessionVPNCell(sessionVPN: viewModel.deviceList[i],
                                        viewModel: viewModel,
@@ -45,7 +44,10 @@ struct SessionVPNView: View {
                         }
                     }
                     .padding(.horizontal, Constant.Menu.hozitalPaddingCell)
-                    
+                }
+                if viewModel.showProgressView {
+                    LoadingView()
+                        .padding(.top, UIScreen.main.bounds.size.height / 3)
                 }
             }
         }
@@ -66,6 +68,6 @@ struct DevicesView_Previews: PreviewProvider {
     @State static var showAccount = true
     
     static var previews: some View {
-        SessionVPNView(showAccount: $showAccount, showTotalDevice: $showAccount, statusConnect: .constant(.connected), viewModel: SessionVPNViewModel())
+        SessionVPNView(showAccount: $showAccount, showTotalDevice: $showAccount, statusConnect: .constant(.connected), viewModel: SessionVPNViewModel(), shouldHideSessionList: .constant(false))
     }
 }

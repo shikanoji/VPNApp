@@ -125,6 +125,9 @@ class BoardViewModel: ObservableObject {
     
     @Published var showAlertAutoConnectSetting: Bool = false
     
+    @Published var showAlertSessionSetting: Bool = false
+    @Published var shouldHideSession = true
+    
     @Published var showProgressView: Bool = false
     
     var error: APIError?
@@ -194,53 +197,73 @@ class BoardViewModel: ObservableObject {
     }
     
     @objc private func checkAutoconnectIfNeeded() {
-        if let type = ItemCellType(rawValue: AppSetting.shared.selectAutoConnect) {
-            if type != .off {
-                if state == .disconnected, !isProcessingVPN {
-                    if Connectivity.sharedInstance.isReachable {
-                        switch type {
-                        case .always:
-                            connectVPN()
-                        case .onWifi:
-                            if Connectivity.sharedInstance.isReachableOnEthernetOrWiFi {
-                                connectVPN()
-                            }
-                        case .onMobile:
-                            if Connectivity.sharedInstance.isReachableOnCellular {
-                                connectVPN()
-                            }
-                        default:
-                            stopAutoconnectTimer()
-                        }
+        guard let type = ItemCellType(rawValue: AppSetting.shared.selectAutoConnect) else {
+            self.stopAutoconnectTimer()
+            return
+        }
+        if type != .off {
+            if Connectivity.sharedInstance.isReachable, !isProcessingVPN {
+                switch type {
+                case .always:
+                    connectVPN()
+                case .onWifi:
+                    if Connectivity.sharedInstance.isReachableOnEthernetOrWiFi {
+                        connectVPN()
                     }
+                case .onMobile:
+                    if Connectivity.sharedInstance.isReachableOnCellular {
+                        connectVPN()
+                    }
+                default:
+                    break
                 }
-            } else if type == .off {
-                if state == .connected {
-                    disconnectSession()
-                    NetworkManager.shared.disconnect()
-                }
-                stopAutoconnectTimer()
             }
+        } else {
+            stopAutoconnectTimer()
+            disconnectSession()
+            NetworkManager.shared.disconnect()
         }
     }
     
     func connectVPN() {
-        if state == .disconnected {
-            stateUI = .connecting
-            getRequestCertificate()
+        if state != .connected {
+            if state == .disconnected {
+                numberReconnect = 0
+                stateUI = .connecting
+                startConnectVPN()
+            }
         } else {
             if let type = ItemCellType(rawValue: AppSetting.shared.selectAutoConnect),
                (type == .always || type == .onMobile || type == .onWifi) {
-                showAlertAutoConnectSetting = true
+                if disconnectByUser {
+                    showAlertAutoConnectSetting = true
+                }
             } else {
-                stateUI = .disconnecting
+                stateUI = .disconnected
                 NetworkManager.shared.disconnect()
             }
         }
     }
     
-    let maximumReonnect = 7
+    func startConnectVPN() {
+        getRequestCertificate {
+            if $0 {
+                NetworkManager.shared.connect()
+            } else {
+                if !self.isEnableReconect {
+                    self.stateUI = .disconnected
+                }
+            }
+        }
+    }
+    
+    let maximumReconnect = 3
     var numberReconnect = 0
+    
+    var isEnableReconect: Bool {
+        get { numberReconnect < maximumReconnect }
+    }
+    
     var disconnectByUser = false
     
     @objc private func VPNStatusDidChange(notification: Notification) {
@@ -263,7 +286,7 @@ class BoardViewModel: ObservableObject {
             stopSpeedTimer()
             
             switch NetworkManager.shared.selectConfig {
-            case .openVPN, .recommend:
+            case .openVPNTCP, .recommend, .openVPNUDP:
                 if let iPVPN = NetworkManager.shared.requestCertificate?.server?.ipAddress {
                     ip = iPVPN
                 }
@@ -294,17 +317,15 @@ class BoardViewModel: ObservableObject {
                 ip = AppSetting.shared.ip
                 flag = ""
                 stopSpeedTimer()
-                disconnectByUser = true
-                
                 isProcessingVPN = false
                 
-                if numberReconnect < maximumReonnect, !disconnectByUser {
-                    numberReconnect += 1
-                    connectVPN()
+                if numberReconnect < maximumReconnect, !disconnectByUser {
+                    startConnectVPN()
                 } else {
                     if disconnectByUser {
                         disconnectSession()
                     }
+                    disconnectByUser = false
                 }
             }
             
@@ -318,11 +339,12 @@ class BoardViewModel: ObservableObject {
         print("VPNStatusDidFail: \(notification.vpnError.localizedDescription)")
         
         stopSpeedTimer()
-        state = .disconnected
         
-        if numberReconnect < maximumReonnect, !disconnectByUser  {
-            connectVPN()
-            numberReconnect += 1
+        state = .disconnected
+        stateUI = .disconnected
+        
+        if numberReconnect < maximumReconnect, !disconnectByUser {
+            startConnectVPN()
         }
     }
     
@@ -334,7 +356,28 @@ class BoardViewModel: ObservableObject {
         checkInternetTimer = DispatchSource.makeTimerSource(queue: queue)
         checkInternetTimer!.schedule(deadline: .now(), repeating: .seconds(5))
         checkInternetTimer!.setEventHandler { [weak self] in
-            self?.checkAutoconnectIfNeeded()
+            guard let type = ItemCellType(rawValue: AppSetting.shared.selectAutoConnect) else {
+                self?.checkInternetTimer = nil
+                return
+            }
+            
+            switch type {
+            case .off:
+                switch self?.stateUI {
+                case .connected:
+                    self?.disconnectSession()
+                    NetworkManager.shared.disconnect()
+                default:
+                    break
+                }
+                self?.stopAutoconnectTimer()
+            case .always, .onWifi, .onMobile:
+                if self?.state != .connected && !(self?.isProcessingVPN ?? false) {
+                    self?.checkAutoconnectIfNeeded()
+                }
+            default:
+                break
+            }
         }
         checkInternetTimer!.resume()
     }
@@ -346,7 +389,7 @@ class BoardViewModel: ObservableObject {
         speedTimer = DispatchSource.makeTimerSource(queue: queue)
         speedTimer!.schedule(deadline: .now(), repeating: .seconds(1))
         speedTimer!.setEventHandler { [weak self] in
-            if NetworkManager.shared.selectConfig == .openVPN,
+            if (NetworkManager.shared.selectConfig == .openVPNTCP || NetworkManager.shared.selectConfig == .openVPNUDP),
                let dataCount = OpenVPNManager.shared.getDataCount() {
                 self?.uploadSpeed = dataCount.sent.descriptionAsDataUnit
                 self?.downloadSpeed = dataCount.received.descriptionAsDataUnit
@@ -380,12 +423,14 @@ class BoardViewModel: ObservableObject {
             return
         }
         
+        self.showProgressView = true
+        
         APIManager.shared.getCountryList()
             .subscribe { [weak self] response in
                 guard let `self` = self else {
                     return
                 }
-                
+                self.showProgressView = false
                 if let result = response.result {
                     AppSetting.shared.saveDataMap(result)
                     self.configCountryList(result)
@@ -400,6 +445,7 @@ class BoardViewModel: ObservableObject {
                     }
                 }
             } onFailure: { error in
+                self.showProgressView = false
                 self.error = APIError.identified(message: error.localizedDescription)
                 self.showAlert = true
             }
@@ -441,13 +487,19 @@ class BoardViewModel: ObservableObject {
     
     func prepareConnect(completion: @escaping (Bool) -> Void) {
         switch NetworkManager.shared.selectConfig {
-        case .openVPN, .recommend:
+        case .openVPNTCP, .recommend, .openVPNUDP:
             AppSetting.shared.currentSessionId = NetworkManager.shared.requestCertificate?.sessionId ?? ""
             completion(true)
         case .wireGuard:
             numberCallObtainCer = 0
             getObtainCertificate() {
-                completion($0)
+                if self.isEnableReconect {
+                    self.getRequestCertificate {
+                        completion($0)
+                    }
+                } else {
+                    completion($0)
+                }
             }
         default:
             break
@@ -504,12 +556,20 @@ class BoardViewModel: ObservableObject {
             .disposed(by: disposedBag)
     }
     
-    func getRequestCertificate() {
+    func getRequestCertificate(completion: @escaping (Bool) -> Void) {
+        guard isEnableReconect else {
+            stateUI = .disconnected
+            return
+        }
+        if stateUI != .connecting {
+            stateUI = .connecting
+        }
+        numberReconnect += 1
+        
         guard Connectivity.sharedInstance.isReachable else {
             internetNotAvaiable()
             return
         }
-        self.showProgressView = true
         APIManager.shared.getRequestCertificate(currentTab: tab)
             .subscribe { [weak self] response in
                 guard let `self` = self else {
@@ -519,31 +579,44 @@ class BoardViewModel: ObservableObject {
                 self.showProgressView = false
                 
                 if let result = response.result {
-                    NetworkManager.shared.requestCertificate = result
-                    self.prepareConnect() { start in
-                        if start {
-                            NetworkManager.shared.connect()
+                    if result.exceedLimit {
+                        self.showAlertSessionSetting = true
+                        self.stateUI = .disconnected
+                        completion(false)
+                    } else {
+                        NetworkManager.shared.requestCertificate = result
+                        self.prepareConnect() { start in
+                            completion(start)
                         }
                     }
                 } else {
-                    self.stateUI = .disconnected
-                    NetworkManager.shared.disconnect()
-                    let error = response.errors
-                    if error.count > 0, let message = error[0] as? String {
-                        self.error = APIError.identified(message: message)
-                        self.showAlert = true
-                    } else if !response.message.isEmpty {
-                        self.error = APIError.identified(message: response.message)
-                        self.showAlert = true
+                    if self.isEnableReconect {
+                        self.getRequestCertificate() {
+                            completion($0)
+                        }
+                    } else {
+                        NetworkManager.shared.disconnect()
+                        let error = response.errors
+                        if error.count > 0, let message = error[0] as? String {
+                            self.error = APIError.identified(message: message)
+                            self.showAlert = true
+                        } else if !response.message.isEmpty {
+                            self.error = APIError.identified(message: response.message)
+                            self.showAlert = true
+                        }
                     }
                 }
             } onFailure: { error in
-                self.stateUI = .disconnected
-                NetworkManager.shared.disconnect()
-                self.stateUI = .disconnected
-                self.error = APIError.identified(message: error.localizedDescription)
-                self.showProgressView = false
-                self.showAlert = true
+                if self.isEnableReconect {
+                    self.getRequestCertificate() {
+                        completion($0)
+                    }
+                } else {
+                    NetworkManager.shared.disconnect()
+                    self.error = APIError.identified(message: error.localizedDescription)
+                    self.showProgressView = false
+                    self.showAlert = true
+                }
             }
             .disposed(by: disposedBag)
     }
@@ -588,7 +661,7 @@ class BoardViewModel: ObservableObject {
     }
     
     func disconnectSession() {
-        APIManager.shared.disconnectSession(AppSetting.shared.currentSessionId)
+        APIManager.shared.disconnectSession(sessionId: AppSetting.shared.currentSessionId, terminal: false)
             .subscribe { [weak self] response in
                 guard let `self` = self else {
                     return
@@ -599,18 +672,18 @@ class BoardViewModel: ObservableObject {
                 if response.success {
                   
                 } else {
-                    let error = response.errors
-                    if error.count > 0, let message = error[0] as? String {
-                        self.error = APIError.identified(message: message)
-                        self.showAlert = true
-                    } else if !response.message.isEmpty {
-                        self.error = APIError.identified(message: response.message)
-                        self.showAlert = true
-                    }
+//                    let error = response.errors
+//                    if error.count > 0, let message = error[0] as? String {
+//                        self.error = APIError.identified(message: message)
+//                        self.showAlert = true
+//                    } else if !response.message.isEmpty {
+//                        self.error = APIError.identified(message: response.message)
+//                        self.showAlert = true
+//                    }
                 }
             } onFailure: { error in
-                self.error = APIError.identified(message: error.localizedDescription)
-                self.showAlert = true
+//                self.error = APIError.identified(message: error.localizedDescription)
+//                self.showAlert = true
             }
             .disposed(by: disposedBag)
     }

@@ -16,10 +16,15 @@ struct PlanListCell: View {
             HStack {
                 Spacer().frame(width: 20)
                 VStack(alignment: .leading) {
-                    Text(plan.name).font(.system(size: 16, weight: .semibold))
+                    Text(plan.name)
+                        .font(.system(size: 16, weight: .semibold))
                         .foregroundColor(focus ? AppColor.themeColor : Color.white)
+                        .frame(maxWidth: .infinity, alignment: .leading)
                     Spacer().frame(height: 10)
-                    Text(plan.description).font(.system(size: 12)).foregroundColor(Color.white).lineSpacing(5)
+                    Text(plan.description)
+                        .font(.system(size: 12))
+                        .foregroundColor(Color.white).lineSpacing(5)
+                        .frame(maxWidth: .infinity, alignment: .leading)
                 }.frame(width: 156)
                 Spacer()
                 VStack {

@@ -48,7 +48,7 @@ struct ConnectButton: View {
             .frame(width:  Constant.Board.QuickButton.widthSize,
                    height: Constant.Board.QuickButton.widthSize)
             SpeedConnectedView(uploadSpeed: uploadSpeed, downLoadSpeed: downloadSpeed)
-                .opacity(status == .connected ? 1 : 0)
+                .opacity(status == .connected ? (NetworkManager.shared.selectConfig == .wireGuard ? 0 : 1) : 0)
                 .padding(.top, 35)
                 .frame(width: widthSpeed)
         }

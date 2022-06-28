@@ -10,9 +10,9 @@ import UIKit
 import TunnelKitWireGuard
 import TunnelKit
 
-private let appGroup = "group.com.ilg.SysVPN.dev.daz"
+private let appGroup = "group.com.ilg.SysVPN"
 
-private let tunnelIdentifier = "com.ilg.SysVPN.dev.daz.WireGuard"
+private let tunnelIdentifier = "com.ilg.SysVPN.WireGuard"
 
 class WireGuardManager: ObservableObject {
     
@@ -87,7 +87,7 @@ class WireGuardManager: ObservableObject {
         do {
             var builder = try WireGuard.ConfigurationBuilder(clientPrivateKey)
             builder.addresses = [clientAddress]
-            builder.dnsServers = [dns]
+            builder.dnsServers = getCustomDNS().count > 0 ? getCustomDNS() : [dns]
             
             try builder.addPeer(serverPublicKey, endpoint: endPoint, allowedIPs: [allowedIPs])
             builder.addAllowedIP(allowedIPs, toPeer: 0)
@@ -100,6 +100,22 @@ class WireGuardManager: ObservableObject {
         }
         
         return nil
+    }
+    
+    func getCustomDNS() -> [String] {
+        var dnsList: [String] = []
+        
+        guard let dnsCyberSec = NetworkManager.shared.requestCertificate?.dns,
+              dnsCyberSec.count > 0 else {
+            if AppSetting.shared.primaryDNSValue != "" {
+                dnsList.append(AppSetting.shared.primaryDNSValue)
+            }
+            if AppSetting.shared.secondaryDNSValue != "" {
+                dnsList.append(AppSetting.shared.secondaryDNSValue)
+            }
+            return dnsList
+        }
+        return dnsCyberSec
     }
     
     func getValueParase(_ line: String, regexType: NSRegularExpression) -> String? {

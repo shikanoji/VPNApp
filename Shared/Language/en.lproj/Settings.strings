@@ -19,7 +19,8 @@
 "settings" = "settings";
 "itemAuto" = "Auto-connect";
 "itemProtocol" = "Protocol";
-"openVPN" = "Open VPN";
+"openVPNTCP" = "OpenVPN - TCP";
+"openVPNUDP" = "OpenVPN - UDP";
 "wireGuard" = "WireGuard";
 "itemSplit" = "Split tunneling";
 "itemDNS" = "DNS";
