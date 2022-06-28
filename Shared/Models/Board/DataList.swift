@@ -101,8 +101,9 @@ enum SectionType: Decodable {
         case .protocolConnect:
             return [
                 ItemCell(type: .recommend),
-                ItemCell(type: .openVPN),
-                ItemCell(type: .wireGuard)
+                ItemCell(type: .wireGuard),
+                ItemCell(type: .openVPNTCP),
+                ItemCell(type: .openVPNUDP)
             ]
             
         case .tools:
@@ -171,7 +172,8 @@ enum ItemCellType: Int, Decodable {
     case faster
     
     case recommend
-    case openVPN
+    case openVPNTCP
+    case openVPNUDP
     case wireGuard
     
     case cyberSec
@@ -250,8 +252,10 @@ enum ItemCellType: Int, Decodable {
             return L10n.Settings.fastestConnect
         case .recommend:
             return L10n.Settings.contentRecommend
-        case .openVPN:
-            return L10n.Settings.openVPN
+        case .openVPNTCP:
+            return L10n.Settings.openVPNTCP
+        case .openVPNUDP:
+            return L10n.Settings.openVPNUDP
         case .wireGuard:
             return L10n.Settings.wireGuard
         }
@@ -373,7 +377,7 @@ enum ItemCellType: Int, Decodable {
         switch self {
         case .always, .onWifi, .onMobile, .off:
             return true
-        case .recommend, .openVPN, .wireGuard:
+        case .recommend, .openVPNTCP, .openVPNUDP, .wireGuard:
             return true
         default:
             return false

@@ -201,6 +201,7 @@ struct RequestCertificateModel: Codable {
     var requestId: String?
     var sessionId: String?
     var dns: [String]
+    var exceedLimit: Bool = false
     
     enum CodingKeys: String, CodingKey {
         case server
@@ -208,6 +209,7 @@ struct RequestCertificateModel: Codable {
         case requestId
         case sessionId
         case dns
+        case exceedLimit
     }
     
     init(from decoder: Decoder) throws {
@@ -242,6 +244,12 @@ struct RequestCertificateModel: Codable {
         } else {
             dns = []
         }
+        
+        if let _exceedLimit = try? values.decode(Bool.self, forKey: .exceedLimit) {
+            exceedLimit = _exceedLimit
+        } else {
+            exceedLimit = false
+        }
     }
     
     func convertToString() -> String {
@@ -254,7 +262,7 @@ struct RequestCertificateModel: Codable {
         
         stringData += spaceLine
         stringData += "dev " + _connection.dev + spaceLine
-        stringData += "proto " + _connection.proto + spaceLine 
+        stringData += "proto " + _connection.proto + spaceLine
         stringData += "remote " + _connection.remote + spaceLine
         stringData += "cipher " + _connection.cipher + spaceLine
         stringData += "auth " + _connection.auth + spaceLine

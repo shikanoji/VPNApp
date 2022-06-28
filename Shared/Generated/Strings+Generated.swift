@@ -395,8 +395,10 @@ public enum L10n {
     public static let onMobileConnect = L10n.tr("Settings", "onMobileConnect")
     /// On Wi-fi
     public static let onWifiConnect = L10n.tr("Settings", "onWifiConnect")
-    /// Open VPN
-    public static let openVPN = L10n.tr("Settings", "openVPN")
+    /// OpenVPN - TCP
+    public static let openVPNTCP = L10n.tr("Settings", "openVPNTCP")
+    /// OpenVPN - UDP
+    public static let openVPNUDP = L10n.tr("Settings", "openVPNUDP")
     /// Auto-connect to
     public static let sectionAutoConnect = L10n.tr("Settings", "sectionAutoConnect")
     /// Other Settings
