@@ -25,6 +25,8 @@
 "Infomation.id" = "SysVpn id";
 "Infomation.security" = "Account sercurity";
 "Infomation.changePassword" = "Change password";
+"Infomation.setPassword" = "Set password";
+"Infomation.setPasswordNote" = "Set password for your account.";
 "Infomation.introChangePassword" = "Enter current & new password";
 "Infomation.currentPassword" = "Current Password";
 "Infomation.newPassword" = "New Password";

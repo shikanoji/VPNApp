@@ -51,7 +51,7 @@ class PlanSelectionViewModel: ObservableObject {
                         let receiptData = try Data(contentsOf: appStoreReceiptURL, options: .alwaysMapped)
                         
                         let receiptString = receiptData.base64EncodedString(options: [])
-                        
+                        print(receiptString)
                         // Read receiptData
                         self?.toWelcomeScreen = true
                     }
