@@ -92,6 +92,10 @@ public enum L10n {
       public static let save = L10n.tr("Account", "Infomation.save")
       /// Account sercurity
       public static let security = L10n.tr("Account", "Infomation.security")
+      /// Set password
+      public static let setPassword = L10n.tr("Account", "Infomation.setPassword")
+      /// Set password for your account.
+      public static let setPasswordNote = L10n.tr("Account", "Infomation.setPasswordNote")
       /// Tap to change password
       public static let tapToChangePassword = L10n.tr("Account", "Infomation.tapToChangePassword")
       /// Infomation
