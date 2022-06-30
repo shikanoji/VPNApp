@@ -38,7 +38,6 @@ enum PositionItemCell {
 }
 
 struct ItemRowCell: View {
-    
     @State var title: String = ""
     @State var content: String = ""
     @State var showRightButton = false
@@ -47,13 +46,23 @@ struct ItemRowCell: View {
     @State var alertContent = ""
     
     @State var position: PositionItemCell = .middle
-    
+    var item: ItemCell? = nil
     var switchValue: Bool = false
     var onSwitchValueChange: ((Bool) -> Void)?
     
     var body: some View {
         HStack {
             Spacer().frame(width: 16)
+            if item?.type == .fastestServer {
+                if let autoConnectNode = AppSetting.shared.getAutoConnectNode(),
+                   let flag = autoConnectNode.flag {
+                    ImageView(withURL: flag, size: Constant.BoardList.heightImageNode)
+                        .clipShape(Circle())
+                } else {
+                    Asset.Assets.fastestServerIcon.SuImage
+                }
+                Spacer().frame(width: 16)
+            }
             VStack(alignment: .leading, spacing: 6) {
                 Text(title)
                     .font(Constant.Menu.fontItem)
@@ -116,7 +125,6 @@ struct SettingRow_Previews: PreviewProvider {
 }
 
 struct CheckmarkToggleStyle: ToggleStyle {
-    
     func makeBody(configuration: Configuration) -> some View {
         HStack {
             configuration.label

@@ -24,8 +24,8 @@ struct Node: Identifiable, Codable {
     var flag: String
     var isCity = false
     var cityNodeList = [Node]()
-    var countryId: Int?
-    var countryName: String?
+    var countryId: Int = 0
+    var countryName: String = ""
     
     enum CodingKeys: String, CodingKey {
         case id
@@ -41,6 +41,7 @@ struct Node: Identifiable, Codable {
         case x
         case y
         case countryId
+        case countryName
     }
     
     init(from decoder: Decoder) throws {
@@ -110,7 +111,11 @@ struct Node: Identifiable, Codable {
         if let _countryId = try? values.decode(Int.self, forKey: .countryId){
             self.countryId = _countryId
         } else {
-            self.countryId = nil
+            self.countryId = 0
+        }
+        
+        if let _countryName = try? values.decode(String.self, forKey: .countryName){
+            self.countryName = _countryName
         }
         
         cityNodeList = cityNodeList.map { city -> Node in

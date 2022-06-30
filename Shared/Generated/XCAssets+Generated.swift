@@ -75,6 +75,7 @@ internal enum Asset {
     internal static let rocketFast = ImageAsset(name: "rocket-fast")
     internal static let unlimited = ImageAsset(name: "unlimited")
     internal static let welcome = ImageAsset(name: "welcome")
+    internal static let fastestServerIcon = ImageAsset(name: "fastest_server_icon")
     internal static let iconArrowRight = ImageAsset(name: "icon_arrow_right")
   }
   internal enum Colors {

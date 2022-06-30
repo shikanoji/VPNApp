@@ -42,6 +42,7 @@ enum AppKeys: String {
     case ip = "ip"
     case listNodeGroup = "listNodeGroup"
     case mutilhopList = "mutilhopList"
+    case autoConnectNode = "autoConnectNode"
     
     ///Last Time when Data Map Update
     case lastChange = "lastChange"

@@ -80,6 +80,9 @@ struct ChangePasswordView: View {
                 ZStack(alignment: .top) {
                     VisualEffectView(effect: UIBlurEffect(style: .dark))
                         .opacity(0.95)
+                        .onTapGesture {
+                            self.showChangePassword = false
+                        }
                     HStack {
                         Image(Constant.CustomNavigation.iconBack)
                             .onTapGesture {

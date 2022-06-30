@@ -122,6 +122,23 @@ extension AppSetting {
         return nil
     }
     
+    func saveAutoConnectNode(_ dataNode: Node?) {
+        if dataNode != nil {
+            let data = try! JSONEncoder().encode(dataNode!)
+            UserDefaults.standard.set(data, forKey: AppKeys.autoConnectNode.rawValue)
+        } else {
+            UserDefaults.standard.set(nil, forKey: AppKeys.autoConnectNode.rawValue)
+        }
+    }
+    
+    func getAutoConnectNode() -> Node? {
+        if let dataAutoConnectNode = UserDefaults.standard.data(forKey: AppKeys.autoConnectNode.rawValue) {
+            let autoConnectNode = try! JSONDecoder().decode(Node.self, from: dataAutoConnectNode)
+            return autoConnectNode
+        }
+        return nil
+    }
+    
     func saveMutilhopList(_ arr: [MultihopModel]) {
         let data = try! JSONEncoder().encode(arr)
         UserDefaults.standard.set(data, forKey: AppKeys.mutilhopList.rawValue)

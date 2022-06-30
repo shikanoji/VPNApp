@@ -23,6 +23,8 @@
 		AC490871281B9FC600DB430B /* NotificationExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC490870281B9FC600DB430B /* NotificationExtension.swift */; };
 		AC490873281B9FFB00DB430B /* PublisherExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC490872281B9FFB00DB430B /* PublisherExtension.swift */; };
 		AC516FCE2869A91F00BEBC81 /* LoadingScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC516FCD2869A91F00BEBC81 /* LoadingScreen.swift */; };
+		AC516FD2286C50A000BEBC81 /* AutoConnectDestinationSelectView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC516FD1286C50A000BEBC81 /* AutoConnectDestinationSelectView.swift */; };
+		AC516FD4286C579800BEBC81 /* AutoConnectDestinationSelectViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC516FD3286C579800BEBC81 /* AutoConnectDestinationSelectViewModel.swift */; };
 		AC6074B027D8D24F00DD5667 /* ArrayExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC6074AF27D8D24F00DD5667 /* ArrayExtension.swift */; };
 		AC6074B227D8D2B200DD5667 /* CustomPopupView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC6074B127D8D2B200DD5667 /* CustomPopupView.swift */; };
 		AC6074D927DB74CC00DD5667 /* swiftgen.yml in Resources */ = {isa = PBXBuildFile; fileRef = AC6074D827DB74CB00DD5667 /* swiftgen.yml */; };
@@ -357,6 +359,8 @@
 		AC490870281B9FC600DB430B /* NotificationExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationExtension.swift; sourceTree = "<group>"; };
 		AC490872281B9FFB00DB430B /* PublisherExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PublisherExtension.swift; sourceTree = "<group>"; };
 		AC516FCD2869A91F00BEBC81 /* LoadingScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingScreen.swift; sourceTree = "<group>"; };
+		AC516FD1286C50A000BEBC81 /* AutoConnectDestinationSelectView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AutoConnectDestinationSelectView.swift; sourceTree = "<group>"; };
+		AC516FD3286C579800BEBC81 /* AutoConnectDestinationSelectViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AutoConnectDestinationSelectViewModel.swift; sourceTree = "<group>"; };
 		AC6074AF27D8D24F00DD5667 /* ArrayExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArrayExtension.swift; sourceTree = "<group>"; };
 		AC6074B127D8D2B200DD5667 /* CustomPopupView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomPopupView.swift; sourceTree = "<group>"; };
 		AC6074D827DB74CB00DD5667 /* swiftgen.yml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.yaml; path = swiftgen.yml; sourceTree = SOURCE_ROOT; };
@@ -663,6 +667,8 @@
 			children = (
 				EE9B77B7283F2F3B00240E89 /* AutoConnectViewModel.swift */,
 				EE9B77C528460BB400240E89 /* AutoConnectView.swift */,
+				AC516FD1286C50A000BEBC81 /* AutoConnectDestinationSelectView.swift */,
+				AC516FD3286C579800BEBC81 /* AutoConnectDestinationSelectViewModel.swift */,
 			);
 			path = AutoConnect;
 			sourceTree = "<group>";
@@ -1768,6 +1774,7 @@
 				AC6074B227D8D2B200DD5667 /* CustomPopupView.swift in Sources */,
 				D78044E32758F54A0086E59D /* AppDelegate.swift in Sources */,
 				D785DFBF27B3B26F001FC84B /* FAQViewModel.swift in Sources */,
+				AC516FD4286C579800BEBC81 /* AutoConnectDestinationSelectViewModel.swift in Sources */,
 				EE514CBF27CCC14500F82AD7 /* LoadingView.swift in Sources */,
 				EE85EE1227BDF5B6000F967A /* Node.swift in Sources */,
 				D78044F4275912AC0086E59D /* AppSetting.swift in Sources */,
@@ -1775,6 +1782,7 @@
 				EE3246E8282237580070FB91 /* StaticNodePopupView.swift in Sources */,
 				AC6074EE27DE42C100DD5667 /* Strings+Generated.swift in Sources */,
 				EE8910012796792400ADF293 /* PaymentHistoryView.swift in Sources */,
+				AC516FD2286C50A000BEBC81 /* AutoConnectDestinationSelectView.swift in Sources */,
 				EE9B77BF28460AC700240E89 /* ProtocolSettingView.swift in Sources */,
 				AC6074B027D8D24F00DD5667 /* ArrayExtension.swift in Sources */,
 				EE514CBD27CC71DC00F82AD7 /* IpInfoResult.swift in Sources */,

@@ -14,11 +14,41 @@ struct LocationListView: View {
     @State var isEditing = false
     @State var showCityListView = false
     @State var cityNode: Node?
-    
+    var hasFastestOption: Bool = false
+    @Binding var showAutoConnectionDestinationView: Bool
+    var fastestServerSection: some View {
+            VStack {
+                HStack {
+                    Spacer().frame(width: 16)
+                    Text("Favorites")
+                        .font(Constant.BoardList.fontNodeList)
+                        .foregroundColor(AppColor.lightBlackText)
+                    Spacer()
+                }
+                HStack(spacing: 16) {
+                    Asset.Assets.fastestServerIcon.SuImage
+                    VStack(alignment: .leading, spacing: 4) {
+                        Text("Fastest server")
+                            .font(Constant.BoardList.fontNameCity)
+                            .foregroundColor(.white)
+                    }
+                    Spacer()
+                }
+                .padding()
+                .frame(height: Constant.BoardList.heightStatusLoction)
+                .onTapGesture {
+                    nodeSelect = nil
+                }
+            }
+        }
     var body: some View {
         VStack(spacing: 8) {
             SearchBar(text: $searchText, isEditing: $isEditing)
                 .padding(.horizontal)
+            if hasFastestOption  {
+                Spacer().frame(height: 20)
+                fastestServerSection
+            }
             ScrollView(showsIndicators: false) {
                 VStack(alignment: .leading) {
                     if isEditing {
@@ -48,7 +78,9 @@ struct LocationListView: View {
                 }
             }
             Spacer()
-            NavigationLink(destination: CityListView(nodeSelect: $nodeSelect, node: cityNode ?? Node.country), isActive: $showCityListView) { }
+            NavigationLink(destination: CityListView(nodeSelect: $nodeSelect,
+                                                     node: cityNode ?? Node.country,
+                                                     showAutoConnectDestinationView: $showAutoConnectionDestinationView), isActive: $showCityListView) { }
         }
         .frame(maxHeight: .infinity)
         .navigationBarHidden(true)
@@ -79,6 +111,6 @@ struct LocationListView_Previews: PreviewProvider {
     @State static var nodeSelect: Node? = nil
     
     static var previews: some View {
-        LocationListView(locationData: $locationData, nodeSelect: $nodeSelect)
+        LocationListView(locationData: $locationData, nodeSelect: $nodeSelect, showAutoConnectionDestinationView: .constant(false))
     }
 }
