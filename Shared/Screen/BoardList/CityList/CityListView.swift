@@ -10,7 +10,7 @@ import SwiftUI
 struct CityListView: View {
     @Binding var nodeSelect: Node?
     @State var node: Node
-    
+    @Binding var showAutoConnectDestinationView: Bool
     let imageSize: CGFloat = Constant.BoardList.heightImageNode
     
     @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
@@ -18,9 +18,13 @@ struct CityListView: View {
     var body: some View {
         VStack(spacing: 8) {
             Spacer()
-                .frame(height: 20)
+                .frame(height: 40)
             Button(action: {
-                presentationMode.wrappedValue.dismiss()
+                if showAutoConnectDestinationView {
+                    showAutoConnectDestinationView = false
+                } else {
+                    presentationMode.wrappedValue.dismiss()
+                }
             }) {
                 HStack {
                     Image(Constant.CustomNavigation.iconLeft)
@@ -39,7 +43,11 @@ struct CityListView: View {
                     ForEach(node.cityNodeList) { city in
                         Button {
                             nodeSelect = city
-                            presentationMode.wrappedValue.dismiss()
+                            if showAutoConnectDestinationView {
+                                showAutoConnectDestinationView = false
+                            } else {
+                                presentationMode.wrappedValue.dismiss()
+                            }
                         } label: {
                             CityCellView(node: city, subName: L10n.Board.BoardList.cityOf + " \(node.name)")
                         }
@@ -60,6 +68,6 @@ struct CityListView_Previews: PreviewProvider {
     @State static var nodeSelect: Node? = Node.country
     
     static var previews: some View {
-        CityListView(nodeSelect: $nodeSelect, node: node)
+        CityListView(nodeSelect: $nodeSelect, node: node, showAutoConnectDestinationView: .constant(false))
     }
 }

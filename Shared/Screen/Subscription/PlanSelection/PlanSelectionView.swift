@@ -33,7 +33,11 @@ struct PlanSelectionView: View {
                                    isActive: $viewModel.toWelcomeScreen) {
                     }
                     AppButton(width: 311, text: L10n.PlanSelect.continueButton) {
+                        #if DEBUG
+                        viewModel.toWelcomeScreen = true
+                        #else
                         viewModel.purchasePlan()
+                        #endif
                     }
                     Spacer().frame(height: 20)
                     Text(viewModel.planListViewModel.selectedPlan?.note ?? "")

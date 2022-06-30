@@ -68,7 +68,8 @@ struct SelectLocationMultihopView: View {
             }
             Spacer()
             NavigationLink(destination: CityListView(nodeSelect: $nodeSelect,
-                                                     node: cityNode ?? Node.country),
+                                                     node: cityNode ?? Node.country,
+                                                     showAutoConnectDestinationView: .constant(false)),
                            isActive: $showCityListView) { }
         }
         .onChange(of: nodeSelect, perform: { newValue in

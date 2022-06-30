@@ -147,12 +147,23 @@ extension IAPHandler: SKProductsRequestDelegate, SKPaymentTransactionObserver{
                         completion(IAPHandlerAlertType.canceled, nil, nil)
                     }
                     break
+                    
                 case .restored:
                     log("Product restored")
                     SKPaymentQueue.default().finishTransaction(transaction as! SKPaymentTransaction)
+                    if let completion = self.purchaseProductCompletion {
+                        completion(IAPHandlerAlertType.restored, nil, nil)
+                    }
                     break
                     
-                default: break
+                case .purchasing:
+                    break
+                    
+                default:
+                    if let completion = self.purchaseProductCompletion {
+                        completion(IAPHandlerAlertType.canceled, nil, nil)
+                    }
+                    break
                 }
             }
         }

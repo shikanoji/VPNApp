@@ -138,8 +138,8 @@ class BoardViewModel: ObservableObject {
     
     init() {
         
-        AppSetting.shared.updateDataMap ? getDataUpdate() : getDataFromLocal()
-        
+//        AppSetting.shared.updateDataMap ? getDataUpdate() : getDataFromLocal()
+        getDataUpdate()
         getMultihopList()
         
         NotificationCenter.default.addObserver(
@@ -197,6 +197,7 @@ class BoardViewModel: ObservableObject {
     }
     
     @objc private func checkAutoconnectIfNeeded() {
+        print("checkAutoconnectIfNeeded")
         guard let type = ItemCellType(rawValue: AppSetting.shared.selectAutoConnect) else {
             self.stopAutoconnectTimer()
             return
@@ -317,9 +318,9 @@ class BoardViewModel: ObservableObject {
                 ip = AppSetting.shared.ip
                 flag = ""
                 stopSpeedTimer()
-                isProcessingVPN = false
                 
                 if numberReconnect < maximumReconnect, !disconnectByUser {
+                    print("startConnectVPN disconnectByUser")
                     startConnectVPN()
                 } else {
                     if disconnectByUser {
@@ -327,6 +328,8 @@ class BoardViewModel: ObservableObject {
                     }
                     disconnectByUser = false
                 }
+                
+                isProcessingVPN = false
             }
             
         default:
@@ -365,6 +368,7 @@ class BoardViewModel: ObservableObject {
             case .off:
                 switch self?.stateUI {
                 case .connected:
+                    self?.disconnectByUser = true
                     self?.disconnectSession()
                     NetworkManager.shared.disconnect()
                 default:
@@ -657,7 +661,10 @@ class BoardViewModel: ObservableObject {
                              staticNodes: staticIPData,
                              clientCountryNode: result.clientCountryDetail)
         
-        getAvaiableCity(cityNodes)
+        var cityRecommendNodes = [Node]()
+        result.recommendedCountries.forEach { cityRecommendNodes.append(contentsOf: $0.cityNodeList) }
+        
+        getAvaiableCity(cityRecommendNodes)
     }
     
     func disconnectSession() {

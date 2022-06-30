@@ -95,7 +95,7 @@ enum SectionType: Decodable {
             ]
         case .autoConnect:
             return [
-                ItemCell(type: .faster)
+                ItemCell(type: .fastestServer)
             ]
             
         case .protocolConnect:
@@ -169,7 +169,7 @@ enum ItemCellType: Int, Decodable {
     case onWifi
     case onMobile
     case off
-    case faster
+    case fastestServer
     
     case recommend
     case openVPNTCP
@@ -248,7 +248,10 @@ enum ItemCellType: Int, Decodable {
             return L10n.Settings.onMobileConnect
         case .off:
             return L10n.Settings.offConnect
-        case .faster:
+        case .fastestServer:
+            if let autoConnectNode = AppSetting.shared.getAutoConnectNode() {
+                return autoConnectNode.countryName
+            }
             return L10n.Settings.fastestConnect
         case .recommend:
             return L10n.Settings.contentRecommend
@@ -340,7 +343,10 @@ enum ItemCellType: Int, Decodable {
             return L10n.Settings.contentItemLocalNetwork
         case .metered:
             return L10n.Settings.contentItemMetered
-        case .faster:
+        case .fastestServer:
+            if let autoConnectNode = AppSetting.shared.getAutoConnectNode() {
+                return autoConnectNode.name 
+            }
             return L10n.Settings.contentRecommend
         default:
             return ""
@@ -351,7 +357,7 @@ enum ItemCellType: Int, Decodable {
         switch self {
         case .paymentHistory:
             return true
-        case .faster:
+        case .fastestServer:
             return true
         default:
             return false
