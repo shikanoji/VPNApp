@@ -12,6 +12,7 @@ struct PlanSelectionView: View {
     @Environment(\.presentationMode) var presentationMode
     @StateObject var viewModel: PlanSelectionViewModel
     @State var toWelcomeScreen = false
+    @State var shouldShowAccountLinkedAlertView = false
     var body: some View {
         LoadingScreen(isShowing: $viewModel.showProgressView) {
             Background {
@@ -31,6 +32,9 @@ struct PlanSelectionView: View {
                     }
                     NavigationLink(destination: WelcomeView().navigationBarHidden(true),
                                    isActive: $viewModel.toWelcomeScreen) {
+                    }
+                    NavigationLink(destination: SubscriptionLinkedAlertView().navigationBarHidden(true),
+                                   isActive: $shouldShowAccountLinkedAlertView) {
                     }
                     AppButton(width: 311, text: L10n.PlanSelect.continueButton) {
                         #if DEBUG
