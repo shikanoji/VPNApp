@@ -28,7 +28,7 @@ struct SettingsView: View {
     var body: some View {
         VStack {
             AppColor.darkButton
-                .frame(height: 24)
+                .frame(height: 14)
             CustomNavigationView(
                 tapLeftButton: {
                     showSettings = false

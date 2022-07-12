@@ -200,6 +200,8 @@ public enum L10n {
     public static let title = L10n.tr("ForgotPassword", "Title")
   }
   public enum Global {
+    /// Back
+    public static let back = L10n.tr("Global", "Back")
     /// Cancel
     public static let cancel = L10n.tr("Global", "cancel")
     /// Default
@@ -279,10 +281,16 @@ public enum L10n {
     public static let title = L10n.tr("Notice", "Title")
   }
   public enum PlanSelect {
+    /// Account limit reached
+    public static let accountLimit = L10n.tr("PlanSelect", "AccountLimit")
+    /// You already have a SysVPN account associated with Apple ID. Please log in on that account to continue.
+    public static let accountLimitNote = L10n.tr("PlanSelect", "AccountLimitNote")
     /// All plans include protection for 6 devices
     public static let body = L10n.tr("PlanSelect", "body")
     /// Continue
     public static let continueButton = L10n.tr("PlanSelect", "continueButton")
+    /// Got it
+    public static let gotIt = L10n.tr("PlanSelect", "GotIt")
     /// month
     public static let month = L10n.tr("PlanSelect", "month")
     /// Pay after 7 days. Subscription auto-renews every 1 years

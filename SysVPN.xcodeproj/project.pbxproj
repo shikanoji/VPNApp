@@ -56,6 +56,7 @@
 		AC79CE0B282CFB9600E1E874 /* ToolsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC79CE0A282CFB9600E1E874 /* ToolsViewModel.swift */; };
 		AC87539B2801ED10004C5F43 /* DeleteAccountConfirmationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC87539A2801ED10004C5F43 /* DeleteAccountConfirmationView.swift */; };
 		AC87539C2801ED10004C5F43 /* DeleteAccountConfirmationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC87539A2801ED10004C5F43 /* DeleteAccountConfirmationView.swift */; };
+		AC91BDEF287C5C3A002776E6 /* SubscriptionLinkedAlertView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC91BDEE287C5C3A002776E6 /* SubscriptionLinkedAlertView.swift */; };
 		AC9A8F5B27D6236900FACD7D /* KeychainService.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC9A8F5A27D6236900FACD7D /* KeychainService.swift */; };
 		AC9A8F5D27D655C700FACD7D /* Constant+KeychainService.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC9A8F5C27D655C700FACD7D /* Constant+KeychainService.swift */; };
 		ACB6DDD92818F23E007DA359 /* EmptyResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACB6DDD82818F23E007DA359 /* EmptyResult.swift */; };
@@ -386,6 +387,7 @@
 		AC79CE08282CFA7800E1E874 /* ToolsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToolsView.swift; sourceTree = "<group>"; };
 		AC79CE0A282CFB9600E1E874 /* ToolsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToolsViewModel.swift; sourceTree = "<group>"; };
 		AC87539A2801ED10004C5F43 /* DeleteAccountConfirmationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeleteAccountConfirmationView.swift; sourceTree = "<group>"; };
+		AC91BDEE287C5C3A002776E6 /* SubscriptionLinkedAlertView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubscriptionLinkedAlertView.swift; sourceTree = "<group>"; };
 		AC9A8F5A27D6236900FACD7D /* KeychainService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeychainService.swift; sourceTree = "<group>"; };
 		AC9A8F5C27D655C700FACD7D /* Constant+KeychainService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Constant+KeychainService.swift"; sourceTree = "<group>"; };
 		ACB6DDD82818F23E007DA359 /* EmptyResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmptyResult.swift; sourceTree = "<group>"; };
@@ -735,6 +737,7 @@
 				D71CE4FC27903D4F00E8731D /* SubscriptionIntroductionView.swift */,
 				D79E82942796F671009E36F3 /* WelcomeView.swift */,
 				D79E829827970649009E36F3 /* SetupVPNView.swift */,
+				AC91BDEE287C5C3A002776E6 /* SubscriptionLinkedAlertView.swift */,
 			);
 			path = Subscription;
 			sourceTree = "<group>";
@@ -1849,6 +1852,7 @@
 				EE78F74A280E781100F49903 /* WireGuardManager.swift in Sources */,
 				D785C72927BD4F7C00E83C0F /* KeyedCodingKeyContainerExtension.swift in Sources */,
 				AC4051E227CCB6860054F6AE /* ToastView.swift in Sources */,
+				AC91BDEF287C5C3A002776E6 /* SubscriptionLinkedAlertView.swift in Sources */,
 				EE78F77E2811526C00F49903 /* RequestCertificateModel.swift in Sources */,
 				D79BF75E27BD10D700E76C37 /* Constant+API.swift in Sources */,
 				EE78F768280FB6CE00F49903 /* NetworkManager.swift in Sources */,
