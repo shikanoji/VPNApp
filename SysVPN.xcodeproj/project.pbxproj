@@ -13,6 +13,8 @@
 		6384B4F8276C43DD00E904D2 /* BoardViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6384B4F7276C43DD00E904D2 /* BoardViewModel.swift */; };
 		AC1195D22844D71D002230F0 /* DNSSettingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC1195D12844D71D002230F0 /* DNSSettingView.swift */; };
 		AC1195DB28452313002230F0 /* DNSSettingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC1195DA28452313002230F0 /* DNSSettingViewModel.swift */; };
+		AC280AF12880179F00FE1246 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = AC280AF02880179F00FE1246 /* GoogleService-Info.plist */; };
+		AC280AF32880214C00FE1246 /* GoogleService-Info-dev.plist in Resources */ = {isa = PBXBuildFile; fileRef = AC280AF22880214C00FE1246 /* GoogleService-Info-dev.plist */; };
 		AC4051E227CCB6860054F6AE /* ToastView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC4051E127CCB6860054F6AE /* ToastView.swift */; };
 		AC489252286405F6003F2795 /* PurchaseService.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC489251286405F6003F2795 /* PurchaseService.swift */; };
 		AC490871281B9FC600DB430B /* NotificationExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC490870281B9FC600DB430B /* NotificationExtension.swift */; };
@@ -75,7 +77,6 @@
 		D78044C82758C6FC0086E59D /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D780449C2758C6F90086E59D /* ContentView.swift */; };
 		D78044CA2758C6FC0086E59D /* Persistence.swift in Sources */ = {isa = PBXBuildFile; fileRef = D780449D2758C6F90086E59D /* Persistence.swift */; };
 		D78044CC2758C6FC0086E59D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D780449E2758C6FB0086E59D /* Assets.xcassets */; };
-		D78044DD2758F46B0086E59D /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = D78044DC2758F46B0086E59D /* GoogleService-Info.plist */; };
 		D78044E12758F5110086E59D /* UIApplicationExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = D78044E02758F5110086E59D /* UIApplicationExtension.swift */; };
 		D78044E32758F54A0086E59D /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D78044E22758F54A0086E59D /* AppDelegate.swift */; };
 		D78044EA27590DB70086E59D /* APIManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D78044E927590DB70086E59D /* APIManager.swift */; };
@@ -117,7 +118,6 @@
 		D7A4AC4327952C5900C88162 /* PlanListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7A4AC4227952C5900C88162 /* PlanListViewModel.swift */; };
 		D7A4AC4527954A7900C88162 /* PlanListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7A4AC4427954A7900C88162 /* PlanListCell.swift */; };
 		D7A4AC472795743300C88162 /* NotificationNameExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7A4AC462795743300C88162 /* NotificationNameExtension.swift */; };
-		D7F0EAB527BF9BB300B41015 /* GoogleService-Info-dev.plist in Resources */ = {isa = PBXBuildFile; fileRef = D7F0EAB427BF9BB300B41015 /* GoogleService-Info-dev.plist */; };
 		D7F9695827B262190037A3D0 /* SessionVPNViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7F9695727B262190037A3D0 /* SessionVPNViewModel.swift */; };
 		D7F9695C27B2AC980037A3D0 /* FAQView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7F9695B27B2AC980037A3D0 /* FAQView.swift */; };
 		D7F9695F27B2B8590037A3D0 /* QuestionModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7F9695E27B2B8590037A3D0 /* QuestionModel.swift */; };
@@ -267,6 +267,8 @@
 		6384B4F7276C43DD00E904D2 /* BoardViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoardViewModel.swift; sourceTree = "<group>"; };
 		AC1195D12844D71D002230F0 /* DNSSettingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DNSSettingView.swift; sourceTree = "<group>"; };
 		AC1195DA28452313002230F0 /* DNSSettingViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DNSSettingViewModel.swift; sourceTree = "<group>"; };
+		AC280AF02880179F00FE1246 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		AC280AF22880214C00FE1246 /* GoogleService-Info-dev.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info-dev.plist"; sourceTree = "<group>"; };
 		AC4051E127CCB6860054F6AE /* ToastView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToastView.swift; sourceTree = "<group>"; };
 		AC489251286405F6003F2795 /* PurchaseService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PurchaseService.swift; sourceTree = "<group>"; };
 		AC490870281B9FC600DB430B /* NotificationExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationExtension.swift; sourceTree = "<group>"; };
@@ -317,7 +319,6 @@
 		D780449D2758C6F90086E59D /* Persistence.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Persistence.swift; sourceTree = "<group>"; };
 		D780449E2758C6FB0086E59D /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		D78044A32758C6FB0086E59D /* SysVPN Dev.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "SysVPN Dev.app"; sourceTree = BUILT_PRODUCTS_DIR; };
-		D78044DC2758F46B0086E59D /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		D78044E02758F5110086E59D /* UIApplicationExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIApplicationExtension.swift; sourceTree = "<group>"; };
 		D78044E22758F54A0086E59D /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		D78044E927590DB70086E59D /* APIManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIManager.swift; sourceTree = "<group>"; };
@@ -361,7 +362,6 @@
 		D7A4AC4227952C5900C88162 /* PlanListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlanListViewModel.swift; sourceTree = "<group>"; };
 		D7A4AC4427954A7900C88162 /* PlanListCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlanListCell.swift; sourceTree = "<group>"; };
 		D7A4AC462795743300C88162 /* NotificationNameExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationNameExtension.swift; sourceTree = "<group>"; };
-		D7F0EAB427BF9BB300B41015 /* GoogleService-Info-dev.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info-dev.plist"; sourceTree = "<group>"; };
 		D7F9695727B262190037A3D0 /* SessionVPNViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionVPNViewModel.swift; sourceTree = "<group>"; };
 		D7F9695B27B2AC980037A3D0 /* FAQView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FAQView.swift; sourceTree = "<group>"; };
 		D7F9695E27B2B8590037A3D0 /* QuestionModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuestionModel.swift; sourceTree = "<group>"; };
@@ -949,7 +949,7 @@
 		D7F0EAB227BF9B9200B41015 /* Dev */ = {
 			isa = PBXGroup;
 			children = (
-				D7F0EAB427BF9BB300B41015 /* GoogleService-Info-dev.plist */,
+				AC280AF22880214C00FE1246 /* GoogleService-Info-dev.plist */,
 			);
 			path = Dev;
 			sourceTree = "<group>";
@@ -957,7 +957,7 @@
 		D7F0EAB327BF9B9D00B41015 /* Release */ = {
 			isa = PBXGroup;
 			children = (
-				D78044DC2758F46B0086E59D /* GoogleService-Info.plist */,
+				AC280AF02880179F00FE1246 /* GoogleService-Info.plist */,
 			);
 			path = Release;
 			sourceTree = "<group>";
@@ -1190,9 +1190,9 @@
 /* End PBXLegacyTarget section */
 
 /* Begin PBXNativeTarget section */
-		D78044A22758C6FB0086E59D /* SysVPN (iOS) */ = {
+		D78044A22758C6FB0086E59D /* SysVPN */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = D78044D02758C6FC0086E59D /* Build configuration list for PBXNativeTarget "SysVPN (iOS)" */;
+			buildConfigurationList = D78044D02758C6FC0086E59D /* Build configuration list for PBXNativeTarget "SysVPN" */;
 			buildPhases = (
 				AC6074DA27DC6B3800DD5667 /* SwiftGen */,
 				D780449F2758C6FB0086E59D /* Sources */,
@@ -1206,7 +1206,7 @@
 				EE03444528090AB7003DFB64 /* PBXTargetDependency */,
 				EE46BCD3280963F4003C4FEB /* PBXTargetDependency */,
 			);
-			name = "SysVPN (iOS)";
+			name = SysVPN;
 			packageProductDependencies = (
 				EE03440628081044003DFB64 /* TunnelKit */,
 				EE03440828081044003DFB64 /* TunnelKitLZO */,
@@ -1331,7 +1331,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				D78044A22758C6FB0086E59D /* SysVPN (iOS) */,
+				D78044A22758C6FB0086E59D /* SysVPN */,
 				EE03443C28090AB7003DFB64 /* OpenVPN */,
 				EE46BCCA280963F4003C4FEB /* WireGuard */,
 				EE46BCD82809641B003C4FEB /* WireGuardKit-iOS */,
@@ -1345,6 +1345,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				AC60750B27DE431C00DD5667 /* Account.strings in Resources */,
+				AC280AF32880214C00FE1246 /* GoogleService-Info-dev.plist in Resources */,
 				AC6074E727DE424600DD5667 /* StaticIP.strings in Resources */,
 				AC84BB74287FCB84006905CE /* swiftgen in Resources */,
 				D78044CC2758C6FC0086E59D /* Assets.xcassets in Resources */,
@@ -1361,13 +1362,12 @@
 				D784FA65275DA89B00A7A7F1 /* Global.strings in Resources */,
 				AC6074F327DE42FE00DD5667 /* Login.strings in Resources */,
 				EE46BCFC280D1509003C4FEB /* build_wireguard_go_bridge.sh in Resources */,
+				AC280AF12880179F00FE1246 /* GoogleService-Info.plist in Resources */,
 				AC60751327DE432300DD5667 /* FAQ.strings in Resources */,
-				D7F0EAB527BF9BB300B41015 /* GoogleService-Info-dev.plist in Resources */,
 				AC6074F627DE430200DD5667 /* Board.strings in Resources */,
 				AC60750F27DE431F00DD5667 /* Settings.strings in Resources */,
 				AC6074DD27DD014100DD5667 /* Colors.xcassets in Resources */,
 				AC6074FF27DE430B00DD5667 /* Notice.strings in Resources */,
-				D78044DD2758F46B0086E59D /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2089,7 +2089,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		D78044D02758C6FC0086E59D /* Build configuration list for PBXNativeTarget "SysVPN (iOS)" */ = {
+		D78044D02758C6FC0086E59D /* Build configuration list for PBXNativeTarget "SysVPN" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				D78044D12758C6FC0086E59D /* Debug */,
