@@ -7,6 +7,7 @@
 
 import Moya
 import Alamofire
+import UIKit
 
 enum APIError: Error {
     case someError

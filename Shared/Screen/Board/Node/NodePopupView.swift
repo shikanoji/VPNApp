@@ -30,7 +30,7 @@ struct NodePopupView: View {
         if node.isCity {
             return AnyView(
                 VStack(alignment: .center, spacing: 0) {
-                    Text(node.countryName ?? "")
+                    Text(node.countryName)
                         .font(.system(size: Constant.Board.NodePopupView.sizeFont * Constant.Board.Map.zoomCity * scale ,
                                       weight: Constant.Board.NodePopupView.weightFont))
                         .lineLimit(Constant.Board.NodePopupView.numberLineText)

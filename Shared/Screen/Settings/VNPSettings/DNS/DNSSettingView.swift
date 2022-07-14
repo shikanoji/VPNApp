@@ -7,7 +7,7 @@
 
 import Foundation
 import SwiftUI
-import ExytePopupView
+import PopupView
 import TunnelKitManager
 
 enum DNSSetting: String {

@@ -6,6 +6,7 @@
 //
 
 import RxSwift
+import RxMoya
 import Moya
 import SwiftyJSON
 
