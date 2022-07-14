@@ -55,7 +55,11 @@ struct DeleteAccountConfirmationView: View {
     
     var body: some View {
         ZStack {
-            Background{}.opacity(0.8)
+            Background{}
+                .opacity(0.8)
+                .onTapGesture {
+                    presentationMode.wrappedValue.dismiss()
+                }
             VStack {
                 Spacer().frame(height: 40)
                 HStack {

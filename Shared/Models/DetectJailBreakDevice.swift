@@ -64,7 +64,6 @@ public enum TypeOfJailBreakCheckAPI {
             self = .readAndWriteFiles
         case .systemCalls:
             self = .systemCalls
-            
         }
     }
 }

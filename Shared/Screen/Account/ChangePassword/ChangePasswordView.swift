@@ -21,9 +21,9 @@ struct ChangePasswordView: View {
     
     var header: some View {
         VStack(alignment: .leading, spacing: 8) {
-            Text(L10n.Account.Infomation.changePassword)
+            Text(AppSetting.shared.hasPassword ? L10n.Account.Infomation.changePassword : L10n.Account.Infomation.setPassword)
                 .font(Constant.ChangePassWord.fontTitle)
-            Text(L10n.Account.Infomation.introChangePassword)
+            Text(AppSetting.shared.hasPassword ? L10n.Account.Infomation.introChangePassword : L10n.Account.Infomation.setPasswordNote)
                 .font(Constant.ChangePassWord.fontSubContent)
                 .foregroundColor(Asset.Colors.lightBlackText.SuColor)
         }
@@ -80,6 +80,9 @@ struct ChangePasswordView: View {
                 ZStack(alignment: .top) {
                     VisualEffectView(effect: UIBlurEffect(style: .dark))
                         .opacity(0.95)
+                        .onTapGesture {
+                            self.showChangePassword = false
+                        }
                     HStack {
                         Image(Constant.CustomNavigation.iconBack)
                             .onTapGesture {
