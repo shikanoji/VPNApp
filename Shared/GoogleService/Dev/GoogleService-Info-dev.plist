@@ -3,21 +3,23 @@
 <plist version="1.0">
 <dict>
 	<key>CLIENT_ID</key>
-	<string>241654953259-6fqo93k2f2mv8onihosl281vpfadb0oe.apps.googleusercontent.com</string>
+	<string>950428175397-vnr64oph9jd5024nllebafs48ndh9tpc.apps.googleusercontent.com</string>
 	<key>REVERSED_CLIENT_ID</key>
-	<string>com.googleusercontent.apps.241654953259-6fqo93k2f2mv8onihosl281vpfadb0oe</string>
+	<string>com.googleusercontent.apps.950428175397-vnr64oph9jd5024nllebafs48ndh9tpc</string>
+	<key>ANDROID_CLIENT_ID</key>
+	<string>950428175397-29s2g89p1v675iu5q77ppahom48gd810.apps.googleusercontent.com</string>
 	<key>API_KEY</key>
-	<string>AIzaSyABuYuZJLc09f0z30hyC1rwSpgURvYV8Z4</string>
+	<string>AIzaSyA5O_1VujqRZCrCzhtWLilbk7fVOw7suqk</string>
 	<key>GCM_SENDER_ID</key>
-	<string>241654953259</string>
+	<string>950428175397</string>
 	<key>PLIST_VERSION</key>
 	<string>1</string>
 	<key>BUNDLE_ID</key>
 	<string>com.ilg.SysVPN.dev</string>
 	<key>PROJECT_ID</key>
-	<string>sysvpn-8e7c3</string>
+	<string>sysvpn-4f680</string>
 	<key>STORAGE_BUCKET</key>
-	<string>sysvpn-8e7c3.appspot.com</string>
+	<string>sysvpn-4f680.appspot.com</string>
 	<key>IS_ADS_ENABLED</key>
 	<false></false>
 	<key>IS_ANALYTICS_ENABLED</key>
@@ -29,6 +31,6 @@
 	<key>IS_SIGNIN_ENABLED</key>
 	<true></true>
 	<key>GOOGLE_APP_ID</key>
-	<string>1:241654953259:ios:53f5fcb717c1664dfb416e</string>
+	<string>1:950428175397:ios:6970e6b510f5ba3191c3cc</string>
 </dict>
 </plist>
