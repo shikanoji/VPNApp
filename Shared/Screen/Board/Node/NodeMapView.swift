@@ -20,7 +20,7 @@ struct NodeMapView: View {
             ForEach(mesh.getNodeViewShow()) { node in
                 NodeView(scale: $scale, node: node, selection: self.selection)
                     .position(x: Constant.convertXToMap(node.x) * scale,
-                              y: Constant.convertYToMap(node.y) * scale - 20)
+                              y: Constant.convertYToMap(node.y) * scale)
                     .onTapGesture {
                         self.selection.selectNode(node)
                     }
