@@ -87,6 +87,7 @@ enum APIService {
     case disconnectSession(sessionId: String, terminal: Bool)
     case getTopicQuestionList
     case getMultihopList
+    case fetchPaymentHistory
 }
 
 extension APIService: TargetType {
@@ -110,7 +111,7 @@ extension APIService: TargetType {
             return Constant.api.path.getMultihopList
         case .getTopicQuestionList:
             return ""
-//            return Constant.api.path.getTopicFaq
+            //            return Constant.api.path.getTopicFaq
         case .register:
             return Constant.api.path.register
         case .login:
@@ -139,13 +140,15 @@ extension APIService: TargetType {
             return Constant.api.path.disconnectSession
         case .loginSocial:
             return Constant.api.path.loginSocial
+        case .fetchPaymentHistory:
+            return Constant.api.path.fetchPaymentHistory
         }
     }
     
     // Here we specify which method our calls should use.
     var method: Moya.Method {
         switch self {
-        case .getCountryList, .ipInfo, .getRequestCertificate, .ipInfoOptional, .getListSession, .getTopicQuestionList, .getMultihopList:
+        case .getCountryList, .ipInfo, .getRequestCertificate, .ipInfoOptional, .getListSession, .getTopicQuestionList, .getMultihopList, .fetchPaymentHistory:
             return .get
         case .register, .login, .loginSocial, .logout, .forgotPassword, .refreshToken:
             return .post
@@ -249,9 +252,9 @@ extension APIService: TargetType {
                     }
                 }
                 
-//                if let staticServer = NetworkManager.shared.selectStaticServer {
-//                    param["serverId"] = staticServer.id
-//                }
+                //                if let staticServer = NetworkManager.shared.selectStaticServer {
+                //                    param["serverId"] = staticServer.id
+                //                }
             case .staticIP:
                 param["isHop"] = 0
                 if let staticServer = NetworkManager.shared.selectStaticServer {
@@ -323,6 +326,12 @@ extension APIService: TargetType {
                 bodyParameters: body,
                 bodyEncoding: JSONEncoding.prettyPrinted,
                 urlParameters: param)
+        case .fetchPaymentHistory:
+            var param: [String: Any] = [:]
+            param["key"] = "9ed926a3355c6f380d5f81a8efd36c25"
+            param["id"] = AppSetting.shared.idUser
+            
+            return .requestParameters(parameters: param, encoding: URLEncoding.queryString)
         }
     }
     
@@ -349,6 +358,12 @@ extension APIService: TargetType {
             baseHeader["x-user-info"] = "{\"id\": \(AppSetting.shared.idUser)}"
             
             return baseHeader
+        case .fetchPaymentHistory:
+            let baseHeader = [
+                "Content-type": "application/json",
+                "x-api-key": "4368c9a9-e8a7-4e66-89cb-97c801c5dd88"
+            ]
+            return baseHeader
         default:
             return ["Content-type": "application/json"]
         }
@@ -362,7 +377,7 @@ extension APIService: TargetType {
     
     
     func getInfoDevice() -> String {
-
+        
         let info = InfoDeviceModel(
             ipAddress: AppSetting.shared.ip,
             deviceId: UIDevice.current.identifierForVendor!.uuidString,

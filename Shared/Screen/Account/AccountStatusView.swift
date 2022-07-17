@@ -58,7 +58,8 @@ struct AccountStatusView: View {
                             PaymentHistoryView(
                                 showAccount: $showAccount,
                                 showAccountStatus: $showAccountStatus,
-                                statusConnect: $statusConnect),
+                                statusConnect: $statusConnect,
+                                viewModel: PaymentHistoryViewModel()),
                            isActive: $showPayment) { }
             NavigationLink(destination: PlanSelectionView(viewModel: PlanSelectionViewModel()).environmentObject(RegisterResultModel()),
                                        isActive: $showPlanListView) { }
