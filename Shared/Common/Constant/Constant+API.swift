@@ -27,6 +27,7 @@ extension Constant {
             static let disconnectSession = "/shared/module_server/v1/vpn/disconnect_session"
             static let getTopicFaq = "shared/app/module_faq/v1/faqs"
             static let getMultihopList = "app/module_server/v1/multi_hop/get_list"
+            static let fetchPaymentHistory = "/web/module_payment/v1/payments/"
         }
     }
 }

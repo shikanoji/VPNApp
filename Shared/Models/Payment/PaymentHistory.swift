@@ -1,35 +1,67 @@
 //
-//  PaymentHistory.swift
+//  PaymentHistoryResult.swift
 //  SysVPN
 //
-//  Created by Da Phan Van on 18/01/2022.
+//  Created by Nguyen Dinh Thach on 17/07/2022.
 //
 
 import Foundation
-import SwiftUI
-
-struct PaymentHistory {
-    enum statusPayemnt {
-        case failed
-        case success
+struct PaymentHistory: Decodable {
+    var page: Int = 0
+    var limit: Int = 0
+    var totalPages: Int = 0
+    var totalResults: Int = 0
+    var rows: [PaymentHistoryRow] = []
+    
+    enum CodingKeys: String, CodingKey {
+        case page = "page"
+        case limit = "limit"
+        case totalPages = "totalPages"
+        case totalResults = "totalResults"
+        case rows = "rows"
     }
     
-    var id: UUID = UUID()
-    var pack = "3 months pack"
-    var status: statusPayemnt = .failed
-    var contentStatus: String {
-        switch status {
-        case .failed:
-            return "Failed"
-        case .success:
-            return "Success"
+    init(from decoder: Decoder) throws {
+        let values = try decoder.container(keyedBy: CodingKeys.self)
+        if values.contains(.page) {
+            page = try values.decode(Int.self, forKey: .page)
+        }
+        if values.contains(.limit) {
+            limit = try values.decode(Int.self, forKey: .limit)
+        }
+        if values.contains(.totalPages) {
+            totalPages = try values.decode(Int.self, forKey: .totalPages)
+        }
+        if values.contains(.totalResults) {
+            totalResults = try values.decode(Int.self, forKey: .totalResults)
+        }
+        if values.contains(.rows) {
+            rows = try values.decode([PaymentHistoryRow].self, forKey: .rows)
         }
     }
-    var date = "20:22 20210-12-25"
-    var cancel = false
-    var alert = false
 }
 
-extension PaymentHistory: Identifiable, Equatable {
+struct PaymentHistoryRow: Decodable {
+    var status: String = ""
+    var packageName: String = ""
+    var paymentDate: String = ""
     
+    enum CodingKeys: String, CodingKey {
+        case packageName = "packageName"
+        case paymentDate = "paymentDate"
+        case status = "status"
+    }
+    
+    init(from decoder: Decoder) throws {
+        let values = try decoder.container(keyedBy: CodingKeys.self)
+        if values.contains(.packageName) {
+            packageName = try values.decode(String.self, forKey: .packageName)
+        }
+        if values.contains(.paymentDate) {
+            paymentDate = try values.decode(String.self, forKey: .paymentDate)
+        }
+        if values.contains(.status) {
+            status = try values.decode(String.self, forKey: .status)
+        }
+    }
 }

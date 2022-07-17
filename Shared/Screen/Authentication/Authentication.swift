@@ -21,6 +21,7 @@ class Authentication: ObservableObject {
     }
     
     private func login(user: User, tokens: Tokens) {
+        AppSetting.shared.idUser = Int(user.id)
         AppSetting.shared.email = user.email
         AppSetting.shared.accessToken = tokens.access.token
         AppSetting.shared.accessTokenExpires = tokens.access.expires
@@ -37,6 +38,7 @@ class Authentication: ObservableObject {
     
     func logout() {
         ///Should not clear ip, country code and city since it will make user unable to login again unless restarting app
+        AppSetting.shared.idUser = 0
         AppSetting.shared.email = ""
         AppSetting.shared.accessToken = ""
         AppSetting.shared.accessTokenExpires = nil
