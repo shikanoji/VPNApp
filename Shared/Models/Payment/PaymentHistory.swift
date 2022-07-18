@@ -6,6 +6,8 @@
 //
 
 import Foundation
+import SwiftDate
+
 struct PaymentHistory: Decodable {
     var page: Int = 0
     var limit: Int = 0
@@ -57,11 +59,17 @@ struct PaymentHistoryRow: Decodable {
         if values.contains(.packageName) {
             packageName = try values.decode(String.self, forKey: .packageName)
         }
-        if values.contains(.paymentDate) {
-            paymentDate = try values.decode(String.self, forKey: .paymentDate)
-        }
+        
         if values.contains(.status) {
-            status = try values.decode(String.self, forKey: .status)
+                    status = try values.decode(String.self, forKey: .status)
         }
+        
+        if values.contains(.paymentDate) {
+            guard let date = try values.decode(Int?.self, forKey: .paymentDate) else { return }
+            let expireInteval = TimeInterval(date)
+            let expireDate = DateInRegion(seconds: expireInteval, region: .local)
+            paymentDate = expireDate.toFormat("hh:mm:ss dd-MM-yyyy")
+        }
+        
     }
 }

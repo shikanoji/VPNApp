@@ -15,6 +15,7 @@
 		AC1195DB28452313002230F0 /* DNSSettingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC1195DA28452313002230F0 /* DNSSettingViewModel.swift */; };
 		AC280AF12880179F00FE1246 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = AC280AF02880179F00FE1246 /* GoogleService-Info.plist */; };
 		AC280AF32880214C00FE1246 /* GoogleService-Info-dev.plist in Resources */ = {isa = PBXBuildFile; fileRef = AC280AF22880214C00FE1246 /* GoogleService-Info-dev.plist */; };
+		AC3280C92885AB7E00FCCB50 /* DeleteAccountConfirmationViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC3280C82885AB7E00FCCB50 /* DeleteAccountConfirmationViewModel.swift */; };
 		AC4051E227CCB6860054F6AE /* ToastView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC4051E127CCB6860054F6AE /* ToastView.swift */; };
 		AC489252286405F6003F2795 /* PurchaseService.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC489251286405F6003F2795 /* PurchaseService.swift */; };
 		AC490871281B9FC600DB430B /* NotificationExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC490870281B9FC600DB430B /* NotificationExtension.swift */; };
@@ -271,6 +272,7 @@
 		AC1195DA28452313002230F0 /* DNSSettingViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DNSSettingViewModel.swift; sourceTree = "<group>"; };
 		AC280AF02880179F00FE1246 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		AC280AF22880214C00FE1246 /* GoogleService-Info-dev.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info-dev.plist"; sourceTree = "<group>"; };
+		AC3280C82885AB7E00FCCB50 /* DeleteAccountConfirmationViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeleteAccountConfirmationViewModel.swift; sourceTree = "<group>"; };
 		AC4051E127CCB6860054F6AE /* ToastView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToastView.swift; sourceTree = "<group>"; };
 		AC489251286405F6003F2795 /* PurchaseService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PurchaseService.swift; sourceTree = "<group>"; };
 		AC490870281B9FC600DB430B /* NotificationExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationExtension.swift; sourceTree = "<group>"; };
@@ -562,6 +564,15 @@
 			path = ProtocolSetting;
 			sourceTree = "<group>";
 		};
+		AC3280C72885AB6700FCCB50 /* DeleteAccount */ = {
+			isa = PBXGroup;
+			children = (
+				AC87539A2801ED10004C5F43 /* DeleteAccountConfirmationView.swift */,
+				AC3280C82885AB7E00FCCB50 /* DeleteAccountConfirmationViewModel.swift */,
+			);
+			path = DeleteAccount;
+			sourceTree = "<group>";
+		};
 		AC6074DB27DD011F00DD5667 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
@@ -836,9 +847,9 @@
 		D78EECE827C65BE200A2CBA5 /* Information */ = {
 			isa = PBXGroup;
 			children = (
+				AC3280C72885AB6700FCCB50 /* DeleteAccount */,
 				EE890FEE2795101300ADF293 /* InfomationView.swift */,
 				EED4F59E285448BC0098DF47 /* InfomationViewModel.swift */,
-				AC87539A2801ED10004C5F43 /* DeleteAccountConfirmationView.swift */,
 			);
 			path = Information;
 			sourceTree = "<group>";
@@ -1447,6 +1458,7 @@
 				AC6074B027D8D24F00DD5667 /* ArrayExtension.swift in Sources */,
 				EE514CBD27CC71DC00F82AD7 /* IpInfoResult.swift in Sources */,
 				EE89100F2796B54700ADF293 /* SessionVPNView.swift in Sources */,
+				AC3280C92885AB7E00FCCB50 /* DeleteAccountConfirmationViewModel.swift in Sources */,
 				EE890FEF2795101300ADF293 /* InfomationView.swift in Sources */,
 				D795FFA8275F6E9A00E54206 /* PagingView.swift in Sources */,
 				D78044C62758C6FC0086E59D /* SysVPNApp.swift in Sources */,

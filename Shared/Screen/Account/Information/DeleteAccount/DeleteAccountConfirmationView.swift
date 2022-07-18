@@ -10,6 +10,8 @@ import SwiftUI
 
 struct DeleteAccountConfirmationView: View {
     @Environment(\.presentationMode) var presentationMode
+    @EnvironmentObject var authentication: Authentication
+    @StateObject var viewModel: DeleteAccountConfirmationViewModel
     var title: some View {
         HStack {
             Text(L10n.Account.deleteAccount)
@@ -43,7 +45,7 @@ struct DeleteAccountConfirmationView: View {
             message
             Spacer().frame(height: 30)
             AppButton(width: .infinity, backgroundColor: AppColor.redradient, textColor: Color.white , text: L10n.Account.DeleteAccount.delete) {
-                presentationMode.wrappedValue.dismiss()
+                viewModel.deleteAccount()
             }
             Spacer().frame(height: 30)
         }
@@ -73,16 +75,32 @@ struct DeleteAccountConfirmationView: View {
                 Spacer()
                 content
             }
+            .onChange(of: viewModel.shouldDismissView) { shouldDismiss in
+                if shouldDismiss {
+                    presentationMode.wrappedValue.dismiss()
+                }
+            }
         }
         .background(PopupBackgroundView())
         .ignoresSafeArea()
+        .onAppear {
+            /// Pass authentication to view model because Environment object only receivable through view
+            viewModel.authentication = authentication
+        }
+        .popup(isPresented: $viewModel.showAlert, type: .floater(verticalPadding: 10), position: .bottom, animation: .easeInOut, autohideIn: 10, closeOnTap: false, closeOnTapOutside: true) {
+            ToastView(title: viewModel.alertTitle,
+                      message: viewModel.alertMessage,
+                      cancelAction: {
+                viewModel.showAlert = false
+            })
+        }
     }
 }
 
 #if DEBUG
 struct DeleteAccountConfirmationView_Preview: PreviewProvider {
     static var previews: some View {
-        DeleteAccountConfirmationView()
+        DeleteAccountConfirmationView(viewModel: DeleteAccountConfirmationViewModel())
     }
 }
 #endif

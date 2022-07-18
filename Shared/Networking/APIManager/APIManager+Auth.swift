@@ -126,4 +126,16 @@ extension APIManager {
                 throw APIError.someError
             }
     }
+    
+    func deleteAccount() -> Single<APIResponse<EmptyResult>> {
+        return provider.rx
+            .request(.deleteAccount)
+            .map { response in
+                let result = try JSONDecoder().decode(APIResponse<EmptyResult>.self, from: response.data)
+                return result
+            }
+            .catch { error in
+                throw APIError.someError
+            }
+    }
 }
