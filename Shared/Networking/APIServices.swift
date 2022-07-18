@@ -88,6 +88,7 @@ enum APIService {
     case getTopicQuestionList
     case getMultihopList
     case fetchPaymentHistory
+    case deleteAccount
 }
 
 extension APIService: TargetType {
@@ -142,6 +143,8 @@ extension APIService: TargetType {
             return Constant.api.path.loginSocial
         case .fetchPaymentHistory:
             return Constant.api.path.fetchPaymentHistory
+        case .deleteAccount:
+            return Constant.api.path.deleteAccount
         }
     }
     
@@ -158,6 +161,8 @@ extension APIService: TargetType {
             return .put
         case .disconnectSession:
             return .patch
+        case .deleteAccount:
+            return .delete
         }
     }
     
@@ -332,6 +337,8 @@ extension APIService: TargetType {
             param["id"] = AppSetting.shared.idUser
             
             return .requestParameters(parameters: param, encoding: URLEncoding.queryString)
+        default:
+            return .requestParameters(parameters: [:], encoding: URLEncoding.queryString)
         }
     }
     
@@ -341,7 +348,7 @@ extension APIService: TargetType {
         switch self {
         case .login, .register:
             return ["Content-type": "application/json"]
-        case .getCountryList, .getObtainCertificate, .changePassword, .getListSession, .getTopicQuestionList, .getMultihopList, .disconnectSession:
+        case .getCountryList, .getObtainCertificate, .changePassword, .getListSession, .getTopicQuestionList, .getMultihopList, .disconnectSession, .deleteAccount:
             return [
                 "Content-type": "application/json",
                 "Authorization": "Bearer \(AppSetting.shared.accessToken)"

@@ -25,7 +25,7 @@ struct InfomationView: View {
                   textSize: 14, text: L10n.Account.deleteAccount) {
             deleteAccount = true
         }.fullScreenCover(isPresented: $deleteAccount) {
-            DeleteAccountConfirmationView()
+            DeleteAccountConfirmationView(viewModel: DeleteAccountConfirmationViewModel())
         }
     }
 
