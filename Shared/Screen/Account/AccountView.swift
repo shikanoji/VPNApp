@@ -164,9 +164,9 @@ struct AccountView: View {
                animation: .easeInOut,
                closeOnTap: true,
                closeOnTapOutside: true) {
-            ToastView(title: "Are you sure want to logout?",
+            ToastView(title: L10n.Account.Logout.Confirm.message,
                       message: "",
-                      confirmTitle: "Confirm",
+                      confirmTitle: L10n.Account.Logout.confirm,
                       oneChossing: true,
                       confirmAction: {
                 viewModel.showLogoutConfirmation = false

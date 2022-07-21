@@ -10,7 +10,8 @@ extension Constant {
     struct api {
         static let root = "https://api.sysvpnconnect.com"
         static let ipInfoOptional = "https://ipinfo.io/json"
-        
+        static let termsAndConditionsURL = "https://sysvpn.com/webview/terms-of-service"
+        static let privacyPolictyURL = "https://sysvpn.com/webview/privacy-policy"
         struct path {
             static let register = "/shared/module_auth/v1/register"
             static let logout = "/shared/module_auth/v1/logout"

@@ -13,6 +13,7 @@ struct PlanSelectionView: View {
     @StateObject var viewModel: PlanSelectionViewModel
     @State var toWelcomeScreen = false
     @State var shouldShowAccountLinkedAlertView = false
+    
     var body: some View {
         LoadingScreen(isShowing: $viewModel.showProgressView) {
             Background {
@@ -30,18 +31,24 @@ struct PlanSelectionView: View {
                         PlanListView(viewModel: viewModel.planListViewModel)
                         Spacer().frame(height: 20)
                     }
-                    NavigationLink(destination: WelcomeView().navigationBarHidden(true),
-                                   isActive: $viewModel.toWelcomeScreen) {
+                    Group {
+                        NavigationLink(destination: WelcomeView().navigationBarHidden(true),
+                                       isActive: $viewModel.toWelcomeScreen) {
+                        }
+                        NavigationLink(destination: SubscriptionLinkedAlertView().navigationBarHidden(true),
+                                       isActive: $shouldShowAccountLinkedAlertView) {
+                        }
+                        NavigationLink(destination: EmptyView()) {
+                            EmptyView()
+                        }
                     }
-                    NavigationLink(destination: SubscriptionLinkedAlertView().navigationBarHidden(true),
-                                   isActive: $shouldShowAccountLinkedAlertView) {
-                    }
+                    
                     AppButton(width: 311, text: L10n.PlanSelect.continueButton) {
-                        #if DEBUG
+#if DEBUG
                         viewModel.toWelcomeScreen = true
-                        #else
+#else
                         viewModel.purchasePlan()
-                        #endif
+#endif
                     }
                     Spacer().frame(height: 20)
                     Text(viewModel.planListViewModel.selectedPlan?.note ?? "")

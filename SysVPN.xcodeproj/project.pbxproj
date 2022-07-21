@@ -13,6 +13,13 @@
 		6384B4F8276C43DD00E904D2 /* BoardViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6384B4F7276C43DD00E904D2 /* BoardViewModel.swift */; };
 		AC1195D22844D71D002230F0 /* DNSSettingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC1195D12844D71D002230F0 /* DNSSettingView.swift */; };
 		AC1195DB28452313002230F0 /* DNSSettingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC1195DA28452313002230F0 /* DNSSettingViewModel.swift */; };
+		AC17E2412888FC4500C72E20 /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = AC17E2402888FC4500C72E20 /* Settings.bundle */; };
+		AC17E247288911D700C72E20 /* LicenseListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC17E246288911D700C72E20 /* LicenseListView.swift */; };
+		AC17E2492889133E00C72E20 /* LicenseListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC17E2482889133E00C72E20 /* LicenseListViewModel.swift */; };
+		AC17E24D28891EFE00C72E20 /* com.mono0926.LicensePlist.plist in Resources */ = {isa = PBXBuildFile; fileRef = AC17E24C28891EFE00C72E20 /* com.mono0926.LicensePlist.plist */; };
+		AC17E24F288933BD00C72E20 /* LicenseDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC17E24E288933BC00C72E20 /* LicenseDetailView.swift */; };
+		AC17E2512889359200C72E20 /* com.mono0926.LicensePlist in Resources */ = {isa = PBXBuildFile; fileRef = AC17E2502889359200C72E20 /* com.mono0926.LicensePlist */; };
+		AC17E253288935D100C72E20 /* LicenseDetailViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC17E252288935D100C72E20 /* LicenseDetailViewModel.swift */; };
 		AC280AF12880179F00FE1246 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = AC280AF02880179F00FE1246 /* GoogleService-Info.plist */; };
 		AC280AF32880214C00FE1246 /* GoogleService-Info-dev.plist in Resources */ = {isa = PBXBuildFile; fileRef = AC280AF22880214C00FE1246 /* GoogleService-Info-dev.plist */; };
 		AC3280C92885AB7E00FCCB50 /* DeleteAccountConfirmationViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC3280C82885AB7E00FCCB50 /* DeleteAccountConfirmationViewModel.swift */; };
@@ -65,6 +72,8 @@
 		AC84BB74287FCB84006905CE /* swiftgen in Resources */ = {isa = PBXBuildFile; fileRef = AC84BB73287FCB84006905CE /* swiftgen */; };
 		AC87539B2801ED10004C5F43 /* DeleteAccountConfirmationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC87539A2801ED10004C5F43 /* DeleteAccountConfirmationView.swift */; };
 		AC91BDEF287C5C3A002776E6 /* SubscriptionLinkedAlertView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC91BDEE287C5C3A002776E6 /* SubscriptionLinkedAlertView.swift */; };
+		AC99848B288948A90038F216 /* EmbedWebView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC99848A288948A90038F216 /* EmbedWebView.swift */; };
+		AC99848F28895F230038F216 /* UIDeviceExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC99848E28895F230038F216 /* UIDeviceExtension.swift */; };
 		AC9A8F5B27D6236900FACD7D /* KeychainService.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC9A8F5A27D6236900FACD7D /* KeychainService.swift */; };
 		AC9A8F5D27D655C700FACD7D /* Constant+KeychainService.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC9A8F5C27D655C700FACD7D /* Constant+KeychainService.swift */; };
 		ACB6DDD92818F23E007DA359 /* EmptyResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACB6DDD82818F23E007DA359 /* EmptyResult.swift */; };
@@ -270,6 +279,13 @@
 		6384B4F7276C43DD00E904D2 /* BoardViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoardViewModel.swift; sourceTree = "<group>"; };
 		AC1195D12844D71D002230F0 /* DNSSettingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DNSSettingView.swift; sourceTree = "<group>"; };
 		AC1195DA28452313002230F0 /* DNSSettingViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DNSSettingViewModel.swift; sourceTree = "<group>"; };
+		AC17E2402888FC4500C72E20 /* Settings.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = Settings.bundle; sourceTree = "<group>"; };
+		AC17E246288911D700C72E20 /* LicenseListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LicenseListView.swift; sourceTree = "<group>"; };
+		AC17E2482889133E00C72E20 /* LicenseListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LicenseListViewModel.swift; sourceTree = "<group>"; };
+		AC17E24C28891EFE00C72E20 /* com.mono0926.LicensePlist.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = com.mono0926.LicensePlist.plist; sourceTree = "<group>"; };
+		AC17E24E288933BC00C72E20 /* LicenseDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LicenseDetailView.swift; sourceTree = "<group>"; };
+		AC17E2502889359200C72E20 /* com.mono0926.LicensePlist */ = {isa = PBXFileReference; lastKnownFileType = folder; path = com.mono0926.LicensePlist; sourceTree = "<group>"; };
+		AC17E252288935D100C72E20 /* LicenseDetailViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LicenseDetailViewModel.swift; sourceTree = "<group>"; };
 		AC280AF02880179F00FE1246 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		AC280AF22880214C00FE1246 /* GoogleService-Info-dev.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info-dev.plist"; sourceTree = "<group>"; };
 		AC3280C82885AB7E00FCCB50 /* DeleteAccountConfirmationViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeleteAccountConfirmationViewModel.swift; sourceTree = "<group>"; };
@@ -309,6 +325,8 @@
 		AC84BB73287FCB84006905CE /* swiftgen */ = {isa = PBXFileReference; lastKnownFileType = folder; path = swiftgen; sourceTree = "<group>"; };
 		AC87539A2801ED10004C5F43 /* DeleteAccountConfirmationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeleteAccountConfirmationView.swift; sourceTree = "<group>"; };
 		AC91BDEE287C5C3A002776E6 /* SubscriptionLinkedAlertView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubscriptionLinkedAlertView.swift; sourceTree = "<group>"; };
+		AC99848A288948A90038F216 /* EmbedWebView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmbedWebView.swift; sourceTree = "<group>"; };
+		AC99848E28895F230038F216 /* UIDeviceExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIDeviceExtension.swift; sourceTree = "<group>"; };
 		AC9A8F5A27D6236900FACD7D /* KeychainService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeychainService.swift; sourceTree = "<group>"; };
 		AC9A8F5C27D655C700FACD7D /* Constant+KeychainService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Constant+KeychainService.swift"; sourceTree = "<group>"; };
 		ACB6DDD82818F23E007DA359 /* EmptyResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmptyResult.swift; sourceTree = "<group>"; };
@@ -564,6 +582,26 @@
 			path = ProtocolSetting;
 			sourceTree = "<group>";
 		};
+		AC17E245288911C800C72E20 /* Licenses */ = {
+			isa = PBXGroup;
+			children = (
+				AC17E246288911D700C72E20 /* LicenseListView.swift */,
+				AC17E2482889133E00C72E20 /* LicenseListViewModel.swift */,
+				AC17E24E288933BC00C72E20 /* LicenseDetailView.swift */,
+				AC17E252288935D100C72E20 /* LicenseDetailViewModel.swift */,
+			);
+			path = Licenses;
+			sourceTree = "<group>";
+		};
+		AC17E25428893BFE00C72E20 /* Licenses */ = {
+			isa = PBXGroup;
+			children = (
+				AC17E24C28891EFE00C72E20 /* com.mono0926.LicensePlist.plist */,
+				AC17E2502889359200C72E20 /* com.mono0926.LicensePlist */,
+			);
+			path = Licenses;
+			sourceTree = "<group>";
+		};
 		AC3280C72885AB6700FCCB50 /* DeleteAccount */ = {
 			isa = PBXGroup;
 			children = (
@@ -694,11 +732,13 @@
 		D78044932758C6F90086E59D = {
 			isa = PBXGroup;
 			children = (
+				AC17E2402888FC4500C72E20 /* Settings.bundle */,
 				EE78F73A280E732700F49903 /* wg_ios_client.conf */,
 				EE46BCFB280D1509003C4FEB /* build_wireguard_go_bridge.sh */,
 				AC6074D827DB74CB00DD5667 /* swiftgen.yml */,
 				D78C8FC92774914400D4A46F /* SysVPN (iOS).entitlements */,
 				D78C8FC827748EE200D4A46F /* SysVPN--iOS--Info.plist */,
+				AC17E25428893BFE00C72E20 /* Licenses */,
 				D78044982758C6F90086E59D /* Shared */,
 				EE03443F28090AB7003DFB64 /* OpenVPN */,
 				EE46BCCD280963F4003C4FEB /* WireGuard */,
@@ -756,6 +796,7 @@
 				AC6074E527DDD06200DD5667 /* AssetsExtension+SwiftUI.swift */,
 				AC490870281B9FC600DB430B /* NotificationExtension.swift */,
 				AC490872281B9FFB00DB430B /* PublisherExtension.swift */,
+				AC99848E28895F230038F216 /* UIDeviceExtension.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -867,6 +908,8 @@
 				AC6074B127D8D2B200DD5667 /* CustomPopupView.swift */,
 				D79E829A27971299009E36F3 /* PopupBackgroundView.swift */,
 				EE514CBE27CCC14500F82AD7 /* LoadingView.swift */,
+				AC99848A288948A90038F216 /* EmbedWebView.swift */,
+				EED4F5A82855A5DA0098DF47 /* WebView.swift */,
 			);
 			path = Components;
 			sourceTree = "<group>";
@@ -1150,6 +1193,7 @@
 		EE8910142797AC3000ADF293 /* Settings */ = {
 			isa = PBXGroup;
 			children = (
+				AC17E245288911C800C72E20 /* Licenses */,
 				AC1195D728451AC6002230F0 /* VNPSettings */,
 				AC79CE07282CFA6D00E1E874 /* Tools */,
 				EE8910152797AC3D00ADF293 /* SettingsView.swift */,
@@ -1182,7 +1226,6 @@
 			isa = PBXGroup;
 			children = (
 				EED4F5A42855A5600098DF47 /* FAQDetailView.swift */,
-				EED4F5A82855A5DA0098DF47 /* WebView.swift */,
 			);
 			path = FAQDetail;
 			sourceTree = "<group>";
@@ -1366,10 +1409,12 @@
 				AC6074E727DE424600DD5667 /* StaticIP.strings in Resources */,
 				AC84BB74287FCB84006905CE /* swiftgen in Resources */,
 				D78044CC2758C6FC0086E59D /* Assets.xcassets in Resources */,
+				AC17E24D28891EFE00C72E20 /* com.mono0926.LicensePlist.plist in Resources */,
 				AC6074F927DE430500DD5667 /* Register.strings in Resources */,
 				AC6074FC27DE430800DD5667 /* ForgotPassword.strings in Resources */,
 				AC6074F027DE42F700DD5667 /* Introduction.strings in Resources */,
 				AC6074D927DB74CC00DD5667 /* swiftgen.yml in Resources */,
+				AC17E2512889359200C72E20 /* com.mono0926.LicensePlist in Resources */,
 				AC6074EB27DE427F00DD5667 /* en.lproj in Resources */,
 				D795FFAC275F9AC500E54206 /* LaunchScreen.storyboard in Resources */,
 				AC60750827DE431A00DD5667 /* Welcome.strings in Resources */,
@@ -1383,6 +1428,7 @@
 				AC60751327DE432300DD5667 /* FAQ.strings in Resources */,
 				AC6074F627DE430200DD5667 /* Board.strings in Resources */,
 				AC60750F27DE431F00DD5667 /* Settings.strings in Resources */,
+				AC17E2412888FC4500C72E20 /* Settings.bundle in Resources */,
 				AC6074DD27DD014100DD5667 /* Colors.xcassets in Resources */,
 				AC6074FF27DE430B00DD5667 /* Notice.strings in Resources */,
 			);
@@ -1490,6 +1536,7 @@
 				ACF77632285C8981001ACB39 /* PlanSelectionView.swift in Sources */,
 				D788B18927635BC000855C24 /* AppButton.swift in Sources */,
 				AC1195DB28452313002230F0 /* DNSSettingViewModel.swift in Sources */,
+				AC17E2492889133E00C72E20 /* LicenseListViewModel.swift in Sources */,
 				D78044E12758F5110086E59D /* UIApplicationExtension.swift in Sources */,
 				6353F842276F333900B42334 /* StatusVPNView.swift in Sources */,
 				EEAD5C53277AC968008181E3 /* MapView.swift in Sources */,
@@ -1520,6 +1567,8 @@
 				EE9B77D4284B48A800240E89 /* DetectJailBreakDevice.swift in Sources */,
 				D78A35CA276B767400CC010D /* AppTextField.swift in Sources */,
 				EE78F74A280E781100F49903 /* WireGuardManager.swift in Sources */,
+				AC17E24F288933BD00C72E20 /* LicenseDetailView.swift in Sources */,
+				AC99848B288948A90038F216 /* EmbedWebView.swift in Sources */,
 				D785C72927BD4F7C00E83C0F /* KeyedCodingKeyContainerExtension.swift in Sources */,
 				AC4051E227CCB6860054F6AE /* ToastView.swift in Sources */,
 				AC91BDEF287C5C3A002776E6 /* SubscriptionLinkedAlertView.swift in Sources */,
@@ -1530,6 +1579,7 @@
 				EE9B77D02849A5BB00240E89 /* SettingVPNViewModel.swift in Sources */,
 				EE9B77C428460BA100240E89 /* SettingVPNView.swift in Sources */,
 				EE85EDC327B37120000F967A /* NodeCellStaticView.swift in Sources */,
+				AC17E253288935D100C72E20 /* LicenseDetailViewModel.swift in Sources */,
 				D7874DFA277AFEE200ADC7AD /* ForgotPasswordViewModel.swift in Sources */,
 				D78F47282761D1840064A764 /* LoginView.swift in Sources */,
 				D7F9695827B262190037A3D0 /* SessionVPNViewModel.swift in Sources */,
@@ -1572,9 +1622,11 @@
 				D79BF76B27BD31CD00E76C37 /* LoginResult.swift in Sources */,
 				ACF77634285C8989001ACB39 /* PlanSelectionViewModel.swift in Sources */,
 				6384B4F5276C374E00E904D2 /* BoardView.swift in Sources */,
+				AC17E247288911D700C72E20 /* LicenseListView.swift in Sources */,
 				AC540338288400D800A5605E /* PaymentHistory.swift in Sources */,
 				EE79F52D27731A63006F0E5D /* ConnectButton.swift in Sources */,
 				EE8910122796B8CF00ADF293 /* SessionVPNCell.swift in Sources */,
+				AC99848F28895F230038F216 /* UIDeviceExtension.swift in Sources */,
 				D795FFAA275F6ED200E54206 /* Introduction.swift in Sources */,
 				AC6074E627DDD06200DD5667 /* AssetsExtension+SwiftUI.swift in Sources */,
 				EE79F53327758896006F0E5D /* StopWatch.swift in Sources */,

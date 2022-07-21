@@ -36,6 +36,7 @@ struct SessionVPNView: View {
                             shouldHideSessionList = true
                         }, statusConnect: $statusConnect)
                     .padding(.bottom, Constant.Menu.topPaddingCell)
+                    Spacer().frame(height: 15)
                     ForEach(viewModel.deviceList.indices, id: \.self) { i in
                         SessionVPNCell(sessionVPN: viewModel.deviceList[i],
                                        viewModel: viewModel,
@@ -47,7 +48,7 @@ struct SessionVPNView: View {
                 }
                 if viewModel.showProgressView {
                     LoadingView()
-                        .padding(.top, UIScreen.main.bounds.size.height / 3)
+                        .padding(.top, UIScreen.main.bounds.size.height / 2)
                 }
             }
         }
