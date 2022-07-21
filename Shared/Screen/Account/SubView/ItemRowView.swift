@@ -14,10 +14,13 @@ struct ItemRowView: View {
     
     var body: some View {
         HStack(spacing: 0) {
-            Image(item.type.iconString)
-                .frame(width: Constant.Menu.sizeIconItemMenu,
-                       height: Constant.Menu.sizeIconItemMenu)
-                .padding([.top, .bottom, .trailing])
+            if item.type.icon != nil {
+                item.type.icon
+                    .frame(width: Constant.Menu.sizeIconItemMenu,
+                           height: Constant.Menu.sizeIconItemMenu)
+                    .padding([.top, .bottom, .trailing])
+            }
+            
             VStack(alignment: .leading, spacing: 8) {
                 Text(item.type.title + subTitle)
                     .font(Constant.Menu.fontItem)
@@ -30,8 +33,10 @@ struct ItemRowView: View {
             }
             .frame(height: Constant.Menu.heightItemMenu)
             Spacer()
-            Image(Constant.Account.rightButton)
-            .padding()
+            if item.type.showRightButton {
+                Image(Constant.Account.rightButton)
+                    .padding()
+            }
         }
         .frame(minHeight: Constant.Menu.heightItemMenu)
         .frame(maxWidth: .infinity)

@@ -35,7 +35,7 @@ struct Constant {
         }
         
         struct Navigation {
-            static let heightNavigationBar: CGFloat = 60
+            static let heightNavigationBar: CGFloat = UIDevice.current.hasNotch ? 60 : 40
             static let sizeFont: CGFloat = 14
             static let weightFont: Font.Weight = .bold
         }

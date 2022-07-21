@@ -101,6 +101,14 @@ public enum L10n {
       /// Infomation
       public static let title = L10n.tr("Account", "Infomation.title")
     }
+    public enum Logout {
+      /// Confirm
+      public static let confirm = L10n.tr("Account", "Logout.Confirm")
+      public enum Confirm {
+        /// Are you sure want to logout?
+        public static let message = L10n.tr("Account", "Logout.Confirm.Message")
+      }
+    }
     public enum PaymentHistory {
       /// Cancel Subscription
       public static let cancelSubscription = L10n.tr("Account", "PaymentHistory.cancelSubscription")
@@ -359,6 +367,8 @@ public enum L10n {
     public static let title = L10n.tr("Register", "Title")
   }
   public enum Settings {
+    /// About Us
+    public static let aboutUs = L10n.tr("Settings", "aboutUs")
     /// Always
     public static let alwaysConnect = L10n.tr("Settings", "alwaysConnect")
     /// Enables access to printers, Tvs, and other devices when connected
@@ -371,28 +381,24 @@ public enum L10n {
     public static let contentItemSplit = L10n.tr("Settings", "contentItemSplit")
     /// Recommend
     public static let contentRecommend = L10n.tr("Settings", "contentRecommend")
+    /// Current version
+    public static let currentVersion = L10n.tr("Settings", "currentVersion")
     /// Disabled
     public static let disabled = L10n.tr("Settings", "disabled")
     /// Enabled
     public static let enabled = L10n.tr("Settings", "enabled")
     /// Fastest server
     public static let fastestConnect = L10n.tr("Settings", "fastestConnect")
-    /// App & Website Shortcuts
-    public static let itemApps = L10n.tr("Settings", "itemApps")
     /// Auto-connect
     public static let itemAuto = L10n.tr("Settings", "itemAuto")
     /// DNS
     public static let itemDNS = L10n.tr("Settings", "itemDNS")
-    /// General
-    public static let itemGeneral = L10n.tr("Settings", "itemGeneral")
     /// Help improve SysVpn
     public static let itemHelp = L10n.tr("Settings", "itemHelp")
     /// Local network discovery
     public static let itemLocalNetwork = L10n.tr("Settings", "itemLocalNetwork")
     /// Metered connection
     public static let itemPMetered = L10n.tr("Settings", "itemPMetered")
-    /// Protection Summary
-    public static let itemProtec = L10n.tr("Settings", "itemProtec")
     /// Protocol
     public static let itemProtocol = L10n.tr("Settings", "itemProtocol")
     /// Split tunneling
@@ -401,6 +407,8 @@ public enum L10n {
     public static let itemTool = L10n.tr("Settings", "itemTool")
     /// VPN connection
     public static let itemVPN = L10n.tr("Settings", "itemVPN")
+    /// Licenses
+    public static let licenses = L10n.tr("Settings", "licenses")
     /// Off
     public static let offConnect = L10n.tr("Settings", "offConnect")
     /// On mobile networks
@@ -411,14 +419,18 @@ public enum L10n {
     public static let openVPNTCP = L10n.tr("Settings", "openVPNTCP")
     /// OpenVPN - UDP
     public static let openVPNUDP = L10n.tr("Settings", "openVPNUDP")
+    /// Privacy policies
+    public static let privacyPolicty = L10n.tr("Settings", "privacyPolicty")
     /// Auto-connect to
     public static let sectionAutoConnect = L10n.tr("Settings", "sectionAutoConnect")
-    /// Other Settings
+    /// Others
     public static let sectionOther = L10n.tr("Settings", "sectionOther")
     /// VPN Settings
     public static let sectionVPN = L10n.tr("Settings", "sectionVPN")
     /// settings
     public static let settings = L10n.tr("Settings", "settings")
+    /// Terms & Conditions
+    public static let termAndCondition = L10n.tr("Settings", "termAndCondition")
     /// Settings
     public static let title = L10n.tr("Settings", "title")
     /// WireGuard
