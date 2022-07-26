@@ -162,11 +162,13 @@ struct Constant {
     }
     
     static func convertXToMap(_ x: CGFloat) -> CGFloat {
+//        return Constant.Board.Map.heightScreen * Constant.Board.Map.ration / 2
         return (x / Constant.Board.Map.widthMapOrigin) * (Constant.Board.Map.heightScreen * Constant.Board.Map.ration)
     }
     
     static func convertYToMap(_ y: CGFloat) -> CGFloat {
-        return (y / Constant.Board.Map.heightMapOrigin) * Constant.Board.Map.heightScreen
+//        return Constant.Board.Map.heightScreen / 2
+        return (y / Constant.Board.Map.heightMapOrigin) * Constant.Board.Map.heightScreen - 25
     }
     
     struct NameNotification {
