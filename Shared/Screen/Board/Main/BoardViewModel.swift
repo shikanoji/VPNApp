@@ -139,9 +139,9 @@ class BoardViewModel: ObservableObject {
     init() {
         
 //        AppSetting.shared.updateDataMap ? getDataUpdate() : getDataFromLocal()
-        getDataUpdate()
+//        getDataUpdate()
         getMultihopList()
-        
+        getDataFromLocal()
         NotificationCenter.default.addObserver(
             self,
             selector: #selector(VPNStatusDidChange(notification:)),

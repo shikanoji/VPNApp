@@ -9,12 +9,11 @@ import SwiftUI
 import TunnelKitManager
 
 struct MapView: View {
-    @State var currentAmount = 0.0 {
+    @State var currentAmount: CGFloat = 1.0 {
         didSet {
-            mesh.showCityNodes = (currentAmount + finalAmount) > Constant.Board.Map.enableCityZoom
+            mesh.showCityNodes = currentAmount > Constant.Board.Map.enableCityZoom
         }
     }
-    @State var finalAmount = 1.0
     
     @ObservedObject var mesh: Mesh
     @ObservedObject var selection: SelectionHandler
@@ -23,41 +22,18 @@ struct MapView: View {
     @State var heightMap: CGFloat = Constant.Board.Map.heightScreen
     
     @State private var location: CGPoint = CGPoint(
-        x: 0,
-        y: 0
-//        x: Constant.Board.Map.widthScreen / 2,
-//        y: Constant.Board.Map.heightScreen / 2
-    ) {
-        didSet {
-            print("didSet \(location.x) \(location.y)")
-        }
-    }
+        x: Constant.Board.Map.widthScreen / 2,
+        y: Constant.Board.Map.heightScreen / 2
+    )
     
     @GestureState private var fingerLocation: CGPoint? = nil
     @GestureState private var startLocation: CGPoint? = nil
     
     @Binding var statusConnect: VPNStatus
     
-    var simpleDrag: some Gesture {
-        DragGesture()
-            .onChanged { value in
-                var newLocation = startLocation ?? location
-                newLocation.x += value.translation.width
-                newLocation.y += value.translation.height
-                self.location = newLocation
-                checkCollision()
-            }
-            .updating($startLocation) { (value, startLocation, transition) in
-                startLocation = startLocation ?? location
-            }
-            .onEnded { _ in
-                checkCollision()
-            }
-    }
-    
     func getNodeMapView() -> some View {
         let binding = Binding(
-            get: { CGFloat(finalAmount + currentAmount) },
+            get: { currentAmount },
             set: { _ in }
         )
         
@@ -85,107 +61,37 @@ struct MapView: View {
 //                    .aspectRatio(2048 / 1588, contentMode: .fill)
                 getNodeMapView()
             }
-        }, location: $location)
-//        {
-//            ZStack(alignment: .center) {
-//                Asset.Assets.map.SuImage
-//                    .resizable()
-//                    .background(AppColor.background)
-//                    .aspectRatio(2048 / 1588, contentMode: .fit)
-//                    .frame(width: widthMap * (finalAmount + currentAmount),
-//                           height: heightMap * (finalAmount + currentAmount))
-//                    .position(location)
-//                    .aspectRatio(contentMode: .fit)
-//                getNodeMapView()
-//                    .frame(width: widthMap * (finalAmount + currentAmount),
-//                           height: heightMap * (finalAmount + currentAmount))
-//                    .position(location)
-//                    .opacity(statusConnect == .connected ? 0 : 1)
-//            }
-//            .aspectRatio(contentMode: .fill)
-//            .background(AppColor.background)
-//        }
+        }, location: $location) { _ in
+//            scale = $0
+        }
         .onReceive(selection.$selectedNodeIDs) {
             if let id = $0.first, let node = mesh.nodeWithID(id) {
                 moveToNode(x: node.x, y: node.y)
                 NetworkManager.shared.selectNode = node
             }
         }
-//        .onReceive(selection.$selectedStaticNodeIDs) {
-//            if let id = $0.first, let node = mesh.staticNodeWithID(id) {
-//                moveToNode(x: node.x, y: node.y)
-//                NetworkManager.shared.selectStaticServer = node
-//            }
-//        }
-//        .onReceive(mesh.$clientCountryNode) {
-//            if selection.selectedNodeIDs.count == 0
-//                && selection.selectedStaticNodeIDs.count == 0,
-//               let node = $0 {
-//                moveToNode(x: node.x, y: node.y)
-//            }
-//        }
+        .onReceive(selection.$selectedStaticNodeIDs) {
+            if let id = $0.first, let node = mesh.staticNodeWithID(id) {
+                moveToNode(x: node.x, y: node.y)
+                NetworkManager.shared.selectStaticServer = node
+            }
+        }
+        .onReceive(mesh.$clientCountryNode) {
+            if selection.selectedNodeIDs.count == 0
+                && selection.selectedStaticNodeIDs.count == 0,
+               let node = $0 {
+                moveToNode(x: node.x, y: node.y)
+            }
+        }
         .animation(.easeIn)
         .edgesIgnoringSafeArea(.all)
-//        .gesture(
-//            simpleDrag
-//        )
-//        .gesture(
-//            MagnificationGesture()
-//                .onChanged { amount in
-//                    if validateZoom(amount - 1 + finalAmount) {
-//                        currentAmount = amount - 1
-//                        checkCollision()
-//                    }
-//                }
-//                .onEnded { amount in
-//                    if validateZoom(currentAmount + finalAmount) {
-//                        finalAmount += currentAmount
-//                        currentAmount = 0
-//                        checkCollision()
-//                    }
-//                }
-//        )
-//        .background(AppColor.background)
-    }
-    
-    private func validateZoom(_ newValue: CGFloat) -> Bool {
-        return newValue < Constant.Board.Map.maxZoom && newValue >= Constant.Board.Map.minZoom
-    }
-    
-    func checkCollision() {
-        let rangeHeight = heightMap * (finalAmount + currentAmount) * 0.5
-
-        if location.y >= rangeHeight {
-            self.location.y = rangeHeight
-        }
-        else if location.y <= (heightMap - rangeHeight) {
-            location.y = heightMap - rangeHeight
-        }
-        
-        let rangeWidth = widthMap * (finalAmount + currentAmount) * 0.5
-         
-        if location.x >= rangeWidth {
-            location.x = rangeWidth
-        } else if location.x <= Constant.Board.Map.widthScreen - rangeWidth {
-            location.x = Constant.Board.Map.widthScreen - rangeWidth
-        }
     }
     
     func moveToNode(x: CGFloat, y: CGFloat) {
-        let xNode = Constant.convertXToMap(x)
-        let yNode = Constant.convertYToMap(y)
-        
-//        let x = (finalAmount + currentAmount) * (widthMap / 2 - xNode) + Constant.Board.Map.widthScreen / 2
-//        let y = (finalAmount + currentAmount) * (heightMap / 2 - yNode) + Constant.Board.Map.heightScreen / 2
-        
         location = CGPoint(
             x: x,
             y: y
         )
-        
-        print("moveToNode \(x) \(y)")
-        
-        checkCollision()
     }
 }
 
@@ -212,6 +118,15 @@ extension Binding {
 }
 
 struct ZoomableScrollView<Content: View>: UIViewRepresentable {
+    
+    class ViewModel: ObservableObject {
+        var shouldUpdateView = true
+    }
+    
+    @ObservedObject var viewModel: Self.ViewModel
+    
+    var updateZoomScale: (Double) -> Void
+    
     private var content: Content
     
     let scrollView = UIScrollView()
@@ -219,14 +134,18 @@ struct ZoomableScrollView<Content: View>: UIViewRepresentable {
     @Binding var location: CGPoint
     
     init(@ViewBuilder content: () -> Content,
-         location: Binding<CGPoint>) {
+         location: Binding<CGPoint>,
+         updateZoomScale: @escaping (Double)-> Void = { _ in }) {
+        self.updateZoomScale = updateZoomScale
         self.content = content()
         self._location = location
+        self.viewModel = ViewModel()
+        print("ZoomableScrollView init")
     }
     
     func makeUIView(context: Context) -> UIScrollView {
         // set up the UIScrollView
-        print("makeUIView")
+        print("ZoomableScrollView makeUIView")
         scrollView.delegate = context.coordinator
         scrollView.minimumZoomScale = 1
         scrollView.maximumZoomScale = 5
@@ -237,8 +156,6 @@ struct ZoomableScrollView<Content: View>: UIViewRepresentable {
         scrollView.clipsToBounds = false
         
         let hostedView = context.coordinator.hostingController.view!
-//        hostedView.translatesAutoresizingMaskIntoConstraints = true
-//        hostedView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
         
         hostedView.frame = CGRect(x: 0, y: 0,
                                   width: Constant.Board.Map.heightScreen * Constant.Board.Map.ration,
@@ -255,25 +172,46 @@ struct ZoomableScrollView<Content: View>: UIViewRepresentable {
             width: max(hostedView.bounds.width, hostedView.bounds.width+1),
             height: max(hostedView.bounds.height, hostedView.bounds.height+1))
         
-        print("hostedView.frame \(hostedView.frame)")
-        print("scrollView.contentSize \(scrollView.contentSize)")
-        
         return scrollView
     }
     
     func makeCoordinator() -> Coordinator {
-        return Coordinator(hostingController: UIHostingController(rootView: self.content))
+        return Coordinator(hostingController: UIHostingController(rootView: self.content), self)
     }
     
     func updateUIView(_ uiView: UIScrollView, context: Context) {
         // update the hosting controller's SwiftUI content
-        print("location \(location)")
         
-        let x = (location.x / uiView.contentSize.width) * (uiView.contentSize.width - uiView.bounds.size.width)
+        guard viewModel.shouldUpdateView else {
+            viewModel.shouldUpdateView = true
+            return
+        }
         
-        uiView.contentOffset = CGPoint(
-            x: x,
-            y: 0)
+        let widthScrollView = uiView.contentSize.width
+        let maxWidthScrollView = widthScrollView - uiView.bounds.size.width
+        let widthScreen = Constant.Board.Map.widthScreen
+        
+        let x = (location.x / (Constant.Board.Map.widthMapOrigin)) * (widthScrollView)
+        
+        var xOffSet = x - widthScreen / 2
+        
+        let heighScrollView = uiView.contentSize.height
+        let maxHeighScrollView = heighScrollView - uiView.bounds.size.height
+        let heighScreen = Constant.Board.Map.heightScreen
+        
+        let y = (location.y / (Constant.Board.Map.heightMapOrigin)) * (heighScrollView)
+        
+        var yOffSet = y - heighScreen / 2
+        
+        xOffSet = xOffSet < 0 ? 0 : xOffSet
+        xOffSet = xOffSet > maxWidthScrollView ? maxWidthScrollView : xOffSet
+        
+        yOffSet = yOffSet < 20 ? 20 : yOffSet
+        yOffSet = yOffSet > maxHeighScrollView ? maxHeighScrollView : yOffSet
+        
+        uiView.setContentOffset(CGPoint(
+            x: xOffSet,
+            y: yOffSet), animated: true)
         
         context.coordinator.hostingController.rootView = self.content
         assert(context.coordinator.hostingController.view.superview == uiView)
@@ -283,8 +221,10 @@ struct ZoomableScrollView<Content: View>: UIViewRepresentable {
     
     class Coordinator: NSObject, UIScrollViewDelegate {
         var hostingController: UIHostingController<Content>
+        var parent: ZoomableScrollView
         
-        init(hostingController: UIHostingController<Content>) {
+        init(hostingController: UIHostingController<Content>, _ parent: ZoomableScrollView) {
+            self.parent = parent
             self.hostingController = hostingController
         }
         
@@ -293,13 +233,21 @@ struct ZoomableScrollView<Content: View>: UIViewRepresentable {
         }
         
         func scrollViewDidEndZooming(_ scrollView: UIScrollView, with view: UIView?, atScale scale: CGFloat) {
-            print("scale \(scale)")
-            if(scale < scrollView.minimumZoomScale){
+            if(scale < scrollView.minimumZoomScale) {
                 scrollView.minimumZoomScale = scale
             }
             
-            if(scale > scrollView.maximumZoomScale){
+            if(scale > scrollView.maximumZoomScale) {
                 scrollView.maximumZoomScale = scale
+            }
+            
+            parent.viewModel.shouldUpdateView = false
+            parent.updateZoomScale(scrollView.zoomScale)
+        }
+        
+        func scrollViewDidScroll(_ scrollView: UIScrollView) {
+            if scrollView.contentOffset.y < 20 {
+                scrollView.contentOffset.y = 20
             }
         }
         
