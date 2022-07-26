@@ -28,7 +28,6 @@ enum IAPHandlerAlertType {
 
 
 class IAPHandler: NSObject {
-    
     //MARK:- Shared Object
     //MARK:-
     static let shared = IAPHandler()

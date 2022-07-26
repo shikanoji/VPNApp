@@ -10,9 +10,8 @@ import SwiftUI
 
 struct PlanSelectionView: View {
     @Environment(\.presentationMode) var presentationMode
+    @EnvironmentObject var authentication: Authentication
     @StateObject var viewModel: PlanSelectionViewModel
-    @State var toWelcomeScreen = false
-    @State var shouldShowAccountLinkedAlertView = false
     
     var body: some View {
         LoadingScreen(isShowing: $viewModel.showProgressView) {
@@ -35,8 +34,8 @@ struct PlanSelectionView: View {
                         NavigationLink(destination: WelcomeView().navigationBarHidden(true),
                                        isActive: $viewModel.toWelcomeScreen) {
                         }
-                        NavigationLink(destination: SubscriptionLinkedAlertView().navigationBarHidden(true),
-                                       isActive: $shouldShowAccountLinkedAlertView) {
+                        NavigationLink(destination: AccountLimitedView().navigationBarHidden(true),
+                                       isActive: $viewModel.shouldShowAccountLimitedView) {
                         }
                         NavigationLink(destination: EmptyView()) {
                             EmptyView()
@@ -57,9 +56,29 @@ struct PlanSelectionView: View {
                         .frame(width: 320, height: 40)
                     Spacer()
                 }
+                .toolbar {
+                    ToolbarItem(placement: .navigationBarTrailing) {
+                        Button {
+                            authentication.logout()
+                        } label: {
+                            Text(L10n.Account.signout)
+                            Asset.Assets.logout.SuImage
+                        }
+                        .opacity(viewModel.shouldAllowLogout ? 1 : 0)
+                        .foregroundColor(Color.white)
+                    }
+                }
             }.onAppear(perform: {
                 viewModel.loadPlans()
+                viewModel.authentication = authentication
             })
+            .popup(isPresented: $viewModel.showAlert, type: .floater(verticalPadding: 10), position: .bottom, animation: .easeInOut, autohideIn: 10, closeOnTap: false, closeOnTapOutside: true) {
+                ToastView(title: "", message: viewModel.alertMessage, confirmTitle: "Retry", confirmAction: {
+                    Task {
+                        await viewModel.verifyReceipt()
+                    }
+                })
+            }
         }
     }
 }

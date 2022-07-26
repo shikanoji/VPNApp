@@ -8,6 +8,7 @@
 import Foundation
 import StoreKit
 import SwiftUI
+import RxSwift
 
 class PlanSelectionViewModel: ObservableObject {
     let productIDs = ["sysvpn.subscription.1year", "sysvpn.subscription.6months", "sysvpn.subscription.1month"]
@@ -15,9 +16,16 @@ class PlanSelectionViewModel: ObservableObject {
     @Published var planList: [SKProduct]
     @Published var toWelcomeScreen = false
     @Published var showProgressView = false
-    init() {
+    @Published var shouldShowAccountLimitedView = false
+    @Published var showAlert = false
+    var shouldAllowLogout: Bool
+    var authentication: Authentication?
+    var alertMessage: String = ""
+    let disposedBag = DisposeBag()
+    init(shouldAllowLogout: Bool = false) {
         planList = []
         planListViewModel = PlanListViewModel()
+        self.shouldAllowLogout = shouldAllowLogout
     }
     func loadPlans() {
         IAPHandler.shared.setProductIds(ids: productIDs)
@@ -42,22 +50,34 @@ class PlanSelectionViewModel: ObservableObject {
             return
         }
         IAPHandler.shared.purchase(product: plan) { [weak self] alert, skProduct, payment in
-            self?.showProgressView = false
-            if alert == .purchased {
-                if let appStoreReceiptURL = Bundle.main.appStoreReceiptURL,
-                    FileManager.default.fileExists(atPath: appStoreReceiptURL.path) {
-
-                    do {
-                        let receiptData = try Data(contentsOf: appStoreReceiptURL, options: .alwaysMapped)
-                        
-                        let receiptString = receiptData.base64EncodedString(options: [])
-                        print(receiptString)
-                        // Read receiptData
-                        self?.toWelcomeScreen = true
-                    }
-                    catch { print("Couldn't read receipt data with error: " + error.localizedDescription) }
+            switch alert {
+            case .purchased:
+                Task {
+                    await self?.verifyReceipt()
                 }
+            default:
+                self?.showProgressView = false
+                self?.shouldShowAccountLimitedView = true
             }
+        }
+    }
+    
+    @MainActor func verifyReceipt() async {
+        let verifyResult = await AppstoreReceiptHelper.shared.verifyReceipt()
+        switch verifyResult {
+        case .success(let response):
+            showProgressView = false
+            if response.success, let user = response.result, shouldAllowLogout{
+                authentication?.upgradeToPremium(user: user)
+                toWelcomeScreen = true
+            } else {
+                self.shouldShowAccountLimitedView = true
+            }
+        case .failure(let error):
+            print(error)
+            showProgressView = false
+            alertMessage = "An error occured. Please try again!"
+            showAlert = true
         }
     }
 }

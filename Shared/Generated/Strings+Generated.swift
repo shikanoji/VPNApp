@@ -275,6 +275,10 @@ public enum L10n {
     public static let usernamePlaceholder = L10n.tr("Login", "UsernamePlaceholder")
   }
   public enum Notice {
+    /// By clicking "Agree & Continue", you confirm to agree to our
+    public static let agreement = L10n.tr("Notice", "agreement")
+    /// and
+    public static let and = L10n.tr("Notice", "and")
     /// Agree & Continue
     public static let buttonText = L10n.tr("Notice", "ButtonText")
     /// This is foundation of Sysvpn, and that’s why we want to be crystal clear about what data you agree to share with us. This data is necessary to grant you the best user expericence and provide a top-quality privacy protection service:
@@ -283,8 +287,12 @@ public enum L10n {
     public static let firstTerm = L10n.tr("Notice", "FirstTerm")
     /// That’s all. We strictly don’t monitor, record, or log your online activities nor personal data. What you do online stays only between you and your device.
     public static let lastGraph = L10n.tr("Notice", "LastGraph")
+    /// Privacy Policy
+    public static let privacyPolicy = L10n.tr("Notice", "PrivacyPolicy")
     /// Anonymous applications usage data (including the version of your device & its operating system) us collected to improve & troubleshoot our app.
     public static let secondTerm = L10n.tr("Notice", "SecondTerm")
+    /// Terms of Services
+    public static let termOfService = L10n.tr("Notice", "TermOfService")
     /// We respect your privacy
     public static let title = L10n.tr("Notice", "Title")
   }

@@ -89,6 +89,7 @@ enum APIService {
     case getMultihopList
     case fetchPaymentHistory
     case deleteAccount
+    case verifyReceipt(receipt: String)
 }
 
 extension APIService: TargetType {
@@ -145,18 +146,18 @@ extension APIService: TargetType {
             return Constant.api.path.fetchPaymentHistory
         case .deleteAccount:
             return Constant.api.path.deleteAccount
+        case .verifyReceipt:
+            return Constant.api.path.verifyReceipt
         }
     }
     
     // Here we specify which method our calls should use.
     var method: Moya.Method {
         switch self {
-        case .getCountryList, .ipInfo, .getRequestCertificate, .ipInfoOptional, .getListSession, .getTopicQuestionList, .getMultihopList, .fetchPaymentHistory:
+        case .getCountryList, .ipInfo, .getRequestCertificate, .ipInfoOptional, .getListSession, .getTopicQuestionList, .getMultihopList, .fetchPaymentHistory, .getObtainCertificate:
             return .get
-        case .register, .login, .loginSocial, .logout, .forgotPassword, .refreshToken:
+        case .register, .login, .loginSocial, .logout, .forgotPassword, .refreshToken, .verifyReceipt:
             return .post
-        case .getObtainCertificate:
-            return .get
         case .changePassword:
             return .put
         case .disconnectSession:
@@ -337,6 +338,19 @@ extension APIService: TargetType {
             param["id"] = AppSetting.shared.idUser
             
             return .requestParameters(parameters: param, encoding: URLEncoding.queryString)
+        case .verifyReceipt(let receipt):
+            var param: [String: Any] = [:]
+            param["key"] = "9ed926a3355c6f380d5f81a8efd36c25"
+            
+            var body: [String: Any] = [:]
+            body["type"] = "APPLE_INAPP"
+            body["userId"] = AppSetting.shared.idUser
+            body["receipt"] = receipt
+            
+            return .requestCompositeParameters(
+                bodyParameters: body,
+                bodyEncoding: JSONEncoding.prettyPrinted,
+                urlParameters: param)
         default:
             return .requestParameters(parameters: [:], encoding: URLEncoding.queryString)
         }
@@ -365,7 +379,7 @@ extension APIService: TargetType {
             baseHeader["x-user-info"] = "{\"id\": \(AppSetting.shared.idUser)}"
             
             return baseHeader
-        case .fetchPaymentHistory:
+        case .fetchPaymentHistory, .verifyReceipt:
             let baseHeader = [
                 "Content-type": "application/json",
                 "x-api-key": "4368c9a9-e8a7-4e66-89cb-97c801c5dd88"

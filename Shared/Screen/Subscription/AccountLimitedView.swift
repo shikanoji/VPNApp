@@ -8,7 +8,7 @@
 import Foundation
 import SwiftUI
 
-struct SubscriptionLinkedAlertView: View {
+struct AccountLimitedView: View {
     @Environment(\.presentationMode) var presentationMode
     @EnvironmentObject var authentication: Authentication
     
@@ -53,7 +53,9 @@ struct SubscriptionLinkedAlertView: View {
                     content
                     Spacer()
                 }
-            }.frame(width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height)
+            }
+            .frame(width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height)
         }
+        .navigationBarHidden(true)
     }
 }

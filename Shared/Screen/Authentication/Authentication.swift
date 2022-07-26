@@ -28,11 +28,22 @@ class Authentication: ObservableObject {
         AppSetting.shared.refreshToken = tokens.refresh.token
         AppSetting.shared.refreshTokenExpires = tokens.refresh.expires
         AppSetting.shared.isPremium = user.is_premium
+        if user.is_premium {
+            Task {
+                await AppstoreReceiptHelper.shared.verifyReceipt()
+            }
+        }
         AppSetting.shared.premiumExpires = user.premium_expire
         AppSetting.shared.name = user.name
         AppSetting.shared.accountCreatedTime = user.created_at
         AppSetting.shared.hasPassword = user.has_password
         isValidated = AppSetting.shared.isRefreshTokenValid
+        isPremium = AppSetting.shared.isPremium
+    }
+    
+    func upgradeToPremium(user: User) {
+        AppSetting.shared.isPremium = user.is_premium
+        AppSetting.shared.premiumExpires = user.premium_expire
         isPremium = AppSetting.shared.isPremium
     }
     

@@ -30,6 +30,7 @@ extension Constant {
             static let getMultihopList = "app/module_server/v1/multi_hop/get_list"
             static let fetchPaymentHistory = "/web/module_payment/v1/payments/"
             static let deleteAccount = "shared/module_user/v1/delete-account"
+            static let verifyReceipt = "web/module_payment/v1/payments/apple-verify"
         }
     }
 }
