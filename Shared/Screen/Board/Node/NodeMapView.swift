@@ -15,12 +15,14 @@ struct NodeMapView: View {
     
     @Binding var scale: CGFloat
     
+    var isCityMap = false
+    
     var body: some View {
         ZStack {
-            ForEach(mesh.getNodeViewShow()) { node in
+            ForEach(isCityMap ? mesh.cityNodes : mesh.countryNodes) { node in
                 NodeView(scale: $scale, node: node, selection: self.selection)
-                    .position(x: Constant.convertXToMap(node.x) * scale,
-                              y: Constant.convertYToMap(node.y) * scale)
+                    .position(x: Constant.convertXToMap(node.x),
+                              y: Constant.convertYToMap(node.y))
                     .onTapGesture {
                         self.selection.selectNode(node)
                     }

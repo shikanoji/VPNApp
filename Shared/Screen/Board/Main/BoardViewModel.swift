@@ -138,8 +138,8 @@ class BoardViewModel: ObservableObject {
     
     init() {
         
-//        AppSetting.shared.updateDataMap ? getDataUpdate() : getDataFromLocal()
-//        getDataUpdate()
+        getDataFromLocal()
+        getDataUpdate()
         getMultihopList()
         getDataFromLocal()
         NotificationCenter.default.addObserver(
@@ -155,25 +155,25 @@ class BoardViewModel: ObservableObject {
             object: nil
         )
         
-        NotificationCenter.default.addObserver(
-            self,
-            selector: #selector(checkInternetRealTimeForeground),
-            name: UIApplication.willEnterForegroundNotification,
-            object: nil
-        )
-        
-        NotificationCenter.default.addObserver(
-            self,
-            selector: #selector(checkInternetRealTime),
-            name: Constant.NameNotification.checkAutoconnect,
-            object: nil
-        )
+//        NotificationCenter.default.addObserver(
+//            self,
+//            selector: #selector(checkInternetRealTimeForeground),
+//            name: UIApplication.willEnterForegroundNotification,
+//            object: nil
+//        )
+//
+//        NotificationCenter.default.addObserver(
+//            self,
+//            selector: #selector(checkInternetRealTime),
+//            name: Constant.NameNotification.checkAutoconnect,
+//            object: nil
+//        )
 
         Task {
             await OpenVPNManager.shared.vpn.prepare()
         }
         
-        checkInternetRealTime()
+//        checkInternetRealTime()
         
         assignJailBreakCheckType(type: .readAndWriteFiles)
     }

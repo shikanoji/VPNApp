@@ -29,13 +29,17 @@ struct NodeView: View {
             ZStack {
                 Ellipse()
                     .fill(AppColor.themeColor)
-                    .frame(width: width * 2 * scale,
-                           height: width * 2 * scale)
+                    .frame(width: width * 2,
+                           height: width * 2)
+//                    .frame(width: width * 2 / scale,
+//                           height: width * 2 / scale)
                     .opacity(0.2)
                 Ellipse()
                     .fill(AppColor.themeColor)
-                    .frame(width: width * scale,
-                           height: width * scale)
+                    .frame(width: width,
+                           height: width)
+//                    .frame(width: width / scale,
+//                           height: width / scale)
             }
         }
     }
