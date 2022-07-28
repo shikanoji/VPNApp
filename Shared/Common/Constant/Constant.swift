@@ -84,6 +84,9 @@ struct Constant {
             static let widthMapOrigin: CGFloat = 2048
             static let heightMapOrigin: CGFloat = 1588
             static let ration: CGFloat = widthMapOrigin / heightMapOrigin
+            static var contentOffSetScrolLView: CGSize = CGSize(
+                width: Constant.Board.Map.heightScreen * Constant.Board.Map.ration,
+                height: Constant.Board.Map.heightScreen)
         }
     }
     
@@ -168,7 +171,7 @@ struct Constant {
     
     static func convertYToMap(_ y: CGFloat) -> CGFloat {
 //        return Constant.Board.Map.heightScreen / 2
-        return (y / Constant.Board.Map.heightMapOrigin) * Constant.Board.Map.heightScreen - 25
+        return (y / Constant.Board.Map.heightMapOrigin) * Constant.Board.Map.heightScreen - 20
     }
     
     struct NameNotification {

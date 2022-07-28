@@ -11,7 +11,20 @@ import TunnelKitManager
 struct MapView: View {
     @State var currentAmount: CGFloat = 1.0 {
         didSet {
-            mesh.showCityNodes = currentAmount > Constant.Board.Map.enableCityZoom
+            let showCityNodes = currentAmount > Constant.Board.Map.enableCityZoom
+            
+            self.isCityMap = showCityNodes
+            if showCityNodes {
+                if !mesh.showCityNodes {
+                    enableShowCity = true
+                    mesh.showCityNodes = true
+                }
+            } else {
+                if mesh.showCityNodes {
+                    enableShowCity = true
+                    mesh.showCityNodes = false
+                }
+            }
         }
     }
     
@@ -31,7 +44,7 @@ struct MapView: View {
     
     @Binding var statusConnect: VPNStatus
     
-    func getNodeMapView() -> some View {
+    func getNodeMapView(_ isCityMap: Bool) -> some View {
         let binding = Binding(
             get: { currentAmount },
             set: { _ in }
@@ -42,7 +55,8 @@ struct MapView: View {
             
             return AnyView(NodeMapView(selection: selection,
                                        mesh: mesh,
-                                       scale: binding))
+                                       scale: binding,
+                                       isCityMap: isCityMap))
         case .staticIP:
             return AnyView(StaticNodeMapView(selection: selection,
                                              mesh: mesh,
@@ -50,7 +64,33 @@ struct MapView: View {
         }
     }
     
-    @State var scale: CGFloat = 1.0
+    @State var isCityMap = false
+    
+    @State var enableShowCity = false {
+        didSet {
+            if enableShowCity {
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+                    self.enableShowCity = false
+                }
+            }
+        }
+    }
+    
+    @State var enableUpdateMap = true {
+        didSet {
+            if enableUpdateMap {
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+                    self.enableUpdateMap = false
+                }
+            }
+        }
+    }
+    
+    @State var contentSize: CGSize = Constant.Board.Map.contentOffSetScrolLView {
+        didSet {
+            Constant.Board.Map.contentOffSetScrolLView = contentSize
+        }
+    }
     
     var body: some View {
         ZoomableScrollView(content: {
@@ -58,11 +98,36 @@ struct MapView: View {
                 Asset.Assets.map.SuImage
                     .resizable()
                     .background(AppColor.background)
-//                    .aspectRatio(2048 / 1588, contentMode: .fill)
-                getNodeMapView()
+                    .aspectRatio(2048 / 1588, contentMode: .fill)
+                
+                Group {
+                    NodeMapView(selection: selection,
+                                mesh: mesh,
+                                scale: $currentAmount,
+                                isCityMap: false)
+                    .opacity(!isCityMap ? 1 : 0)
+
+                    NodeMapView(selection: selection,
+                                mesh: mesh,
+                                scale: $currentAmount,
+                                isCityMap: true)
+                    .opacity(isCityMap ? 1 : 0)
+                }
+                .opacity(mesh.currentTab == .location ? 1 : 0)
+                
+                StaticNodeMapView(selection: selection,
+                                  mesh: mesh,
+                                  scale: $currentAmount)
+                .opacity(mesh.currentTab == .staticIP ? 1 : 0)
             }
-        }, location: $location) { _ in
-//            scale = $0
+        }, location: $location, enableUpdateMap: enableUpdateMap, enableShowCity: enableShowCity, updateZoomScale: {
+            enableUpdateMap = false
+            self.currentAmount = $0
+        }, contentSize: {
+            self.contentSize = $0
+        })
+        .onAppear {
+            self.enableUpdateMap = false
         }
         .onReceive(selection.$selectedNodeIDs) {
             if let id = $0.first, let node = mesh.nodeWithID(id) {
@@ -88,6 +153,7 @@ struct MapView: View {
     }
     
     func moveToNode(x: CGFloat, y: CGFloat) {
+        enableUpdateMap = true
         location = CGPoint(
             x: x,
             y: y
@@ -119,13 +185,8 @@ extension Binding {
 
 struct ZoomableScrollView<Content: View>: UIViewRepresentable {
     
-    class ViewModel: ObservableObject {
-        var shouldUpdateView = true
-    }
-    
-    @ObservedObject var viewModel: Self.ViewModel
-    
-    var updateZoomScale: (Double) -> Void
+    var updateZoomScale: (Double) -> Void?
+    var contentSize: (CGSize) -> Void?
     
     private var content: Content
     
@@ -133,19 +194,28 @@ struct ZoomableScrollView<Content: View>: UIViewRepresentable {
     
     @Binding var location: CGPoint
     
+    var enableUpdateMap = true
+    var enableShowCity = false
+    
     init(@ViewBuilder content: () -> Content,
          location: Binding<CGPoint>,
-         updateZoomScale: @escaping (Double)-> Void = { _ in }) {
+         enableUpdateMap: Bool,
+         enableShowCity: Bool,
+         updateZoomScale: @escaping (Double)-> Void = { _ in },
+         contentSize: @escaping (CGSize)-> Void = { _ in }
+    ) {
         self.updateZoomScale = updateZoomScale
         self.content = content()
         self._location = location
-        self.viewModel = ViewModel()
-        print("ZoomableScrollView init")
+        self.enableUpdateMap = enableUpdateMap
+        self.enableShowCity = enableShowCity
+        self.contentSize = contentSize
+        
+        scrollView.decelerationRate = UIScrollView.DecelerationRate(rawValue: 2)
     }
     
     func makeUIView(context: Context) -> UIScrollView {
-        // set up the UIScrollView
-        print("ZoomableScrollView makeUIView")
+        
         scrollView.delegate = context.coordinator
         scrollView.minimumZoomScale = 1
         scrollView.maximumZoomScale = 5
@@ -180,11 +250,11 @@ struct ZoomableScrollView<Content: View>: UIViewRepresentable {
     }
     
     func updateUIView(_ uiView: UIScrollView, context: Context) {
-        // update the hosting controller's SwiftUI content
         
-        guard viewModel.shouldUpdateView else {
-            viewModel.shouldUpdateView = true
-            return
+        if !enableShowCity {
+            guard enableUpdateMap else {
+                return
+            }
         }
         
         let widthScrollView = uiView.contentSize.width
@@ -209,9 +279,11 @@ struct ZoomableScrollView<Content: View>: UIViewRepresentable {
         yOffSet = yOffSet < 20 ? 20 : yOffSet
         yOffSet = yOffSet > maxHeighScrollView ? maxHeighScrollView : yOffSet
         
-        uiView.setContentOffset(CGPoint(
-            x: xOffSet,
-            y: yOffSet), animated: true)
+        if !enableShowCity {
+            uiView.setContentOffset(CGPoint(
+                x: xOffSet,
+                y: yOffSet), animated: true)
+        }
         
         context.coordinator.hostingController.rootView = self.content
         assert(context.coordinator.hostingController.view.superview == uiView)
@@ -241,7 +313,7 @@ struct ZoomableScrollView<Content: View>: UIViewRepresentable {
                 scrollView.maximumZoomScale = scale
             }
             
-            parent.viewModel.shouldUpdateView = false
+            parent.contentSize(scrollView.contentSize)
             parent.updateZoomScale(scrollView.zoomScale)
         }
         

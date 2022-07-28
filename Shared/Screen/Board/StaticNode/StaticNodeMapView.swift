@@ -19,7 +19,8 @@ struct StaticNodeMapView: View {
         ZStack {
             ForEach(mesh.staticNodes) { node in
                 StaticNodeView(scale: $scale, node: node, selection: self.selection)
-                    .position(x: Constant.convertXToMap(node.x) * scale, y: Constant.convertYToMap(node.y) * scale - (scale - 0.8) * 8 - 18)
+                    .position(x: Constant.convertXToMap(node.x),
+                              y: Constant.convertYToMap(node.y))
                     .onTapGesture {
                         self.selection.selectStaticNode(node)
                     }
