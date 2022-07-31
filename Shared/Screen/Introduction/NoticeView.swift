@@ -10,6 +10,8 @@ import SwiftUI
 
 struct NoticeView: View {
     @State var showIntroduction: Bool = false
+    @State var showTermsAndCondition: Bool = false
+    @State var showPrivacyPolicies: Bool = false
     var body: some View {
         ZStack {
             Background() {
@@ -38,10 +40,43 @@ struct NoticeView: View {
                     }
                     Spacer().frame(height: 20)
                 }
-                Text(L10n.Notice.lastGraph).setLightBlackText()
-                Spacer().frame(height: 20)
-                NavigationLink(destination: IntroductionView(), isActive: $showIntroduction) {
+                Group {
+                    Text(L10n.Notice.lastGraph).setLightBlackText()
+                    Spacer().frame(height: 10)
+                    Text(L10n.Notice.agreement).setLightBlackText()
+                    Spacer().frame(height: 5)
+                    HStack {
+                        Text(L10n.Notice.termOfService)
+                            .font(.system(size: 14, weight: .semibold))
+                            .foregroundColor(Color.white)
+                            .underline()
+                            .onTapGesture {
+                                showTermsAndCondition = true
+                            }
+                        Spacer().frame(width: 5)
+                        Text(L10n.Notice.and).setLightBlackText()
+                        Spacer().frame(width: 5)
+                        Text(L10n.Notice.privacyPolicy)
+                            .font(.system(size: 14, weight: .semibold))
+                            .foregroundColor(Color.white)
+                            .underline()
+                            .onTapGesture {
+                                showPrivacyPolicies = true
+                            }
+                        Spacer()
+                    }
+                    Spacer().frame(height: 20)
                 }
+                Group {
+                    NavigationLink(destination: EmbedWebView(url: Constant.api.termsAndConditionsURL,
+                                                             title: L10n.Settings.termAndCondition),
+                                   isActive: $showTermsAndCondition) {}
+                    NavigationLink(destination: EmbedWebView(url: Constant.api.privacyPolictyURL,
+                                                             title: L10n.Settings.privacyPolicty),
+                                   isActive: $showPrivacyPolicies) {}
+                    NavigationLink(destination: IntroductionView(), isActive: $showIntroduction) {}
+                }
+                
                 AppButton(width: 295, text: L10n.Notice.buttonText){
                     AppSetting.shared.showedNotice = true
                     showIntroduction = true

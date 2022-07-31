@@ -71,12 +71,13 @@
 		AC79CE0B282CFB9600E1E874 /* ToolsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC79CE0A282CFB9600E1E874 /* ToolsViewModel.swift */; };
 		AC84BB74287FCB84006905CE /* swiftgen in Resources */ = {isa = PBXBuildFile; fileRef = AC84BB73287FCB84006905CE /* swiftgen */; };
 		AC87539B2801ED10004C5F43 /* DeleteAccountConfirmationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC87539A2801ED10004C5F43 /* DeleteAccountConfirmationView.swift */; };
-		AC91BDEF287C5C3A002776E6 /* SubscriptionLinkedAlertView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC91BDEE287C5C3A002776E6 /* SubscriptionLinkedAlertView.swift */; };
+		AC91BDEF287C5C3A002776E6 /* AccountLimitedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC91BDEE287C5C3A002776E6 /* AccountLimitedView.swift */; };
 		AC99848B288948A90038F216 /* EmbedWebView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC99848A288948A90038F216 /* EmbedWebView.swift */; };
 		AC99848F28895F230038F216 /* UIDeviceExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC99848E28895F230038F216 /* UIDeviceExtension.swift */; };
 		AC9A8F5B27D6236900FACD7D /* KeychainService.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC9A8F5A27D6236900FACD7D /* KeychainService.swift */; };
 		AC9A8F5D27D655C700FACD7D /* Constant+KeychainService.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC9A8F5C27D655C700FACD7D /* Constant+KeychainService.swift */; };
 		ACB6DDD92818F23E007DA359 /* EmptyResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACB6DDD82818F23E007DA359 /* EmptyResult.swift */; };
+		ACF1BC622894484500E4EB92 /* AppstoreReceiptHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACF1BC612894484500E4EB92 /* AppstoreReceiptHelper.swift */; };
 		ACF77632285C8981001ACB39 /* PlanSelectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACF77631285C8981001ACB39 /* PlanSelectionView.swift */; };
 		ACF77634285C8989001ACB39 /* PlanSelectionViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACF77633285C8989001ACB39 /* PlanSelectionViewModel.swift */; };
 		D71CE4FD27903D4F00E8731D /* SubscriptionIntroductionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D71CE4FC27903D4F00E8731D /* SubscriptionIntroductionView.swift */; };
@@ -324,12 +325,13 @@
 		AC79CE0A282CFB9600E1E874 /* ToolsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToolsViewModel.swift; sourceTree = "<group>"; };
 		AC84BB73287FCB84006905CE /* swiftgen */ = {isa = PBXFileReference; lastKnownFileType = folder; path = swiftgen; sourceTree = "<group>"; };
 		AC87539A2801ED10004C5F43 /* DeleteAccountConfirmationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeleteAccountConfirmationView.swift; sourceTree = "<group>"; };
-		AC91BDEE287C5C3A002776E6 /* SubscriptionLinkedAlertView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubscriptionLinkedAlertView.swift; sourceTree = "<group>"; };
+		AC91BDEE287C5C3A002776E6 /* AccountLimitedView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountLimitedView.swift; sourceTree = "<group>"; };
 		AC99848A288948A90038F216 /* EmbedWebView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmbedWebView.swift; sourceTree = "<group>"; };
 		AC99848E28895F230038F216 /* UIDeviceExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIDeviceExtension.swift; sourceTree = "<group>"; };
 		AC9A8F5A27D6236900FACD7D /* KeychainService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeychainService.swift; sourceTree = "<group>"; };
 		AC9A8F5C27D655C700FACD7D /* Constant+KeychainService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Constant+KeychainService.swift"; sourceTree = "<group>"; };
 		ACB6DDD82818F23E007DA359 /* EmptyResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmptyResult.swift; sourceTree = "<group>"; };
+		ACF1BC612894484500E4EB92 /* AppstoreReceiptHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppstoreReceiptHelper.swift; sourceTree = "<group>"; };
 		ACF77631285C8981001ACB39 /* PlanSelectionView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlanSelectionView.swift; sourceTree = "<group>"; };
 		ACF77633285C8989001ACB39 /* PlanSelectionViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlanSelectionViewModel.swift; sourceTree = "<group>"; };
 		D71CE4FC27903D4F00E8731D /* SubscriptionIntroductionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubscriptionIntroductionView.swift; sourceTree = "<group>"; };
@@ -652,6 +654,7 @@
 				ACF77633285C8989001ACB39 /* PlanSelectionViewModel.swift */,
 				ACF77631285C8981001ACB39 /* PlanSelectionView.swift */,
 				AC489251286405F6003F2795 /* PurchaseService.swift */,
+				ACF1BC612894484500E4EB92 /* AppstoreReceiptHelper.swift */,
 			);
 			path = PlanSelection;
 			sourceTree = "<group>";
@@ -664,7 +667,7 @@
 				D71CE4FC27903D4F00E8731D /* SubscriptionIntroductionView.swift */,
 				D79E82942796F671009E36F3 /* WelcomeView.swift */,
 				D79E829827970649009E36F3 /* SetupVPNView.swift */,
-				AC91BDEE287C5C3A002776E6 /* SubscriptionLinkedAlertView.swift */,
+				AC91BDEE287C5C3A002776E6 /* AccountLimitedView.swift */,
 			);
 			path = Subscription;
 			sourceTree = "<group>";
@@ -1571,7 +1574,7 @@
 				AC99848B288948A90038F216 /* EmbedWebView.swift in Sources */,
 				D785C72927BD4F7C00E83C0F /* KeyedCodingKeyContainerExtension.swift in Sources */,
 				AC4051E227CCB6860054F6AE /* ToastView.swift in Sources */,
-				AC91BDEF287C5C3A002776E6 /* SubscriptionLinkedAlertView.swift in Sources */,
+				AC91BDEF287C5C3A002776E6 /* AccountLimitedView.swift in Sources */,
 				EE78F77E2811526C00F49903 /* RequestCertificateModel.swift in Sources */,
 				D79BF75E27BD10D700E76C37 /* Constant+API.swift in Sources */,
 				EE78F768280FB6CE00F49903 /* NetworkManager.swift in Sources */,
@@ -1588,6 +1591,7 @@
 				D7A4AC4527954A7900C88162 /* PlanListCell.swift in Sources */,
 				EE85EDC127B369B6000F967A /* StaticIPListView.swift in Sources */,
 				EE890FFB27956B9100ADF293 /* ChangePasswordView.swift in Sources */,
+				ACF1BC622894484500E4EB92 /* AppstoreReceiptHelper.swift in Sources */,
 				AC1195D22844D71D002230F0 /* DNSSettingView.swift in Sources */,
 				D78044F62759133A0086E59D /* Constant.swift in Sources */,
 				EE890FFE27956E0E00ADF293 /* ChangePasswordViewModel.swift in Sources */,

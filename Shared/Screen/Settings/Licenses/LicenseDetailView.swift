@@ -28,7 +28,6 @@ struct LicenseDetailView: View {
             .frame(height: UIScreen.main.bounds.height - 60)
             .clipped()
         }
-        .navigationBarHidden(false)
         .background(AppColor.background)
         .navigationBarTitle(viewModel.license.title ?? "")
         .navigationBarTitleDisplayMode(.inline)

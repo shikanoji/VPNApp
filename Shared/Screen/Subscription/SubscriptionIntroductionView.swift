@@ -43,7 +43,8 @@ struct SubscriptionIntroduction: View {
                         Spacer().frame(height: 30)
                     }
                     Group {
-                        NavigationLink(destination: PlanSelectionView(viewModel: PlanSelectionViewModel()), isActive: $toPlanSelection) {
+                        NavigationLink(destination: PlanSelectionView(viewModel: PlanSelectionViewModel(shouldAllowLogout: true)),
+                                       isActive: $toPlanSelection) {
                         }
                         AppButton(width: 300, text: L10n.SubscriptionIntro.startFreeTrial) {
                             toPlanSelection = true

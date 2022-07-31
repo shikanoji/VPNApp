@@ -284,17 +284,17 @@ enum ItemCellType: Int, Decodable {
         case .tools:
             return Asset.Assets.iconSettingsItemTools.SuImage
         case .currentVersion:
-            return Asset.Assets.iconSettingsItemProtec.SuImage
+            return Asset.Assets.iconSettingsItemVersion.SuImage
         case .aboutUs:
             return Asset.Assets.iconSettingsItemProtec.SuImage
         case .help:
             return Asset.Assets.iconSettingsItemHelp.SuImage
         case .licenses:
-            return Asset.Assets.iconSettingsItemGeneral.SuImage
+            return Asset.Assets.iconSettingsItemLicense.SuImage
         case .termAndConditions:
-            return Asset.Assets.iconSettingsItemVpn.SuImage
+            return Asset.Assets.iconSettingsItemTerm.SuImage
         case .privacyPolicy:
-            return Asset.Assets.iconSettingsItemVpn.SuImage
+            return Asset.Assets.iconSettingsItemPrivacy.SuImage
         default:
             return nil
         }

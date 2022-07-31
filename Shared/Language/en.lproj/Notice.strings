@@ -11,3 +11,7 @@
 "SecondTerm" = "Anonymous applications usage data (including the version of your device & its operating system) us collected to improve & troubleshoot our app.";
 "LastGraph" = "That’s all. We strictly don’t monitor, record, or log your online activities nor personal data. What you do online stays only between you and your device.";
 "ButtonText" = "Agree & Continue";
+"agreement" = "By clicking \"Agree & Continue\", you confirm to agree to our";
+"TermOfService" = "Terms of Services";
+"and" = "and";
+"PrivacyPolicy" = "Privacy Policy";

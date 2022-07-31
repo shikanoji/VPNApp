@@ -22,4 +22,16 @@ extension APIManager {
                 throw APIError.someError
             }
     }
+    
+    func verifyReceipt(receiptString: String) -> Single<APIResponse<User>> {
+        return provider.rx
+            .request(.verifyReceipt(receipt: receiptString))
+            .map { response in
+                let verifyResult = try JSONDecoder().decode(APIResponse<User>.self, from: response.data)
+                return verifyResult
+            }
+            .catch { error in
+                throw APIError.someError
+            }
+    }
 }
