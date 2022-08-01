@@ -71,7 +71,7 @@ struct Constant {
             static let backgroudTriangle: Color = .white
             static let cornerRadius: CGFloat = 5
             static let numberLineText = 1
-            static let heightContentPopupView: CGFloat = 40
+            static let heightContentPopupView: CGFloat = 35
         }
         
         struct Map {
@@ -84,9 +84,6 @@ struct Constant {
             static let widthMapOrigin: CGFloat = 2048
             static let heightMapOrigin: CGFloat = 1588
             static let ration: CGFloat = widthMapOrigin / heightMapOrigin
-            static var contentOffSetScrolLView: CGSize = CGSize(
-                width: Constant.Board.Map.heightScreen * Constant.Board.Map.ration,
-                height: Constant.Board.Map.heightScreen)
         }
     }
     
@@ -169,9 +166,9 @@ struct Constant {
         return (x / Constant.Board.Map.widthMapOrigin) * (Constant.Board.Map.heightScreen * Constant.Board.Map.ration)
     }
     
-    static func convertYToMap(_ y: CGFloat) -> CGFloat {
+    static func convertYToMap(_ y: CGFloat, _ isCityView: Bool) -> CGFloat {
 //        return Constant.Board.Map.heightScreen / 2
-        return (y / Constant.Board.Map.heightMapOrigin) * Constant.Board.Map.heightScreen - 20
+        return (y / Constant.Board.Map.heightMapOrigin) * Constant.Board.Map.heightScreen - ((isCityView ? (Constant.Board.NodePopupView.heightTriangle + Constant.Board.NodePopupView.heightContentPopupView) : Constant.Board.NodePopupView.heightContentPopupView)) / 2
     }
     
     struct NameNotification {

@@ -190,14 +190,14 @@ struct BoardView: View {
                     }, tapRightIcon: {
                         handlerTapRightNavigation()
                     })
-                    StatusVPNView(ip: viewModel.ip, status: viewModel.stateUI, flag: viewModel.flag)
+                    StatusVPNView(ip: viewModel.ip, status: viewModel.stateUI, flag: viewModel.flag, name: viewModel.nameSelect)
                     Spacer()
                     ConnectButton(status: viewModel.stateUI,
                                   uploadSpeed: viewModel.uploadSpeed,
                                   downloadSpeed: viewModel.downloadSpeed)
                     .onTapGesture {
-                        viewModel.disconnectByUser = true
-                        viewModel.connectVPN()
+                        viewModel.connectOrDisconnectByUser = true
+                        viewModel.ConnectOrDisconnectVPN()
                     }
                     Spacer()
                         .frame(height: Constant.Board.Tabs.topPadding)

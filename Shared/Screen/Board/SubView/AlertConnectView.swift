@@ -13,7 +13,7 @@ struct AlertConnectView: View {
             Text(L10n.Board.connectedAlert)
                 .font(.system(size: Constant.Board.Alert.sizeFont, weight: Constant.Board.Alert.weightFont))
                 .lineLimit(1)
-                .padding(5)
+                .padding(15)
                 .foregroundColor(.black)
                 .background(AppColor.VPNConnected)
                 .cornerRadius(10)

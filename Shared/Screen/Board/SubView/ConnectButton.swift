@@ -19,7 +19,7 @@ struct ConnectButton: View {
     @State var startAlertScroll = false
     
     var body: some View {
-        HStack(spacing: 0) {
+        HStack(alignment: .bottom, spacing: 0) {
             Spacer()
                 .frame(width: widthSpeed)
             VStack(spacing: 10) {
@@ -33,6 +33,7 @@ struct ConnectButton: View {
                             startAlertScroll = false
                         }
                         .animation(Animation.easeInOut(duration: 1))
+                        .frame(width: Constant.Board.QuickButton.widthSize * 2)
                 }
                 ZStack {
                     Circle()
@@ -45,12 +46,12 @@ struct ConnectButton: View {
                 .frame(width: Constant.Board.QuickButton.widthSize,
                        height: Constant.Board.QuickButton.widthSize)
             }
-            .frame(width:  Constant.Board.QuickButton.widthSize,
-                   height: Constant.Board.QuickButton.widthSize)
+            .frame(width:  Constant.Board.QuickButton.widthSize)
             SpeedConnectedView(uploadSpeed: uploadSpeed, downLoadSpeed: downloadSpeed)
                 .opacity(status == .connected ? (NetworkManager.shared.selectConfig == .wireGuard ? 0 : 1) : 0)
-                .padding(.top, 35)
-                .frame(width: widthSpeed)
+                .frame(width: widthSpeed, height: Constant.Board.QuickButton.widthSize)
+//                .background(Color.green.opacity(0.5))
+//                .frame(height: Constant.Board.QuickButton.widthSize)
         }
     }
     
