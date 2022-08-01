@@ -33,7 +33,7 @@ class ForgotPasswordViewModel: ObservableObject {
         APIManager.shared.forgotPassword(email: email)
             .subscribe(onSuccess: { [self] response in
                 self.showProgressView = false
-                if let result = response.result {
+                if response.result != nil {
                     alertMessage = L10n.ForgotPassword.success
                     showAlert = true
                 } else {

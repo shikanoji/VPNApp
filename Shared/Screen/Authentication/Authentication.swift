@@ -21,12 +21,18 @@ class Authentication: ObservableObject {
     }
     
     private func login(user: User, tokens: Tokens) {
+        AppSetting.shared.idUser = Int(user.id)
         AppSetting.shared.email = user.email
         AppSetting.shared.accessToken = tokens.access.token
         AppSetting.shared.accessTokenExpires = tokens.access.expires
         AppSetting.shared.refreshToken = tokens.refresh.token
         AppSetting.shared.refreshTokenExpires = tokens.refresh.expires
         AppSetting.shared.isPremium = user.is_premium
+        if user.is_premium {
+            Task {
+                await AppstoreReceiptHelper.shared.verifyReceipt()
+            }
+        }
         AppSetting.shared.premiumExpires = user.premium_expire
         AppSetting.shared.name = user.name
         AppSetting.shared.accountCreatedTime = user.created_at
@@ -35,8 +41,15 @@ class Authentication: ObservableObject {
         isPremium = AppSetting.shared.isPremium
     }
     
+    func upgradeToPremium(user: User) {
+        AppSetting.shared.isPremium = user.is_premium
+        AppSetting.shared.premiumExpires = user.premium_expire
+        isPremium = AppSetting.shared.isPremium
+    }
+    
     func logout() {
         ///Should not clear ip, country code and city since it will make user unable to login again unless restarting app
+        AppSetting.shared.idUser = 0
         AppSetting.shared.email = ""
         AppSetting.shared.accessToken = ""
         AppSetting.shared.accessTokenExpires = nil

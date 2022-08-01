@@ -7,14 +7,14 @@
 
 import SwiftUI
 import TunnelKitManager
+import SwiftDate
 
 struct PaymentHistoryView: View {
     
     @Binding var showAccount: Bool
     @Binding var showAccountStatus: Bool
     @Binding var statusConnect: VPNStatus
-    
-    @State var paymentHistoryList = [PaymentHistory(cancel: true), PaymentHistory(), PaymentHistory()]
+    @StateObject var viewModel: PaymentHistoryViewModel
     
     @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
     
@@ -34,15 +34,19 @@ struct PaymentHistoryView: View {
                             showAccount = false
                         }, statusConnect: $statusConnect)
                     VStack(spacing: 1) {
-                        ForEach(paymentHistoryList, id: \.id) { item in
-                            ItemRowCell(title: item.pack,
-                                        content: item.contentStatus + " - " + item.date,
-                                        alertContent: item.alert ? L10n.Account.PaymentHistory.cancelSubscription : "",
-                                        position: paymentHistoryList.getPosition(item))
+                        ForEach(viewModel.paymentHistory.indices, id: \.self) { index in
+                            let item = viewModel.paymentHistory[index]
+                            ItemRowCell(title: item.packageName,
+                                        content: item.status + " - " + item.paymentDate,
+                                        alertContent: "",
+                                        position: viewModel.paymentHistory.getPosition(index))
                         }
                     }
                     .padding(Constant.Menu.hozitalPaddingCell)
                     .padding(.top, Constant.Menu.topPaddingCell)
+                }
+                .onAppear {
+                    viewModel.fetchPaymentHistory()
                 }
             }
         }
@@ -56,6 +60,6 @@ struct PaymentHistoryView_Previews: PreviewProvider {
     @State static var showAccount = true
     
     static var previews: some View {
-        PaymentHistoryView(showAccount: $showAccount, showAccountStatus: $showAccount, statusConnect: .constant(.connected))
+        PaymentHistoryView(showAccount: $showAccount, showAccountStatus: $showAccount, statusConnect: .constant(.connected), viewModel: PaymentHistoryViewModel())
     }
 }

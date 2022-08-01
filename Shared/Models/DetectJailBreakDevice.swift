@@ -68,7 +68,7 @@ public enum TypeOfJailBreakCheckAPI {
     }
 }
 
-public extension Check_Method_Of_JailBreak where Self: AnyObject {
+public extension Check_Method_Of_JailBreak {
     
     // Protocol function extended for JailBreak detection
     //

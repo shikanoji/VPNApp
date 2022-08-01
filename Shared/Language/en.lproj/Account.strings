@@ -48,3 +48,6 @@
 "DeleteAccount.delete" = "Delete";
 "ChangePassword.passwordNotMatch" = "Confirm password does not matche";
 "ChangePassword.success" = "Successfully changed password";
+
+"Logout.Confirm.Message" = "Are you sure want to logout?";
+"Logout.Confirm" = "Confirm";

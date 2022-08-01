@@ -7,7 +7,7 @@
 
 import SwiftUI
 import AuthenticationServices
-import ExytePopupView
+import PopupView
 
 struct LoginView: View {
     @StateObject var viewModel: LoginViewModel

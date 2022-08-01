@@ -20,7 +20,9 @@ struct CustomNavigationView: View {
     
     var body: some View {
         VStack {
-            Spacer().frame(height: 20)
+            if UIDevice.current.hasNotch {
+                Spacer().frame(height: 20)
+            }
             HStack {
                 Button {
                     tapLeftButton()

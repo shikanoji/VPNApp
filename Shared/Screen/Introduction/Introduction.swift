@@ -79,7 +79,8 @@ struct IntroductionView: View {
                 Spacer()
             }
             .padding()
-        }.navigationBarHidden(true)
+        }
+        .navigationBarHidden(true)
     }
 }
 

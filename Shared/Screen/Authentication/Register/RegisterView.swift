@@ -6,7 +6,7 @@
 //
 
 import SwiftUI
-import ExytePopupView
+import PopupView
 
 struct RegisterView: View {
     @StateObject var viewModel: RegisterViewModel

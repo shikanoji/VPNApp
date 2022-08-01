@@ -10,9 +10,9 @@ import SwiftUI
 
 struct PlanSelectionView: View {
     @Environment(\.presentationMode) var presentationMode
+    @EnvironmentObject var authentication: Authentication
     @StateObject var viewModel: PlanSelectionViewModel
-    @State var toWelcomeScreen = false
-    @State var shouldShowAccountLinkedAlertView = false
+    
     var body: some View {
         LoadingScreen(isShowing: $viewModel.showProgressView) {
             Background {
@@ -30,18 +30,24 @@ struct PlanSelectionView: View {
                         PlanListView(viewModel: viewModel.planListViewModel)
                         Spacer().frame(height: 20)
                     }
-                    NavigationLink(destination: WelcomeView().navigationBarHidden(true),
-                                   isActive: $viewModel.toWelcomeScreen) {
+                    Group {
+                        NavigationLink(destination: WelcomeView().navigationBarHidden(true),
+                                       isActive: $viewModel.toWelcomeScreen) {
+                        }
+                        NavigationLink(destination: AccountLimitedView().navigationBarHidden(true),
+                                       isActive: $viewModel.shouldShowAccountLimitedView) {
+                        }
+                        NavigationLink(destination: EmptyView()) {
+                            EmptyView()
+                        }
                     }
-                    NavigationLink(destination: SubscriptionLinkedAlertView().navigationBarHidden(true),
-                                   isActive: $shouldShowAccountLinkedAlertView) {
-                    }
+                    
                     AppButton(width: 311, text: L10n.PlanSelect.continueButton) {
-                        #if DEBUG
+#if DEBUG
                         viewModel.toWelcomeScreen = true
-                        #else
+#else
                         viewModel.purchasePlan()
-                        #endif
+#endif
                     }
                     Spacer().frame(height: 20)
                     Text(viewModel.planListViewModel.selectedPlan?.note ?? "")
@@ -50,9 +56,29 @@ struct PlanSelectionView: View {
                         .frame(width: 320, height: 40)
                     Spacer()
                 }
+                .toolbar {
+                    ToolbarItem(placement: .navigationBarTrailing) {
+                        Button {
+                            authentication.logout()
+                        } label: {
+                            Text(L10n.Account.signout)
+                            Asset.Assets.logout.SuImage
+                        }
+                        .opacity(viewModel.shouldAllowLogout ? 1 : 0)
+                        .foregroundColor(Color.white)
+                    }
+                }
             }.onAppear(perform: {
                 viewModel.loadPlans()
+                viewModel.authentication = authentication
             })
+            .popup(isPresented: $viewModel.showAlert, type: .floater(verticalPadding: 10), position: .bottom, animation: .easeInOut, autohideIn: 10, closeOnTap: false, closeOnTapOutside: true) {
+                ToastView(title: "", message: viewModel.alertMessage, confirmTitle: "Retry", confirmAction: {
+                    Task {
+                        await viewModel.verifyReceipt()
+                    }
+                })
+            }
         }
     }
 }

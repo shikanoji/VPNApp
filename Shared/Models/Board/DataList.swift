@@ -7,6 +7,7 @@
 
 import Foundation
 import SwiftDate
+import SwiftUI
 
 struct DataSection: Equatable, Identifiable {
     var id: UUID = UUID()
@@ -71,20 +72,19 @@ enum SectionType: Decodable {
         case .helpSupport:
             return [
                 ItemCell(type: .questions),
-                ItemCell(type: .helpCenter),
-                ItemCell(type: .security)
             ]
         case .vpnSetting:
             return [
                 ItemCell(type: .vpnConnection),
                 ItemCell(type: .tools),
-                //ItemCell(type: .general)
             ]
         case .otherSetting:
             return [
-                ItemCell(type: .apps),
-                ItemCell(type: .protection),
-                ItemCell(type: .help)
+                ItemCell(type: .currentVersion),
+                ItemCell(type: .privacyPolicy),
+                ItemCell(type: .termAndConditions),
+                ItemCell(type: .aboutUs),
+                ItemCell(type: .licenses)
             ]
         case .typeAutoConnect:
             return [
@@ -109,9 +109,6 @@ enum SectionType: Decodable {
         case .tools:
             return [
                 ItemCell(type: .cyberSec)
-//                ,ItemCell(type: .killSwitch)
-//                ,ItemCell(type: .darkWebMonitor)
-//                ,ItemCell(type: .tapJacking)
             ]
             
         case .infomation:
@@ -153,10 +150,12 @@ enum ItemCellType: Int, Decodable {
     case paymentHistory
     case vpnConnection
     case tools
-    case general
-    case apps
-    case protection
+    case termAndConditions
+    case aboutUs
+    case currentVersion
     case help
+    case licenses
+    case privacyPolicy
     
     case autoConnect
     case protocolConnect
@@ -220,12 +219,12 @@ enum ItemCellType: Int, Decodable {
             return L10n.Settings.itemVPN
         case .tools:
             return L10n.Settings.itemTool
-        case .general:
-            return L10n.Settings.itemGeneral
-        case .apps:
-            return L10n.Settings.itemApps
-        case .protection:
-            return L10n.Settings.itemProtec
+        case .currentVersion:
+            return L10n.Settings.currentVersion
+        case .aboutUs:
+            return L10n.Settings.aboutUs
+        case .termAndConditions:
+            return L10n.Settings.termAndCondition
         case .help:
             return L10n.Settings.itemHelp
         case .autoConnect:
@@ -261,35 +260,43 @@ enum ItemCellType: Int, Decodable {
             return L10n.Settings.openVPNUDP
         case .wireGuard:
             return L10n.Settings.wireGuard
+        case .licenses:
+            return L10n.Settings.licenses
+        case .privacyPolicy:
+            return L10n.Settings.privacyPolicty
         }
     }
     
-    var iconString: String {
+    var icon: Image? {
         switch self {
         case .statusAccount:
-            return "icon_account_item_account"
+            return Asset.Assets.iconAccountItemAccount.SuImage
         case .totalDevice:
-            return "icon_account_item_device"
+            return Asset.Assets.iconAccountItemDevice.SuImage
         case .questions:
-            return "icon_account_item_question"
+            return Asset.Assets.iconAccountItemQuestion.SuImage
         case .helpCenter:
-            return "icon_account_item_helpCenter"
+            return Asset.Assets.iconAccountItemHelpCenter.SuImage
         case .security:
-            return "icon_account_item_security"
+            return Asset.Assets.iconAccountItemSecurity.SuImage
         case .vpnConnection:
-            return "icon_settings_item_vpn"
+            return Asset.Assets.iconSettingsItemVpn.SuImage
         case .tools:
-            return "icon_settings_item_tools"
-        case .general:
-            return "icon_settings_item_general"
-        case .apps:
-            return "icon_settings_item_apps"
-        case .protection:
-            return "icon_settings_item_protec"
+            return Asset.Assets.iconSettingsItemTools.SuImage
+        case .currentVersion:
+            return Asset.Assets.iconSettingsItemVersion.SuImage
+        case .aboutUs:
+            return Asset.Assets.iconSettingsItemProtec.SuImage
         case .help:
-            return "icon_settings_item_help"
+            return Asset.Assets.iconSettingsItemHelp.SuImage
+        case .licenses:
+            return Asset.Assets.iconSettingsItemLicense.SuImage
+        case .termAndConditions:
+            return Asset.Assets.iconSettingsItemTerm.SuImage
+        case .privacyPolicy:
+            return Asset.Assets.iconSettingsItemPrivacy.SuImage
         default:
-            return ""
+            return nil
         }
     }
     
@@ -323,12 +330,6 @@ enum ItemCellType: Int, Decodable {
             return L10n.Account.contentTotalDevices
         case .vpnConnection:
             return "3 " + L10n.Settings.settings
-        case .general:
-            return "3 " + L10n.Settings.settings
-        case .apps:
-            return AppSetting.shared.appShourtcuts ? L10n.Settings.enabled : L10n.Settings.disabled
-        case .protection:
-            return AppSetting.shared.protection ? L10n.Settings.enabled : L10n.Settings.disabled
         case .help:
             return AppSetting.shared.help ? L10n.Settings.enabled : L10n.Settings.disabled
         case .autoConnect:
@@ -348,6 +349,8 @@ enum ItemCellType: Int, Decodable {
                 return autoConnectNode.name 
             }
             return L10n.Settings.contentRecommend
+        case .currentVersion:
+            return Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String ?? ""
         default:
             return ""
         }
@@ -355,12 +358,10 @@ enum ItemCellType: Int, Decodable {
     
     var showRightButton: Bool {
         switch self {
-        case .paymentHistory:
-            return true
-        case .fastestServer:
-            return true
-        default:
+        case .currentVersion:
             return false
+        default:
+            return true
         }
     }
     

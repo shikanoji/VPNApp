@@ -7,12 +7,12 @@
 */
 "title" = "Settings";
 "sectionVPN" = "VPN Settings";
-"sectionOther" = "Other Settings";
+"sectionOther" = "Others";
 "itemVPN" = "VPN connection";
 "itemTool" = "Tools";
-"itemGeneral" = "General";
-"itemApps" = "App & Website Shortcuts";
-"itemProtec" = "Protection Summary";
+"currentVersion" = "Current version";
+"aboutUs" = "About Us";
+"termAndCondition" = "Terms & Conditions";
 "itemHelp" = "Help improve SysVpn";
 "enabled" = "Enabled";
 "disabled" = "Disabled";
@@ -37,6 +37,8 @@
 "sectionAutoConnect" = "Auto-connect to";
 "fastestConnect" = "Fastest server";
 "contentRecommend" = "Recommend";
+"licenses" = "Licenses";
+"privacyPolicty" = "Privacy policies";
 
 //Tools
 "Tools.title" = "Tools";
