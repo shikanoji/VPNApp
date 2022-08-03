@@ -20,7 +20,7 @@ struct StaticNodeMapView: View {
             ForEach(mesh.staticNodes) { node in
                 StaticNodeView(scale: $scale, node: node, selection: self.selection)
                     .position(x: Constant.convertXToMap(node.x),
-                              y: Constant.convertYToMap(node.y))
+                              y: Constant.convertYToMap(node.y, mesh.showCityNodes))
                     .onTapGesture {
                         self.selection.selectStaticNode(node)
                     }

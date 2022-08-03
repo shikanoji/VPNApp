@@ -358,7 +358,7 @@ enum ItemCellType: Int, Decodable {
     
     var showRightButton: Bool {
         switch self {
-        case .currentVersion:
+        case .currentVersion, .always, .onWifi, .onMobile, .off, .recommend, .wireGuard, .openVPNTCP, .openVPNUDP:
             return false
         default:
             return true

@@ -28,15 +28,17 @@ struct LoginView: View {
     }
     
     var forms: some View {
-        VStack {
-            Form(placeholder: L10n.Login.emailPlaceholder, value: $viewModel.email)
-            Spacer().frame(height: 20)
-            Form(placeholder: L10n.Login.passwordPlaceholder, value: $viewModel.password, isPassword: true)
-            Spacer().frame(height: 20)
+        ZStack {
+            VStack {
+                Form(placeholder: L10n.Login.emailPlaceholder, value: $viewModel.email)
+                Spacer().frame(height: 20)
+                Form(placeholder: L10n.Login.passwordPlaceholder, value: $viewModel.password, isPassword: true)
+                Spacer().frame(height: 20)
+                Spacer().frame(height: 20)
+            }
             if viewModel.showProgressView {
                 ProgressView().progressViewStyle(CircularProgressViewStyle(tint: Color.white))
             }
-            Spacer().frame(height: 20)
         }
     }
     

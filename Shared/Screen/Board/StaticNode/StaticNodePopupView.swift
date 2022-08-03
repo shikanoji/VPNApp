@@ -21,8 +21,8 @@ struct StaticNodePopupView: View {
                 .background(Constant.Board.NodePopupView.backgroudTriangle)
                 .cornerRadius(Constant.Board.NodePopupView.cornerRadius)
             Triangle()
-                .frame(width: Constant.Board.NodePopupView.widthTriangle * scale * Constant.Board.Map.zoomCity,
-                       height: Constant.Board.NodePopupView.heightTriangle * scale * Constant.Board.Map.zoomCity)
+                .frame(width: Constant.Board.NodePopupView.widthTriangle,
+                       height: Constant.Board.NodePopupView.heightTriangle)
                 .foregroundColor(Constant.Board.NodePopupView.backgroudTriangle)
         }
     }
@@ -30,7 +30,7 @@ struct StaticNodePopupView: View {
     func getStateViewDescription() -> some View {
         VStack(alignment: .center, spacing: 0) {
             Text(node.countryName)
-                .font(.system(size: Constant.Board.NodePopupView.sizeFont * Constant.Board.Map.zoomCity * scale ,
+                .font(.system(size: Constant.Board.NodePopupView.sizeFont,
                               weight: Constant.Board.NodePopupView.weightFont))
                 .lineLimit(Constant.Board.NodePopupView.numberLineText)
                 .frame(maxWidth: .infinity, maxHeight: .infinity)
@@ -39,12 +39,12 @@ struct StaticNodePopupView: View {
                 .minimumScaleFactor(.leastNonzeroMagnitude)
             HStack(spacing: 6) {
                 
-                ImageView(withURL: node.flag, size: ensignSize * Constant.Board.Map.zoomCity * scale)
+                ImageView(withURL: node.flag, size: ensignSize)
                     .clipShape(Circle())
-                    .frame(width: Constant.Board.NodePopupView.frameEnsign * Constant.Board.Map.zoomCity * scale,
-                           height: Constant.Board.NodePopupView.frameEnsign * Constant.Board.Map.zoomCity * scale)
+                    .frame(width: Constant.Board.NodePopupView.frameEnsign,
+                           height: Constant.Board.NodePopupView.frameEnsign)
                 Text(node.cityName)
-                    .font(.system(size: Constant.Board.NodePopupView.sizeFont * Constant.Board.Map.zoomCity * scale,
+                    .font(.system(size: Constant.Board.NodePopupView.sizeFont,
                                   weight: Constant.Board.NodePopupView.weightFont))
                     .lineLimit(Constant.Board.NodePopupView.numberLineText)
             }
@@ -52,7 +52,7 @@ struct StaticNodePopupView: View {
             .padding(.vertical, Constant.Board.NodePopupView.paddingContent)
             .padding(.horizontal, Constant.Board.NodePopupView.paddingContent * 2)
         }
-        .frame(height: Constant.Board.NodePopupView.heightContentPopupView * Constant.Board.Map.zoomCity * scale)
+        .frame(height: Constant.Board.NodePopupView.heightContentPopupView)
         .fixedSize(horizontal: true, vertical: false)
     }
 }

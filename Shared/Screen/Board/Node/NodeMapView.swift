@@ -15,18 +15,18 @@ struct NodeMapView: View {
     
     @Binding var scale: CGFloat
     
-    var isCityMap = false
-    
     var body: some View {
         ZStack {
-            ForEach(isCityMap ? mesh.cityNodes : mesh.countryNodes) { node in
-                NodeView(scale: $scale, node: node, selection: self.selection)
-                    .position(x: Constant.convertXToMap(node.x),
-                              y: Constant.convertYToMap(node.y))
-                    .onTapGesture {
-                        self.selection.selectNode(node)
-                    }
-                    .zIndex(selection.selectedNodeIDs.first == node.id ? 1 : 0)
+            ForEach(mesh.showCityNodes ? mesh.cityNodes : mesh.countryNodes) { node in
+                VStack {
+                    NodeView(scale: $scale, node: node, selection: self.selection)
+                        .position(x: Constant.convertXToMap(node.x),
+                                  y: Constant.convertYToMap(node.y, mesh.showCityNodes))
+                        .onTapGesture {
+                            self.selection.selectNode(node)
+                        }
+                        .zIndex(selection.selectedNodeIDs.first == node.id ? 1 : 0)
+                }
             }
         }
     }
@@ -44,5 +44,3 @@ struct NodeMapView_Previews: PreviewProvider {
         return NodeMapView(selection: selection, mesh: mesh, scale: $scale)
     }
 }
-
-

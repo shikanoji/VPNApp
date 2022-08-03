@@ -93,8 +93,7 @@ struct ItemRowCell: View {
                         }
                     )) {}
                         .toggleStyle(CheckmarkToggleStyle())
-                } else
-                if showSelect {
+                } else if showSelect {
                     Toggle(isOn: Binding<Bool>(
                         get: { switchValue },
                         set: { value in
