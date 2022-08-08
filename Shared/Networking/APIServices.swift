@@ -78,7 +78,7 @@ enum APIService {
     case logout
     case refreshToken
     case forgotPassword(email: String)
-    case ipInfo
+    case getAppSettings
     case ipInfoOptional
     case getRequestCertificate(currentTab: BoardViewModel.StateTab)
     case getObtainCertificate
@@ -126,7 +126,7 @@ extension APIService: TargetType {
             return Constant.api.path.forgotPassword
         case .getCountryList:
             return Constant.api.path.getCountryList + "/\(AppSetting.shared.countryCode)/\(AppSetting.shared.ip)"
-        case .ipInfo:
+        case .getAppSettings:
             return Constant.api.path.ipInfo
         case .ipInfoOptional:
             return ""
@@ -154,7 +154,7 @@ extension APIService: TargetType {
     // Here we specify which method our calls should use.
     var method: Moya.Method {
         switch self {
-        case .getCountryList, .ipInfo, .getRequestCertificate, .ipInfoOptional, .getListSession, .getTopicQuestionList, .getMultihopList, .fetchPaymentHistory, .getObtainCertificate:
+        case .getCountryList, .getAppSettings, .getRequestCertificate, .ipInfoOptional, .getListSession, .getTopicQuestionList, .getMultihopList, .fetchPaymentHistory, .getObtainCertificate:
             return .get
         case .register, .login, .loginSocial, .logout, .forgotPassword, .refreshToken, .verifyReceipt:
             return .post
@@ -202,9 +202,9 @@ extension APIService: TargetType {
             var body: [String: Any] = [:]
             body["provider"] = socialProvider
             body["token"] = token
-            body["ip"] = AppSetting.shared.ip
-            body["country"] = AppSetting.shared.countryCode
-            body["city"] = AppSetting.shared.cityName
+            if getInfoDevice() != "" {
+                body["deviceInfo"] = getInfoDevice()
+            }
             return .requestCompositeParameters(bodyParameters: body, bodyEncoding: JSONEncoding.prettyPrinted, urlParameters: [:])
         case .logout:
             var body: [String: Any] = [:]
@@ -229,10 +229,11 @@ extension APIService: TargetType {
             // Use "key" temporarily, after remove it
             param["key"] = "f11b69c57d5fe9555e29c57c1d863bf8"
             return .requestParameters(parameters: param, encoding: URLEncoding.queryString)
-        case .ipInfo:
+        case .getAppSettings:
             var param: [String: Any] = [:]
             // Use "key" temporarily, after remove it
             param["key"] = "f11b69c57d5fe9555e29c57c1d863bf8"
+            param["platform"] = "ios"
             return .requestParameters(parameters: param, encoding: URLEncoding.queryString)
         case .ipInfoOptional:
             return .requestPlain
@@ -414,7 +415,8 @@ extension APIService: TargetType {
             isEmulator: TARGET_OS_SIMULATOR != 0 ? 1 : 0,
             isTablet: UIDevice.current.userInterfaceIdiom == .pad ? 1 : 0,
             userCountryCode: AppSetting.shared.countryCode,
-            userCountryName: AppSetting.shared.countryName)
+            userCountryName: AppSetting.shared.countryName,
+            userCity: AppSetting.shared.cityName)
         
         let jsonEncoder = JSONEncoder()
         if let jsonData = try? jsonEncoder.encode(info),

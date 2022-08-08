@@ -8,7 +8,7 @@
 
 "title" = "Welcome to SysVPN";
 "message" = "Now you can connect to VPN and enjoy\nultimate privacy and security online.";
-"startButton" = "Started";
+"startButton" = "Start Protecting Yourself";
 "setupVPN" = "Setup Your VPN";
 "setupVPNMessage" = "Your device will ask permission to complete the configuration.";
 "setupButton" = "Setup Now";

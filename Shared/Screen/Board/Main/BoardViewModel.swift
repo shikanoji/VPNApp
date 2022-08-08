@@ -255,16 +255,19 @@ class BoardViewModel: ObservableObject {
         }
     }
     
+    var isDisconnecting = false
+    
     func configDisconnect() {
-        numberReconnect = 0
-        isProcessingVPN = false
-        stateUI = .disconnected
-        NetworkManager.shared.disconnect()
         disconnectSession()
         stopSpeedTimer()
         stopAutoconnectTimer()
+        numberReconnect = 0
+        isProcessingVPN = false
+        stateUI = .disconnected
         connectOrDisconnectByUser = false
         isCheckingAutoConnect = false
+        isDisconnecting = true
+        NetworkManager.shared.disconnect()
     }
     
     func configStartConnectVPN() {
@@ -306,6 +309,10 @@ class BoardViewModel: ObservableObject {
                 return
             }
             
+            guard state != .connected else {
+                return
+            }
+            
             state = .connected
             stateUI = .connected
             numberReconnect = 0
@@ -343,28 +350,30 @@ class BoardViewModel: ObservableObject {
             isProcessingVPN = false
             
         case .disconnected:
-            guard isProcessingVPN && state == .disconnecting else {
+            guard state != .disconnected else {
+                return
+            }
+            
+            guard state == .disconnecting else {
                 return
             }
             
             if state == .disconnecting || state == .disconnected {
-                state = .disconnected
-                stateUI = .disconnected
-                ip = AppSetting.shared.ip
-                flag = ""
-                stopSpeedTimer()
-                
-                if isEnableReconect, !connectOrDisconnectByUser {
-                    print("startConnectVPN disconnectByUser")
+                if (isEnableReconect && !connectOrDisconnectByUser) && !isDisconnecting {
                     startConnectVPN()
                 } else {
                     if connectOrDisconnectByUser {
                         disconnectSession()
                     }
                     connectOrDisconnectByUser = false
+                    state = .disconnected
+                    stateUI = .disconnected
+                    ip = AppSetting.shared.ip
+                    flag = ""
+                    stopSpeedTimer()
+                    nameSelect = ""
+                    isProcessingVPN = false
                 }
-                
-                isProcessingVPN = false
             }
             
         default:
@@ -640,7 +649,7 @@ class BoardViewModel: ObservableObject {
                             completion($0)
                         }
                     } else {
-                        NetworkManager.shared.disconnect()
+                        self.configDisconnect()
                         let error = response.errors
                         if error.count > 0, let message = error[0] as? String {
                             self.error = APIError.identified(message: message)
@@ -657,7 +666,7 @@ class BoardViewModel: ObservableObject {
                         completion($0)
                     }
                 } else {
-                    NetworkManager.shared.disconnect()
+                    self.configDisconnect()
                     self.error = APIError.identified(message: error.localizedDescription)
                     self.showProgressView = false
                     self.showAlert = true

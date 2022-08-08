@@ -20,7 +20,7 @@ extension Constant {
             static let refreshToken = "/shared/module_auth/v1/refresh-tokens"
             static let forgotPassword = "/shared/module_auth/v1/forgot-password"
             static let getCountryList = "app/module_server/v1/country/get_list"
-            static let ipInfo = "/shared/module_server/v1/app/ip_info"
+            static let ipInfo = "/app/module_server/v1/app_setting/get_app_settings"
             static let requestCertificate = "/app/module_server/v1/vpn/request_certificate"
             static let obtainCertificate = "/app/module_server/v1/vpn/obtain_certificate"
             static let changePassword = "/shared/module_user/v1/change-password"

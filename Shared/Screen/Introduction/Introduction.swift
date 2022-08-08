@@ -59,8 +59,10 @@ struct IntroductionView: View {
                                 .scaledToFit()
                             Spacer().frame(height: 10)
                             Text(intro.title).setTitle()
+                                .multilineTextAlignment(.center)
                             Spacer().frame(height: 10)
                             Text(intro.body).setDefault()
+                                .multilineTextAlignment(.center)
                         }
                     }
                 }

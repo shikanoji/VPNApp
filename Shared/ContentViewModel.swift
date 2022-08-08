@@ -26,11 +26,11 @@ class ContentViewModel: ObservableObject {
     func getIpInfo(completion: @escaping () -> Void) {
         showProgressView = true
         
-        APIManager.shared.getIpInfo()
+        APIManager.shared.getAppSettings()
             .subscribe(onSuccess: { [self] response in
                 self.showProgressView = false
                 if let result = response.result{
-                    configIpInfo(result)
+                    AppSetting.shared.configAppSettings(result)
                     completion()
                 } else {
                     let error = response.errors
