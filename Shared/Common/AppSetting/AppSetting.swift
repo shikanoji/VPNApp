@@ -385,10 +385,10 @@ struct AppSetting {
     /// api get ip info in app
     func getIpInfo(completion: @escaping (String?) -> Void) {
         
-        APIManager.shared.getIpInfo()
+        APIManager.shared.getAppSettings()
             .subscribe(onSuccess: { [self] response in
                 if let result = response.result{
-                    configIpInfo(result)
+                    configAppSettings(result)
                     completion(nil)
                 } else {
                     let error = response.errors
@@ -428,6 +428,30 @@ struct AppSetting {
         AppSetting.shared.countryName = ipInfo.countryName
         AppSetting.shared.cityName = ipInfo.city
         AppSetting.shared.lastChange = ipInfo.lastChange ?? 0
+    }
+    
+    func configAppSettings(_ result: AppSettingsResultAPI) {
+        AppSetting.shared.ip = result.ipInfo.ip
+        AppSetting.shared.countryCode = result.ipInfo.countryCode
+        AppSetting.shared.countryName = result.ipInfo.countryName
+        AppSetting.shared.cityName = result.ipInfo.city
+        AppSetting.shared.lastChange = result.lastChange ?? 0
+        
+        if NetworkManager.shared.selectConfig == .recommend {
+            if let vpnSetting = result.appSettings?.vpn {
+                if vpnSetting.defaultTech == "wireguard" {
+                    NetworkManager.shared.selectConfig = .wireGuard
+                } else if vpnSetting.defaultTech == "openVPN" {
+                    if let defaultProtocol = vpnSetting.defaultProtocol {
+                        if defaultProtocol == "UDP" {
+                            NetworkManager.shared.selectConfig = .openVPNUDP
+                        } else {
+                            NetworkManager.shared.selectConfig = .openVPNTCP
+                        }
+                    }
+                }
+            }
+        }
     }
     
     func prepareForIpInfo(completion: @escaping (String?) -> Void) {

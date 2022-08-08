@@ -36,5 +36,5 @@
 "BoardList.MultiHop.SelectExitLocation" = "Select exit location";
 "BoardList.MultiHop.Connect" = "Connect";
 "BoardList.MultiHop.Exit" = "Exit location represents your main VPN server";
-"BoardList.MultiHop.ContentMultiHop" = "MultiHop enables you to connect via two different VPN servers. Most of the time, these are located in different countries. For example, you can make your VPN connection even more secure and private by connecting to a VPN server in Canada and then a second VPN server in Germany instead of just a Canadian server.";
+"BoardList.MultiHop.ContentMultiHop" = "A multiHop VPN, also known as a double VPN, works by sending your internet traffic through two secure servers rather than one when you go online. Consider this as a secure tunnel inside a secure tunnel, which provides an extra layer of security. As your data reaches each server, it receives another extra layer of traffic encryption (double-encrypted), to the point where your data is almost entirely inaccessible to cybercriminals, ensuring both your IP and traffic are therefore protected twice as much.";
 "BoardList.MultiHop.GotIt" = "Got it";

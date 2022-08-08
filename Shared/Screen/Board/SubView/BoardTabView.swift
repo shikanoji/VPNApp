@@ -57,12 +57,7 @@ struct BoardTabViewCustom: View {
             }
             showBoardList = true
         }
-        .font(Font.system(size: 13, weight: .medium))
-        .padding()
-        .frame(height: Constant.Board.Tabs.heightSize)
-        .frame(maxWidth: .infinity)
-        .background(selected ? AppColor.backgroundStatusView : AppColor.darkButton)
-        .cornerRadius(Constant.Board.SubBoard.radius)
+        .buttonStyle(PrimaryButtonStyle(backgroundColor: selected ? AppColor.backgroundStatusView : AppColor.darkButton, cornerRadius: Constant.Board.SubBoard.radius))
     }
 }
 
@@ -72,5 +67,29 @@ struct BoardTabView_Previews: PreviewProvider {
     static var previews: some View {
         BoardTabView(tab: Binding<BoardViewModel.StateTab>.constant(.staticIP), showBoardList: $show)
             .previewLayout(.fixed(width: 343.0, height: Constant.Board.Tabs.heightSize))
+    }
+}
+
+struct PrimaryButtonStyle: ButtonStyle {
+    var backgroundColor: Color = .black
+    var textColor: Color = Color.white
+    var height: CGFloat = 46
+    var cornerRadius: CGFloat = 15
+    var fontSize: CGFloat = 13
+    var disabled: Bool = false
+    var textSidePadding: CGFloat = 30
+    var weight: Font.Weight = .semibold
+    
+    func makeBody(configuration: Configuration) -> some View {
+        configuration.label
+            .padding([.leading, .trailing], textSidePadding)
+            .frame(maxWidth: .infinity, maxHeight: height)
+            .background(disabled ? .gray : backgroundColor)
+            .foregroundColor(textColor)
+            .cornerRadius(Constant.Board.SubBoard.radius)
+            .font(.system(size: fontSize, weight: weight, design: .default))
+            .scaleEffect(configuration.isPressed ? 1.2 : 1)
+            .animation(.easeOut(duration: 0.2), value: configuration.isPressed)
+            .lineLimit(1)
     }
 }

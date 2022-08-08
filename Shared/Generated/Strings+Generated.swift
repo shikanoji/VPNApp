@@ -168,7 +168,7 @@ public enum L10n {
       public enum MultiHop {
         /// Connect
         public static let connect = L10n.tr("Board", "BoardList.MultiHop.Connect")
-        /// MultiHop enables you to connect via two different VPN servers. Most of the time, these are located in different countries. For example, you can make your VPN connection even more secure and private by connecting to a VPN server in Canada and then a second VPN server in Germany instead of just a Canadian server.
+        /// A multiHop VPN, also known as a double VPN, works by sending your internet traffic through two secure servers rather than one when you go online. Consider this as a secure tunnel inside a secure tunnel, which provides an extra layer of security. As your data reaches each server, it receives another extra layer of traffic encryption (double-encrypted), to the point where your data is almost entirely inaccessible to cybercriminals, ensuring both your IP and traffic are therefore protected twice as much.
         public static let contentMultiHop = L10n.tr("Board", "BoardList.MultiHop.ContentMultiHop")
         /// Exit location represents your main VPN server
         public static let exit = L10n.tr("Board", "BoardList.MultiHop.Exit")
@@ -230,8 +230,7 @@ public enum L10n {
     public static let somethingWrong = L10n.tr("Global", "SomethingWrong")
   }
   public enum Introduction {
-    /// A good VPN service provides you a secure,
-    /// encrypted tunnel for online traffic to flow
+    /// SysVPN brings top-notch security by encrypting your connection, masking your sensitive info, and disguising your online activities from hacker attacks.
     public static let intro1Body = L10n.tr("Introduction", "Intro1Body")
     /// Get secure and private
     /// access to the Internet
@@ -239,15 +238,13 @@ public enum L10n {
     /// Best of all, with one SysVPN account, you can
     /// secure up to 6 devices at the same time
     public static let intro2Body = L10n.tr("Introduction", "Intro2Body")
-    /// Protect all your devices
+    /// Support Cross-Platform With Just One Subscription
     public static let intro2Title = L10n.tr("Introduction", "Intro2Title")
-    /// Choose from 5100+ SysVPN servers in 60
-    /// countries and enjoy the VPN experience
+    /// Whether it’s high-speed streaming, browsing, security, file sharing, or privacy; you get everything with SysVPN!
     public static let intro3Body = L10n.tr("Introduction", "Intro3Body")
-    /// Enjoy a fast and stable
-    /// connection anywhere
+    /// Fast & Stable Speed From Anywhere To Everywhere
     public static let intro3Title = L10n.tr("Introduction", "Intro3Title")
-    /// START FREE 7-DAY TRIAL
+    /// START FREE 30-DAY TRIAL
     public static let trialButton = L10n.tr("Introduction", "trialButton")
   }
   public enum Login {
@@ -303,19 +300,21 @@ public enum L10n {
     public static let accountLimitNote = L10n.tr("PlanSelect", "AccountLimitNote")
     /// All plans include protection for 6 devices
     public static let body = L10n.tr("PlanSelect", "body")
-    /// Continue
+    /// Get 24-Month Plan
     public static let continueButton = L10n.tr("PlanSelect", "continueButton")
     /// Got it
     public static let gotIt = L10n.tr("PlanSelect", "GotIt")
-    /// month
+    /// mo
     public static let month = L10n.tr("PlanSelect", "month")
     /// Pay after 7 days. Subscription auto-renews every 1 years
     /// until canceled.
     public static let note = L10n.tr("PlanSelect", "note")
+    /// Subscription auto-renews every 2 years until canceled.
+    public static let notePlan = L10n.tr("PlanSelect", "notePlan")
     /// Select a plan
     public static let title = L10n.tr("PlanSelect", "title")
     public enum PlanA {
-      /// $83.99 billed every year.
+      /// đ2,748,000 billed every 2 years. 7-day free trial.
       public static let description = L10n.tr("PlanSelect", "PlanA.description")
       /// Pay after 7 days. Subscription auto-renews every year
       /// until canceled.
@@ -501,7 +500,7 @@ public enum L10n {
     public static let staticIP = L10n.tr("StaticIP", "StaticIP")
   }
   public enum SubscriptionIntro {
-    /// 30-day money-back guarantee
+    /// Blazing-fast & stable globally servers network
     public static let cashback = L10n.tr("SubscriptionIntro", "cashback")
     /// Continue without subscription
     public static let continueWithoutSub = L10n.tr("SubscriptionIntro", "continueWithoutSub")
@@ -509,19 +508,17 @@ public enum L10n {
     public static let liveSupport = L10n.tr("SubscriptionIntro", "liveSupport")
     /// Auto-renewable subscription info:
     /// 
-    /// The payment will be charged to your iTunes Account at confirmation of purchase
+    /// The payment will be charged to your Play Store Account at confirmation of purchase
     /// 
     /// The subscription renews automatically unless the auto-renew is turned off at least 24 hours before the end of the current billing period
     /// 
     /// Yout account will be charged for renewal within 24 hours prior to the end of your selected subscription
     /// 
     /// You can manager subscription and turn off auto-renewal after purchase by going to your Account Settings
-    /// 
-    /// Any unused portion of Sysvpn’s free trial period, if offered, will be forfeited when you purchase a subscription
     public static let note = L10n.tr("SubscriptionIntro", "note")
-    /// 3200+ fast servers
+    /// Blazing-fast & stable globally servers network
     public static let rocketFast = L10n.tr("SubscriptionIntro", "rocketFast")
-    /// Start your 7-day free trial
+    /// Start your 30-day free trial
     public static let startFreeTrial = L10n.tr("SubscriptionIntro", "startFreeTrial")
     /// Subscription
     public static let title = L10n.tr("SubscriptionIntro", "Title")
@@ -538,7 +535,7 @@ public enum L10n {
     public static let setupVPN = L10n.tr("Welcome", "setupVPN")
     /// Your device will ask permission to complete the configuration.
     public static let setupVPNMessage = L10n.tr("Welcome", "setupVPNMessage")
-    /// Started
+    /// Start Protecting Yourself
     public static let startButton = L10n.tr("Welcome", "startButton")
     /// Welcome to SysVPN
     public static let title = L10n.tr("Welcome", "title")

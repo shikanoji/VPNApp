@@ -30,6 +30,10 @@ struct BoardView: View {
                 .opacity(showBoardList ? 1 : 0)
             contentMapView()
                 .opacity((!showAccount && !showSettings && !showBoardList) ? 1 : 0)
+            if showBoardList {
+                boardListView()
+                    .transition(.move(edge: .bottom))
+            }
             AutoConnectView(
                 showSettings: .constant(true),
                 showVPNSetting: .constant(true),
