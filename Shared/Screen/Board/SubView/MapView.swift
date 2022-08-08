@@ -44,7 +44,7 @@ struct MapView: View {
     var body: some View {
         ZoomableScrollView(content: {
             ZStack(alignment: .center) {
-                Asset.Assets.map.SuImage
+                Asset.Assets.map.swiftUIImage
                     .resizable()
                     .background(AppColor.background)
                     .aspectRatio(2048 / 1588, contentMode: .fill)

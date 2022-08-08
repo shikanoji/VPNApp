@@ -14,3 +14,7 @@
 
 "Intro3Title" = "Fast & Stable Speed From Anywhere To Everywhere";
 "Intro3Body" = "Whether it’s high-speed streaming, browsing, security, file sharing, or privacy; you get everything with SysVPN!";
+
+"UpdateRequired" = "Update Required";
+"UpdateRequiredNote" = "The current version of SYSVPN is no longer supported. Please update the app to continue using the app.";
+"UpdateNewVersion" = "Update New Version";

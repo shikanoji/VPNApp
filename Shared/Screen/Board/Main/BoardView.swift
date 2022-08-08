@@ -173,10 +173,10 @@ struct BoardView: View {
                             statusConnect: $viewModel.stateUI)
                     .allowsHitTesting(viewModel.stateUI != .connected)
                     if viewModel.stateUI == .connected {
-                        Asset.Assets.logoConnectedBackground.SuImage
+                        Asset.Assets.logoConnectedBackground.swiftUIImage
                             .resizable()
                             .aspectRatio(contentMode: .fit)
-                        Asset.Assets.logoConnected.SuImage
+                        Asset.Assets.logoConnected.swiftUIImage
                             .resizable()
                             .aspectRatio(contentMode: .fit)
                             .frame(width: 150, height: 150)

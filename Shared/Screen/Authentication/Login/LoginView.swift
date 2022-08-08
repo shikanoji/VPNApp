@@ -18,7 +18,7 @@ struct LoginView: View {
     
     var header: some View {
         VStack {
-            Asset.Assets.logoMedium.SuImage
+            Asset.Assets.logoMedium.swiftUIImage
             Spacer().frame(height: 50)
             Text(L10n.Login.title).setTitle()
             Spacer().frame(height: 20)
@@ -49,13 +49,13 @@ struct LoginView: View {
     }
     
     var loginWithGoogleButton: some View {
-        AppButton(style: .darkButton, width: 311, text: L10n.Login.signinWithGoogle, icon: Asset.Assets.google.SuImage) {
+        AppButton(style: .darkButton, width: 311, text: L10n.Login.signinWithGoogle, icon: Asset.Assets.google.swiftUIImage) {
             viewModel.loginGoogle()
         }
     }
     
     var loginWithAppleButton: some View {
-        AppButton(style: .darkButton, width: 311, text: L10n.Login.signinWithApple, icon: Asset.Assets.apple.SuImage) {
+        AppButton(style: .darkButton, width: 311, text: L10n.Login.signinWithApple, icon: Asset.Assets.apple.swiftUIImage) {
             viewModel.loginApple()
         }
     }

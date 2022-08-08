@@ -14,7 +14,7 @@ struct WelcomeView: View {
         Background {
             VStack {
                 Spacer()
-                Asset.Assets.welcome.SuImage
+                Asset.Assets.welcome.swiftUIImage
                 Spacer().frame(height: 10)
                 Text(L10n.Welcome.title).setTitle()
                 Spacer().frame(height: 10)

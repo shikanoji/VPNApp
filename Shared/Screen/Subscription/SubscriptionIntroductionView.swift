@@ -20,26 +20,26 @@ struct SubscriptionIntroduction: View {
                 VStack(alignment: .center) {
 //                    Spacer().frame(minHeight: 10)
                     Text(L10n.SubscriptionIntro.title).setTitle()
-                    Asset.Assets.subscriptionIntroImage.SuImage
+                    Asset.Assets.subscriptionIntroImage.swiftUIImage
 //                    Group {
                         Spacer().frame(height: 20)
                         HStack{
-                            Asset.Assets.unlimited.SuImage
+                            Asset.Assets.unlimited.swiftUIImage
                             Text(L10n.SubscriptionIntro.unlimited).setDefault()
                             Spacer()
                         }.frame(width: widthConent)
                         HStack{
-                            Asset.Assets.cashReturn.SuImage
+                            Asset.Assets.cashReturn.swiftUIImage
                             Text(L10n.SubscriptionIntro.cashback).setDefault()
                             Spacer()
                         }.frame(width: widthConent)
                         HStack{
-                            Asset.Assets.rocketFast.SuImage
+                            Asset.Assets.rocketFast.swiftUIImage
                             Text(L10n.SubscriptionIntro.rocketFast).setDefault()
                             Spacer()
                         }.frame(width: widthConent)
                         HStack{
-                            Asset.Assets.liveSupport.SuImage
+                            Asset.Assets.liveSupport.swiftUIImage
                             Text(L10n.SubscriptionIntro.liveSupport).setDefault()
                             Spacer()
                         }.frame(width: widthConent)

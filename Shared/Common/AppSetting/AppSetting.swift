@@ -62,7 +62,7 @@ enum AppKeys: String {
 
 struct AppSetting {
     static var shared = AppSetting()
-    
+    var forceUpdateVersion: [String] = []
     init() {}
     
     var currentSessionId: String {
@@ -436,6 +436,10 @@ struct AppSetting {
         AppSetting.shared.countryName = result.ipInfo.countryName
         AppSetting.shared.cityName = result.ipInfo.city
         AppSetting.shared.lastChange = result.lastChange ?? 0
+        
+        if let _forceUpdateVersions = result.appSettings?.forceUpdateVersions {
+            AppSetting.shared.forceUpdateVersion = _forceUpdateVersions
+        }
         
         if NetworkManager.shared.selectConfig == .recommend {
             if let vpnSetting = result.appSettings?.vpn {
