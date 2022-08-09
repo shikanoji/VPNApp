@@ -16,11 +16,11 @@ struct IntroductionPage: Hashable {
     
     static func getList() -> [IntroductionPage] {
         
-        let intro1 = IntroductionPage(image: Asset.Assets.introduction1.SuImage, title: L10n.Introduction.intro1Title, body: L10n.Introduction.intro1Body)
+        let intro1 = IntroductionPage(image: Asset.Assets.introduction1.swiftUIImage, title: L10n.Introduction.intro1Title, body: L10n.Introduction.intro1Body)
         
-        let intro2 = IntroductionPage(image: Asset.Assets.introduction2.SuImage, title: L10n.Introduction.intro2Title, body: L10n.Introduction.intro2Title)
+        let intro2 = IntroductionPage(image: Asset.Assets.introduction2.swiftUIImage, title: L10n.Introduction.intro2Title, body: L10n.Introduction.intro2Title)
         
-        let intro3 = IntroductionPage(image: Asset.Assets.introduction3.SuImage, title: L10n.Introduction.intro3Title, body: L10n.Introduction.intro3Body)
+        let intro3 = IntroductionPage(image: Asset.Assets.introduction3.swiftUIImage, title: L10n.Introduction.intro3Title, body: L10n.Introduction.intro3Body)
         
         return [intro1, intro2, intro3]
     }
@@ -47,7 +47,7 @@ struct IntroductionView: View {
                 Spacer().frame(height: 20)
                 HStack {
                     Spacer().frame(width: 10)
-                    Asset.Assets.logoSmall.SuImage
+                    Asset.Assets.logoSmall.swiftUIImage
                     Spacer()
                 }
                 Spacer()
@@ -59,8 +59,10 @@ struct IntroductionView: View {
                                 .scaledToFit()
                             Spacer().frame(height: 10)
                             Text(intro.title).setTitle()
+                                .multilineTextAlignment(.center)
                             Spacer().frame(height: 10)
                             Text(intro.body).setDefault()
+                                .multilineTextAlignment(.center)
                         }
                     }
                 }

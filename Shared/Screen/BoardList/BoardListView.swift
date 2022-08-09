@@ -20,6 +20,8 @@ struct BoardListView: View {
     @Binding var mutilhopList: [MultihopModel]
     @Binding var multihopSelect: MultihopModel?
     
+    @State var stopAnimation = false
+    
     var body: some View {
         VStack(spacing: 8) {
             Spacer()
@@ -46,6 +48,9 @@ struct BoardListView: View {
         .navigationBarHidden(true)
         .background(AppColor.background)
         .ignoresSafeArea()
-        .animation(nil)
+        .onAppear {
+            self.stopAnimation = true
+        }
+        .animation(stopAnimation ? nil : .linear)
     }
 }

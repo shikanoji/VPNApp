@@ -5,12 +5,16 @@
   Created by Nguyễn Đình Thạch on 22/12/2021.
   
 */
-"trialButton" = "START FREE 7-DAY TRIAL";
+"trialButton" = "START FREE 30-DAY TRIAL";
 "Intro1Title" = "Get secure and private\naccess to the Internet";
-"Intro1Body" = "A good VPN service provides you a secure,\nencrypted tunnel for online traffic to flow";
+"Intro1Body" = "SysVPN brings top-notch security by encrypting your connection, masking your sensitive info, and disguising your online activities from hacker attacks.";
 
-"Intro2Title" = "Protect all your devices";
+"Intro2Title" = "Support Cross-Platform With Just One Subscription";
 "Intro2Body" = "Best of all, with one SysVPN account, you can\nsecure up to 6 devices at the same time";
 
-"Intro3Title" = "Enjoy a fast and stable\nconnection anywhere";
-"Intro3Body" = "Choose from 5100+ SysVPN servers in 60\ncountries and enjoy the VPN experience";
+"Intro3Title" = "Fast & Stable Speed From Anywhere To Everywhere";
+"Intro3Body" = "Whether it’s high-speed streaming, browsing, security, file sharing, or privacy; you get everything with SysVPN!";
+
+"UpdateRequired" = "Update Required";
+"UpdateRequiredNote" = "The current version of SYSVPN is no longer supported. Please update the app to continue using the app.";
+"UpdateNewVersion" = "Update New Version";

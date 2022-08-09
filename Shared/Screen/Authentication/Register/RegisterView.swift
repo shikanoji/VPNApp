@@ -53,11 +53,11 @@ struct RegisterView: View {
             }
             normalRegisterButton
             Spacer().frame(height: 30)
-            AppButton(style: .darkButton, width: 311, text: L10n.Register.signupWithGoogle, icon: Asset.Assets.google.SuImage) {
+            AppButton(style: .darkButton, width: 311, text: L10n.Register.signupWithGoogle, icon: Asset.Assets.google.swiftUIImage) {
                 viewModel.signupGoogle()
             }
             Spacer().frame(height: 10)
-            AppButton(style: .darkButton, width: 311, text: L10n.Register.signupWithApple, icon: Asset.Assets.apple.SuImage) {
+            AppButton(style: .darkButton, width: 311, text: L10n.Register.signupWithApple, icon: Asset.Assets.apple.swiftUIImage) {
                 viewModel.signupApple()
             }
             Spacer().frame(height: 30)
@@ -82,7 +82,7 @@ struct RegisterView: View {
                 ScrollView(.vertical, showsIndicators: false) {
                     VStack(alignment: .center) {
                         Spacer().frame(minHeight: 100)
-                        Asset.Assets.logoMedium.SuImage
+                        Asset.Assets.logoMedium.swiftUIImage
                         header
                         forms
                         registerButtons

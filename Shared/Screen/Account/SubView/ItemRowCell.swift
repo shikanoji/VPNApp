@@ -59,7 +59,7 @@ struct ItemRowCell: View {
                     ImageView(withURL: flag, size: Constant.BoardList.heightImageNode)
                         .clipShape(Circle())
                 } else {
-                    Asset.Assets.fastestServerIcon.SuImage
+                    Asset.Assets.fastestServerIcon.swiftUIImage
                 }
                 Spacer().frame(width: 16)
             }
@@ -93,8 +93,7 @@ struct ItemRowCell: View {
                         }
                     )) {}
                         .toggleStyle(CheckmarkToggleStyle())
-                } else
-                if showSelect {
+                } else if showSelect {
                     Toggle(isOn: Binding<Bool>(
                         get: { switchValue },
                         set: { value in

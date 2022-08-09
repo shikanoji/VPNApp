@@ -10,10 +10,13 @@ import SwiftUI
 
 struct PlanListView: View {
     @StateObject var viewModel: PlanListViewModel
+    
+    var widthConent: CGFloat = 311
+    
     var body: some View {
         VStack {
             ForEach(Plan.getListPlan(), id: \.self) { item in
-                PlanListCell(focus: (viewModel.selectedPlan?.name ?? "") == item.name, plan: item).onTapGesture {
+                PlanListCell(focus: (viewModel.selectedPlan?.name ?? "") == item.name, plan: item, widthConent: widthConent).onTapGesture {
                     viewModel.selectPlan(plan: item)
                 }
             }

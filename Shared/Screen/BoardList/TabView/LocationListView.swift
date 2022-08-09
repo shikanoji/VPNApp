@@ -26,7 +26,7 @@ struct LocationListView: View {
                     Spacer()
                 }
                 HStack(spacing: 16) {
-                    Asset.Assets.fastestServerIcon.SuImage
+                    Asset.Assets.fastestServerIcon.swiftUIImage
                     VStack(alignment: .leading, spacing: 4) {
                         Text("Fastest server")
                             .font(Constant.BoardList.fontNameCity)

@@ -25,7 +25,7 @@ struct ChangePasswordView: View {
                 .font(Constant.ChangePassWord.fontTitle)
             Text(AppSetting.shared.hasPassword ? L10n.Account.Infomation.introChangePassword : L10n.Account.Infomation.setPasswordNote)
                 .font(Constant.ChangePassWord.fontSubContent)
-                .foregroundColor(Asset.Colors.lightBlackText.SuColor)
+                .foregroundColor(Asset.Colors.lightBlackText.swiftUIColor)
         }
         .padding(.vertical)
     }

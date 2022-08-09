@@ -12,6 +12,7 @@ struct StatusVPNView: View {
     var ip: String
     var status: VPNStatus
     var flag: String
+    var name: String
     
     var body: some View {
         ZStack(alignment: .leading) {
@@ -32,17 +33,9 @@ struct StatusVPNView: View {
             + Text(status.statusTitle)
                 .foregroundColor(status.statusColor)
                 .fontWeight(.semibold)
-            Text(L10n.Board.subIP)
+            Text(name == "" ? L10n.Board.subIP : ("Location: " + name))
         }
         .font(.system(size: Constant.Board.SubBoard.fontSize))
         .foregroundColor(Constant.Board.SubBoard.fontColor)
-    }
-}
-
-struct StatusVPNView_Previews: PreviewProvider {
-    
-    static var previews: some View {
-        StatusVPNView(ip: "199.199.199.8", status: .disconnected, flag: "")
-            .previewLayout(.fixed(width: /*@START_MENU_TOKEN@*/343.0/*@END_MENU_TOKEN@*/, height: /*@START_MENU_TOKEN@*/68.0/*@END_MENU_TOKEN@*/))
     }
 }

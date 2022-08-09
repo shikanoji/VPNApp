@@ -11,7 +11,7 @@ import SwiftUI
 struct StaticNodeView: View {
     @Binding var scale: CGFloat
     
-    var width = CGFloat(5)
+    var width = CGFloat(10)
     // 1
     @State var node: StaticServer
     //2

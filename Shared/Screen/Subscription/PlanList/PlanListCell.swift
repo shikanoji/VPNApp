@@ -11,47 +11,44 @@ import SwiftUI
 struct PlanListCell: View {
     var focus: Bool
     var plan: Plan
+    var widthConent: CGFloat = 311
+    
     var body: some View {
         VStack {
             HStack {
                 Spacer().frame(width: 20)
-                VStack(alignment: .leading) {
-                    Text(plan.name)
-                        .font(.system(size: 16, weight: .semibold))
-                        .foregroundColor(focus ? AppColor.themeColor : Color.white)
-                        .frame(maxWidth: .infinity, alignment: .leading)
-                    Spacer().frame(height: 10)
+                VStack(alignment: .leading, spacing: 10) {
+                    HStack {
+                        Text(plan.name)
+                            .font(.system(size: 16, weight: .semibold))
+                            .foregroundColor(Color.white)
+                            .frame(maxWidth: .infinity, alignment: .leading)
+                        if !plan.savingText.isEmpty {
+                            VStack{
+                                Text(plan.savingText + "%").foregroundColor( AppColor.blackText).font(.system(size: 11, weight: .semibold))
+                            }
+                            .padding(8)
+                            .background(focus ? AppColor.planSelectSave : Color.white)
+                            .clipShape(Capsule())
+                        }
+                        Spacer().frame(width: 20)
+                    }
+                    
+                    HStack {
+                        Text(plan.price).font(.system(size: 24, weight: .semibold))
+                            .foregroundColor(AppColor.themeColor)
+                        Text(" /" + L10n.PlanSelect.month).font(.system(size: 12))
+                            .foregroundColor(Color.gray)
+                    }
+                    
                     Text(plan.description)
                         .font(.system(size: 12))
                         .foregroundColor(Color.white).lineSpacing(5)
                         .frame(maxWidth: .infinity, alignment: .leading)
-                }.frame(width: 156)
-                Spacer()
-                VStack {
-                    Text(plan.price).font(.system(size: 24, weight: .semibold))
-                        .foregroundColor(focus ? AppColor.blackText : Color.white)
-                    Spacer().frame(height: 5)
-                    HStack() {
-                        Spacer()
-                        Text("/ " + L10n.PlanSelect.month).font(.system(size: 12)).foregroundColor(focus ? AppColor.blackText : Color.white)
-                        Spacer().frame(width : 25)
-                    }
-                    Spacer().frame(height: 20)
-                    if !plan.savingText.isEmpty {
-                        VStack{
-                            Text(plan.savingText + "%").foregroundColor(focus ? Color.white : AppColor.blackText).font(.system(size: 11, weight: .semibold))
-                        }.frame(width: 93, height: 20)
-                            .background(focus ? AppColor.background : Color.white)
-                            .cornerRadius(10)
-                    }
                 }
-                .frame(width: 116, height: 120)
-                .background(focus ? AppColor.themeColor : Asset.Colors.planListCellDeactiveBackground.SuColor)
-                .cornerRadius(15)
-                Spacer().frame(width: 0)
             }
         }
-        .frame(width: 311, height: 120)
+        .frame(width: widthConent, height: 120)
         .background(AppColor.darkButton)
         .cornerRadius(15)
         .overlay(

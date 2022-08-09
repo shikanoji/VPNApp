@@ -91,11 +91,11 @@ extension APIManager {
             }
     }
     
-    func getIpInfo() -> Single<APIResponse<IpInfoResultModel>> {
+    func getAppSettings() -> Single<APIResponse<AppSettingsResultAPI>> {
         return provider.rx
-            .request(.ipInfo)
+            .request(.getAppSettings)
             .map { response in
-                let ipInfoResult = try JSONDecoder().decode(APIResponse<IpInfoResultModel>.self, from: response.data)
+                let ipInfoResult = try JSONDecoder().decode(APIResponse<AppSettingsResultAPI>.self, from: response.data)
                 return ipInfoResult
             }
             .catch { error in

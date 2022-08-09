@@ -11,42 +11,45 @@ import SwiftUI
 struct SubscriptionIntroduction: View {
     @State var toPlanSelection: Bool = false
     @State var toWelcomeScreen: Bool = false
+    
+    let widthConent = Constant.Board.Map.widthScreen - 100
+    
     var body: some View {
         Background {
             ScrollView(.vertical, showsIndicators: false) {
                 VStack(alignment: .center) {
-                    Spacer().frame(minHeight: 10)
+//                    Spacer().frame(minHeight: 10)
                     Text(L10n.SubscriptionIntro.title).setTitle()
-                    Asset.Assets.subscriptionIntroImage.SuImage
-                    Group {
+                    Asset.Assets.subscriptionIntroImage.swiftUIImage
+//                    Group {
                         Spacer().frame(height: 20)
                         HStack{
-                            Asset.Assets.unlimited.SuImage
+                            Asset.Assets.unlimited.swiftUIImage
                             Text(L10n.SubscriptionIntro.unlimited).setDefault()
                             Spacer()
-                        }.frame(width: 250)
+                        }.frame(width: widthConent)
                         HStack{
-                            Asset.Assets.cashReturn.SuImage
+                            Asset.Assets.cashReturn.swiftUIImage
                             Text(L10n.SubscriptionIntro.cashback).setDefault()
                             Spacer()
-                        }.frame(width: 250)
+                        }.frame(width: widthConent)
                         HStack{
-                            Asset.Assets.rocketFast.SuImage
+                            Asset.Assets.rocketFast.swiftUIImage
                             Text(L10n.SubscriptionIntro.rocketFast).setDefault()
                             Spacer()
-                        }.frame(width: 250)
+                        }.frame(width: widthConent)
                         HStack{
-                            Asset.Assets.liveSupport.SuImage
+                            Asset.Assets.liveSupport.swiftUIImage
                             Text(L10n.SubscriptionIntro.liveSupport).setDefault()
                             Spacer()
-                        }.frame(width: 250)
+                        }.frame(width: widthConent)
                         Spacer().frame(height: 30)
-                    }
+//                    }
                     Group {
                         NavigationLink(destination: PlanSelectionView(viewModel: PlanSelectionViewModel(shouldAllowLogout: true)),
                                        isActive: $toPlanSelection) {
                         }
-                        AppButton(width: 300, text: L10n.SubscriptionIntro.startFreeTrial) {
+                        AppButton(width: widthConent, text: L10n.SubscriptionIntro.startFreeTrial) {
                             toPlanSelection = true
                         }
                         Spacer().frame(height: 20)
@@ -57,8 +60,8 @@ struct SubscriptionIntroduction: View {
 //                        }
                         Spacer().frame(height: 15)
                     }
-                    Text(L10n.SubscriptionIntro.note).foregroundColor(AppColor.lightBlackText).font(.system(size: 11)).frame(width: 300)
-                    Spacer().frame(minHeight: 10)
+                    Text(L10n.SubscriptionIntro.note).foregroundColor(AppColor.lightBlackText).font(.system(size: 11)).frame(width: widthConent)
+//                    Spacer().frame(minHeight: 10)
                 }
                 .frame(minHeight: UIScreen.main.bounds.height)
             }

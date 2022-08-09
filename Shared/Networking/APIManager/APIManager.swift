@@ -25,6 +25,10 @@ struct APIManager {
         self.provider.session.sessionConfiguration.timeoutIntervalForResource = 10
     }
     
+    func cancelTask() {
+        provider.session.session.finishTasksAndInvalidate()
+    }
+    
     func getCountryList() -> Single<APIResponse<CountryListResultModel>> {
         return provider.rx
             .request(.getCountryList)

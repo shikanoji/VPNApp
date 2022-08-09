@@ -13,6 +13,8 @@ struct PlanSelectionView: View {
     @EnvironmentObject var authentication: Authentication
     @StateObject var viewModel: PlanSelectionViewModel
     
+    let widthConent = Constant.Board.Map.widthScreen - 80
+    
     var body: some View {
         LoadingScreen(isShowing: $viewModel.showProgressView) {
             Background {
@@ -27,7 +29,7 @@ struct PlanSelectionView: View {
                     
                     Group {
                         Spacer().frame(height: 20)
-                        PlanListView(viewModel: viewModel.planListViewModel)
+                        PlanListView(viewModel: viewModel.planListViewModel, widthConent: widthConent)
                         Spacer().frame(height: 20)
                     }
                     Group {
@@ -42,7 +44,7 @@ struct PlanSelectionView: View {
                         }
                     }
                     
-                    AppButton(width: 311, text: L10n.PlanSelect.continueButton) {
+                    AppButton(width: widthConent, text: L10n.PlanSelect.continueButton) {
 #if DEBUG
                         viewModel.toWelcomeScreen = true
 #else
@@ -50,10 +52,13 @@ struct PlanSelectionView: View {
 #endif
                     }
                     Spacer().frame(height: 20)
+                    
+                    Text(L10n.PlanSelect.notePlan).setDefault()
+                    
                     Text(viewModel.planListViewModel.selectedPlan?.note ?? "")
                         .font(.system(size: 11))
                         .foregroundColor(Color.white)
-                        .frame(width: 320, height: 40)
+                        .frame(width: widthConent, height: 40)
                     Spacer()
                 }
                 .toolbar {
@@ -62,7 +67,7 @@ struct PlanSelectionView: View {
                             authentication.logout()
                         } label: {
                             Text(L10n.Account.signout)
-                            Asset.Assets.logout.SuImage
+                            Asset.Assets.logout.swiftUIImage
                         }
                         .opacity(viewModel.shouldAllowLogout ? 1 : 0)
                         .foregroundColor(Color.white)

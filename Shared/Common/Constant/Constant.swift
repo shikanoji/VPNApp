@@ -71,7 +71,7 @@ struct Constant {
             static let backgroudTriangle: Color = .white
             static let cornerRadius: CGFloat = 5
             static let numberLineText = 1
-            static let heightContentPopupView: CGFloat = 40
+            static let heightContentPopupView: CGFloat = 35
         }
         
         struct Map {
@@ -84,9 +84,6 @@ struct Constant {
             static let widthMapOrigin: CGFloat = 2048
             static let heightMapOrigin: CGFloat = 1588
             static let ration: CGFloat = widthMapOrigin / heightMapOrigin
-            static var contentOffSetScrolLView: CGSize = CGSize(
-                width: Constant.Board.Map.heightScreen * Constant.Board.Map.ration,
-                height: Constant.Board.Map.heightScreen)
         }
     }
     
@@ -140,23 +137,23 @@ struct Constant {
     }
     
     struct StaticIP {
-        static let iconS = Asset.Assets.iconStatic.SuImage
+        static let iconS = Asset.Assets.iconStatic.swiftUIImage
         
         static let widthStatusStatic: CGFloat = 40
         static let heightStatusStatic: CGFloat = 8
     }
     
     struct MultiHop {
-        static let iconWhat = Asset.Assets.iconMultihopWhat.SuImage
-        static let iconExit = Asset.Assets.iconMultihopExit.SuImage
+        static let iconWhat = Asset.Assets.iconMultihopWhat.swiftUIImage
+        static let iconExit = Asset.Assets.iconMultihopExit.swiftUIImage
         static let sizeIcon: CGFloat = 24
     }
     
     struct Global {
-        static let errorImage = Asset.Assets.japan.SuImage
-        static let iconCheck = Asset.Assets.iconCheckbox.SuImage
-        static let iconUncheck = Asset.Assets.iconUncheck.SuImage
-        static let iconArrowRight = Asset.Assets.iconArrowRight.SuImage
+        static let errorImage = Asset.Assets.japan.swiftUIImage
+        static let iconCheck = Asset.Assets.iconCheckbox.swiftUIImage
+        static let iconUncheck = Asset.Assets.iconUncheck.swiftUIImage
+        static let iconArrowRight = Asset.Assets.iconArrowRight.swiftUIImage
     }
     
     struct Loading {
@@ -165,13 +162,11 @@ struct Constant {
     }
     
     static func convertXToMap(_ x: CGFloat) -> CGFloat {
-//        return Constant.Board.Map.heightScreen * Constant.Board.Map.ration / 2
         return (x / Constant.Board.Map.widthMapOrigin) * (Constant.Board.Map.heightScreen * Constant.Board.Map.ration)
     }
     
-    static func convertYToMap(_ y: CGFloat) -> CGFloat {
-//        return Constant.Board.Map.heightScreen / 2
-        return (y / Constant.Board.Map.heightMapOrigin) * Constant.Board.Map.heightScreen - 20
+    static func convertYToMap(_ y: CGFloat, _ isCityView: Bool) -> CGFloat {
+        return (y / Constant.Board.Map.heightMapOrigin) * Constant.Board.Map.heightScreen - ((isCityView ? (Constant.Board.NodePopupView.heightTriangle + Constant.Board.NodePopupView.heightContentPopupView) : Constant.Board.NodePopupView.heightContentPopupView)) / 2
     }
     
     struct NameNotification {

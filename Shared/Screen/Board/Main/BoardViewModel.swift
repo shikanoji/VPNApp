@@ -68,9 +68,11 @@ class BoardViewModel: ObservableObject {
     @Published var showProtocolConnect: Bool = false
     @Published var showDNSSetting: Bool = false
     @Published var stateUI: VPNStatus = .disconnected
+    
     @Published var state: VPNStatus = .disconnected
     @Published var ip = AppSetting.shared.ip
     @Published var flag = ""
+    @Published var nameSelect = ""
     @Published var nodes: [Node] = []
     @Published var errorMessage: String? = nil
     
@@ -86,7 +88,7 @@ class BoardViewModel: ObservableObject {
         didSet {
             if let node = nodeConnected {
                 NetworkManager.shared.selectNode = node
-                self.connectVPN()
+                self.ConnectOrDisconnectVPN()
             }
         }
     }
@@ -98,7 +100,7 @@ class BoardViewModel: ObservableObject {
         didSet {
             if let staticIP = staticIPNodeSelecte {
                 NetworkManager.shared.selectStaticServer = staticIP
-                self.connectVPN()
+                self.ConnectOrDisconnectVPN()
             }
         }
     }
@@ -108,7 +110,7 @@ class BoardViewModel: ObservableObject {
         didSet {
             if let multihop = multihopSelect {
                 NetworkManager.shared.selectMultihop = multihop
-                self.connectVPN()
+                self.ConnectOrDisconnectVPN()
             }
         }
     }
@@ -155,25 +157,25 @@ class BoardViewModel: ObservableObject {
             object: nil
         )
         
-//        NotificationCenter.default.addObserver(
-//            self,
-//            selector: #selector(checkInternetRealTimeForeground),
-//            name: UIApplication.willEnterForegroundNotification,
-//            object: nil
-//        )
-//
-//        NotificationCenter.default.addObserver(
-//            self,
-//            selector: #selector(checkInternetRealTime),
-//            name: Constant.NameNotification.checkAutoconnect,
-//            object: nil
-//        )
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(checkInternetRealTimeForeground),
+            name: UIApplication.willEnterForegroundNotification,
+            object: nil
+        )
+
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(checkInternetRealTime),
+            name: Constant.NameNotification.checkAutoconnect,
+            object: nil
+        )
 
         Task {
             await OpenVPNManager.shared.vpn.prepare()
         }
         
-//        checkInternetRealTime()
+        checkInternetRealTime()
         
         assignJailBreakCheckType(type: .readAndWriteFiles)
     }
@@ -190,6 +192,8 @@ class BoardViewModel: ObservableObject {
     
     @Published var shouldHideAutoConnect = true
     
+    var isCheckingAutoConnect = false
+    
     @objc private func checkInternetRealTimeForeground() {
         if state != .connected {
             checkInternetRealTime()
@@ -197,7 +201,6 @@ class BoardViewModel: ObservableObject {
     }
     
     @objc private func checkAutoconnectIfNeeded() {
-        print("checkAutoconnectIfNeeded")
         guard let type = ItemCellType(rawValue: AppSetting.shared.selectAutoConnect) else {
             self.stopAutoconnectTimer()
             return
@@ -206,44 +209,72 @@ class BoardViewModel: ObservableObject {
             if Connectivity.sharedInstance.isReachable, !isProcessingVPN {
                 switch type {
                 case .always:
-                    connectVPN()
+                    ConnectOrDisconnectVPN()
                 case .onWifi:
                     if Connectivity.sharedInstance.isReachableOnEthernetOrWiFi {
-                        connectVPN()
+                        ConnectOrDisconnectVPN()
                     }
                 case .onMobile:
                     if Connectivity.sharedInstance.isReachableOnCellular {
-                        connectVPN()
+                        ConnectOrDisconnectVPN()
                     }
                 default:
                     break
                 }
             }
         } else {
-            stopAutoconnectTimer()
-            disconnectSession()
-            NetworkManager.shared.disconnect()
+           configDisconnect()
         }
     }
     
-    func connectVPN() {
-        if state != .connected {
-            if state == .disconnected {
-                numberReconnect = 0
-                stateUI = .connecting
-                startConnectVPN()
-            }
-        } else {
+    func ConnectOrDisconnectVPN() {
+        if connectOrDisconnectByUser {
             if let type = ItemCellType(rawValue: AppSetting.shared.selectAutoConnect),
                (type == .always || type == .onMobile || type == .onWifi) {
-                if disconnectByUser {
-                    showAlertAutoConnectSetting = true
-                }
+                showAlertAutoConnectSetting = true
             } else {
-                stateUI = .disconnected
-                NetworkManager.shared.disconnect()
+                if isProcessingVPN || stateUI == .connecting || state == .connected {
+                    configDisconnect()
+                } else if state == .disconnected {
+                    configStartConnectVPN()
+                }
+            }
+        } else if !isProcessingVPN {
+            if let type = ItemCellType(rawValue: AppSetting.shared.selectAutoConnect) {
+                switch type {
+                case .off:
+                    configDisconnect()
+                case .always, .onWifi, .onMobile:
+                    if state == .disconnected {
+                        configStartConnectVPN()
+                    }
+                default:
+                    break
+                }
             }
         }
+    }
+    
+    var isDisconnecting = false
+    
+    func configDisconnect() {
+        disconnectSession()
+        stopSpeedTimer()
+        stopAutoconnectTimer()
+        numberReconnect = 0
+        isProcessingVPN = false
+        stateUI = .disconnected
+        connectOrDisconnectByUser = false
+        isCheckingAutoConnect = false
+        isDisconnecting = true
+        NetworkManager.shared.disconnect()
+    }
+    
+    func configStartConnectVPN() {
+        numberReconnect = 0
+        isProcessingVPN = true
+        stateUI = .connecting
+        startConnectVPN()
     }
     
     func startConnectVPN() {
@@ -251,9 +282,7 @@ class BoardViewModel: ObservableObject {
             if $0 {
                 NetworkManager.shared.connect()
             } else {
-                if !self.isEnableReconect {
-                    self.stateUI = .disconnected
-                }
+                self.configDisconnect()
             }
         }
     }
@@ -265,7 +294,7 @@ class BoardViewModel: ObservableObject {
         get { numberReconnect < maximumReconnect }
     }
     
-    var disconnectByUser = false
+    var connectOrDisconnectByUser = false
     
     @objc private func VPNStatusDidChange(notification: Notification) {
         
@@ -280,10 +309,14 @@ class BoardViewModel: ObservableObject {
                 return
             }
             
+            guard state != .connected else {
+                return
+            }
+            
             state = .connected
             stateUI = .connected
             numberReconnect = 0
-            disconnectByUser = false
+            connectOrDisconnectByUser = false
             stopSpeedTimer()
             
             switch NetworkManager.shared.selectConfig {
@@ -293,13 +326,22 @@ class BoardViewModel: ObservableObject {
                 }
 
                 flag = NetworkManager.shared.selectNode?.flag ?? ""
-
-            case .wireGuard:
+                
+                if let node = NetworkManager.shared.selectNode {
+                    nameSelect = node.isCity ? node.name : node.countryName
+                }
+                
+                case .wireGuard:
                 if let iPWireguard = NetworkManager.shared.obtainCertificate?.server?.ipAddress {
                     ip = iPWireguard
                 }
 
                 flag = NetworkManager.shared.selectStaticServer?.flag ?? ""
+                
+                if let node = NetworkManager.shared.selectStaticServer {
+                    nameSelect = node.countryName
+                }
+                
             default:
                 break
             }
@@ -308,33 +350,34 @@ class BoardViewModel: ObservableObject {
             isProcessingVPN = false
             
         case .disconnected:
-            guard isProcessingVPN else {
+            guard state != .disconnected else {
                 return
             }
             
-            if state == .disconnecting {
-                state = .disconnected
-                stateUI = .disconnected
-                ip = AppSetting.shared.ip
-                flag = ""
-                stopSpeedTimer()
-                
-                if numberReconnect < maximumReconnect, !disconnectByUser {
-                    print("startConnectVPN disconnectByUser")
+            guard state == .disconnecting else {
+                return
+            }
+            
+            if state == .disconnecting || state == .disconnected {
+                if (isEnableReconect && !connectOrDisconnectByUser) && !isDisconnecting {
                     startConnectVPN()
                 } else {
-                    if disconnectByUser {
+                    if connectOrDisconnectByUser {
                         disconnectSession()
                     }
-                    disconnectByUser = false
+                    connectOrDisconnectByUser = false
+                    state = .disconnected
+                    stateUI = .disconnected
+                    ip = AppSetting.shared.ip
+                    flag = ""
+                    stopSpeedTimer()
+                    nameSelect = ""
+                    isProcessingVPN = false
                 }
-                
-                isProcessingVPN = false
             }
             
         default:
             state = notification.vpnStatus
-            isProcessingVPN = true
         }
     }
     
@@ -346,7 +389,7 @@ class BoardViewModel: ObservableObject {
         state = .disconnected
         stateUI = .disconnected
         
-        if numberReconnect < maximumReconnect, !disconnectByUser {
+        if isEnableReconect, !connectOrDisconnectByUser {
             startConnectVPN()
         }
     }
@@ -354,27 +397,36 @@ class BoardViewModel: ObservableObject {
     var checkInternetTimer: DispatchSourceTimer?
     
     @objc func checkInternetRealTime() {
+        print("checkInternetRealTime")
+        guard let type = ItemCellType(rawValue: AppSetting.shared.selectAutoConnect) else {
+            self.checkInternetTimer = nil
+            return
+        }
+        
+        if type == .off {
+            switch self.stateUI {
+            case .connected:
+                self.configDisconnect()
+            default:
+                break
+            }
+            return
+        }
+        
+        guard !isCheckingAutoConnect else {
+            return
+        }
+        
+        isCheckingAutoConnect = true
+        
         stopAutoconnectTimer()
         let queue = DispatchQueue.main
         checkInternetTimer = DispatchSource.makeTimerSource(queue: queue)
         checkInternetTimer!.schedule(deadline: .now(), repeating: .seconds(5))
         checkInternetTimer!.setEventHandler { [weak self] in
-            guard let type = ItemCellType(rawValue: AppSetting.shared.selectAutoConnect) else {
-                self?.checkInternetTimer = nil
-                return
-            }
-            
             switch type {
             case .off:
-                switch self?.stateUI {
-                case .connected:
-                    self?.disconnectByUser = true
-                    self?.disconnectSession()
-                    NetworkManager.shared.disconnect()
-                default:
-                    break
-                }
-                self?.stopAutoconnectTimer()
+                self?.configDisconnect()
             case .always, .onWifi, .onMobile:
                 if self?.state != .connected && !(self?.isProcessingVPN ?? false) {
                     self?.checkAutoconnectIfNeeded()
@@ -562,12 +614,10 @@ class BoardViewModel: ObservableObject {
     
     func getRequestCertificate(completion: @escaping (Bool) -> Void) {
         guard isEnableReconect else {
-            stateUI = .disconnected
+            completion(false)
             return
         }
-        if stateUI != .connecting {
-            stateUI = .connecting
-        }
+        
         numberReconnect += 1
         
         guard Connectivity.sharedInstance.isReachable else {
@@ -599,7 +649,7 @@ class BoardViewModel: ObservableObject {
                             completion($0)
                         }
                     } else {
-                        NetworkManager.shared.disconnect()
+                        self.configDisconnect()
                         let error = response.errors
                         if error.count > 0, let message = error[0] as? String {
                             self.error = APIError.identified(message: message)
@@ -616,7 +666,7 @@ class BoardViewModel: ObservableObject {
                         completion($0)
                     }
                 } else {
-                    NetworkManager.shared.disconnect()
+                    self.configDisconnect()
                     self.error = APIError.identified(message: error.localizedDescription)
                     self.showProgressView = false
                     self.showAlert = true

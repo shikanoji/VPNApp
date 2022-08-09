@@ -22,7 +22,7 @@ struct ContentView: View {
             AppColor.background
             if !viewModel.getIpInfoSuccess {
                 if viewModel.showProgressView {
-                    Asset.Assets.launchScreen.SuImage
+                    Asset.Assets.launchScreen.swiftUIImage
                         .resizable()
                         .aspectRatio(contentMode: .fit)
                     LoadingView()
@@ -30,14 +30,18 @@ struct ContentView: View {
             } else {
                 NavigationView {
                     if AppSetting.shared.showedNotice {
-                        if authentication.isValidated {
-                            if authentication.isPremium {
-                                BoardView(viewModel: BoardViewModel())
-                            } else {
-                                SubscriptionIntroduction()
-                            }
+                        if let appVersion = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String, AppSetting.shared.forceUpdateVersion.contains(appVersion) {
+                            ForceUpdateView()
                         } else {
-                            IntroductionView()
+                            if authentication.isValidated {
+                                if authentication.isPremium {
+                                    BoardView(viewModel: BoardViewModel())
+                                } else {
+                                    SubscriptionIntroduction()
+                                }
+                            } else {
+                                IntroductionView()
+                            }
                         }
                     } else {
                         NoticeView()

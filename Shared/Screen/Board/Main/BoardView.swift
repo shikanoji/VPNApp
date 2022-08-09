@@ -30,6 +30,10 @@ struct BoardView: View {
                 .opacity(showBoardList ? 1 : 0)
             contentMapView()
                 .opacity((!showAccount && !showSettings && !showBoardList) ? 1 : 0)
+            if showBoardList {
+                boardListView()
+                    .transition(.move(edge: .bottom))
+            }
             AutoConnectView(
                 showSettings: .constant(true),
                 showVPNSetting: .constant(true),
@@ -169,10 +173,10 @@ struct BoardView: View {
                             statusConnect: $viewModel.stateUI)
                     .allowsHitTesting(viewModel.stateUI != .connected)
                     if viewModel.stateUI == .connected {
-                        Asset.Assets.logoConnectedBackground.SuImage
+                        Asset.Assets.logoConnectedBackground.swiftUIImage
                             .resizable()
                             .aspectRatio(contentMode: .fit)
-                        Asset.Assets.logoConnected.SuImage
+                        Asset.Assets.logoConnected.swiftUIImage
                             .resizable()
                             .aspectRatio(contentMode: .fit)
                             .frame(width: 150, height: 150)
@@ -190,14 +194,14 @@ struct BoardView: View {
                     }, tapRightIcon: {
                         handlerTapRightNavigation()
                     })
-                    StatusVPNView(ip: viewModel.ip, status: viewModel.stateUI, flag: viewModel.flag)
+                    StatusVPNView(ip: viewModel.ip, status: viewModel.stateUI, flag: viewModel.flag, name: viewModel.nameSelect)
                     Spacer()
                     ConnectButton(status: viewModel.stateUI,
                                   uploadSpeed: viewModel.uploadSpeed,
                                   downloadSpeed: viewModel.downloadSpeed)
                     .onTapGesture {
-                        viewModel.disconnectByUser = true
-                        viewModel.connectVPN()
+                        viewModel.connectOrDisconnectByUser = true
+                        viewModel.ConnectOrDisconnectVPN()
                     }
                     Spacer()
                         .frame(height: Constant.Board.Tabs.topPadding)
