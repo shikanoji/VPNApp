@@ -46,7 +46,7 @@ struct ForgotPasswordView: View {
             ScrollView(.vertical, showsIndicators: false) {
                 VStack(alignment: .center) {
                     Spacer().frame(minHeight: 20)
-                    Asset.Assets.logoMedium.SuImage
+                    Asset.Assets.logoMedium.swiftUIImage
                     header
                     emailForm
                     Spacer().frame(height: 20)

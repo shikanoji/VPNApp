@@ -18,7 +18,7 @@ struct NoticeView: View {
             }
             
             VStack{
-                Asset.Assets.lock.SuImage
+                Asset.Assets.lock.swiftUIImage
                 Spacer().frame(height: 20)
                 Text(L10n.Notice.title).setTitle()
                 Group {
@@ -26,14 +26,14 @@ struct NoticeView: View {
                     Text(L10n.Notice.firstGraph).setLightBlackText()
                     Spacer().frame(height: 20)
                     HStack(alignment: .firstTextBaseline) {
-                        Asset.Assets.checkmark.SuImage
+                        Asset.Assets.checkmark.swiftUIImage
                         Spacer().frame(width: 10)
                         Text(L10n.Notice.firstTerm).setLightBlackText()
                         Spacer()
                     }
                     Spacer().frame(height: 20)
                     HStack(alignment: .firstTextBaseline) {
-                        Asset.Assets.checkmark.SuImage
+                        Asset.Assets.checkmark.swiftUIImage
                         Spacer().frame(width: 10)
                         Text(L10n.Notice.secondTerm).setLightBlackText()
                         Spacer()

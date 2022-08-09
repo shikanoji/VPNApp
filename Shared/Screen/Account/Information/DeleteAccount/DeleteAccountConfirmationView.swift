@@ -68,7 +68,7 @@ struct DeleteAccountConfirmationView: View {
                     Button {
                         presentationMode.wrappedValue.dismiss()
                     } label: {
-                        Asset.Assets.close.SuImage
+                        Asset.Assets.close.swiftUIImage
                     }
                     Spacer()
                 }

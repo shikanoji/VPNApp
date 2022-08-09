@@ -270,31 +270,31 @@ enum ItemCellType: Int, Decodable {
     var icon: Image? {
         switch self {
         case .statusAccount:
-            return Asset.Assets.iconAccountItemAccount.SuImage
+            return Asset.Assets.iconAccountItemAccount.swiftUIImage
         case .totalDevice:
-            return Asset.Assets.iconAccountItemDevice.SuImage
+            return Asset.Assets.iconAccountItemDevice.swiftUIImage
         case .questions:
-            return Asset.Assets.iconAccountItemQuestion.SuImage
+            return Asset.Assets.iconAccountItemQuestion.swiftUIImage
         case .helpCenter:
-            return Asset.Assets.iconAccountItemHelpCenter.SuImage
+            return Asset.Assets.iconAccountItemHelpCenter.swiftUIImage
         case .security:
-            return Asset.Assets.iconAccountItemSecurity.SuImage
+            return Asset.Assets.iconAccountItemSecurity.swiftUIImage
         case .vpnConnection:
-            return Asset.Assets.iconSettingsItemVpn.SuImage
+            return Asset.Assets.iconSettingsItemVpn.swiftUIImage
         case .tools:
-            return Asset.Assets.iconSettingsItemTools.SuImage
+            return Asset.Assets.iconSettingsItemTools.swiftUIImage
         case .currentVersion:
-            return Asset.Assets.iconSettingsItemVersion.SuImage
+            return Asset.Assets.iconSettingsItemVersion.swiftUIImage
         case .aboutUs:
-            return Asset.Assets.iconSettingsItemProtec.SuImage
+            return Asset.Assets.iconSettingsItemProtec.swiftUIImage
         case .help:
-            return Asset.Assets.iconSettingsItemHelp.SuImage
+            return Asset.Assets.iconSettingsItemHelp.swiftUIImage
         case .licenses:
-            return Asset.Assets.iconSettingsItemLicense.SuImage
+            return Asset.Assets.iconSettingsItemLicense.swiftUIImage
         case .termAndConditions:
-            return Asset.Assets.iconSettingsItemTerm.SuImage
+            return Asset.Assets.iconSettingsItemTerm.swiftUIImage
         case .privacyPolicy:
-            return Asset.Assets.iconSettingsItemPrivacy.SuImage
+            return Asset.Assets.iconSettingsItemPrivacy.swiftUIImage
         default:
             return nil
         }

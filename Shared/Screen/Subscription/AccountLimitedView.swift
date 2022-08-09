@@ -14,11 +14,11 @@ struct AccountLimitedView: View {
     
     var content: some View {
         VStack {
-            Asset.Assets.accountLinked.SuImage
+            Asset.Assets.accountLinked.swiftUIImage
             Spacer().frame(height: 20)
             Text(L10n.PlanSelect.accountLimit)
                 .font(.system(size: 24, weight: .bold))
-                .foregroundColor(Asset.Colors.pink.SuColor)
+                .foregroundColor(Asset.Colors.pink.swiftUIColor)
             Spacer().frame(height: 20)
             HStack {
                 Spacer().frame(width: 30)
@@ -37,7 +37,7 @@ struct AccountLimitedView: View {
     var body: some View {
         Background {
             ZStack {
-                Asset.Assets.redLinearGradient.SuImage.resizable()
+                Asset.Assets.redLinearGradient.swiftUIImage.resizable()
                 VStack(spacing: 20){
                     Spacer().frame(height: 40)
                     HStack {

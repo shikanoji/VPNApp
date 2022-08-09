@@ -67,7 +67,7 @@ struct PlanSelectionView: View {
                             authentication.logout()
                         } label: {
                             Text(L10n.Account.signout)
-                            Asset.Assets.logout.SuImage
+                            Asset.Assets.logout.swiftUIImage
                         }
                         .opacity(viewModel.shouldAllowLogout ? 1 : 0)
                         .foregroundColor(Color.white)

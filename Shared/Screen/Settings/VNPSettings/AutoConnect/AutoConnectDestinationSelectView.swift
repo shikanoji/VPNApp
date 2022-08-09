@@ -29,7 +29,7 @@ struct AutoConnectDestinationSelectView: View {
                         Button {
                             showAutoConnectDestinationSelection = false
                         } label: {
-                            Asset.Assets.close.SuImage
+                            Asset.Assets.close.swiftUIImage
                         }
                         Spacer()
                     }

@@ -27,6 +27,8 @@
 		AC489252286405F6003F2795 /* PurchaseService.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC489251286405F6003F2795 /* PurchaseService.swift */; };
 		AC490871281B9FC600DB430B /* NotificationExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC490870281B9FC600DB430B /* NotificationExtension.swift */; };
 		AC490873281B9FFB00DB430B /* PublisherExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC490872281B9FFB00DB430B /* PublisherExtension.swift */; };
+		AC4C96CA28A0F2820063B4AF /* ForceUpdateView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC4C96C928A0F2820063B4AF /* ForceUpdateView.swift */; };
+		AC4C96CD28A0FC030063B4AF /* swiftgen in Resources */ = {isa = PBXBuildFile; fileRef = AC4C96CC28A0FC030063B4AF /* swiftgen */; };
 		AC516FCE2869A91F00BEBC81 /* LoadingScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC516FCD2869A91F00BEBC81 /* LoadingScreen.swift */; };
 		AC516FD2286C50A000BEBC81 /* AutoConnectDestinationSelectView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC516FD1286C50A000BEBC81 /* AutoConnectDestinationSelectView.swift */; };
 		AC516FD4286C579800BEBC81 /* AutoConnectDestinationSelectViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC516FD3286C579800BEBC81 /* AutoConnectDestinationSelectViewModel.swift */; };
@@ -38,7 +40,6 @@
 		AC6074D927DB74CC00DD5667 /* swiftgen.yml in Resources */ = {isa = PBXBuildFile; fileRef = AC6074D827DB74CB00DD5667 /* swiftgen.yml */; };
 		AC6074DD27DD014100DD5667 /* Colors.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = AC6074DC27DD014100DD5667 /* Colors.xcassets */; };
 		AC6074E227DD08D200DD5667 /* XCAssets+Generated.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC6074E127DD08D100DD5667 /* XCAssets+Generated.swift */; };
-		AC6074E627DDD06200DD5667 /* AssetsExtension+SwiftUI.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC6074E527DDD06200DD5667 /* AssetsExtension+SwiftUI.swift */; };
 		AC6074E727DE424600DD5667 /* StaticIP.strings in Resources */ = {isa = PBXBuildFile; fileRef = AC6074E927DE424600DD5667 /* StaticIP.strings */; };
 		AC6074EB27DE427F00DD5667 /* en.lproj in Resources */ = {isa = PBXBuildFile; fileRef = AC6074EA27DE427F00DD5667 /* en.lproj */; };
 		AC6074EE27DE42C100DD5667 /* Strings+Generated.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC6074ED27DE42C100DD5667 /* Strings+Generated.swift */; };
@@ -69,7 +70,6 @@
 		AC637785287FB7940015BB2E /* PopupView in Frameworks */ = {isa = PBXBuildFile; productRef = AC637784287FB7940015BB2E /* PopupView */; };
 		AC79CE09282CFA7800E1E874 /* ToolsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC79CE08282CFA7800E1E874 /* ToolsView.swift */; };
 		AC79CE0B282CFB9600E1E874 /* ToolsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC79CE0A282CFB9600E1E874 /* ToolsViewModel.swift */; };
-		AC84BB74287FCB84006905CE /* swiftgen in Resources */ = {isa = PBXBuildFile; fileRef = AC84BB73287FCB84006905CE /* swiftgen */; };
 		AC87539B2801ED10004C5F43 /* DeleteAccountConfirmationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC87539A2801ED10004C5F43 /* DeleteAccountConfirmationView.swift */; };
 		AC91BDEF287C5C3A002776E6 /* AccountLimitedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC91BDEE287C5C3A002776E6 /* AccountLimitedView.swift */; };
 		AC99848B288948A90038F216 /* EmbedWebView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC99848A288948A90038F216 /* EmbedWebView.swift */; };
@@ -294,6 +294,8 @@
 		AC489251286405F6003F2795 /* PurchaseService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PurchaseService.swift; sourceTree = "<group>"; };
 		AC490870281B9FC600DB430B /* NotificationExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationExtension.swift; sourceTree = "<group>"; };
 		AC490872281B9FFB00DB430B /* PublisherExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PublisherExtension.swift; sourceTree = "<group>"; };
+		AC4C96C928A0F2820063B4AF /* ForceUpdateView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForceUpdateView.swift; sourceTree = "<group>"; };
+		AC4C96CC28A0FC030063B4AF /* swiftgen */ = {isa = PBXFileReference; lastKnownFileType = folder; path = swiftgen; sourceTree = "<group>"; };
 		AC516FCD2869A91F00BEBC81 /* LoadingScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingScreen.swift; sourceTree = "<group>"; };
 		AC516FD1286C50A000BEBC81 /* AutoConnectDestinationSelectView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AutoConnectDestinationSelectView.swift; sourceTree = "<group>"; };
 		AC516FD3286C579800BEBC81 /* AutoConnectDestinationSelectViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AutoConnectDestinationSelectViewModel.swift; sourceTree = "<group>"; };
@@ -305,7 +307,6 @@
 		AC6074D827DB74CB00DD5667 /* swiftgen.yml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.yaml; path = swiftgen.yml; sourceTree = SOURCE_ROOT; };
 		AC6074DC27DD014100DD5667 /* Colors.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Colors.xcassets; sourceTree = "<group>"; };
 		AC6074E127DD08D100DD5667 /* XCAssets+Generated.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "XCAssets+Generated.swift"; sourceTree = "<group>"; };
-		AC6074E527DDD06200DD5667 /* AssetsExtension+SwiftUI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AssetsExtension+SwiftUI.swift"; sourceTree = "<group>"; };
 		AC6074E827DE424600DD5667 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/StaticIP.strings; sourceTree = "<group>"; };
 		AC6074EA27DE427F00DD5667 /* en.lproj */ = {isa = PBXFileReference; lastKnownFileType = folder; path = en.lproj; sourceTree = "<group>"; };
 		AC6074ED27DE42C100DD5667 /* Strings+Generated.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Strings+Generated.swift"; sourceTree = "<group>"; };
@@ -323,7 +324,6 @@
 		AC60751527DE432300DD5667 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/FAQ.strings; sourceTree = "<group>"; };
 		AC79CE08282CFA7800E1E874 /* ToolsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToolsView.swift; sourceTree = "<group>"; };
 		AC79CE0A282CFB9600E1E874 /* ToolsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToolsViewModel.swift; sourceTree = "<group>"; };
-		AC84BB73287FCB84006905CE /* swiftgen */ = {isa = PBXFileReference; lastKnownFileType = folder; path = swiftgen; sourceTree = "<group>"; };
 		AC87539A2801ED10004C5F43 /* DeleteAccountConfirmationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeleteAccountConfirmationView.swift; sourceTree = "<group>"; };
 		AC91BDEE287C5C3A002776E6 /* AccountLimitedView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountLimitedView.swift; sourceTree = "<group>"; };
 		AC99848A288948A90038F216 /* EmbedWebView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmbedWebView.swift; sourceTree = "<group>"; };
@@ -710,6 +710,7 @@
 			children = (
 				D795FFA9275F6ED200E54206 /* Introduction.swift */,
 				D78AC3E427858D860056FCC0 /* NoticeView.swift */,
+				AC4C96C928A0F2820063B4AF /* ForceUpdateView.swift */,
 			);
 			path = Introduction;
 			sourceTree = "<group>";
@@ -746,7 +747,7 @@
 				EE03443F28090AB7003DFB64 /* OpenVPN */,
 				EE46BCCD280963F4003C4FEB /* WireGuard */,
 				D78044A42758C6FB0086E59D /* Products */,
-				AC84BB73287FCB84006905CE /* swiftgen */,
+				AC4C96CC28A0FC030063B4AF /* swiftgen */,
 				E384F2A7218657BACCD5156E /* Frameworks */,
 			);
 			sourceTree = "<group>";
@@ -796,7 +797,6 @@
 				D78A35C7276B2F1400CC010D /* TextExtension.swift */,
 				D78044E02758F5110086E59D /* UIApplicationExtension.swift */,
 				D78044ED27590E480086E59D /* ViewExtension.swift */,
-				AC6074E527DDD06200DD5667 /* AssetsExtension+SwiftUI.swift */,
 				AC490870281B9FC600DB430B /* NotificationExtension.swift */,
 				AC490872281B9FFB00DB430B /* PublisherExtension.swift */,
 				AC99848E28895F230038F216 /* UIDeviceExtension.swift */,
@@ -1408,9 +1408,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				AC60750B27DE431C00DD5667 /* Account.strings in Resources */,
+				AC4C96CD28A0FC030063B4AF /* swiftgen in Resources */,
 				AC280AF32880214C00FE1246 /* GoogleService-Info-dev.plist in Resources */,
 				AC6074E727DE424600DD5667 /* StaticIP.strings in Resources */,
-				AC84BB74287FCB84006905CE /* swiftgen in Resources */,
 				D78044CC2758C6FC0086E59D /* Assets.xcassets in Resources */,
 				AC17E24D28891EFE00C72E20 /* com.mono0926.LicensePlist.plist in Resources */,
 				AC6074F927DE430500DD5667 /* Register.strings in Resources */,
@@ -1514,6 +1514,7 @@
 				EE9B77D7284B4EFE00240E89 /* GetFreeMemory.m in Sources */,
 				EE9B77C128460AC700240E89 /* ProtocolSettingViewModel.swift in Sources */,
 				D78F47262761A53A0064A764 /* AppColor.swift in Sources */,
+				AC4C96CA28A0F2820063B4AF /* ForceUpdateView.swift in Sources */,
 				D78F76C52769D84700919AA6 /* ViewModifier.swift in Sources */,
 				D7874DF8277AFED200ADC7AD /* ForgotPasswordView.swift in Sources */,
 				EED4F5A52855A5600098DF47 /* FAQDetailView.swift in Sources */,
@@ -1632,7 +1633,6 @@
 				EE8910122796B8CF00ADF293 /* SessionVPNCell.swift in Sources */,
 				AC99848F28895F230038F216 /* UIDeviceExtension.swift in Sources */,
 				D795FFAA275F6ED200E54206 /* Introduction.swift in Sources */,
-				AC6074E627DDD06200DD5667 /* AssetsExtension+SwiftUI.swift in Sources */,
 				EE79F53327758896006F0E5D /* StopWatch.swift in Sources */,
 				EE9B77B8283F2F3B00240E89 /* AutoConnectViewModel.swift in Sources */,
 				EE89100427967AA200ADF293 /* AccountStatusView.swift in Sources */,
