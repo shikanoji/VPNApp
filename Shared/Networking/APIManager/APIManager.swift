@@ -41,11 +41,11 @@ struct APIManager {
             }
     }
     
-    func getRequestCertificate(currentTab: BoardViewModel.StateTab) -> Single<APIResponse<RequestCertificateModel>> {
+    func getRequestCertificate(currentTab: BoardViewModel.StateTab) -> Single<APIResponse<RequestCerAPI>> {
         return provider.rx
             .request(.getRequestCertificate(currentTab: currentTab))
             .map { response in
-                let result = try JSONDecoder().decode(APIResponse<RequestCertificateModel>.self, from: response.data)
+                let result = try JSONDecoder().decode(APIResponse<RequestCerAPI>.self, from: response.data)
                 return result
             }
             .catch { error in

@@ -50,6 +50,10 @@ struct LocationListView: View {
                 fastestServerSection
             }
             ScrollView(showsIndicators: false) {
+                HStack {
+                    Spacer()
+                }
+                .frame(height: 0)
                 VStack(alignment: .leading) {
                     if isEditing {
                         ForEach(nodeListSearch) { node in

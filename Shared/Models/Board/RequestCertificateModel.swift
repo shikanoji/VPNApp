@@ -195,6 +195,50 @@ struct ConnectionDetails: Codable {
     }
 }
 
+enum RequestCerAPI: Codable {
+    case requestCer(RequestCertificateModel?)
+    case obtainCer(ObtainCertificateModel?)
+    
+    init(from decoder: Decoder) throws {
+        let container = try decoder.singleValueContainer()
+        if let _requestCer = try? container.decode(RequestCertificateModel.self) {
+            self = .requestCer(_requestCer)
+            return
+        }
+        
+        if let _obtainCer = try? container.decode(ObtainCertificateModel.self) {
+            self = .obtainCer(_obtainCer)
+            return
+        }
+        
+        throw DecodingError.typeMismatch(RequestCerAPI.self, DecodingError.Context(codingPath: decoder.codingPath, debugDescription: "Wrong convert"))
+    }
+    
+    var getRequestCer: RequestCertificateModel? {
+        switch self {
+        case .requestCer(let cer):
+            guard let _cer = cer else {
+                return nil
+            }
+            return _cer
+        default:
+            return nil
+        }
+    }
+    
+    var getObtainCer: ObtainCertificateModel? {
+        switch self {
+        case .obtainCer(let cer):
+            guard let _cer = cer else {
+                return nil
+            }
+            return _cer
+        default:
+            return nil
+        }
+    }
+}
+
 struct RequestCertificateModel: Codable {
     var server: Server?
     var connectionDetails: ConnectionDetails?

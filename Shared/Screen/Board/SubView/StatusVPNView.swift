@@ -17,7 +17,7 @@ struct StatusVPNView: View {
     var body: some View {
         ZStack(alignment: .leading) {
             RoundedRectangle(cornerRadius: Constant.Board.SubBoard.radius)
-                .foregroundColor(AppColor.backgroundStatusView)
+                .foregroundColor(status == .connected ? AppColor.connectedStateView : AppColor.disconectStateView)
             HStack(spacing: 15) {
                 ImageView(withURL: flag, size: 32, placeholder: UIImage(named: Constant.Board.Image.locationDefault))
                 getStatusTextView()
@@ -31,7 +31,7 @@ struct StatusVPNView: View {
         VStack(alignment: .leading, spacing: 5) {
             Text(L10n.Board.ip + " \(ip) - ")
             + Text(status.statusTitle)
-                .foregroundColor(status.statusColor)
+                .foregroundColor(status == .connected ? AppColor.VPNConnected : .white)
                 .fontWeight(.semibold)
             Text(name == "" ? L10n.Board.subIP : ("Location: " + name))
         }

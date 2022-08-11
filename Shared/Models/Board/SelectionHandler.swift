@@ -12,6 +12,10 @@ import CoreGraphics
 class SelectionHandler: ObservableObject {
     @Published private(set) var selectedNodeIDs: [NodeID] = []
     
+    func removeSelectNode() {
+        selectedNodeIDs = []
+    }
+    
     func selectNode(_ node: Node) {
         selectedNodeIDs = [node.id]
     }

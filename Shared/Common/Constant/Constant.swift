@@ -62,14 +62,14 @@ struct Constant {
         }
         
         struct NodePopupView {
-            static let sizeFont: CGFloat = 8
+            static let sizeFont: CGFloat = 12
             static let weightFont: Font.Weight = .semibold
             static let paddingContent: CGFloat = 3.0
-            static let frameEnsign: CGFloat = 20.0
+            static let frameEnsign: CGFloat = 16.0
             static let widthTriangle: CGFloat = 12
             static let heightTriangle: CGFloat = 5
             static let backgroudTriangle: Color = .white
-            static let cornerRadius: CGFloat = 5
+            static let cornerRadius: CGFloat = 8
             static let numberLineText = 1
             static let heightContentPopupView: CGFloat = 35
         }
@@ -166,7 +166,7 @@ struct Constant {
     }
     
     static func convertYToMap(_ y: CGFloat, _ isCityView: Bool) -> CGFloat {
-        return (y / Constant.Board.Map.heightMapOrigin) * Constant.Board.Map.heightScreen - ((isCityView ? (Constant.Board.NodePopupView.heightTriangle + Constant.Board.NodePopupView.heightContentPopupView) : Constant.Board.NodePopupView.heightContentPopupView)) / 2
+        return (y / Constant.Board.Map.heightMapOrigin) * Constant.Board.Map.heightScreen - ((isCityView ? (Constant.Board.NodePopupView.heightTriangle + Constant.Board.NodePopupView.heightContentPopupView + 20) : Constant.Board.NodePopupView.heightContentPopupView)) / 2
     }
     
     struct NameNotification {

@@ -27,7 +27,7 @@ class SessionVPNViewModel: ObservableObject {
     let disposedBag = DisposeBag()
     
     init() {
-        getListSession()
+//        getListSession()
     }
     
     func getListSession(loadMore: Bool = false) {
