@@ -8,7 +8,11 @@
 import Foundation
 extension Constant {
     struct api {
+#if DEBUG
         static let root = "https://api.sysvpnconnect.com"
+#else
+        static let root = "https://prod.sysvpnconnect.com"
+#endif
         static let ipInfoOptional = "https://ipinfo.io/json"
         static let termsAndConditionsURL = "https://sysvpn.com/webview/terms-of-service"
         static let privacyPolictyURL = "https://sysvpn.com/webview/privacy-policy"

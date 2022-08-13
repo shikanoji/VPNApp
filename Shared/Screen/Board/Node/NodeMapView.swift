@@ -29,6 +29,10 @@ struct NodeMapView: View {
                 }
             }
         }
+        .contentShape(Rectangle())
+        .onTapGesture {
+            self.selection.removeSelectNode()
+        }
     }
 }
 

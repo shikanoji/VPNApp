@@ -186,17 +186,17 @@ extension APIService: TargetType {
             var body: [String: Any] = [:]
             body["email"] = email
             body["password"] = password
-            body["ip"] = AppSetting.shared.ip
-            body["country"] = AppSetting.shared.countryCode
-            body["city"] = AppSetting.shared.cityName
+            if getInfoDevice() != "" {
+                body["deviceInfo"] = getInfoDevice()
+            }
             return .requestCompositeParameters(bodyParameters: body, bodyEncoding: JSONEncoding.prettyPrinted, urlParameters: [:])
         case .login(let email, let password):
             var body: [String: Any] = [:]
             body["email"] = email
             body["password"] = password
-            body["ip"] = AppSetting.shared.ip
-            body["country"] = AppSetting.shared.countryCode
-            body["city"] = AppSetting.shared.cityName
+            if getInfoDevice() != "" {
+                body["deviceInfo"] = getInfoDevice()
+            }
             return .requestCompositeParameters(bodyParameters: body, bodyEncoding: JSONEncoding.prettyPrinted, urlParameters: [:])
         case .loginSocial(let socialProvider, let token):
             var body: [String: Any] = [:]
@@ -213,16 +213,16 @@ extension APIService: TargetType {
         case .refreshToken:
             var body: [String: Any] = [:]
             body["refreshToken"] = AppSetting.shared.refreshToken
-            body["ip"] = AppSetting.shared.ip
-            body["country"] = AppSetting.shared.countryCode
-            body["city"] = AppSetting.shared.cityName
+            if getInfoDevice() != "" {
+                body["deviceInfo"] = getInfoDevice()
+            }
             return .requestCompositeParameters(bodyParameters: body, bodyEncoding: JSONEncoding.prettyPrinted, urlParameters: [:])
         case .forgotPassword(let email):
             var body: [String: Any] = [:]
             body["email"] = email
-            body["ip"] = AppSetting.shared.ip
-            body["country"] = AppSetting.shared.countryCode
-            body["city"] = AppSetting.shared.cityName
+            if getInfoDevice() != "" {
+                body["deviceInfo"] = getInfoDevice()
+            }
             return .requestCompositeParameters(bodyParameters: body, bodyEncoding: JSONEncoding.prettyPrinted, urlParameters: [:])
         case .getCountryList:
             var param: [String: Any] = [:]

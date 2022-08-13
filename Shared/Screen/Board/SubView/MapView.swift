@@ -48,17 +48,13 @@ struct MapView: View {
                     .resizable()
                     .background(AppColor.background)
                     .aspectRatio(2048 / 1588, contentMode: .fill)
-                Group {
+                
+                if statusConnect != .connected {
                     NodeMapView(selection: selection,
                                 mesh: mesh,
                                 scale: $currentAmount)
-                    .opacity(mesh.currentTab == .location ? 1 : 0)
-                    
-                    StaticNodeMapView(selection: selection,
-                                      mesh: mesh,
-                                      scale: $currentAmount)
-                    .opacity(mesh.currentTab == .staticIP ? 1 : 0)
-                }.opacity(statusConnect == .connected ? 0 : 1)
+                    .animation(.linear)
+                }
             }
         }, location: $location, enableUpdateMap: enableUpdateMap, updateZoomScale: {
             enableUpdateMap = false
@@ -238,8 +234,6 @@ struct ZoomableScrollView<Content: View>: UIViewRepresentable {
             if(scale > Constant.Board.Map.maxZoom) {
                 scrollView.maximumZoomScale = scale
             }
-            
-            parent.updateZoomScale(scrollView.zoomScale)
         }
         
         func scrollViewDidScroll(_ scrollView: UIScrollView) {
@@ -254,6 +248,7 @@ struct ZoomableScrollView<Content: View>: UIViewRepresentable {
                 let topMargin: CGFloat = (scrollView.frame.size.height - hostingController.view!.frame.height)*0.5
                 scrollView.contentInset = UIEdgeInsets(top: max(0, topMargin), left: max(0,leftMargin), bottom: 0, right: 0)
             }
+            parent.updateZoomScale(scrollView.zoomScale)
         }
     }
 }

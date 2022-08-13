@@ -14,7 +14,7 @@ struct NodePopupView: View {
     let ensignSize: CGFloat = Constant.Board.NodePopupView.frameEnsign
     
     var body: some View {
-        VStack(spacing: -1) {
+        VStack(spacing: 0) {
             getStateViewDescription()
                 .foregroundColor(.black)
                 .background(Constant.Board.NodePopupView.backgroudTriangle)
@@ -31,7 +31,7 @@ struct NodePopupView: View {
             return AnyView(
                 VStack(alignment: .center, spacing: 0) {
                     Text(node.countryName)
-                        .font(.system(size: Constant.Board.NodePopupView.sizeFont * Constant.Board.Map.zoomCity ,
+                        .font(.system(size: Constant.Board.NodePopupView.sizeFont,
                                       weight: Constant.Board.NodePopupView.weightFont))
                         .lineLimit(Constant.Board.NodePopupView.numberLineText)
                         .frame(maxWidth: .infinity, maxHeight: .infinity)
@@ -39,12 +39,12 @@ struct NodePopupView: View {
                         .minimumScaleFactor(.leastNonzeroMagnitude)
                         .background(AppColor.backgroundCity)
                     HStack(spacing: 6) {
-                        ImageView(withURL: node.flag, size: ensignSize * Constant.Board.Map.zoomCity)
+                        ImageView(withURL: node.flag, size: ensignSize)
                             .clipShape(Circle())
-                            .frame(width: Constant.Board.NodePopupView.frameEnsign * Constant.Board.Map.zoomCity,
-                                   height: Constant.Board.NodePopupView.frameEnsign * Constant.Board.Map.zoomCity)
+                            .frame(width: Constant.Board.NodePopupView.frameEnsign,
+                                   height: Constant.Board.NodePopupView.frameEnsign)
                         Text(node.name)
-                            .font(.system(size: Constant.Board.NodePopupView.sizeFont * Constant.Board.Map.zoomCity,
+                            .font(.system(size: Constant.Board.NodePopupView.sizeFont,
                                           weight: Constant.Board.NodePopupView.weightFont))
                             .lineLimit(Constant.Board.NodePopupView.numberLineText)
                     }
@@ -52,18 +52,24 @@ struct NodePopupView: View {
                     .padding(Constant.Board.NodePopupView.paddingContent)
                     .minimumScaleFactor(.leastNonzeroMagnitude)
                 }
-                    .frame(height: Constant.Board.NodePopupView.heightContentPopupView)
+//                    .frame(height: Constant.Board.NodePopupView.heightContentPopupView)
                     .fixedSize(horizontal: true, vertical: true)
             )
         } else {
-            return AnyView(HStack {
-                ImageView(withURL: node.flag, size: ensignSize)
-                    .clipShape(Circle())
-                Text(node.name)
-                    .font(.system(size: Constant.Board.NodePopupView.sizeFont,
-                                  weight: Constant.Board.NodePopupView.weightFont))
-                    .lineLimit(Constant.Board.NodePopupView.numberLineText)
-            }.padding(10))
+            return AnyView(
+                HStack(spacing: 10) {
+                    ImageView(withURL: node.flag, size: ensignSize)
+                        .clipShape(Circle())
+                        .frame(width: Constant.Board.NodePopupView.frameEnsign,
+                               height: Constant.Board.NodePopupView.frameEnsign)
+                    Text(node.name)
+                        .font(.system(size: Constant.Board.NodePopupView.sizeFont + 4,
+                                      weight: Constant.Board.NodePopupView.weightFont))
+                        .lineLimit(Constant.Board.NodePopupView.numberLineText)
+                }
+                    .padding(8)
+                    .padding(.leading, 3)
+            )
         }
     }
 }

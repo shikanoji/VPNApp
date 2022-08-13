@@ -212,6 +212,7 @@
 		EE8910712798FBD500ADF293 /* SearchBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE8910702798FBD500ADF293 /* SearchBar.swift */; };
 		EE8910742799458A00ADF293 /* NodeCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE8910732799458A00ADF293 /* NodeCellView.swift */; };
 		EE891077279947FA00ADF293 /* ImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE891076279947FA00ADF293 /* ImageView.swift */; };
+		EE8966A128A203D60049052A /* PopupSelectView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE8966A028A203D60049052A /* PopupSelectView.swift */; };
 		EE9B77B8283F2F3B00240E89 /* AutoConnectViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE9B77B7283F2F3B00240E89 /* AutoConnectViewModel.swift */; };
 		EE9B77BF28460AC700240E89 /* ProtocolSettingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE9B77BD28460AC600240E89 /* ProtocolSettingView.swift */; };
 		EE9B77C128460AC700240E89 /* ProtocolSettingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE9B77BE28460AC700240E89 /* ProtocolSettingViewModel.swift */; };
@@ -451,6 +452,7 @@
 		EE8910702798FBD500ADF293 /* SearchBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchBar.swift; sourceTree = "<group>"; };
 		EE8910732799458A00ADF293 /* NodeCellView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NodeCellView.swift; sourceTree = "<group>"; };
 		EE891076279947FA00ADF293 /* ImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageView.swift; sourceTree = "<group>"; };
+		EE8966A028A203D60049052A /* PopupSelectView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopupSelectView.swift; sourceTree = "<group>"; };
 		EE9B77B7283F2F3B00240E89 /* AutoConnectViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AutoConnectViewModel.swift; sourceTree = "<group>"; };
 		EE9B77BD28460AC600240E89 /* ProtocolSettingView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProtocolSettingView.swift; sourceTree = "<group>"; };
 		EE9B77BE28460AC700240E89 /* ProtocolSettingViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProtocolSettingViewModel.swift; sourceTree = "<group>"; };
@@ -913,6 +915,7 @@
 				EE514CBE27CCC14500F82AD7 /* LoadingView.swift */,
 				AC99848A288948A90038F216 /* EmbedWebView.swift */,
 				EED4F5A82855A5DA0098DF47 /* WebView.swift */,
+				EE8966A028A203D60049052A /* PopupSelectView.swift */,
 			);
 			path = Components;
 			sourceTree = "<group>";
@@ -1497,6 +1500,7 @@
 				EE514CBF27CCC14500F82AD7 /* LoadingView.swift in Sources */,
 				EE85EE1227BDF5B6000F967A /* Node.swift in Sources */,
 				D78044F4275912AC0086E59D /* AppSetting.swift in Sources */,
+				EE8966A128A203D60049052A /* PopupSelectView.swift in Sources */,
 				EE85EDBB27B22452000F967A /* MultiHopView.swift in Sources */,
 				EE3246E8282237580070FB91 /* StaticNodePopupView.swift in Sources */,
 				AC6074EE27DE42C100DD5667 /* Strings+Generated.swift in Sources */,

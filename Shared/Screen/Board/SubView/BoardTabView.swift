@@ -88,8 +88,8 @@ struct PrimaryButtonStyle: ButtonStyle {
             .foregroundColor(textColor)
             .cornerRadius(Constant.Board.SubBoard.radius)
             .font(.system(size: fontSize, weight: weight, design: .default))
-            .scaleEffect(configuration.isPressed ? 1.2 : 1)
-            .animation(.easeOut(duration: 0.2), value: configuration.isPressed)
+//            .scaleEffect(configuration.isPressed ? 1.2 : 1)
+//            .animation(.easeOut(duration: 0.2), value: configuration.isPressed)
             .lineLimit(1)
     }
 }

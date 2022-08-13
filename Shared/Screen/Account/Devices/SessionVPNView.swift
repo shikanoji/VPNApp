@@ -62,6 +62,9 @@ struct SessionVPNView: View {
                 viewModel.showAlert = false
             })
         }
+        .onAppear {
+            viewModel.getListSession(loadMore: false)
+        }
     }
 }
 

@@ -38,6 +38,7 @@ struct NodeView: View {
                            height: width)
             }
         }
+        .scaleEffect(1 / scale, anchor: .bottom)
     }
 }
 
