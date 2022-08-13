@@ -109,7 +109,6 @@ struct ItemRowCell: View {
             Spacer().frame(width: 15)
         }
         .padding(.vertical, 8.0)
-        .frame(minHeight: Constant.Menu.heightItemMenu)
         .frame(maxWidth: .infinity)
         .background(AppColor.darkButton)
         .cornerRadius(radius: Constant.Menu.radiusCell, corners: [position.rectCorner])
