@@ -18,116 +18,156 @@ struct BoardView: View {
     @State var showSettings = false
     @State var showBoardList = false
     
+    private let transition = AnyTransition.asymmetric(insertion: .move(edge: .bottom),
+                                                      removal: .move(edge: .top))
+    
     @State var showPopup = false
+    
+    @State private var dragged = CGSize.zero
+    @State private var accumulated = CGSize.zero
+    
+    let heightScreen = Constant.Board.Map.heightScreen
+    
+    func constraintOffSet(_ value: CGFloat) -> CGFloat {
+        var valueConstraint = value
+        valueConstraint = valueConstraint <= 0 ? 0 : valueConstraint
+        valueConstraint = valueConstraint >= heightScreen ? heightScreen : valueConstraint
+        return valueConstraint
+    }
+    
+    func caculatorDirection(_ value: CGFloat) -> CGFloat {
+        var valueConstraint = value
+        let caculatorHeightScreen = heightScreen * 0.4
+        if valueConstraint < caculatorHeightScreen {
+            valueConstraint = 0
+        } else {
+            withAnimation(.linear) {
+                valueConstraint = heightScreen
+            }
+            
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+                showBoardList = false
+                dragged.height = .zero
+                accumulated.height = .zero
+            }
+        }
+        return valueConstraint
+    }
+    
+    let drag = DragGesture(minimumDistance: 0.0)
     
     var body: some View {
         ZStack {
-            accountView()
-                .opacity(showAccount ? 1 : 0)
-            settingView()
-                .opacity(showSettings ? 1 : 0)
-            boardListView()
-                .opacity(showBoardList ? 1 : 0)
             contentMapView()
-                .opacity((!showAccount && !showSettings && !showBoardList) ? 1 : 0)
+            if showAccount {
+                accountView()
+            }
+            if showSettings {
+                settingView()
+            }
             if showBoardList {
                 boardListView()
-                    .transition(.move(edge: .bottom))
+                    .transition(transition)
+                    .offset(y: self.dragged.height)
+                    .gesture(drag
+                        .onChanged{ value in
+                            let valueConstraint = value.translation.height + self.accumulated.height
+                            self.dragged = CGSize(width: value.translation.width + self.accumulated.width,
+                                                  height: constraintOffSet(valueConstraint))
+                        }
+                        .onEnded{ value in
+                            let valueConstraint = value.translation.height + self.accumulated.height
+                            self.dragged = CGSize(width: value.translation.width + self.accumulated.width,
+                                                  height: caculatorDirection(valueConstraint))
+                            self.accumulated = self.dragged
+                        })
             }
-            AutoConnectView(
-                showSettings: .constant(true),
-                showVPNSetting: .constant(true),
-                shouldHideAutoConnect: $viewModel.shouldHideAutoConnect,
-                statusConnect: $viewModel.stateUI,
-                viewModel: AutoConnectViewModel())
-            .opacity(viewModel.shouldHideAutoConnect ? 0 : 1)
-            SessionVPNView(
-                showAccount: .constant(true),
-                showTotalDevice: .constant(true),
-                statusConnect: $viewModel.stateUI,
-                viewModel: SessionVPNViewModel(),
-                shouldHideSessionList: $viewModel.shouldHideSession)
-            .opacity(viewModel.shouldHideSession ? 0 : 1)
-            VStack{
-                Spacer()
-                ToastView(title: viewModel.error?.title ?? "",
-                          message: viewModel.error?.description ?? "",
-                          cancelAction: {
-                    viewModel.showAlert = false
-                })
-                .frame(alignment: .bottom)
-                .padding(.bottom, 20)
+            
+            if !viewModel.shouldHideAutoConnect {
+                autoConnectView()
             }
-            .opacity(viewModel.showAlert ? 1 : 0)
-            .onChange(of: viewModel.showAlert, perform: { newValue in
-                if newValue {
-                    DispatchQueue.main.asyncAfter(deadline: .now() + 5.0) {
-                        viewModel.showAlert = false
-                    }
-                }
-            })
-            VStack{
-                Spacer()
-                ToastView(title: "Need terminal some sessions",
-                          message: "",
-                          confirmTitle: "Open Sessions",
-                          oneChossing: true,
-                          confirmAction: {
-                    viewModel.showAlertSessionSetting = false
-                    viewModel.shouldHideSession = false
-                })
-                .frame(alignment: .bottom)
-                .padding(.bottom, 20)
+            
+            if !viewModel.shouldHideSession {
+                sessionVPNView()
             }
-            .opacity(viewModel.showAlertSessionSetting ? 1 : 0)
-            .onChange(of: viewModel.showAlertSessionSetting, perform: { newValue in
-                if newValue {
-                    DispatchQueue.main.asyncAfter(deadline: .now() + 5.0) {
+            
+            if viewModel.showAlert {
+                toastView()
+            }
+            
+            if viewModel.showAlertSessionSetting {
+                VStack{
+                    Spacer()
+                    PopupSelectView(title: "Need terminal some sessions",
+                                    message: "",
+                                    confirmTitle: "Open Sessions",
+                                    oneChossing: true,
+                                    confirmAction: {
                         viewModel.showAlertSessionSetting = false
-                    }
+                        viewModel.shouldHideSession = false
+                    })
+                    .frame(alignment: .bottom)
+                    .padding(.bottom, 20)
                 }
-            })
-            VStack{
-                Spacer()
-                ToastView(title: "Disable auto-conenct",
-                          message: "",
-                          confirmTitle: "Open Setting",
-                          oneChossing: true,
-                          confirmAction: {
-                    viewModel.showAlertAutoConnectSetting = false
-                    viewModel.shouldHideAutoConnect = false
-                })
-                .frame(alignment: .bottom)
-                .padding(.bottom, 20)
             }
-            .opacity(viewModel.showAlertAutoConnectSetting ? 1 : 0)
-            .onChange(of: viewModel.showAlertAutoConnectSetting, perform: { newValue in
-                if newValue {
-                    DispatchQueue.main.asyncAfter(deadline: .now() + 5.0) {
+            
+            
+            if viewModel.showAlertAutoConnectSetting {
+                VStack{
+                    Spacer()
+                    PopupSelectView(title: "Disable auto-conenct",
+                                    message: "",
+                                    confirmTitle: "SETTINGS",
+                                    oneChossing: true,
+                                    confirmAction: {
                         viewModel.showAlertAutoConnectSetting = false
-                    }
+                        viewModel.shouldHideAutoConnect = false
+                    })
+                    .frame(alignment: .bottom)
+                    .padding(.bottom, 20)
                 }
-            })
+            }
         }
-               .onChange(of: viewModel.nodeConnected, perform: { newValue in
-                   showAccount = false
-                   showSettings = false
-                   showBoardList = false
-               })
-               .onChange(of: viewModel.staticIPNodeSelecte, perform: { newValue in
-                   showAccount = false
-                   showSettings = false
-                   showBoardList = false
-               })
-               .onChange(of: viewModel.multihopSelect, perform: { newValue in
-                   showAccount = false
-                   showSettings = false
-                   showBoardList = false
-               })
-               .animation(Animation.linear(duration: 0.25))
-               .preferredColorScheme(.dark)
-               .navigationBarHidden(true)
-               .edgesIgnoringSafeArea(.all)
+        .onChange(of: viewModel.showAlert, perform: { newValue in
+            if newValue {
+                DispatchQueue.main.asyncAfter(deadline: .now() + 5.0) {
+                    viewModel.showAlert = false
+                }
+            }
+        })
+        .onChange(of: viewModel.showAlertSessionSetting, perform: { newValue in
+            if newValue {
+                DispatchQueue.main.asyncAfter(deadline: .now() + 5.0) {
+                    viewModel.showAlertSessionSetting = false
+                }
+            }
+        })
+        .onChange(of: viewModel.showAlertAutoConnectSetting, perform: { newValue in
+            if newValue {
+                DispatchQueue.main.asyncAfter(deadline: .now() + 5.0) {
+                    viewModel.showAlertAutoConnectSetting = false
+                }
+            }
+        })
+        .onChange(of: viewModel.nodeConnected, perform: { newValue in
+            showAccount = false
+            showSettings = false
+            showBoardList = false
+        })
+        .onChange(of: viewModel.staticIPNodeSelecte, perform: { newValue in
+            showAccount = false
+            showSettings = false
+            showBoardList = false
+        })
+        .onChange(of: viewModel.multihopSelect, perform: { newValue in
+            showAccount = false
+            showSettings = false
+            showBoardList = false
+        })
+        .animation(Animation.linear(duration: 0.25))
+        .preferredColorScheme(.dark)
+        .navigationBarHidden(true)
+        .edgesIgnoringSafeArea(.all)
     }
     
     func handlerTapLeftNavigation() {
@@ -141,6 +181,37 @@ struct BoardView: View {
     func accountView() -> some View {
         AccountView(showAccount: $showAccount,
                     statusConnect: $viewModel.stateUI, viewModel: AccountViewModel())
+    }
+    
+    func autoConnectView() -> some View {
+        AutoConnectView(
+            showSettings: .constant(true),
+            showVPNSetting: .constant(true),
+            shouldHideAutoConnect: $viewModel.shouldHideAutoConnect,
+            statusConnect: $viewModel.stateUI,
+            viewModel: AutoConnectViewModel())
+    }
+    
+    func sessionVPNView() -> some View {
+        SessionVPNView(
+            showAccount: .constant(true),
+            showTotalDevice: .constant(true),
+            statusConnect: $viewModel.stateUI,
+            viewModel: SessionVPNViewModel(),
+            shouldHideSessionList: $viewModel.shouldHideSession)
+    }
+    
+    func toastView() -> some View {
+        VStack{
+            Spacer()
+            ToastView(title: viewModel.error?.title ?? "",
+                      message: viewModel.error?.description ?? "",
+                      cancelAction: {
+                viewModel.showAlert = false
+            })
+            .frame(alignment: .bottom)
+            .padding(.bottom, 20)
+        }
     }
     
     func settingView() -> some View {

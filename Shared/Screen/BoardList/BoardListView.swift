@@ -30,7 +30,7 @@ struct BoardListView: View {
                 .onTapGesture {
                     showBoardList = false
                 }
-            BoardTabView(tab: $currentTab, showBoardList: Binding.constant(false))
+            BoardTabView(tab: $currentTab, showBoardList: $showBoardList)
                 .padding([.leading, .trailing])
             Spacer()
                 .frame(height: 8)
@@ -48,9 +48,11 @@ struct BoardListView: View {
         .navigationBarHidden(true)
         .background(AppColor.background)
         .ignoresSafeArea()
-        .onAppear {
-            self.stopAnimation = true
-        }
-        .animation(stopAnimation ? nil : .linear)
+//        .onAppear {
+//            DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
+//                self.stopAnimation = true
+//            }
+//        }
+//        .animation(stopAnimation ? nil : .linear)
     }
 }

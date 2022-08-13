@@ -14,7 +14,7 @@ class Mesh: ObservableObject {
     @Published var staticNodes: [StaticServer] = []
     @Published var clientCountryNode: Node?
     
-    var showCityNodes: Bool = false
+    @Published var showCityNodes: Bool = false
     
     var currentTab: BoardViewModel.StateTab = .location
     
