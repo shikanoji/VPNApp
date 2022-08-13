@@ -39,28 +39,30 @@ struct SettingsView: View {
             ScrollView(showsIndicators: false) {
                 VStack {
                     ForEach(sections, id: \.id) { section in
-                        VStack(alignment: .leading, spacing: 10) {
+                        VStack(alignment: .leading) {
                             Text(section.type.title)
                                 .font(Constant.Menu.fontSectionTitle)
                                 .foregroundColor(AppColor.lightBlackText)
-                            ForEach(section.type.items) { item in
-                                Button {
-                                    switch item.type {
-                                    case .vpnConnection:
-                                        self.showVPNSetting = true
-                                    case .tools:
-                                        self.showToolsSetting = true
-                                    case .licenses:
-                                        self.showLicenseList = true
-                                    case .termAndConditions:
-                                        self.showTermsAndCondition = true
-                                    case .privacyPolicy:
-                                        self.showPrivacyPolicies = true
-                                    default:
-                                        return
+                            VStack {
+                                ForEach(section.type.items) { item in
+                                    Button {
+                                        switch item.type {
+                                        case .vpnConnection:
+                                            self.showVPNSetting = true
+                                        case .tools:
+                                            self.showToolsSetting = true
+                                        case .licenses:
+                                            self.showLicenseList = true
+                                        case .termAndConditions:
+                                            self.showTermsAndCondition = true
+                                        case .privacyPolicy:
+                                            self.showPrivacyPolicies = true
+                                        default:
+                                            return
+                                        }
+                                    } label: {
+                                        ItemRowView(item: item)
                                     }
-                                } label: {
-                                    ItemRowView(item: item)
                                 }
                             }
                         }
@@ -91,7 +93,7 @@ struct SettingsView: View {
                                        isActive: $showTermsAndCondition) { }
                         NavigationLink(destination: EmbedWebView(url: Constant.api.privacyPolictyURL,
                                                                  title: L10n.Settings.privacyPolicty),
-                                                               isActive: $showPrivacyPolicies) { }
+                                       isActive: $showPrivacyPolicies) { }
                     }
                 }
             }

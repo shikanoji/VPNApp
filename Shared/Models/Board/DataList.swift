@@ -83,7 +83,6 @@ enum SectionType: Decodable {
                 ItemCell(type: .currentVersion),
                 ItemCell(type: .privacyPolicy),
                 ItemCell(type: .termAndConditions),
-                ItemCell(type: .aboutUs),
                 ItemCell(type: .licenses)
             ]
         case .typeAutoConnect:
@@ -151,7 +150,6 @@ enum ItemCellType: Int, Decodable {
     case vpnConnection
     case tools
     case termAndConditions
-    case aboutUs
     case currentVersion
     case help
     case licenses
@@ -221,8 +219,6 @@ enum ItemCellType: Int, Decodable {
             return L10n.Settings.itemTool
         case .currentVersion:
             return L10n.Settings.currentVersion
-        case .aboutUs:
-            return L10n.Settings.aboutUs
         case .termAndConditions:
             return L10n.Settings.termAndCondition
         case .help:
@@ -285,8 +281,6 @@ enum ItemCellType: Int, Decodable {
             return Asset.Assets.iconSettingsItemTools.swiftUIImage
         case .currentVersion:
             return Asset.Assets.iconSettingsItemVersion.swiftUIImage
-        case .aboutUs:
-            return Asset.Assets.iconSettingsItemProtec.swiftUIImage
         case .help:
             return Asset.Assets.iconSettingsItemHelp.swiftUIImage
         case .licenses:

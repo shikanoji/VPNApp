@@ -18,15 +18,18 @@ struct MultiHopView: View {
     
     var body: some View {
         VStack(alignment: .leading, spacing: 8) {
-            Button {
-                showDescriptionMultihop = true
-            } label: {
-                HStack {
-                    Constant.MultiHop.iconWhat
-                    Text(L10n.Board.BoardList.MultiHop.what)
-                        .foregroundColor(.white)
-                        .font(Constant.BoardList.fontNodeList)
+            HStack {
+                Button {
+                    showDescriptionMultihop = true
+                } label: {
+                    HStack {
+                        Constant.MultiHop.iconWhat
+                        Text(L10n.Board.BoardList.MultiHop.what)
+                            .foregroundColor(.white)
+                            .font(Constant.BoardList.fontNodeList)
+                    }
                 }
+                Spacer()
             }
             Spacer()
                 .frame(height: 4)
