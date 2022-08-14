@@ -22,12 +22,10 @@ extension ItemCellType {
     
     var getProtocolVPN: String {
         switch self {
-        case .openVPNTCP, .recommend:
+        case .openVPNTCP:
             return "tcp"
-        case .openVPNUDP:
-            return "udp"
         default:
-            return ""
+            return "udp"
         }
     }
 }
