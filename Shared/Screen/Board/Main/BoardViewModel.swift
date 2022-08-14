@@ -88,6 +88,7 @@ class BoardViewModel: ObservableObject {
         didSet {
             if let node = nodeConnected {
                 NetworkManager.shared.selectNode = node
+                self.connectOrDisconnectByUser = true
                 self.ConnectOrDisconnectVPN()
             }
         }
@@ -100,6 +101,7 @@ class BoardViewModel: ObservableObject {
         didSet {
             if let staticIP = staticIPNodeSelecte {
                 NetworkManager.shared.selectStaticServer = staticIP
+                self.connectOrDisconnectByUser = true
                 self.ConnectOrDisconnectVPN()
             }
         }
@@ -110,6 +112,7 @@ class BoardViewModel: ObservableObject {
         didSet {
             if let multihop = multihopSelect {
                 NetworkManager.shared.selectMultihop = multihop
+                self.connectOrDisconnectByUser = true
                 self.ConnectOrDisconnectVPN()
             }
         }

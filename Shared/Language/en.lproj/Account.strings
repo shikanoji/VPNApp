@@ -44,7 +44,7 @@
 "contentTotalDevices" = "Multiple devices online";
 "deleteAccount" = "Delete your account";
 "DeleteAccount.note" = "Note: This action cannot be undone.";
-"DeleteAccount.message" = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.";
+"DeleteAccount.message" = "Please note that the deletion of an account doesn\'t have an impact on your subscription payments. For that, you also need to cancel your subscription or request a refund as well.";
 "DeleteAccount.delete" = "Delete";
 "ChangePassword.passwordNotMatch" = "Confirm password does not matche";
 "ChangePassword.success" = "Successfully changed password";

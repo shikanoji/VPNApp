@@ -69,8 +69,8 @@ public enum L10n {
     public enum DeleteAccount {
       /// Delete
       public static let delete = L10n.tr("Account", "DeleteAccount.delete", fallback: #"Delete"#)
-      /// Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
-      public static let message = L10n.tr("Account", "DeleteAccount.message", fallback: #"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat."#)
+      /// Please note that the deletion of an account doesn't have an impact on your subscription payments. For that, you also need to cancel your subscription or request a refund as well.
+      public static let message = L10n.tr("Account", "DeleteAccount.message", fallback: #"Please note that the deletion of an account doesn't have an impact on your subscription payments. For that, you also need to cancel your subscription or request a refund as well."#)
       /// Note: This action cannot be undone.
       public static let note = L10n.tr("Account", "DeleteAccount.note", fallback: #"Note: This action cannot be undone."#)
     }

@@ -241,9 +241,8 @@ extension APIService: TargetType {
             var param: [String: Any] = [:]
             // Use "key" temporarily, after remove it
             param["key"] = "f11b69c57d5fe9555e29c57c1d863bf8"
-            
             param["tech"] = NetworkManager.shared.selectConfig.getConfigParam
-            
+            param["proto"] = NetworkManager.shared.selectConfig.getProtocolVPN
             param["dev"] = "tun"
             param["cybersec"] = AppSetting.shared.selectCyberSec ? 1 : 0
             
@@ -399,7 +398,6 @@ extension APIService: TargetType {
     
     
     func getInfoDevice() -> String {
-        
         let info = InfoDeviceModel(
             ipAddress: AppSetting.shared.ip,
             deviceId: UIDevice.current.identifierForVendor!.uuidString,
