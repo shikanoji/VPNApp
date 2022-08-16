@@ -204,8 +204,10 @@ struct BoardView: View {
     func toastView() -> some View {
         VStack{
             Spacer()
-            ToastView(title: viewModel.error?.title ?? "",
-                      message: viewModel.error?.description ?? "",
+            ToastView(
+//                title: viewModel.error?.title ?? "",
+                      title: "An error occurred",
+                      message: "",
                       cancelAction: {
                 viewModel.showAlert = false
             })
@@ -235,6 +237,23 @@ struct BoardView: View {
     
     @State var zoomLogo = false
     
+    func logoAnimation() -> some View {
+        Group {
+            Asset.Assets.logoConnectedBackground.swiftUIImage
+                .resizable()
+                .aspectRatio(contentMode: .fit)
+            Asset.Assets.logoConnected.swiftUIImage
+                .resizable()
+                .aspectRatio(contentMode: .fit)
+                .frame(width: 150, height: 150)
+                .scaleEffect(zoomLogo ? 0.9 : 1.1)
+                .onAppear {
+                    zoomLogo = !zoomLogo
+                }
+                .animation(Animation.easeInOut(duration: 0.7).repeatForever(autoreverses: true))
+        }
+    }
+    
     func contentMapView() -> some View {
         ZStack(alignment: .top) {
             GeometryReader { geometry in
@@ -244,18 +263,8 @@ struct BoardView: View {
                             statusConnect: $viewModel.stateUI)
                     .allowsHitTesting(viewModel.stateUI != .connected)
                     if viewModel.stateUI == .connected {
-                        Asset.Assets.logoConnectedBackground.swiftUIImage
-                            .resizable()
-                            .aspectRatio(contentMode: .fit)
-                        Asset.Assets.logoConnected.swiftUIImage
-                            .resizable()
-                            .aspectRatio(contentMode: .fit)
-                            .frame(width: 150, height: 150)
-                            .scaleEffect(zoomLogo ? 0.9 : 1.1)
-                            .onAppear {
-                                zoomLogo = !zoomLogo
-                            }
-                            .animation(Animation.easeInOut(duration: 0.7).repeatForever(autoreverses: true))
+                        logoAnimation()
+                            .padding(.bottom, Constant.Board.QuickButton.widthSize)
                     }
                 }
                 VStack {
