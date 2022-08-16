@@ -33,4 +33,8 @@ class SelectionHandler: ObservableObject {
     func isStaticNodeSelected(_ node: StaticServer) -> Bool {
         return selectedStaticNodeIDs.contains(node.id)
     }
+    
+    func nodeIsSelected(_ node: Node) -> Bool {
+        return selectedNodeIDs.contains(node.id)
+    }
 }

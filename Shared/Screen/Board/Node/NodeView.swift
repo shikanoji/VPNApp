@@ -10,7 +10,7 @@ import SwiftUI
 struct NodeView: View {
     @Binding var scale: CGFloat
     
-    var width = CGFloat(10)
+    @State var width = CGFloat(10)
     // 1
     @State var node: Node
     //2
@@ -18,6 +18,10 @@ struct NodeView: View {
     //3
     var isSelected: Bool {
         return selection.isNodeSelected(node)
+    }
+    
+    var getWidth: CGFloat {
+        return scale > Constant.Board.Map.enableCityZoom ? (width + 4) : width
     }
     
     @State var isCityNode = false
@@ -29,13 +33,13 @@ struct NodeView: View {
             ZStack {
                 Ellipse()
                     .fill(AppColor.themeColor)
-                    .frame(width: width * 2,
-                           height: width * 2)
+                    .frame(width: getWidth * 2,
+                           height: getWidth * 2)
                     .opacity(0.2)
                 Ellipse()
                     .fill(AppColor.themeColor)
-                    .frame(width: width,
-                           height: width)
+                    .frame(width: getWidth,
+                           height: getWidth)
             }
         }
         .scaleEffect(1 / scale, anchor: .bottom)

@@ -32,6 +32,7 @@ struct StatusLocationView: View {
             }
             Spacer()
             Image(Constant.BoardList.iconUp)
+                .rotationEffect(.radians(.pi))
                 .padding()
         }
         .frame(maxWidth: .infinity)

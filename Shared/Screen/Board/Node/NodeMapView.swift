@@ -18,15 +18,13 @@ struct NodeMapView: View {
     var body: some View {
         ZStack {
             ForEach(mesh.showCityNodes ? mesh.cityNodes : mesh.countryNodes) { node in
-                VStack {
                     NodeView(scale: $scale, node: node, selection: self.selection)
                         .position(x: Constant.convertXToMap(node.x),
                                   y: Constant.convertYToMap(node.y, mesh.showCityNodes))
                         .onTapGesture {
                             self.selection.selectNode(node)
                         }
-                        .zIndex(selection.selectedNodeIDs.first == node.id ? 1 : 0)
-                }
+                        .zIndex(selection.nodeIsSelected(node) ? 1 : 0)
             }
         }
         .contentShape(Rectangle())

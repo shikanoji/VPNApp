@@ -76,7 +76,7 @@ struct Constant {
         
         struct Map {
             static let minZoom: CGFloat = 1
-            static let maxZoom: CGFloat = 3
+            static let maxZoom: CGFloat = 2.5
             static let enableCityZoom: CGFloat = 1.5
             static let zoomCity: CGFloat = 0.5
             static let widthScreen = UIScreen.main.bounds.width

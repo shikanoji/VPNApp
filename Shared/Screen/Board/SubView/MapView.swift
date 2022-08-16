@@ -170,6 +170,9 @@ struct ZoomableScrollView<Content: View>: UIViewRepresentable {
             width: max(hostedView.bounds.width, hostedView.bounds.width+1),
             height: max(hostedView.bounds.height, hostedView.bounds.height+1))
         
+        scrollView.minimumZoomScale = Constant.Board.Map.minZoom
+        scrollView.maximumZoomScale = Constant.Board.Map.maxZoom
+        
         return scrollView
     }
     
@@ -224,16 +227,6 @@ struct ZoomableScrollView<Content: View>: UIViewRepresentable {
         
         func viewForZooming(in scrollView: UIScrollView) -> UIView? {
             return hostingController.view
-        }
-        
-        func scrollViewDidEndZooming(_ scrollView: UIScrollView, with view: UIView?, atScale scale: CGFloat) {
-            if(scale < Constant.Board.Map.minZoom) {
-                scrollView.minimumZoomScale = scale
-            }
-            
-            if(scale > Constant.Board.Map.maxZoom) {
-                scrollView.maximumZoomScale = scale
-            }
         }
         
         func scrollViewDidScroll(_ scrollView: UIScrollView) {
