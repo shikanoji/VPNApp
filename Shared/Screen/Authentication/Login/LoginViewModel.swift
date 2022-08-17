@@ -37,7 +37,7 @@ class LoginViewModel: NSObject, ObservableObject {
     func login() {
         showProgressView = true
         
-        APIManager.shared.login(email: email, password: password)
+        ServiceManager.shared.login(email: email, password: password)
             .subscribe(onSuccess: { [self] response in
                 self.showProgressView = false
                 if let result = response.result {
@@ -79,7 +79,7 @@ class LoginViewModel: NSObject, ObservableObject {
                 }
 //                let credential = GoogleAuthProvider.credential(withIDToken: idToken, accessToken: authentication.accessToken)
                 self.showProgressView = true
-                APIManager.shared.loginSocial(socialProvider: "google", token: idToken)
+                ServiceManager.shared.loginSocial(socialProvider: "google", token: idToken)
                     .subscribe(onSuccess: { [self] response in
                         self.showProgressView = false
                         if let result = response.result {
@@ -128,7 +128,7 @@ extension LoginViewModel: ASAuthorizationControllerDelegate {
             /// 2. Perform tasks to do after login
             self.appleToken = token
             self.showProgressView = true
-            APIManager.shared.loginSocial(socialProvider: "apple", token: token)
+            ServiceManager.shared.loginSocial(socialProvider: "apple", token: token)
                 .subscribe(onSuccess: { [self] response in
                     self.showProgressView = false
                     if let result = response.result {

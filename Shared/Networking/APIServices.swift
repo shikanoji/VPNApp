@@ -11,7 +11,7 @@ import UIKit
 
 enum APIError: Error {
     case someError
-    case tokenError
+    case tokenExpired
     case permissionError
     
     case badURL
@@ -25,7 +25,7 @@ enum APIError: Error {
     var localizedDescription: String {
         /// User feedback
         switch self {
-        case .badURL, .parsing, .unknown, .tokenError, .someError, .permissionError, .identified:
+        case .badURL, .parsing, .unknown, .tokenExpired, .someError, .permissionError, .identified:
             return "Sorry, something went wrong."
         case .badResponse(_):
             return "Sorry, the connection to our server failed."
@@ -49,7 +49,7 @@ enum APIError: Error {
             return "bad response with status code \(statusCode)"
         case .someError:
             return "some error"
-        case .tokenError:
+        case .tokenExpired:
             return "token error"
         case .permissionError:
             return "permission error"

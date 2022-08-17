@@ -483,7 +483,7 @@ class BoardViewModel: ObservableObject {
         
         self.showProgressView = true
         
-        APIManager.shared.getCountryList()
+        ServiceManager.shared.getCountryList()
             .subscribe { [weak self] response in
                 guard let `self` = self else {
                     return
@@ -516,7 +516,7 @@ class BoardViewModel: ObservableObject {
             return
         }
         
-        APIManager.shared.getMutihopList()
+        ServiceManager.shared.getMutihopList()
             .subscribe { [weak self] response in
                 guard let `self` = self else {
                     return
@@ -574,7 +574,7 @@ class BoardViewModel: ObservableObject {
         }
         numberCallObtainCer += 1
         
-        APIManager.shared.getObtainCertificate()
+        ServiceManager.shared.getObtainCertificate()
             .subscribe { [weak self] response in
                 guard let `self` = self else {
                     return
@@ -626,7 +626,7 @@ class BoardViewModel: ObservableObject {
             internetNotAvaiable()
             return
         }
-        APIManager.shared.getRequestCertificate(currentTab: tab)
+        ServiceManager.shared.getRequestCertificate(currentTab: tab)
             .subscribe { [weak self] response in
                 guard let `self` = self else {
                     return
@@ -637,7 +637,7 @@ class BoardViewModel: ObservableObject {
                 if let result = response.result {
                     switch NetworkManager.shared.selectConfig {
                     case .openVPNTCP, .recommend, .openVPNUDP:
-                        print("APIManager.shared.getRequestCertificate switch NetworkManager.shared.selectConfig")
+                        print("ServiceManager.shared.getRequestCertificate switch NetworkManager.shared.selectConfig")
                         if let cer = result.getRequestCer {
                             if !cer.exceedLimit {
                                 NetworkManager.shared.requestCertificate = cer
@@ -740,7 +740,7 @@ class BoardViewModel: ObservableObject {
     }
     
     func disconnectSession() {
-        APIManager.shared.disconnectSession(sessionId: AppSetting.shared.currentSessionId, terminal: false)
+        ServiceManager.shared.disconnectSession(sessionId: AppSetting.shared.currentSessionId, terminal: false)
             .subscribe { [weak self] response in
                 guard let `self` = self else {
                     return

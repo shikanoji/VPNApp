@@ -29,7 +29,7 @@ class RegisterViewModel: NSObject, ObservableObject {
     
     func signup() {
         showProgressView = true
-        APIManager.shared.register(email: email, password: password)
+        ServiceManager.shared.register(email: email, password: password)
             .subscribe(onSuccess: { [weak self] response in
                 self?.showProgressView = false
                 if let result = response.result, !result.tokens.access.token.isEmpty, !result.tokens.refresh.token.isEmpty {
@@ -67,7 +67,7 @@ class RegisterViewModel: NSObject, ObservableObject {
                 }
 //                let credential = GoogleAuthProvider.credential(withIDToken: idToken, accessToken: authentication.accessToken)
                 self.showProgressView = true
-                APIManager.shared.loginSocial(socialProvider: "google", token: idToken)
+                ServiceManager.shared.loginSocial(socialProvider: "google", token: idToken)
                     .subscribe(onSuccess: { [weak self] response in
                         self?.showProgressView = false
                         if let result = response.result {
@@ -115,7 +115,7 @@ extension RegisterViewModel: ASAuthorizationControllerDelegate {
             /// 2. Perform tasks to do after login
             self.appleToken = token
             self.showProgressView = true
-            APIManager.shared.loginSocial(socialProvider: "apple", token: token)
+            ServiceManager.shared.loginSocial(socialProvider: "apple", token: token)
                 .subscribe(onSuccess: { [weak self] response in
                     self?.showProgressView = false
                     if let result = response.result {
