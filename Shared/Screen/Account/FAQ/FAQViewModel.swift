@@ -24,7 +24,7 @@ class FAQViewModel: ObservableObject {
         
         showProgressView = true
         
-        APIManager.shared.getTopicQuestionList()
+        ServiceManager.shared.getTopicQuestionList()
             .subscribe { [weak self] response in
                 guard let `self` = self else {
                     return

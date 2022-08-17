@@ -26,7 +26,7 @@ class ChangePasswordViewModel: NSObject, ObservableObject {
         }
         
         showProgressView = true
-        APIManager.shared.changePassword(oldPassword: password, newPassword: newPassword)
+        ServiceManager.shared.changePassword(oldPassword: password, newPassword: newPassword)
             .subscribe(onSuccess: { [self] response in
                 self.showProgressView = false
                 if let _ = response.result {

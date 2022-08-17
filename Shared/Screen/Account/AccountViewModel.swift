@@ -16,7 +16,7 @@ class AccountViewModel: ObservableObject {
     var alertMessage: String = ""
     var authentication: Authentication?
     func logout(){
-        APIManager.shared.logout().subscribe { result in
+        ServiceManager.shared.logout().subscribe { result in
             self.authentication?.logout()
         } onFailure: { error in
             self.authentication?.logout()

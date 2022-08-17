@@ -30,7 +30,7 @@ class ForgotPasswordViewModel: ObservableObject {
     
     func sendRequest() {
         showProgressView = true
-        APIManager.shared.forgotPassword(email: email)
+        ServiceManager.shared.forgotPassword(email: email)
             .subscribe(onSuccess: { [self] response in
                 self.showProgressView = false
                 if response.result != nil {

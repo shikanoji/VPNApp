@@ -43,7 +43,7 @@ class SessionVPNViewModel: ObservableObject {
         
         showProgressView = true
         
-        APIManager.shared.getListSession(page: currentPage, limit: limit)
+        ServiceManager.shared.getListSession(page: currentPage, limit: limit)
             .subscribe { [weak self] response in
                 guard let `self` = self else {
                     return
@@ -93,7 +93,7 @@ class SessionVPNViewModel: ObservableObject {
     func disconnectSession(_ device: SessionVPN) {
         showProgressView = true
         
-        APIManager.shared.disconnectSession(sessionId: device.id, terminal: true)
+        ServiceManager.shared.disconnectSession(sessionId: device.id, terminal: true)
             .subscribe { [weak self] response in
                 guard let `self` = self else {
                     return
