@@ -9,7 +9,7 @@ import SwiftUI
 
 struct StatusLocationView: View {
     
-    @State var node: Node?
+    @Binding var node: Node?
     
     let imageSize: CGFloat = Constant.BoardList.heightImageNode / 2
     
@@ -38,12 +38,5 @@ struct StatusLocationView: View {
         .frame(maxWidth: .infinity)
         .frame(height: Constant.BoardList.heightStatusLoction)
         .background(AppColor.background)
-    }
-}
-
-struct StatusLocationView_Previews: PreviewProvider {
-    static var previews: some View {
-        StatusLocationView(node: nil)
-            .previewLayout(.fixed(width: /*@START_MENU_TOKEN@*/375.0/*@END_MENU_TOKEN@*/, height: /*@START_MENU_TOKEN@*/60.0/*@END_MENU_TOKEN@*/))
     }
 }

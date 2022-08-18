@@ -26,7 +26,7 @@ struct BoardListView: View {
         VStack(spacing: 8) {
             Spacer()
                 .frame(height: 20)
-            StatusLocationView(node: node)
+            StatusLocationView(node: $node)
                 .onTapGesture {
                     withAnimation {
                         showBoardList.toggle()

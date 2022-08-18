@@ -282,8 +282,9 @@ struct BoardView: View {
                                   uploadSpeed: viewModel.uploadSpeed,
                                   downloadSpeed: viewModel.downloadSpeed)
                     .onTapGesture {
-                        viewModel.connectOrDisconnectByUser = true
-                        viewModel.ConnectOrDisconnectVPN()
+                        viewModel.nodeConnected = NetworkManager.shared.selectNode
+//                        viewModel.connectOrDisconnectByUser = true
+//                        viewModel.ConnectOrDisconnectVPN()
                     }
                     Spacer()
                         .frame(height: Constant.Board.Tabs.topPadding)
