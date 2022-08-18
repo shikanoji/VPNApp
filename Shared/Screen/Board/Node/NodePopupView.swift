@@ -49,7 +49,7 @@ struct NodePopupView: View {
                             .lineLimit(Constant.Board.NodePopupView.numberLineText)
                     }
                     .frame(maxWidth: .infinity, maxHeight: .infinity)
-                    .padding(Constant.Board.NodePopupView.paddingContent)
+                    .padding(Constant.Board.NodePopupView.paddingContent + 5)
                     .minimumScaleFactor(.leastNonzeroMagnitude)
                 }
 //                    .frame(height: Constant.Board.NodePopupView.heightContentPopupView)

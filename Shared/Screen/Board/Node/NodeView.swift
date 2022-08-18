@@ -27,7 +27,7 @@ struct NodeView: View {
     @State var isCityNode = false
     
     var body: some View {
-        VStack(spacing: 2) {
+        VStack(spacing: 5) {
             NodePopupView(node: node, scale: $scale)
                 .opacity(isSelected ? 1 : 0)
             ZStack {
