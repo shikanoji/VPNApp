@@ -21,8 +21,9 @@ struct NodePopupView: View {
                 .cornerRadius(Constant.Board.NodePopupView.cornerRadius)
             Triangle()
                 .frame(width: Constant.Board.NodePopupView.widthTriangle,
-                       height: Constant.Board.NodePopupView.heightTriangle)
+                       height: Constant.Board.NodePopupView.heightTriangle + 2)
                 .foregroundColor(Constant.Board.NodePopupView.backgroudTriangle)
+                .padding(.top, -2)
         }
     }
     
@@ -49,7 +50,7 @@ struct NodePopupView: View {
                             .lineLimit(Constant.Board.NodePopupView.numberLineText)
                     }
                     .frame(maxWidth: .infinity, maxHeight: .infinity)
-                    .padding(Constant.Board.NodePopupView.paddingContent)
+                    .padding(Constant.Board.NodePopupView.paddingContent + 5)
                     .minimumScaleFactor(.leastNonzeroMagnitude)
                 }
 //                    .frame(height: Constant.Board.NodePopupView.heightContentPopupView)

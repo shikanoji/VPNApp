@@ -201,15 +201,22 @@ enum RequestCerAPI: Codable {
     
     init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        if let _requestCer = try? container.decode(RequestCertificateModel.self) {
-            self = .requestCer(_requestCer)
-            return
+        
+        switch NetworkManager.shared.selectConfig {
+        case .openVPNTCP, .recommend, .openVPNUDP:
+            if let _requestCer = try? container.decode(RequestCertificateModel.self) {
+                self = .requestCer(_requestCer)
+                return
+            }
+        case .wireGuard:
+            if let _obtainCer = try? container.decode(ObtainCertificateModel.self) {
+                self = .obtainCer(_obtainCer)
+                return
+            }
+        default:
+            break
         }
         
-        if let _obtainCer = try? container.decode(ObtainCertificateModel.self) {
-            self = .obtainCer(_obtainCer)
-            return
-        }
         
         throw DecodingError.typeMismatch(RequestCerAPI.self, DecodingError.Context(codingPath: decoder.codingPath, debugDescription: "Wrong convert"))
     }

@@ -637,31 +637,36 @@ class BoardViewModel: ObservableObject {
                 if let result = response.result {
                     switch NetworkManager.shared.selectConfig {
                     case .openVPNTCP, .recommend, .openVPNUDP:
-                        print("ServiceManager.shared.getRequestCertificate switch NetworkManager.shared.selectConfig")
                         if let cer = result.getRequestCer {
                             if !cer.exceedLimit {
                                 NetworkManager.shared.requestCertificate = cer
                                 AppSetting.shared.currentSessionId = NetworkManager.shared.requestCertificate?.sessionId ?? ""
                                 completion(true)
+                                return
                             } else {
                                 self.showAlertSessionSetting = true
                             }
                         } else if self.isEnableReconect {
                             self.getRequestCertificate() {
                                 completion($0)
+                                return
                             }
                         } else {
                             self.stateUI = .disconnected
                             completion(false)
+                            return
                         }
                     case .wireGuard:
                         if let cer = result.getObtainCer {
                             NetworkManager.shared.obtainCertificate = cer
                             AppSetting.shared.currentSessionId = cer.sessionId ?? ""
                             completion(true)
+                            return
+                        } else {
+                            self.stateUI = .disconnected
+                            completion(false)
+                            return
                         }
-                        self.stateUI = .disconnected
-                        completion(false)
                     default:
                         break
                     }
@@ -680,6 +685,8 @@ class BoardViewModel: ObservableObject {
                             self.error = APIError.identified(message: response.message)
                             self.showAlert = true
                         }
+                        completion(false)
+                        return
                     }
                 }
             } onFailure: { error in
