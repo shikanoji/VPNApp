@@ -6,16 +6,18 @@
 //
 
 import SwiftUI
+import TunnelKitManager
+import TunnelKitCore
 
 struct StatusLocationView: View {
     
     @Binding var node: Node?
-    
+    @Binding var statusConnect: VPNStatus
     let imageSize: CGFloat = Constant.BoardList.heightImageNode / 2
     
     var body: some View {
         HStack(spacing: 0) {
-            if let node = node {
+            if let node = node, statusConnect == .connected {
                 ImageView(withURL: node.flag, size: imageSize, placeholder: Constant.BoardList.iconCity)
                     .clipShape(Circle())
                     .padding()
