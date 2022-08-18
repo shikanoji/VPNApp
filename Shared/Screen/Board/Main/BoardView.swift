@@ -19,7 +19,7 @@ struct BoardView: View {
     @State var showBoardList = false
     
     private let transition = AnyTransition.asymmetric(insertion: .move(edge: .bottom),
-                                                      removal: .move(edge: .top))
+                                                      removal: .move(edge: .bottom))
     
     @State var showPopup = false
     
@@ -65,22 +65,24 @@ struct BoardView: View {
             if showSettings {
                 settingView()
             }
-            if showBoardList {
-                boardListView()
-                    .transition(transition)
-                    .offset(y: self.dragged.height)
-                    .gesture(drag
-                        .onChanged{ value in
-                            let valueConstraint = value.translation.height + self.accumulated.height
-                            self.dragged = CGSize(width: value.translation.width + self.accumulated.width,
-                                                  height: constraintOffSet(valueConstraint))
-                        }
-                        .onEnded{ value in
-                            let valueConstraint = value.translation.height + self.accumulated.height
-                            self.dragged = CGSize(width: value.translation.width + self.accumulated.width,
-                                                  height: caculatorDirection(valueConstraint))
-                            self.accumulated = self.dragged
-                        })
+            VStack {
+                if showBoardList {
+                    boardListView()
+                        .transition(transition)
+                        .offset(y: self.dragged.height)
+                        .gesture(drag
+                            .onChanged{ value in
+                                let valueConstraint = value.translation.height + self.accumulated.height
+                                self.dragged = CGSize(width: value.translation.width + self.accumulated.width,
+                                                      height: constraintOffSet(valueConstraint))
+                            }
+                            .onEnded{ value in
+                                let valueConstraint = value.translation.height + self.accumulated.height
+                                self.dragged = CGSize(width: value.translation.width + self.accumulated.width,
+                                                      height: caculatorDirection(valueConstraint))
+                                self.accumulated = self.dragged
+                            })
+                }
             }
             
             if !viewModel.shouldHideAutoConnect {

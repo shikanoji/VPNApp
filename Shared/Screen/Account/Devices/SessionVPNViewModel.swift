@@ -7,6 +7,14 @@
 
 import Foundation
 import RxSwift
+import SwiftUI
+
+extension Binding where Value == Int {
+    public func string() -> Binding<String> {
+        return Binding<String>(get:{ String(self.wrappedValue) },
+                               set: { self.wrappedValue = Int($0) ?? 0})
+    }
+}
 
 class SessionVPNViewModel: ObservableObject {
     @Published var deviceList: [SessionVPN] = []
@@ -52,7 +60,7 @@ class SessionVPNViewModel: ObservableObject {
                 self.showProgressView = false
                 
                 if let result = response.result {
-                    if result.totalResults == 0 || result.totalResults >= self.limit {
+                    if result.totalResults == 0 || result.totalResults < self.limit {
                         self.isLoadMoreEnable = false
                     } else {
                         self.isLoadMoreEnable = true

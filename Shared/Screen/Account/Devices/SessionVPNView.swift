@@ -13,7 +13,7 @@ struct SessionVPNView: View {
     @Binding var showTotalDevice: Bool
     
     @Binding var statusConnect: VPNStatus
-    @StateObject var viewModel: SessionVPNViewModel
+    @ObservedObject var viewModel: SessionVPNViewModel
     @Binding var shouldHideSessionList: Bool
     
     @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
@@ -24,9 +24,9 @@ struct SessionVPNView: View {
                 VStack(spacing: 1) {
                     AppColor.darkButton
                         .frame(height: 20)
-                    CustomNavigationView(
+                    CustomNavigationViewUpdate(
                         leftTitle: L10n.Account.AccountStatus.title,
-                        currentTitle: L10n.Account.itemDevices + " (\(viewModel.currentNumberDevice)/\(AppSetting.shared.maxNumberDevices))",
+                        currentTitle: $viewModel.currentNumberDevice.string(),
                         tapLeftButton: {
                             presentationMode.wrappedValue.dismiss()
                             shouldHideSessionList = true

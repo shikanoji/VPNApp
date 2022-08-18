@@ -28,7 +28,9 @@ struct BoardListView: View {
                 .frame(height: 20)
             StatusLocationView(node: node)
                 .onTapGesture {
-                    showBoardList = false
+                    withAnimation {
+                        showBoardList.toggle()
+                    }
                 }
             BoardTabView(tab: $currentTab, showBoardList: $showBoardList)
                 .padding([.leading, .trailing])

@@ -21,8 +21,9 @@ struct NodePopupView: View {
                 .cornerRadius(Constant.Board.NodePopupView.cornerRadius)
             Triangle()
                 .frame(width: Constant.Board.NodePopupView.widthTriangle,
-                       height: Constant.Board.NodePopupView.heightTriangle)
+                       height: Constant.Board.NodePopupView.heightTriangle + 2)
                 .foregroundColor(Constant.Board.NodePopupView.backgroudTriangle)
+                .padding(.top, -2)
         }
     }
     
