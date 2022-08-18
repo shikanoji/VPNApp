@@ -6,6 +6,8 @@
 //
 
 import SwiftUI
+import TunnelKitManager
+import TunnelKitCore
 
 struct BoardListView: View {
     @Binding var showBoardList: Bool
@@ -19,14 +21,14 @@ struct BoardListView: View {
     
     @Binding var mutilhopList: [MultihopModel]
     @Binding var multihopSelect: MultihopModel?
-    
+    @Binding var statusConnect: VPNStatus
     @State var stopAnimation = false
     
     var body: some View {
         VStack(spacing: 8) {
             Spacer()
                 .frame(height: 20)
-            StatusLocationView(node: $node)
+            StatusLocationView(node: $node, statusConnect: $statusConnect)
                 .onTapGesture {
                     withAnimation {
                         showBoardList.toggle()

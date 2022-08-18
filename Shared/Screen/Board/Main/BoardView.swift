@@ -234,7 +234,8 @@ struct BoardView: View {
                       staticIPData: $viewModel.staticIPData,
                       staticNode: $viewModel.staticIPNodeSelecte,
                       mutilhopList: $viewModel.mutilhopList,
-                      multihopSelect: $viewModel.multihopSelect)
+                      multihopSelect: $viewModel.multihopSelect,
+                      statusConnect: $viewModel.stateUI)
     }
     
     @State var zoomLogo = false
@@ -282,9 +283,8 @@ struct BoardView: View {
                                   uploadSpeed: viewModel.uploadSpeed,
                                   downloadSpeed: viewModel.downloadSpeed)
                     .onTapGesture {
-                        viewModel.nodeConnected = NetworkManager.shared.selectNode
-//                        viewModel.connectOrDisconnectByUser = true
-//                        viewModel.ConnectOrDisconnectVPN()
+                        viewModel.connectOrDisconnectByUser = true
+                        viewModel.ConnectOrDisconnectVPN()
                     }
                     Spacer()
                         .frame(height: Constant.Board.Tabs.topPadding)
