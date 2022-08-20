@@ -12,7 +12,7 @@
 	</array>
 	<key>keychain-access-groups</key>
 	<array>
-		<string>$(AppIdentifierPrefix)group.com.ilg.SysVPN</string>
+		<string>$(AppIdentifierPrefix)group.sysvpn.client.ios</string>
 	</array>
 </dict>
 </plist>

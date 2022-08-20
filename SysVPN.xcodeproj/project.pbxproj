@@ -22,8 +22,9 @@
 		AC17E253288935D100C72E20 /* LicenseDetailViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC17E252288935D100C72E20 /* LicenseDetailViewModel.swift */; };
 		AC273F8328AD48C90010E632 /* BaseServiceManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC273F8228AD48C80010E632 /* BaseServiceManager.swift */; };
 		AC273F8528AD493E0010E632 /* RequestLoggingPlugin.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC273F8428AD493E0010E632 /* RequestLoggingPlugin.swift */; };
-		AC280AF12880179F00FE1246 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = AC280AF02880179F00FE1246 /* GoogleService-Info.plist */; };
-		AC280AF32880214C00FE1246 /* GoogleService-Info-dev.plist in Resources */ = {isa = PBXBuildFile; fileRef = AC280AF22880214C00FE1246 /* GoogleService-Info-dev.plist */; };
+		AC273F8F28AF992B0010E632 /* ServiceManager+VPN.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC273F8E28AF992B0010E632 /* ServiceManager+VPN.swift */; };
+		AC273F9128B11A5F0010E632 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = AC273F9028B11A5F0010E632 /* GoogleService-Info.plist */; };
+		AC273F9328B11BE50010E632 /* GoogleService-Info-dev.plist in Resources */ = {isa = PBXBuildFile; fileRef = AC273F9228B11BE50010E632 /* GoogleService-Info-dev.plist */; };
 		AC3280C92885AB7E00FCCB50 /* DeleteAccountConfirmationViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC3280C82885AB7E00FCCB50 /* DeleteAccountConfirmationViewModel.swift */; };
 		AC4051E227CCB6860054F6AE /* ToastView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC4051E127CCB6860054F6AE /* ToastView.swift */; };
 		AC489252286405F6003F2795 /* PurchaseService.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC489251286405F6003F2795 /* PurchaseService.swift */; };
@@ -292,8 +293,9 @@
 		AC17E252288935D100C72E20 /* LicenseDetailViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LicenseDetailViewModel.swift; sourceTree = "<group>"; };
 		AC273F8228AD48C80010E632 /* BaseServiceManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseServiceManager.swift; sourceTree = "<group>"; };
 		AC273F8428AD493E0010E632 /* RequestLoggingPlugin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RequestLoggingPlugin.swift; sourceTree = "<group>"; };
-		AC280AF02880179F00FE1246 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
-		AC280AF22880214C00FE1246 /* GoogleService-Info-dev.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info-dev.plist"; sourceTree = "<group>"; };
+		AC273F8E28AF992B0010E632 /* ServiceManager+VPN.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ServiceManager+VPN.swift"; sourceTree = "<group>"; };
+		AC273F9028B11A5F0010E632 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		AC273F9228B11BE50010E632 /* GoogleService-Info-dev.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info-dev.plist"; sourceTree = "<group>"; };
 		AC3280C82885AB7E00FCCB50 /* DeleteAccountConfirmationViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeleteAccountConfirmationViewModel.swift; sourceTree = "<group>"; };
 		AC4051E127CCB6860054F6AE /* ToastView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToastView.swift; sourceTree = "<group>"; };
 		AC489251286405F6003F2795 /* PurchaseService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PurchaseService.swift; sourceTree = "<group>"; };
@@ -330,6 +332,9 @@
 		AC79CE08282CFA7800E1E874 /* ToolsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToolsView.swift; sourceTree = "<group>"; };
 		AC79CE0A282CFB9600E1E874 /* ToolsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToolsViewModel.swift; sourceTree = "<group>"; };
 		AC87539A2801ED10004C5F43 /* DeleteAccountConfirmationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeleteAccountConfirmationView.swift; sourceTree = "<group>"; };
+		AC8EFD6528B125A400D90F57 /* OpenVPNDebug.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = OpenVPNDebug.entitlements; sourceTree = "<group>"; };
+		AC8EFD6628B125C400D90F57 /* WireGuardDebug.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = WireGuardDebug.entitlements; sourceTree = "<group>"; };
+		AC8EFD6728B125DE00D90F57 /* SysVPNDebug.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = SysVPNDebug.entitlements; sourceTree = "<group>"; };
 		AC91BDEE287C5C3A002776E6 /* AccountLimitedView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountLimitedView.swift; sourceTree = "<group>"; };
 		AC99848A288948A90038F216 /* EmbedWebView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmbedWebView.swift; sourceTree = "<group>"; };
 		AC99848E28895F230038F216 /* UIDeviceExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIDeviceExtension.swift; sourceTree = "<group>"; };
@@ -742,6 +747,7 @@
 		D78044932758C6F90086E59D = {
 			isa = PBXGroup;
 			children = (
+				AC8EFD6728B125DE00D90F57 /* SysVPNDebug.entitlements */,
 				AC17E2402888FC4500C72E20 /* Settings.bundle */,
 				EE78F73A280E732700F49903 /* wg_ios_client.conf */,
 				EE46BCFB280D1509003C4FEB /* build_wireguard_go_bridge.sh */,
@@ -938,6 +944,7 @@
 			isa = PBXGroup;
 			children = (
 				D78044E927590DB70086E59D /* ServiceManager.swift */,
+				AC273F8E28AF992B0010E632 /* ServiceManager+VPN.swift */,
 				D79BF76027BD173600E76C37 /* ServiceManager+Auth.swift */,
 				AC5403352884008200A5605E /* ServiceManager+Payment.swift */,
 				AC273F8228AD48C80010E632 /* BaseServiceManager.swift */,
@@ -1020,7 +1027,7 @@
 		D7F0EAB227BF9B9200B41015 /* Dev */ = {
 			isa = PBXGroup;
 			children = (
-				AC280AF22880214C00FE1246 /* GoogleService-Info-dev.plist */,
+				AC273F9228B11BE50010E632 /* GoogleService-Info-dev.plist */,
 			);
 			path = Dev;
 			sourceTree = "<group>";
@@ -1028,7 +1035,7 @@
 		D7F0EAB327BF9B9D00B41015 /* Release */ = {
 			isa = PBXGroup;
 			children = (
-				AC280AF02880179F00FE1246 /* GoogleService-Info.plist */,
+				AC273F9028B11A5F0010E632 /* GoogleService-Info.plist */,
 			);
 			path = Release;
 			sourceTree = "<group>";
@@ -1064,6 +1071,7 @@
 		EE03443F28090AB7003DFB64 /* OpenVPN */ = {
 			isa = PBXGroup;
 			children = (
+				AC8EFD6528B125A400D90F57 /* OpenVPNDebug.entitlements */,
 				EE03444028090AB7003DFB64 /* OpenVPNPacketTunnelProvider.swift */,
 				EE03444228090AB7003DFB64 /* Info.plist */,
 				EE03444328090AB7003DFB64 /* OpenVPN.entitlements */,
@@ -1118,6 +1126,7 @@
 		EE46BCCD280963F4003C4FEB /* WireGuard */ = {
 			isa = PBXGroup;
 			children = (
+				AC8EFD6628B125C400D90F57 /* WireGuardDebug.entitlements */,
 				EE46BCCE280963F4003C4FEB /* WireGuardPacketTunnelProvider.swift */,
 				EE46BCD0280963F4003C4FEB /* Info.plist */,
 				EE46BCD1280963F4003C4FEB /* WireGuard.entitlements */,
@@ -1418,15 +1427,16 @@
 			files = (
 				AC60750B27DE431C00DD5667 /* Account.strings in Resources */,
 				AC4C96CD28A0FC030063B4AF /* swiftgen in Resources */,
-				AC280AF32880214C00FE1246 /* GoogleService-Info-dev.plist in Resources */,
 				AC6074E727DE424600DD5667 /* StaticIP.strings in Resources */,
 				D78044CC2758C6FC0086E59D /* Assets.xcassets in Resources */,
+				AC273F9328B11BE50010E632 /* GoogleService-Info-dev.plist in Resources */,
 				AC17E24D28891EFE00C72E20 /* com.mono0926.LicensePlist.plist in Resources */,
 				AC6074F927DE430500DD5667 /* Register.strings in Resources */,
 				AC6074FC27DE430800DD5667 /* ForgotPassword.strings in Resources */,
 				AC6074F027DE42F700DD5667 /* Introduction.strings in Resources */,
 				AC6074D927DB74CC00DD5667 /* swiftgen.yml in Resources */,
 				AC17E2512889359200C72E20 /* com.mono0926.LicensePlist in Resources */,
+				AC273F9128B11A5F0010E632 /* GoogleService-Info.plist in Resources */,
 				AC6074EB27DE427F00DD5667 /* en.lproj in Resources */,
 				D795FFAC275F9AC500E54206 /* LaunchScreen.storyboard in Resources */,
 				AC60750827DE431A00DD5667 /* Welcome.strings in Resources */,
@@ -1436,7 +1446,6 @@
 				D784FA65275DA89B00A7A7F1 /* Global.strings in Resources */,
 				AC6074F327DE42FE00DD5667 /* Login.strings in Resources */,
 				EE46BCFC280D1509003C4FEB /* build_wireguard_go_bridge.sh in Resources */,
-				AC280AF12880179F00FE1246 /* GoogleService-Info.plist in Resources */,
 				AC60751327DE432300DD5667 /* FAQ.strings in Resources */,
 				AC6074F627DE430200DD5667 /* Board.strings in Resources */,
 				AC60750F27DE431F00DD5667 /* Settings.strings in Resources */,
@@ -1550,6 +1559,7 @@
 				EE9B8B5827C387C50077BCFC /* StaticServer.swift in Sources */,
 				ACF77632285C8981001ACB39 /* PlanSelectionView.swift in Sources */,
 				D788B18927635BC000855C24 /* AppButton.swift in Sources */,
+				AC273F8F28AF992B0010E632 /* ServiceManager+VPN.swift in Sources */,
 				AC1195DB28452313002230F0 /* DNSSettingViewModel.swift in Sources */,
 				AC17E2492889133E00C72E20 /* LicenseListViewModel.swift in Sources */,
 				D78044E12758F5110086E59D /* UIApplicationExtension.swift in Sources */,
@@ -1926,11 +1936,11 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CLANG_ENABLE_MODULES = YES;
-				CODE_SIGN_ENTITLEMENTS = "SysVPN (iOS).entitlements";
+				CODE_SIGN_ENTITLEMENTS = SysVPNDebug.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = CL37FMMQY4;
+				DEVELOPMENT_TEAM = JM6FBPTUR3;
 				ENABLE_BITCODE = NO;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
@@ -1952,7 +1962,7 @@
 					"$(inherited)",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.ilg.SysVPN;
+				PRODUCT_BUNDLE_IDENTIFIER = com.sysvpn.client.ios.dev;
 				PRODUCT_NAME = "SysVPN Dev";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SDKROOT = iphoneos;
@@ -1976,7 +1986,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = CL37FMMQY4;
+				DEVELOPMENT_TEAM = JM6FBPTUR3;
 				ENABLE_BITCODE = NO;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
@@ -1999,7 +2009,7 @@
 				);
 				MARKETING_VERSION = 1.0;
 				ONLY_ACTIVE_ARCH = NO;
-				PRODUCT_BUNDLE_IDENTIFIER = com.ilg.SysVPN;
+				PRODUCT_BUNDLE_IDENTIFIER = com.sysvpn.client.ios;
 				PRODUCT_NAME = SysVPN;
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SDKROOT = iphoneos;
@@ -2015,11 +2025,11 @@
 		EE03444828090AB7003DFB64 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CODE_SIGN_ENTITLEMENTS = OpenVPN/OpenVPN.entitlements;
+				CODE_SIGN_ENTITLEMENTS = OpenVPN/OpenVPNDebug.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = CL37FMMQY4;
+				DEVELOPMENT_TEAM = JM6FBPTUR3;
 				ENABLE_BITCODE = NO;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = OpenVPN/Info.plist;
@@ -2033,7 +2043,7 @@
 					"@executable_path/../../Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.ilg.SysVPN.OpenVPN;
+				PRODUCT_BUNDLE_IDENTIFIER = com.sysvpn.client.ios.dev.openvpn;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SDKROOT = iphoneos;
@@ -2051,7 +2061,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = CL37FMMQY4;
+				DEVELOPMENT_TEAM = JM6FBPTUR3;
 				ENABLE_BITCODE = NO;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = OpenVPN/Info.plist;
@@ -2065,7 +2075,7 @@
 					"@executable_path/../../Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.ilg.SysVPN.OpenVPN;
+				PRODUCT_BUNDLE_IDENTIFIER = com.sysvpn.client.ios.openvpn;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SDKROOT = iphoneos;
@@ -2080,10 +2090,10 @@
 		EE46BCD6280963F4003C4FEB /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CODE_SIGN_ENTITLEMENTS = WireGuard/WireGuard.entitlements;
+				CODE_SIGN_ENTITLEMENTS = WireGuard/WireGuardDebug.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = CL37FMMQY4;
+				DEVELOPMENT_TEAM = JM6FBPTUR3;
 				ENABLE_BITCODE = NO;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = WireGuard/Info.plist;
@@ -2096,7 +2106,7 @@
 					"@executable_path/../../Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.ilg.SysVPN.WireGuard;
+				PRODUCT_BUNDLE_IDENTIFIER = com.sysvpn.client.ios.dev.wireguard;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
@@ -2112,7 +2122,7 @@
 				CODE_SIGN_ENTITLEMENTS = WireGuard/WireGuard.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = CL37FMMQY4;
+				DEVELOPMENT_TEAM = JM6FBPTUR3;
 				ENABLE_BITCODE = NO;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = WireGuard/Info.plist;
@@ -2125,7 +2135,7 @@
 					"@executable_path/../../Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.ilg.SysVPN.WireGuard;
+				PRODUCT_BUNDLE_IDENTIFIER = com.sysvpn.client.ios.wireguard;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;

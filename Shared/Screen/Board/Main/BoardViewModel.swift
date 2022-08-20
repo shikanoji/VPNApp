@@ -614,7 +614,7 @@ class BoardViewModel: ObservableObject {
             .disposed(by: disposedBag)
     }
     
-    func getRequestCertificate(completion: @escaping (Bool) -> Void) {
+    func getRequestCertificate(asNewConnection: Bool = false, completion: @escaping (Bool) -> Void) {
         guard isEnableReconect else {
             completion(false)
             return
@@ -626,7 +626,7 @@ class BoardViewModel: ObservableObject {
             internetNotAvaiable()
             return
         }
-        ServiceManager.shared.getRequestCertificate(currentTab: tab)
+        ServiceManager.shared.getRequestCertificate(currentTab: tab, asNewConnection: asNewConnection)
             .subscribe { [weak self] response in
                 guard let `self` = self else {
                     return
@@ -639,6 +639,12 @@ class BoardViewModel: ObservableObject {
                     case .openVPNTCP, .recommend, .openVPNUDP:
                         if let cer = result.getRequestCer {
                             if !cer.exceedLimit {
+                                guard cer.allowReconnect else {
+                                    self.getRequestCertificate(asNewConnection: true) {
+                                        completion($0)
+                                    }
+                                    return
+                                }
                                 NetworkManager.shared.requestCertificate = cer
                                 AppSetting.shared.currentSessionId = NetworkManager.shared.requestCertificate?.sessionId ?? ""
                                 completion(true)

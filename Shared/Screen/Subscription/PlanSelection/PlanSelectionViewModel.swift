@@ -11,7 +11,7 @@ import SwiftUI
 import RxSwift
 
 class PlanSelectionViewModel: ObservableObject {
-    let productIDs = ["sysvpn.subscription.1year", "sysvpn.subscription.6months", "sysvpn.subscription.1month"]
+    let productIDs = ["sysvpn.ios.client.subscription.1year", "sysvpn.ios.client.subscription.6months", "sysvpn.ios.client.subscription.1month"]
     @ObservedObject var planListViewModel: PlanListViewModel
     @Published var planList: [SKProduct]
     @Published var toWelcomeScreen = false

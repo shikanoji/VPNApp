@@ -80,7 +80,7 @@ enum APIService {
     case forgotPassword(email: String)
     case getAppSettings
     case ipInfoOptional
-    case getRequestCertificate(currentTab: BoardViewModel.StateTab)
+    case getRequestCertificate(currentTab: BoardViewModel.StateTab, asNewConnection: Bool)
     case getObtainCertificate
     case changePassword(oldPassword: String, newPassword: String)
     case getListSession(page: Int = 1, limit: Int = 20, isActive: Int = 1)
@@ -237,7 +237,7 @@ extension APIService: TargetType {
             return .requestParameters(parameters: param, encoding: URLEncoding.queryString)
         case .ipInfoOptional:
             return .requestPlain
-        case .getRequestCertificate(let currentTab):
+        case .getRequestCertificate(let currentTab, let asNewConnection):
             var param: [String: Any] = [:]
             // Use "key" temporarily, after remove it
             param["key"] = "f11b69c57d5fe9555e29c57c1d863bf8"
@@ -289,7 +289,7 @@ extension APIService: TargetType {
             default:
                 break
             }
-            if prevSessionId != "" {
+            if prevSessionId != "", !asNewConnection {
                 param["prevSessionId"] = prevSessionId
             }
             
