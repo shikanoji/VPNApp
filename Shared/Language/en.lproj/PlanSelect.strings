@@ -8,10 +8,10 @@
 "title" = "Select a plan";
 "body" = "All plans include protection for 6 devices";
 "continueButton" = "Get 24-Month Plan";
-"notePlan" = "Subscription auto-renews every 2 years until canceled.";
+"notePlan" = "Subscription auto-renews every year until canceled.";
 "note" = "Pay after 7 days. Subscription auto-renews every 1 years\nuntil canceled.";
 "PlanA.title" = "1-Year plan";
-"PlanA.description" = "đ2,748,000 billed every 2 years. 7-day free trial.";
+"PlanA.description" = "$83.99 billed every year. 7-day free trial.";
 "PlanA.savingText" = "Save 12.5";
 "PlanA.note" = "Pay after 7 days. Subscription auto-renews every year
 until canceled.";
