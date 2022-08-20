@@ -201,15 +201,21 @@ enum RequestCerAPI: Codable {
     
     init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        if let _requestCer = try? container.decode(RequestCertificateModel.self) {
-            self = .requestCer(_requestCer)
-            return
+        switch NetworkManager.shared.selectConfig {
+        case .openVPNTCP, .recommend, .openVPNUDP:
+            if let _requestCer = try? container.decode(RequestCertificateModel.self) {
+                self = .requestCer(_requestCer)
+                return
+            }
+        case .wireGuard:
+            if let _obtainCer = try? container.decode(ObtainCertificateModel.self) {
+                self = .obtainCer(_obtainCer)
+                return
+            }
+        default:
+            break
         }
         
-        if let _obtainCer = try? container.decode(ObtainCertificateModel.self) {
-            self = .obtainCer(_obtainCer)
-            return
-        }
         
         throw DecodingError.typeMismatch(RequestCerAPI.self, DecodingError.Context(codingPath: decoder.codingPath, debugDescription: "Wrong convert"))
     }
@@ -246,6 +252,7 @@ struct RequestCertificateModel: Codable {
     var sessionId: String?
     var dns: [String]
     var exceedLimit: Bool = false
+    var allowReconnect: Bool = true
     
     enum CodingKeys: String, CodingKey {
         case server
@@ -254,6 +261,7 @@ struct RequestCertificateModel: Codable {
         case sessionId
         case dns
         case exceedLimit
+        case allowReconnect
     }
     
     init(from decoder: Decoder) throws {
@@ -293,6 +301,12 @@ struct RequestCertificateModel: Codable {
             exceedLimit = _exceedLimit
         } else {
             exceedLimit = false
+        }
+        
+        if let _allowReconnect = try? values.decode(Bool.self, forKey: .allowReconnect) {
+            allowReconnect = _allowReconnect
+        } else {
+            allowReconnect = true
         }
     }
     

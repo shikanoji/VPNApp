@@ -6,16 +6,18 @@
 //
 
 import SwiftUI
+import TunnelKitManager
+import TunnelKitCore
 
 struct StatusLocationView: View {
     
-    @State var node: Node?
-    
+    @Binding var node: Node?
+    @Binding var statusConnect: VPNStatus
     let imageSize: CGFloat = Constant.BoardList.heightImageNode / 2
     
     var body: some View {
         HStack(spacing: 0) {
-            if let node = node {
+            if let node = node, statusConnect == .connected {
                 ImageView(withURL: node.flag, size: imageSize, placeholder: Constant.BoardList.iconCity)
                     .clipShape(Circle())
                     .padding()
@@ -32,17 +34,11 @@ struct StatusLocationView: View {
             }
             Spacer()
             Image(Constant.BoardList.iconUp)
+                .rotationEffect(.radians(.pi))
                 .padding()
         }
         .frame(maxWidth: .infinity)
         .frame(height: Constant.BoardList.heightStatusLoction)
         .background(AppColor.background)
-    }
-}
-
-struct StatusLocationView_Previews: PreviewProvider {
-    static var previews: some View {
-        StatusLocationView(node: nil)
-            .previewLayout(.fixed(width: /*@START_MENU_TOKEN@*/375.0/*@END_MENU_TOKEN@*/, height: /*@START_MENU_TOKEN@*/60.0/*@END_MENU_TOKEN@*/))
     }
 }

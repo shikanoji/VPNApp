@@ -385,7 +385,7 @@ struct AppSetting {
     /// api get ip info in app
     func getIpInfo(completion: @escaping (String?) -> Void) {
         
-        APIManager.shared.getAppSettings()
+        ServiceManager.shared.getAppSettings()
             .subscribe(onSuccess: { [self] response in
                 if let result = response.result{
                     configAppSettings(result)
@@ -412,7 +412,7 @@ struct AppSetting {
     /// api get ip info optional
     func getIpInfoOptional(completion: @escaping (String?) -> Void) {
         
-        APIManager.shared.getIpInfoOptional()
+        ServiceManager.shared.getIpInfoOptional()
             .subscribe(onSuccess: { [self] response in
                 configIpInfo(response)
                 completion(nil)

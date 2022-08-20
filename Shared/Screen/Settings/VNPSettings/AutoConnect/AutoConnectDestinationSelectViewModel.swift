@@ -30,7 +30,7 @@ class AutoConnectDestinationSelectViewModel: ObservableObject {
         
         self.showProgressView = true
         
-        APIManager.shared.getCountryList()
+        ServiceManager.shared.getCountryList()
             .subscribe { [weak self] response in
                 guard let `self` = self else {
                     return

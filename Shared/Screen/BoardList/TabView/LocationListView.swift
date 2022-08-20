@@ -17,30 +17,30 @@ struct LocationListView: View {
     var hasFastestOption: Bool = false
     @Binding var showAutoConnectionDestinationView: Bool
     var fastestServerSection: some View {
-            VStack {
-                HStack {
-                    Spacer().frame(width: 16)
-                    Text("Favorites")
-                        .font(Constant.BoardList.fontNodeList)
-                        .foregroundColor(AppColor.lightBlackText)
-                    Spacer()
+        VStack {
+            HStack {
+                Spacer().frame(width: 16)
+                Text("Favorites")
+                    .font(Constant.BoardList.fontNodeList)
+                    .foregroundColor(AppColor.lightBlackText)
+                Spacer()
+            }
+            HStack(spacing: 16) {
+                Asset.Assets.fastestServerIcon.swiftUIImage
+                VStack(alignment: .leading, spacing: 4) {
+                    Text("Fastest server")
+                        .font(Constant.BoardList.fontNameCity)
+                        .foregroundColor(.white)
                 }
-                HStack(spacing: 16) {
-                    Asset.Assets.fastestServerIcon.swiftUIImage
-                    VStack(alignment: .leading, spacing: 4) {
-                        Text("Fastest server")
-                            .font(Constant.BoardList.fontNameCity)
-                            .foregroundColor(.white)
-                    }
-                    Spacer()
-                }
-                .padding()
-                .frame(height: Constant.BoardList.heightStatusLoction)
-                .onTapGesture {
-                    nodeSelect = nil
-                }
+                Spacer()
+            }
+            .padding()
+            .frame(height: Constant.BoardList.heightStatusLoction)
+            .onTapGesture {
+                nodeSelect = nil
             }
         }
+    }
     var body: some View {
         VStack(spacing: 8) {
             SearchBar(text: $searchText, isEditing: $isEditing)
@@ -57,7 +57,16 @@ struct LocationListView: View {
                 VStack(alignment: .leading) {
                     if isEditing {
                         ForEach(nodeListSearch) { node in
-                            NodeCellView(node: node)
+                            Button(action: {
+                                if node.cityNodeList.count > 0 {
+                                    cityNode = node
+                                    showCityListView = true
+                                } else {
+                                    nodeSelect = node
+                                }
+                            }) {
+                                NodeCellView(node: node)
+                            }
                         }
                     } else {
                         ForEach(locationData, id: \.type) { nodeList in
@@ -103,7 +112,6 @@ struct LocationListView: View {
                 }
             }
             return allNode.filter {
-                //                $0.name.contains(searchText)
                 $0.name.range(of: searchText, options: .caseInsensitive) != nil
             }
         }

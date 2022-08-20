@@ -19,7 +19,7 @@ class DeleteAccountConfirmationViewModel: ObservableObject {
     var disposedBag = DisposeBag()
     func deleteAccount() {
         showProgressView = true
-        APIManager.shared.deleteAccount()
+        ServiceManager.shared.deleteAccount()
             .subscribe(onSuccess: {[weak self] response in
                 guard let strongSelf = self else { return }
                 strongSelf.showProgressView = false

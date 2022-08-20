@@ -483,7 +483,7 @@ class BoardViewModel: ObservableObject {
         
         self.showProgressView = true
         
-        APIManager.shared.getCountryList()
+        ServiceManager.shared.getCountryList()
             .subscribe { [weak self] response in
                 guard let `self` = self else {
                     return
@@ -516,7 +516,7 @@ class BoardViewModel: ObservableObject {
             return
         }
         
-        APIManager.shared.getMutihopList()
+        ServiceManager.shared.getMutihopList()
             .subscribe { [weak self] response in
                 guard let `self` = self else {
                     return
@@ -574,7 +574,7 @@ class BoardViewModel: ObservableObject {
         }
         numberCallObtainCer += 1
         
-        APIManager.shared.getObtainCertificate()
+        ServiceManager.shared.getObtainCertificate()
             .subscribe { [weak self] response in
                 guard let `self` = self else {
                     return
@@ -614,7 +614,7 @@ class BoardViewModel: ObservableObject {
             .disposed(by: disposedBag)
     }
     
-    func getRequestCertificate(completion: @escaping (Bool) -> Void) {
+    func getRequestCertificate(asNewConnection: Bool = false, completion: @escaping (Bool) -> Void) {
         guard isEnableReconect else {
             completion(false)
             return
@@ -626,7 +626,7 @@ class BoardViewModel: ObservableObject {
             internetNotAvaiable()
             return
         }
-        APIManager.shared.getRequestCertificate(currentTab: tab)
+        ServiceManager.shared.getRequestCertificate(currentTab: tab, asNewConnection: asNewConnection)
             .subscribe { [weak self] response in
                 guard let `self` = self else {
                     return
@@ -637,31 +637,42 @@ class BoardViewModel: ObservableObject {
                 if let result = response.result {
                     switch NetworkManager.shared.selectConfig {
                     case .openVPNTCP, .recommend, .openVPNUDP:
-                        print("APIManager.shared.getRequestCertificate switch NetworkManager.shared.selectConfig")
                         if let cer = result.getRequestCer {
                             if !cer.exceedLimit {
+                                guard cer.allowReconnect else {
+                                    self.getRequestCertificate(asNewConnection: true) {
+                                        completion($0)
+                                    }
+                                    return
+                                }
                                 NetworkManager.shared.requestCertificate = cer
                                 AppSetting.shared.currentSessionId = NetworkManager.shared.requestCertificate?.sessionId ?? ""
                                 completion(true)
+                                return
                             } else {
                                 self.showAlertSessionSetting = true
                             }
                         } else if self.isEnableReconect {
                             self.getRequestCertificate() {
                                 completion($0)
+                                return
                             }
                         } else {
                             self.stateUI = .disconnected
                             completion(false)
+                            return
                         }
                     case .wireGuard:
                         if let cer = result.getObtainCer {
                             NetworkManager.shared.obtainCertificate = cer
                             AppSetting.shared.currentSessionId = cer.sessionId ?? ""
                             completion(true)
+                            return
+                        } else {
+                            self.stateUI = .disconnected
+                            completion(false)
+                            return
                         }
-                        self.stateUI = .disconnected
-                        completion(false)
                     default:
                         break
                     }
@@ -680,6 +691,8 @@ class BoardViewModel: ObservableObject {
                             self.error = APIError.identified(message: response.message)
                             self.showAlert = true
                         }
+                        completion(false)
+                        return
                     }
                 }
             } onFailure: { error in
@@ -740,7 +753,7 @@ class BoardViewModel: ObservableObject {
     }
     
     func disconnectSession() {
-        APIManager.shared.disconnectSession(sessionId: AppSetting.shared.currentSessionId, terminal: false)
+        ServiceManager.shared.disconnectSession(sessionId: AppSetting.shared.currentSessionId, terminal: false)
             .subscribe { [weak self] response in
                 guard let `self` = self else {
                     return

@@ -14,7 +14,7 @@ class PaymentHistoryViewModel: ObservableObject {
     @Published var showProgressView: Bool = false
     func fetchPaymentHistory() {
         showProgressView = true
-        APIManager.shared.fetchPaymentHistory()
+        ServiceManager.shared.fetchPaymentHistory()
             .subscribe(onSuccess: { [weak self] response in
                 guard let strongSelf = self else { return }
                 if let result = response.result {

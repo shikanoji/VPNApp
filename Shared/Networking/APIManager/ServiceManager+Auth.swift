@@ -1,5 +1,5 @@
 //
-//  APIManager+Auth.swift
+//  ServiceManager+Auth.swift
 //  SysVPN (iOS)
 //
 //  Created by Nguyễn Đình Thạch on 16/02/2022.
@@ -10,10 +10,9 @@ import RxMoya
 import Moya
 import SwiftyJSON
 
-extension APIManager {
+extension ServiceManager {
     func login(email: String, password: String) -> Single<APIResponse<LoginResultModel>> {
-        return provider.rx
-            .request(.login(email: email, password: password))
+        return request(.login(email: email, password: password))
             .map { response in
                 let loginResult = try JSONDecoder().decode(APIResponse<LoginResultModel>.self, from: response.data)
                 return loginResult
@@ -24,8 +23,7 @@ extension APIManager {
     }
     
     func loginSocial(socialProvider: String, token: String) -> Single<APIResponse<LoginResultModel>> {
-        return provider.rx
-            .request(.loginSocial(socialProvider: socialProvider, token: token))
+        return request(.loginSocial(socialProvider: socialProvider, token: token))
             .map { response in
                 let loginResult = try JSONDecoder().decode(APIResponse<LoginResultModel>.self, from: response.data)
                 return loginResult
@@ -36,8 +34,7 @@ extension APIManager {
     }
     
     func register(email: String, password: String) -> Single<APIResponse<RegisterResultModel>> {
-        return provider.rx
-            .request(.register(email: email, password: password))
+        return request(.register(email: email, password: password))
             .map { response in
                 let registerResult = try JSONDecoder().decode(APIResponse<RegisterResultModel>.self, from: response.data)
                 return registerResult
@@ -48,8 +45,7 @@ extension APIManager {
     }
     
     func logout() -> Single<APIResponse<EmptyResult>> {
-        return provider.rx
-            .request(.logout)
+        return request(.logout)
             .map { response in
                 let logoutResult = try JSONDecoder().decode(APIResponse<EmptyResult>.self, from: response.data)
                 return logoutResult
@@ -60,8 +56,7 @@ extension APIManager {
     }
     
     func changePassword(oldPassword: String, newPassword: String) -> Single<APIResponse<EmptyResult>> {
-        return provider.rx
-            .request(.changePassword(oldPassword: oldPassword, newPassword: newPassword))
+        return request(.changePassword(oldPassword: oldPassword, newPassword: newPassword))
             .map { response in
                 let result = try JSONDecoder().decode(APIResponse<EmptyResult>.self, from: response.data)
                 return result
@@ -72,8 +67,7 @@ extension APIManager {
     }
     
     func refreshToken()-> Single<APIResponse<RegisterResultModel>> {
-        return provider.rx
-            .request(.refreshToken)
+        return request(.refreshToken)
             .filterSuccessfulStatusAndRedirectCodes()
             .map { response in
                 let refreshTokenResult = try JSONDecoder().decode(APIResponse<RegisterResultModel>.self, from: response.data)
@@ -92,8 +86,7 @@ extension APIManager {
     }
     
     func getAppSettings() -> Single<APIResponse<AppSettingsResultAPI>> {
-        return provider.rx
-            .request(.getAppSettings)
+        return request(.getAppSettings)
             .map { response in
                 let ipInfoResult = try JSONDecoder().decode(APIResponse<AppSettingsResultAPI>.self, from: response.data)
                 return ipInfoResult
@@ -104,8 +97,7 @@ extension APIManager {
     }
     
     func getIpInfoOptional() -> Single<IpInfoResultModel> {
-        return provider.rx
-            .request(.ipInfoOptional)
+        return request(.ipInfoOptional)
             .map { response in
                 let ipInfoResult = try JSONDecoder().decode(IpInfoResultModel.self, from: response.data)
                 return ipInfoResult
@@ -116,8 +108,7 @@ extension APIManager {
     }
     
     func forgotPassword(email: String) -> Single<APIResponse<EmptyResult>> {
-        return provider.rx
-            .request(.forgotPassword(email: email))
+        return request(.forgotPassword(email: email))
             .map { response in
                 let result = try JSONDecoder().decode(APIResponse<EmptyResult>.self, from: response.data)
                 return result
@@ -128,8 +119,7 @@ extension APIManager {
     }
     
     func deleteAccount() -> Single<APIResponse<EmptyResult>> {
-        return provider.rx
-            .request(.deleteAccount)
+        return request(.deleteAccount)
             .map { response in
                 let result = try JSONDecoder().decode(APIResponse<EmptyResult>.self, from: response.data)
                 return result

@@ -19,7 +19,7 @@ struct BoardView: View {
     @State var showBoardList = false
     
     private let transition = AnyTransition.asymmetric(insertion: .move(edge: .bottom),
-                                                      removal: .move(edge: .top))
+                                                      removal: .move(edge: .bottom))
     
     @State var showPopup = false
     
@@ -65,22 +65,24 @@ struct BoardView: View {
             if showSettings {
                 settingView()
             }
-            if showBoardList {
-                boardListView()
-                    .transition(transition)
-                    .offset(y: self.dragged.height)
-                    .gesture(drag
-                        .onChanged{ value in
-                            let valueConstraint = value.translation.height + self.accumulated.height
-                            self.dragged = CGSize(width: value.translation.width + self.accumulated.width,
-                                                  height: constraintOffSet(valueConstraint))
-                        }
-                        .onEnded{ value in
-                            let valueConstraint = value.translation.height + self.accumulated.height
-                            self.dragged = CGSize(width: value.translation.width + self.accumulated.width,
-                                                  height: caculatorDirection(valueConstraint))
-                            self.accumulated = self.dragged
-                        })
+            VStack {
+                if showBoardList {
+                    boardListView()
+                        .transition(transition)
+                        .offset(y: self.dragged.height)
+                        .gesture(drag
+                            .onChanged{ value in
+                                let valueConstraint = value.translation.height + self.accumulated.height
+                                self.dragged = CGSize(width: value.translation.width + self.accumulated.width,
+                                                      height: constraintOffSet(valueConstraint))
+                            }
+                            .onEnded{ value in
+                                let valueConstraint = value.translation.height + self.accumulated.height
+                                self.dragged = CGSize(width: value.translation.width + self.accumulated.width,
+                                                      height: caculatorDirection(valueConstraint))
+                                self.accumulated = self.dragged
+                            })
+                }
             }
             
             if !viewModel.shouldHideAutoConnect {
@@ -204,8 +206,10 @@ struct BoardView: View {
     func toastView() -> some View {
         VStack{
             Spacer()
-            ToastView(title: viewModel.error?.title ?? "",
-                      message: viewModel.error?.description ?? "",
+            ToastView(
+//                title: viewModel.error?.title ?? "",
+                      title: "An error occurred",
+                      message: "",
                       cancelAction: {
                 viewModel.showAlert = false
             })
@@ -230,10 +234,28 @@ struct BoardView: View {
                       staticIPData: $viewModel.staticIPData,
                       staticNode: $viewModel.staticIPNodeSelecte,
                       mutilhopList: $viewModel.mutilhopList,
-                      multihopSelect: $viewModel.multihopSelect)
+                      multihopSelect: $viewModel.multihopSelect,
+                      statusConnect: $viewModel.stateUI)
     }
     
     @State var zoomLogo = false
+    
+    func logoAnimation() -> some View {
+        Group {
+            Asset.Assets.logoConnectedBackground.swiftUIImage
+                .resizable()
+                .aspectRatio(contentMode: .fit)
+            Asset.Assets.logoConnected.swiftUIImage
+                .resizable()
+                .aspectRatio(contentMode: .fit)
+                .frame(width: 150, height: 150)
+                .scaleEffect(zoomLogo ? 0.9 : 1.1)
+                .onAppear {
+                    zoomLogo = !zoomLogo
+                }
+                .animation(Animation.easeInOut(duration: 0.7).repeatForever(autoreverses: true))
+        }
+    }
     
     func contentMapView() -> some View {
         ZStack(alignment: .top) {
@@ -244,18 +266,8 @@ struct BoardView: View {
                             statusConnect: $viewModel.stateUI)
                     .allowsHitTesting(viewModel.stateUI != .connected)
                     if viewModel.stateUI == .connected {
-                        Asset.Assets.logoConnectedBackground.swiftUIImage
-                            .resizable()
-                            .aspectRatio(contentMode: .fit)
-                        Asset.Assets.logoConnected.swiftUIImage
-                            .resizable()
-                            .aspectRatio(contentMode: .fit)
-                            .frame(width: 150, height: 150)
-                            .scaleEffect(zoomLogo ? 0.9 : 1.1)
-                            .onAppear {
-                                zoomLogo = !zoomLogo
-                            }
-                            .animation(Animation.easeInOut(duration: 0.7).repeatForever(autoreverses: true))
+                        logoAnimation()
+                            .padding(.bottom, Constant.Board.QuickButton.widthSize)
                     }
                 }
                 VStack {

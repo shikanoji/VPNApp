@@ -31,7 +31,11 @@ struct StaticIPListView: View {
                 VStack(alignment: .leading) {
                     if isEditing {
                         ForEach(nodeListSearch) { node in
-                            NodeCellStaticView(node: node)
+                            Button(action: {
+                                selectStaticServer = node
+                            }) {
+                                NodeCellStaticView(node: node)
+                            }
                         }
                     } else {
                         ForEach(staticIPData) { node in

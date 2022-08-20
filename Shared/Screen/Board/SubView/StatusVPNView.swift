@@ -19,12 +19,12 @@ struct StatusVPNView: View {
             RoundedRectangle(cornerRadius: Constant.Board.SubBoard.radius)
                 .foregroundColor(status == .connected ? AppColor.connectedStateView : AppColor.disconectStateView)
             HStack(spacing: 15) {
-                if flag != "" {
+                if flag != "" && status == .connected {
                     ImageView(withURL: flag, size: 32, placeholder: UIImage(named: Constant.Board.Image.locationDefault))
                         .overlay(RoundedRectangle(cornerRadius: 16)
                             .stroke(Color.white, lineWidth: 2))
                 } else {
-                    ImageView(withURL: flag, size: 32, placeholder: UIImage(named: Constant.Board.Image.locationDefault))
+                    ImageView(withURL: "", size: 32, placeholder: UIImage(named: Constant.Board.Image.locationDefault))
                 }
                 getStatusTextView()
             }

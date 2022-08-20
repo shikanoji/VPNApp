@@ -339,16 +339,16 @@ public enum L10n {
     /// Pay after 7 days. Subscription auto-renews every 1 years
     /// until canceled.
     public static let note = L10n.tr("PlanSelect", "note", fallback: #"Pay after 7 days. Subscription auto-renews every 1 years\nuntil canceled."#)
-    /// Subscription auto-renews every 2 years until canceled.
-    public static let notePlan = L10n.tr("PlanSelect", "notePlan", fallback: #"Subscription auto-renews every 2 years until canceled."#)
+    /// Subscription auto-renews every year until canceled.
+    public static let notePlan = L10n.tr("PlanSelect", "notePlan", fallback: #"Subscription auto-renews every year until canceled."#)
     /// strings
     ///   SysVPN
     /// 
     ///   Created by Nguyễn Đình Thạch on 13/01/2022.
     public static let title = L10n.tr("PlanSelect", "title", fallback: #"Select a plan"#)
     public enum PlanA {
-      /// đ2,748,000 billed every 2 years. 7-day free trial.
-      public static let description = L10n.tr("PlanSelect", "PlanA.description", fallback: #"đ2,748,000 billed every 2 years. 7-day free trial."#)
+      /// $83.99 billed every year. 7-day free trial.
+      public static let description = L10n.tr("PlanSelect", "PlanA.description", fallback: #"$83.99 billed every year. 7-day free trial."#)
       /// Pay after 7 days. Subscription auto-renews every year
       /// until canceled.
       public static let note = L10n.tr("PlanSelect", "PlanA.note", fallback: #"Pay after 7 days. Subscription auto-renews every year\nuntil canceled."#)

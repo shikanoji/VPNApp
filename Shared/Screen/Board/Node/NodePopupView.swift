@@ -21,8 +21,9 @@ struct NodePopupView: View {
                 .cornerRadius(Constant.Board.NodePopupView.cornerRadius)
             Triangle()
                 .frame(width: Constant.Board.NodePopupView.widthTriangle,
-                       height: Constant.Board.NodePopupView.heightTriangle)
+                       height: Constant.Board.NodePopupView.heightTriangle + 2)
                 .foregroundColor(Constant.Board.NodePopupView.backgroudTriangle)
+                .padding(.top, -2)
         }
     }
     
@@ -30,14 +31,18 @@ struct NodePopupView: View {
         if node.isCity {
             return AnyView(
                 VStack(alignment: .center, spacing: 0) {
-                    Text(node.countryName)
-                        .font(.system(size: Constant.Board.NodePopupView.sizeFont,
-                                      weight: Constant.Board.NodePopupView.weightFont))
-                        .lineLimit(Constant.Board.NodePopupView.numberLineText)
-                        .frame(maxWidth: .infinity, maxHeight: .infinity)
-                        .padding(.vertical, Constant.Board.NodePopupView.paddingContent)
-                        .minimumScaleFactor(.leastNonzeroMagnitude)
-                        .background(AppColor.backgroundCity)
+                    VStack{
+                        Text(node.countryName)
+                            .font(.system(size: Constant.Board.NodePopupView.sizeFont,
+                                          weight: Constant.Board.NodePopupView.weightFont))
+                            .lineLimit(Constant.Board.NodePopupView.numberLineText)
+                            .frame(minWidth: 100, maxWidth: .infinity, maxHeight: .infinity)
+                            .padding(.vertical, Constant.Board.NodePopupView.paddingContent)
+                            .minimumScaleFactor(.leastNonzeroMagnitude)
+                            
+                    }
+                    .padding(8)
+                    .background(AppColor.backgroundCity)
                     HStack(spacing: 6) {
                         ImageView(withURL: node.flag, size: ensignSize)
                             .clipShape(Circle())
@@ -48,11 +53,10 @@ struct NodePopupView: View {
                                           weight: Constant.Board.NodePopupView.weightFont))
                             .lineLimit(Constant.Board.NodePopupView.numberLineText)
                     }
-                    .frame(maxWidth: .infinity, maxHeight: .infinity)
-                    .padding(Constant.Board.NodePopupView.paddingContent)
+                    .frame(minWidth: 100, maxWidth: .infinity, maxHeight: .infinity)
+                    .padding(8)
                     .minimumScaleFactor(.leastNonzeroMagnitude)
                 }
-//                    .frame(height: Constant.Board.NodePopupView.heightContentPopupView)
                     .fixedSize(horizontal: true, vertical: true)
             )
         } else {

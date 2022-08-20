@@ -20,7 +20,7 @@ final class AppstoreReceiptHelper {
                 let receiptString = receiptData.base64EncodedString(options: [])
                 return await withCheckedContinuation
                 { (continuation: CheckedContinuation<Result<APIResponse<User>, Error>, Never>) in
-                    APIManager.shared.verifyReceipt(receiptString: receiptString)
+                    ServiceManager.shared.verifyReceipt(receiptString: receiptString)
                         .subscribe(onSuccess: { result in
                             continuation.resume(returning: .success(result))
                         }, onFailure: { error in

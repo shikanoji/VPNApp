@@ -50,8 +50,6 @@ struct ConnectButton: View {
             SpeedConnectedView(uploadSpeed: uploadSpeed, downLoadSpeed: downloadSpeed)
                 .opacity(status == .connected ? (NetworkManager.shared.selectConfig == .wireGuard ? 0 : 1) : 0)
                 .frame(width: widthSpeed, height: Constant.Board.QuickButton.widthSize)
-//                .background(Color.green.opacity(0.5))
-//                .frame(height: Constant.Board.QuickButton.widthSize)
         }
     }
     
