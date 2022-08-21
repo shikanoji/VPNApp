@@ -11,7 +11,7 @@ import SwiftUI
 import RxSwift
 
 class PlanSelectionViewModel: ObservableObject {
-    let productIDs = ["sysvpn.ios.client.subscription.1year", "sysvpn.ios.client.subscription.6months", "sysvpn.ios.client.subscription.1month"]
+    let productIDs = ["sysvpn.ios.client.subscription.1year", "sysvpn.ios.client.subscription.6month", "sysvpn.ios.client.subscription.1month"]
     @ObservedObject var planListViewModel: PlanListViewModel
     @Published var planList: [SKProduct]
     @Published var toWelcomeScreen = false
@@ -46,7 +46,7 @@ class PlanSelectionViewModel: ObservableObject {
             }
         }
         guard let plan = product else {
-            showProgressView = false
+            showProgressView = false 
             return
         }
         IAPHandler.shared.purchase(product: plan) { [weak self] alert, skProduct, payment in
