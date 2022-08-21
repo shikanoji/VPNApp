@@ -7,7 +7,7 @@
 */
 "title" = "Select a plan";
 "body" = "All plans include protection for 6 devices";
-"continueButton" = "Get 24-Month Plan";
+"continueButton" = "Subscribe";
 "notePlan" = "Subscription auto-renews every year until canceled.";
 "note" = "Pay after 7 days. Subscription auto-renews every 1 years\nuntil canceled.";
 "PlanA.title" = "1-Year plan";
