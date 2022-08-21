@@ -16,6 +16,5 @@ extension UIDevice {
         } else {
             return UIApplication.shared.delegate?.window??.safeAreaInsets.top ?? 0 > 20
         }
-        return false
     }
 }

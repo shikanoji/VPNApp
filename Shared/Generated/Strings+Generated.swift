@@ -330,8 +330,8 @@ public enum L10n {
     public static let accountLimitNote = L10n.tr("PlanSelect", "AccountLimitNote", fallback: #"You already have a SysVPN account associated with Apple ID. Please log in on that account to continue."#)
     /// All plans include protection for 6 devices
     public static let body = L10n.tr("PlanSelect", "body", fallback: #"All plans include protection for 6 devices"#)
-    /// Get 24-Month Plan
-    public static let continueButton = L10n.tr("PlanSelect", "continueButton", fallback: #"Get 24-Month Plan"#)
+    /// Subscribe
+    public static let continueButton = L10n.tr("PlanSelect", "continueButton", fallback: #"Subscribe"#)
     /// Got it
     public static let gotIt = L10n.tr("PlanSelect", "GotIt", fallback: #"Got it"#)
     /// mo

@@ -12,7 +12,6 @@ struct PlanSelectionView: View {
     @Environment(\.presentationMode) var presentationMode
     @EnvironmentObject var authentication: Authentication
     @StateObject var viewModel: PlanSelectionViewModel
-    
     let widthConent = Constant.Board.Map.widthScreen - 80
     
     var body: some View {
@@ -55,7 +54,7 @@ struct PlanSelectionView: View {
                     
                     Text(L10n.PlanSelect.notePlan).setDefault()
                     
-                    Text(viewModel.planListViewModel.selectedPlan?.note ?? "")
+                    Text(viewModel.planListViewModel.note)
                         .font(.system(size: 11))
                         .foregroundColor(Color.white)
                         .frame(width: widthConent, height: 40)
