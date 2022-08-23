@@ -10,9 +10,9 @@ import UIKit
 import TunnelKitWireGuard
 import TunnelKit
 
-private let appGroup = "group.com.ilg.SysVPN"
+private let appGroup = "group.sysvpn.client.ios"
 
-private let tunnelIdentifier = "com.ilg.SysVPN.WireGuard"
+private let tunnelIdentifier = "com.sysvpn.client.ios.wireguard"
 
 class WireGuardManager: ObservableObject {
     
