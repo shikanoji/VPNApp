@@ -14,7 +14,11 @@ import TunnelKitCore
 
 private let appGroup = "group.sysvpn.client.ios"
 
+#if DEBUG
+private let tunnelIdentifier = "com.sysvpn.client.ios.dev.openvpn"
+#else
 private let tunnelIdentifier = "com.sysvpn.client.ios.openvpn"
+#endif
 
 class OpenVPNManager: ObservableObject {
     
