@@ -12,7 +12,11 @@ import TunnelKit
 
 private let appGroup = "group.sysvpn.client.ios"
 
+#if DEBUG
+private let tunnelIdentifier = "com.sysvpn.client.ios.dev.wireguard"
+#else
 private let tunnelIdentifier = "com.sysvpn.client.ios.wireguard"
+#endif
 
 class WireGuardManager: ObservableObject {
     

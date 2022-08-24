@@ -135,6 +135,9 @@ class BoardViewModel: ObservableObject {
     
     @Published var showProgressView: Bool = false
     
+    var disconnectBeforeConnecting = false
+    var isProcessingVPN = false
+    
     var error: APIError?
     
     let disposedBag = DisposeBag()
@@ -189,8 +192,6 @@ class BoardViewModel: ObservableObject {
         }
     }
     
-    var isProcessingVPN = false
-    
     @Published var shouldHideAutoConnect = true
     
     var isCheckingAutoConnect = false
@@ -236,7 +237,7 @@ class BoardViewModel: ObservableObject {
                     showAlertAutoConnectSetting = true
                 }
             } else {
-                if isProcessingVPN || stateUI == .connecting || state == .connected {
+                if isProcessingVPN || state == .connected {
                     configDisconnect()
                 } else if state == .disconnected {
                     configStartConnectVPN()
@@ -258,21 +259,29 @@ class BoardViewModel: ObservableObject {
         }
     }
     
-    var isDisconnecting = false
+    func configDisconencted() {
+        connectOrDisconnectByUser = false
+        state = .disconnected
+        stateUI = .disconnected
+        ip = AppSetting.shared.ip
+        flag = ""
+        stopSpeedTimer()
+        nameSelect = ""
+        isProcessingVPN = false
+    }
     
     func configDisconnect() {
         disconnectSession()
         stopSpeedTimer()
         numberReconnect = 0
-        isProcessingVPN = false
         stateUI = .disconnected
-        connectOrDisconnectByUser = false
         isCheckingAutoConnect = false
-        isDisconnecting = true
+        isProcessingVPN = true
         NetworkManager.shared.disconnect()
     }
     
     func configStartConnectVPN() {
+        disconnectBeforeConnecting = false
         numberReconnect = 0
         isProcessingVPN = true
         stateUI = .connecting
@@ -307,20 +316,20 @@ class BoardViewModel: ObservableObject {
                 return
             }
             
+            guard disconnectBeforeConnecting else {
+                return
+            }
+            
             guard state == .connecting else {
                 return
             }
-            
-            guard state != .connected else {
-                return
-            }
-            
+
             state = .connected
             stateUI = .connected
             numberReconnect = 0
             connectOrDisconnectByUser = false
             stopSpeedTimer()
-            
+
             switch NetworkManager.shared.selectConfig {
             case .openVPNTCP, .recommend, .openVPNUDP:
                 if let iPVPN = NetworkManager.shared.requestCertificate?.server?.ipAddress {
@@ -328,54 +337,50 @@ class BoardViewModel: ObservableObject {
                 }
 
                 flag = NetworkManager.shared.selectNode?.flag ?? ""
-                
+
                 if let node = NetworkManager.shared.selectNode {
                     nameSelect = node.isCity ? node.name : node.countryName
                 }
-                
+
                 case .wireGuard:
                 if let iPWireguard = NetworkManager.shared.obtainCertificate?.server?.ipAddress {
                     ip = iPWireguard
                 }
 
                 flag = NetworkManager.shared.selectStaticServer?.flag ?? ""
-                
+
                 if let node = NetworkManager.shared.selectStaticServer {
                     nameSelect = node.countryName
                 }
-                
+
             default:
                 break
             }
             getSpeedRealTime()
-            
+
             isProcessingVPN = false
             
         case .disconnected:
-            guard state != .disconnected else {
+            guard isProcessingVPN else {
                 return
             }
             
-            guard state == .disconnecting else {
-                return
+            if !disconnectBeforeConnecting {
+                disconnectBeforeConnecting = true
             }
             
-            if state == .disconnecting || state == .disconnected {
-                if (isEnableReconect && !connectOrDisconnectByUser) && !isDisconnecting {
+            if state == .disconnecting {
+                
+                if (isEnableReconect && !connectOrDisconnectByUser) {
                     startConnectVPN()
                 } else {
                     if connectOrDisconnectByUser {
                         disconnectSession()
                     }
-                    connectOrDisconnectByUser = false
-                    state = .disconnected
-                    stateUI = .disconnected
-                    ip = AppSetting.shared.ip
-                    flag = ""
-                    stopSpeedTimer()
-                    nameSelect = ""
-                    isProcessingVPN = false
+                    configDisconencted()
                 }
+            } else if state == .connecting {
+                configDisconencted()
             }
             
         default:
@@ -639,18 +644,21 @@ class BoardViewModel: ObservableObject {
                     case .openVPNTCP, .recommend, .openVPNUDP:
                         if let cer = result.getRequestCer {
                             if !cer.exceedLimit {
-                                guard cer.allowReconnect else {
+                                if cer.allowReconnect {
+                                    NetworkManager.shared.requestCertificate = cer
+                                    AppSetting.shared.currentSessionId = NetworkManager.shared.requestCertificate?.sessionId ?? ""
+                                    completion(true)
+                                    return
+                                } else {
                                     self.getRequestCertificate(asNewConnection: true) {
                                         completion($0)
+                                        return
                                     }
-                                    return
                                 }
-                                NetworkManager.shared.requestCertificate = cer
-                                AppSetting.shared.currentSessionId = NetworkManager.shared.requestCertificate?.sessionId ?? ""
-                                completion(true)
-                                return
+                               
                             } else {
                                 self.showAlertSessionSetting = true
+                                return
                             }
                         } else if self.isEnableReconect {
                             self.getRequestCertificate() {
@@ -680,6 +688,7 @@ class BoardViewModel: ObservableObject {
                     if self.isEnableReconect {
                         self.getRequestCertificate() {
                             completion($0)
+                            return
                         }
                     } else {
                         self.configDisconnect()
@@ -699,6 +708,7 @@ class BoardViewModel: ObservableObject {
                 if self.isEnableReconect {
                     self.getRequestCertificate() {
                         completion($0)
+                        return
                     }
                 } else {
                     self.configDisconnect()
