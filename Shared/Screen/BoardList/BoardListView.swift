@@ -22,7 +22,6 @@ struct BoardListView: View {
     @Binding var mutilhopList: [MultihopModel]
     @Binding var multihopSelect: MultihopModel?
     @Binding var statusConnect: VPNStatus
-    @State var stopAnimation = false
     
     var body: some View {
         VStack(spacing: 8) {
@@ -52,11 +51,5 @@ struct BoardListView: View {
         .navigationBarHidden(true)
         .background(AppColor.background)
         .ignoresSafeArea()
-//        .onAppear {
-//            DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
-//                self.stopAnimation = true
-//            }
-//        }
-//        .animation(stopAnimation ? nil : .linear)
     }
 }

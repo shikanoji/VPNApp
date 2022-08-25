@@ -57,6 +57,7 @@ struct AccountView: View {
             ScrollView(showsIndicators: false) {
                 VStack(spacing: 0) {
                     sectionsView
+                        .animation(nil)
                     Spacer()
                     AppButton(style: .darkButton, width: UIScreen.main.bounds.size.width - 30, text: L10n.Account.signout) {
                         viewModel.showLogoutConfirmation = true
@@ -72,7 +73,6 @@ struct AccountView: View {
                 )
             }
         }
-        .animation(nil)
         .background(AppColor.background)
         .ignoresSafeArea().frame(
             maxHeight: .infinity,
