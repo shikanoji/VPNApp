@@ -62,7 +62,6 @@ class SessionVPNViewModel: ObservableObject {
     
     func disconnectSession(_ device: SessionVPN) {
         showProgressView = true
-        
         ServiceManager.shared.disconnectSession(sessionId: device.id, terminal: true)
             .subscribe { [weak self] response in
                 guard let `self` = self else {
@@ -91,5 +90,7 @@ class SessionVPNViewModel: ObservableObject {
                 self.showAlert = true
             }
             .disposed(by: disposedBag)
+        
+//        NotificationCenter.default.post(name: Constant.NameNotification.disconnectedSucces, object: nil)
     }
 }

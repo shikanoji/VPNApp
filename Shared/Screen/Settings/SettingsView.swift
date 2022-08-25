@@ -102,7 +102,6 @@ struct SettingsView: View {
             .ignoresSafeArea()
         }
         .background(AppColor.background)
-        .animation(nil)
     }
 }
 

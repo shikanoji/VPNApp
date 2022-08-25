@@ -21,6 +21,12 @@ struct BoardView: View {
     private let transition = AnyTransition.asymmetric(insertion: .move(edge: .bottom),
                                                       removal: .move(edge: .bottom))
     
+    private let transitionLeft = AnyTransition.asymmetric(insertion: .move(edge: .leading),
+                                                      removal: .move(edge: .leading))
+    
+    private let transitionRight = AnyTransition.asymmetric(insertion: .move(edge: .trailing),
+                                                      removal: .move(edge: .trailing))
+    
     @State var showPopup = false
     
     @State private var dragged = CGSize.zero
@@ -61,9 +67,11 @@ struct BoardView: View {
             contentMapView()
             if showAccount {
                 accountView()
+                    .transition(transitionRight)
             }
             if showSettings {
                 settingView()
+                    .transition(transitionLeft)
             }
             VStack {
                 if showBoardList {
@@ -248,12 +256,12 @@ struct BoardView: View {
             Asset.Assets.logoConnected.swiftUIImage
                 .resizable()
                 .aspectRatio(contentMode: .fit)
-                .frame(width: 150, height: 150)
+                .frame(width: 100, height: 100)
                 .scaleEffect(zoomLogo ? 0.9 : 1.1)
                 .onAppear {
                     zoomLogo = !zoomLogo
                 }
-                .animation(Animation.easeInOut(duration: 0.7).repeatForever(autoreverses: true))
+                .animation(Animation.easeInOut(duration: 1).repeatForever(autoreverses: true))
         }
     }
     
