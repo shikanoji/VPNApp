@@ -257,10 +257,7 @@ extension APIService: TargetType {
                         param["cityId"] = cityNodeSelect.id
                     }
                 }
-                
-                //                if let staticServer = NetworkManager.shared.selectStaticServer {
-                //                    param["serverId"] = staticServer.id
-                //                }
+
             case .staticIP:
                 param["isHop"] = 0
                 if let staticServer = NetworkManager.shared.selectStaticServer {

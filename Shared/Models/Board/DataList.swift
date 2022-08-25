@@ -157,7 +157,6 @@ enum ItemCellType: Int, Decodable {
     
     case autoConnect
     case protocolConnect
-    case split
     case dns
     case localNetwork
     case metered
@@ -174,10 +173,7 @@ enum ItemCellType: Int, Decodable {
     case wireGuard
     
     case cyberSec
-    case killSwitch
-    case darkWebMonitor
-    case tapJacking
-    
+
     case email
     case joinMember
     case sysVPNId
@@ -195,12 +191,6 @@ enum ItemCellType: Int, Decodable {
             return L10n.Account.Infomation.security
         case .cyberSec:
             return L10n.Settings.Tools.cyberSec
-        case .killSwitch:
-            return L10n.Settings.Tools.killSwitch
-        case .darkWebMonitor:
-            return L10n.Settings.Tools.darkWebMonitors
-        case .tapJacking:
-            return L10n.Settings.Tools.tapJackingProtection
         case .paymentHistory:
             return L10n.Account.AccountStatus.paymentHistory
         case .statusAccount:
@@ -227,8 +217,7 @@ enum ItemCellType: Int, Decodable {
             return L10n.Settings.itemAuto
         case .protocolConnect:
             return L10n.Settings.itemProtocol
-        case .split:
-            return L10n.Settings.itemSplit
+
         case .dns:
             return L10n.Settings.itemDNS
         case .localNetwork:
@@ -307,12 +296,7 @@ enum ItemCellType: Int, Decodable {
             
         case .cyberSec:
             return L10n.Settings.Tools.CyberSec.note
-        case .killSwitch:
-            return L10n.Settings.Tools.KillSwitch.note
-        case .darkWebMonitor:
-            return L10n.Settings.Tools.DarkWebMonitors.note
-        case .tapJacking:
-            return L10n.Settings.Tools.TapJackingProtection.note
+
         case .statusAccount:
             guard AppSetting.shared.isPremium else {
                 return L10n.Account.premiumOffer
@@ -330,8 +314,7 @@ enum ItemCellType: Int, Decodable {
             return AppSetting.shared.getAutoConnectProtocol().title
         case .protocolConnect:
             return AppSetting.shared.getConfigProtocol().title
-        case .split:
-            return L10n.Settings.contentItemSplit
+
         case .dns:
             return AppSetting.shared.getContentDNSCell()
         case .localNetwork:
