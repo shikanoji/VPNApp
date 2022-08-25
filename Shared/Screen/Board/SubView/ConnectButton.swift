@@ -32,7 +32,7 @@ struct ConnectButton: View {
                         .onDisappear {
                             startAlertScroll = false
                         }
-                        .animation(Animation.easeInOut(duration: 1))
+                        .animation(Animation.easeInOut(duration: 0.7))
                         .frame(width: Constant.Board.QuickButton.widthSize * 2)
                 }
                 ZStack {
