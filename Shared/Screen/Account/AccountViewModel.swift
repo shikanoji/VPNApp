@@ -15,6 +15,7 @@ class AccountViewModel: ObservableObject {
     var alertTitle: String = ""
     var alertMessage: String = ""
     var authentication: Authentication?
+
     func logout(){
         ServiceManager.shared.logout().subscribe { result in
             self.authentication?.logout()

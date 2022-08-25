@@ -22,6 +22,8 @@ struct AccountView: View {
     
     @State private var showFAQ = false
     
+    @State var numberOfSession: Int
+    
     @StateObject var viewModel: AccountViewModel
     
     @State var sections: [DataSection] = [
@@ -157,7 +159,11 @@ struct AccountView: View {
         .background(AppColor.background)
         .onAppear() {
             viewModel.authentication = authentication
+            AppSetting.shared.fetchListSession()
         }
+        .onChange(of: AppSetting.shared.currentNumberDevice, perform: { numberOfDevices in
+            self.numberOfSession = numberOfDevices
+        })
         .popup(isPresented: $viewModel.showLogoutConfirmation,
                type: .floater(verticalPadding: 10),
                position: .bottom,
@@ -181,6 +187,6 @@ struct AccountView_Previews: PreviewProvider {
     @State static var value: VPNStatus = .connected
     
     static var previews: some View {
-        AccountView(showAccount: $showMenu, statusConnect: $value, viewModel: AccountViewModel())
+        AccountView(showAccount: $showMenu, statusConnect: $value, numberOfSession: AppSetting.shared.currentNumberDevice, viewModel: AccountViewModel())
     }
 }

@@ -9,6 +9,7 @@ import Foundation
 import SwiftUI
 import SwiftDate
 import RxSwift
+import Combine
 
 enum AppKeys: String {
     ///Auth Keys
@@ -60,9 +61,10 @@ enum AppKeys: String {
     case selectCyberSec = "selectCyberSec"
 }
 
-struct AppSetting {
+class AppSetting {
     static var shared = AppSetting()
     var forceUpdateVersion: [String] = []
+    @Published var currentNumberDevice: Int = 0
     init() {}
     
     var currentSessionId: String {
@@ -465,5 +467,16 @@ struct AppSetting {
             }
         }
         completion(nil)
+    }
+    
+    func fetchListSession() {
+        ServiceManager.shared.getListSession()
+            .subscribe { response in
+                if let result = response.result {
+                    AppSetting.shared.currentNumberDevice = result.totalResults
+                }
+            } onFailure: { error in
+            }
+            .disposed(by: disposedBag)
     }
 }

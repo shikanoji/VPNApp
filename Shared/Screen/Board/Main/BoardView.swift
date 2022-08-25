@@ -182,7 +182,7 @@ struct BoardView: View {
     
     func accountView() -> some View {
         AccountView(showAccount: $showAccount,
-                    statusConnect: $viewModel.stateUI, viewModel: AccountViewModel())
+                    statusConnect: $viewModel.stateUI, numberOfSession: AppSetting.shared.currentNumberDevice, viewModel: AccountViewModel())
     }
     
     func autoConnectView() -> some View {
