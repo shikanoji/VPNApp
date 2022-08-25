@@ -39,7 +39,6 @@ struct SessionVPNView: View {
                     Spacer().frame(height: 15)
                     ForEach(viewModel.deviceList.indices, id: \.self) { i in
                         SessionVPNCell(sessionVPN: viewModel.deviceList[i],
-                                       viewModel: viewModel,
                                        position: viewModel.deviceList.getPosition(i)) {
                             viewModel.disconnectSession(viewModel.deviceList[i])
                         }
@@ -63,7 +62,9 @@ struct SessionVPNView: View {
             })
         }
         .onAppear {
-            viewModel.getListSession(loadMore: false)
+            DispatchQueue.main.asyncAfter(deadline: .now() + 1, execute: {
+                viewModel.getListSession()
+            })
         }
     }
 }

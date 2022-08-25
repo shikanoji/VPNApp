@@ -27,15 +27,6 @@ extension AppSetting {
         }
     }
     
-    var currentNumberDevice: Int {
-        get {
-            return UserDefaults.standard.integer(forKey: AppKeys.currentNumberDevice.rawValue)
-        }
-        set {
-            UserDefaults.standard.setValue(newValue, forKey: AppKeys.currentNumberDevice.rawValue)
-        }
-    }
-    
     var maxNumberDevices: Int {
         get {
             return 6

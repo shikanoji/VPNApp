@@ -145,7 +145,6 @@ class BoardViewModel: ObservableObject {
     // MARK: Function
     
     init() {
-        
         getDataFromLocal()
         getDataUpdate()
         getMultihopList()
@@ -184,6 +183,7 @@ class BoardViewModel: ObservableObject {
         checkInternetRealTime()
         
         assignJailBreakCheckType(type: .readAndWriteFiles)
+        AppSetting.shared.fetchListSession()
     }
     
     func getDataUpdate() {
@@ -361,9 +361,9 @@ class BoardViewModel: ObservableObject {
             isProcessingVPN = false
             
         case .disconnected:
-            guard isProcessingVPN else {
-                return
-            }
+//            guard isProcessingVPN else {
+//                return
+//            }
             
             if !disconnectBeforeConnecting {
                 disconnectBeforeConnecting = true

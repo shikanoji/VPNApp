@@ -10,9 +10,7 @@ import SwiftUI
 struct SessionVPNCell: View {
     
     @State var sessionVPN: SessionVPN
-    
-    @ObservedObject var viewModel: SessionVPNViewModel
-    
+        
     var position: PositionItemCell = .middle
     
     var removeDevice: (() -> Void)?
@@ -41,13 +39,6 @@ struct SessionVPNCell: View {
                 .onTapGesture {
                     removeDevice?()
                 }
-        }
-        .onAppear {
-            if position == .bot {
-                DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
-                    viewModel.getListSession(loadMore: true)
-                }
-            }
         }
         .padding(.bottom, 0)
         .frame(height: Constant.Menu.heightItemCell)
