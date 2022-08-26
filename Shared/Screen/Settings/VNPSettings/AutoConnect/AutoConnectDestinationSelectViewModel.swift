@@ -17,7 +17,6 @@ class AutoConnectDestinationSelectViewModel: ObservableObject {
     @Published var locationData: [NodeGroup] = []
     @Published var node: Node? = AppSetting.shared.getAutoConnectNode() {
         didSet {
-            NetworkManager.shared.selectNode = node
             AppSetting.shared.saveAutoConnectNode(node)
             shouldAutoCloseView = true
         }

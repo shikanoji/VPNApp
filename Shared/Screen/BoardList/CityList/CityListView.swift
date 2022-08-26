@@ -46,7 +46,7 @@ struct CityListView: View {
                             if showAutoConnectDestinationView {
                                 showAutoConnectDestinationView = false
                             } else {
-                                presentationMode.wrappedValue.dismiss()
+//                                presentationMode.wrappedValue.dismiss()
                             }
                         } label: {
                             CityCellView(node: city, subName: L10n.Board.BoardList.cityOf + " \(node.name)")
