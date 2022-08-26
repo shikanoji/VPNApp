@@ -160,6 +160,9 @@ struct BoardView: View {
             }
         })
         .onChange(of: viewModel.nodeConnected, perform: { newValue in
+            if let node = newValue {
+                selection.selectNode(node)
+            }
             showAccount = false
             showSettings = false
             showBoardList = false

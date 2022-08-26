@@ -80,4 +80,8 @@ class NetworkManager: ObservableObject {
             break
         }
     }
+    
+    func getNodeConnect() -> Node? {
+        return ItemCell(type: AppSetting.shared.getAutoConnectProtocol()).type != .off ? AppSetting.shared.getAutoConnectNode() : selectNode
+    }
 }

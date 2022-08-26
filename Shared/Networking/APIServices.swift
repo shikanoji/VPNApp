@@ -249,7 +249,8 @@ extension APIService: TargetType {
             switch currentTab {
             case .location:
                 param["isHop"] = 0
-                if let cityNodeSelect = NetworkManager.shared.selectNode {
+                
+                if let cityNodeSelect = NetworkManager.shared.getNodeConnect() {
                     if cityNodeSelect.cityNodeList.count > 0 {
                         param["countryId"] = cityNodeSelect.id
                     } else {

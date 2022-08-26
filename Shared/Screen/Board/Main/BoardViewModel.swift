@@ -178,12 +178,12 @@ class BoardViewModel: ObservableObject {
             object: nil
         )
         
-//        NotificationCenter.default.addObserver(
-//            self,
-//            selector: #selector(disconnectedSucces),
-//            name: Constant.NameNotification.disconnectedSucces,
-//            object: nil
-//        )
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(disconnectCurrentSession),
+            name: Constant.NameNotification.disconnectCurrentSession,
+            object: nil
+        )
 
         Task {
             await OpenVPNManager.shared.vpn.prepare()
@@ -195,7 +195,7 @@ class BoardViewModel: ObservableObject {
         AppSetting.shared.fetchListSession()
     }
     
-    @objc private func disconnectedSucces() {
+    @objc private func disconnectCurrentSession() {
         configDisconnect()
     }
     
@@ -323,12 +323,12 @@ class BoardViewModel: ObservableObject {
             if let iPVPN = NetworkManager.shared.requestCertificate?.server?.ipAddress {
                 ip = iPVPN
             }
-
-            flag = NetworkManager.shared.selectNode?.flag ?? ""
-
-            if let node = NetworkManager.shared.selectNode {
-                nameSelect = node.isCity ? node.name : node.countryName
+            
+            if let nodeSelect = NetworkManager.shared.getNodeConnect() {
+                flag = nodeSelect.flag
+                nameSelect = nodeSelect.isCity ? nodeSelect.name : nodeSelect.countryName
             }
+            
         case .staticIP, .multiHop:
             if let iPWireguard = NetworkManager.shared.obtainCertificate?.server?.ipAddress {
                 ip = iPWireguard
