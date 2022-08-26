@@ -261,7 +261,7 @@ class BoardViewModel: ObservableObject {
         }
     }
     
-    func configDisconencted() {
+    func configDisconected() {
         connectOrDisconnectByUser = false
         state = .disconnected
         stateUI = .disconnected
@@ -361,23 +361,18 @@ class BoardViewModel: ObservableObject {
             configConnected()
             
         case .disconnected:
-//            guard isProcessingVPN else {
-//                return
-//            }
-            
             if !disconnectBeforeConnecting {
                 disconnectBeforeConnecting = true
             }
             
             if state == .disconnecting {
-                
                 if (isEnableReconect && !connectOrDisconnectByUser) {
                     startConnectVPN()
                 } else {
-                    configDisconencted()
+                    configDisconected()
                 }
             } else if state == .connecting || (state == .connected && !isProcessingVPN) {
-                configDisconencted()
+                configDisconected()
             }
             
         default:
@@ -389,7 +384,6 @@ class BoardViewModel: ObservableObject {
         print("VPNStatusDidFail: \(notification.vpnError.localizedDescription)")
         
         stopSpeedTimer()
-        
         state = .disconnected
         stateUI = .disconnected
         
@@ -522,18 +516,10 @@ class BoardViewModel: ObservableObject {
                     self.mutilhopList = result
                     
                 } else {
-//                    let error = response.errors
-//                    if error.count > 0, let message = error[0] as? String {
-//                        self.error = APIError.identified(message: message)
-//                        self.showAlert = true
-//                    } else if !response.message.isEmpty {
-//                        self.error = APIError.identified(message: response.message)
-//                        self.showAlert = true
-//                    }
+                    //No multi-hop
                 }
             } onFailure: { error in
-//                self.error = APIError.identified(message: error.localizedDescription)
-//                self.showAlert = true
+                // Error
             }
             .disposed(by: disposedBag)
     }
@@ -765,18 +751,9 @@ class BoardViewModel: ObservableObject {
                 if response.success {
                   
                 } else {
-//                    let error = response.errors
-//                    if error.count > 0, let message = error[0] as? String {
-//                        self.error = APIError.identified(message: message)
-//                        self.showAlert = true
-//                    } else if !response.message.isEmpty {
-//                        self.error = APIError.identified(message: response.message)
-//                        self.showAlert = true
-//                    }
+
                 }
             } onFailure: { error in
-//                self.error = APIError.identified(message: error.localizedDescription)
-//                self.showAlert = true
             }
             .disposed(by: disposedBag)
     }
