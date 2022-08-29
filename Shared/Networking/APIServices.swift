@@ -173,15 +173,9 @@ extension APIService: TargetType {
     var task: Task {
         switch self {
         case .getMultihopList:
-            var param: [String: Any] = [:]
-            // Use "key" temporarily, after remove it
-            param["key"] = "f11b69c57d5fe9555e29c57c1d863bf8"
-            return .requestParameters(parameters: param, encoding: URLEncoding.queryString)
+            return .requestParameters(parameters: [:], encoding: URLEncoding.queryString)
         case .getTopicQuestionList:
-            var param: [String: Any] = [:]
-            // Use "key" temporarily, after remove it
-            param["key"] = "f11b69c57d5fe9555e29c57c1d863bf8"
-            return .requestParameters(parameters: param, encoding: URLEncoding.queryString)
+            return .requestParameters(parameters: [:], encoding: URLEncoding.queryString)
         case .register(let email, let password):
             var body: [String: Any] = [:]
             body["email"] = email
@@ -225,22 +219,15 @@ extension APIService: TargetType {
             }
             return .requestCompositeParameters(bodyParameters: body, bodyEncoding: JSONEncoding.prettyPrinted, urlParameters: [:])
         case .getCountryList:
-            var param: [String: Any] = [:]
-            // Use "key" temporarily, after remove it
-            param["key"] = "f11b69c57d5fe9555e29c57c1d863bf8"
-            return .requestParameters(parameters: param, encoding: URLEncoding.queryString)
+            return .requestParameters(parameters: [:], encoding: URLEncoding.queryString)
         case .getAppSettings:
             var param: [String: Any] = [:]
-            // Use "key" temporarily, after remove it
-            param["key"] = "f11b69c57d5fe9555e29c57c1d863bf8"
             param["platform"] = "ios"
             return .requestParameters(parameters: param, encoding: URLEncoding.queryString)
         case .ipInfoOptional:
             return .requestPlain
         case .getRequestCertificate(let currentTab, let asNewConnection):
             var param: [String: Any] = [:]
-            // Use "key" temporarily, after remove it
-            param["key"] = "f11b69c57d5fe9555e29c57c1d863bf8"
             param["tech"] = NetworkManager.shared.selectConfig.getConfigParam
             param["proto"] = NetworkManager.shared.selectConfig.getProtocolVPN
             param["dev"] = "tun"
@@ -254,7 +241,6 @@ extension APIService: TargetType {
                     if cityNodeSelect.cityNodeList.count > 0 {
                         param["countryId"] = cityNodeSelect.id
                     } else {
-                        param["countryId"] = cityNodeSelect.countryId
                         param["cityId"] = cityNodeSelect.id
                     }
                 }
@@ -263,16 +249,13 @@ extension APIService: TargetType {
                 param["isHop"] = 0
                 if let staticServer = NetworkManager.shared.selectStaticServer {
                     param["serverId"] = staticServer.id
-                    param["countryId"] = staticServer.countryId
                 }
                 
             case .multiHop:
                 param["isHop"] = 1
                 if let multihop = NetworkManager.shared.selectMultihop,
-                   let serverId = multihop.entry?.serverId,
-                   let countryId = multihop.exit?.node?.id {
+                   let serverId = multihop.entry?.serverId {
                     param["serverId"] = serverId
-                    param["countryId"] = countryId
                 }
                 break
             }
@@ -293,10 +276,7 @@ extension APIService: TargetType {
             
             return .requestParameters(parameters: param, encoding: URLEncoding.queryString)
         case .getObtainCertificate:
-            var param: [String: Any] = [:]
-            // Use "key" temporarily, after remove it
-            param["key"] = "f11b69c57d5fe9555e29c57c1d863bf8"
-            return .requestParameters(parameters: param, encoding: URLEncoding.queryString)
+            return .requestParameters(parameters: [:], encoding: URLEncoding.queryString)
         case .changePassword(let oldPassword, let newPassword):
             var param: [String: Any] = [:]
             if !oldPassword.isEmpty {
@@ -311,17 +291,10 @@ extension APIService: TargetType {
             param["isActive"] = isActive
             param["sortBy"] = "createdAt:desc"
             param["userId"] = AppSetting.shared.idUser
-            // Use "key" temporarily, after remove it
-            param["key"] = "f11b69c57d5fe9555e29c57c1d863bf8"
             
             return .requestParameters(parameters: param, encoding: URLEncoding.queryString)
             
         case .disconnectSession(let sessionId, let terminal):
-            var param: [String: Any] = [:]
-            
-            // Use "key" temporarily, after remove it
-            param["key"] = "f11b69c57d5fe9555e29c57c1d863bf8"
-            
             var body: [String: Any] = [:]
             body["sessionId"] = sessionId
             body["disconnectedBy"] = terminal ? "client_terminate" : "client"
@@ -329,16 +302,13 @@ extension APIService: TargetType {
             return .requestCompositeParameters(
                 bodyParameters: body,
                 bodyEncoding: JSONEncoding.prettyPrinted,
-                urlParameters: param)
+                urlParameters:  [:])
         case .fetchPaymentHistory:
             var param: [String: Any] = [:]
-            param["key"] = "9ed926a3355c6f380d5f81a8efd36c25"
             param["id"] = AppSetting.shared.idUser
             
             return .requestParameters(parameters: param, encoding: URLEncoding.queryString)
         case .verifyReceipt(let receipt):
-            var param: [String: Any] = [:]
-            param["key"] = "9ed926a3355c6f380d5f81a8efd36c25"
             
             var body: [String: Any] = [:]
             body["type"] = "APPLE_INAPP"
@@ -348,7 +318,7 @@ extension APIService: TargetType {
             return .requestCompositeParameters(
                 bodyParameters: body,
                 bodyEncoding: JSONEncoding.prettyPrinted,
-                urlParameters: param)
+                urlParameters: [:])
         default:
             return .requestParameters(parameters: [:], encoding: URLEncoding.queryString)
         }

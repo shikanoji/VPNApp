@@ -32,12 +32,16 @@ class WireGuardManager: ObservableObject {
         cfg = configuretionParaseFromContents(lines: string!.trimmedLines())
         
         Task {
-            try await vpn.reconnect(
-                tunnelIdentifier,
-                configuration: cfg!,
-                extra: nil,
-                after: .seconds(2)
-            )
+            do {
+                try await vpn.reconnect(
+                    tunnelIdentifier,
+                    configuration: cfg!,
+                    extra: nil,
+                    after: .seconds(2)
+                )
+            } catch {
+                print(error)
+            }
         }
     }
     

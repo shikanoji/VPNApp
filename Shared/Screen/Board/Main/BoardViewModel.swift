@@ -76,6 +76,8 @@ class BoardViewModel: ObservableObject {
     @Published var nodes: [Node] = []
     @Published var errorMessage: String? = nil
     
+    var isSwitchTab = false
+    
     @Published var tab: StateTab = .location {
         didSet {
             mesh.currentTab = tab
@@ -87,6 +89,7 @@ class BoardViewModel: ObservableObject {
     @Published var nodeConnected: Node? = nil {
         didSet {
             if let node = nodeConnected {
+                self.isSwitching = state == .connected
                 NetworkManager.shared.selectNode = node
                 self.connectOrDisconnectByUser = true
                 self.ConnectOrDisconnectVPN()
@@ -100,6 +103,7 @@ class BoardViewModel: ObservableObject {
     @Published var staticIPNodeSelecte: StaticServer? = nil {
         didSet {
             if let staticIP = staticIPNodeSelecte {
+                self.isSwitching = state == .connected
                 NetworkManager.shared.selectStaticServer = staticIP
                 self.connectOrDisconnectByUser = true
                 self.ConnectOrDisconnectVPN()
@@ -111,6 +115,7 @@ class BoardViewModel: ObservableObject {
     @Published var multihopSelect: MultihopModel? = nil {
         didSet {
             if let multihop = multihopSelect {
+                self.isSwitching = state == .connected
                 NetworkManager.shared.selectMultihop = multihop
                 self.connectOrDisconnectByUser = true
                 self.ConnectOrDisconnectVPN()
@@ -143,6 +148,8 @@ class BoardViewModel: ObservableObject {
     var error: APIError?
     
     let disposedBag = DisposeBag()
+    
+    var isSwitching = false
     
     // MARK: Function
     
@@ -271,6 +278,11 @@ class BoardViewModel: ObservableObject {
         nameSelect = ""
         isProcessingVPN = false
         disconnectSession()
+        
+        if isSwitching {
+            isSwitching = false
+            configStartConnectVPN()
+        }
     }
     
     func configDisconnect() {
@@ -297,6 +309,9 @@ class BoardViewModel: ObservableObject {
             if $0 {
                 NetworkManager.shared.connect()
             } else {
+                if self.isSwitching {
+                    self.isSwitching = false
+                }
                 self.configDisconnect()
             }
         }
@@ -633,6 +648,7 @@ class BoardViewModel: ObservableObject {
                                 }
                                
                             } else {
+                                completion(false)
                                 self.showAlertSessionSetting = true
                                 return
                             }
