@@ -20,7 +20,6 @@ struct LoadingScreen<Content>: View where Content: View {
                 self.content()
                     .disabled(self.isShowing)
                     .blur(radius: self.isShowing ? 3 : 0)
-
                 LoadingView()
                 .opacity(self.isShowing ? 1 : 0)
             }

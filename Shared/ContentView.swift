@@ -22,10 +22,7 @@ struct ContentView: View {
             AppColor.background
             if !viewModel.getIpInfoSuccess {
                 if viewModel.showProgressView {
-                    Asset.Assets.launchScreen.swiftUIImage
-                        .resizable()
-                        .aspectRatio(contentMode: .fit)
-                    LoadingView()
+                    AnimationLogo()
                 }
             } else {
                 NavigationView {
