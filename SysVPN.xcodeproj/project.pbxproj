@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0932581928B8635800CCB500 /* AnimationLogo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0932581828B8635800CCB500 /* AnimationLogo.swift */; };
 		6353F842276F333900B42334 /* StatusVPNView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6353F841276F333900B42334 /* StatusVPNView.swift */; };
 		6353F844276F3E8500B42334 /* BoardNavigationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6353F843276F3E8500B42334 /* BoardNavigationView.swift */; };
 		6384B4F5276C374E00E904D2 /* BoardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6384B4F4276C374E00E904D2 /* BoardView.swift */; };
@@ -278,6 +279,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		0932581828B8635800CCB500 /* AnimationLogo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnimationLogo.swift; sourceTree = "<group>"; };
 		6353F841276F333900B42334 /* StatusVPNView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatusVPNView.swift; sourceTree = "<group>"; };
 		6353F843276F3E8500B42334 /* BoardNavigationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoardNavigationView.swift; sourceTree = "<group>"; };
 		6384B4F4276C374E00E904D2 /* BoardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoardView.swift; sourceTree = "<group>"; };
@@ -926,6 +928,7 @@
 				AC99848A288948A90038F216 /* EmbedWebView.swift */,
 				EED4F5A82855A5DA0098DF47 /* WebView.swift */,
 				EE8966A028A203D60049052A /* PopupSelectView.swift */,
+				0932581828B8635800CCB500 /* AnimationLogo.swift */,
 			);
 			path = Components;
 			sourceTree = "<group>";
@@ -1660,6 +1663,7 @@
 				EE89100427967AA200ADF293 /* AccountStatusView.swift in Sources */,
 				EE891077279947FA00ADF293 /* ImageView.swift in Sources */,
 				EE85EDB927B21F7A000F967A /* LocationListView.swift in Sources */,
+				0932581928B8635800CCB500 /* AnimationLogo.swift in Sources */,
 				EE8910712798FBD500ADF293 /* SearchBar.swift in Sources */,
 				EE8910742799458A00ADF293 /* NodeCellView.swift in Sources */,
 				D72E50542771EEAF002357E8 /* Authentication.swift in Sources */,

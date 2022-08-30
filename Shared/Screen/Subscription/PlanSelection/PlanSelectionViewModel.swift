@@ -57,7 +57,6 @@ class PlanSelectionViewModel: ObservableObject {
                 }
             default:
                 self?.showProgressView = false
-                self?.shouldShowAccountLimitedView = true
             }
         }
     }

@@ -37,7 +37,7 @@ struct ConnectionDetails: Codable {
     var client: String
     var dev: String
     var proto: String
-    var remote: String
+    var remote: [String]
     var cipher: String
     var auth: String
     var authNocache: String
@@ -97,10 +97,10 @@ struct ConnectionDetails: Codable {
             proto = ""
         }
         
-        if let _remote = try? values.decode(String.self, forKey: .remote) {
+        if let _remote = try? values.decode([String].self, forKey: .remote) {
             remote = _remote
         } else {
-            remote = ""
+            remote = []
         }
         
         if let _cipher = try? values.decode(String.self, forKey: .cipher) {
@@ -321,7 +321,9 @@ struct RequestCertificateModel: Codable {
         stringData += spaceLine
         stringData += "dev " + _connection.dev + spaceLine
         stringData += "proto " + _connection.proto + spaceLine
-        stringData += "remote " + _connection.remote + spaceLine
+        _connection.remote.forEach {
+            stringData += "remote " + $0 + spaceLine
+        }
         stringData += "cipher " + _connection.cipher + spaceLine
         stringData += "auth " + _connection.auth + spaceLine
         stringData += "auth-nocache " + _connection.authNocache + spaceLine

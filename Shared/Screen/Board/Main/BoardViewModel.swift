@@ -76,6 +76,8 @@ class BoardViewModel: ObservableObject {
     @Published var nodes: [Node] = []
     @Published var errorMessage: String? = nil
     
+    var isSwitchTab = false
+    
     @Published var tab: StateTab = .location {
         didSet {
             mesh.currentTab = tab
@@ -87,6 +89,7 @@ class BoardViewModel: ObservableObject {
     @Published var nodeConnected: Node? = nil {
         didSet {
             if let node = nodeConnected {
+                self.isSwitching = state == .connected
                 NetworkManager.shared.selectNode = node
                 self.connectOrDisconnectByUser = true
                 self.ConnectOrDisconnectVPN()
@@ -100,6 +103,7 @@ class BoardViewModel: ObservableObject {
     @Published var staticIPNodeSelecte: StaticServer? = nil {
         didSet {
             if let staticIP = staticIPNodeSelecte {
+                self.isSwitching = state == .connected
                 NetworkManager.shared.selectStaticServer = staticIP
                 self.connectOrDisconnectByUser = true
                 self.ConnectOrDisconnectVPN()
@@ -111,6 +115,7 @@ class BoardViewModel: ObservableObject {
     @Published var multihopSelect: MultihopModel? = nil {
         didSet {
             if let multihop = multihopSelect {
+                self.isSwitching = state == .connected
                 NetworkManager.shared.selectMultihop = multihop
                 self.connectOrDisconnectByUser = true
                 self.ConnectOrDisconnectVPN()
@@ -143,6 +148,8 @@ class BoardViewModel: ObservableObject {
     var error: APIError?
     
     let disposedBag = DisposeBag()
+    
+    var isSwitching = false
     
     // MARK: Function
     
@@ -178,12 +185,12 @@ class BoardViewModel: ObservableObject {
             object: nil
         )
         
-//        NotificationCenter.default.addObserver(
-//            self,
-//            selector: #selector(disconnectedSucces),
-//            name: Constant.NameNotification.disconnectedSucces,
-//            object: nil
-//        )
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(disconnectCurrentSession),
+            name: Constant.NameNotification.disconnectCurrentSession,
+            object: nil
+        )
 
         Task {
             await OpenVPNManager.shared.vpn.prepare()
@@ -195,7 +202,7 @@ class BoardViewModel: ObservableObject {
         AppSetting.shared.fetchListSession()
     }
     
-    @objc private func disconnectedSucces() {
+    @objc private func disconnectCurrentSession() {
         configDisconnect()
     }
     
@@ -261,7 +268,7 @@ class BoardViewModel: ObservableObject {
         }
     }
     
-    func configDisconencted() {
+    func configDisconected() {
         connectOrDisconnectByUser = false
         state = .disconnected
         stateUI = .disconnected
@@ -271,6 +278,11 @@ class BoardViewModel: ObservableObject {
         nameSelect = ""
         isProcessingVPN = false
         disconnectSession()
+        
+        if isSwitching {
+            isSwitching = false
+            configStartConnectVPN()
+        }
     }
     
     func configDisconnect() {
@@ -297,6 +309,9 @@ class BoardViewModel: ObservableObject {
             if $0 {
                 NetworkManager.shared.connect()
             } else {
+                if self.isSwitching {
+                    self.isSwitching = false
+                }
                 self.configDisconnect()
             }
         }
@@ -323,12 +338,12 @@ class BoardViewModel: ObservableObject {
             if let iPVPN = NetworkManager.shared.requestCertificate?.server?.ipAddress {
                 ip = iPVPN
             }
-
-            flag = NetworkManager.shared.selectNode?.flag ?? ""
-
-            if let node = NetworkManager.shared.selectNode {
-                nameSelect = node.isCity ? node.name : node.countryName
+            
+            if let nodeSelect = NetworkManager.shared.getNodeConnect() {
+                flag = nodeSelect.flag
+                nameSelect = nodeSelect.isCity ? nodeSelect.name : nodeSelect.countryName
             }
+            
         case .staticIP, .multiHop:
             if let iPWireguard = NetworkManager.shared.obtainCertificate?.server?.ipAddress {
                 ip = iPWireguard
@@ -361,23 +376,18 @@ class BoardViewModel: ObservableObject {
             configConnected()
             
         case .disconnected:
-//            guard isProcessingVPN else {
-//                return
-//            }
-            
             if !disconnectBeforeConnecting {
                 disconnectBeforeConnecting = true
             }
             
             if state == .disconnecting {
-                
                 if (isEnableReconect && !connectOrDisconnectByUser) {
                     startConnectVPN()
                 } else {
-                    configDisconencted()
+                    configDisconected()
                 }
             } else if state == .connecting || (state == .connected && !isProcessingVPN) {
-                configDisconencted()
+                configDisconected()
             }
             
         default:
@@ -389,7 +399,6 @@ class BoardViewModel: ObservableObject {
         print("VPNStatusDidFail: \(notification.vpnError.localizedDescription)")
         
         stopSpeedTimer()
-        
         state = .disconnected
         stateUI = .disconnected
         
@@ -522,18 +531,10 @@ class BoardViewModel: ObservableObject {
                     self.mutilhopList = result
                     
                 } else {
-//                    let error = response.errors
-//                    if error.count > 0, let message = error[0] as? String {
-//                        self.error = APIError.identified(message: message)
-//                        self.showAlert = true
-//                    } else if !response.message.isEmpty {
-//                        self.error = APIError.identified(message: response.message)
-//                        self.showAlert = true
-//                    }
+                    //No multi-hop
                 }
             } onFailure: { error in
-//                self.error = APIError.identified(message: error.localizedDescription)
-//                self.showAlert = true
+                // Error
             }
             .disposed(by: disposedBag)
     }
@@ -647,6 +648,7 @@ class BoardViewModel: ObservableObject {
                                 }
                                
                             } else {
+                                completion(false)
                                 self.showAlertSessionSetting = true
                                 return
                             }
@@ -765,18 +767,9 @@ class BoardViewModel: ObservableObject {
                 if response.success {
                   
                 } else {
-//                    let error = response.errors
-//                    if error.count > 0, let message = error[0] as? String {
-//                        self.error = APIError.identified(message: message)
-//                        self.showAlert = true
-//                    } else if !response.message.isEmpty {
-//                        self.error = APIError.identified(message: response.message)
-//                        self.showAlert = true
-//                    }
+
                 }
             } onFailure: { error in
-//                self.error = APIError.identified(message: error.localizedDescription)
-//                self.showAlert = true
             }
             .disposed(by: disposedBag)
     }
