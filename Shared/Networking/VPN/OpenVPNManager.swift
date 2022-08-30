@@ -36,12 +36,16 @@ class OpenVPNManager: ObservableObject {
             cfg = OpenVPN.ProviderConfiguration.init("openVPN", appGroup: appGroup, configuration: config)
             
             Task {
-                try await vpn.reconnect(
-                    tunnelIdentifier,
-                    configuration: cfg!,
-                    extra: nil,
-                    after: .seconds(2)
-                )
+                do {
+                    try await vpn.reconnect(
+                        tunnelIdentifier,
+                        configuration: cfg!,
+                        extra: nil,
+                        after: .seconds(2)
+                    )
+                } catch {
+                    print(error)
+                }
             }
         } catch {
             print(error)
