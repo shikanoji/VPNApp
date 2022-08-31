@@ -197,6 +197,13 @@ class BoardViewModel: ObservableObject {
             name: Constant.NameNotification.disconnectCurrentSession,
             object: nil
         )
+        
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(logoutNeedDisconnect),
+            name: Constant.NameNotification.logoutNeedDisconnect,
+            object: nil
+        )
 
         Task {
             await OpenVPNManager.shared.vpn.prepare()
@@ -210,6 +217,10 @@ class BoardViewModel: ObservableObject {
         
         assignJailBreakCheckType(type: .readAndWriteFiles)
         AppSetting.shared.fetchListSession()
+    }
+    
+    @objc private func logoutNeedDisconnect() {
+        configDisconnect()
     }
     
     @objc private func disconnectCurrentSession() {
