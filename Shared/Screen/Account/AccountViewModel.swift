@@ -15,12 +15,16 @@ class AccountViewModel: ObservableObject {
     var alertTitle: String = ""
     var alertMessage: String = ""
     var authentication: Authentication?
-
+    
     func logout(){
-        ServiceManager.shared.logout().subscribe { result in
-            self.authentication?.logout()
-        } onFailure: { error in
-            self.authentication?.logout()
-        }.disposed(by: disposedBag)
+        NotificationCenter.default.post(name: Constant.NameNotification.logoutNeedDisconnect, object: nil)
+        
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
+            ServiceManager.shared.logout().subscribe {
+                result in self.authentication?.logout()
+            } onFailure: { error in
+                self.authentication?.logout()
+            }.disposed(by: self.disposedBag)
+        }
     }
 }

@@ -173,5 +173,6 @@ struct Constant {
     struct NameNotification {
         static let checkAutoconnect = Notification.Name("CheckAutoconnectIfNeeded")
         static let disconnectCurrentSession = Notification.Name("disconnectCurrentSession")
+        static let logoutNeedDisconnect = Notification.Name("logoutNeedDisconnect")
     }
 }
