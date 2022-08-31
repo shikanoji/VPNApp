@@ -53,11 +53,44 @@ class NetworkManager: ObservableObject {
     
     var obtainCertificate: ObtainCertificateModel?
     
-    var selectNode: Node?
+    var selectNode: Node? {
+        get {
+            AppSetting.shared.getNodeSelect()
+        }
+        set {
+            guard let data = newValue else {
+                return
+            }
+
+            AppSetting.shared.saveNodeSelect(data)
+        }
+    }
     
-    var selectStaticServer: StaticServer?
+    var selectStaticServer: StaticServer? {
+        get {
+            AppSetting.shared.getStaticSelect()
+        }
+        set {
+            guard let data = newValue else {
+                return
+            }
+
+            AppSetting.shared.saveStaticSelect(data)
+        }
+    }
     
-    var selectMultihop: MultihopModel?
+    var selectMultihop: MultihopModel? {
+        get {
+            AppSetting.shared.getMultihopSelect()
+        }
+        set {
+            guard let data = newValue else {
+                return
+            }
+
+            AppSetting.shared.saveMultihopSelect(data)
+        }
+    }
     
     func connect() {
         switch selectConfig {

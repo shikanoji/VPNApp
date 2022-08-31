@@ -62,9 +62,7 @@ struct SessionVPNView: View {
             })
         }
         .onAppear {
-            DispatchQueue.main.asyncAfter(deadline: .now() + 1, execute: {
-                viewModel.getListSession()
-            })
+            viewModel.getListSession()
         }
     }
 }

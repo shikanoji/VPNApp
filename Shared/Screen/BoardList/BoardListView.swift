@@ -11,7 +11,7 @@ import TunnelKitCore
 
 struct BoardListView: View {
     @Binding var showBoardList: Bool
-    @Binding var currentTab: BoardViewModel.StateTab
+    @Binding var currentTab: StateTab
     @Binding var node: Node?
     
     @Binding var locationData: [NodeGroup]

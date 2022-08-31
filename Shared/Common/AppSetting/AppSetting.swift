@@ -44,6 +44,10 @@ enum AppKeys: String {
     case listNodeGroup = "listNodeGroup"
     case mutilhopList = "mutilhopList"
     case autoConnectNode = "autoConnectNode"
+    case currentTab = "currentTab"
+    case nodeSelect = "nodeSelect"
+    case staticSelect = "staticSelect"
+    case multiSelect = "multiSelect"
     
     ///Last Time when Data Map Update
     case lastChange = "lastChange"
@@ -66,6 +70,12 @@ class AppSetting {
     var forceUpdateVersion: [String] = []
     @Published var currentNumberDevice: Int = 0
     init() {}
+    
+    func isExitSearch(_ search: String, name: String, iso2: String, iso3: String) -> Bool {
+        return name.range(of: search, options: .caseInsensitive) != nil
+        || iso2.range(of: search, options: .caseInsensitive) != nil
+        || iso3.range(of: search, options: .caseInsensitive) != nil
+    }
     
     var currentSessionId: String {
         get {

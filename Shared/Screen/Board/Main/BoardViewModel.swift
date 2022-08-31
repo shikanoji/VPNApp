@@ -55,15 +55,16 @@ extension VPNStatus {
     }
 }
 
+enum StateTab: Int {
+    case location = 0
+    case staticIP = 1
+    case multiHop = 2
+}
+
 class BoardViewModel: ObservableObject {
     
     // MARK: Variable
     
-    enum StateTab: Int {
-        case location = 0
-        case staticIP = 1
-        case multiHop = 2
-    }
     @Published var showAutoConnect: Bool = false
     @Published var showProtocolConnect: Bool = false
     @Published var showDNSSetting: Bool = false
@@ -80,6 +81,7 @@ class BoardViewModel: ObservableObject {
     
     @Published var tab: StateTab = .location {
         didSet {
+            AppSetting.shared.saveCurrentTab(tab)
             mesh.currentTab = tab
         }
     }
@@ -153,11 +155,15 @@ class BoardViewModel: ObservableObject {
     
     // MARK: Function
     
+    var firstLoad = true
+    
     init() {
+        tab = AppSetting.shared.getCurrentTab()
+        
         getDataFromLocal()
         getDataUpdate()
         getMultihopList()
-        getDataFromLocal()
+        
         NotificationCenter.default.addObserver(
             self,
             selector: #selector(VPNStatusDidChange(notification:)),
@@ -194,6 +200,10 @@ class BoardViewModel: ObservableObject {
 
         Task {
             await OpenVPNManager.shared.vpn.prepare()
+        }
+        
+        NotificationCenter.default.addObserver(forName: UIApplication.willTerminateNotification, object: nil, queue: .main) { _ in
+            NetworkManager.shared.disconnect()
         }
         
         checkInternetRealTime()
@@ -345,7 +355,7 @@ class BoardViewModel: ObservableObject {
             }
             
         case .staticIP, .multiHop:
-            if let iPWireguard = NetworkManager.shared.obtainCertificate?.server?.ipAddress {
+            if let iPWireguard = NetworkManager.shared.requestCertificate?.server?.ipAddress {
                 ip = iPWireguard
             }
 
@@ -361,6 +371,11 @@ class BoardViewModel: ObservableObject {
         print("VPNStatusDidChange: \(notification.vpnStatus)")
         switch notification.vpnStatus {
         case .connected:
+            if firstLoad {
+                configConnected()
+                firstLoad = false
+            }
+            
             guard isProcessingVPN else {
                 return
             }
@@ -376,6 +391,11 @@ class BoardViewModel: ObservableObject {
             configConnected()
             
         case .disconnected:
+            if firstLoad {
+                configDisconected()
+                firstLoad = false
+            }
+            
             if !disconnectBeforeConnecting {
                 disconnectBeforeConnecting = true
             }
@@ -529,6 +549,15 @@ class BoardViewModel: ObservableObject {
                 if let result = response.result {
                     AppSetting.shared.saveMutilhopList(result)
                     self.mutilhopList = result
+                    if result.count > 0 {
+                        if let selectLocal = NetworkManager.shared.selectMultihop {
+                            if self.mutilhopList.filter({ selectLocal.id == $0.id }).count == 0 {
+                                NetworkManager.shared.selectMultihop = result.first
+                            }
+                        } else {
+                            NetworkManager.shared.selectMultihop = result.first
+                        }
+                    }
                     
                 } else {
                     //No multi-hop
@@ -715,7 +744,13 @@ class BoardViewModel: ObservableObject {
     
     func getAvaiableCity(_ cityNodes: [Node]) {
         if cityNodes.count > 0 {
-            NetworkManager.shared.selectNode = cityNodes.first
+            if let nodeLocal = NetworkManager.shared.selectNode {
+                if cityNodes.filter({ nodeLocal.id == $0.id }).count == 0 {
+                    NetworkManager.shared.selectNode = cityNodes.first
+                }
+            } else {
+                NetworkManager.shared.selectNode = cityNodes.first
+            }
         }
     }
     
@@ -726,6 +761,9 @@ class BoardViewModel: ObservableObject {
         
         if let multihopListLocal = AppSetting.shared.getMutilhopList() {
             mutilhopList = multihopListLocal
+            if mutilhopList.count > 0 {
+                NetworkManager.shared.selectMultihop = mutilhopList.first
+            }
         }
     }
     
@@ -742,7 +780,15 @@ class BoardViewModel: ObservableObject {
         
         staticIPData = result.staticServers
         
-        NetworkManager.shared.selectStaticServer = staticIPData.first
+        if staticIPData.count > 0 {
+            if let staticLocal = NetworkManager.shared.selectStaticServer {
+                if self.staticIPData.filter({ staticLocal.id == $0.id }).count == 0 {
+                    NetworkManager.shared.selectStaticServer = staticIPData.first
+                }
+            } else {
+                NetworkManager.shared.selectStaticServer = staticIPData.first
+            }
+        }
         
         self.mesh.configNode(countryNodes: countryNodes,
                              cityNodes: cityNodes,

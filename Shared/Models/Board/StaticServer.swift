@@ -20,6 +20,9 @@ struct StaticServer: Identifiable, Codable {
     var flag: String
     var cityName: String
     var currentLoad: CGFloat
+    var iso2: String
+    var iso3: String
+    var serverNumber: Int
     
     enum CodingKeys: String, CodingKey {
         case serverId
@@ -32,10 +35,28 @@ struct StaticServer: Identifiable, Codable {
         case y
         case currentLoad
         case cityName
+        case serverNumber
+        case iso2
+        case iso3
     }
     
     init(from decoder: Decoder) throws {
         let values = try decoder.container(keyedBy: CodingKeys.self)
+        if let _value = try? values.decode(String.self, forKey: .iso2){
+            self.iso2 = _value
+        } else {
+            self.iso2 = ""
+        }
+        if let _value = try? values.decode(String.self, forKey: .iso3){
+            self.iso3 = _value
+        } else {
+            self.iso3 = ""
+        }
+        if let _serverNumber = try? values.decode(Int.self, forKey: .serverNumber){
+            self.serverNumber = _serverNumber
+        } else {
+            self.serverNumber = 0
+        }
         if let _serverId = try? values.decode(Int.self, forKey: .serverId){
             self.serverId = _serverId
         } else {
@@ -97,7 +118,10 @@ struct StaticServer: Identifiable, Codable {
          x: CGFloat = .zero,
          y: CGFloat = .zero,
          flag: String = "",
-         currentLoad: CGFloat = 0) {
+         currentLoad: CGFloat = 0,
+         serverNumber: Int = 0,
+         iso2: String = "",
+         iso3: String = "") {
         self.serverId = serverId
         self.countryName = countryName
         self.cityName = cityName
@@ -107,10 +131,17 @@ struct StaticServer: Identifiable, Codable {
         self.y = y
         self.flag = flag
         self.currentLoad = currentLoad
+        self.serverNumber = serverNumber
+        self.iso2 = iso2
+        self.iso3 = iso3
+    }
+    
+    func getTitleContentCell() -> String {
+        return countryName + " #\(serverNumber)"
     }
     
     func getSubContentCell() -> String {
-        return cityName + " #\(serverId)"
+        return cityName
     }
 }
 
