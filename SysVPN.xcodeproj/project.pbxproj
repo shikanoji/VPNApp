@@ -284,6 +284,9 @@
 		6353F843276F3E8500B42334 /* BoardNavigationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoardNavigationView.swift; sourceTree = "<group>"; };
 		6384B4F4276C374E00E904D2 /* BoardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoardView.swift; sourceTree = "<group>"; };
 		6384B4F7276C43DD00E904D2 /* BoardViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoardViewModel.swift; sourceTree = "<group>"; };
+		AC09D7C528BF466D0078E928 /* Base.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Base.xcconfig; sourceTree = "<group>"; };
+		AC09D7C728BF46950078E928 /* Debug.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Debug.xcconfig; sourceTree = "<group>"; };
+		AC09D7C828BF46A80078E928 /* Release.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Release.xcconfig; sourceTree = "<group>"; };
 		AC1195D12844D71D002230F0 /* DNSSettingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DNSSettingView.swift; sourceTree = "<group>"; };
 		AC1195DA28452313002230F0 /* DNSSettingViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DNSSettingViewModel.swift; sourceTree = "<group>"; };
 		AC17E2402888FC4500C72E20 /* Settings.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = Settings.bundle; sourceTree = "<group>"; };
@@ -556,6 +559,16 @@
 			path = Board;
 			sourceTree = "<group>";
 		};
+		AC09D7C428BF462A0078E928 /* Configuration */ = {
+			isa = PBXGroup;
+			children = (
+				AC09D7C528BF466D0078E928 /* Base.xcconfig */,
+				AC09D7C728BF46950078E928 /* Debug.xcconfig */,
+				AC09D7C828BF46A80078E928 /* Release.xcconfig */,
+			);
+			path = Configuration;
+			sourceTree = "<group>";
+		};
 		AC1195D02844D70D002230F0 /* DNS */ = {
 			isa = PBXGroup;
 			children = (
@@ -756,6 +769,7 @@
 				AC6074D827DB74CB00DD5667 /* swiftgen.yml */,
 				D78C8FC92774914400D4A46F /* SysVPN (iOS).entitlements */,
 				D78C8FC827748EE200D4A46F /* SysVPN--iOS--Info.plist */,
+				AC09D7C428BF462A0078E928 /* Configuration */,
 				AC17E25428893BFE00C72E20 /* Licenses */,
 				D78044982758C6F90086E59D /* Shared */,
 				EE03443F28090AB7003DFB64 /* OpenVPN */,
@@ -1824,6 +1838,7 @@
 /* Begin XCBuildConfiguration section */
 		D78044CE2758C6FC0086E59D /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = AC09D7C728BF46950078E928 /* Debug.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_ANALYZER_NONNULL = YES;
@@ -1883,6 +1898,7 @@
 		};
 		D78044CF2758C6FC0086E59D /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = AC09D7C828BF46A80078E928 /* Release.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_ANALYZER_NONNULL = YES;
@@ -1943,7 +1959,7 @@
 				CODE_SIGN_ENTITLEMENTS = SysVPNDebug.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = CURRENT_PROJECT_VERSION;
 				DEVELOPMENT_TEAM = JM6FBPTUR3;
 				ENABLE_BITCODE = NO;
 				ENABLE_PREVIEWS = YES;
@@ -1965,7 +1981,7 @@
 					/usr/lib/swift,
 					"$(inherited)",
 				);
-				MARKETING_VERSION = 1.0;
+				MARKETING_VERSION = "${APP_VERSION";
 				PRODUCT_BUNDLE_IDENTIFIER = com.sysvpn.client.ios.dev;
 				PRODUCT_NAME = "SysVPN Dev";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -1989,7 +2005,7 @@
 				CODE_SIGN_ENTITLEMENTS = "SysVPN (iOS).entitlements";
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = CURRENT_PROJECT_VERSION;
 				DEVELOPMENT_TEAM = JM6FBPTUR3;
 				ENABLE_BITCODE = NO;
 				ENABLE_PREVIEWS = YES;
@@ -2011,7 +2027,7 @@
 					/usr/lib/swift,
 					"$(inherited)",
 				);
-				MARKETING_VERSION = 1.0;
+				MARKETING_VERSION = "${APP_VERSION";
 				ONLY_ACTIVE_ARCH = NO;
 				PRODUCT_BUNDLE_IDENTIFIER = com.sysvpn.client.ios;
 				PRODUCT_NAME = SysVPN;
@@ -2032,7 +2048,7 @@
 				CODE_SIGN_ENTITLEMENTS = OpenVPN/OpenVPNDebug.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = CURRENT_PROJECT_VERSION;
 				DEVELOPMENT_TEAM = JM6FBPTUR3;
 				ENABLE_BITCODE = NO;
 				GENERATE_INFOPLIST_FILE = YES;
@@ -2046,7 +2062,7 @@
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
-				MARKETING_VERSION = 1.0;
+				MARKETING_VERSION = "${APP_VERSION";
 				PRODUCT_BUNDLE_IDENTIFIER = com.sysvpn.client.ios.dev.openvpn;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -2064,7 +2080,7 @@
 				CODE_SIGN_ENTITLEMENTS = OpenVPN/OpenVPN.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = CURRENT_PROJECT_VERSION;
 				DEVELOPMENT_TEAM = JM6FBPTUR3;
 				ENABLE_BITCODE = NO;
 				GENERATE_INFOPLIST_FILE = YES;
@@ -2078,7 +2094,7 @@
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
-				MARKETING_VERSION = 1.0;
+				MARKETING_VERSION = "${APP_VERSION";
 				PRODUCT_BUNDLE_IDENTIFIER = com.sysvpn.client.ios.openvpn;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -2096,7 +2112,7 @@
 			buildSettings = {
 				CODE_SIGN_ENTITLEMENTS = WireGuard/WireGuardDebug.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = CURRENT_PROJECT_VERSION;
 				DEVELOPMENT_TEAM = JM6FBPTUR3;
 				ENABLE_BITCODE = NO;
 				GENERATE_INFOPLIST_FILE = YES;
@@ -2109,7 +2125,7 @@
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
-				MARKETING_VERSION = 1.0;
+				MARKETING_VERSION = "${APP_VERSION}";
 				PRODUCT_BUNDLE_IDENTIFIER = com.sysvpn.client.ios.dev.wireguard;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = iphoneos;
@@ -2125,7 +2141,7 @@
 			buildSettings = {
 				CODE_SIGN_ENTITLEMENTS = WireGuard/WireGuard.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = CURRENT_PROJECT_VERSION;
 				DEVELOPMENT_TEAM = JM6FBPTUR3;
 				ENABLE_BITCODE = NO;
 				GENERATE_INFOPLIST_FILE = YES;
@@ -2138,7 +2154,7 @@
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
-				MARKETING_VERSION = 1.0;
+				MARKETING_VERSION = "${APP_VERSION}";
 				PRODUCT_BUNDLE_IDENTIFIER = com.sysvpn.client.ios.wireguard;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = iphoneos;
