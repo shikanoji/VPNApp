@@ -19,7 +19,7 @@ struct NodeCellStaticView: View {
             Constant.StaticIP.iconS
                 .frame(width: 20, height: 20)
             VStack(alignment: .leading, spacing: 6) {
-                Text(node.countryName)
+                Text(node.getTitleContentCell())
                     .font(Constant.BoardList.fontNameCity)
                     .foregroundColor(.white)
                 Text(node.getSubContentCell())

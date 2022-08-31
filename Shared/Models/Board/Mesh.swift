@@ -16,7 +16,7 @@ class Mesh: ObservableObject {
     
     @Published var showCityNodes: Bool = false
     
-    var currentTab: BoardViewModel.StateTab = .location
+    var currentTab: StateTab = .location
     
     init() {
         
@@ -58,7 +58,7 @@ class Mesh: ObservableObject {
         self.clientCountryNode = clientCountryNode
     }
     
-    func updateCurrentTab(_ tab: BoardViewModel.StateTab) {
+    func updateCurrentTab(_ tab: StateTab) {
         currentTab = tab
     }
     

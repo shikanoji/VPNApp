@@ -80,7 +80,7 @@ enum APIService {
     case forgotPassword(email: String)
     case getAppSettings
     case ipInfoOptional
-    case getRequestCertificate(currentTab: BoardViewModel.StateTab, asNewConnection: Bool)
+    case getRequestCertificate(currentTab: StateTab, asNewConnection: Bool)
     case getObtainCertificate
     case changePassword(oldPassword: String, newPassword: String)
     case getListSession(page: Int = 1, limit: Int = 20, isActive: Int = 1)

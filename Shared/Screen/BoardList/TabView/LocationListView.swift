@@ -112,7 +112,7 @@ struct LocationListView: View {
                 }
             }
             return allNode.filter {
-                $0.name.range(of: searchText, options: .caseInsensitive) != nil
+                AppSetting.shared.isExitSearch(searchText, name: $0.name, iso2: $0.iso2, iso3: $0.iso3)
             }
         }
     }

@@ -142,4 +142,56 @@ extension AppSetting {
         }
         return nil
     }
+    
+    func saveCurrentTab(_ tab: StateTab) {
+        UserDefaults.standard.set(tab.rawValue, forKey: AppKeys.currentTab.rawValue)
+    }
+    
+    func getCurrentTab() -> StateTab {
+        let tabIndex = UserDefaults.standard.integer(forKey: AppKeys.currentTab.rawValue)
+        let tab = StateTab(rawValue: tabIndex) ?? .location
+        return tab
+    }
+    
+    func saveNodeSelect(_ node: Node) {
+        if let encodedData = try? JSONEncoder().encode(node) {
+            UserDefaults.standard.set(encodedData, forKey: AppKeys.nodeSelect.rawValue)
+        }
+    }
+    
+    func getNodeSelect() -> Node? {
+        if let data = UserDefaults.standard.data(forKey: AppKeys.nodeSelect.rawValue),
+           let staticSelect = try? JSONDecoder().decode(Node.self, from: data) {
+            return staticSelect
+        }
+        return nil
+    }
+    
+    func saveStaticSelect(_ staticSelect: StaticServer) {
+        if let encodedData = try? JSONEncoder().encode(staticSelect) {
+            UserDefaults.standard.set(encodedData, forKey: AppKeys.staticSelect.rawValue)
+        }
+    }
+    
+    func getStaticSelect() -> StaticServer? {
+        if let data = UserDefaults.standard.data(forKey: AppKeys.staticSelect.rawValue),
+            let staticSelect = try? JSONDecoder().decode(StaticServer.self, from: data) {
+            return staticSelect
+        }
+        return nil
+    }
+    
+    func saveMultihopSelect(_ data: MultihopModel) {
+        if let encodedData = try? JSONEncoder().encode(data) {
+            UserDefaults.standard.set(encodedData, forKey: AppKeys.multiSelect.rawValue)
+        }
+    }
+    
+    func getMultihopSelect() -> MultihopModel? {
+        if let data = UserDefaults.standard.data(forKey: AppKeys.multiSelect.rawValue),
+           let multihop = try? JSONDecoder().decode(MultihopModel.self, from: data) {
+            return multihop
+        }
+        return nil
+    }
 }

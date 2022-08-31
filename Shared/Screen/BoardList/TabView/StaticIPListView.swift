@@ -62,8 +62,7 @@ struct StaticIPListView: View {
             return []
         } else {
             return staticIPData.filter {
-                //                $0.name.contains(searchText)
-                $0.countryName.range(of: searchText, options: .caseInsensitive) != nil
+                AppSetting.shared.isExitSearch(searchText, name: $0.countryName, iso2: $0.iso2, iso3: $0.iso3)
             }
         }
     }

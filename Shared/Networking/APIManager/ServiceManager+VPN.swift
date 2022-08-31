@@ -23,7 +23,7 @@ extension ServiceManager {
             }
     }
     
-    func getRequestCertificate(currentTab: BoardViewModel.StateTab, asNewConnection: Bool = false) -> Single<APIResponse<RequestCerAPI>> {
+    func getRequestCertificate(currentTab: StateTab, asNewConnection: Bool = false) -> Single<APIResponse<RequestCerAPI>> {
         return request(.getRequestCertificate(currentTab: currentTab, asNewConnection: asNewConnection))
             .map { response in
                 let result = try JSONDecoder().decode(APIResponse<RequestCerAPI>.self, from: response.data)

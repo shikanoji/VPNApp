@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct BoardTabView: View {
-    @Binding var tab: BoardViewModel.StateTab
+    @Binding var tab: StateTab
     @Binding var showBoardList: Bool
     
     var body: some View {
@@ -27,13 +27,13 @@ struct BoardTabView: View {
 
 struct BoardTabViewCustom: View {
     @Binding private var selected: Bool
-    @Binding var currentTab: BoardViewModel.StateTab
+    @Binding var currentTab: StateTab
     @Binding var showBoardList: Bool
     
-    var typeTab: BoardViewModel.StateTab
+    var typeTab: StateTab
     var title: String
     
-    init(typeTab: BoardViewModel.StateTab, currentTab: Binding<BoardViewModel.StateTab>, showBoardList: Binding<Bool>) {
+    init(typeTab: StateTab, currentTab: Binding<StateTab>, showBoardList: Binding<Bool>) {
         switch typeTab {
         case .location:
             self.title = L10n.Board.locationTitleTab
@@ -65,7 +65,7 @@ struct BoardTabView_Previews: PreviewProvider {
     @State static var show = false
     
     static var previews: some View {
-        BoardTabView(tab: Binding<BoardViewModel.StateTab>.constant(.staticIP), showBoardList: $show)
+        BoardTabView(tab: Binding<StateTab>.constant(.staticIP), showBoardList: $show)
             .previewLayout(.fixed(width: 343.0, height: Constant.Board.Tabs.heightSize))
     }
 }
