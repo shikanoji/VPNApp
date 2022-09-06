@@ -114,7 +114,7 @@ enum SectionType: Decodable {
             return [
                 ItemCell(type: .email),
                 ItemCell(type: .joinMember),
-                ItemCell(type: .sysVPNId),
+//                ItemCell(type: .sysVPNId),
                 ItemCell(type: .accountSecurity),
             ]
         }

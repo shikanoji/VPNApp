@@ -14,20 +14,19 @@ struct FAQCell: View {
     
     var body: some View {
         HStack {
-            VStack(alignment: .leading, spacing: 6) {
-                HStack {
-                    Text(question.title)
-                        .font(Constant.Menu.fontItem)
-                        .foregroundColor(.white)
-                }
-            }
-            .padding(.leading, 16.0)
+            Text(question.title)
+                .font(Constant.Menu.fontItem)
+                .foregroundColor(.white)
+                .padding(.leading, 16.0)
+                .lineLimit(nil)
+                .multilineTextAlignment(.leading)
+                .fixedSize(horizontal: false, vertical: true)
+                .lineSpacing(10)
             Spacer()
             Image(Constant.Account.rightButton)
                 .padding()
         }
-        .frame(height: Constant.Menu.heightItemCell)
-        .frame(maxWidth: .infinity)
+        .padding(.vertical, 10)
         .background(AppColor.darkButton)
         .cornerRadius(radius: Constant.Menu.radiusCell, corners: [position.rectCorner])
     }

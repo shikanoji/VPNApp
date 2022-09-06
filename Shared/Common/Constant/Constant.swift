@@ -111,7 +111,7 @@ struct Constant {
         static let fontSubItem = Font.system(size: 11, weight: .regular)
         static let fontSectionTitle = Font.system(size: 12, weight: .medium)
         static let sizeIconItemMenu: CGFloat = 32
-        static let fontItem = Font.system(size: 13, weight: .bold)
+        static let fontItem = Font.system(size: 15, weight: .bold)
         static let radiusCell: CGFloat = 10
         static let heightItemCell: CGFloat = 63
         static let hozitalPaddingCell: CGFloat = 16

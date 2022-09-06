@@ -144,22 +144,27 @@ struct AccountView: View {
     }
     
     var body: some View {
-        VStack {
-            AppColor.darkButton
-                .frame(height: 24)
-            CustomNavigationView(
-                tapLeftButton: {
-                    showAccount = false
-                }, tapRightButton: {
-                    showAccount = false
-                }, statusConnect: $statusConnect)
-            header
-            content
-        }
-        .background(AppColor.background)
-        .onAppear() {
-            viewModel.authentication = authentication
-            AppSetting.shared.fetchListSession()
+        ZStack {
+            VStack {
+                AppColor.darkButton
+                    .frame(height: 24)
+                CustomNavigationView(
+                    tapLeftButton: {
+                        showAccount = false
+                    }, tapRightButton: {
+                        showAccount = false
+                    }, statusConnect: $statusConnect)
+                header
+                content
+            }
+            .background(AppColor.background)
+            .onAppear() {
+                viewModel.authentication = authentication
+                AppSetting.shared.fetchListSession()
+            }
+            if viewModel.showProgressView {
+                LoadingView()
+            }
         }
         .onChange(of: AppSetting.shared.currentNumberDevice, perform: { numberOfDevices in
             self.numberOfSession = numberOfDevices
@@ -168,14 +173,14 @@ struct AccountView: View {
                type: .floater(verticalPadding: 10),
                position: .bottom,
                animation: .easeInOut,
+               autohideIn: nil,
                closeOnTap: true,
                closeOnTapOutside: true) {
-            ToastView(title: L10n.Account.Logout.Confirm.message,
-                      message: "",
-                      confirmTitle: L10n.Account.Logout.confirm,
-                      oneChossing: true,
-                      confirmAction: {
+            LogoutViewPopup(cancel: {
                 viewModel.showLogoutConfirmation = false
+            }, confim: {
+                viewModel.showLogoutConfirmation = false
+                viewModel.showProgressView = true
                 viewModel.logout()
             })
         }
