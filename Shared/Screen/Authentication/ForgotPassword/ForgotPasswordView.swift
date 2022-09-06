@@ -67,9 +67,9 @@ struct ForgotPasswordView: View {
                animation: .easeInOut,
                closeOnTap: false,
                closeOnTapOutside: true) {
-            ToastView(title: viewModel.alertTitle,
+            PopupSelectView(title: viewModel.alertTitle,
                       message: viewModel.alertMessage,
-                      cancelAction: {
+                      confirmAction: {
                 viewModel.showAlert = false
             })
         }

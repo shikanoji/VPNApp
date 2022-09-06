@@ -167,8 +167,8 @@ struct ZoomableScrollView<Content: View>: UIViewRepresentable {
         scrollView.contentOffset = CGPoint(x: max(0,-leftMargin), y: max(0,-topMargin));
         
         scrollView.contentSize = CGSize(
-            width: max(hostedView.bounds.width, hostedView.bounds.width+1),
-            height: max(hostedView.bounds.height, hostedView.bounds.height+1))
+            width: hostedView.bounds.width,
+            height: hostedView.bounds.height)
         
         scrollView.minimumZoomScale = Constant.Board.Map.minZoom
         scrollView.maximumZoomScale = Constant.Board.Map.maxZoom

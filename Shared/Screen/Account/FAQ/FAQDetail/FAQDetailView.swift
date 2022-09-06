@@ -26,9 +26,9 @@ struct FAQDetailView: View {
     }
 
     var body: some View {
-        VStack {
+        VStack(spacing: 0) {
             AppColor.darkButton
-                .frame(height: 10)
+                .frame(height: 20)
             CustomNavigationView(
                 tapLeftButton: {
                     presentationMode.wrappedValue.dismiss()
@@ -48,7 +48,7 @@ struct FAQDetailView: View {
                                 .opacity(webViewFinishedLoading ? 1 : 0)
                         }
                     }
-                    .frame(height: Constant.Board.Map.heightScreen - Constant.Board.Navigation.heightNavigationBar - 100)
+                    .frame(height: Constant.Board.Map.heightScreen - Constant.Board.Navigation.heightNavigationBar)
                 }
             }
         }

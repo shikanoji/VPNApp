@@ -16,7 +16,7 @@ struct Background<Content: View>: View {
     }
 
     var body: some View {
-        AppColor.background
+        AppColor.lightBlack
             .frame(maxWidth: .infinity, maxHeight: .infinity)
         .overlay(content)
         .ignoresSafeArea()

@@ -49,5 +49,6 @@
 "ChangePassword.passwordNotMatch" = "Confirm password does not matche";
 "ChangePassword.success" = "Successfully changed password";
 
-"Logout.Confirm.Message" = "Are you sure want to logout?";
-"Logout.Confirm" = "Confirm";
+"Logout.Confirm.Message" = "All VPN connections will be disconnected when you sign out. Are you sure you want to continue?";
+"Logout.Confirm" = "Confirm Sign Out";
+"Logout.SignOut" = "Sign Out";

@@ -19,7 +19,9 @@ struct ItemRowView: View {
             Spacer().frame(height: 20)
             HStack(spacing: 0) {
                 if item.type.icon != nil {
-                    item.type.icon
+                    item.type.icon?
+                        .resizable()
+                        .frame(width: 38, height: 38)
                     Spacer().frame(width: 20)
                 }
                 
