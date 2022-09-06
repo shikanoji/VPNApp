@@ -105,11 +105,13 @@ public enum L10n {
       public static let title = L10n.tr("Account", "Infomation.title", fallback: #"Infomation"#)
     }
     public enum Logout {
-      /// Confirm
-      public static let confirm = L10n.tr("Account", "Logout.Confirm", fallback: #"Confirm"#)
+      /// Confirm Sign Out
+      public static let confirm = L10n.tr("Account", "Logout.Confirm", fallback: #"Confirm Sign Out"#)
+      /// Sign Out
+      public static let signOut = L10n.tr("Account", "Logout.SignOut", fallback: #"Sign Out"#)
       public enum Confirm {
-        /// Are you sure want to logout?
-        public static let message = L10n.tr("Account", "Logout.Confirm.Message", fallback: #"Are you sure want to logout?"#)
+        /// All VPN connections will be disconnected when you sign out. Are you sure you want to continue?
+        public static let message = L10n.tr("Account", "Logout.Confirm.Message", fallback: #"All VPN connections will be disconnected when you sign out. Are you sure you want to continue?"#)
       }
     }
     public enum PaymentHistory {
@@ -148,8 +150,8 @@ public enum L10n {
     public static let speed = L10n.tr("Board", "Speed", fallback: #"/s"#)
     /// Static IP
     public static let staticIPTitleTab = L10n.tr("Board", "StaticIPTitleTab", fallback: #"Static IP"#)
-    /// Connect to VPN to online sercurity
-    public static let subIP = L10n.tr("Board", "SubIP", fallback: #"Connect to VPN to online sercurity"#)
+    /// Connect to VPN for online sercurity
+    public static let subIP = L10n.tr("Board", "SubIP", fallback: #"Connect to VPN for online sercurity"#)
     /// Unprotected
     public static let unconnect = L10n.tr("Board", "Unconnect", fallback: #"Unprotected"#)
     public enum BoardList {

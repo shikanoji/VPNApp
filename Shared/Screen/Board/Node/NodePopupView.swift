@@ -67,7 +67,7 @@ struct NodePopupView: View {
                         .frame(width: Constant.Board.NodePopupView.frameEnsign,
                                height: Constant.Board.NodePopupView.frameEnsign)
                     Text(node.name)
-                        .font(.system(size: Constant.Board.NodePopupView.sizeFont + 4,
+                        .font(.system(size: Constant.Board.NodePopupView.sizeFont + 2,
                                       weight: Constant.Board.NodePopupView.weightFont))
                         .lineLimit(Constant.Board.NodePopupView.numberLineText)
                 }

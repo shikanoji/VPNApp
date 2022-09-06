@@ -14,20 +14,19 @@ struct PopupSelectView: View {
         static let buttonHeight: CGFloat = 30
         static let buttonWidth: CGFloat = 120
     }
-    let title: String
-    let message: String
     
-    var cacnelTitle = ""
-    var confirmTitle = ""
+    var title: String = ""
+    var message: String = ""
     
-    var oneChossing = false
+    var cancelTitle = ""
+    var confirmTitle = "DISMISS"
     
     var cancelAction: (() -> Void)? = nil
     var confirmAction: (() -> Void)? = nil
     
     var body: some View {
-        HStack(alignment: .center) {
-            VStack(spacing: 5) {
+        HStack(spacing: 0) {
+            VStack(alignment: .leading, spacing: 5) {
                 if !title.isEmpty {
                     Text(title).setDefaultBold()
                 }
@@ -37,9 +36,11 @@ struct PopupSelectView: View {
                         .foregroundColor(AppColor.textColor)
                         .multilineTextAlignment(.center)
                 }
-            }.frame(maxWidth: .infinity)
+            }
+            .padding(.horizontal)
+            Spacer()
             if confirmAction != nil {
-                HStack {
+                HStack(spacing: 10) {
                     if cancelAction != nil {
                         Spacer()
                         AppButton(
@@ -47,13 +48,12 @@ struct PopupSelectView: View {
                             backgroundColor: Color.clear,
                             textColor: Color.white,
                             textSize: Size.bodyTextSize,
-                            text: cacnelTitle == "" ? L10n.Global.cancel : cacnelTitle,
+                            text: cancelTitle == "" ? L10n.Global.cancel : cancelTitle,
                             borderWidth: 1,
                             borderColor: AppColor.lightGray) {
                                 cancelAction?()
                             }
                     }
-                    Spacer()
                     AppButton(
                         width: Size.buttonWidth, height: Size.buttonHeight,
                         backgroundColor: Color.clear,

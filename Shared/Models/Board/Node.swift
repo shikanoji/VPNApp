@@ -127,6 +127,9 @@ struct Node: Identifiable, Codable {
         
         isCity = cityNodeList.count == 0
         
+        if !isCity {
+            countryName = name
+        }
     }
     
     init(id: Int = 0,
@@ -181,7 +184,7 @@ extension Node {
         case 1:
             return "1 " + L10n.Board.BoardList.city + " " + L10n.Board.BoardList.available
         default:
-            return "\(count) " + L10n.Board.BoardList.city + " " + L10n.Board.BoardList.available
+            return "\(count) " + L10n.Board.BoardList.cities + " " + L10n.Board.BoardList.available
         }
     }
 }

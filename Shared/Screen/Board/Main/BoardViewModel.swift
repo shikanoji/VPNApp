@@ -371,6 +371,7 @@ class BoardViewModel: ObservableObject {
             }
 
             flag = NetworkManager.shared.selectStaticServer?.flag ?? ""
+            nameSelect = NetworkManager.shared.selectStaticServer?.countryName ?? ""
         }
         getSpeedRealTime()
 

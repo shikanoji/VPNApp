@@ -10,6 +10,7 @@ import RxSwift
 
 class AccountViewModel: ObservableObject {
     @Published var showAlert = false
+    @Published var showProgressView = false
     @Published var showLogoutConfirmation = false
     var disposedBag = DisposeBag()
     var alertTitle: String = ""
@@ -19,12 +20,13 @@ class AccountViewModel: ObservableObject {
     func logout(){
         NotificationCenter.default.post(name: Constant.NameNotification.logoutNeedDisconnect, object: nil)
         
-        DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
-            ServiceManager.shared.logout().subscribe {
-                result in self.authentication?.logout()
-            } onFailure: { error in
-                self.authentication?.logout()
-            }.disposed(by: self.disposedBag)
-        }
+        ServiceManager.shared.logout().subscribe {
+            result in
+            self.showProgressView = false
+            self.authentication?.logout()
+        } onFailure: { error in
+            self.showProgressView = false
+            self.authentication?.logout()
+        }.disposed(by: self.disposedBag)
     }
 }

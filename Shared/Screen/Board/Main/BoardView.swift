@@ -109,9 +109,7 @@ struct BoardView: View {
                 VStack{
                     Spacer()
                     PopupSelectView(title: "Need terminal some sessions",
-                                    message: "",
                                     confirmTitle: "Open Sessions",
-                                    oneChossing: true,
                                     confirmAction: {
                         viewModel.showAlertSessionSetting = false
                         viewModel.shouldHideSession = false
@@ -126,9 +124,7 @@ struct BoardView: View {
                 VStack{
                     Spacer()
                     PopupSelectView(title: "Disable auto-conenct",
-                                    message: "",
                                     confirmTitle: "SETTINGS",
-                                    oneChossing: true,
                                     confirmAction: {
                         viewModel.showAlertAutoConnectSetting = false
                         viewModel.shouldHideAutoConnect = false
@@ -217,11 +213,10 @@ struct BoardView: View {
     func toastView() -> some View {
         VStack{
             Spacer()
-            ToastView(
-//                title: viewModel.error?.title ?? "",
-                      title: "An error occurred",
-                      message: "",
-                      cancelAction: {
+            PopupSelectView(title: "An error occurred",
+                            cancelTitle: "zzzz",
+                            confirmTitle: "DISMISS",
+                            confirmAction: {
                 viewModel.showAlert = false
             })
             .frame(alignment: .bottom)
