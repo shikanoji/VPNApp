@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		091C559D28C8CE3300270E4C /* SlideIntroduction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 091C559C28C8CE3300270E4C /* SlideIntroduction.swift */; };
 		0932581928B8635800CCB500 /* AnimationLogo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0932581828B8635800CCB500 /* AnimationLogo.swift */; };
 		6353F842276F333900B42334 /* StatusVPNView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6353F841276F333900B42334 /* StatusVPNView.swift */; };
 		6353F844276F3E8500B42334 /* BoardNavigationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6353F843276F3E8500B42334 /* BoardNavigationView.swift */; };
@@ -279,6 +280,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		091C559C28C8CE3300270E4C /* SlideIntroduction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SlideIntroduction.swift; sourceTree = "<group>"; };
 		0932581828B8635800CCB500 /* AnimationLogo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnimationLogo.swift; sourceTree = "<group>"; };
 		6353F841276F333900B42334 /* StatusVPNView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatusVPNView.swift; sourceTree = "<group>"; };
 		6353F843276F3E8500B42334 /* BoardNavigationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoardNavigationView.swift; sourceTree = "<group>"; };
@@ -737,6 +739,7 @@
 				D795FFA9275F6ED200E54206 /* Introduction.swift */,
 				D78AC3E427858D860056FCC0 /* NoticeView.swift */,
 				AC4C96C928A0F2820063B4AF /* ForceUpdateView.swift */,
+				091C559C28C8CE3300270E4C /* SlideIntroduction.swift */,
 			);
 			path = Introduction;
 			sourceTree = "<group>";
@@ -1571,6 +1574,7 @@
 				D72E50512771D023002357E8 /* Connectivity.swift in Sources */,
 				D79C225127BE31CE00B54613 /* RegisterResult.swift in Sources */,
 				EE85EDB327B21467000F967A /* CityListView.swift in Sources */,
+				091C559D28C8CE3300270E4C /* SlideIntroduction.swift in Sources */,
 				AC273F8528AD493E0010E632 /* RequestLoggingPlugin.swift in Sources */,
 				D71CE4FD27903D4F00E8731D /* SubscriptionIntroductionView.swift in Sources */,
 				EE9B8B5827C387C50077BCFC /* StaticServer.swift in Sources */,
