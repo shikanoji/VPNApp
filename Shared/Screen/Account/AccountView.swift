@@ -176,7 +176,7 @@ struct AccountView: View {
                autohideIn: nil,
                closeOnTap: true,
                closeOnTapOutside: true) {
-            LogoutViewPopup(cancel: {
+            BottomViewPopup(cancel: {
                 viewModel.showLogoutConfirmation = false
             }, confim: {
                 viewModel.showLogoutConfirmation = false

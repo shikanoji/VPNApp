@@ -52,3 +52,6 @@
 "Logout.Confirm.Message" = "All VPN connections will be disconnected when you sign out. Are you sure you want to continue?";
 "Logout.Confirm" = "Confirm Sign Out";
 "Logout.SignOut" = "Sign Out";
+"Session.Terminal.Title" = "Terminate session";
+"Session.Terminal.Message" = "Are you sure to terminate this session";
+"Session.Terminal.Terminate" = "Terminate";

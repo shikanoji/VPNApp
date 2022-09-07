@@ -40,7 +40,8 @@ struct SessionVPNView: View {
                     ForEach(viewModel.deviceList.indices, id: \.self) { i in
                         SessionVPNCell(sessionVPN: viewModel.deviceList[i],
                                        position: viewModel.deviceList.getPosition(i)) {
-                            viewModel.disconnectSession(viewModel.deviceList[i])
+                            viewModel.sessionSelect = viewModel.deviceList[i]
+                            viewModel.showPopupView = true
                         }
                     }
                     .padding(.horizontal, Constant.Menu.hozitalPaddingCell)
@@ -60,6 +61,25 @@ struct SessionVPNView: View {
                       confirmAction: {
                 viewModel.showAlert = false
             })
+        }
+        .popup(isPresented: $viewModel.showPopupView,
+               type: .floater(verticalPadding: 10),
+               position: .bottom,
+               animation: .easeInOut,
+               autohideIn: nil,
+               closeOnTap: true,
+               closeOnTapOutside: true) {
+            BottomViewPopup(
+                titleStr: L10n.Account.Session.Terminal.title,
+                messageStr: L10n.Account.Session.Terminal.message,
+                confirmStr: L10n.Account.Session.Terminal.terminate,
+                warning: true,
+                cancel: {
+                    viewModel.showPopupView = false
+                }, confim: {
+                    viewModel.showPopupView = false
+                    viewModel.disconnectSession()
+                })
         }
         .onAppear {
             viewModel.getListSession()
