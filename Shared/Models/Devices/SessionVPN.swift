@@ -58,7 +58,7 @@ struct SessionResult: Codable {
     }
 }
 
-struct SessionVPN: Codable, Identifiable {
+struct SessionVPN: Codable, Identifiable, Equatable {
     var id: String
     
     var deviceId: String

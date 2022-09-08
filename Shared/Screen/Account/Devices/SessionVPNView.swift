@@ -13,9 +13,8 @@ struct SessionVPNView: View {
     @Binding var showTotalDevice: Bool
     
     @Binding var statusConnect: VPNStatus
-    @ObservedObject var viewModel: SessionVPNViewModel
+    @StateObject var viewModel: SessionVPNViewModel
     @Binding var shouldHideSessionList: Bool
-    
     @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
     
     var body: some View {
@@ -26,7 +25,7 @@ struct SessionVPNView: View {
                         .frame(height: 20)
                     CustomNavigationViewUpdate(
                         leftTitle: L10n.Account.AccountStatus.title,
-                        currentTitle: $viewModel.currentNumberDevice.string(),
+                        currentTitle: $viewModel.currentNumberDevice,
                         tapLeftButton: {
                             presentationMode.wrappedValue.dismiss()
                             shouldHideSessionList = true
@@ -37,7 +36,7 @@ struct SessionVPNView: View {
                         }, statusConnect: $statusConnect)
                     .padding(.bottom, Constant.Menu.topPaddingCell)
                     Spacer().frame(height: 15)
-                    ForEach(viewModel.deviceList.indices, id: \.self) { i in
+                    ForEach($viewModel.deviceList.indices, id: \.self) { i in
                         SessionVPNCell(sessionVPN: viewModel.deviceList[i],
                                        position: viewModel.deviceList.getPosition(i)) {
                             viewModel.sessionSelect = viewModel.deviceList[i]

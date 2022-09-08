@@ -9,7 +9,7 @@ import SwiftUI
 
 struct SessionVPNCell: View {
     
-    @State var sessionVPN: SessionVPN
+    var sessionVPN: SessionVPN
         
     var position: PositionItemCell = .middle
     
