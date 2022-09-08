@@ -118,6 +118,16 @@ public enum L10n {
       /// Cancel Subscription
       public static let cancelSubscription = L10n.tr("Account", "PaymentHistory.cancelSubscription", fallback: #"Cancel Subscription"#)
     }
+    public enum Session {
+      public enum Terminal {
+        /// Are you sure to terminate this session
+        public static let message = L10n.tr("Account", "Session.Terminal.Message", fallback: #"Are you sure to terminate this session"#)
+        /// Terminate
+        public static let terminate = L10n.tr("Account", "Session.Terminal.Terminate", fallback: #"Terminate"#)
+        /// Terminate session
+        public static let title = L10n.tr("Account", "Session.Terminal.Title", fallback: #"Terminate session"#)
+      }
+    }
   }
   public enum Board {
     /// Back to maps

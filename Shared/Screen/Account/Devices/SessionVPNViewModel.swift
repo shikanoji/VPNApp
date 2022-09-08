@@ -22,6 +22,9 @@ class SessionVPNViewModel: ObservableObject {
     @Published var showProgressView: Bool = false
     
     @Published var currentNumberDevice: Int = AppSetting.shared.currentNumberDevice
+    @Published var showPopupView: Bool = false
+    
+    var sessionSelect: SessionVPN?
      
     var error: APIError?
     var limit = AppSetting.shared.maxNumberDevices
@@ -60,7 +63,10 @@ class SessionVPNViewModel: ObservableObject {
             .disposed(by: disposedBag)
     }
     
-    func disconnectSession(_ device: SessionVPN) {
+    func disconnectSession() {
+        guard let device = sessionSelect else {
+            return
+        }
         if device.id == AppSetting.shared.currentSessionId {
             NotificationCenter.default.post(name: Constant.NameNotification.disconnectCurrentSession, object: nil)
         } else {

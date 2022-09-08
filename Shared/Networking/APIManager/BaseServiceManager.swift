@@ -34,7 +34,7 @@ class BaseServiceManager<API: TargetType> {
                 }
             }
             .handleResponse()
-            .filterSuccessfulStatusCodes()
+//            .filterSuccessfulStatusCodes()
             .retry(2)
     }
     
@@ -51,6 +51,10 @@ extension PrimitiveSequence where Trait == SingleTrait, Element == Response {
 //            }
             
             if (200 ... 299) ~= response.statusCode {
+                return Single.just(response)
+            }
+            
+            if response.statusCode == 400 {
                 return Single.just(response)
             }
             

@@ -50,10 +50,13 @@ struct MapView: View {
                     .aspectRatio(2048 / 1588, contentMode: .fill)
                 
                 if statusConnect != .connected {
-                    NodeMapView(selection: selection,
-                                mesh: mesh,
-                                scale: $currentAmount)
-                    .animation(.linear)
+                    if AppSetting.shared.getCurrentTab() == .location {
+                        NodeMapView(selection: selection,
+                                    mesh: mesh,
+                                    scale: $currentAmount,
+                                    statusConnect: $statusConnect)
+                        .animation(.linear)
+                    }
                 }
             }
         }, location: $location, enableUpdateMap: enableUpdateMap, updateZoomScale: {

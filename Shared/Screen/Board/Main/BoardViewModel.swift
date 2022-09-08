@@ -290,6 +290,9 @@ class BoardViewModel: ObservableObject {
     }
     
     func configDisconected() {
+        if state == .connected {
+            disconnectSession()
+        }
         connectOrDisconnectByUser = false
         state = .disconnected
         stateUI = .disconnected
@@ -298,7 +301,6 @@ class BoardViewModel: ObservableObject {
         stopSpeedTimer()
         nameSelect = ""
         isProcessingVPN = false
-        disconnectSession()
         
         if isSwitching {
             isSwitching = false
@@ -431,9 +433,7 @@ class BoardViewModel: ObservableObject {
         print("VPNStatusDidFail: \(notification.vpnError.localizedDescription)")
         
         stopSpeedTimer()
-        state = .disconnected
-        stateUI = .disconnected
-        
+        configDisconected()
         if isEnableReconect, !connectOrDisconnectByUser {
             startConnectVPN()
         }
