@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct NodePopupView: View {
-    @State var node: Node!
+    var node: Node!
     @Binding var scale: CGFloat
     
     let ensignSize: CGFloat = Constant.Board.NodePopupView.frameEnsign

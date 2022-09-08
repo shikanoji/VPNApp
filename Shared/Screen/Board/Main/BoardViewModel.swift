@@ -309,6 +309,7 @@ class BoardViewModel: ObservableObject {
     }
     
     func configDisconnect() {
+        connectOrDisconnectByUser = true
         stopSpeedTimer()
         numberReconnect = 0
         stateUI = .disconnected
