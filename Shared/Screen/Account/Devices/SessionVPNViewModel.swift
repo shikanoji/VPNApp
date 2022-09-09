@@ -11,7 +11,7 @@ import SwiftUI
 
 class SessionVPNViewModel: ObservableObject {
     @Published var deviceList: [SessionVPN] = []
-    @Published var showAlert: Bool = true
+    @Published var showAlert: Bool = false
     @Published var showProgressView: Bool = false
     
     @Published var currentNumberDevice: String = "\(AppSetting.shared.currentNumberDevice)"

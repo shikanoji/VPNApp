@@ -64,6 +64,7 @@ struct MapView: View {
             self.currentAmount = $0
         })
         .onAppear {
+            self.selection.removeSelectNode()
             self.enableUpdateMap = false
         }
         .onReceive(selection.$selectedNodeIDs) {

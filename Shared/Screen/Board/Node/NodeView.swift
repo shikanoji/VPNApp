@@ -24,12 +24,15 @@ struct NodeView: View {
         return scale > Constant.Board.Map.enableCityZoom ? (width + 4) : width
     }
     
-    @State var isCityNode = false
-    
     var body: some View {
         VStack(spacing: 5) {
-            NodePopupView(node: node, scale: $scale)
-                .opacity(isSelected ? 1 : 0)
+            if isSelected {
+                NodePopupView(node: node, scale: $scale)
+            } else {
+                Color.clear
+                    .frame(height: !node.isCity ?
+                           (Constant.Board.NodePopupView.heightContentPopupView + 4): (Constant.Board.NodePopupView.heightTriangle + Constant.Board.NodePopupView.heightContentPopupView + 34))
+            }
             ZStack {
                 Ellipse()
                     .fill(AppColor.themeColor)
