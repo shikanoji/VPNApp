@@ -28,12 +28,12 @@ class StopWatch: ObservableObject {
     }
 
     @objc func applicationDidEnterBackground(_ notification: NotificationCenter) {
-        updateTimerBG = true
         appDidEnterBackgroundDate = Date()
     }
 
     @objc func applicationWillEnterForeground(_ notification: NotificationCenter) {
         guard let previousDate = appDidEnterBackgroundDate else { return }
+        updateTimerBG = true
         let calendar = Calendar.current
         let difference = calendar.dateComponents([.second], from: previousDate, to: Date())
         let seconds = difference.second!

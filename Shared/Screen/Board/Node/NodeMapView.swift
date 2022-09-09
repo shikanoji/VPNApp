@@ -29,6 +29,7 @@ struct NodeMapView: View {
                             self.selection.selectNode(node)
                         }
                         .zIndex(selection.nodeIsSelected(node) ? 1 : 0)
+                        .animation(nil)
                 }
             }
         }

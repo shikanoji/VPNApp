@@ -287,9 +287,7 @@ class BoardViewModel: ObservableObject {
     }
     
     func configDisconected() {
-        if state == .connected {
-            disconnectSession()
-        }
+        disconnectSession()
         connectOrDisconnectByUser = false
         ip = AppSetting.shared.ip
         flag = ""
