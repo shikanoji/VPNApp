@@ -14,6 +14,32 @@ class StopWatch: ObservableObject {
     private let queue = DispatchQueue(label: "stopwatch.timer")
     private var counter: Int = 0
     
+    private var countTimerBG: Int = 0
+    private var appDidEnterBackgroundDate: Date?
+    private var updateTimerBG = false
+    
+    init() {
+        setup()
+    }
+    
+    func setup() {
+        NotificationCenter.default.addObserver(self, selector: #selector(applicationDidEnterBackground(_:)), name: UIApplication.didEnterBackgroundNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(applicationWillEnterForeground(_:)), name: UIApplication.willEnterForegroundNotification, object: nil)
+    }
+
+    @objc func applicationDidEnterBackground(_ notification: NotificationCenter) {
+        updateTimerBG = true
+        appDidEnterBackgroundDate = Date()
+    }
+
+    @objc func applicationWillEnterForeground(_ notification: NotificationCenter) {
+        guard let previousDate = appDidEnterBackgroundDate else { return }
+        let calendar = Calendar.current
+        let difference = calendar.dateComponents([.second], from: previousDate, to: Date())
+        let seconds = difference.second!
+        countTimerBG += seconds
+    }
+    
     var stopWatchTime = "00:00:00" {
         didSet {
             self.update()
@@ -94,7 +120,17 @@ class StopWatch: ObservableObject {
         self.sourceTimer?.resume()
     }
     
+    private func updateTimerWithBG() {
+        if updateTimerBG {
+            self.counter += countTimerBG
+            countTimerBG = 0
+            updateTimerBG = false
+            appDidEnterBackgroundDate = nil
+        }
+    }
+    
     private func updateTimer() {
+        updateTimerWithBG()
         self.counter += 1
         
         DispatchQueue.main.async {

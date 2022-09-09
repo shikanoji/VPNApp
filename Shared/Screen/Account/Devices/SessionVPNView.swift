@@ -55,9 +55,8 @@ struct SessionVPNView: View {
         .background(AppColor.background)
         .ignoresSafeArea()
         .popup(isPresented: $viewModel.showAlert, type: .floater(verticalPadding: 10), position: .bottom, animation: .easeInOut, autohideIn: 10, closeOnTap: false, closeOnTapOutside: true) {
-            PopupSelectView(title: viewModel.error?.title ?? "",
-                      message: viewModel.error?.description ?? "",
-                      confirmAction: {
+            PopupSelectView(message: viewModel.error?.description ?? "",
+                            confirmAction: {
                 viewModel.showAlert = false
             })
         }

@@ -87,6 +87,7 @@ struct MapView: View {
         }
         .animation(.easeIn)
         .edgesIgnoringSafeArea(.all)
+        .allowsHitTesting(!(statusConnect == .connecting))
     }
     
     func moveToNode(x: CGFloat, y: CGFloat) {

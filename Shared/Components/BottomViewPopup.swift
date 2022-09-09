@@ -16,8 +16,8 @@ struct BottomViewPopup: View {
     
     var warning = false
     
-    var cancel: (() -> Void)?
-    var confim: (() -> Void)?
+    var cancel: (() -> Void)? = nil
+    var confim: (() -> Void)? = nil
     
     var title: some View {
         HStack {
@@ -39,7 +39,9 @@ struct BottomViewPopup: View {
             title
             message
             AppButton(width: .infinity, backgroundColor: warning ? AppColor.redradient : AppColor.darkButton, textColor: Color.white , text: confirmStr) {
-                confim?()
+                if confim != nil {
+                    confim?()
+                }
             }
         }
         .padding(20)
@@ -59,7 +61,9 @@ struct BottomViewPopup: View {
                 Spacer().frame(height: 40)
                 HStack {
                     Button {
-                        cancel?()
+                        if cancel != nil {
+                            cancel?()
+                        }
                     } label: {
                         Asset.Assets.close.swiftUIImage
                     }
