@@ -14,8 +14,6 @@ struct PopupSelectView: View {
         static let buttonHeight: CGFloat = 30
         static let buttonWidth: CGFloat = 120
     }
-    
-    var title: String = ""
     var message: String = ""
     
     var cancelTitle = ""
@@ -27,9 +25,6 @@ struct PopupSelectView: View {
     var body: some View {
         HStack(spacing: 0) {
             VStack(alignment: .leading, spacing: 5) {
-                if !title.isEmpty {
-                    Text(title).setDefaultBold()
-                }
                 if !message.isEmpty {
                     Text(message)
                         .font(.system(size: Size.bodyTextSize, weight: .semibold))

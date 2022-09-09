@@ -127,7 +127,7 @@ extension AppSetting {
             let autoConnectNode = try! JSONDecoder().decode(Node.self, from: dataAutoConnectNode)
             return autoConnectNode
         }
-        return nil
+        return AppSetting.shared.getNodeSelect()
     }
     
     func saveMutilhopList(_ arr: [MultihopModel]) {

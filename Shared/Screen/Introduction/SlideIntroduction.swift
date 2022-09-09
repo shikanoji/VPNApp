@@ -34,6 +34,11 @@ struct IntroductionPage: Hashable {
 }
 
 struct SlideIntroduction: View {
+    
+    init(){
+        UIPageControl.appearance().currentPageIndicatorTintColor = UIColor(Color.themeColor)
+    }
+    
     var body: some View {
         TabView {
             ForEach(IntroductionPage.getList(), id: \.self) { intro in
@@ -61,4 +66,8 @@ struct SlideIntroduction_Previews: PreviewProvider {
     static var previews: some View {
         SlideIntroduction()
     }
+}
+
+extension Color {
+    static let themeColor = Color("darkThemeColor")
 }

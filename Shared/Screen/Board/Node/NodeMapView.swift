@@ -7,6 +7,7 @@
 
 import Foundation
 import SwiftUI
+import TunnelKitManager
 
 struct NodeMapView: View {
     @ObservedObject var selection: SelectionHandler
@@ -15,9 +16,12 @@ struct NodeMapView: View {
     
     @Binding var scale: CGFloat
     
+    @Binding var statusConnect: VPNStatus
+    
     var body: some View {
         ZStack {
             ForEach(mesh.showCityNodes ? mesh.cityNodes : mesh.countryNodes) { node in
+                if (statusConnect == .connecting && selection.isNodeSelected(node)) || statusConnect != .connecting {
                     NodeView(scale: $scale, node: node, selection: self.selection)
                         .position(x: Constant.convertXToMap(node.x),
                                   y: Constant.convertYToMap(node.y, mesh.showCityNodes))
@@ -25,6 +29,8 @@ struct NodeMapView: View {
                             self.selection.selectNode(node)
                         }
                         .zIndex(selection.nodeIsSelected(node) ? 1 : 0)
+                        .animation(nil)
+                }
             }
         }
         .contentShape(Rectangle())
@@ -43,6 +49,6 @@ struct NodeMapView_Previews: PreviewProvider {
     
     static var previews: some View {
         let selection = SelectionHandler()
-        return NodeMapView(selection: selection, mesh: mesh, scale: $scale)
+        return NodeMapView(selection: selection, mesh: mesh, scale: $scale, statusConnect: .constant(.connected))
     }
 }

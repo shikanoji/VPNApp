@@ -50,10 +50,13 @@ struct MapView: View {
                     .aspectRatio(2048 / 1588, contentMode: .fill)
                 
                 if statusConnect != .connected {
-                    NodeMapView(selection: selection,
-                                mesh: mesh,
-                                scale: $currentAmount)
-                    .animation(.linear)
+                    if AppSetting.shared.getCurrentTab() == .location {
+                        NodeMapView(selection: selection,
+                                    mesh: mesh,
+                                    scale: $currentAmount,
+                                    statusConnect: $statusConnect)
+                        .animation(.linear)
+                    }
                 }
             }
         }, location: $location, enableUpdateMap: enableUpdateMap, updateZoomScale: {
@@ -61,6 +64,7 @@ struct MapView: View {
             self.currentAmount = $0
         })
         .onAppear {
+            self.selection.removeSelectNode()
             self.enableUpdateMap = false
         }
         .onReceive(selection.$selectedNodeIDs) {
@@ -84,6 +88,7 @@ struct MapView: View {
         }
         .animation(.easeIn)
         .edgesIgnoringSafeArea(.all)
+        .allowsHitTesting(!(statusConnect == .connecting))
     }
     
     func moveToNode(x: CGFloat, y: CGFloat) {

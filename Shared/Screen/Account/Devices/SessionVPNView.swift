@@ -13,9 +13,8 @@ struct SessionVPNView: View {
     @Binding var showTotalDevice: Bool
     
     @Binding var statusConnect: VPNStatus
-    @ObservedObject var viewModel: SessionVPNViewModel
+    @StateObject var viewModel: SessionVPNViewModel
     @Binding var shouldHideSessionList: Bool
-    
     @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
     
     var body: some View {
@@ -26,7 +25,7 @@ struct SessionVPNView: View {
                         .frame(height: 20)
                     CustomNavigationViewUpdate(
                         leftTitle: L10n.Account.AccountStatus.title,
-                        currentTitle: $viewModel.currentNumberDevice.string(),
+                        currentTitle: $viewModel.currentNumberDevice,
                         tapLeftButton: {
                             presentationMode.wrappedValue.dismiss()
                             shouldHideSessionList = true
@@ -37,10 +36,11 @@ struct SessionVPNView: View {
                         }, statusConnect: $statusConnect)
                     .padding(.bottom, Constant.Menu.topPaddingCell)
                     Spacer().frame(height: 15)
-                    ForEach(viewModel.deviceList.indices, id: \.self) { i in
+                    ForEach($viewModel.deviceList.indices, id: \.self) { i in
                         SessionVPNCell(sessionVPN: viewModel.deviceList[i],
                                        position: viewModel.deviceList.getPosition(i)) {
-                            viewModel.disconnectSession(viewModel.deviceList[i])
+                            viewModel.sessionSelect = viewModel.deviceList[i]
+                            viewModel.showPopupView = true
                         }
                     }
                     .padding(.horizontal, Constant.Menu.hozitalPaddingCell)
@@ -55,11 +55,29 @@ struct SessionVPNView: View {
         .background(AppColor.background)
         .ignoresSafeArea()
         .popup(isPresented: $viewModel.showAlert, type: .floater(verticalPadding: 10), position: .bottom, animation: .easeInOut, autohideIn: 10, closeOnTap: false, closeOnTapOutside: true) {
-            PopupSelectView(title: viewModel.error?.title ?? "",
-                      message: viewModel.error?.description ?? "",
-                      confirmAction: {
+            PopupSelectView(message: viewModel.error?.description ?? "Error",
+                            confirmAction: {
                 viewModel.showAlert = false
             })
+        }
+        .popup(isPresented: $viewModel.showPopupView,
+               type: .floater(verticalPadding: 10),
+               position: .bottom,
+               animation: .easeInOut,
+               autohideIn: nil,
+               closeOnTap: true,
+               closeOnTapOutside: true) {
+            BottomViewPopup(
+                titleStr: L10n.Account.Session.Terminal.title,
+                messageStr: L10n.Account.Session.Terminal.message,
+                confirmStr: L10n.Account.Session.Terminal.terminate,
+                warning: true,
+                cancel: {
+                    viewModel.showPopupView = false
+                }, confim: {
+                    viewModel.showPopupView = false
+                    viewModel.disconnectSession()
+                })
         }
         .onAppear {
             viewModel.getListSession()

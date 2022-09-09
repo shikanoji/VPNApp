@@ -8,14 +8,20 @@
 import Foundation
 import SwiftUI
 
-struct LogoutViewPopup: View {
+struct BottomViewPopup: View {
     
-    var cancel: (() -> Void)?
-    var confim: (() -> Void)?
+    var titleStr = L10n.Account.Logout.confirm
+    var messageStr = L10n.Account.Logout.Confirm.message
+    var confirmStr = L10n.Account.signout
+    
+    var warning = false
+    
+    var cancel: (() -> Void)? = nil
+    var confim: (() -> Void)? = nil
     
     var title: some View {
         HStack {
-            Text(L10n.Account.Logout.confirm)
+            Text(titleStr)
                 .font(.system(size: 18, weight: .bold))
                 .foregroundColor(Color.white)
             Spacer()
@@ -23,17 +29,19 @@ struct LogoutViewPopup: View {
     }
     
     var message: some View {
-        Text(L10n.Account.Logout.Confirm.message)
+        Text(messageStr)
             .font(.system(size: 14, weight: .regular))
             .foregroundColor(AppColor.yellowGradient)
     }
     
     var content: some View {
-        VStack(spacing: 30) {
+        VStack(alignment: .leading, spacing: 30) {
             title
             message
-            AppButton(width: .infinity, backgroundColor: AppColor.darkButton, textColor: Color.white , text: L10n.Account.signout) {
-                confim?()
+            AppButton(width: .infinity, backgroundColor: warning ? AppColor.redradient : AppColor.darkButton, textColor: Color.white , text: confirmStr) {
+                if confim != nil {
+                    confim?()
+                }
             }
         }
         .padding(20)
@@ -53,7 +61,9 @@ struct LogoutViewPopup: View {
                 Spacer().frame(height: 40)
                 HStack {
                     Button {
-                        cancel?()
+                        if cancel != nil {
+                            cancel?()
+                        }
                     } label: {
                         Asset.Assets.close.swiftUIImage
                     }

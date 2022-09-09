@@ -143,7 +143,6 @@ class BoardViewModel: ObservableObject {
     @Published var showProgressView: Bool = false
     
     var disconnectBeforeConnecting = false
-    var isProcessingVPN = false
     
     var checkStateFirstLoad = true
     
@@ -244,7 +243,7 @@ class BoardViewModel: ObservableObject {
     }
     
     @objc private func autoConnectWithConfig() {
-        if Connectivity.sharedInstance.isReachable, !isProcessingVPN {
+        if Connectivity.sharedInstance.isReachable {
             switch self.autoConnectType {
             case .always:
                 ConnectOrDisconnectVPN()
@@ -277,41 +276,39 @@ class BoardViewModel: ObservableObject {
             if connectOrDisconnectByUser {
                 showAlertAutoConnectSetting = true
             } else {
-                if !isProcessingVPN {
-                    switch state {
-                    case .disconnected:
-                        configStartConnectVPN()
-                    default:
-                        break
-                    }
+                switch state {
+                case .disconnected:
+                    configStartConnectVPN()
+                default:
+                    break
                 }
             }
         }
     }
     
     func configDisconected() {
+        disconnectSession()
         connectOrDisconnectByUser = false
-        state = .disconnected
-        stateUI = .disconnected
         ip = AppSetting.shared.ip
         flag = ""
         stopSpeedTimer()
         nameSelect = ""
-        isProcessingVPN = false
-        disconnectSession()
         
         if isSwitching {
             isSwitching = false
             configStartConnectVPN()
         }
+        
+        if autoConnectType == .off {
+            stopAutoconnectTimer()
+        }
     }
     
     func configDisconnect() {
-        stopSpeedTimer()
+        connectOrDisconnectByUser = true
         numberReconnect = 0
         stateUI = .disconnected
         isCheckingAutoConnect = false
-        isProcessingVPN = true
         NetworkManager.shared.disconnect()
     }
     
@@ -319,7 +316,6 @@ class BoardViewModel: ObservableObject {
         if state == .disconnected {
             disconnectBeforeConnecting = false
             numberReconnect = 0
-            isProcessingVPN = true
             stateUI = .connecting
             startConnectVPN()
         }
@@ -348,8 +344,6 @@ class BoardViewModel: ObservableObject {
     var connectOrDisconnectByUser = false
     
     func configConnected() {
-        state = .connected
-        stateUI = .connected
         numberReconnect = 0
         connectOrDisconnectByUser = false
         stopSpeedTimer()
@@ -374,56 +368,29 @@ class BoardViewModel: ObservableObject {
             nameSelect = NetworkManager.shared.selectStaticServer?.countryName ?? ""
         }
         getSpeedRealTime()
-
-        isProcessingVPN = false
     }
     
     @objc private func VPNStatusDidChange(notification: Notification) {
        
         print("VPNStatusDidChange: \(notification.vpnStatus)")
-        switch notification.vpnStatus {
+        
+        guard state != notification.vpnStatus else {
+            return
+        }
+        
+        state = notification.vpnStatus
+        
+        if stateUI != state {
+            stateUI = state
+        }
+        
+        switch stateUI {
         case .connected:
-            if firstLoad {
-                configConnected()
-                firstLoad = false
-            }
-            
-            guard isProcessingVPN else {
-                return
-            }
-            
-            guard disconnectBeforeConnecting else {
-                return
-            }
-            
-            guard state == .connecting else {
-                return
-            }
-
             configConnected()
-            
         case .disconnected:
-            if firstLoad {
-                configDisconected()
-                firstLoad = false
-            }
-            
-            if !disconnectBeforeConnecting {
-                disconnectBeforeConnecting = true
-            }
-            
-            if state == .disconnecting {
-                if (isEnableReconect && !connectOrDisconnectByUser) {
-                    startConnectVPN()
-                } else {
-                    configDisconected()
-                }
-            } else if state == .connecting || (state == .connected && !isProcessingVPN) {
-                configDisconected()
-            }
-            
+            configDisconected()
         default:
-            state = notification.vpnStatus
+            break
         }
     }
     
@@ -431,9 +398,7 @@ class BoardViewModel: ObservableObject {
         print("VPNStatusDidFail: \(notification.vpnError.localizedDescription)")
         
         stopSpeedTimer()
-        state = .disconnected
-        stateUI = .disconnected
-        
+        configDisconected()
         if isEnableReconect, !connectOrDisconnectByUser {
             startConnectVPN()
         }
@@ -466,7 +431,7 @@ class BoardViewModel: ObservableObject {
         checkInternetTimer!.setEventHandler { [weak self] in
             switch self?.autoConnectType {
             case .always, .onWifi, .onMobile:
-                if self?.state == .disconnected && !(self?.isProcessingVPN ?? false) {
+                if self?.stateUI == .disconnected {
                     self?.autoConnectWithConfig()
                 }
             default:
