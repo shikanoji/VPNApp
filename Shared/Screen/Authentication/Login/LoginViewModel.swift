@@ -23,7 +23,6 @@ class LoginViewModel: NSObject, ObservableObject {
     private let disposedBag = DisposeBag()
     var authentication: Authentication?
     var loginDisable: Bool {
-        return false
         email.isEmpty || password.isEmpty
     }
     
@@ -38,7 +37,7 @@ class LoginViewModel: NSObject, ObservableObject {
     func login() {
         showProgressView = true
         
-        ServiceManager.shared.login(email: "test@gmail.com", password: "X12345678")
+        ServiceManager.shared.login(email: email, password: password)
             .subscribe(onSuccess: { [self] response in
                 self.showProgressView = false
                 if let result = response.result {
