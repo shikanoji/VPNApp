@@ -142,19 +142,15 @@ class BoardViewModel: ObservableObject {
     
     @Published var showProgressView: Bool = false
     
-    var disconnectBeforeConnecting = false
-    
-    var checkStateFirstLoad = true
-    
     var error: APIError?
     
     let disposedBag = DisposeBag()
     
     var isSwitching = false
     
-    // MARK: Function
+    var reconnectWhenLoseInternet = false
     
-    var firstLoad = true
+    // MARK: Function
     
     init() {
         tab = AppSetting.shared.getCurrentTab()
@@ -294,6 +290,9 @@ class BoardViewModel: ObservableObject {
         stopSpeedTimer()
         nameSelect = ""
         
+        state = .disconnected
+        stateUI = .disconnected
+        
         if isSwitching {
             isSwitching = false
             configStartConnectVPN()
@@ -314,7 +313,6 @@ class BoardViewModel: ObservableObject {
     
     func configStartConnectVPN() {
         if state == .disconnected {
-            disconnectBeforeConnecting = false
             numberReconnect = 0
             stateUI = .connecting
             startConnectVPN()
@@ -388,7 +386,14 @@ class BoardViewModel: ObservableObject {
         case .connected:
             configConnected()
         case .disconnected:
-            configDisconected()
+            if autoConnectType == .off && !Connectivity.sharedInstance.isReachable {
+                reconnectWhenLoseInternetRealTime()
+            }
+            if isEnableReconect, !connectOrDisconnectByUser {
+                startConnectVPN()
+            } else {
+                configDisconected()
+            }
         default:
             break
         }
@@ -402,6 +407,28 @@ class BoardViewModel: ObservableObject {
         if isEnableReconect, !connectOrDisconnectByUser {
             startConnectVPN()
         }
+    }
+    
+    var reconnectWhenLoseInternetTimer: DispatchSourceTimer?
+    
+    func reconnectWhenLoseInternetRealTime() {
+        let queue = DispatchQueue.main
+        reconnectWhenLoseInternetTimer = DispatchSource.makeTimerSource(queue: queue)
+        reconnectWhenLoseInternetTimer!.schedule(deadline: .now(), repeating: .seconds(3))
+        reconnectWhenLoseInternetTimer!.setEventHandler { [weak self] in
+            if Connectivity.sharedInstance.isReachable {
+                self?.stopReconnectWhenLoseInternetTimer()
+                self?.configStartConnectVPN()
+            }
+            if self?.state == .connected {
+                self?.stopReconnectWhenLoseInternetTimer()
+            }
+        }
+        reconnectWhenLoseInternetTimer!.resume()
+    }
+    
+    func stopReconnectWhenLoseInternetTimer() {
+        reconnectWhenLoseInternetTimer = nil
     }
     
     var checkInternetTimer: DispatchSourceTimer?
@@ -468,6 +495,7 @@ class BoardViewModel: ObservableObject {
     deinit {
         stopSpeedTimer()
         stopAutoconnectTimer()
+        stopReconnectWhenLoseInternetTimer()
     }
     
     func internetNotAvaiable() {
@@ -626,6 +654,7 @@ class BoardViewModel: ObservableObject {
         
         guard Connectivity.sharedInstance.isReachable else {
             internetNotAvaiable()
+            configDisconected()
             return
         }
         ServiceManager.shared.getRequestCertificate(currentTab: tab, asNewConnection: asNewConnection)
