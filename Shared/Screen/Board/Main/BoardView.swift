@@ -289,6 +289,7 @@ struct BoardView: View {
                                   uploadSpeed: viewModel.uploadSpeed,
                                   downloadSpeed: viewModel.downloadSpeed)
                     .onTapGesture {
+                        AppSetting.shared.temporaryDisableAutoConnect = false
                         viewModel.connectOrDisconnectByUser = true
                         viewModel.ConnectOrDisconnectVPN()
                     }
