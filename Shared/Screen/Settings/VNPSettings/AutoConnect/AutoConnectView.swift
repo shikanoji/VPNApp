@@ -64,6 +64,7 @@ struct AutoConnectView: View {
                                         switchValue: item.select,
                                         onSwitchValueChange: { value in
                                 if value {
+                                    AppSetting.shared.temporaryDisableAutoConnect = false
                                     viewModel.configItem(item)
                                 }
                             })

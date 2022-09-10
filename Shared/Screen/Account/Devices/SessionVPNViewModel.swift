@@ -61,6 +61,9 @@ class SessionVPNViewModel: ObservableObject {
             return
         }
         if device.id == AppSetting.shared.currentSessionId {
+            if ItemCell(type: AppSetting.shared.getAutoConnectProtocol()).type != .off {
+                AppSetting.shared.temporaryDisableAutoConnect = true
+            }
             NotificationCenter.default.post(name: Constant.NameNotification.disconnectCurrentSession, object: nil)
         }
         self.showProgressView = true
