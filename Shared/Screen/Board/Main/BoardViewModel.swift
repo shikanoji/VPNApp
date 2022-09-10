@@ -272,7 +272,11 @@ class BoardViewModel: ObservableObject {
                 }
             }
         default:
-            if connectOrDisconnectByUser {
+            guard !AppSetting.shared.temporaryDisableAutoConnect else {
+                configDisconnect()
+                return
+            }
+            if connectOrDisconnectByUser, state == .connected {
                 showAlertAutoConnectSetting = true
             } else {
                 switch state {

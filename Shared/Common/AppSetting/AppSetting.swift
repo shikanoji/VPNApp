@@ -48,6 +48,7 @@ enum AppKeys: String {
     case nodeSelect = "nodeSelect"
     case staticSelect = "staticSelect"
     case multiSelect = "multiSelect"
+    case temporaryDisableAutoConnect = "temporaryDisableAutoConnect"
     
     ///Last Time when Data Map Update
     case lastChange = "lastChange"
