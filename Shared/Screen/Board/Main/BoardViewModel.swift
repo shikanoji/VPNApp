@@ -258,6 +258,9 @@ class BoardViewModel: ObservableObject {
     }
     
     func ConnectOrDisconnectVPN() {
+        guard [.connected, .disconnected].contains(state) else {
+            return
+        }
         switch autoConnectType {
         case .off:
             if connectOrDisconnectByUser {
