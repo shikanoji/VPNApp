@@ -213,7 +213,8 @@ struct BoardView: View {
     func toastView() -> some View {
         VStack{
             Spacer()
-            PopupSelectView(message: "An error occurred",
+            
+            PopupSelectView(message: viewModel.error?.description ?? "An error occurred",
                             confirmTitle: "DISMISS",
                             confirmAction: {
                 viewModel.showAlert = false
