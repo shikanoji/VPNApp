@@ -46,7 +46,7 @@ struct AutoConnectDestinationSelectView: View {
                 }
             }
         }
-        .background(PopupBackgroundView())
+        .background(AppColor.background)
         .ignoresSafeArea()
         .onAppear(perform: {
             viewModel.getCountryList()

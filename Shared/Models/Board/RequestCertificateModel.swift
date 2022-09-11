@@ -202,7 +202,7 @@ enum RequestCerAPI: Codable {
     init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
         switch NetworkManager.shared.selectConfig {
-        case .openVPNTCP, .recommend, .openVPNUDP:
+        case .openVPNTCP, .recommended, .openVPNUDP:
             if let _requestCer = try? container.decode(RequestCertificateModel.self) {
                 self = .requestCer(_requestCer)
                 return

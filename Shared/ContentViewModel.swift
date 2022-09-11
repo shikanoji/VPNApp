@@ -16,7 +16,6 @@ import RxSwift
 class ContentViewModel: ObservableObject {
     @Published var showAlert: Bool = false
     @Published var getIpInfoSuccess = false
-    @Published var showProgressView: Bool = false
     
     var alertMessage = ""
     
@@ -24,23 +23,12 @@ class ContentViewModel: ObservableObject {
     
     /// api get ip info in app
     func getIpInfo(completion: @escaping () -> Void) {
-        showProgressView = true
-        
         ServiceManager.shared.getAppSettings()
             .subscribe(onSuccess: { [self] response in
-                self.showProgressView = false
                 if let result = response.result{
                     AppSetting.shared.configAppSettings(result)
                     completion()
                 } else {
-                    let error = response.errors
-                    if error.count > 0, let message = error[0] as? String {
-                        alertMessage = message
-                        showAlert = true
-                    } else if !response.message.isEmpty {
-                        alertMessage = response.message
-                        showAlert = true
-                    }
                     self.getIpInfoOptional { _ in
                         completion()
                     }
@@ -54,22 +42,66 @@ class ContentViewModel: ObservableObject {
     }
     
     init() {
+        getState()
+    }
+    
+    func getState() {
         getIpInfo {
-            self.getIpInfoSuccess = true
+            if AppSetting.shared.loadDataMap {
+                self.getCountryList {
+                    self.getMultihopList {
+                        self.getIpInfoSuccess = true
+                    }
+                }
+            } else {
+                self.getIpInfoSuccess = true
+            }
         }
+    }
+    
+    func getCountryList(completion: @escaping () -> Void) {
+        guard Connectivity.sharedInstance.isReachable else {
+            completion()
+            return
+        }
+        
+        ServiceManager.shared.getCountryList()
+            .subscribe { response in
+                if let result = response.result {
+                    AppSetting.shared.saveDataMap(result)
+                }
+                completion()
+            } onFailure: { _ in
+                completion()
+            }
+            .disposed(by: disposedBag)
+    }
+    
+    func getMultihopList(completion: @escaping () -> Void) {
+        guard Connectivity.sharedInstance.isReachable else {
+            completion()
+            return
+        }
+        
+        ServiceManager.shared.getMutihopList()
+            .subscribe { response in
+                if let result = response.result {
+                    AppSetting.shared.saveMutilhopList(result)
+                }
+                completion()
+            } onFailure: { error in
+                completion()
+            }
+            .disposed(by: disposedBag)
     }
     
     /// api get ip info optional
     func getIpInfoOptional(completion: @escaping (()) -> Void) {
-        showProgressView = true
-        
         ServiceManager.shared.getIpInfoOptional()
             .subscribe(onSuccess: { [self] response in
-                self.showProgressView = false
                 configIpInfo(response)
                 completion(())
             }, onFailure: { error in
-                self.showProgressView = false
                 completion(())
             })
             .disposed(by: disposedBag)

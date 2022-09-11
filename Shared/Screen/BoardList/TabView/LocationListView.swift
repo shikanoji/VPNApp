@@ -102,15 +102,17 @@ struct LocationListView: View {
     }
     
     var nodeListSearch: [Node] {
-        if searchText.isEmpty {
-            return []
-        } else {
-            var allNode: [Node] = []
-            for i in 0..<locationData.count {
-                if locationData[i].type == .all {
-                    allNode += locationData[i].list
-                }
+        
+        var allNode: [Node] = []
+        for i in 0..<locationData.count {
+            if locationData[i].type == .all {
+                allNode += locationData[i].list
             }
+        }
+        
+        if searchText.isEmpty {
+            return allNode
+        } else {
             return allNode.filter {
                 AppSetting.shared.isExitSearch(searchText, name: $0.name, iso2: $0.iso2, iso3: $0.iso3)
             }

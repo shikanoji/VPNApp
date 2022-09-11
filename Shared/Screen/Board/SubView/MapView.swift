@@ -21,10 +21,7 @@ struct MapView: View {
     @State var widthMap: CGFloat = Constant.Board.Map.heightScreen * Constant.Board.Map.ration
     @State var heightMap: CGFloat = Constant.Board.Map.heightScreen
     
-    @State private var location: CGPoint = CGPoint(
-        x: Constant.Board.Map.widthScreen / 2,
-        y: Constant.Board.Map.heightScreen / 2
-    )
+    @State private var location: CGPoint = AppSetting.shared.getLocationMap()
     
     @GestureState private var fingerLocation: CGPoint? = nil
     @GestureState private var startLocation: CGPoint? = nil
@@ -50,13 +47,11 @@ struct MapView: View {
                     .aspectRatio(2048 / 1588, contentMode: .fill)
                 
                 if statusConnect != .connected {
-                    if AppSetting.shared.getCurrentTab() == .location {
-                        NodeMapView(selection: selection,
-                                    mesh: mesh,
-                                    scale: $currentAmount,
-                                    statusConnect: $statusConnect)
-                        .animation(.linear)
-                    }
+                    NodeMapView(selection: selection,
+                                mesh: mesh,
+                                scale: $currentAmount,
+                                statusConnect: $statusConnect)
+                    .animation(.linear)
                 }
             }
         }, location: $location, enableUpdateMap: enableUpdateMap, updateZoomScale: {
@@ -166,10 +161,7 @@ struct ZoomableScrollView<Content: View>: UIViewRepresentable {
         
         scrollView.addSubview(hostedView)
         
-        let leftMargin: CGFloat = (scrollView.frame.size.width - hostedView.bounds.width)*0.5
-        let topMargin: CGFloat = (scrollView.frame.size.height - hostedView.bounds.height)*0.5
-
-        scrollView.contentOffset = CGPoint(x: max(0,-leftMargin), y: max(0,-topMargin));
+        scrollView.contentOffset = CGPoint(x: 0, y: 0)
         
         scrollView.contentSize = CGSize(
             width: hostedView.bounds.width,

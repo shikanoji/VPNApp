@@ -15,7 +15,7 @@ import TunnelKitCore
 extension ItemCellType {
     var getConfigParam: String {
         switch self {
-        case .openVPNTCP, .recommend, .openVPNUDP:
+        case .openVPNTCP, .recommended, .openVPNUDP:
             return "ovpn"
         case .wireGuard:
             return "wg"
@@ -94,7 +94,7 @@ class NetworkManager: ObservableObject {
     
     func connect() {
         switch selectConfig {
-        case .openVPNTCP, .recommend, .openVPNUDP:
+        case .openVPNTCP, .recommended, .openVPNUDP:
             OpenVPNManager.shared.connect()
         case .wireGuard:
             WireGuardManager.shared.connect()
@@ -105,7 +105,7 @@ class NetworkManager: ObservableObject {
     
     func disconnect() {
         switch selectConfig {
-        case .openVPNTCP, .recommend, .openVPNUDP:
+        case .openVPNTCP, .recommended, .openVPNUDP:
             OpenVPNManager.shared.disconnect()
         case .wireGuard:
             WireGuardManager.shared.disconnect()
@@ -115,6 +115,6 @@ class NetworkManager: ObservableObject {
     }
     
     func getNodeConnect() -> Node? {
-        return ItemCell(type: AppSetting.shared.getAutoConnectProtocol()).type != .off ? AppSetting.shared.getAutoConnectNode() : selectNode
+        return ItemCell(type: AppSetting.shared.getAutoConnectProtocol()).type != .off ? AppSetting.shared.getAutoConnectNodeToConnect() : selectNode
     }
 }

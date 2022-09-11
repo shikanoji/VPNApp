@@ -21,9 +21,7 @@ struct ContentView: View {
         ZStack{
             AppColor.background
             if !viewModel.getIpInfoSuccess {
-                if viewModel.showProgressView {
-                    AnimationLogo()
-                }
+                AnimationLogo()
             } else {
                 NavigationView {
                     if AppSetting.shared.showedNotice {
