@@ -108,7 +108,7 @@ struct BoardView: View {
             if viewModel.showAlertSessionSetting {
                 VStack{
                     Spacer()
-                    PopupSelectView(message: "Need terminal some sessions",
+                    PopupSelectView(message: "Need terminate other sessions",
                                     confirmTitle: "Open Sessions",
                                     confirmAction: {
                         viewModel.showAlertSessionSetting = false
@@ -118,7 +118,19 @@ struct BoardView: View {
                     .padding(.bottom, 20)
                 }
             }
-            
+
+            if viewModel.showSessionTerminatedAlert {
+                VStack{
+                    Spacer()
+                    PopupSelectView(message: "Session terminated",
+                                    confirmTitle: "OK",
+                                    confirmAction: {
+                        viewModel.showSessionTerminatedAlert = false
+                    })
+                    .frame(alignment: .bottom)
+                    .padding(.bottom, 20)
+                }
+            }
             
             if viewModel.showAlertAutoConnectSetting {
                 VStack{

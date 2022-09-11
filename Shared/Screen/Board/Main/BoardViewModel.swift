@@ -136,7 +136,7 @@ class BoardViewModel: ObservableObject {
     }
     
     @Published var showAlertAutoConnectSetting: Bool = false
-    
+    @Published var showSessionTerminatedAlert: Bool = false
     @Published var showAlertSessionSetting: Bool = false
     @Published var shouldHideSession = true
     
@@ -327,7 +327,7 @@ class BoardViewModel: ObservableObject {
     }
     
     func startConnectVPN() {
-        getRequestCertificate {
+        getRequestCertificate(asNewConnection: AppSetting.shared.needToStartNewSession) {
             if $0 {
                 NetworkManager.shared.connect()
             } else {
@@ -396,7 +396,8 @@ class BoardViewModel: ObservableObject {
             if autoConnectType == .off && !Connectivity.sharedInstance.isReachable {
                 reconnectWhenLoseInternetRealTime()
             }
-            if isEnableReconect, !connectOrDisconnectByUser {
+            if isEnableReconect,
+               !connectOrDisconnectByUser {
                 startConnectVPN()
             } else {
                 configDisconected()
@@ -408,7 +409,6 @@ class BoardViewModel: ObservableObject {
     
     @MainActor @objc private func VPNDidFail(notification: Notification) {
         print("VPNStatusDidFail: \(notification.vpnError.localizedDescription)")
-        
         stopSpeedTimer()
         configDisconected()
         if isEnableReconect, !connectOrDisconnectByUser {
@@ -669,58 +669,42 @@ class BoardViewModel: ObservableObject {
                 guard let `self` = self else {
                     return
                 }
-                
                 self.showProgressView = false
-                
                 if let result = response.result {
-                    switch NetworkManager.shared.selectConfig {
-                    case .openVPNTCP, .recommend, .openVPNUDP:
-                        if let cer = result.getRequestCer {
-                            if !cer.exceedLimit {
-                                if cer.allowReconnect {
-                                    NetworkManager.shared.requestCertificate = cer
-                                    AppSetting.shared.currentSessionId = NetworkManager.shared.requestCertificate?.sessionId ?? ""
-                                    completion(true)
-                                    return
-                                } else {
-                                    self.getRequestCertificate(asNewConnection: true) {
-                                        completion($0)
-                                        return
-                                    }
-                                }
-                               
+                    if let cer = result.getRequestCer {
+                        if !cer.exceedLimit {
+                            if cer.allowReconnect {
+                                NetworkManager.shared.requestCertificate = cer
+                                AppSetting.shared.needToStartNewSession = false
+                                AppSetting.shared.currentSessionId = NetworkManager.shared.requestCertificate?.sessionId ?? ""
+                                completion(true)
+                                return
                             } else {
+                                AppSetting.shared.temporaryDisableAutoConnect = true
+                                AppSetting.shared.needToStartNewSession = true
+                                self.showSessionTerminatedAlert = true
+                                self.stateUI = .disconnected
                                 completion(false)
-                                self.showAlertSessionSetting = true
-                                return
-                            }
-                        } else if self.isEnableReconect {
-                            self.getRequestCertificate() {
-                                completion($0)
                                 return
                             }
                         } else {
-                            self.stateUI = .disconnected
                             completion(false)
+                            self.showAlertSessionSetting = true
                             return
                         }
-                    case .wireGuard:
-                        if let cer = result.getObtainCer {
-                            NetworkManager.shared.obtainCertificate = cer
-                            AppSetting.shared.currentSessionId = cer.sessionId ?? ""
-                            completion(true)
-                            return
-                        } else {
-                            self.stateUI = .disconnected
-                            completion(false)
+                    } else if self.isEnableReconect {
+                        self.getRequestCertificate(asNewConnection: AppSetting.shared.needToStartNewSession) {
+                            completion($0)
                             return
                         }
-                    default:
-                        break
+                    } else {
+                        self.stateUI = .disconnected
+                        completion(false)
+                        return
                     }
                 } else {
                     if self.isEnableReconect {
-                        self.getRequestCertificate() {
+                        self.getRequestCertificate(asNewConnection: AppSetting.shared.needToStartNewSession) {
                             completion($0)
                             return
                         }
@@ -740,7 +724,7 @@ class BoardViewModel: ObservableObject {
                 }
             } onFailure: { error in
                 if self.isEnableReconect {
-                    self.getRequestCertificate() {
+                    self.getRequestCertificate(asNewConnection: AppSetting.shared.needToStartNewSession) {
                         completion($0)
                         return
                     }
