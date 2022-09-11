@@ -479,7 +479,7 @@ class BoardViewModel: ObservableObject {
         print("VPNStatusDidFail: \(notification.vpnError.localizedDescription)")
         stopSpeedTimer()
         configDisconected()
-        if isEnableReconect, !connectOrDisconnectByUser {
+        if isEnableReconect, !connectOrDisconnectByUser, notification.vpnError.localizedDescription != "permission denied" {
             startConnectVPN()
         }
     }

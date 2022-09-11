@@ -23,8 +23,8 @@ struct ContentView: View {
             if !viewModel.getIpInfoSuccess {
                 AnimationLogo()
             } else {
-                NavigationView {
-                    if AppSetting.shared.showedNotice {
+                if authentication.showNoticeAlert {
+                    NavigationView {
                         if let appVersion = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String, AppSetting.shared.forceUpdateVersion.contains(appVersion) {
                             ForceUpdateView()
                         } else {
@@ -38,14 +38,13 @@ struct ContentView: View {
                                 IntroductionView()
                             }
                         }
-                    } else {
-                        NoticeView()
                     }
-                    
+                    .navigationViewStyle(StackNavigationViewStyle())
+                    .navigationBarTitleDisplayMode(.inline)
+                    .navigationAppearance(backgroundColor: UIColor(AppColor.background), foregroundColor: UIColor.white, tintColor: UIColor.white, hideSeparator: true)
+                } else {
+                    NoticeView()
                 }
-                .navigationViewStyle(StackNavigationViewStyle())
-                .navigationBarTitleDisplayMode(.inline)
-                .navigationAppearance(backgroundColor: UIColor(AppColor.background), foregroundColor: UIColor.white, tintColor: UIColor.white, hideSeparator: true)
             }
         }
         .ignoresSafeArea()

@@ -61,6 +61,7 @@ class SessionVPNViewModel: ObservableObject {
             return
         }
         if device.id == AppSetting.shared.currentSessionId {
+            AppSetting.shared.needToStartNewSession = true
             if AppSetting.shared.isAutoConnectEnable {
                 AppSetting.shared.temporaryDisableAutoConnect = true
             }

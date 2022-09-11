@@ -11,6 +11,7 @@ import SwiftUI
 class Authentication: ObservableObject {
     @Published var isValidated: Bool = AppSetting.shared.isRefreshTokenValid
     @Published var isPremium: Bool = AppSetting.shared.isPremium
+    @Published var showNoticeAlert: Bool = AppSetting.shared.showedNotice
     
     func login(withLoginData data: LoginResultModel) {
         login(user: data.user, tokens: data.tokens)

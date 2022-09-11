@@ -9,6 +9,7 @@ import Foundation
 import SwiftUI
 
 struct NoticeView: View {
+    @EnvironmentObject var authentication: Authentication
     @State var showIntroduction: Bool = false
     @State var showTermsAndCondition: Bool = false
     @State var showPrivacyPolicies: Bool = false
@@ -74,12 +75,11 @@ struct NoticeView: View {
                     NavigationLink(destination: EmbedWebView(url: Constant.api.privacyPolictyURL,
                                                              title: L10n.Settings.privacyPolicty),
                                    isActive: $showPrivacyPolicies) {}
-                    NavigationLink(destination: IntroductionView(), isActive: $showIntroduction) {}
                 }
                 
                 AppButton(width: 295, text: L10n.Notice.buttonText){
                     AppSetting.shared.showedNotice = true
-                    showIntroduction = true
+                    authentication.showNoticeAlert = true
                 }
             }
             .padding(20)

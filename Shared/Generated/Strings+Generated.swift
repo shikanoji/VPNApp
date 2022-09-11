@@ -252,7 +252,7 @@ public enum L10n {
     ///   SysVPN
     /// 
     ///   Created by Nguyễn Đình Thạch on 06/12/2021.
-    public static let slogan = L10n.tr("Global", "slogan", fallback: #"Light is Faster, but We are Safer"#)
+    public static let slogan = L10n.tr("Global", "slogan", fallback: #"Right Protection, Right Time"#)
     /// Something went wrong
     public static let somethingWrong = L10n.tr("Global", "SomethingWrong", fallback: #"Something went wrong"#)
   }
