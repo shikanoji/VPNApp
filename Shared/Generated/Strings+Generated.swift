@@ -271,11 +271,13 @@ public enum L10n {
     public static let intro3Body = L10n.tr("Introduction", "Intro3Body", fallback: #"Whether it’s high-speed streaming, browsing, security, file sharing, or privacy; you get everything with SysVPN!"#)
     /// Fast & Stable Speed From Anywhere To Everywhere
     public static let intro3Title = L10n.tr("Introduction", "Intro3Title", fallback: #"Fast & Stable Speed From Anywhere To Everywhere"#)
+    /// You won’t be charged until the trial period ends
+    public static let introBottomTitle = L10n.tr("Introduction", "IntroBottomTitle", fallback: #"You won’t be charged until the trial period ends"#)
     /// strings
     ///   SysVPN
     /// 
     ///   Created by Nguyễn Đình Thạch on 22/12/2021.
-    public static let trialButton = L10n.tr("Introduction", "trialButton", fallback: #"START FREE 30-DAY TRIAL"#)
+    public static let trialButton = L10n.tr("Introduction", "trialButton", fallback: #"START FREE 7-DAY TRIAL"#)
     /// Update New Version
     public static let updateNewVersion = L10n.tr("Introduction", "UpdateNewVersion", fallback: #"Update New Version"#)
     /// Update Required
@@ -430,12 +432,12 @@ public enum L10n {
     public static let contentItemLocalNetwork = L10n.tr("Settings", "contentItemLocalNetwork", fallback: #"Enables access to printers, Tvs, and other devices when connected"#)
     /// Metered VPN connection gives you more control over how much data your phone uses through downloads and other apps
     public static let contentItemMetered = L10n.tr("Settings", "contentItemMetered", fallback: #"Metered VPN connection gives you more control over how much data your phone uses through downloads and other apps"#)
-    /// Recommend
-    public static let contentItemProtocol = L10n.tr("Settings", "contentItemProtocol", fallback: #"Recommend"#)
+    /// Recommended
+    public static let contentItemProtocol = L10n.tr("Settings", "contentItemProtocol", fallback: #"Recommended"#)
     /// Disables VPN for selected apps
     public static let contentItemSplit = L10n.tr("Settings", "contentItemSplit", fallback: #"Disables VPN for selected apps"#)
-    /// Recommend
-    public static let contentRecommend = L10n.tr("Settings", "contentRecommend", fallback: #"Recommend"#)
+    /// Recommended
+    public static let contentRecommended = L10n.tr("Settings", "contentRecommended", fallback: #"Recommended"#)
     /// Current version
     public static let currentVersion = L10n.tr("Settings", "currentVersion", fallback: #"Current version"#)
     /// Disabled
@@ -572,8 +574,8 @@ public enum L10n {
     public static let note = L10n.tr("SubscriptionIntro", "note", fallback: #"Auto-renewable subscription info:\n\nThe payment will be charged to your Play Store Account at confirmation of purchase\n\nThe subscription renews automatically unless the auto-renew is turned off at least 24 hours before the end of the current billing period\n\nYout account will be charged for renewal within 24 hours prior to the end of your selected subscription\n\nYou can manager subscription and turn off auto-renewal after purchase by going to your Account Settings"#)
     /// Blazing-fast & stable globally servers network
     public static let rocketFast = L10n.tr("SubscriptionIntro", "rocketFast", fallback: #"Blazing-fast & stable globally servers network"#)
-    /// Start your 30-day free trial
-    public static let startFreeTrial = L10n.tr("SubscriptionIntro", "startFreeTrial", fallback: #"Start your 30-day free trial"#)
+    /// Start your 7-day free trial
+    public static let startFreeTrial = L10n.tr("SubscriptionIntro", "startFreeTrial", fallback: #"Start your 7-day free trial"#)
     /// strings
     ///   SysVPN
     /// 

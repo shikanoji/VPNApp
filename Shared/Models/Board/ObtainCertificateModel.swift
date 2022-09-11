@@ -102,16 +102,32 @@ struct ObtainCertificateModel: Codable {
     var interface: Interface?
     var peer: Peer?
     var sessionId: String?
+    var allowReconnect: Bool = true
+    var exceedLimit: Bool = false
     
     enum CodingKeys: String, CodingKey {
         case server
         case interface = "Interface"
         case peer = "Peer"
         case sessionId
+        case allowReconnect
+        case exceedLimit
     }
     
     init(from decoder: Decoder) throws {
         let values = try decoder.container(keyedBy: CodingKeys.self)
+        
+        if let _exceedLimit = try? values.decode(Bool.self, forKey: .exceedLimit) {
+            exceedLimit = _exceedLimit
+        } else {
+            exceedLimit = false
+        }
+        
+        if let _allowReconnect = try? values.decode(Bool.self, forKey: .allowReconnect) {
+            allowReconnect = _allowReconnect
+        } else {
+            allowReconnect = true
+        }
         
         if let _server = try? values.decode(Server.self, forKey: .server) {
             server = _server

@@ -34,6 +34,10 @@ struct IntroductionView: View {
                     self.signIn = true
                 }
                 Spacer()
+                Text(L10n.Introduction.introBottomTitle)
+                    .font(.system(size: 11))
+                    .foregroundColor(.white)
+                Spacer()
             }
             .padding()
         }

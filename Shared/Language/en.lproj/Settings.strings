@@ -26,7 +26,7 @@
 "itemDNS" = "DNS";
 "itemLocalNetwork" = "Local network discovery";
 "itemPMetered" = "Metered connection";
-"contentItemProtocol" = "Recommend";
+"contentItemProtocol" = "Recommended";
 "contentItemLocalNetwork" = "Enables access to printers, Tvs, and other devices when connected";
 "contentItemMetered" = "Metered VPN connection gives you more control over how much data your phone uses through downloads and other apps";
 "contentItemSplit" = "Disables VPN for selected apps";
@@ -36,7 +36,7 @@
 "offConnect" = "Off";
 "sectionAutoConnect" = "Auto-connect to";
 "fastestConnect" = "Fastest server";
-"contentRecommend" = "Recommend";
+"contentRecommended" = "Recommended";
 "licenses" = "Licenses";
 "privacyPolicty" = "Privacy policies";
 

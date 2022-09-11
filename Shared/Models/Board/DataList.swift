@@ -80,10 +80,10 @@ enum SectionType: Decodable {
             ]
         case .otherSetting:
             return [
-                ItemCell(type: .currentVersion),
                 ItemCell(type: .privacyPolicy),
                 ItemCell(type: .termAndConditions),
-                ItemCell(type: .licenses)
+                ItemCell(type: .licenses),
+                ItemCell(type: .currentVersion)
             ]
         case .typeAutoConnect:
             return [
@@ -99,7 +99,7 @@ enum SectionType: Decodable {
             
         case .protocolConnect:
             return [
-                ItemCell(type: .recommend),
+                ItemCell(type: .recommended),
                 ItemCell(type: .wireGuard),
                 ItemCell(type: .openVPNTCP),
                 ItemCell(type: .openVPNUDP)
@@ -167,7 +167,7 @@ enum ItemCellType: Int, Decodable {
     case off
     case fastestServer
     
-    case recommend
+    case recommended
     case openVPNTCP
     case openVPNUDP
     case wireGuard
@@ -237,8 +237,8 @@ enum ItemCellType: Int, Decodable {
                 return autoConnectNode.countryName
             }
             return L10n.Settings.fastestConnect
-        case .recommend:
-            return L10n.Settings.contentRecommend
+        case .recommended:
+            return L10n.Settings.contentRecommended
         case .openVPNTCP:
             return L10n.Settings.openVPNTCP
         case .openVPNUDP:
@@ -325,7 +325,7 @@ enum ItemCellType: Int, Decodable {
             if let autoConnectNode = AppSetting.shared.getAutoConnectNode() {
                 return autoConnectNode.name 
             }
-            return L10n.Settings.contentRecommend
+            return L10n.Settings.contentRecommended
         case .currentVersion:
             return Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String ?? ""
         default:
@@ -335,7 +335,7 @@ enum ItemCellType: Int, Decodable {
     
     var showRightButton: Bool {
         switch self {
-        case .currentVersion, .always, .onWifi, .onMobile, .off, .recommend, .wireGuard, .openVPNTCP, .openVPNUDP:
+        case .currentVersion, .always, .onWifi, .onMobile, .off, .recommended, .wireGuard, .openVPNTCP, .openVPNUDP:
             return false
         default:
             return true
@@ -361,7 +361,7 @@ enum ItemCellType: Int, Decodable {
         switch self {
         case .always, .onWifi, .onMobile, .off:
             return true
-        case .recommend, .openVPNTCP, .openVPNUDP, .wireGuard:
+        case .recommended, .openVPNTCP, .openVPNUDP, .wireGuard:
             return true
         default:
             return false

@@ -65,6 +65,8 @@ enum AppKeys: String {
     
     case currentSessionId = "currentSessionId"
     case selectCyberSec = "selectCyberSec"
+    
+    case loadDataMap = "loadDataMap"
 }
 
 class AppSetting {
@@ -77,6 +79,15 @@ class AppSetting {
         return name.range(of: search, options: .caseInsensitive) != nil
         || iso2.range(of: search, options: .caseInsensitive) != nil
         || iso3.range(of: search, options: .caseInsensitive) != nil
+    }
+
+    var loadDataMap: Bool {
+        get {
+            return UserDefaults.standard.bool(forKey: AppKeys.loadDataMap.rawValue)
+        }
+        set {
+            UserDefaults.standard.setValue(newValue, forKey: AppKeys.loadDataMap.rawValue)
+        }
     }
     
     var currentSessionId: String {
@@ -281,13 +292,13 @@ class AppSetting {
     
     func getConfigProtocol() -> ItemCellType {
         if let type = ItemCellType(rawValue: AppSetting.shared.selectConfig) {
-            if type != .recommend && type != .wireGuard && type != .openVPNTCP && type != .openVPNUDP {
-                return .recommend
+            if type != .recommended && type != .wireGuard && type != .openVPNTCP && type != .openVPNUDP {
+                return .recommended
             }
             return type
         }
         
-        return .recommend
+        return .recommended
     }
     
     func getAutoConnectProtocol() -> ItemCellType {
@@ -455,7 +466,7 @@ class AppSetting {
             AppSetting.shared.forceUpdateVersion = _forceUpdateVersions
         }
         
-        if NetworkManager.shared.selectConfig == .recommend {
+        if NetworkManager.shared.selectConfig == .recommended {
             if let vpnSetting = result.appSettings?.vpn {
                 if vpnSetting.defaultTech == "wireguard" {
                     NetworkManager.shared.selectConfig = .wireGuard

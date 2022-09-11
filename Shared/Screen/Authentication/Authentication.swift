@@ -39,6 +39,8 @@ class Authentication: ObservableObject {
         AppSetting.shared.hasPassword = user.has_password
         isValidated = AppSetting.shared.isRefreshTokenValid
         isPremium = AppSetting.shared.isPremium
+        
+        AppSetting.shared.loadDataMap = true
     }
     
     func upgradeToPremium(user: User) {
@@ -62,5 +64,7 @@ class Authentication: ObservableObject {
         AppSetting.shared.hasPassword = false
         isValidated = AppSetting.shared.isRefreshTokenValid
         isPremium = AppSetting.shared.isPremium
+        
+        AppSetting.shared.loadDataMap = false
     }
 }
