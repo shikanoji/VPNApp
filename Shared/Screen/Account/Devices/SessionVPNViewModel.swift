@@ -13,7 +13,7 @@ class SessionVPNViewModel: ObservableObject {
     @Published var deviceList: [SessionVPN] = []
     @Published var showAlert: Bool = false
     @Published var showProgressView: Bool = false
-    
+    @Published var showSessionTerminatedAlert: Bool = false
     @Published var currentNumberDevice: String = "\(AppSetting.shared.currentNumberDevice)"
     @Published var showPopupView: Bool = false
     @Published var disconnectCurrentSession: Bool = false
@@ -61,7 +61,7 @@ class SessionVPNViewModel: ObservableObject {
             return
         }
         if device.id == AppSetting.shared.currentSessionId {
-            if ItemCell(type: AppSetting.shared.getAutoConnectProtocol()).type != .off {
+            if AppSetting.shared.isAutoConnectEnable {
                 AppSetting.shared.temporaryDisableAutoConnect = true
             }
             NotificationCenter.default.post(name: Constant.NameNotification.disconnectCurrentSession, object: nil)
@@ -77,6 +77,7 @@ class SessionVPNViewModel: ObservableObject {
 
                 if response.success {
                     self.getListSession()
+                    self.showSessionTerminatedAlert = true
                 } else {
                     let error = response.errors
                     if error.count > 0, let message = error[0] as? String {

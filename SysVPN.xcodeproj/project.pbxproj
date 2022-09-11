@@ -13,6 +13,7 @@
 		6353F844276F3E8500B42334 /* BoardNavigationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6353F843276F3E8500B42334 /* BoardNavigationView.swift */; };
 		6384B4F5276C374E00E904D2 /* BoardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6384B4F4276C374E00E904D2 /* BoardView.swift */; };
 		6384B4F8276C43DD00E904D2 /* BoardViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6384B4F7276C43DD00E904D2 /* BoardViewModel.swift */; };
+		AC09D7E028CDF8040078E928 /* AppSetting+VPN.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC09D7DF28CDF8040078E928 /* AppSetting+VPN.swift */; };
 		AC1195D22844D71D002230F0 /* DNSSettingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC1195D12844D71D002230F0 /* DNSSettingView.swift */; };
 		AC1195DB28452313002230F0 /* DNSSettingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC1195DA28452313002230F0 /* DNSSettingViewModel.swift */; };
 		AC17E2412888FC4500C72E20 /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = AC17E2402888FC4500C72E20 /* Settings.bundle */; };
@@ -290,6 +291,7 @@
 		AC09D7C528BF466D0078E928 /* Base.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Base.xcconfig; sourceTree = "<group>"; };
 		AC09D7C728BF46950078E928 /* Debug.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Debug.xcconfig; sourceTree = "<group>"; };
 		AC09D7C828BF46A80078E928 /* Release.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Release.xcconfig; sourceTree = "<group>"; };
+		AC09D7DF28CDF8040078E928 /* AppSetting+VPN.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AppSetting+VPN.swift"; sourceTree = "<group>"; };
 		AC1195D12844D71D002230F0 /* DNSSettingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DNSSettingView.swift; sourceTree = "<group>"; };
 		AC1195DA28452313002230F0 /* DNSSettingViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DNSSettingViewModel.swift; sourceTree = "<group>"; };
 		AC17E2402888FC4500C72E20 /* Settings.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = Settings.bundle; sourceTree = "<group>"; };
@@ -1023,6 +1025,7 @@
 			isa = PBXGroup;
 			children = (
 				D78044F3275912AC0086E59D /* AppSetting.swift */,
+				AC09D7DF28CDF8040078E928 /* AppSetting+VPN.swift */,
 				D79C224D27BE0FA100B54613 /* AppSetting+Board.swift */,
 			);
 			path = AppSetting;
@@ -1629,6 +1632,7 @@
 				AC17E24F288933BD00C72E20 /* LicenseDetailView.swift in Sources */,
 				AC99848B288948A90038F216 /* EmbedWebView.swift in Sources */,
 				D785C72927BD4F7C00E83C0F /* KeyedCodingKeyContainerExtension.swift in Sources */,
+				AC09D7E028CDF8040078E928 /* AppSetting+VPN.swift in Sources */,
 				AC91BDEF287C5C3A002776E6 /* AccountLimitedView.swift in Sources */,
 				EE78F77E2811526C00F49903 /* RequestCertificateModel.swift in Sources */,
 				D79BF75E27BD10D700E76C37 /* Constant+API.swift in Sources */,

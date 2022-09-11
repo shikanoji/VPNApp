@@ -11,12 +11,11 @@ import TunnelKitManager
 struct SessionVPNView: View {
     @Binding var showAccount: Bool
     @Binding var showTotalDevice: Bool
-    
     @Binding var statusConnect: VPNStatus
     @StateObject var viewModel: SessionVPNViewModel
     @Binding var shouldHideSessionList: Bool
     @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
-    
+
     var body: some View {
         ScrollView(.vertical, showsIndicators: false) {
             ZStack(alignment: .top) {
@@ -60,6 +59,12 @@ struct SessionVPNView: View {
                 viewModel.showAlert = false
             })
         }
+        .popup(isPresented: $viewModel.showSessionTerminatedAlert, type: .floater(verticalPadding: 10), position: .bottom, animation: .easeInOut, autohideIn: 10, closeOnTap: false, closeOnTapOutside: true) {
+            PopupSelectView(message: "Successfully terminate session!",
+                            confirmAction: {
+                viewModel.showSessionTerminatedAlert = false
+            })
+        }
         .popup(isPresented: $viewModel.showPopupView,
                type: .floater(verticalPadding: 10),
                position: .bottom,
@@ -92,3 +97,4 @@ struct DevicesView_Previews: PreviewProvider {
         SessionVPNView(showAccount: $showAccount, showTotalDevice: $showAccount, statusConnect: .constant(.connected), viewModel: SessionVPNViewModel(), shouldHideSessionList: .constant(false))
     }
 }
+

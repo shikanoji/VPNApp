@@ -95,6 +95,15 @@ extension AppSetting {
             UserDefaults.standard.setValue(newValue, forKey: AppKeys.temporaryDisableAutoConnect.rawValue)
         }
     }
+
+    var needToStartNewSession: Bool {
+        get {
+            return UserDefaults.standard.bool(forKey: AppKeys.needToStartNewSession.rawValue) ?? false
+        }
+        set {
+            UserDefaults.standard.setValue(newValue, forKey: AppKeys.needToStartNewSession.rawValue)
+        }
+    }
 }
 
 extension AppSetting {
