@@ -51,7 +51,7 @@
     </scenes>
     <resources>
         <image name="LaunchScreen_BackGround" width="375" height="812"/>
-        <image name="Logo-Text" width="422" height="117"/>
+        <image name="Logo-Text" width="378" height="117"/>
         <image name="Logo-large" width="133.5" height="150.5"/>
     </resources>
 </document>

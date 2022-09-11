@@ -7,7 +7,7 @@
 
 import Foundation
 import SwiftUI
-
+import UIKit
 struct IntroductionView: View {
     @State var index = 0
     @State private var signIn = false
