@@ -87,7 +87,7 @@ struct SelectLocationMultihopView: View {
     
     var nodeListSearch: [Node] {
         if searchText.isEmpty {
-            return []
+            return nodeList
         } else {
             return nodeList.filter {
                 //                $0.name.contains(searchText)

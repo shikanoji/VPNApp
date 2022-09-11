@@ -81,7 +81,6 @@ enum APIService {
     case getAppSettings
     case ipInfoOptional
     case getRequestCertificate(currentTab: StateTab, asNewConnection: Bool)
-    case getObtainCertificate
     case changePassword(oldPassword: String, newPassword: String)
     case getListSession(page: Int = 1, limit: Int = 20, isActive: Int = 1)
     case disconnectSession(sessionId: String, terminal: Bool)
@@ -132,8 +131,6 @@ extension APIService: TargetType {
             return ""
         case .getRequestCertificate:
             return Constant.api.path.requestCertificate
-        case .getObtainCertificate:
-            return Constant.api.path.obtainCertificate + "/\(NetworkManager.shared.requestCertificate?.requestId ?? "")"
         case .changePassword:
             return Constant.api.path.changePassword
         case .getListSession:
@@ -154,7 +151,7 @@ extension APIService: TargetType {
     // Here we specify which method our calls should use.
     var method: Moya.Method {
         switch self {
-        case .getCountryList, .getAppSettings, .getRequestCertificate, .ipInfoOptional, .getListSession, .getTopicQuestionList, .getMultihopList, .fetchPaymentHistory, .getObtainCertificate:
+        case .getCountryList, .getAppSettings, .getRequestCertificate, .ipInfoOptional, .getListSession, .getTopicQuestionList, .getMultihopList, .fetchPaymentHistory:
             return .get
         case .register, .login, .loginSocial, .logout, .forgotPassword, .refreshToken, .verifyReceipt:
             return .post
@@ -278,8 +275,6 @@ extension APIService: TargetType {
             }
             
             return .requestParameters(parameters: param, encoding: URLEncoding.queryString)
-        case .getObtainCertificate:
-            return .requestParameters(parameters: [:], encoding: URLEncoding.queryString)
         case .changePassword(let oldPassword, let newPassword):
             var param: [String: Any] = [:]
             if !oldPassword.isEmpty {
@@ -333,7 +328,7 @@ extension APIService: TargetType {
         switch self {
         case .login, .register:
             return ["Content-type": "application/json"]
-        case .getCountryList, .getObtainCertificate, .changePassword, .getListSession, .getTopicQuestionList, .getMultihopList, .disconnectSession, .deleteAccount:
+        case .getCountryList, .changePassword, .getListSession, .getTopicQuestionList, .getMultihopList, .disconnectSession, .deleteAccount:
             return [
                 "Content-type": "application/json",
                 "Authorization": "Bearer \(AppSetting.shared.accessToken)"

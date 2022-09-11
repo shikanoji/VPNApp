@@ -5,7 +5,7 @@
   Created by Nguyễn Đình Thạch on 22/12/2021.
   
 */
-"trialButton" = "START FREE 30-DAY TRIAL";
+"trialButton" = "START FREE 7-DAY TRIAL";
 "Intro1Title" = "Get secure and private\naccess to the Internet";
 "Intro1Body" = "SysVPN brings top-notch security by encrypting your connection, masking your sensitive info, and disguising your online activities from hacker attacks.";
 
@@ -18,3 +18,4 @@
 "UpdateRequired" = "Update Required";
 "UpdateRequiredNote" = "The current version of SYSVPN is no longer supported. Please update the app to continue using the app.";
 "UpdateNewVersion" = "Update New Version";
+"IntroBottomTitle" = "You won’t be charged until the trial period ends";

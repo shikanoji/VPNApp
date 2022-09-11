@@ -142,6 +142,8 @@ class BoardViewModel: ObservableObject {
     
     @Published var showProgressView: Bool = false
     
+    @Published var showLogoView: Bool = true
+    
     var error: APIError?
     
     let disposedBag = DisposeBag()
@@ -156,8 +158,6 @@ class BoardViewModel: ObservableObject {
         tab = AppSetting.shared.getCurrentTab()
         
         getDataFromLocal()
-        getDataUpdate()
-        getMultihopList()
         
         NotificationCenter.default.addObserver(
             self,
@@ -212,6 +212,80 @@ class BoardViewModel: ObservableObject {
         
         assignJailBreakCheckType(type: .readAndWriteFiles)
         AppSetting.shared.fetchListSession()
+        
+        if AppSetting.shared.getDataMap() == nil {
+            getIpInfo {
+                self.getCountryList {
+                    self.getCountryList {
+                    }
+                }
+            }
+        }
+    }
+    
+    func getIpInfo(completion: @escaping () -> Void) {
+        guard Connectivity.sharedInstance.isReachable else {
+            completion()
+            return
+        }
+        
+        ServiceManager.shared.getAppSettings()
+            .subscribe(onSuccess: { response in
+                if let result = response.result{
+                    AppSetting.shared.configAppSettings(result)
+                }
+                completion()
+            }, onFailure: { error in
+                completion()
+            })
+            .disposed(by: disposedBag)
+    }
+    
+    func getCountryList(completion: @escaping () -> Void) {
+        guard Connectivity.sharedInstance.isReachable else {
+            completion()
+            return
+        }
+        
+        ServiceManager.shared.getCountryList()
+            .subscribe { response in
+                if let result = response.result {
+                    AppSetting.shared.saveDataMap(result)
+                    self.configCountryList(result)
+                }
+                completion()
+            } onFailure: { _ in
+                completion()
+            }
+            .disposed(by: disposedBag)
+    }
+    
+    func getMultihopList(completion: @escaping () -> Void) {
+        guard Connectivity.sharedInstance.isReachable else {
+            completion()
+            return
+        }
+        
+        ServiceManager.shared.getMutihopList()
+            .subscribe { response in
+                if let result = response.result {
+                    AppSetting.shared.saveMutilhopList(result)
+                    self.mutilhopList = result
+                    if result.count > 0 {
+                        if let selectLocal = NetworkManager.shared.selectMultihop {
+                            if self.mutilhopList.filter({ selectLocal.id == $0.id }).count == 0 {
+                                NetworkManager.shared.selectMultihop = result.first
+                            }
+                        } else {
+                            NetworkManager.shared.selectMultihop = result.first
+                        }
+                    }
+                }
+                completion()
+            } onFailure: { error in
+                completion()
+            }
+            .disposed(by: disposedBag)
     }
     
     @objc private func logoutNeedDisconnect() {
@@ -220,12 +294,6 @@ class BoardViewModel: ObservableObject {
     
     @objc private func disconnectCurrentSession() {
         configDisconnect()
-    }
-    
-    func getDataUpdate() {
-        AppSetting.shared.getIpInfo { _ in
-            self.getCountryList()
-        }
     }
     
     @Published var shouldHideAutoConnect = true
@@ -511,146 +579,6 @@ class BoardViewModel: ObservableObject {
         self.showAlert = true
     }
     
-    func getCountryList() {
-        guard Connectivity.sharedInstance.isReachable else {
-            internetNotAvaiable()
-            return
-        }
-        
-        self.showProgressView = true
-        
-        ServiceManager.shared.getCountryList()
-            .subscribe { [weak self] response in
-                guard let `self` = self else {
-                    return
-                }
-                self.showProgressView = false
-                if let result = response.result {
-                    AppSetting.shared.saveDataMap(result)
-                    self.configCountryList(result)
-                } else {
-                    let error = response.errors
-                    if error.count > 0, let message = error[0] as? String {
-                        self.error = APIError.identified(message: message)
-                        self.showAlert = true
-                    } else if !response.message.isEmpty {
-                        self.error = APIError.identified(message: response.message)
-                        self.showAlert = true
-                    }
-                }
-            } onFailure: { error in
-                self.showProgressView = false
-                self.error = APIError.identified(message: error.localizedDescription)
-                self.showAlert = true
-            }
-            .disposed(by: disposedBag)
-    }
-    
-    func getMultihopList() {
-        guard Connectivity.sharedInstance.isReachable else {
-            internetNotAvaiable()
-            return
-        }
-        
-        ServiceManager.shared.getMutihopList()
-            .subscribe { [weak self] response in
-                guard let `self` = self else {
-                    return
-                }
-                
-                if let result = response.result {
-                    AppSetting.shared.saveMutilhopList(result)
-                    self.mutilhopList = result
-                    if result.count > 0 {
-                        if let selectLocal = NetworkManager.shared.selectMultihop {
-                            if self.mutilhopList.filter({ selectLocal.id == $0.id }).count == 0 {
-                                NetworkManager.shared.selectMultihop = result.first
-                            }
-                        } else {
-                            NetworkManager.shared.selectMultihop = result.first
-                        }
-                    }
-                    
-                } else {
-                    //No multi-hop
-                }
-            } onFailure: { error in
-                // Error
-            }
-            .disposed(by: disposedBag)
-    }
-    
-    func prepareConnect(completion: @escaping (Bool) -> Void) {
-        switch NetworkManager.shared.selectConfig {
-        case .openVPNTCP, .recommend, .openVPNUDP:
-            AppSetting.shared.currentSessionId = NetworkManager.shared.requestCertificate?.sessionId ?? ""
-            completion(true)
-        case .wireGuard:
-            numberCallObtainCer = 0
-            getObtainCertificate() {
-                if self.isEnableReconect {
-                    self.getRequestCertificate {
-                        completion($0)
-                    }
-                } else {
-                    completion($0)
-                }
-            }
-        default:
-            break
-        }
-    }
-    
-    let maximumCallObtainCer = 50
-    var numberCallObtainCer = 0
-    
-    func getObtainCertificate(completion: @escaping (Bool) -> Void) {
-        guard Connectivity.sharedInstance.isReachable else {
-            internetNotAvaiable()
-            return
-        }
-        numberCallObtainCer += 1
-        
-        ServiceManager.shared.getObtainCertificate()
-            .subscribe { [weak self] response in
-                guard let `self` = self else {
-                    return
-                }
-                
-                self.showProgressView = false
-                
-                if let result = response.result {
-                    NetworkManager.shared.obtainCertificate = result
-                    AppSetting.shared.currentSessionId = result.sessionId ?? ""
-                    completion(true)
-                } else if response.success {
-                    if self.numberCallObtainCer >= self.maximumCallObtainCer {
-                        completion(false)
-                    } else {
-                        self.getObtainCertificate() {
-                            completion($0)
-                        }
-                    }
-                } else {
-                    let error = response.errors
-                    if error.count > 0, let message = error[0] as? String {
-                        self.error = APIError.identified(message: message)
-                        self.showAlert = true
-                    } else if !response.message.isEmpty {
-                        self.error = APIError.identified(message: response.message)
-                        self.showAlert = true
-                    }
-                    completion(false)
-                }
-            } onFailure: { error in
-                self.error = APIError.identified(message: error.localizedDescription)
-                self.showProgressView = false
-                self.showAlert = true
-                completion(false)
-            }
-            .disposed(by: disposedBag)
-    }
-    
     func getRequestCertificate(asNewConnection: Bool = false, completion: @escaping (Bool) -> Void) {
         guard isEnableReconect else {
             completion(false)
@@ -671,33 +599,72 @@ class BoardViewModel: ObservableObject {
                 }
                 self.showProgressView = false
                 if let result = response.result {
-                    if let cer = result.getRequestCer {
-                        if !cer.exceedLimit {
-                            if cer.allowReconnect {
-                                NetworkManager.shared.requestCertificate = cer
-                                AppSetting.shared.needToStartNewSession = false
-                                AppSetting.shared.currentSessionId = NetworkManager.shared.requestCertificate?.sessionId ?? ""
-                                completion(true)
-                                return
+                    switch NetworkManager.shared.selectConfig {
+                    case .openVPNTCP, .recommended, .openVPNUDP:
+                        if let cer = result.getRequestCer {
+                            if !cer.exceedLimit {
+                                if cer.allowReconnect {
+                                    NetworkManager.shared.requestCertificate = cer
+                                    AppSetting.shared.needToStartNewSession = false
+                                    AppSetting.shared.currentSessionId = NetworkManager.shared.requestCertificate?.sessionId ?? ""
+                                    completion(true)
+                                    return
+                                } else {
+                                    AppSetting.shared.temporaryDisableAutoConnect = true
+                                    AppSetting.shared.needToStartNewSession = true
+                                    self.showSessionTerminatedAlert = true
+                                    self.stateUI = .disconnected
+                                    completion(false)
+                                    return
+                                }
                             } else {
-                                AppSetting.shared.temporaryDisableAutoConnect = true
-                                AppSetting.shared.needToStartNewSession = true
-                                self.showSessionTerminatedAlert = true
-                                self.stateUI = .disconnected
                                 completion(false)
+                                self.showAlertSessionSetting = true
+                                return
+                            }
+                        } else if self.isEnableReconect {
+                            self.getRequestCertificate(asNewConnection: AppSetting.shared.needToStartNewSession) {
+                                completion($0)
                                 return
                             }
                         } else {
+                            self.stateUI = .disconnected
                             completion(false)
-                            self.showAlertSessionSetting = true
                             return
                         }
-                    } else if self.isEnableReconect {
-                        self.getRequestCertificate(asNewConnection: AppSetting.shared.needToStartNewSession) {
-                            completion($0)
+                    case .wireGuard:
+                        if let cer = result.getObtainCer {
+                            if !cer.exceedLimit {
+                                if cer.allowReconnect {
+                                    AppSetting.shared.needToStartNewSession = false
+                                    NetworkManager.shared.obtainCertificate = cer
+                                    AppSetting.shared.currentSessionId = cer.sessionId ?? ""
+                                    completion(true)
+                                    return
+                                } else {
+                                    AppSetting.shared.temporaryDisableAutoConnect = true
+                                    AppSetting.shared.needToStartNewSession = true
+                                    self.showSessionTerminatedAlert = true
+                                    self.stateUI = .disconnected
+                                    completion(false)
+                                    return
+                                }
+                            } else {
+                                completion(false)
+                                self.showAlertSessionSetting = true
+                                return
+                            }
+                        } else if self.isEnableReconect {
+                            self.getRequestCertificate(asNewConnection: AppSetting.shared.needToStartNewSession) {
+                                completion($0)
+                                return
+                            }
+                        } else {
+                            self.stateUI = .disconnected
+                            completion(false)
                             return
                         }
-                    } else {
+                    default:
                         self.stateUI = .disconnected
                         completion(false)
                         return

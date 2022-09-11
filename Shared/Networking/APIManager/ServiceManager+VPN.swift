@@ -34,17 +34,6 @@ extension ServiceManager {
             }
     }
     
-    func getObtainCertificate() -> Single<APIResponse<ObtainCertificateModel>> {
-        return request(.getObtainCertificate)
-            .map { response in
-                let result = try JSONDecoder().decode(APIResponse<ObtainCertificateModel>.self, from: response.data)
-                return result
-            }
-            .catch { error in
-                throw APIError.someError
-            }
-    }
-    
     func getListSession(page: Int = 1, limit: Int = 20) -> Single<APIResponse<SessionResult>> {
         return request(.getListSession(page: page, limit: limit))
             .map { response in

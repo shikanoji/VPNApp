@@ -59,7 +59,7 @@ struct StaticIPListView: View {
     
     var nodeListSearch: [StaticServer] {
         if searchText.isEmpty {
-            return []
+            return staticIPData
         } else {
             return staticIPData.filter {
                 AppSetting.shared.isExitSearch(searchText, name: $0.countryName, iso2: $0.iso2, iso3: $0.iso3)

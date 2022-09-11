@@ -29,7 +29,7 @@ struct SettingsView: View {
     var body: some View {
         VStack {
             AppColor.darkButton
-                .frame(height: 14)
+                .frame(height: 20)
             CustomNavigationView(
                 tapLeftButton: {
                     showSettings = false
@@ -38,63 +38,11 @@ struct SettingsView: View {
                 }, statusConnect: $statusConnect)
             ScrollView(showsIndicators: false) {
                 VStack {
-                    ForEach(sections, id: \.id) { section in
-                        VStack(alignment: .leading) {
-                            Text(section.type.title)
-                                .font(Constant.Menu.fontSectionTitle)
-                                .foregroundColor(AppColor.lightBlackText)
-                            VStack {
-                                ForEach(section.type.items) { item in
-                                    Button {
-                                        switch item.type {
-                                        case .vpnConnection:
-                                            self.showVPNSetting = true
-                                        case .tools:
-                                            self.showToolsSetting = true
-                                        case .licenses:
-                                            self.showLicenseList = true
-                                        case .termAndConditions:
-                                            self.showTermsAndCondition = true
-                                        case .privacyPolicy:
-                                            self.showPrivacyPolicies = true
-                                        default:
-                                            return
-                                        }
-                                    } label: {
-                                        ItemRowView(item: item)
-                                    }
-                                }
-                            }
-                        }
-                    }
+                    sectionsView
+                        .animation(nil)
                     .padding([.top, .leading])
                     Spacer().frame(height: 34)
-                    Group {
-                        NavigationLink(destination:
-                                        SettingVPNView(
-                                            showSettings: $showSettings,
-                                            showVPNSetting: $showVPNSetting,
-                                            statusConnect: $statusConnect,
-                                            viewModel: SettingVPNViewModel()),
-                                       isActive: $showVPNSetting) { }
-                            .isDetailLink(false)
-                        NavigationLink(destination:
-                                        ToolsView(showSettings: $showSettings,
-                                                  statusConnect: $statusConnect,
-                                                  viewModel: ToolsViewModel()),
-                                       isActive: $showToolsSetting) { }
-                        NavigationLink(destination:
-                                        LicenseListView(showSettings: $showSettings,
-                                                        statusConnect: $statusConnect,
-                                                        viewModel: LicenseListViewModel()),
-                                       isActive: $showLicenseList) { }
-                        NavigationLink(destination: EmbedWebView(url: Constant.api.termsAndConditionsURL,
-                                                                 title: L10n.Settings.termAndCondition),
-                                       isActive: $showTermsAndCondition) { }
-                        NavigationLink(destination: EmbedWebView(url: Constant.api.privacyPolictyURL,
-                                                                 title: L10n.Settings.privacyPolicty),
-                                       isActive: $showPrivacyPolicies) { }
-                    }
+                    navigationLinks
                 }
             }
             .frame(maxHeight: .infinity)
@@ -102,6 +50,67 @@ struct SettingsView: View {
             .ignoresSafeArea()
         }
         .background(AppColor.background)
+    }
+    
+    var sectionsView: some View {
+        ForEach(sections, id: \.id) { section in
+            VStack(alignment: .leading) {
+                Text(section.type.title)
+                    .font(Constant.Menu.fontSectionTitle)
+                    .foregroundColor(AppColor.lightBlackText)
+                VStack {
+                    ForEach(section.type.items) { item in
+                        Button {
+                            switch item.type {
+                            case .vpnConnection:
+                                self.showVPNSetting = true
+                            case .tools:
+                                self.showToolsSetting = true
+                            case .licenses:
+                                self.showLicenseList = true
+                            case .termAndConditions:
+                                self.showTermsAndCondition = true
+                            case .privacyPolicy:
+                                self.showPrivacyPolicies = true
+                            default:
+                                return
+                            }
+                        } label: {
+                            ItemRowView(item: item)
+                        }
+                    }
+                }
+            }
+        }
+    }
+    
+    var navigationLinks: some View {
+        Group {
+            NavigationLink(destination:
+                            SettingVPNView(
+                                showSettings: $showSettings,
+                                showVPNSetting: $showVPNSetting,
+                                statusConnect: $statusConnect,
+                                viewModel: SettingVPNViewModel()),
+                           isActive: $showVPNSetting) { }
+                .isDetailLink(false)
+            NavigationLink(destination:
+                            ToolsView(showSettings: $showSettings,
+                                      statusConnect: $statusConnect,
+                                      viewModel: ToolsViewModel()),
+                           isActive: $showToolsSetting) { }
+            NavigationLink(destination:
+                            LicenseListView(showSettings: $showSettings,
+                                            statusConnect: $statusConnect,
+                                            viewModel: LicenseListViewModel()),
+                           isActive: $showLicenseList) { }
+            NavigationLink(destination: EmbedWebView(url: Constant.api.termsAndConditionsURL,
+                                                     title: L10n.Settings.termAndCondition),
+                           isActive: $showTermsAndCondition) { }
+            NavigationLink(destination: EmbedWebView(url: Constant.api.privacyPolictyURL,
+                                                     title: L10n.Settings.privacyPolicty),
+                           isActive: $showPrivacyPolicies) { }
+        }
     }
 }
 
