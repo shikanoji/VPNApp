@@ -17,7 +17,7 @@ struct RegisterView: View {
     var normalRegisterButton: some View {
         AppButton(style: .themeButton, width: Constant.Global.widthFormAndButton, text: L10n.Register.signup) {
             viewModel.signup()
-        }.disabled(viewModel.registerDisable)
+        }
     }
     
     var header: some View {

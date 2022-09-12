@@ -341,9 +341,9 @@ class BoardViewModel: ObservableObject {
     }
     
     func ConnectOrDisconnectVPN() {
-        guard [.connected, .disconnected].contains(state) else {
-            return
-        }
+//        guard [.connected, .disconnected].contains(state) else {
+//            return
+//        }
         switch autoConnectType {
         case .off:
             if connectOrDisconnectByUser {
@@ -353,8 +353,6 @@ class BoardViewModel: ObservableObject {
                 default:
                     configDisconnect()
                 }
-            } else {
-                print(connectOrDisconnectByUser)
             }
         default:
             guard !AppSetting.shared.temporaryDisableAutoConnect else {
@@ -392,7 +390,6 @@ class BoardViewModel: ObservableObject {
         if autoConnectType == .off {
             stopAutoconnectTimer()
         }
-        connectOrDisconnectByUser = false
     }
     
     func configDisconnect() {

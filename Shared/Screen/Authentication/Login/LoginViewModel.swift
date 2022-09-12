@@ -35,6 +35,11 @@ class LoginViewModel: NSObject, ObservableObject {
     }
     
     func login() {
+        guard !loginDisable else {
+            alertMessage = "Invalid email or password!"
+            showAlert = true
+            return
+        }
         showProgressView = true
         
         ServiceManager.shared.login(email: email, password: password)
