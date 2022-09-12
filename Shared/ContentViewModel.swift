@@ -15,6 +15,7 @@ import RxSwift
 
 class ContentViewModel: ObservableObject {
     @Published var showAlert: Bool = false
+    @Published var showSessionExpired: Bool = false
     @Published var getIpInfoSuccess = false
     
     var alertMessage = ""
@@ -43,6 +44,17 @@ class ContentViewModel: ObservableObject {
     
     init() {
         getState()
+        
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(sessionExpided),
+            name: Constant.NameNotification.sessionExpired,
+            object: nil
+        )
+    }
+    
+    @objc func sessionExpided() {
+        showSessionExpired = true
     }
     
     func getState() {

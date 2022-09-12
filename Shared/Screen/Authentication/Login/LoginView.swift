@@ -30,9 +30,9 @@ struct LoginView: View {
     var forms: some View {
         ZStack {
             VStack {
-                Form(placeholder: L10n.Login.emailPlaceholder, value: $viewModel.email)
+                Form(placeholder: L10n.Login.emailPlaceholder, value: $viewModel.email, width: Constant.Global.widthFormAndButton)
                 Spacer().frame(height: 20)
-                Form(placeholder: L10n.Login.passwordPlaceholder, value: $viewModel.password, isPassword: true)
+                Form(placeholder: L10n.Login.passwordPlaceholder, value: $viewModel.password, isPassword: true, width: Constant.Global.widthFormAndButton)
                 Spacer().frame(height: 20)
                 Spacer().frame(height: 20)
             }
@@ -40,19 +40,19 @@ struct LoginView: View {
     }
     
     var loginButton: some View {
-        AppButton(style: .themeButton, width: 311, text: L10n.Login.signin) {
+        AppButton(style: .themeButton, width: Constant.Global.widthFormAndButton, text: L10n.Login.signin) {
             viewModel.fullLogin()
         }.disabled(viewModel.loginDisable)
     }
     
     var loginWithGoogleButton: some View {
-        AppButton(style: .darkButton, width: 311, text: L10n.Login.signinWithGoogle, icon: Asset.Assets.google.swiftUIImage) {
+        AppButton(style: .darkButton, width: Constant.Global.widthFormAndButton, text: L10n.Login.signinWithGoogle, icon: Asset.Assets.google.swiftUIImage) {
             viewModel.loginGoogle()
         }
     }
     
     var loginWithAppleButton: some View {
-        AppButton(style: .darkButton, width: 311, text: L10n.Login.signinWithApple, icon: Asset.Assets.apple.swiftUIImage) {
+        AppButton(style: .darkButton, width: Constant.Global.widthFormAndButton, text: L10n.Login.signinWithApple, icon: Asset.Assets.apple.swiftUIImage) {
             viewModel.loginApple()
         }
     }

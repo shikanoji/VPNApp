@@ -153,6 +153,7 @@ struct Constant {
         static let iconCheck = Asset.Assets.iconCheckbox.swiftUIImage
         static let iconUncheck = Asset.Assets.iconUncheck.swiftUIImage
         static let iconArrowRight = Asset.Assets.iconArrowRight.swiftUIImage
+        static let widthFormAndButton = UIScreen.main.bounds.width - 64
     }
     
     struct Loading {
@@ -175,5 +176,6 @@ struct Constant {
         static let disconnectCurrentSession = Notification.Name("disconnectCurrentSession")
         static let logoutNeedDisconnect = Notification.Name("logoutNeedDisconnect")
         static let changeProtocolSetting = Notification.Name("changeProtocolSetting")
+        static let sessionExpired = Notification.Name("sessionExpired")
     }
 }

@@ -105,6 +105,7 @@ internal enum Asset {
     internal static let borderSearch = ColorAsset(name: "borderSearch")
     internal static let darkButton = ColorAsset(name: "darkButton")
     internal static let darkThemeColor = ColorAsset(name: "darkThemeColor")
+    internal static let grayCenterBackground = ColorAsset(name: "grayCenterBackground")
     internal static let green = ColorAsset(name: "green")
     internal static let greenGradient = ColorAsset(name: "greenGradient")
     internal static let leftCircle = ColorAsset(name: "leftCircle")
