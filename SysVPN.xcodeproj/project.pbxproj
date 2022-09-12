@@ -15,6 +15,7 @@
 		6384B4F8276C43DD00E904D2 /* BoardViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6384B4F7276C43DD00E904D2 /* BoardViewModel.swift */; };
 		AC09D7E028CDF8040078E928 /* AppSetting+VPN.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC09D7DF28CDF8040078E928 /* AppSetting+VPN.swift */; };
 		AC09D7E428CED1750078E928 /* AppSetting+Auth.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC09D7E328CED1750078E928 /* AppSetting+Auth.swift */; };
+		AC09D7F828CF7A960078E928 /* CustomSimpleNavigationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC09D7F728CF7A950078E928 /* CustomSimpleNavigationView.swift */; };
 		AC1195D22844D71D002230F0 /* DNSSettingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC1195D12844D71D002230F0 /* DNSSettingView.swift */; };
 		AC1195DB28452313002230F0 /* DNSSettingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC1195DA28452313002230F0 /* DNSSettingViewModel.swift */; };
 		AC17E2412888FC4500C72E20 /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = AC17E2402888FC4500C72E20 /* Settings.bundle */; };
@@ -295,6 +296,7 @@
 		AC09D7C828BF46A80078E928 /* Release.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Release.xcconfig; sourceTree = "<group>"; };
 		AC09D7DF28CDF8040078E928 /* AppSetting+VPN.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AppSetting+VPN.swift"; sourceTree = "<group>"; };
 		AC09D7E328CED1750078E928 /* AppSetting+Auth.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AppSetting+Auth.swift"; sourceTree = "<group>"; };
+		AC09D7F728CF7A950078E928 /* CustomSimpleNavigationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomSimpleNavigationView.swift; sourceTree = "<group>"; };
 		AC1195D12844D71D002230F0 /* DNSSettingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DNSSettingView.swift; sourceTree = "<group>"; };
 		AC1195DA28452313002230F0 /* DNSSettingViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DNSSettingViewModel.swift; sourceTree = "<group>"; };
 		AC17E2402888FC4500C72E20 /* Settings.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = Settings.bundle; sourceTree = "<group>"; };
@@ -956,6 +958,7 @@
 				0932581828B8635800CCB500 /* AnimationLogo.swift */,
 				EEC5E48A28C7076600286EBD /* BottomViewPopup.swift */,
 				EE8631E228CF2E7F00341BE3 /* ForceLogoutView.swift */,
+				AC09D7F728CF7A950078E928 /* CustomSimpleNavigationView.swift */,
 			);
 			path = Components;
 			sourceTree = "<group>";
@@ -1687,6 +1690,7 @@
 				EE85EE1027BDF5B6000F967A /* DataList.swift in Sources */,
 				EE8631E328CF2E7F00341BE3 /* ForceLogoutView.swift in Sources */,
 				EE85EE1827BE3C4C000F967A /* CountryListResultModel.swift in Sources */,
+				AC09D7F828CF7A960078E928 /* CustomSimpleNavigationView.swift in Sources */,
 				D7F9695C27B2AC980037A3D0 /* FAQView.swift in Sources */,
 				AC79CE0B282CFB9600E1E874 /* ToolsViewModel.swift in Sources */,
 				EE79F53127742B21006F0E5D /* BoardTabView.swift in Sources */,

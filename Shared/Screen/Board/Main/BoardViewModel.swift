@@ -353,6 +353,8 @@ class BoardViewModel: ObservableObject {
                 default:
                     configDisconnect()
                 }
+            } else {
+                print(connectOrDisconnectByUser)
             }
         default:
             guard !AppSetting.shared.temporaryDisableAutoConnect else {
@@ -374,7 +376,6 @@ class BoardViewModel: ObservableObject {
     
     func configDisconected() {
         disconnectSession()
-        connectOrDisconnectByUser = false
         ip = AppSetting.shared.ip
         flag = ""
         stopSpeedTimer()
@@ -391,6 +392,7 @@ class BoardViewModel: ObservableObject {
         if autoConnectType == .off {
             stopAutoconnectTimer()
         }
+        connectOrDisconnectByUser = false
     }
     
     func configDisconnect() {

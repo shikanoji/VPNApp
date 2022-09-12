@@ -21,14 +21,41 @@ class AccountViewModel: ObservableObject {
         AppSetting.shared.temporaryDisableAutoConnect = true
         AppSetting.shared.needToStartNewSession = true
         NotificationCenter.default.post(name: Constant.NameNotification.logoutNeedDisconnect, object: nil)
-        
-        ServiceManager.shared.logout().subscribe {
-            result in
-            self.showProgressView = false
-            self.authentication?.logout()
-        } onFailure: { error in
-            self.showProgressView = false
-            self.authentication?.logout()
-        }.disposed(by: self.disposedBag)
+
+        if !AppSetting.shared.currentSessionId.isEmpty {
+            ServiceManager.shared.disconnectSession(sessionId: AppSetting.shared.currentSessionId, terminal: true)
+                .subscribe { [weak self] response in
+                    guard let `self` = self else {
+                        return
+                    }
+                    if response.success {
+                        self.callLogoutAPI()
+                    } else {
+                        self.showProgressView = false
+                        self.alertMessage = L10n.Global.somethingWrong
+                        self.showAlert = true
+                    }
+                } onFailure: { error in
+                    self.showProgressView = false
+                    self.alertMessage = L10n.Global.somethingWrong
+                    self.showAlert = true
+                }
+                .disposed(by: self.disposedBag)
+        } else {
+            callLogoutAPI()
+        }
+    }
+
+    func callLogoutAPI() {
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1, execute: {
+            ServiceManager.shared.logout().subscribe {
+                result in
+                self.showProgressView = false
+                self.authentication?.logout()
+            } onFailure: { error in
+                self.showProgressView = false
+                self.authentication?.logout()
+            }.disposed(by: self.disposedBag)
+        })
     }
 }
