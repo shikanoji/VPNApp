@@ -87,7 +87,7 @@ struct AccountView: View {
                     .font(Constant.Menu.fontSectionTitle)
                     .foregroundColor(AppColor.lightBlackText)
                 ForEach(section.type.items) { item in
-                    Button {
+                    ItemRowView(item: item).onTapGesture {
                         switch item.type {
                         case .statusAccount:
                             self.showAccountStatus = true
@@ -98,8 +98,6 @@ struct AccountView: View {
                         default:
                             return
                         }
-                    } label: {
-                        ItemRowView(item: item)
                     }
                 }
             }
