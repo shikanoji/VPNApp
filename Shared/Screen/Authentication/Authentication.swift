@@ -13,6 +13,7 @@ class Authentication: ObservableObject {
     @Published var isPremium: Bool = AppSetting.shared.isPremium
     @Published var showNoticeAlert: Bool = AppSetting.shared.showedNotice
     @Published var showedIntroduction: Bool = AppSetting.shared.showedIntroduction
+    @Published var needToShowRegisterScreenBeforeLogin: Bool = false
     
     func login(withLoginData data: LoginResultModel) {
         login(user: data.user, tokens: data.tokens)
@@ -23,6 +24,7 @@ class Authentication: ObservableObject {
     }
     
     private func login(user: User, tokens: Tokens) {
+        needToShowRegisterScreenBeforeLogin = false
         AppSetting.shared.idUser = Int(user.id)
         AppSetting.shared.email = user.email
         AppSetting.shared.accessToken = tokens.access.token
