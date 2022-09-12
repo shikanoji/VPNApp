@@ -78,9 +78,11 @@ extension ServiceManager {
                     AppSetting.shared.refreshToken = tokens.refresh.token
                     AppSetting.shared.refreshTokenExpires = tokens.refresh.expires
                 }
+                AppSetting.shared.isRefreshingToken = false
                 return refreshTokenResult
             }
             .catch { error in
+                AppSetting.shared.isRefreshingToken = false
                 throw APIError.someError
             }
     }

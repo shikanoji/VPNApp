@@ -128,13 +128,22 @@ extension AppSetting {
     }
 
     var showedIntroduction: Bool {
-           get {
-               return UserDefaults.standard.bool(forKey: AppKeys.showedIntroduction.rawValue)
-           }
-           set {
-               UserDefaults.standard.setValue(newValue, forKey: AppKeys.showedIntroduction.rawValue)
-           }
-       }
+        get {
+            return UserDefaults.standard.bool(forKey: AppKeys.showedIntroduction.rawValue)
+        }
+        set {
+            UserDefaults.standard.setValue(newValue, forKey: AppKeys.showedIntroduction.rawValue)
+        }
+    }
+
+    var isRefreshingToken: Bool {
+        get {
+            return UserDefaults.standard.bool(forKey: AppKeys.isRefreshingToken.rawValue)
+        }
+        set {
+            UserDefaults.standard.setValue(newValue, forKey: AppKeys.isRefreshingToken.rawValue)
+        }
+    }
 
     var isRefreshTokenValid: Bool {
         guard !refreshToken.isEmpty else {

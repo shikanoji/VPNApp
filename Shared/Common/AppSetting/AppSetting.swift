@@ -25,6 +25,7 @@ enum AppKeys: String {
     case hasPassword = "hasPassword"
     case showedNotice = "showedNotice"
     case showedIntroduction = "showedIntroduction"
+    case isRefreshingToken = "isRefreshingToken"
     ///Board Keys
     case dateMember = "dateMember"
     case idVPN = "idVPN"
