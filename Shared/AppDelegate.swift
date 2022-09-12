@@ -26,6 +26,7 @@ class AppDelegate: NSObject, UIApplicationDelegate, MessagingDelegate {
             return true
         }
         FirebaseApp.configure(options: fileopts)
+        AppSetting.shared.isRefreshingToken = false
         return true
     }
     

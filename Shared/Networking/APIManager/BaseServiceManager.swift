@@ -22,7 +22,8 @@ class BaseServiceManager<API: TargetType> {
     func request(_ api: API) -> Single<Response> {
         return provider.rx.request(api)
             .flatMap {
-                if $0.statusCode == 401 {
+                if $0.statusCode == 401, !AppSetting.shared.isRefreshingToken {
+                    AppSetting.shared.isRefreshingToken = true
                     throw TokenError.tokenExpired
                 } else {
                     return Single.just($0)
