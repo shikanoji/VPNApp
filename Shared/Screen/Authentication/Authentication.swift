@@ -12,6 +12,7 @@ class Authentication: ObservableObject {
     @Published var isValidated: Bool = AppSetting.shared.isRefreshTokenValid
     @Published var isPremium: Bool = AppSetting.shared.isPremium
     @Published var showNoticeAlert: Bool = AppSetting.shared.showedNotice
+    @Published var showedIntroduction: Bool = AppSetting.shared.showedIntroduction
     
     func login(withLoginData data: LoginResultModel) {
         login(user: data.user, tokens: data.tokens)
@@ -55,17 +56,19 @@ class Authentication: ObservableObject {
         AppSetting.shared.idUser = 0
         AppSetting.shared.email = ""
         AppSetting.shared.accessToken = ""
+
         AppSetting.shared.accessTokenExpires = nil
         AppSetting.shared.refreshToken = ""
         AppSetting.shared.refreshTokenExpires = nil
         AppSetting.shared.name = nil
+
         AppSetting.shared.isPremium = false
         AppSetting.shared.premiumExpires = nil
         AppSetting.shared.accountCreatedTime = nil
         AppSetting.shared.hasPassword = false
+
         isValidated = AppSetting.shared.isRefreshTokenValid
         isPremium = AppSetting.shared.isPremium
-        
         AppSetting.shared.loadDataMap = false
     }
 }

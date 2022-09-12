@@ -35,7 +35,11 @@ struct ContentView: View {
                                     SubscriptionIntroduction()
                                 }
                             } else {
-                                IntroductionView()
+                                if authentication.showedIntroduction {
+                                    LoginView(viewModel: LoginViewModel())
+                                } else {
+                                    IntroductionView()
+                                }
                             }
                         }
                     }

@@ -9,15 +9,12 @@ import Foundation
 import SwiftUI
 import UIKit
 struct IntroductionView: View {
+    @EnvironmentObject var authentication: Authentication
     @State var index = 0
-    @State private var signIn = false
-    @State private var trial = false
     // test board screen
-    @State private var isPresented = false
-    
     var body: some View {
         Background() {
-            VStack(spacing: 10) {
+            VStack() {
                 Spacer().frame(height: 20)
                 HStack {
                     Spacer().frame(width: 10)
@@ -27,11 +24,12 @@ struct IntroductionView: View {
                 Spacer()
                 SlideIntroduction()
                 AppButton(style: .themeButton, width: 300, height:50, text: L10n.Introduction.trialButton) {
-                    self.signIn = true
+                    AppSetting.shared.showedIntroduction = true
+                    authentication.showedIntroduction = true
                 }
-                NavigationLink(destination: LoginView(viewModel: LoginViewModel()), isActive: $signIn) { }
                 AppButton(style: .darkButton, width: 300, height:50, text: "Sign In") {
-                    self.signIn = true
+                    AppSetting.shared.showedIntroduction = true
+                    authentication.showedIntroduction = true
                 }
                 Spacer()
                 Text(L10n.Introduction.introBottomTitle)
@@ -39,7 +37,6 @@ struct IntroductionView: View {
                     .foregroundColor(.white)
                 Spacer()
             }
-            .padding()
         }
         .navigationBarHidden(true)
     }
