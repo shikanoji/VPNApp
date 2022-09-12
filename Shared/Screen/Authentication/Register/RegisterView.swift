@@ -15,7 +15,7 @@ struct RegisterView: View {
     @EnvironmentObject var authentication: Authentication
     
     var normalRegisterButton: some View {
-        AppButton(style: .themeButton, width: 311, text: L10n.Register.signup) {
+        AppButton(style: .themeButton, width: Constant.Global.widthFormAndButton, text: L10n.Register.signup) {
             viewModel.signup()
         }.disabled(viewModel.registerDisable)
     }
@@ -32,11 +32,11 @@ struct RegisterView: View {
     
     var forms: some View {
         Group{
-            Form(placeholder: L10n.Register.emailPlaceholder, value: $viewModel.email)
+            Form(placeholder: L10n.Register.emailPlaceholder, value: $viewModel.email, width: Constant.Global.widthFormAndButton)
             Spacer().frame(height: 20)
-            Form(placeholder: L10n.Register.passwordPlaceholder, value: $viewModel.password, isPassword: true)
+            Form(placeholder: L10n.Register.passwordPlaceholder, value: $viewModel.password, isPassword: true, width: Constant.Global.widthFormAndButton)
             Spacer().frame(height: 20)
-            Form(placeholder: L10n.Register.retypePassword, value: $viewModel.retypePassword, isPassword: true)
+            Form(placeholder: L10n.Register.retypePassword, value: $viewModel.retypePassword, isPassword: true, width: Constant.Global.widthFormAndButton)
             Spacer().frame(height: 20)
             if viewModel.showProgressView {
                 ProgressView().progressViewStyle(CircularProgressViewStyle(tint: Color.white))
@@ -53,11 +53,11 @@ struct RegisterView: View {
             }
             normalRegisterButton
             Spacer().frame(height: 30)
-            AppButton(style: .darkButton, width: 311, text: L10n.Register.signupWithGoogle, icon: Asset.Assets.google.swiftUIImage) {
+            AppButton(style: .darkButton, width: Constant.Global.widthFormAndButton, text: L10n.Register.signupWithGoogle, icon: Asset.Assets.google.swiftUIImage) {
                 viewModel.signupGoogle()
             }
             Spacer().frame(height: 10)
-            AppButton(style: .darkButton, width: 311, text: L10n.Register.signupWithApple, icon: Asset.Assets.apple.swiftUIImage) {
+            AppButton(style: .darkButton, width: Constant.Global.widthFormAndButton, text: L10n.Register.signupWithApple, icon: Asset.Assets.apple.swiftUIImage) {
                 viewModel.signupApple()
             }
             Spacer().frame(height: 30)

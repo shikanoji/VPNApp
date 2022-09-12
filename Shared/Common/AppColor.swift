@@ -70,4 +70,6 @@ struct AppColor {
     static let rightCircle = Asset.Colors.rightCircle.swiftUIColor
     static let leftCircle = Asset.Colors.leftCircle.swiftUIColor
     static let backgroundLoading = Asset.Colors.backgroundLoading.swiftUIColor
+    
+    static let grayBackground = Asset.Colors.grayCenterBackground.swiftUIColor
 }

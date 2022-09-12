@@ -25,8 +25,6 @@ struct BoardListView: View {
     
     var body: some View {
         VStack(spacing: 8) {
-            Spacer()
-                .frame(height: 20)
             StatusLocationView(node: $node, statusConnect: $statusConnect)
                 .onTapGesture {
                     withAnimation {

@@ -199,6 +199,13 @@ class BoardViewModel: ObservableObject {
             name: Constant.NameNotification.logoutNeedDisconnect,
             object: nil
         )
+        
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(changeProtocolSetting),
+            name: Constant.NameNotification.changeProtocolSetting,
+            object: nil
+        )
 
         Task {
             await OpenVPNManager.shared.vpn.prepare()
@@ -220,6 +227,14 @@ class BoardViewModel: ObservableObject {
                     }
                 }
             }
+        }
+    }
+    
+    @objc
+    func changeProtocolSetting() {
+        if state == .connected {
+            isSwitching = true
+            configDisconnect()
         }
     }
     

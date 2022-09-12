@@ -144,6 +144,15 @@ extension AppSetting {
             UserDefaults.standard.setValue(newValue, forKey: AppKeys.isRefreshingToken.rawValue)
         }
     }
+    
+    var refreshTokenError: Bool {
+        get {
+            return UserDefaults.standard.bool(forKey: AppKeys.refreshTokenError.rawValue)
+        }
+        set {
+            UserDefaults.standard.setValue(newValue, forKey: AppKeys.refreshTokenError.rawValue)
+        }
+    }
 
     var isRefreshTokenValid: Bool {
         guard !refreshToken.isEmpty else {

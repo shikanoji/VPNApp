@@ -70,6 +70,7 @@ extension ServiceManager {
         return request(.refreshToken)
             .filterSuccessfulStatusAndRedirectCodes()
             .map { response in
+                AppSetting.shared.isRefreshingToken = false
                 let refreshTokenResult = try JSONDecoder().decode(APIResponse<RegisterResultModel>.self, from: response.data)
                 if let result = refreshTokenResult.result {
                     let tokens = result.tokens
@@ -77,8 +78,10 @@ extension ServiceManager {
                     AppSetting.shared.accessTokenExpires = tokens.access.expires
                     AppSetting.shared.refreshToken = tokens.refresh.token
                     AppSetting.shared.refreshTokenExpires = tokens.refresh.expires
+                } else {
+                    AppSetting.shared.refreshTokenError = true
+                    NotificationCenter.default.post(name: Constant.NameNotification.sessionExpired, object: nil)
                 }
-                AppSetting.shared.isRefreshingToken = false
                 return refreshTokenResult
             }
             .catch { error in

@@ -21,10 +21,8 @@ struct AutoConnectDestinationSelectView: View {
     
     var body: some View {
         ZStack {
-            Background{}.opacity(0.8)
             ScrollView(showsIndicators: false) {
                 VStack {
-                    Spacer().frame(height: 40)
                     HStack {
                         Button {
                             showAutoConnectDestinationSelection = false
@@ -33,7 +31,7 @@ struct AutoConnectDestinationSelectView: View {
                         }
                         Spacer()
                     }
-                    Spacer().frame(height: 40)
+                    .frame(height: 50)
                     LocationListView(locationData: $viewModel.locationData,
                                      nodeSelect: $viewModel.node,
                                      hasFastestOption: true,
