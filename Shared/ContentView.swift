@@ -7,6 +7,7 @@
 
 import SwiftUI
 import CoreData
+import UIKit
 
 struct ContentView: View {
     @StateObject var viewModel: ContentViewModel = ContentViewModel()
@@ -15,6 +16,11 @@ struct ContentView: View {
     init() {
         UITextField.appearance().tintColor = .white
         UIScrollView.appearance().bounces = false
+        let appearance = UINavigationBarAppearance()
+        appearance.configureWithOpaqueBackground()
+        appearance.backgroundColor = .white
+        UINavigationBar.appearance().standardAppearance = appearance
+        UINavigationBar.appearance().scrollEdgeAppearance = appearance
     }
     
     var body: some View {
@@ -33,8 +39,8 @@ struct ContentView: View {
                 if !viewModel.getIpInfoSuccess {
                     AnimationLogo()
                 } else {
-                    if authentication.showNoticeAlert {
-                        NavigationView {
+                    NavigationView {
+                        if authentication.showNoticeAlert {
                             if let appVersion = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String, AppSetting.shared.forceUpdateVersion.contains(appVersion) {
                                 ForceUpdateView()
                             } else {
@@ -46,19 +52,23 @@ struct ContentView: View {
                                     }
                                 } else {
                                     if authentication.showedIntroduction {
-                                        LoginView(viewModel: LoginViewModel())
+                                        if authentication.needToShowRegisterScreenBeforeLogin {
+                                            RegisterView(viewModel: RegisterViewModel())
+                                        } else {
+                                            LoginView(viewModel: LoginViewModel())
+                                        }
                                     } else {
                                         IntroductionView()
                                     }
                                 }
                             }
+                        } else {
+                            NoticeView()
                         }
-                        .navigationViewStyle(StackNavigationViewStyle())
-                        .navigationBarTitleDisplayMode(.inline)
-                        .navigationAppearance(backgroundColor: UIColor(AppColor.background), foregroundColor: UIColor.white, tintColor: UIColor.white, hideSeparator: true)
-                    } else {
-                        NoticeView()
                     }
+                    .navigationViewStyle(StackNavigationViewStyle())
+                    .navigationBarTitleDisplayMode(.inline)
+                    .navigationAppearance(backgroundColor: UIColor(AppColor.background), foregroundColor: UIColor.white, tintColor: UIColor.white, hideSeparator: true)
                 }
             }
             .ignoresSafeArea()

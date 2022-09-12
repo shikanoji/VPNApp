@@ -27,29 +27,31 @@ struct SettingsView: View {
     ]
     
     var body: some View {
-        VStack {
-            AppColor.darkButton
-                .frame(height: 20)
-            CustomNavigationView(
-                tapLeftButton: {
-                    showSettings = false
-                }, tapRightButton: {
-                    showSettings = false
-                }, statusConnect: $statusConnect)
-            ScrollView(showsIndicators: false) {
-                VStack {
-                    sectionsView
-                        .animation(nil)
-                    .padding([.top, .leading])
-                    Spacer().frame(height: 34)
-                    navigationLinks
+        ZStack {
+            VStack {
+                AppColor.darkButton
+                    .frame(height: 20)
+                CustomNavigationView(
+                    tapLeftButton: {
+                        showSettings = false
+                    }, tapRightButton: {
+                        showSettings = false
+                    }, statusConnect: $statusConnect)
+                ScrollView(showsIndicators: false) {
+                    VStack {
+                        sectionsView
+                            .animation(nil)
+                            .padding([.top, .leading])
+                        Spacer().frame(height: 34)
+                        navigationLinks
+                    }
                 }
+                .frame(maxHeight: .infinity)
+                .background(AppColor.background)
+                .ignoresSafeArea()
             }
-            .frame(maxHeight: .infinity)
             .background(AppColor.background)
-            .ignoresSafeArea()
         }
-        .background(AppColor.background)
     }
     
     var sectionsView: some View {

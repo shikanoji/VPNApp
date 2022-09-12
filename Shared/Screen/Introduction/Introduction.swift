@@ -24,6 +24,7 @@ struct IntroductionView: View {
                 Spacer()
                 SlideIntroduction()
                 AppButton(style: .themeButton, width: 300, height:50, text: L10n.Introduction.trialButton) {
+                    authentication.needToShowRegisterScreenBeforeLogin = true
                     AppSetting.shared.showedIntroduction = true
                     authentication.showedIntroduction = true
                 }

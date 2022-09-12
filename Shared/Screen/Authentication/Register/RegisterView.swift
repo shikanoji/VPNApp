@@ -13,7 +13,7 @@ struct RegisterView: View {
     @State var toPlanSelection: Bool = false
     @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
     @EnvironmentObject var authentication: Authentication
-    
+    @State var shouldPushLoginView: Bool = false
     var normalRegisterButton: some View {
         AppButton(style: .themeButton, width: Constant.Global.widthFormAndButton, text: L10n.Register.signup) {
             viewModel.signup()
@@ -70,7 +70,13 @@ struct RegisterView: View {
                 Text(L10n.Register.hadAccountText).setDefault()
                 Spacer().frame(width: 5)
                 Text(L10n.Register.signin).setDefaultBold().onTapGesture {
-                    presentationMode.wrappedValue.dismiss()
+                    if authentication.needToShowRegisterScreenBeforeLogin {
+                        shouldPushLoginView = true
+                    } else {
+                        presentationMode.wrappedValue.dismiss()
+                    }
+                }
+                NavigationLink(destination: LoginView(viewModel: LoginViewModel()), isActive: $shouldPushLoginView) {
                 }
             }
         }
@@ -96,6 +102,7 @@ struct RegisterView: View {
                 .frame(maxWidth: .infinity, maxHeight: .infinity)
             }
         }
+        .navigationBarHidden(true)
         .onAppear {
             /// Pass authentication to view model because Environment object only receivable through view
             viewModel.authentication = authentication

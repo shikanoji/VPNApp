@@ -10,6 +10,7 @@ import AuthenticationServices
 import PopupView
 
 struct LoginView: View {
+    @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
     @StateObject var viewModel: LoginViewModel
     @EnvironmentObject var authentication: Authentication
     @State var createNewAccount: Bool = false
@@ -63,7 +64,11 @@ struct LoginView: View {
             NavigationLink(destination: RegisterView(viewModel: RegisterViewModel()), isActive: $createNewAccount) {
                 Text(L10n.Login.createNew).setDefaultBold()
                     .onTapGesture {
-                        self.createNewAccount = true
+                        if authentication.needToShowRegisterScreenBeforeLogin {
+                            presentationMode.wrappedValue.dismiss()
+                        } else {
+                            self.createNewAccount = true
+                        }
                     }
             }
         }
