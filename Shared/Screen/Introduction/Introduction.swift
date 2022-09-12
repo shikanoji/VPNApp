@@ -15,7 +15,7 @@ struct IntroductionView: View {
     var body: some View {
         Background() {
             VStack() {
-                Spacer().frame(height: 20)
+                Spacer().frame(height: UIDevice.current.hasNotch ? 60 : 40)
                 HStack {
                     Spacer().frame(width: 10)
                     Asset.Assets.logoSmall.swiftUIImage
