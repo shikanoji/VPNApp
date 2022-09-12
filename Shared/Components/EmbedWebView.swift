@@ -16,14 +16,12 @@ private struct SafeAreaInsetsKey: EnvironmentKey {
 }
 
 extension EnvironmentValues {
-    
     var safeAreaInsets: EdgeInsets {
         self[SafeAreaInsetsKey.self]
     }
 }
 
 private extension UIEdgeInsets {
-    
     var insets: EdgeInsets {
         EdgeInsets(top: top, leading: left, bottom: bottom, trailing: right)
     }
@@ -33,13 +31,36 @@ struct EmbedWebView: View {
     @State var webViewFinishedLoading = false
     @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
     
-    @Environment(\.safeAreaInsets) private var safeAreaInsets
-    
     var url: String
     var title: String
+
+    var navigation: some View {
+        ZStack {
+            VStack {
+                Spacer().frame(height: UIDevice.current.hasNotch ? 40 : 0)
+                HStack{
+                    Spacer().frame(width: 15)
+                    Label(L10n.Global.back, systemImage: "chevron.backward")
+                        .foregroundColor(Color.white)
+                        .onTapGesture {
+                            presentationMode.wrappedValue.dismiss()
+                        }
+                    Spacer()
+                }.frame(height: 60)
+            }
+            VStack {
+                Spacer().frame(height: UIDevice.current.hasNotch ? 40 : 0)
+                HStack {
+                    Spacer()
+                    Text(title).font(.system(size: 16, weight: .bold))
+                    Spacer()
+                }.frame(height: 60)
+            }
+        }.background(AppColor.background)
+    }
     var body: some View {
         VStack {
-            Spacer().frame(height: 60)
+            navigation
             ScrollView(.vertical, showsIndicators: false) {
                 ZStack(alignment: .top) {
                     if !webViewFinishedLoading {
@@ -55,10 +76,7 @@ struct EmbedWebView: View {
                 }
             }
         }
-        .padding(safeAreaInsets)
-        .navigationBarTitleDisplayMode(.inline)
-        .navigationTitle(title)
-        .background(AppColor.background)
+        .navigationBarHidden(true)
         .ignoresSafeArea()
     }
 }
