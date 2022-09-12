@@ -119,6 +119,14 @@ public enum L10n {
       public static let cancelSubscription = L10n.tr("Account", "PaymentHistory.cancelSubscription", fallback: #"Cancel Subscription"#)
     }
     public enum Session {
+      public enum Expired {
+        /// Login Again
+        public static let button = L10n.tr("Account", "Session.Expired.Button", fallback: #"Login Again"#)
+        /// Your session has expired. Please login again to continue.
+        public static let message = L10n.tr("Account", "Session.Expired.Message", fallback: #"Your session has expired. Please login again to continue."#)
+        /// Session expired.
+        public static let title = L10n.tr("Account", "Session.Expired.Title", fallback: #"Session expired."#)
+      }
       public enum Terminal {
         /// Are you sure to terminate this session
         public static let message = L10n.tr("Account", "Session.Terminal.Message", fallback: #"Are you sure to terminate this session"#)

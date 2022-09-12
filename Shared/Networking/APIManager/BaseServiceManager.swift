@@ -12,7 +12,7 @@ import RxMoya
 import RxSwift
 
 class BaseServiceManager<API: TargetType> {
-    private let provider = MoyaProvider<API>(plugins: [NetworkLoggerPlugin(configuration: .init(logOptions: .formatRequestAscURL))])
+    let provider = MoyaProvider<API>(plugins: [NetworkLoggerPlugin(configuration: .init(logOptions: .formatRequestAscURL))])
     
     init() {
         self.provider.session.sessionConfiguration.timeoutIntervalForRequest = 10
@@ -36,7 +36,7 @@ class BaseServiceManager<API: TargetType> {
             }
             .handleResponse()
 //            .filterSuccessfulStatusCodes()
-            .retry(2)
+            .retry(AppSetting.shared.refreshTokenError ? 0 : 2)
     }
     
     func cancelTask() {

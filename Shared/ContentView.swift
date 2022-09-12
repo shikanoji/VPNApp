@@ -18,40 +18,51 @@ struct ContentView: View {
     }
     
     var body: some View {
-        ZStack{
-            AppColor.background
-            if !viewModel.getIpInfoSuccess {
-                AnimationLogo()
-            } else {
-                if authentication.showNoticeAlert {
-                    NavigationView {
-                        if let appVersion = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String, AppSetting.shared.forceUpdateVersion.contains(appVersion) {
-                            ForceUpdateView()
-                        } else {
-                            if authentication.isValidated {
-                                if authentication.isPremium {
-                                    BoardView(viewModel: BoardViewModel())
-                                } else {
-                                    SubscriptionIntroduction()
-                                }
+        if viewModel.showSessionExpired {
+            ForceLogoutView {
+                viewModel.showSessionExpired = false
+                AppSetting.shared.refreshTokenError = false
+                authentication.logout()
+                authentication.showedIntroduction = true
+            }
+            .frame(width: UIScreen.main.bounds.width)
+            .ignoresSafeArea()
+        } else {
+            ZStack{
+                AppColor.background
+                if !viewModel.getIpInfoSuccess {
+                    AnimationLogo()
+                } else {
+                    if authentication.showNoticeAlert {
+                        NavigationView {
+                            if let appVersion = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String, AppSetting.shared.forceUpdateVersion.contains(appVersion) {
+                                ForceUpdateView()
                             } else {
-                                if authentication.showedIntroduction {
-                                    LoginView(viewModel: LoginViewModel())
+                                if authentication.isValidated {
+                                    if authentication.isPremium {
+                                        BoardView(viewModel: BoardViewModel())
+                                    } else {
+                                        SubscriptionIntroduction()
+                                    }
                                 } else {
-                                    IntroductionView()
+                                    if authentication.showedIntroduction {
+                                        LoginView(viewModel: LoginViewModel())
+                                    } else {
+                                        IntroductionView()
+                                    }
                                 }
                             }
                         }
+                        .navigationViewStyle(StackNavigationViewStyle())
+                        .navigationBarTitleDisplayMode(.inline)
+                        .navigationAppearance(backgroundColor: UIColor(AppColor.background), foregroundColor: UIColor.white, tintColor: UIColor.white, hideSeparator: true)
+                    } else {
+                        NoticeView()
                     }
-                    .navigationViewStyle(StackNavigationViewStyle())
-                    .navigationBarTitleDisplayMode(.inline)
-                    .navigationAppearance(backgroundColor: UIColor(AppColor.background), foregroundColor: UIColor.white, tintColor: UIColor.white, hideSeparator: true)
-                } else {
-                    NoticeView()
                 }
             }
+            .ignoresSafeArea()
         }
-        .ignoresSafeArea()
     }
 }
 

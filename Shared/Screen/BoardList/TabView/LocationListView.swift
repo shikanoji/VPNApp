@@ -34,7 +34,7 @@ struct LocationListView: View {
                 }
                 Spacer()
             }
-            .padding()
+            .padding(.horizontal)
             .frame(height: Constant.BoardList.heightStatusLoction)
             .onTapGesture {
                 nodeSelect = nil
@@ -50,10 +50,6 @@ struct LocationListView: View {
                 fastestServerSection
             }
             ScrollView(showsIndicators: false) {
-                HStack {
-                    Spacer()
-                }
-                .frame(height: 0)
                 VStack(alignment: .leading) {
                     if isEditing {
                         ForEach(nodeListSearch) { node in

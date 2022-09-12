@@ -22,11 +22,11 @@ struct ForgotPasswordView: View {
     }
     
     var emailForm: some View {
-        Form(placeholder: L10n.ForgotPassword.emailPlaceholder, value: $viewModel.email)
+        Form(placeholder: L10n.ForgotPassword.emailPlaceholder, value: $viewModel.email, width: Constant.Global.widthFormAndButton)
     }
     
     var submitButton: some View {
-        AppButton(style: .themeButton, width: 311, text: L10n.ForgotPassword.sendRequestButton) {
+        AppButton(style: .themeButton, width: Constant.Global.widthFormAndButton, text: L10n.ForgotPassword.sendRequestButton) {
             viewModel.sendRequest()
         }.disabled(viewModel.sendRequestDisable)
     }

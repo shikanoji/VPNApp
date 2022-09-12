@@ -55,3 +55,6 @@
 "Session.Terminal.Title" = "Terminate session";
 "Session.Terminal.Message" = "Are you sure to terminate this session";
 "Session.Terminal.Terminate" = "Terminate";
+"Session.Expired.Title" = "Session expired.";
+"Session.Expired.Message" = "Your session has expired. Please login again to continue.";
+"Session.Expired.Button" = "Login Again";

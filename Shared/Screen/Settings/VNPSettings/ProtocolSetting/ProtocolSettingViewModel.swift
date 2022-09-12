@@ -28,9 +28,12 @@ class ProtocolSettingViewModel: ObservableObject {
         guard let exitItem = defaultItem else {
             return
         }
-        
-        NetworkManager.shared.selectConfig = exitItem.type
 
         section.updateSelectedItemListAndUnSelectOther(exitItem)
+        
+        if NetworkManager.shared.selectConfig != exitItem.type {
+            NetworkManager.shared.selectConfig = exitItem.type
+            NotificationCenter.default.post(name: Constant.NameNotification.changeProtocolSetting, object: nil)
+        }
     }
 }
