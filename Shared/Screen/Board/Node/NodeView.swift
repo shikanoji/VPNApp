@@ -27,11 +27,10 @@ struct NodeView: View {
     var body: some View {
         VStack(spacing: 5) {
             if isSelected {
-                NodePopupView(node: node, scale: $scale)
+                NodePopupView(node: node, scale: $scale, isSelected: .constant(true))
             } else {
-                Color.clear
-                    .frame(height: !node.isCity ?
-                           (Constant.Board.NodePopupView.heightContentPopupView + 4): (Constant.Board.NodePopupView.heightTriangle + Constant.Board.NodePopupView.heightContentPopupView + 34))
+                NodePopupView(node: node, scale: $scale, isSelected: .constant(false))
+                    .opacity(0)
             }
             ZStack {
                 Ellipse()
@@ -45,6 +44,7 @@ struct NodeView: View {
                            height: getWidth)
             }
         }
+        .frame(height: 80)
         .scaleEffect(1 / scale, anchor: .bottom)
     }
 }

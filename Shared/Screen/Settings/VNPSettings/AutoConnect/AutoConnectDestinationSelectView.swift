@@ -9,6 +9,30 @@ import Foundation
 import SwiftUI
 import TunnelKitManager
 
+struct BlurView: UIViewRepresentable {
+
+    let style: UIBlurEffect.Style
+
+    func makeUIView(context: UIViewRepresentableContext<BlurView>) -> UIView {
+        let view = UIView(frame: .zero)
+        view.backgroundColor = .clear
+        let blurEffect = UIBlurEffect(style: style)
+        let blurView = UIVisualEffectView(effect: blurEffect)
+        blurView.translatesAutoresizingMaskIntoConstraints = false
+        view.insertSubview(blurView, at: 0)
+        NSLayoutConstraint.activate([
+            blurView.heightAnchor.constraint(equalTo: view.heightAnchor),
+            blurView.widthAnchor.constraint(equalTo: view.widthAnchor),
+        ])
+        return view
+    }
+
+    func updateUIView(_ uiView: UIView,
+                      context: UIViewRepresentableContext<BlurView>) {
+
+    }
+}
+
 struct AutoConnectDestinationSelectView: View {
     @Binding var showSettings: Bool
     @Binding var showVPNSetting: Bool
@@ -21,10 +45,8 @@ struct AutoConnectDestinationSelectView: View {
     
     var body: some View {
         ZStack {
-            Background{}.opacity(0.8)
             ScrollView(showsIndicators: false) {
                 VStack {
-                    Spacer().frame(height: 40)
                     HStack {
                         Button {
                             showAutoConnectDestinationSelection = false
@@ -33,7 +55,7 @@ struct AutoConnectDestinationSelectView: View {
                         }
                         Spacer()
                     }
-                    Spacer().frame(height: 40)
+                    .frame(height: 50)
                     LocationListView(locationData: $viewModel.locationData,
                                      nodeSelect: $viewModel.node,
                                      hasFastestOption: true,

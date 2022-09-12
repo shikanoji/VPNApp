@@ -73,25 +73,6 @@ struct BoardView: View {
                 settingView()
                     .transition(transitionLeft)
             }
-            VStack {
-                if showBoardList {
-                    boardListView()
-                        .transition(transition)
-                        .offset(y: self.dragged.height)
-                        .gesture(drag
-                            .onChanged{ value in
-                                let valueConstraint = value.translation.height + self.accumulated.height
-                                self.dragged = CGSize(width: value.translation.width + self.accumulated.width,
-                                                      height: constraintOffSet(valueConstraint))
-                            }
-                            .onEnded{ value in
-                                let valueConstraint = value.translation.height + self.accumulated.height
-                                self.dragged = CGSize(width: value.translation.width + self.accumulated.width,
-                                                      height: caculatorDirection(valueConstraint))
-                                self.accumulated = self.dragged
-                            })
-                }
-            }
             
             if !viewModel.shouldHideAutoConnect {
                 autoConnectView()
@@ -315,6 +296,9 @@ struct BoardView: View {
             if viewModel.showProgressView {
                 // dont show loading
             }
+        }
+        .sheet(isPresented: $showBoardList) {
+            boardListView()
         }
         .background(AppColor.background)
         .frame(alignment: .top)

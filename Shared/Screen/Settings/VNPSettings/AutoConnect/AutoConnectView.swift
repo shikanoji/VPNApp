@@ -36,16 +36,6 @@ struct AutoConnectView: View {
                         shouldHideAutoConnect = true
                     }, statusConnect: $statusConnect)
                 VStack(alignment: .leading, spacing: 1) {
-                    NavigationLink(isActive: $showAutoConnectDestinationSelection,
-                                   destination: {
-                        AutoConnectDestinationSelectView(showSettings: $showSettings,
-                                                         showVPNSetting: $showVPNSetting,
-                                                         shouldHideAutoConnect: $shouldHideAutoConnect,
-                                                         statusConnect: $statusConnect,
-                                                         showAutoConnectDestinationSelection: $showAutoConnectDestinationSelection,
-                                                         viewModel: AutoConnectDestinationSelectViewModel())
-                    },
-                                   label: {})
                     ForEach(viewModel.sectionList, id: \.id) { section in
                         if section.type.title != "" {
                             Text(section.type.title)
@@ -82,6 +72,14 @@ struct AutoConnectView: View {
                 }
                 .padding(Constant.Menu.hozitalPaddingCell)
                 .padding(.top, Constant.Menu.topPaddingCell)
+                .sheet(isPresented: $showAutoConnectDestinationSelection) {
+                    AutoConnectDestinationSelectView(showSettings: $showSettings,
+                                                     showVPNSetting: $showVPNSetting,
+                                                     shouldHideAutoConnect: $shouldHideAutoConnect,
+                                                     statusConnect: $statusConnect,
+                                                     showAutoConnectDestinationSelection: $showAutoConnectDestinationSelection,
+                                                     viewModel: AutoConnectDestinationSelectViewModel())
+                }
             }
         }
         .navigationBarHidden(true)
