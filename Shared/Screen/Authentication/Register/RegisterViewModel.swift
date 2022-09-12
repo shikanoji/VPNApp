@@ -28,6 +28,11 @@ class RegisterViewModel: NSObject, ObservableObject {
     private let disposedBag = DisposeBag()
     
     func signup() {
+        guard !registerDisable else {
+            self.alertMessage = "Invalid email or password"
+            self.showAlert = true
+            return
+        }
         showProgressView = true
         ServiceManager.shared.register(email: email, password: password)
             .subscribe(onSuccess: { [weak self] response in

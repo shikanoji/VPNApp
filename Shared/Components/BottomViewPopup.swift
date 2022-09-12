@@ -58,7 +58,7 @@ struct BottomViewPopup: View {
                     cancel?()
                 }
             VStack {
-                Spacer().frame(height: 40)
+                Spacer().frame(height: 60)
                 HStack {
                     Button {
                         if cancel != nil {
