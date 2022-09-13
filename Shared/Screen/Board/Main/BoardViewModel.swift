@@ -10,6 +10,7 @@ import SwiftUI
 import RxSwift
 import TunnelKitManager
 import TunnelKitCore
+import UIKit
 
 extension VPNStatus {
     var title: String {
@@ -151,9 +152,9 @@ class BoardViewModel: ObservableObject {
     var isSwitching = false
     
     var reconnectWhenLoseInternet = false
-    
+
+    private var backgroundTaskId: UIBackgroundTaskIdentifier?
     // MARK: Function
-    
     init() {
         tab = AppSetting.shared.getCurrentTab()
         
@@ -228,6 +229,24 @@ class BoardViewModel: ObservableObject {
                 }
             }
         }
+    }
+
+    ///Register background task
+    private func beginBackgroundTask() {
+        backgroundTaskId = UIApplication.shared.beginBackgroundTask(withName: "sysvpn.client.ios.vpnkeeper") { [weak self] in
+            self?.backgroundTaskExpired()
+        }
+    }
+
+    private func endBackgroundTask() {
+        guard let backgroundTaskId = backgroundTaskId else { return }
+        UIApplication.shared.endBackgroundTask(backgroundTaskId)
+        self.backgroundTaskId = nil
+    }
+
+    private func backgroundTaskExpired() {
+        // End BG task to make sure app not be killed
+        endBackgroundTask()
     }
     
     @objc
@@ -390,6 +409,7 @@ class BoardViewModel: ObservableObject {
         if autoConnectType == .off {
             stopAutoconnectTimer()
         }
+        endBackgroundTask()
     }
     
     func configDisconnect() {
@@ -431,6 +451,7 @@ class BoardViewModel: ObservableObject {
     var connectOrDisconnectByUser = false
     
     func configConnected() {
+        beginBackgroundTask()
         numberReconnect = 0
         connectOrDisconnectByUser = false
         stopSpeedTimer()
