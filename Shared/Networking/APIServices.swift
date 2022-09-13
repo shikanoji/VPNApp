@@ -303,7 +303,7 @@ extension APIService: TargetType {
                 urlParameters:  [:])
         case .fetchPaymentHistory:
             var param: [String: Any] = [:]
-            param["id"] = AppSetting.shared.idUser
+            param["userId"] = AppSetting.shared.idUser
             
             return .requestParameters(parameters: param, encoding: URLEncoding.queryString)
         case .verifyReceipt(let receipt):
