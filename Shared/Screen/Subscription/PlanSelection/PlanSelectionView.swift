@@ -18,9 +18,10 @@ struct PlanSelectionView: View {
         LoadingScreen(isShowing: $viewModel.showProgressView) {
             Background {
                 VStack {
-                    Spacer()
-                    Spacer().frame(height: 50)
+                    CustomSimpleNavigationView(title: "", backgroundColor: .clear).opacity(viewModel.shouldAllowLogout ? 0 : 1)
                     Group {
+                        Spacer()
+                        Spacer().frame(height: 50)
                         Text(L10n.PlanSelect.title).setTitle()
                         Spacer().frame(height: 10)
                         Text(L10n.PlanSelect.body).setDefault()
@@ -76,6 +77,7 @@ struct PlanSelectionView: View {
                 viewModel.loadPlans()
                 viewModel.authentication = authentication
             })
+
             .popup(isPresented: $viewModel.showAlert, type: .floater(verticalPadding: 10), position: .bottom, animation: .easeInOut, autohideIn: 10, closeOnTap: false, closeOnTapOutside: true) {
                 PopupSelectView(message: viewModel.alertMessage, confirmTitle: "Retry", confirmAction: {
                     Task {
@@ -84,6 +86,7 @@ struct PlanSelectionView: View {
                 })
             }
         }
+        .navigationBarHidden(!viewModel.shouldAllowLogout)
     }
 }
 
