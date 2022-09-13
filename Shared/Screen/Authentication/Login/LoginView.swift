@@ -43,7 +43,7 @@ struct LoginView: View {
     var loginButton: some View {
         AppButton(style: .themeButton, width: Constant.Global.widthFormAndButton, text: L10n.Login.signin) {
             viewModel.fullLogin()
-        }.disabled(viewModel.loginDisable)
+        }
     }
     
     var loginWithGoogleButton: some View {

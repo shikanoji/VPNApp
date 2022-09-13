@@ -72,5 +72,6 @@ class Authentication: ObservableObject {
         isValidated = AppSetting.shared.isRefreshTokenValid
         isPremium = AppSetting.shared.isPremium
         AppSetting.shared.loadDataMap = false
+        AppSetting.shared.currentSessionId = ""
     }
 }
