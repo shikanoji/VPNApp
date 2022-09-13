@@ -24,30 +24,32 @@ struct BoardListView: View {
     @Binding var statusConnect: VPNStatus
     
     var body: some View {
-        VStack(spacing: 8) {
-            StatusLocationView(node: $node, statusConnect: $statusConnect)
-                .onTapGesture {
-                    withAnimation {
-                        showBoardList.toggle()
+        NavigationView {
+            VStack(spacing: 8) {
+                StatusLocationView(node: $node, statusConnect: $statusConnect)
+                    .onTapGesture {
+                        withAnimation {
+                            showBoardList.toggle()
+                        }
                     }
+                BoardTabView(tab: $currentTab, showBoardList: $showBoardList)
+                    .padding([.leading, .trailing])
+                Spacer()
+                    .frame(height: 8)
+                switch currentTab {
+                case .location:
+                    LocationListView(locationData: $locationData, nodeSelect: $node, showAutoConnectionDestinationView: .constant(false))
+                case .staticIP:
+                    StaticIPListView(staticIPData: $staticIPData, selectStaticServer: $staticNode)
+                case .multiHop:
+                    MultiHopView(mutilhopList: $mutilhopList,
+                                 multihopSelect: $multihopSelect)
                 }
-            BoardTabView(tab: $currentTab, showBoardList: $showBoardList)
-                .padding([.leading, .trailing])
-            Spacer()
-                .frame(height: 8)
-            switch currentTab {
-            case .location:
-                LocationListView(locationData: $locationData, nodeSelect: $node, showAutoConnectionDestinationView: .constant(false))
-            case .staticIP:
-                StaticIPListView(staticIPData: $staticIPData, selectStaticServer: $staticNode)
-            case .multiHop:
-                MultiHopView(mutilhopList: $mutilhopList,
-                              multihopSelect: $multihopSelect)
             }
+            .frame(maxHeight: .infinity)
+            .navigationBarHidden(true)
+            .background(AppColor.background)
+            .ignoresSafeArea()
         }
-        .frame(maxHeight: .infinity)
-        .navigationBarHidden(true)
-        .background(AppColor.background)
-        .ignoresSafeArea()
     }
 }
