@@ -20,34 +20,36 @@ struct AutoConnectDestinationSelectView: View {
     @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
     
     var body: some View {
-        ZStack {
-            ScrollView(showsIndicators: false) {
-                VStack {
-                    HStack {
-                        Button {
-                            showAutoConnectDestinationSelection = false
-                        } label: {
-                            Asset.Assets.close.swiftUIImage
+        NavigationView {
+            ZStack {
+                ScrollView(showsIndicators: false) {
+                    VStack {
+                        HStack {
+                            Button {
+                                showAutoConnectDestinationSelection = false
+                            } label: {
+                                Asset.Assets.close.swiftUIImage
+                            }
+                            Spacer()
                         }
-                        Spacer()
+                        .frame(height: 50)
+                        LocationListView(locationData: $viewModel.locationData,
+                                         nodeSelect: $viewModel.node,
+                                         hasFastestOption: true,
+                                         showAutoConnectionDestinationView: $showAutoConnectDestinationSelection)
                     }
-                    .frame(height: 50)
-                    LocationListView(locationData: $viewModel.locationData,
-                                     nodeSelect: $viewModel.node,
-                                     hasFastestOption: true,
-                                     showAutoConnectionDestinationView: $showAutoConnectDestinationSelection)
-                }
-                .onChange(of: viewModel.shouldAutoCloseView){ shouldCloseView in
-                    if shouldCloseView {
-                        showAutoConnectDestinationSelection = false
+                    .onChange(of: viewModel.shouldAutoCloseView){ shouldCloseView in
+                        if shouldCloseView {
+                            showAutoConnectDestinationSelection = false
+                        }
                     }
                 }
             }
+            .background(AppColor.background)
+            .ignoresSafeArea()
+            .onAppear(perform: {
+                viewModel.getCountryList()
+            })
         }
-        .background(AppColor.background)
-        .ignoresSafeArea()
-        .onAppear(perform: {
-            viewModel.getCountryList()
-        })
     }
 }

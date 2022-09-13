@@ -15,7 +15,7 @@ struct AnimationLogo: View {
     @State private var onModel = 0.0
     @State private var paddingImage = 8.0
     @State private var sizeBoder = 8
-    @State private var speedAnimation = 4.0
+    @State private var speedAnimation = 2.0
     
     var body: some View {
         ZStack {

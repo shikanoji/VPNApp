@@ -17,8 +17,6 @@ struct CityListView: View {
     
     var body: some View {
         VStack(spacing: 8) {
-            Spacer()
-                .frame(height: 40)
             Button(action: {
                 if showAutoConnectDestinationView {
                     showAutoConnectDestinationView = false

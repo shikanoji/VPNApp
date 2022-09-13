@@ -154,6 +154,9 @@ class BoardViewModel: ObservableObject {
     var reconnectWhenLoseInternet = false
 
     private var backgroundTaskId: UIBackgroundTaskIdentifier?
+    
+    var onlyDisconnectWithoutEndsession = false
+    
     // MARK: Function
     init() {
         tab = AppSetting.shared.getCurrentTab()
@@ -229,6 +232,19 @@ class BoardViewModel: ObservableObject {
                 }
             }
         }
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(applicationDidEnterBackground(_:)), name: UIApplication.didEnterBackgroundNotification, object: nil)
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(applicationWillEnterForeground(_:)), name: UIApplication.willEnterForegroundNotification, object: nil)
+    }
+    
+    @objc func applicationWillEnterForeground(_ notification: NotificationCenter) {
+        stopReconnectWhenLoseInternetTimer()
+    }
+    
+    
+    @objc func applicationDidEnterBackground(_ notification: NotificationCenter) {
+        reconnectWhenLoseInternetRealTime()
     }
 
     ///Register background task
@@ -327,6 +343,7 @@ class BoardViewModel: ObservableObject {
     }
     
     @objc private func disconnectCurrentSession() {
+        onlyDisconnectWithoutEndsession = true
         configDisconnect()
     }
     
@@ -392,7 +409,10 @@ class BoardViewModel: ObservableObject {
     }
     
     func configDisconected() {
-        disconnectSession()
+        if onlyDisconnectWithoutEndsession {
+            disconnectSession()
+            onlyDisconnectWithoutEndsession = false
+        }
         ip = AppSetting.shared.ip
         flag = ""
         stopSpeedTimer()
@@ -409,7 +429,6 @@ class BoardViewModel: ObservableObject {
         if autoConnectType == .off {
             stopAutoconnectTimer()
         }
-        endBackgroundTask()
     }
     
     func configDisconnect() {
@@ -522,11 +541,14 @@ class BoardViewModel: ObservableObject {
     var reconnectWhenLoseInternetTimer: DispatchSourceTimer?
     
     func reconnectWhenLoseInternetRealTime() {
+        guard reconnectWhenLoseInternetTimer == nil else {
+            return
+        }
         let queue = DispatchQueue.main
         reconnectWhenLoseInternetTimer = DispatchSource.makeTimerSource(queue: queue)
-        reconnectWhenLoseInternetTimer!.schedule(deadline: .now(), repeating: .seconds(3))
+        reconnectWhenLoseInternetTimer!.schedule(deadline: .now(), repeating: .seconds(1))
         reconnectWhenLoseInternetTimer!.setEventHandler { [weak self] in
-            if Connectivity.sharedInstance.isReachable {
+            if Connectivity.sharedInstance.isReachable && self?.state == .disconnected {
                 self?.stopReconnectWhenLoseInternetTimer()
                 self?.configStartConnectVPN()
             }
@@ -606,6 +628,7 @@ class BoardViewModel: ObservableObject {
         stopSpeedTimer()
         stopAutoconnectTimer()
         stopReconnectWhenLoseInternetTimer()
+        endBackgroundTask()
     }
     
     func internetNotAvaiable() {
@@ -743,10 +766,8 @@ class BoardViewModel: ObservableObject {
     
     func getAvaiableCity(_ cityNodes: [Node]) {
         if cityNodes.count > 0 {
-            if let nodeLocal = NetworkManager.shared.selectNode {
-                if cityNodes.filter({ nodeLocal.id == $0.id }).count == 0 {
-                    NetworkManager.shared.selectNode = cityNodes.first
-                }
+            if let _ = NetworkManager.shared.selectNode {
+                
             } else {
                 NetworkManager.shared.selectNode = cityNodes.first
             }

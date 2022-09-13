@@ -62,7 +62,7 @@ struct SettingsView: View {
                     .foregroundColor(AppColor.lightBlackText)
                 VStack {
                     ForEach(section.type.items) { item in
-                        ItemRowView(item: item).onTapGesture {
+                        Button {
                             switch item.type {
                             case .vpnConnection:
                                 self.showVPNSetting = true
@@ -77,6 +77,8 @@ struct SettingsView: View {
                             default:
                                 return
                             }
+                        } label: {
+                            ItemRowView(item: item)
                         }
                     }
                 }
