@@ -159,6 +159,7 @@ class BoardViewModel: ObservableObject {
     
     // MARK: Function
     init() {
+        beginBackgroundTask()
         tab = AppSetting.shared.getCurrentTab()
         
         getDataFromLocal()
@@ -470,7 +471,6 @@ class BoardViewModel: ObservableObject {
     var connectOrDisconnectByUser = false
     
     func configConnected() {
-        beginBackgroundTask()
         numberReconnect = 0
         connectOrDisconnectByUser = false
         stopSpeedTimer()
