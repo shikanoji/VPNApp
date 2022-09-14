@@ -263,11 +263,11 @@ struct BoardView: View {
                     MapView(mesh: viewModel.mesh,
                             selection: selection,
                             statusConnect: $viewModel.stateUI)
-                    .allowsHitTesting(viewModel.stateUI != .connected)
-                    if viewModel.stateUI == .connected {
-                        logoAnimation()
-                            .padding(.bottom, Constant.Board.QuickButton.widthSize)
-                    }
+//                    .allowsHitTesting(viewModel.stateUI != .connected)
+//                    if viewModel.stateUI == .connected {
+//                        logoAnimation()
+//                            .padding(.bottom, Constant.Board.QuickButton.widthSize)
+//                    }
                 }
                 VStack {
                     BoardNavigationView(status: viewModel.stateUI,
@@ -280,7 +280,7 @@ struct BoardView: View {
                     Spacer()
                     ConnectButton(status: viewModel.stateUI,
                                   uploadSpeed: viewModel.uploadSpeed,
-                                  downloadSpeed: viewModel.downloadSpeed)
+                                  downloadSpeed: viewModel.downloadSpeed, viewModel: viewModel)
                     .onTapGesture {
                         AppSetting.shared.temporaryDisableAutoConnect = false
                         viewModel.connectOrDisconnectByUser = true

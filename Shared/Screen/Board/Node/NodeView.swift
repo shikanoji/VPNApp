@@ -33,15 +33,12 @@ struct NodeView: View {
                     .opacity(0)
             }
             ZStack {
-                Ellipse()
-                    .fill(AppColor.themeColor)
-                    .frame(width: getWidth * 2,
-                           height: getWidth * 2)
-                    .opacity(0.2)
-                Ellipse()
-                    .fill(AppColor.themeColor)
-                    .frame(width: getWidth,
-                           height: getWidth)
+                if isSelected {
+                    Asset.Assets.nodeChange.swiftUIImage
+                }
+                else {
+                    Asset.Assets.node.swiftUIImage
+                }
             }
         }
         .frame(height: 80)

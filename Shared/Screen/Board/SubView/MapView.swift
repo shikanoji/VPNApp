@@ -46,13 +46,13 @@ struct MapView: View {
                     .background(AppColor.background)
                     .aspectRatio(2048 / 1588, contentMode: .fill)
                 
-                if statusConnect != .connected {
+//                if statusConnect != .connected {
                     NodeMapView(selection: selection,
                                 mesh: mesh,
                                 scale: $currentAmount,
                                 statusConnect: $statusConnect)
                     .animation(.linear)
-                }
+//                }
             }
         }, location: $location, enableUpdateMap: enableUpdateMap, updateZoomScale: {
             enableUpdateMap = false
