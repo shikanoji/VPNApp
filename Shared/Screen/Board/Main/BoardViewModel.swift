@@ -382,18 +382,18 @@ class BoardViewModel: ObservableObject {
     }
     
     func configDisconected() {
+        ip = AppSetting.shared.ip
+        flag = ""
+        nameSelect = ""
+        DispatchQueue.main.async {
+            self.stopSpeedTimer()
+            self.state = .disconnected
+            self.stateUI = .disconnected
+        }
         if onlyDisconnectWithoutEndsession {
             disconnectSession()
             onlyDisconnectWithoutEndsession = false
         }
-        ip = AppSetting.shared.ip
-        flag = ""
-        stopSpeedTimer()
-        nameSelect = ""
-        
-        state = .disconnected
-        stateUI = .disconnected
-        
         if isSwitching {
             isSwitching = false
             configStartConnectVPN()
@@ -513,7 +513,9 @@ class BoardViewModel: ObservableObject {
         print("VPNStatusDidFail: \(notification.vpnError.localizedDescription)")
         stopSpeedTimer()
         guard notification.vpnError.localizedDescription != "permission denied" else {
-            configDisconected()
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.5, execute: {
+                self.configDisconected()
+            })
             return
         }
         configDisconected()
