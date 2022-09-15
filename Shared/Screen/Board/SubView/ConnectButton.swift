@@ -135,6 +135,7 @@ struct TimeConnectedView: View {
                         self.stopWatch.start()
                     }
                 }
+                .frame(width: 100, alignment: .leading)
             Text(self.stopWatch.stopWatchTime)
                 .foregroundColor(Color.white)
                 .font(.system(size: 14, weight: .bold))
@@ -144,6 +145,7 @@ struct TimeConnectedView: View {
                         self.stopWatch.start()
                     }
                 }
+                .frame(width: 100, alignment: .leading)
         }
         .frame(width: Constant.Board.QuickButton.heightSize + 5,
                height: Constant.Board.QuickButton.heightSize + 5)

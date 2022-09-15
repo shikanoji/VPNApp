@@ -361,45 +361,45 @@ public enum L10n {
     /// Pay after 7 days. Subscription auto-renews every 1 years
     /// until canceled.
     public static let note = L10n.tr("PlanSelect", "note", fallback: #"Pay after 7 days. Subscription auto-renews every 1 years\nuntil canceled."#)
-    /// Subscription auto-renews every year until canceled.
-    public static let notePlan = L10n.tr("PlanSelect", "notePlan", fallback: #"Subscription auto-renews every year until canceled."#)
+    /// Subscription auto-renews until canceled.
+    public static let notePlan = L10n.tr("PlanSelect", "notePlan", fallback: #"Subscription auto-renews until canceled."#)
     /// strings
     ///   SysVPN
     /// 
     ///   Created by Nguyễn Đình Thạch on 13/01/2022.
     public static let title = L10n.tr("PlanSelect", "title", fallback: #"Select a plan"#)
     public enum PlanA {
-      /// $83.99 billed every year. 7-day free trial.
-      public static let description = L10n.tr("PlanSelect", "PlanA.description", fallback: #"$83.99 billed every year. 7-day free trial."#)
+      /// $44.99 billed every year. 7-day free trial.
+      public static let description = L10n.tr("PlanSelect", "PlanA.description", fallback: #"$44.99 billed every year. 7-day free trial."#)
       /// Pay after 7 days. Subscription auto-renews every year
       /// until canceled.
       public static let note = L10n.tr("PlanSelect", "PlanA.note", fallback: #"Pay after 7 days. Subscription auto-renews every year\nuntil canceled."#)
-      /// $6.99
-      public static let price = L10n.tr("PlanSelect", "PlanA.price", fallback: #"$6.99"#)
-      /// Save 12.5
-      public static let savingText = L10n.tr("PlanSelect", "PlanA.savingText", fallback: #"Save 12.5"#)
+      /// $3.75
+      public static let price = L10n.tr("PlanSelect", "PlanA.price", fallback: #"$3.75"#)
+      /// Save 69
+      public static let savingText = L10n.tr("PlanSelect", "PlanA.savingText", fallback: #"Save 69"#)
       /// 1-Year plan
       public static let title = L10n.tr("PlanSelect", "PlanA.title", fallback: #"1-Year plan"#)
     }
     public enum PlanB {
-      /// $44.99 billed every 6 months.
-      public static let description = L10n.tr("PlanSelect", "PlanB.description", fallback: #"$44.99 billed every 6 months."#)
+      /// $31.99 billed every 6 months. 7-day free trial.
+      public static let description = L10n.tr("PlanSelect", "PlanB.description", fallback: #"$31.99 billed every 6 months. 7-day free trial."#)
       /// Subscription auto-renews every 6 months until canceled.
       public static let note = L10n.tr("PlanSelect", "PlanB.note", fallback: #"Subscription auto-renews every 6 months until canceled."#)
-      /// $7.49
-      public static let price = L10n.tr("PlanSelect", "PlanB.price", fallback: #"$7.49"#)
-      /// Save 6
-      public static let savingText = L10n.tr("PlanSelect", "PlanB.savingText", fallback: #"Save 6"#)
+      /// $5.33
+      public static let price = L10n.tr("PlanSelect", "PlanB.price", fallback: #"$5.33"#)
+      /// Save 56
+      public static let savingText = L10n.tr("PlanSelect", "PlanB.savingText", fallback: #"Save 56"#)
       /// 6-Months Plan
       public static let title = L10n.tr("PlanSelect", "PlanB.title", fallback: #"6-Months Plan"#)
     }
     public enum PlanC {
-      /// $7.99 billed every month.
-      public static let description = L10n.tr("PlanSelect", "PlanC.description", fallback: #"$7.99 billed every month."#)
+      /// $11.99 billed every month. 7-day free trial.
+      public static let description = L10n.tr("PlanSelect", "PlanC.description", fallback: #"$11.99 billed every month. 7-day free trial."#)
       /// 
       public static let note = L10n.tr("PlanSelect", "PlanC.note", fallback: #""#)
-      /// $7.99
-      public static let price = L10n.tr("PlanSelect", "PlanC.price", fallback: #"$7.99"#)
+      /// $11.99
+      public static let price = L10n.tr("PlanSelect", "PlanC.price", fallback: #"$11.99"#)
       /// 
       public static let savingText = L10n.tr("PlanSelect", "PlanC.savingText", fallback: #""#)
       /// 1-Month Plan
