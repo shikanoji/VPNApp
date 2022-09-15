@@ -10,46 +10,48 @@ import Combine
 import TunnelKitManager
 
 struct ConnectButton: View {
-    var status: VPNStatus
-    var uploadSpeed: String
-    var downloadSpeed: String
-    
+
     let widthSpeed = (UIScreen.main.bounds.width - Constant.Board.QuickButton.widthSize - 30) / 2
     
     @State var startAlertScroll = false
     
     @StateObject var viewModel: BoardViewModel
     
+    @State var hiddenDelay = 1.0
+    
     var body: some View {
         HStack(alignment: .bottom, spacing: 0) {
-            if(status != .connected){
+            if(viewModel.stateUI != .connected) {
                 Spacer()
                     .frame(width: widthSpeed)
             }
-            if(status == .connected){
+            if(viewModel.stateUI == .connected) {
                 TimeConnectedView().frame(width: widthSpeed, height: Constant.Board.QuickButton.widthSize)
-                    .opacity(status == .connected ? 1 : 0)
+                    .opacity(viewModel.stateUI == .connected ? 1 : 0)
             }
             VStack(spacing: 10) {
-                if status == .connected {
+                if viewModel.stateUI == .connected {
                     getConnectAlert()
                         .padding(.bottom, 5)
-                        .padding(.bottom, startAlertScroll ? 0 : Constant.Board.Map.heightScreen / 3)
+                        .padding(.bottom, startAlertScroll ? 0 : Constant.Board.Map.heightScreen / 4)
                         .onAppear {
-                            startAlertScroll = true
+                            DispatchQueue.main.asyncAfter(deadline: .now() + 0.2, execute: {
+                                startAlertScroll = true
+                            })
                         }
                         .onDisappear {
                             startAlertScroll = false
                         }
-                        .animation(Animation.easeInOut(duration: 0.7))
+                        .animation(Animation.easeInOut(duration: 0.5))
                         .frame(width: Constant.Board.QuickButton.widthSize * 2)
+                        .opacity(!startAlertScroll ? 0 : 1)
                 }
                 ZStack {
                     Circle()
-                        .strokeBorder(status == .disconnected ? Color.white : AppColor.themeColor, lineWidth: Constant.Board.QuickButton.widthBorderMax)
+                        .strokeBorder(viewModel.stateUI == .disconnected ? Color.white : AppColor.themeColor, lineWidth: Constant.Board.QuickButton.widthBorderMax)
                         .frame(width: Constant.Board.QuickButton.widthSize + 20,
                                height: Constant.Board.QuickButton.widthSize + 20)
-                        .background(Circle().foregroundColor(status == .disconnected ? AppColor.themeColor : Color.white))
+                        .background(Circle().foregroundColor(viewModel.stateUI == .disconnected ? AppColor.themeColor : Color.white))
                     Circle()
                         .strokeBorder(Color.black, lineWidth: Constant.Board.QuickButton.widthBorderMax)
                         .frame(width: Constant.Board.QuickButton.widthSize + 11,
@@ -60,8 +62,8 @@ struct ConnectButton: View {
                        height: Constant.Board.QuickButton.widthSize)
             }
             .frame(width:  Constant.Board.QuickButton.widthSize)
-            SpeedConnectedView(uploadSpeed: uploadSpeed, downLoadSpeed: downloadSpeed)
-                .opacity(status == .connected ? ([.wireGuard, .recommended].contains(NetworkManager.shared.selectConfig) ? 0 : 1) : 0)
+            SpeedConnectedView(uploadSpeed: viewModel.uploadSpeed, downLoadSpeed: viewModel.downloadSpeed)
+                .opacity(viewModel.stateUI == .connected ? ([.wireGuard, .recommended].contains(NetworkManager.shared.selectConfig) ? 0 : 1) : 0)
                 .frame(width: widthSpeed, height: Constant.Board.QuickButton.widthSize)
         }
     }
@@ -71,7 +73,7 @@ struct ConnectButton: View {
     }
     
     func getContentButton() -> some View {
-        switch status {
+        switch viewModel.stateUI {
         case .disconnected:
             return AnyView(Text(L10n.Board.quickUnConnect)
                             .foregroundColor(Color.black)

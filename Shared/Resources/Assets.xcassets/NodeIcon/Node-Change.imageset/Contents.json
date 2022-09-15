@@ -1,19 +1,8 @@
 {
   "images" : [
     {
-      "filename" : "node.png",
-      "idiom" : "universal",
-      "scale" : "1x"
-    },
-    {
-      "filename" : "node@2x.png",
-      "idiom" : "universal",
-      "scale" : "2x"
-    },
-    {
-      "filename" : "node@3x.png",
-      "idiom" : "universal",
-      "scale" : "3x"
+      "filename" : "Node-Change.pdf",
+      "idiom" : "universal"
     }
   ],
   "info" : {

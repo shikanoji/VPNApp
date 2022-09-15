@@ -9,6 +9,8 @@ import Foundation
 import SwiftUI
 
 struct LicenseDetailView: View {
+    @Environment(\.safeAreaInsets) private var safeAreaInsets
+    
     @StateObject var viewModel: LicenseDetailViewModel
     var body: some View {
         VStack {
@@ -28,6 +30,7 @@ struct LicenseDetailView: View {
             .frame(height: UIScreen.main.bounds.height - 60)
             .clipped()
         }
+        .padding(.bottom, safeAreaInsets.bottom)
         .background(AppColor.background)
         .navigationBarTitle(viewModel.license.title ?? "")
         .navigationBarTitleDisplayMode(.inline)

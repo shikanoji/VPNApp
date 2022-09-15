@@ -38,7 +38,7 @@ struct NodePopupView: View {
                             .font(.system(size: Constant.Board.NodePopupView.sizeFont,
                                           weight: Constant.Board.NodePopupView.weightFont))
                             .lineLimit(Constant.Board.NodePopupView.numberLineText)
-                            .frame(minWidth: 100, maxWidth: .infinity, maxHeight: .infinity)
+                            .frame(maxWidth: .infinity, maxHeight: .infinity)
                             .padding(.vertical, Constant.Board.NodePopupView.paddingContent)
                             .minimumScaleFactor(.leastNonzeroMagnitude)
                         
@@ -62,7 +62,7 @@ struct NodePopupView: View {
                                           weight: Constant.Board.NodePopupView.weightFont))
                             .lineLimit(Constant.Board.NodePopupView.numberLineText)
                     }
-                    .frame(minWidth: 100, maxWidth: .infinity, maxHeight: .infinity)
+                    .frame(maxWidth: .infinity, maxHeight: .infinity)
                     .padding(8)
                     .minimumScaleFactor(.leastNonzeroMagnitude)
                 }

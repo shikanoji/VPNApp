@@ -92,6 +92,7 @@ class BoardViewModel: ObservableObject {
     @Published var nodeConnected: Node? = nil {
         didSet {
             if let node = nodeConnected {
+                AppSetting.shared.saveCurrentTabConnected(.location)
                 self.isSwitching = state == .connected
                 NetworkManager.shared.selectNode = node
                 self.connectOrDisconnectByUser = true
@@ -106,6 +107,7 @@ class BoardViewModel: ObservableObject {
     @Published var staticIPNodeSelecte: StaticServer? = nil {
         didSet {
             if let staticIP = staticIPNodeSelecte {
+                AppSetting.shared.saveCurrentTabConnected(.staticIP)
                 self.isSwitching = state == .connected
                 NetworkManager.shared.selectStaticServer = staticIP
                 self.connectOrDisconnectByUser = true
@@ -118,6 +120,7 @@ class BoardViewModel: ObservableObject {
     @Published var multihopSelect: MultihopModel? = nil {
         didSet {
             if let multihop = multihopSelect {
+                AppSetting.shared.saveCurrentTabConnected(.multiHop)
                 self.isSwitching = state == .connected
                 NetworkManager.shared.selectMultihop = multihop
                 self.connectOrDisconnectByUser = true
@@ -218,14 +221,14 @@ class BoardViewModel: ObservableObject {
         assignJailBreakCheckType(type: .readAndWriteFiles)
         AppSetting.shared.fetchListSession()
         
-        if AppSetting.shared.getDataMap() == nil {
+//        if AppSetting.shared.getDataMap() == nil {
             getIpInfo {
                 self.getCountryList {
                     self.getCountryList {
                     }
                 }
             }
-        }
+//        }
     }
 
     ///Register background task
@@ -439,13 +442,13 @@ class BoardViewModel: ObservableObject {
         connectOrDisconnectByUser = false
         stopSpeedTimer()
         
-        switch tab {
+        switch AppSetting.shared.getCurrentTabConnected() {
         case .location:
             if let iPVPN = NetworkManager.shared.requestCertificate?.server?.ipAddress {
                 ip = iPVPN
             }
             
-            if let nodeSelect = NetworkManager.shared.getNodeConnect() {
+            if let nodeSelect = NetworkManager.shared.nodeConnected {
                 flag = nodeSelect.flag
                 nameSelect = nodeSelect.isCity ? nodeSelect.name : nodeSelect.countryName
             }
@@ -605,6 +608,7 @@ class BoardViewModel: ObservableObject {
             configDisconected()
             return
         }
+        NetworkManager.shared.nodeConnected = NetworkManager.shared.getNodeConnect()
         ServiceManager.shared.getRequestCertificate(currentTab: tab, asNewConnection: asNewConnection)
             .subscribe { [weak self] response in
                 guard let `self` = self else {

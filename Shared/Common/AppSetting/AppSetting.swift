@@ -44,6 +44,7 @@ enum AppKeys: String {
     case mutilhopList = "mutilhopList"
     case autoConnectNode = "autoConnectNode"
     case currentTab = "currentTab"
+    case currentTabConnected = "currentTabConnected"
     case nodeSelect = "nodeSelect"
     case staticSelect = "staticSelect"
     case multiSelect = "multiSelect"
@@ -64,6 +65,8 @@ enum AppKeys: String {
     case currentSessionId = "currentSessionId"
     case selectCyberSec = "selectCyberSec"
     case loadDataMap = "loadDataMap"
+    
+    case nodeConnected = "nodeConnected"
 }
 
 class AppSetting {
