@@ -68,6 +68,8 @@ internal enum Asset {
     internal static let logoLarge = ImageAsset(name: "Logo-large")
     internal static let logoMedium = ImageAsset(name: "Logo-medium")
     internal static let logoSmall = ImageAsset(name: "Logo-small")
+    internal static let nodeChange = ImageAsset(name: "Node-Change")
+    internal static let node = ImageAsset(name: "Node")
     internal static let iconCheckbox = ImageAsset(name: "icon_checkbox")
     internal static let iconSettingsItemApps = ImageAsset(name: "icon_settings_item_apps")
     internal static let iconSettingsItemGeneral = ImageAsset(name: "icon_settings_item_general")

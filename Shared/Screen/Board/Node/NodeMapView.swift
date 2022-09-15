@@ -21,16 +21,14 @@ struct NodeMapView: View {
     var body: some View {
         ZStack {
             ForEach(mesh.showCityNodes ? mesh.cityNodes : mesh.countryNodes) { node in
-                if (statusConnect == .connecting && selection.isNodeSelected(node)) || statusConnect != .connecting {
-                    NodeView(scale: $scale, node: node, selection: self.selection)
-                        .position(x: Constant.convertXToMap(node.x),
-                                  y: Constant.convertYToMap(node.y, mesh.showCityNodes))
-                        .onTapGesture {
-                            self.selection.selectNode(node)
-                        }
-                        .zIndex(selection.nodeIsSelected(node) ? 1 : 0)
-                        .animation(nil)
-                }
+                NodeView(scale: $scale, node: node, selection: self.selection, statusConnect: $statusConnect)
+                    .position(x: Constant.convertXToMap(node.x),
+                              y: Constant.convertYToMap(node.y, mesh.showCityNodes))
+                    .onTapGesture {
+                        self.selection.selectNode(node)
+                    }
+                    .zIndex(selection.nodeIsSelected(node) ? 1 : 0)
+                    .animation(nil)
             }
         }
         .contentShape(Rectangle())

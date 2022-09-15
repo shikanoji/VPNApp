@@ -46,18 +46,24 @@ struct MapView: View {
                     .background(AppColor.background)
                     .aspectRatio(2048 / 1588, contentMode: .fill)
                 
-                if statusConnect != .connected {
-                    NodeMapView(selection: selection,
-                                mesh: mesh,
-                                scale: $currentAmount,
-                                statusConnect: $statusConnect)
-                    .animation(.linear)
-                }
+                NodeMapView(selection: selection,
+                            mesh: mesh,
+                            scale: $currentAmount,
+                            statusConnect: $statusConnect)
+                .animation(.linear)
             }
         }, location: $location, enableUpdateMap: enableUpdateMap, updateZoomScale: {
             enableUpdateMap = false
             self.currentAmount = $0
         })
+        .onChange(of: statusConnect) { value in
+            if statusConnect == .connected {
+                self.selection.removeSelectNode()
+                if let node = AppSetting.shared.getNodeConnected(), AppSetting.shared.getCurrentTabConnected() == .location {
+                    moveToNode(x: node.x, y: node.y)
+                }
+            }
+        }
         .onAppear {
             self.selection.removeSelectNode()
             self.enableUpdateMap = false
@@ -66,6 +72,7 @@ struct MapView: View {
             if let id = $0.first, let node = mesh.nodeWithID(id) {
                 moveToNode(x: node.x, y: node.y)
                 NetworkManager.shared.selectNode = node
+                AppSetting.shared.saveCurrentTabConnected(.location)
             }
         }
         .onReceive(selection.$selectedStaticNodeIDs) {
@@ -83,7 +90,6 @@ struct MapView: View {
         }
         .animation(.easeIn)
         .edgesIgnoringSafeArea(.all)
-        .allowsHitTesting(!(statusConnect == .connecting))
     }
     
     func moveToNode(x: CGFloat, y: CGFloat) {

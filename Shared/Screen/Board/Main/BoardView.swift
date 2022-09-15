@@ -263,11 +263,6 @@ struct BoardView: View {
                     MapView(mesh: viewModel.mesh,
                             selection: selection,
                             statusConnect: $viewModel.stateUI)
-                    .allowsHitTesting(viewModel.stateUI != .connected)
-                    if viewModel.stateUI == .connected {
-                        logoAnimation()
-                            .padding(.bottom, Constant.Board.QuickButton.widthSize)
-                    }
                 }
                 VStack {
                     BoardNavigationView(status: viewModel.stateUI,
@@ -278,9 +273,7 @@ struct BoardView: View {
                     })
                     StatusVPNView(ip: viewModel.ip, status: viewModel.stateUI, flag: viewModel.flag, name: viewModel.nameSelect)
                     Spacer()
-                    ConnectButton(status: viewModel.stateUI,
-                                  uploadSpeed: viewModel.uploadSpeed,
-                                  downloadSpeed: viewModel.downloadSpeed)
+                    ConnectButton(viewModel: viewModel)
                     .onTapGesture {
                         AppSetting.shared.temporaryDisableAutoConnect = false
                         viewModel.connectOrDisconnectByUser = true

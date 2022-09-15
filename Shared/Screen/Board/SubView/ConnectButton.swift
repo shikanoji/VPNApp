@@ -10,55 +10,70 @@ import Combine
 import TunnelKitManager
 
 struct ConnectButton: View {
-    var status: VPNStatus
-    var uploadSpeed: String
-    var downloadSpeed: String
-    
+
     let widthSpeed = (UIScreen.main.bounds.width - Constant.Board.QuickButton.widthSize - 30) / 2
     
     @State var startAlertScroll = false
     
+    @StateObject var viewModel: BoardViewModel
+    
+    @State var hiddenDelay = 1.0
+    
     var body: some View {
         HStack(alignment: .bottom, spacing: 0) {
-            Spacer()
-                .frame(width: widthSpeed)
+            if(viewModel.stateUI != .connected) {
+                Spacer()
+                    .frame(width: widthSpeed)
+            }
+            if(viewModel.stateUI == .connected) {
+                TimeConnectedView().frame(width: widthSpeed, height: Constant.Board.QuickButton.widthSize)
+                    .opacity(viewModel.stateUI == .connected ? 1 : 0)
+            }
             VStack(spacing: 10) {
-                if status == .connected {
+                if viewModel.stateUI == .connected {
                     getConnectAlert()
-                        .padding(.bottom, startAlertScroll ? 0 : Constant.Board.Map.heightScreen / 3)
+                        .padding(.bottom, 5)
+                        .padding(.bottom, startAlertScroll ? 0 : Constant.Board.Map.heightScreen / 4)
                         .onAppear {
-                            startAlertScroll = true
+                            DispatchQueue.main.asyncAfter(deadline: .now() + 0.2, execute: {
+                                startAlertScroll = true
+                            })
                         }
                         .onDisappear {
                             startAlertScroll = false
                         }
-                        .animation(Animation.easeInOut(duration: 0.7))
+                        .animation(Animation.easeInOut(duration: 0.5))
                         .frame(width: Constant.Board.QuickButton.widthSize * 2)
+                        .opacity(!startAlertScroll ? 0 : 1)
                 }
                 ZStack {
                     Circle()
-                        .strokeBorder(Color.white, lineWidth: Constant.Board.QuickButton.widthBorderMax)
-                        .frame(width: Constant.Board.QuickButton.widthSize,
-                               height: Constant.Board.QuickButton.widthSize)
-                        .background(Circle().foregroundColor(status == .connected ? Color.white : AppColor.themeColor))
+                        .strokeBorder(viewModel.stateUI == .disconnected ? Color.white : AppColor.themeColor, lineWidth: Constant.Board.QuickButton.widthBorderMax)
+                        .frame(width: Constant.Board.QuickButton.widthSize + 20,
+                               height: Constant.Board.QuickButton.widthSize + 20)
+                        .background(Circle().foregroundColor(viewModel.stateUI == .disconnected ? AppColor.themeColor : Color.white))
+                    Circle()
+                        .strokeBorder(Color.black, lineWidth: Constant.Board.QuickButton.widthBorderMax)
+                        .frame(width: Constant.Board.QuickButton.widthSize + 11,
+                               height: Constant.Board.QuickButton.widthSize + 11)
                     getContentButton()
                 }
                 .frame(width: Constant.Board.QuickButton.widthSize,
                        height: Constant.Board.QuickButton.widthSize)
             }
             .frame(width:  Constant.Board.QuickButton.widthSize)
-            SpeedConnectedView(uploadSpeed: uploadSpeed, downLoadSpeed: downloadSpeed)
-                .opacity(status == .connected ? ([.wireGuard, .recommended].contains(NetworkManager.shared.selectConfig) ? 0 : 1) : 0)
+            SpeedConnectedView(uploadSpeed: viewModel.uploadSpeed, downLoadSpeed: viewModel.downloadSpeed)
+                .opacity(viewModel.stateUI == .connected ? ([.wireGuard, .recommended].contains(NetworkManager.shared.selectConfig) ? 0 : 1) : 0)
                 .frame(width: widthSpeed, height: Constant.Board.QuickButton.widthSize)
         }
     }
     
     func getConnectAlert() -> some View {
-        AlertConnectView()
+        AlertConnectView(flag: viewModel.flag, name: viewModel.nameSelect)
     }
     
     func getContentButton() -> some View {
-        switch status {
+        switch viewModel.stateUI {
         case .disconnected:
             return AnyView(Text(L10n.Board.quickUnConnect)
                             .foregroundColor(Color.black)
@@ -70,7 +85,10 @@ struct ConnectButton: View {
                             .padding())
         case .connected:
             return AnyView(
-                TimeConnectedView()
+                Text("STOP").foregroundColor(Color.black)
+                    .multilineTextAlignment(.center)
+                    .font(.system(size: 16, weight: .bold))
+                    .padding()
             )
         }
     }
@@ -107,17 +125,28 @@ struct TimeConnectedView: View {
     @StateObject var stopWatch = StopWatch()
     
     var body: some View {
-        Text(self.stopWatch.stopWatchTime)
-            .truncationMode(.middle)
-            .foregroundColor(Color.black)
-            .font(.system(size: 14, weight: .bold))
-            .lineLimit(1)
-            .frame(width: Constant.Board.QuickButton.heightSize + 5,
-                   height: Constant.Board.QuickButton.heightSize + 5)
-            .onAppear {
-                if self.stopWatch.isPaused() {
-                    self.stopWatch.start()
+        VStack(alignment: .trailing, spacing: 0) {
+            Text("Connected")
+                .foregroundColor(Color.gray)
+                .font(.system(size: 14, weight: .bold))
+                .lineLimit(1)
+                .onAppear {
+                    if self.stopWatch.isPaused() {
+                        self.stopWatch.start()
+                    }
                 }
-            }
+            Text(self.stopWatch.stopWatchTime)
+                .foregroundColor(Color.white)
+                .font(.system(size: 14, weight: .bold))
+                .lineLimit(1)
+                .onAppear {
+                    if self.stopWatch.isPaused() {
+                        self.stopWatch.start()
+                    }
+                }
+        }
+        .frame(width: Constant.Board.QuickButton.heightSize + 5,
+               height: Constant.Board.QuickButton.heightSize + 5)
+
     }
 }

@@ -66,6 +66,19 @@ class NetworkManager: ObservableObject {
         }
     }
     
+    var nodeConnected: Node? {
+        get {
+            AppSetting.shared.getNodeConnected()
+        }
+        set {
+            guard let data = newValue else {
+                return
+            }
+
+            AppSetting.shared.saveNodeConnected(data)
+        }
+    }
+    
     var selectStaticServer: StaticServer? {
         get {
             AppSetting.shared.getStaticSelect()

@@ -18,6 +18,9 @@ struct FAQView: View {
     @State var faqSelect: QuestionModel!
     
     @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
+    
+    @Environment(\.safeAreaInsets) private var safeAreaInsets
+     
     var body: some View {
         VStack {
             AppColor.darkButton
@@ -65,7 +68,9 @@ struct FAQView: View {
                     }
                 }
             }
+            .background(AppColor.background)
         }
+        .padding(.bottom, safeAreaInsets.bottom)
         .navigationBarHidden(true)
         .background(AppColor.background)
         .ignoresSafeArea()
