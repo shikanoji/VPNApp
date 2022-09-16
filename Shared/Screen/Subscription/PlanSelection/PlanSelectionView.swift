@@ -20,7 +20,6 @@ struct PlanSelectionView: View {
                 VStack {
                     CustomSimpleNavigationView(title: "", backgroundColor: .clear).opacity(viewModel.shouldAllowLogout ? 0 : 1)
                     Group {
-                        Spacer()
                         Spacer().frame(height: 50)
                         Text(L10n.PlanSelect.title).setTitle()
                         Spacer().frame(height: 10)
@@ -54,11 +53,7 @@ struct PlanSelectionView: View {
                     Spacer().frame(height: 20)
                     
                     Text(L10n.PlanSelect.notePlan).setDefault()
-                    
-                    Text(viewModel.planListViewModel.note)
-                        .font(.system(size: 11))
-                        .foregroundColor(Color.white)
-                        .frame(width: widthConent, height: 40)
+
                     Spacer()
                 }
                 .toolbar {
@@ -68,6 +63,18 @@ struct PlanSelectionView: View {
                         } label: {
                             Text(L10n.Account.signout)
                             Asset.Assets.logout.swiftUIImage
+                        }
+                        .opacity(viewModel.shouldAllowLogout ? 1 : 0)
+                        .foregroundColor(Color.white)
+                    }
+                }
+                .toolbar {
+                    ToolbarItem(placement: .navigationBarLeading) {
+                        Button {
+                            presentationMode.wrappedValue.dismiss()
+                        } label: {
+                            Image(systemName: "chevron.backward").foregroundColor(.white)
+                            Text(L10n.Global.back)
                         }
                         .opacity(viewModel.shouldAllowLogout ? 1 : 0)
                         .foregroundColor(Color.white)
@@ -87,6 +94,7 @@ struct PlanSelectionView: View {
             }
         }
         .navigationBarHidden(!viewModel.shouldAllowLogout)
+        .navigationBarBackButtonHidden()
     }
 }
 

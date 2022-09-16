@@ -8,24 +8,24 @@
 "title" = "Select a plan";
 "body" = "All plans include protection for 6 devices";
 "continueButton" = "Subscribe";
-"notePlan" = "Subscription auto-renews every year until canceled.";
+"notePlan" = "Subscription auto-renews until canceled.";
 "note" = "Pay after 7 days. Subscription auto-renews every 1 years\nuntil canceled.";
 "PlanA.title" = "1-Year plan";
-"PlanA.description" = "$83.99 billed every year. 7-day free trial.";
-"PlanA.savingText" = "Save 12.5";
+"PlanA.description" = "$44.99 billed every year. 7-day free trial.";
+"PlanA.savingText" = "Save 69";
 "PlanA.note" = "Pay after 7 days. Subscription auto-renews every year
 until canceled.";
 "PlanB.title" = "6-Months Plan";
-"PlanB.description" = "$44.99 billed every 6 months.";
-"PlanB.savingText" = "Save 6";
+"PlanB.description" = "$31.99 billed every 6 months. 7-day free trial.";
+"PlanB.savingText" = "Save 56";
 "PlanB.note" = "Subscription auto-renews every 6 months until canceled.";
 "PlanC.title" = "1-Month Plan";
-"PlanC.description" = "$7.99 billed every month.";
+"PlanC.description" = "$11.99 billed every month. 7-day free trial.";
 "PlanC.savingText" = "";
 "PlanC.note" = "";
-"PlanA.price" = "$6.99";
-"PlanB.price" = "$7.49";
-"PlanC.price" = "$7.99";
+"PlanA.price" = "$3.75";
+"PlanB.price" = "$5.33";
+"PlanC.price" = "$11.99";
 "month" = "mo";
 
 "AccountLimit" = "Account limit reached";

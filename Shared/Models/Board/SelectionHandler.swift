@@ -10,31 +10,17 @@ import CoreGraphics
 
 
 class SelectionHandler: ObservableObject {
-    @Published private(set) var selectedNodeIDs: [NodeID] = []
+    @Published private(set) var selectedNode: Node?
     
     func removeSelectNode() {
-        selectedNodeIDs = []
+        selectedNode = nil
     }
     
     func selectNode(_ node: Node) {
-        selectedNodeIDs = [node.id]
+        selectedNode = node
     }
     
     func isNodeSelected(_ node: Node) -> Bool {
-        return selectedNodeIDs.contains(node.id)
-    }
-    
-    @Published private(set) var selectedStaticNodeIDs: [Int] = []
-    
-    func selectStaticNode(_ node: StaticServer) {
-        selectedStaticNodeIDs = [node.id]
-    }
-    
-    func isStaticNodeSelected(_ node: StaticServer) -> Bool {
-        return selectedStaticNodeIDs.contains(node.id)
-    }
-    
-    func nodeIsSelected(_ node: Node) -> Bool {
-        return selectedNodeIDs.contains(node.id)
+        return selectedNode?.id == node.id
     }
 }

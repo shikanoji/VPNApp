@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import TunnelKitManager
 
 struct NodeView: View {
     @Binding var scale: CGFloat
@@ -14,14 +15,17 @@ struct NodeView: View {
     // 1
     @State var node: Node
     //2
-    @ObservedObject var selection: SelectionHandler
+    @ObservedObject var mesh: Mesh
     //3
+    
+    @Binding var statusConnect: VPNStatus
+    
     var isSelected: Bool {
-        return selection.isNodeSelected(node)
+        return mesh.isNodeSelected(node)
     }
     
-    var getWidth: CGFloat {
-        return scale > Constant.Board.Map.enableCityZoom ? (width + 4) : width
+    var multi: CGFloat {
+        return node.isCity ? 1.5 : 1.2
     }
     
     var body: some View {
@@ -33,28 +37,66 @@ struct NodeView: View {
                     .opacity(0)
             }
             ZStack {
-                Ellipse()
-                    .fill(AppColor.themeColor)
-                    .frame(width: getWidth * 2,
-                           height: getWidth * 2)
-                    .opacity(0.2)
-                Ellipse()
-                    .fill(AppColor.themeColor)
-                    .frame(width: getWidth,
-                           height: getWidth)
+                if statusConnect == .connected {
+                    if showConnectedNode {
+                        Asset.Assets.nodeChange.swiftUIImage
+                            .resizable()
+                            .frame(width: 18 * multi * 1.2, height: 18 * multi * 1.2)
+                    } else {
+                        Asset.Assets.node.swiftUIImage
+                            .resizable()
+                            .frame(width: 18 * multi, height: 18 * multi)
+                            .opacity(0.2)
+                    }
+                } else {
+                    Asset.Assets.node.swiftUIImage
+                        .resizable()
+                        .frame(width: 18 * multi, height: 18 * multi)
+                }
             }
         }
         .frame(height: 80)
         .scaleEffect(1 / scale, anchor: .bottom)
     }
-}
-
-struct NodeView_Previews: PreviewProvider {
-    @State static var scale: CGFloat = 1.0
     
-    static var previews: some View {
-        NodeView(scale: $scale, node: Node.country, selection: SelectionHandler())
-            .previewLayout(.fixed(width: /*@START_MENU_TOKEN@*/100.0/*@END_MENU_TOKEN@*/, height: /*@START_MENU_TOKEN@*/100.0/*@END_MENU_TOKEN@*/))
-            .preferredColorScheme(.dark)
+    var showConnectedNode: Bool {
+        var show = 0
+        //If is auto-connecting, dont change node map when change tab
+        if AppSetting.shared.getAutoConnectProtocol() != .off, statusConnect == .connected {
+            if let nodeConnected = NetworkManager.shared.getNodeConnect() {
+                show = nodeConnected.id == node.id ? 1 : 0
+                node.cityNodeList.forEach {
+                    if nodeConnected.id == $0.id {
+                        show += 1
+                    }
+                }
+            }
+            return show > 0
+        }
+
+        switch AppSetting.shared.getCurrentTab() {
+        case .location:
+            if let nodeConnected = NetworkManager.shared.getNodeConnect() {
+                show = nodeConnected.id == node.id ? 1 : 0
+                node.cityNodeList.forEach {
+                    if nodeConnected.id == $0.id {
+                        show += 1
+                    }
+                }
+            }
+        case .staticIP:
+            if let staticIP = NetworkManager.shared.selectStaticServer {
+                show = staticIP.countryId == node.id ? 1 : 0
+                node.cityNodeList.forEach {
+                    if staticIP.countryId == $0.id {
+                        show += 1
+                    }
+                }
+            }
+        case .multiHop:
+            break
+        }
+        
+        return show > 0
     }
 }

@@ -21,6 +21,7 @@ struct SpeedConnectedView: View {
                 Text("\(uploadSpeed)\(L10n.Board.speed)")
                     .lineLimit(1)
                     .foregroundColor(.white)
+                    .font(.system(size: 14, weight: .bold))
             }
             HStack(spacing: 5) {
                 Image(Constant.Board.Image.downloadSpeed)
@@ -29,6 +30,7 @@ struct SpeedConnectedView: View {
                 Text("\(downLoadSpeed)\(L10n.Board.speed)")
                     .lineLimit(1)
                     .foregroundColor(.white)
+                    .font(.system(size: 14, weight: .bold))
             }
         }
     }

@@ -165,7 +165,7 @@ struct Constant {
         return (x / Constant.Board.Map.widthMapOrigin) * (Constant.Board.Map.heightScreen * Constant.Board.Map.ration)
     }
     
-    static func convertYToMap(_ y: CGFloat, _ isCityView: Bool) -> CGFloat {
+    static func convertYToMap(_ y: CGFloat, _ isCityView: Bool = false) -> CGFloat {
         let heightCountry = Constant.Board.NodePopupView.heightContentPopupView
         let heightCity = Constant.Board.NodePopupView.heightTriangle + Constant.Board.NodePopupView.heightContentPopupView + 20
         return (y / Constant.Board.Map.heightMapOrigin) * Constant.Board.Map.heightScreen - (isCityView ? heightCity : heightCountry) / 2 - (Constant.Board.NodePopupView.paddingContent + 5) * 2

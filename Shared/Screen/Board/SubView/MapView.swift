@@ -15,8 +15,7 @@ struct MapView: View {
         }
     }
     
-    @ObservedObject var mesh: Mesh
-    @ObservedObject var selection: SelectionHandler
+    @EnvironmentObject var mesh: Mesh
     
     @State var widthMap: CGFloat = Constant.Board.Map.heightScreen * Constant.Board.Map.ration
     @State var heightMap: CGFloat = Constant.Board.Map.heightScreen
@@ -46,44 +45,49 @@ struct MapView: View {
                     .background(AppColor.background)
                     .aspectRatio(2048 / 1588, contentMode: .fill)
                 
-                if statusConnect != .connected {
-                    NodeMapView(selection: selection,
-                                mesh: mesh,
-                                scale: $currentAmount,
-                                statusConnect: $statusConnect)
-                    .animation(.linear)
-                }
+                NodeMapView(scale: $currentAmount,
+                            statusConnect: $statusConnect)
+                .animation(.linear)
             }
         }, location: $location, enableUpdateMap: enableUpdateMap, updateZoomScale: {
             enableUpdateMap = false
             self.currentAmount = $0
         })
+        .onChange(of: statusConnect) { value in
+            if statusConnect == .connected {
+                mesh.removeSelectNode()
+                switch AppSetting.shared.getCurrentTabConnected() {
+                case .location:
+                    if let node = NetworkManager.shared.selectNode {
+                        moveToNode(x: node.x, y: node.y)
+                    }
+                case .staticIP:
+                    if let staticServer = NetworkManager.shared.selectStaticServer {
+                        moveToNode(x: staticServer.x, y: staticServer.y)
+                    }
+                default:
+                    break
+                }
+            }
+        }
         .onAppear {
-            self.selection.removeSelectNode()
+            self.mesh.removeSelectNode()
             self.enableUpdateMap = false
         }
-        .onReceive(selection.$selectedNodeIDs) {
-            if let id = $0.first, let node = mesh.nodeWithID(id) {
+        .onChange(of: mesh.selectedNode, perform: { newValue in
+            if let node = newValue {
                 moveToNode(x: node.x, y: node.y)
-                NetworkManager.shared.selectNode = node
+                AppSetting.shared.saveCurrentTabConnected(.location)
             }
-        }
-        .onReceive(selection.$selectedStaticNodeIDs) {
-            if let id = $0.first, let node = mesh.staticNodeWithID(id) {
-                moveToNode(x: node.x, y: node.y)
-                NetworkManager.shared.selectStaticServer = node
-            }
-        }
+        })
         .onReceive(mesh.$clientCountryNode) {
-            if selection.selectedNodeIDs.count == 0
-                && selection.selectedStaticNodeIDs.count == 0,
+            if mesh.selectedNode == nil,
                let node = $0 {
                 moveToNode(x: node.x, y: node.y)
             }
         }
         .animation(.easeIn)
         .edgesIgnoringSafeArea(.all)
-        .allowsHitTesting(!(statusConnect == .connecting))
     }
     
     func moveToNode(x: CGFloat, y: CGFloat) {
@@ -92,17 +96,6 @@ struct MapView: View {
             x: x,
             y: y
         )
-    }
-}
-
-struct MapView_Previews: PreviewProvider {
-    @State static var value = false
-    @State static var statusConnect: VPNStatus = .connected
-    
-    static var previews: some View {
-        let mesh = Mesh.sampleMesh()
-        return MapView(mesh: mesh, selection: SelectionHandler(),
-                       statusConnect: $statusConnect)
     }
 }
 

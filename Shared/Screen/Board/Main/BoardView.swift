@@ -11,8 +11,7 @@ struct BoardView: View {
     
     @StateObject var viewModel: BoardViewModel
     @Environment(\.presentationMode) var presentationMode
-    @EnvironmentObject var authentication: Authentication
-    @ObservedObject var selection = SelectionHandler()
+    @EnvironmentObject var mesh: Mesh
     
     @State var showAccount = false
     @State var showSettings = false
@@ -149,9 +148,6 @@ struct BoardView: View {
             }
         })
         .onChange(of: viewModel.nodeConnected, perform: { newValue in
-            if let node = newValue {
-                selection.selectNode(node)
-            }
             showAccount = false
             showSettings = false
             showBoardList = false
@@ -170,6 +166,9 @@ struct BoardView: View {
         .preferredColorScheme(.dark)
         .navigationBarHidden(true)
         .edgesIgnoringSafeArea(.all)
+        .onAppear(perform: {
+            viewModel.mesh = mesh
+        })
     }
     
     func handlerTapLeftNavigation() {
@@ -260,14 +259,7 @@ struct BoardView: View {
         ZStack(alignment: .top) {
             GeometryReader { geometry in
                 ZStack {
-                    MapView(mesh: viewModel.mesh,
-                            selection: selection,
-                            statusConnect: $viewModel.stateUI)
-                    .allowsHitTesting(viewModel.stateUI != .connected)
-                    if viewModel.stateUI == .connected {
-                        logoAnimation()
-                            .padding(.bottom, Constant.Board.QuickButton.widthSize)
-                    }
+                    MapView(statusConnect: $viewModel.stateUI)
                 }
                 VStack {
                     BoardNavigationView(status: viewModel.stateUI,
@@ -278,9 +270,7 @@ struct BoardView: View {
                     })
                     StatusVPNView(ip: viewModel.ip, status: viewModel.stateUI, flag: viewModel.flag, name: viewModel.nameSelect)
                     Spacer()
-                    ConnectButton(status: viewModel.stateUI,
-                                  uploadSpeed: viewModel.uploadSpeed,
-                                  downloadSpeed: viewModel.downloadSpeed)
+                    ConnectButton(viewModel: viewModel)
                     .onTapGesture {
                         AppSetting.shared.temporaryDisableAutoConnect = false
                         viewModel.connectOrDisconnectByUser = true

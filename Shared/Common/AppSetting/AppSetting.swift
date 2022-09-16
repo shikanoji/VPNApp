@@ -44,9 +44,11 @@ enum AppKeys: String {
     case mutilhopList = "mutilhopList"
     case autoConnectNode = "autoConnectNode"
     case currentTab = "currentTab"
+    case currentTabConnected = "currentTabConnected"
     case nodeSelect = "nodeSelect"
     case staticSelect = "staticSelect"
     case multiSelect = "multiSelect"
+    case recommendedCountries = "recommendedCountries"
     case temporaryDisableAutoConnect = "temporaryDisableAutoConnect"
     case needToStartNewSession = "needToStartNewSession"
     

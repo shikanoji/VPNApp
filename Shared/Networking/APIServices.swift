@@ -80,7 +80,7 @@ enum APIService {
     case forgotPassword(email: String)
     case getAppSettings
     case ipInfoOptional
-    case getRequestCertificate(currentTab: StateTab, asNewConnection: Bool)
+    case getRequestCertificate(asNewConnection: Bool)
     case changePassword(oldPassword: String, newPassword: String)
     case getListSession(page: Int = 1, limit: Int = 20, isActive: Int = 1)
     case disconnectSession(sessionId: String, terminal: Bool)
@@ -223,14 +223,14 @@ extension APIService: TargetType {
             return .requestParameters(parameters: param, encoding: URLEncoding.queryString)
         case .ipInfoOptional:
             return .requestPlain
-        case .getRequestCertificate(let currentTab, let asNewConnection):
+        case .getRequestCertificate(let asNewConnection):
             var param: [String: Any] = [:]
             param["tech"] = NetworkManager.shared.selectConfig.getConfigParam
             param["proto"] = NetworkManager.shared.selectConfig.getProtocolVPN
             param["dev"] = "tun"
             param["cybersec"] = AppSetting.shared.selectCyberSec ? 1 : 0
             
-            switch currentTab {
+            switch AppSetting.shared.getCurrentTabConnected() {
             case .location:
                 param["isHop"] = 0
                 

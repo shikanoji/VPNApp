@@ -8,19 +8,41 @@
 import SwiftUI
 
 struct AlertConnectView: View {
+    var flag: String
+    var name: String
+    let ensignSize: CGFloat = Constant.Board.NodePopupView.frameEnsign
+    
     var body: some View {
         VStack(spacing: 0) {
-            Text(L10n.Board.connectedAlert)
-                .font(.system(size: Constant.Board.Alert.sizeFont, weight: Constant.Board.Alert.weightFont))
-                .lineLimit(1)
-                .padding(15)
+//            Text(L10n.Board.connectedAlert)
+//                .font(.system(size: Constant.Board.Alert.sizeFont, weight: Constant.Board.Alert.weightFont))
+//                .lineLimit(1)
+//                .padding(15)
+//                .foregroundColor(.black)
+//                .background(Color.white)
+//                .cornerRadius(10)
+            AlertConnectView()
                 .foregroundColor(.black)
-                .background(AppColor.VPNConnected)
-                .cornerRadius(10)
+                .background(Constant.Board.NodePopupView.backgroudTriangle)
+                .cornerRadius(Constant.Board.NodePopupView.cornerRadius)
             Triangle()
                 .frame(width: 15, height: 7.5)
-                .foregroundColor(AppColor.VPNConnected)
+                .foregroundColor(.white)
         }
+    }
+    
+    func AlertConnectView() -> some View {
+        HStack(spacing: 10) {
+            ImageView(withURL: flag, size: ensignSize)
+                .clipShape(Circle())
+                .frame(width: Constant.Board.NodePopupView.frameEnsign,
+                       height: Constant.Board.NodePopupView.frameEnsign)
+            Text(name)
+                .font(.system(size: Constant.Board.NodePopupView.sizeFont + 2,
+                              weight: Constant.Board.NodePopupView.weightFont))
+                .lineLimit(Constant.Board.NodePopupView.numberLineText)
+        }
+        .padding(8)
     }
 }
 
@@ -37,8 +59,8 @@ struct Triangle : Shape {
     }
 }
 
-struct AlertConnectView_Previews: PreviewProvider {
-    static var previews: some View {
-        AlertConnectView()
-    }
-}
+//struct AlertConnectView_Previews: PreviewProvider {
+//    static var previews: some View {
+//        AlertConnectView()
+//    }
+//}

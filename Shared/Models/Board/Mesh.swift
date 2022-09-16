@@ -15,6 +15,7 @@ class Mesh: ObservableObject {
     @Published var clientCountryNode: Node?
     
     @Published var showCityNodes: Bool = false
+    @Published private(set) var selectedNode: Node?
     
     var currentTab: StateTab = .location
     
@@ -64,6 +65,18 @@ class Mesh: ObservableObject {
     
     func getNodeViewShow() -> [Node] {
         return showCityNodes ? cityNodes : countryNodes
+    }
+    
+    func removeSelectNode() {
+        selectedNode = nil
+    }
+    
+    func selectNode(_ node: Node) {
+        selectedNode = node
+    }
+    
+    func isNodeSelected(_ node: Node) -> Bool {
+        return selectedNode?.id == node.id
     }
 }
 

@@ -159,7 +159,7 @@ extension AppSetting {
             return fastestServer
         }
         
-        return AppSetting.shared.getNodeSelect()
+        return AppSetting.shared.getRecommendedCountries().first
     }
     
     func getAutoConnectNode() -> Node? {
@@ -181,6 +181,16 @@ extension AppSetting {
             return mutilhopList
         }
         return nil
+    }
+    
+    func saveCurrentTabConnected(_ tab: StateTab) {
+        UserDefaults.standard.set(tab.rawValue, forKey: AppKeys.currentTabConnected.rawValue)
+    }
+    
+    func getCurrentTabConnected() -> StateTab {
+        let tabIndex = UserDefaults.standard.integer(forKey: AppKeys.currentTabConnected.rawValue)
+        let tab = StateTab(rawValue: tabIndex) ?? .location
+        return tab
     }
     
     func saveCurrentTab(_ tab: StateTab) {
@@ -233,5 +243,19 @@ extension AppSetting {
             return multihop
         }
         return nil
+    }
+    
+    func saveRecommendedCountries(_ data: [Node]) {
+        if let encodedData = try? JSONEncoder().encode(data) {
+            UserDefaults.standard.set(encodedData, forKey: AppKeys.recommendedCountries.rawValue)
+        }
+    }
+    
+    func getRecommendedCountries() -> [Node] {
+        if let data = UserDefaults.standard.data(forKey: AppKeys.recommendedCountries.rawValue),
+           let nodeList = try? JSONDecoder().decode([Node].self, from: data) {
+            return nodeList
+        }
+        return []
     }
 }
