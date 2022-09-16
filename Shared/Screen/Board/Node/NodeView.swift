@@ -61,7 +61,19 @@ struct NodeView: View {
     
     var showConnectedNode: Bool {
         var show = 0
-        
+        //If is auto-connecting, dont change node map when change tab
+        if AppSetting.shared.getAutoConnectProtocol() != .off, statusConnect == .connected {
+            if let nodeConnected = NetworkManager.shared.getNodeConnect() {
+                show = nodeConnected.id == node.id ? 1 : 0
+                node.cityNodeList.forEach {
+                    if nodeConnected.id == $0.id {
+                        show += 1
+                    }
+                }
+            }
+            return show > 0
+        }
+
         switch AppSetting.shared.getCurrentTab() {
         case .location:
             if let nodeConnected = NetworkManager.shared.getNodeConnect() {

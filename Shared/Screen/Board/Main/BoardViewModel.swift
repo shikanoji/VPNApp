@@ -341,13 +341,19 @@ class BoardViewModel: ObservableObject {
         if Connectivity.sharedInstance.isReachable {
             switch self.autoConnectType {
             case .always:
+                tab = .location
+                AppSetting.shared.saveCurrentTabConnected(.location)
                 ConnectOrDisconnectVPN()
             case .onWifi:
                 if Connectivity.sharedInstance.isReachableOnEthernetOrWiFi {
+                    tab = .location
+                    AppSetting.shared.saveCurrentTabConnected(.location)
                     ConnectOrDisconnectVPN()
                 }
             case .onMobile:
                 if Connectivity.sharedInstance.isReachableOnCellular {
+                    tab = .location
+                    AppSetting.shared.saveCurrentTabConnected(.location)
                     ConnectOrDisconnectVPN()
                 }
             default:
