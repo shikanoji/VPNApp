@@ -151,9 +151,6 @@
 		EE03444628090AB7003DFB64 /* OpenVPN.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = EE03443D28090AB7003DFB64 /* OpenVPN.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		EE03445A2809204E003DFB64 /* NetworkExtension.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EE0344592809204E003DFB64 /* NetworkExtension.framework */; };
 		EE2D6BFB281BD77D008E1431 /* ObtainCertificateModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE2D6BFA281BD77D008E1431 /* ObtainCertificateModel.swift */; };
-		EE3246E22822362C0070FB91 /* StaticNodeMapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE3246E12822362C0070FB91 /* StaticNodeMapView.swift */; };
-		EE3246E62822373D0070FB91 /* StaticNodeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE3246E52822373D0070FB91 /* StaticNodeView.swift */; };
-		EE3246E8282237580070FB91 /* StaticNodePopupView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE3246E7282237580070FB91 /* StaticNodePopupView.swift */; };
 		EE46BCC428096263003C4FEB /* TunnelKitWireGuard in Frameworks */ = {isa = PBXBuildFile; productRef = EE46BCC328096263003C4FEB /* TunnelKitWireGuard */; };
 		EE46BCCC280963F4003C4FEB /* NetworkExtension.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EE0344592809204E003DFB64 /* NetworkExtension.framework */; };
 		EE46BCCF280963F4003C4FEB /* WireGuardPacketTunnelProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE46BCCE280963F4003C4FEB /* WireGuardPacketTunnelProvider.swift */; };
@@ -423,9 +420,6 @@
 		EE03444328090AB7003DFB64 /* OpenVPN.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = OpenVPN.entitlements; sourceTree = "<group>"; };
 		EE0344592809204E003DFB64 /* NetworkExtension.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = NetworkExtension.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS15.4.sdk/System/Library/Frameworks/NetworkExtension.framework; sourceTree = DEVELOPER_DIR; };
 		EE2D6BFA281BD77D008E1431 /* ObtainCertificateModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ObtainCertificateModel.swift; sourceTree = "<group>"; };
-		EE3246E12822362C0070FB91 /* StaticNodeMapView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StaticNodeMapView.swift; sourceTree = "<group>"; };
-		EE3246E52822373D0070FB91 /* StaticNodeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StaticNodeView.swift; sourceTree = "<group>"; };
-		EE3246E7282237580070FB91 /* StaticNodePopupView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StaticNodePopupView.swift; sourceTree = "<group>"; };
 		EE46BCCB280963F4003C4FEB /* WireGuard.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = WireGuard.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		EE46BCCE280963F4003C4FEB /* WireGuardPacketTunnelProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WireGuardPacketTunnelProvider.swift; sourceTree = "<group>"; };
 		EE46BCD0280963F4003C4FEB /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -563,7 +557,6 @@
 		6384B4F3276C372300E904D2 /* Board */ = {
 			isa = PBXGroup;
 			children = (
-				EE3246E42822369F0070FB91 /* StaticNode */,
 				EE3246E3282236910070FB91 /* Node */,
 				EE3246E0282235D40070FB91 /* Main */,
 				EE3246DF2822359B0070FB91 /* SubView */,
@@ -1148,16 +1141,6 @@
 			path = Node;
 			sourceTree = "<group>";
 		};
-		EE3246E42822369F0070FB91 /* StaticNode */ = {
-			isa = PBXGroup;
-			children = (
-				EE3246E12822362C0070FB91 /* StaticNodeMapView.swift */,
-				EE3246E52822373D0070FB91 /* StaticNodeView.swift */,
-				EE3246E7282237580070FB91 /* StaticNodePopupView.swift */,
-			);
-			path = StaticNode;
-			sourceTree = "<group>";
-		};
 		EE46BCCD280963F4003C4FEB /* WireGuard */ = {
 			isa = PBXGroup;
 			children = (
@@ -1549,7 +1532,6 @@
 				EE2D6BFB281BD77D008E1431 /* ObtainCertificateModel.swift in Sources */,
 				AC6074E227DD08D200DD5667 /* XCAssets+Generated.swift in Sources */,
 				D78044EE27590E480086E59D /* ViewExtension.swift in Sources */,
-				EE3246E62822373D0070FB91 /* StaticNodeView.swift in Sources */,
 				EE890FF8279558EC00ADF293 /* DateExtension.swift in Sources */,
 				AC6074B227D8D2B200DD5667 /* CustomPopupView.swift in Sources */,
 				D78044E32758F54A0086E59D /* AppDelegate.swift in Sources */,
@@ -1560,7 +1542,6 @@
 				D78044F4275912AC0086E59D /* AppSetting.swift in Sources */,
 				EE8966A128A203D60049052A /* PopupSelectView.swift in Sources */,
 				EE85EDBB27B22452000F967A /* MultiHopView.swift in Sources */,
-				EE3246E8282237580070FB91 /* StaticNodePopupView.swift in Sources */,
 				AC6074EE27DE42C100DD5667 /* Strings+Generated.swift in Sources */,
 				AC5403362884008200A5605E /* ServiceManager+Payment.swift in Sources */,
 				EEC5E48928C6F1F300286EBD /* BaseView.swift in Sources */,
@@ -1581,7 +1562,6 @@
 				D78F76C52769D84700919AA6 /* ViewModifier.swift in Sources */,
 				D7874DF8277AFED200ADC7AD /* ForgotPasswordView.swift in Sources */,
 				EED4F5A52855A5600098DF47 /* FAQDetailView.swift in Sources */,
-				EE3246E22822362C0070FB91 /* StaticNodeMapView.swift in Sources */,
 				D79E829927970649009E36F3 /* SetupVPNView.swift in Sources */,
 				D75F936E2773486900E16981 /* NavigationModifier.swift in Sources */,
 				D78044EC27590DC30086E59D /* APIServices.swift in Sources */,

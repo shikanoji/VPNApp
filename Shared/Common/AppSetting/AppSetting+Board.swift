@@ -159,7 +159,7 @@ extension AppSetting {
             return fastestServer
         }
         
-        return AppSetting.shared.getNodeSelect()
+        return AppSetting.shared.getRecommendedCountries().first
     }
     
     func getAutoConnectNode() -> Node? {
@@ -217,20 +217,6 @@ extension AppSetting {
         return nil
     }
     
-    func saveNodeConnected(_ node: Node) {
-        if let encodedData = try? JSONEncoder().encode(node) {
-            UserDefaults.standard.set(encodedData, forKey: AppKeys.nodeConnected.rawValue)
-        }
-    }
-    
-    func getNodeConnected() -> Node? {
-        if let data = UserDefaults.standard.data(forKey: AppKeys.nodeConnected.rawValue),
-           let staticSelect = try? JSONDecoder().decode(Node.self, from: data) {
-            return staticSelect
-        }
-        return nil
-    }
-    
     func saveStaticSelect(_ staticSelect: StaticServer) {
         if let encodedData = try? JSONEncoder().encode(staticSelect) {
             UserDefaults.standard.set(encodedData, forKey: AppKeys.staticSelect.rawValue)
@@ -257,5 +243,19 @@ extension AppSetting {
             return multihop
         }
         return nil
+    }
+    
+    func saveRecommendedCountries(_ data: [Node]) {
+        if let encodedData = try? JSONEncoder().encode(data) {
+            UserDefaults.standard.set(encodedData, forKey: AppKeys.recommendedCountries.rawValue)
+        }
+    }
+    
+    func getRecommendedCountries() -> [Node] {
+        if let data = UserDefaults.standard.data(forKey: AppKeys.recommendedCountries.rawValue),
+           let nodeList = try? JSONDecoder().decode([Node].self, from: data) {
+            return nodeList
+        }
+        return []
     }
 }
