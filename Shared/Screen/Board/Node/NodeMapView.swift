@@ -10,9 +10,8 @@ import SwiftUI
 import TunnelKitManager
 
 struct NodeMapView: View {
-    @ObservedObject var selection: SelectionHandler
     
-    @ObservedObject var mesh: Mesh
+    @EnvironmentObject var mesh: Mesh
     
     @Binding var scale: CGFloat
     
@@ -21,32 +20,19 @@ struct NodeMapView: View {
     var body: some View {
         ZStack {
             ForEach(mesh.showCityNodes ? mesh.cityNodes : mesh.countryNodes) { node in
-                NodeView(scale: $scale, node: node, selection: self.selection, statusConnect: $statusConnect)
+                NodeView(scale: $scale, node: node, mesh: mesh, statusConnect: $statusConnect)
                     .position(x: Constant.convertXToMap(node.x),
                               y: Constant.convertYToMap(node.y, mesh.showCityNodes))
                     .onTapGesture {
-                        self.selection.selectNode(node)
+                        self.mesh.selectNode(node)
                     }
-                    .zIndex(selection.nodeIsSelected(node) ? 1 : 0)
+                    .zIndex(mesh.isNodeSelected(node) ? 1 : 0)
                     .animation(nil)
             }
         }
         .contentShape(Rectangle())
         .onTapGesture {
-            self.selection.removeSelectNode()
+            self.mesh.removeSelectNode()
         }
-    }
-}
-
-struct NodeMapView_Previews: PreviewProvider {
-    @State static var value = false
-    @State static var scale: CGFloat = 1.0
-    @State static var nodes = Node.cityNodeList
-    @State static var staticNodes = StaticServer.simple
-    @State static var mesh = Mesh()
-    
-    static var previews: some View {
-        let selection = SelectionHandler()
-        return NodeMapView(selection: selection, mesh: mesh, scale: $scale, statusConnect: .constant(.connected))
     }
 }

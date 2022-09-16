@@ -48,6 +48,7 @@ enum AppKeys: String {
     case nodeSelect = "nodeSelect"
     case staticSelect = "staticSelect"
     case multiSelect = "multiSelect"
+    case recommendedCountries = "recommendedCountries"
     case temporaryDisableAutoConnect = "temporaryDisableAutoConnect"
     case needToStartNewSession = "needToStartNewSession"
     
@@ -65,8 +66,6 @@ enum AppKeys: String {
     case currentSessionId = "currentSessionId"
     case selectCyberSec = "selectCyberSec"
     case loadDataMap = "loadDataMap"
-    
-    case nodeConnected = "nodeConnected"
 }
 
 class AppSetting {

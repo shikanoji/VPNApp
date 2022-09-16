@@ -11,6 +11,7 @@ import SwiftUI
 struct SysVPNApp: App {
     let persistenceController = PersistenceController.shared
     @State var authentication = Authentication()
+    @State var mesh = Mesh()
     @UIApplicationDelegateAdaptor(AppDelegate.self) var appDelegate
     
     var body: some Scene {
@@ -18,6 +19,7 @@ struct SysVPNApp: App {
             ContentView()
                 .environment(\.managedObjectContext, persistenceController.container.viewContext)
                 .environmentObject(authentication)
+                .environmentObject(mesh)
                 .onAppear(perform: UIApplication.shared.addTapGestureRecognizer)
         }
     }
