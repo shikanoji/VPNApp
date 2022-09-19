@@ -10,25 +10,26 @@ import SwiftUI
 import UIKit
 struct IntroductionView: View {
     @EnvironmentObject var authentication: Authentication
-    @State var index = 0
-    // test board screen
+    
+    @Environment(\.safeAreaInsets) private var safeAreaInsets
+    
     var body: some View {
         Background() {
             VStack() {
                 Spacer().frame(height: UIDevice.current.hasNotch ? 60 : 40)
                 HStack {
-                    Spacer().frame(width: 10)
+                    Spacer().frame(width: 32)
                     Asset.Assets.logoSmall.swiftUIImage
                     Spacer()
                 }
-                Spacer()
                 SlideIntroduction()
-                AppButton(style: .themeButton, width: 300, height:50, text: L10n.Introduction.trialButton) {
+                Spacer()
+                AppButton(style: .themeButton, width: Constant.Global.widthFormAndButton, height:50, text: L10n.Introduction.trialButton) {
                     authentication.needToShowRegisterScreenBeforeLogin = true
                     AppSetting.shared.showedIntroduction = true
                     authentication.showedIntroduction = true
                 }
-                AppButton(style: .darkButton, width: 300, height:50, text: "Sign In") {
+                AppButton(style: .darkButton, width: Constant.Global.widthFormAndButton, height:50, text: "Sign In") {
                     AppSetting.shared.showedIntroduction = true
                     authentication.showedIntroduction = true
                 }
@@ -38,6 +39,7 @@ struct IntroductionView: View {
                     .foregroundColor(.white)
                 Spacer()
             }
+            .padding(.bottom, safeAreaInsets.bottom)
         }
         .navigationBarHidden(true)
     }

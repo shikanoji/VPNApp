@@ -49,15 +49,16 @@ struct SlideIntroduction: View {
                     Spacer().frame(height: 10)
                     Text(intro.title).setTitle()
                         .multilineTextAlignment(.center)
+                        .padding(.horizontal, 20)
                     Spacer().frame(height: 10)
                     Text(intro.body).setDefault()
                         .multilineTextAlignment(.center).padding(.bottom, 50)
+                        .padding(.horizontal, 20)
                 }
             }
         }
         .tabViewStyle(PageTabViewStyle(indexDisplayMode: .always))
-        .aspectRatio(3/4,contentMode: .fit)
-        .frame(maxWidth:400)
+        .frame(maxWidth: .infinity, maxHeight: .infinity)
         .font(Font.body.monospacedDigit())
     }
 }
