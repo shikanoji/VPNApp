@@ -41,7 +41,9 @@ struct AnimationLogo: View {
                 
                 Asset.Assets.logoText.swiftUIImage
                     .resizable()
+                    .aspectRatio(contentMode: .fit)
                     .frame(width: 250, height: 70, alignment: .center)
+                    .padding(.top, 2)
             }
         }
     }

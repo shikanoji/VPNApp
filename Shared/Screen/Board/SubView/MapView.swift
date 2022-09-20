@@ -37,18 +37,23 @@ struct MapView: View {
         }
     }
     
+    @Environment(\.safeAreaInsets) private var safeAreaInsets
+    
     var body: some View {
         ZoomableScrollView(content: {
+            AppColor.background
             ZStack(alignment: .center) {
                 Asset.Assets.map.swiftUIImage
                     .resizable()
                     .background(AppColor.background)
-                    .aspectRatio(2048 / 1588, contentMode: .fill)
+                    .aspectRatio(contentMode: .fill)
                 
                 NodeMapView(scale: $currentAmount,
                             statusConnect: $statusConnect)
-                .animation(.linear)
+                .animation(.easeIn(duration: 0.5))
             }
+            .padding(.bottom, -safeAreaInsets.bottom)
+            .padding(.top, -safeAreaInsets.top)
         }, location: $location, enableUpdateMap: enableUpdateMap, updateZoomScale: {
             enableUpdateMap = false
             self.currentAmount = $0
@@ -86,7 +91,6 @@ struct MapView: View {
                 moveToNode(x: node.x, y: node.y)
             }
         }
-        .animation(.easeIn)
         .edgesIgnoringSafeArea(.all)
     }
     
@@ -120,6 +124,9 @@ struct ZoomableScrollView<Content: View>: UIViewRepresentable {
     
     @Binding var location: CGPoint
     
+    @Environment(\.safeAreaInsets) private var safeAreaInsets
+    var padding: CGFloat = 0
+    
     var enableUpdateMap = true
     
     init(@ViewBuilder content: () -> Content,
@@ -131,8 +138,8 @@ struct ZoomableScrollView<Content: View>: UIViewRepresentable {
         self.content = content()
         self._location = location
         self.enableUpdateMap = enableUpdateMap
-        
-        scrollView.decelerationRate = UIScrollView.DecelerationRate(rawValue: 2)
+        scrollView.decelerationRate = UIScrollView.DecelerationRate(rawValue: 4)
+        padding = safeAreaInsets.bottom
     }
     
     func makeUIView(context: Context) -> UIScrollView {
@@ -167,7 +174,7 @@ struct ZoomableScrollView<Content: View>: UIViewRepresentable {
     }
     
     func makeCoordinator() -> Coordinator {
-        return Coordinator(hostingController: UIHostingController(rootView: self.content), self)
+        return Coordinator(hostingController: UIHostingController(rootView: self.content), self, padding: padding)
     }
     
     func updateUIView(_ uiView: UIScrollView, context: Context) {
@@ -191,7 +198,7 @@ struct ZoomableScrollView<Content: View>: UIViewRepresentable {
         xOffSet = xOffSet < 0 ? 0 : xOffSet
         xOffSet = xOffSet > maxWidthScrollView ? maxWidthScrollView : xOffSet
         
-        yOffSet = yOffSet < 20 ? 20 : yOffSet
+        yOffSet = yOffSet < 0 ? 0 : yOffSet
         yOffSet = yOffSet > maxHeighScrollView ? maxHeighScrollView : yOffSet
         
         if enableUpdateMap {
@@ -209,10 +216,12 @@ struct ZoomableScrollView<Content: View>: UIViewRepresentable {
     class Coordinator: NSObject, UIScrollViewDelegate {
         var hostingController: UIHostingController<Content>
         var parent: ZoomableScrollView
+        let padding: CGFloat
         
-        init(hostingController: UIHostingController<Content>, _ parent: ZoomableScrollView) {
+        init(hostingController: UIHostingController<Content>, _ parent: ZoomableScrollView, padding: CGFloat) {
             self.parent = parent
             self.hostingController = hostingController
+            self.padding = padding
         }
         
         func viewForZooming(in scrollView: UIScrollView) -> UIView? {
@@ -220,8 +229,8 @@ struct ZoomableScrollView<Content: View>: UIViewRepresentable {
         }
         
         func scrollViewDidScroll(_ scrollView: UIScrollView) {
-            if scrollView.contentOffset.y < 20 {
-                scrollView.contentOffset.y = 20
+            if scrollView.contentOffset.y < (padding * scrollView.zoomScale) {
+                scrollView.contentOffset.y = (padding * scrollView.zoomScale)
             }
         }
         

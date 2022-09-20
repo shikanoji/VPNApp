@@ -11,7 +11,7 @@ import TunnelKitManager
 struct NodeView: View {
     @Binding var scale: CGFloat
     
-    @State var width = CGFloat(10)
+    @State var sizeNode = CGFloat(16)
     // 1
     @State var node: Node
     //2
@@ -25,56 +25,48 @@ struct NodeView: View {
     }
     
     var multi: CGFloat {
-        return node.isCity ? 1.5 : 1.2
+        return mesh.showCityNodes ? 1.4 : 1
     }
     
     var body: some View {
-        VStack(spacing: 5) {
-            if isSelected {
-                NodePopupView(node: node, scale: $scale, isSelected: .constant(true))
-            } else {
-                NodePopupView(node: node, scale: $scale, isSelected: .constant(false))
-                    .opacity(0)
+        VStack(spacing: 10) {
+            Group {
+                if isSelected {
+                    NodePopupView(node: node, scale: $scale)
+                } else {
+                    Spacer()
+                }
             }
+            .frame(height: node.isCity ? 65 : 25)
             ZStack {
                 if statusConnect == .connected {
                     if showConnectedNode {
                         Asset.Assets.nodeChange.swiftUIImage
                             .resizable()
-                            .frame(width: 18 * multi * 1.2, height: 18 * multi * 1.2)
+                            .frame(width: sizeNode * multi * 1.5,
+                                   height: sizeNode * multi * 1.5)
                     } else {
                         Asset.Assets.node.swiftUIImage
                             .resizable()
-                            .frame(width: 18 * multi, height: 18 * multi)
+                            .frame(width: sizeNode * multi * 0.9,
+                                   height: sizeNode * multi * 0.9)
                             .opacity(0.2)
                     }
                 } else {
                     Asset.Assets.node.swiftUIImage
                         .resizable()
-                        .frame(width: 18 * multi, height: 18 * multi)
+                        .frame(width: sizeNode * multi,
+                               height: sizeNode * multi)
                 }
             }
         }
-        .frame(height: 80)
         .scaleEffect(1 / scale, anchor: .bottom)
     }
     
     var showConnectedNode: Bool {
         var show = 0
-        //If is auto-connecting, dont change node map when change tab
-        if AppSetting.shared.getAutoConnectProtocol() != .off, statusConnect == .connected {
-            if let nodeConnected = NetworkManager.shared.getNodeConnect() {
-                show = nodeConnected.id == node.id ? 1 : 0
-                node.cityNodeList.forEach {
-                    if nodeConnected.id == $0.id {
-                        show += 1
-                    }
-                }
-            }
-            return show > 0
-        }
 
-        switch AppSetting.shared.getCurrentTab() {
+        switch statusConnect == .connected ? AppSetting.shared.getCurrentTabConnected() : AppSetting.shared.getCurrentTab() {
         case .location:
             if let nodeConnected = NetworkManager.shared.getNodeConnect() {
                 show = nodeConnected.id == node.id ? 1 : 0

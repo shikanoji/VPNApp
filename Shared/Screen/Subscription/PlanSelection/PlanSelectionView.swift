@@ -94,7 +94,7 @@ struct PlanSelectionView: View {
             }
         }
         .navigationBarHidden(!viewModel.shouldAllowLogout)
-        .navigationBarBackButtonHidden()
+        .navigationBarBackButtonHidden(true)
     }
 }
 
