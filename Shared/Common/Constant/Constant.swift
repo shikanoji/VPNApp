@@ -166,9 +166,8 @@ struct Constant {
     }
     
     static func convertYToMap(_ y: CGFloat, _ isCityView: Bool = false) -> CGFloat {
-        let heightCountry = Constant.Board.NodePopupView.heightContentPopupView
-        let heightCity = Constant.Board.NodePopupView.heightTriangle + Constant.Board.NodePopupView.heightContentPopupView + 20
-        return (y / Constant.Board.Map.heightMapOrigin) * Constant.Board.Map.heightScreen - (isCityView ? heightCity : heightCountry) / 2 - (Constant.Board.NodePopupView.paddingContent + 5) * 2
+        let statusPopView: CGFloat = isCityView ? 45 : 16
+        return (y / Constant.Board.Map.heightMapOrigin) * Constant.Board.Map.heightScreen - statusPopView
     }
     
     struct NameNotification {
