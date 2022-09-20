@@ -24,7 +24,7 @@ struct StatusVPNView: View {
                         .overlay(RoundedRectangle(cornerRadius: 16)
                             .stroke(Color.white, lineWidth: 2))
                 } else {
-                    ImageView(withURL: "", size: 32, placeholder: UIImage(named: Constant.Board.Image.locationDefault))
+                    Asset.Assets.iconLocationDefaultBoard.swiftUIImage
                 }
                 getStatusTextView()
             }
