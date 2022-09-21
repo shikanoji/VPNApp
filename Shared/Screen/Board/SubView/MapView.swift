@@ -50,7 +50,7 @@ struct MapView: View {
                 
                 NodeMapView(scale: $currentAmount,
                             statusConnect: $statusConnect)
-                .animation(.easeIn(duration: 0.5))
+                .animation(.easeIn)
             }
             .padding(.bottom, -safeAreaInsets.bottom)
             .padding(.top, -safeAreaInsets.top)
