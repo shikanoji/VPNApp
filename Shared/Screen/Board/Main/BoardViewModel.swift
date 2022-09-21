@@ -211,6 +211,12 @@ class BoardViewModel: ObservableObject {
             name: Constant.NameNotification.changeProtocolSetting,
             object: nil
         )
+        
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(applicationWillSaveTimeWhenTerminate(_:)),
+            name: UIApplication.willTerminateNotification,
+            object: nil)
 
         Task {
             await OpenVPNManager.shared.vpn.prepare()
@@ -249,6 +255,13 @@ class BoardViewModel: ObservableObject {
     private func backgroundTaskExpired() {
         // End BG task to make sure app not be killed
         endBackgroundTask()
+    }
+    
+    @objc
+    func applicationWillSaveTimeWhenTerminate(_ notification: NotificationCenter){
+        if(state == .connected){
+            AppSetting.shared.selectTimeConnectedWhenTerminate = Date()
+        }
     }
     
     @objc
