@@ -19,6 +19,8 @@ struct BoardNavigationView: View {
             Spacer()
             HStack {
                 Image(Constant.Board.Image.setting)
+                    .resizable()
+                    .aspectRatio(contentMode: .fill)
                     .onTapGesture {
                         tapLeftIcon()
                     }
@@ -29,6 +31,8 @@ struct BoardNavigationView: View {
                     .foregroundColor(.white)
                 Spacer()
                 Image(Constant.Board.Image.user)
+                    .resizable()
+                    .aspectRatio(contentMode: .fill)
                     .frame(width: Constant.Board.IconFrame.rightIconWidth, height: Constant.Board.IconFrame.rightIconWidth)
                     .onTapGesture {
                         tapRightIcon()

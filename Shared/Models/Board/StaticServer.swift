@@ -137,7 +137,15 @@ struct StaticServer: Identifiable, Codable {
     }
     
     func getTitleContentCell() -> String {
-        return countryName + " #\(serverNumber)"
+        var number = ""
+        if serverNumber < 10 {
+            number = "#00\(serverNumber)"
+        } else if serverNumber >= 10 && serverNumber < 100 {
+            number = "#0\(serverNumber)"
+        } else {
+            number = "#\(serverNumber)"
+        }
+        return countryName + " " + number
     }
     
     func getSubContentCell() -> String {

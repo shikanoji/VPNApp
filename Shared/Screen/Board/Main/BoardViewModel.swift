@@ -233,7 +233,7 @@ class BoardViewModel: ObservableObject {
         
         getIpInfo {
             self.getCountryList {
-                self.getCountryList {
+                self.getMultihopList {
                 }
             }
         }
@@ -298,7 +298,7 @@ class BoardViewModel: ObservableObject {
         
         ServiceManager.shared.getCountryList()
             .subscribe { response in
-                if let result = response.result {
+                if let result = response.result, result.availableCountries.count > 0 {
                     AppSetting.shared.saveDataMap(result)
                     self.configCountryList(result)
                 }

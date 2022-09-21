@@ -17,9 +17,6 @@ struct BoardView: View {
     @State var showSettings = false
     @State var showBoardList = false
     
-    private let transition = AnyTransition.asymmetric(insertion: .move(edge: .bottom),
-                                                      removal: .move(edge: .bottom))
-    
     private let transitionLeft = AnyTransition.asymmetric(insertion: .move(edge: .leading),
                                                       removal: .move(edge: .leading))
     
@@ -67,10 +64,12 @@ struct BoardView: View {
             if showAccount {
                 accountView()
                     .transition(transitionRight)
+                    .zIndex(1)
             }
             if showSettings {
                 settingView()
                     .transition(transitionLeft)
+                    .zIndex(1)
             }
             
             if !viewModel.shouldHideAutoConnect {
@@ -279,7 +278,7 @@ struct BoardView: View {
                     Spacer()
                         .frame(height: Constant.Board.Tabs.topPadding)
                     BoardTabView(tab: $viewModel.tab, showBoardList: $showBoardList)
-                        .padding(.bottom)
+                        .padding(.bottom, 10)
                 }
                 .padding(/*@START_MENU_TOKEN@*/.all/*@END_MENU_TOKEN@*/)
             }

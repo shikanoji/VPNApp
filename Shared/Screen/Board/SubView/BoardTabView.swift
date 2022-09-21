@@ -12,16 +12,19 @@ struct BoardTabView: View {
     @Binding var showBoardList: Bool
     
     var body: some View {
-        return HStack(spacing: 0) {
-            BoardTabViewCustom(typeTab: .location, currentTab: $tab, showBoardList: $showBoardList)
-            BoardTabViewCustom(typeTab: .staticIP, currentTab: $tab, showBoardList: $showBoardList)
-            BoardTabViewCustom(typeTab: .multiHop, currentTab: $tab, showBoardList: $showBoardList)
+        ZStack {
+            HStack(spacing: 5) {
+                BoardTabViewCustom(typeTab: .location, currentTab: $tab, showBoardList: $showBoardList)
+                BoardTabViewCustom(typeTab: .staticIP, currentTab: $tab, showBoardList: $showBoardList)
+                BoardTabViewCustom(typeTab: .multiHop, currentTab: $tab, showBoardList: $showBoardList)
+            }
+            .cornerRadius(Constant.Board.SubBoard.radius)
+            .padding(6)
         }
-        .frame(maxWidth: .infinity)
         .foregroundColor(Color.white)
-        .background(AppColor.darkButton)
-        .frame(height: Constant.Board.Tabs.heightSize)
-        .cornerRadius(Constant.Board.SubBoard.radius)
+        .background(AppColor.lightBlack)
+        .frame(height: Constant.Board.Tabs.heightSize + 20)
+        .cornerRadius(Constant.Board.SubBoard.radius + 6)
     }
 }
 
@@ -57,7 +60,7 @@ struct BoardTabViewCustom: View {
             }
             showBoardList = true
         }
-        .buttonStyle(PrimaryButtonStyle(backgroundColor: selected ? AppColor.backgroundStatusView : AppColor.darkButton, cornerRadius: Constant.Board.SubBoard.radius))
+        .buttonStyle(PrimaryButtonStyle(backgroundColor: selected ? AppColor.darkButton : AppColor.lightBlack, cornerRadius: Constant.Board.SubBoard.radius))
     }
 }
 
