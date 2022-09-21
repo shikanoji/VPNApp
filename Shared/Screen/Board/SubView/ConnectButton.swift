@@ -19,6 +19,9 @@ struct ConnectButton: View {
     
     @State var hiddenDelay = 1.0
     
+    let widthSizeFrame = UIScreen.main.bounds.width
+    let heightSizeFrame = UIScreen.main.bounds.height
+    
     var body: some View {
         HStack(alignment: .bottom, spacing: 0) {
             if(viewModel.stateUI != .connected) {
@@ -49,17 +52,17 @@ struct ConnectButton: View {
                 ZStack {
                     Circle()
                         .strokeBorder(viewModel.stateUI == .disconnected ? Color.white : AppColor.themeColor, lineWidth: Constant.Board.QuickButton.widthBorderMax)
-                        .frame(width: Constant.Board.QuickButton.widthSize + 20,
-                               height: Constant.Board.QuickButton.widthSize + 20)
+                        .frame(width: widthSizeFrame/4.4 + 20,
+                               height: heightSizeFrame/4.4 + 20)
                         .background(Circle().foregroundColor(viewModel.stateUI == .disconnected ? AppColor.themeColor : Color.white))
                     Circle()
                         .strokeBorder(Color.black, lineWidth: Constant.Board.QuickButton.widthBorderMax)
-                        .frame(width: Constant.Board.QuickButton.widthSize + 11,
-                               height: Constant.Board.QuickButton.widthSize + 11)
+                        .frame(width: widthSizeFrame/4.4 + 11,
+                               height: heightSizeFrame/4.4 + 11)
                     getContentButton()
                 }
-                .frame(width: Constant.Board.QuickButton.widthSize,
-                       height: Constant.Board.QuickButton.widthSize)
+                .frame(width: widthSizeFrame/4.4,
+                       height: widthSizeFrame/4.4)
             }
             .frame(width:  Constant.Board.QuickButton.widthSize)
             SpeedConnectedView(uploadSpeed: viewModel.uploadSpeed, downLoadSpeed: viewModel.downloadSpeed)
@@ -78,7 +81,7 @@ struct ConnectButton: View {
             return AnyView(Text(L10n.Board.quickUnConnect)
                             .foregroundColor(Color.black)
                             .multilineTextAlignment(.center)
-                            .font(.system(size: 14, weight: .bold))
+                            .font(.system(size: widthSizeFrame * 0.04, weight: .bold))
                             .padding())
         case .connecting, .disconnecting:
             return AnyView(getDocAnimation()
@@ -87,7 +90,7 @@ struct ConnectButton: View {
             return AnyView(
                 Text("STOP").foregroundColor(Color.black)
                     .multilineTextAlignment(.center)
-                    .font(.system(size: 16, weight: .bold))
+                    .font(.system(size: widthSizeFrame * 0.04, weight: .bold))
                     .padding()
             )
         }
