@@ -23,12 +23,17 @@ struct BoardListView: View {
     @Binding var multihopSelect: MultihopModel?
     @Binding var statusConnect: VPNStatus
     
+    @Binding var flag: String
+    @Binding var name: String
+    
     var body: some View {
         NavigationView {
             VStack(spacing: 8) {
-                StatusLocationView(node: $node, statusConnect: $statusConnect)
-                    .onTapGesture {
-                        withAnimation {
+                StatusLocationView(statusConnect: $statusConnect,
+                                   flag: $flag,
+                                   name: $name)
+                .onTapGesture {
+                    withAnimation {
                             showBoardList.toggle()
                         }
                     }

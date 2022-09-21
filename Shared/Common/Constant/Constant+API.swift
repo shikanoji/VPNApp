@@ -35,6 +35,8 @@ extension Constant {
             static let fetchPaymentHistory = "/web/module_payment/v1/payments/"
             static let deleteAccount = "shared/module_user/v1/delete-account"
             static let verifyReceipt = "web/module_payment/v1/payments/apple-verify"
+            static let getStatsByServerId = "/app/module_server/v1/server_stats/get_stats_by_server_id/"
+            static let getServerStats = "/app/module_server/v1/server_stats/get_static_server_stats"
         }
     }
 }

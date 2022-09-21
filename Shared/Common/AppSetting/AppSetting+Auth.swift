@@ -9,12 +9,11 @@ import Foundation
 import SwiftDate
 
 extension AppSetting {
-    var loadDataMap: Bool {
-        get {
-            return UserDefaults.standard.bool(forKey: AppKeys.loadDataMap.rawValue)
-        }
-        set {
-            UserDefaults.standard.setValue(newValue, forKey: AppKeys.loadDataMap.rawValue)
+    var needLoadApiMap: Bool {
+        if Date().timeIntervalSince1970 >= lastChange {
+            return true
+        } else {
+            return false
         }
     }
 

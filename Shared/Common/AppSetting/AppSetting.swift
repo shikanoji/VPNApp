@@ -57,6 +57,7 @@ enum AppKeys: String {
     case updateDataMap = "updateDataMap"
     
     case selectConfig = "selectConfig"
+    case recommendConfig = "recommendConfig"
     //DNS
     case dnsSetting = "dnsSetting"
     case primaryDNSValue = "primaryDNSValue"
@@ -65,7 +66,6 @@ enum AppKeys: String {
     case wasJailBreak = "wasJailBreak"
     case currentSessionId = "currentSessionId"
     case selectCyberSec = "selectCyberSec"
-    case loadDataMap = "loadDataMap"
     //Save time
     case selectTimeConnectedWhenTerminate = "selectTimeConnectedWhenTerminate"
     case selectCount = "selectCount"

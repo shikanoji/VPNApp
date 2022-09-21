@@ -75,6 +75,15 @@ extension AppSetting {
             UserDefaults.standard.setValue(newValue, forKey: AppKeys.selectConfig.rawValue)
         }
     }
+    
+    var recommendConfig: Int {
+        get {
+            UserDefaults.standard.integer(forKey: AppKeys.recommendConfig.rawValue)
+        }
+        set {
+            UserDefaults.standard.setValue(newValue, forKey: AppKeys.recommendConfig.rawValue)
+        }
+    }
 
     var selectAutoConnect: Int {
         get {
@@ -105,13 +114,38 @@ extension AppSetting {
 
     func getConfigProtocol() -> ItemCellType {
         if let type = ItemCellType(rawValue: AppSetting.shared.selectConfig) {
-            if type != .recommended && type != .wireGuard && type != .openVPNTCP && type != .openVPNUDP {
+            if [.wireGuard, .openVPNTCP, .openVPNUDP].contains(type) {
+                return type
+            }
+            if type == .recommended {
                 return .recommended
             }
-            return type
         }
 
-        return .recommended
+        return .openVPNTCP
+    }
+    
+    func getRecommendConfigProtocol() -> ItemCellType {
+        if let type = ItemCellType(rawValue: AppSetting.shared.recommendConfig) {
+            if [.wireGuard, .openVPNTCP, .openVPNUDP].contains(type) {
+                return type
+            }
+            return .openVPNTCP
+        }
+
+        return .openVPNTCP
+    }
+    
+    func getValueConfigProtocol() -> ItemCellType {
+        if let type = ItemCellType(rawValue: AppSetting.shared.selectConfig) {
+            if [.wireGuard, .openVPNTCP, .openVPNUDP].contains(type) {
+                return type
+            }
+            if type == .recommended {
+                return getRecommendConfigProtocol()
+            }
+        }
+        return .openVPNTCP
     }
 
     func getAutoConnectProtocol() -> ItemCellType {
@@ -256,13 +290,13 @@ extension AppSetting {
         if NetworkManager.shared.selectConfig == .recommended {
             if let vpnSetting = result.appSettings?.vpn {
                 if vpnSetting.defaultTech == "wireguard" {
-                    NetworkManager.shared.selectConfig = .wireGuard
+                    NetworkManager.shared.recommendConfig = .wireGuard
                 } else if vpnSetting.defaultTech == "openVPN" {
                     if let defaultProtocol = vpnSetting.defaultProtocol {
                         if defaultProtocol == "UDP" {
-                            NetworkManager.shared.selectConfig = .openVPNUDP
+                            NetworkManager.shared.recommendConfig = .openVPNUDP
                         } else {
-                            NetworkManager.shared.selectConfig = .openVPNTCP
+                            NetworkManager.shared.recommendConfig = .openVPNTCP
                         }
                     }
                 }

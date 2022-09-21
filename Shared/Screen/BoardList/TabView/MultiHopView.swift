@@ -58,10 +58,11 @@ struct MultiHopView: View {
                 .frame(height: 10)
             VStack {
                 ForEach(mutilhopList) { item in
-                    if let nodeEntry = item.entry?.node,
-                       let nodeExit = item.exit?.node {
+                    if let nodeEntry = item.entry?.country,
+                       let nodeExit = item.exit?.country {
                         Button {
                             multihopSelect = item
+                            NotificationCenter.default.post(name: Constant.NameNotification.showMap, object: nil)
                         } label: {
                             HStack {
                                 ImageView(withURL: nodeEntry.flag, size: sizeIcon - 8)

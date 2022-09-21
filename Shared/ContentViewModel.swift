@@ -20,7 +20,7 @@ class ContentViewModel: ObservableObject {
     
     var alertMessage = ""
     
-    var disposedBag = DisposeBag()
+    let disposedBag = DisposeBag()
     
     /// api get ip info in app
     func getIpInfo(completion: @escaping () -> Void) {
@@ -54,20 +54,26 @@ class ContentViewModel: ObservableObject {
     }
     
     @objc func sessionExpided() {
-        showSessionExpired = true
+        if AppSetting.shared.accessToken != "" {
+            showSessionExpired = true
+        }
     }
     
     func getState() {
-        getIpInfo {
-            if AppSetting.shared.loadDataMap {
-                self.getCountryList {
-                    self.getMultihopList {
-                        self.getIpInfoSuccess = true
+        if AppSetting.shared.accessToken != "" {
+            getIpInfo {
+                if AppSetting.shared.needLoadApiMap {
+                    self.getCountryList {
+                        self.getMultihopList {
+                            self.getIpInfoSuccess = true
+                        }
                     }
+                } else {
+                    self.getIpInfoSuccess = true
                 }
-            } else {
-                self.getIpInfoSuccess = true
             }
+        } else {
+            self.getIpInfoSuccess = true
         }
     }
     

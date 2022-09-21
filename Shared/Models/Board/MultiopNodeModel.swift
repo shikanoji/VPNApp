@@ -9,11 +9,13 @@ import Foundation
 
 struct MultiopNodeModel: Codable {
     var serverId: Int?
-    var node: Node?
+    var country: Node?
+    var city: Node?
     
     enum CodingKeys: String, CodingKey {
         case serverId
-        case node = "country"
+        case country = "country"
+        case city = "city"
     }
     
     init(from decoder: Decoder) throws {
@@ -25,10 +27,16 @@ struct MultiopNodeModel: Codable {
             serverId = nil
         }
         
-        if let _node = try? values.decode(Node.self, forKey: .node) {
-            node = _node
+        if let _node = try? values.decode(Node.self, forKey: .country) {
+            country = _node
         } else {
-            node = nil
+            country = nil
+        }
+        
+        if let _node = try? values.decode(Node.self, forKey: .city) {
+            city = _node
+        } else {
+            city = nil
         }
     }
 }

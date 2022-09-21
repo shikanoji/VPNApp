@@ -146,17 +146,7 @@ struct BoardView: View {
                 }
             }
         })
-        .onChange(of: viewModel.nodeConnected, perform: { newValue in
-            showAccount = false
-            showSettings = false
-            showBoardList = false
-        })
-        .onChange(of: viewModel.staticIPNodeSelecte, perform: { newValue in
-            showAccount = false
-            showSettings = false
-            showBoardList = false
-        })
-        .onChange(of: viewModel.multihopSelect, perform: { newValue in
+        .onChange(of: viewModel.showMap, perform: { newValue in
             showAccount = false
             showSettings = false
             showBoardList = false
@@ -232,7 +222,9 @@ struct BoardView: View {
                       staticNode: $viewModel.staticIPNodeSelecte,
                       mutilhopList: $viewModel.mutilhopList,
                       multihopSelect: $viewModel.multihopSelect,
-                      statusConnect: $viewModel.stateUI)
+                      statusConnect: $viewModel.stateUI,
+                      flag: $viewModel.flag,
+                      name: $viewModel.nameSelect)
     }
     
     @State var zoomLogo = false
@@ -267,10 +259,13 @@ struct BoardView: View {
                     }, tapRightIcon: {
                         handlerTapRightNavigation()
                     })
+                    .padding(.top)
                     StatusVPNView(ip: viewModel.ip, status: viewModel.stateUI, flag: viewModel.flag, name: viewModel.nameSelect)
+                    .padding(.top, 0)
                     Spacer()
                     ConnectButton(viewModel: viewModel)
                     .onTapGesture {
+                        viewModel.onlyDisconnectWithoutEndsession = true
                         AppSetting.shared.temporaryDisableAutoConnect = false
                         viewModel.connectOrDisconnectByUser = true
                         viewModel.ConnectOrDisconnectVPN()

@@ -89,6 +89,8 @@ class BoardViewModel: ObservableObject {
     
     @Published var uploadSpeed: String = "0"
     @Published var downloadSpeed: String = "0"
+    
+    @Published var showMap = true
       
     @Published var nodeConnected: Node? = nil {
         didSet {
@@ -99,6 +101,7 @@ class BoardViewModel: ObservableObject {
                 NetworkManager.shared.selectNode = node
                 self.connectOrDisconnectByUser = true
                 self.ConnectOrDisconnectVPN()
+                self.showMap.toggle()
             }
         }
     }
@@ -115,6 +118,7 @@ class BoardViewModel: ObservableObject {
                 NetworkManager.shared.selectStaticServer = staticIP
                 self.connectOrDisconnectByUser = true
                 self.ConnectOrDisconnectVPN()
+                self.showMap.toggle()
             }
         }
     }
@@ -129,6 +133,7 @@ class BoardViewModel: ObservableObject {
                 NetworkManager.shared.selectMultihop = multihop
                 self.connectOrDisconnectByUser = true
                 self.ConnectOrDisconnectVPN()
+                self.showMap.toggle()
             }
         }
     }
@@ -164,12 +169,10 @@ class BoardViewModel: ObservableObject {
     
     var onlyDisconnectWithoutEndsession = false
     
-    // MARK: Function
+    // MARK: INIT
     init() {
         beginBackgroundTask()
         tab = AppSetting.shared.getCurrentTab()
-        
-        getDataFromLocal()
         
         NotificationCenter.default.addObserver(
             self,
@@ -226,15 +229,26 @@ class BoardViewModel: ObservableObject {
             NetworkManager.shared.disconnect()
         }
         
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(notiShowMap),
+            name: Constant.NameNotification.showMap,
+            object: nil
+        )
+        
         checkInternetRealTime()
         
         assignJailBreakCheckType(type: .readAndWriteFiles)
         AppSetting.shared.fetchListSession()
         
         getIpInfo {
-            self.getCountryList {
-                self.getMultihopList {
+            if AppSetting.shared.needLoadApiMap {
+                self.getCountryList {
+                    self.getMultihopList {
+                    }
                 }
+            } else {
+                self.getDataFromLocal()
             }
         }
     }
@@ -271,6 +285,13 @@ class BoardViewModel: ObservableObject {
             configDisconnect()
         }
     }
+    
+    @objc
+    func notiShowMap() {
+        showMap.toggle()
+    }
+    
+    // MARK: - HANDLE DATA MAP
     
     func getIpInfo(completion: @escaping () -> Void) {
         guard Connectivity.sharedInstance.isReachable else {
@@ -336,6 +357,66 @@ class BoardViewModel: ObservableObject {
             }
             .disposed(by: disposedBag)
     }
+    
+    func getRecommendNode(_ nodeList: [Node]) {
+        if nodeList.count > 0 {
+            if let _ = NetworkManager.shared.selectNode {
+                
+            } else {
+                NetworkManager.shared.selectNode = nodeList.first
+            }
+            
+            AppSetting.shared.saveRecommendedCountries(nodeList)
+        }
+    }
+    
+    func getDataFromLocal() {
+        if let dataMapLocal = AppSetting.shared.getDataMap() {
+            configCountryList(dataMapLocal)
+        }
+        
+        if let multihopListLocal = AppSetting.shared.getMutilhopList() {
+            mutilhopList = multihopListLocal
+            if mutilhopList.count > 0 {
+                NetworkManager.shared.selectMultihop = mutilhopList.first
+            }
+        }
+    }
+    
+    func configCountryList(_ result: CountryListResultModel) {
+        
+        let countryNodes = result.availableCountries
+        var cityNodes = [Node]()
+        countryNodes.forEach { cityNodes.append(contentsOf: $0.cityNodeList) }
+        
+        locationData = [
+            NodeGroup(nodeList: result.recommendedCountries, type: .recommend),
+            NodeGroup(nodeList: result.availableCountries, type: .all),
+        ]
+        
+        staticIPData = result.staticServers
+        
+        if staticIPData.count > 0 {
+            if let staticLocal = NetworkManager.shared.selectStaticServer {
+                if self.staticIPData.filter({ staticLocal.id == $0.id }).count == 0 {
+                    NetworkManager.shared.selectStaticServer = staticIPData.first
+                }
+            } else {
+                NetworkManager.shared.selectStaticServer = staticIPData.first
+            }
+        }
+        
+        self.mesh?.configNode(countryNodes: countryNodes,
+                              cityNodes: cityNodes,
+                              staticNodes: staticIPData,
+                              clientCountryNode: result.clientCountryDetail)
+        
+        getRecommendNode(result.recommendedCountries)
+        
+        getServerStats()
+    }
+    
+    // MARK: - HANDLE CONFIG VPN
     
     @objc private func logoutNeedDisconnect() {
         configDisconnect()
@@ -419,6 +500,8 @@ class BoardViewModel: ObservableObject {
             isSwitching = false
             configStartConnectVPN()
         }
+        
+        AppSetting.shared.lineNetwork = 0
     }
     
     func configDisconnect() {
@@ -458,30 +541,91 @@ class BoardViewModel: ObservableObject {
     
     var connectOrDisconnectByUser = false
     
+    func getServerStats() {
+        guard Connectivity.sharedInstance.isReachable else {
+            return
+        }
+        
+        ServiceManager.shared.getServerStats()
+            .subscribe { response in
+                if let result = response.result?.rows {
+                    let updateStaticNodesMesh = self.mesh?.staticNodes.map { staticNode in
+                        var updateNode = staticNode
+                        
+                        if let statsNode = result.filter({
+                            $0.serverId == staticNode.serverId
+                        }).first {
+                            updateNode.score = statsNode.score
+                        }
+                        return updateNode
+                    }
+                    
+                    self.mesh?.updateStaticNodes(updateStaticNodesMesh ?? [])
+                    self.staticIPData = updateStaticNodesMesh ?? []
+                }
+            } onFailure: { _ in
+               
+            }
+            .disposed(by: disposedBag)
+    }
+    
+    func getStatsByServer() {
+        guard Connectivity.sharedInstance.isReachable else {
+            return
+        }
+        
+        ServiceManager.shared.getStatsByServer()
+            .subscribe { response in
+                if let result = response.result {
+                    AppSetting.shared.lineNetwork = result.score
+                }
+            } onFailure: { _ in
+                AppSetting.shared.lineNetwork = 0
+            }
+            .disposed(by: disposedBag)
+    }
+    
     func configConnected() {
         numberReconnect = 0
         connectOrDisconnectByUser = false
         stopSpeedTimer()
         
+        getStatsByServer()
+        
+        switch NetworkManager.shared.getValueConfigProtocol {
+        case .openVPNTCP, .openVPNUDP:
+            if let iPVPN = NetworkManager.shared.requestCertificate?.server?.ipAddress {
+                ip = iPVPN
+            }
+            
+        case .wireGuard:
+            if let iPWireguard = NetworkManager.shared.obtainCertificate?.server?.ipAddress {
+                ip = iPWireguard
+            }
+            
+        default:
+            break
+        }
+        
         if autoConnectType == .off {
             switch AppSetting.shared.getCurrentTabConnected() {
             case .location:
-                if let iPVPN = NetworkManager.shared.requestCertificate?.server?.ipAddress {
-                    ip = iPVPN
-                }
-                
                 if let nodeSelect = NetworkManager.shared.selectNode {
                     flag = nodeSelect.flag
                     nameSelect = nodeSelect.isCity ? nodeSelect.name : nodeSelect.countryName
                 }
                 
-            case .staticIP, .multiHop:
-                if let iPWireguard = NetworkManager.shared.requestCertificate?.server?.ipAddress {
-                    ip = iPWireguard
+            case .staticIP:
+                if let staticServer = NetworkManager.shared.selectStaticServer {
+                    flag = staticServer.flag
+                    nameSelect = staticServer.countryName
                 }
-                
-                flag = NetworkManager.shared.selectStaticServer?.flag ?? ""
-                nameSelect = NetworkManager.shared.selectStaticServer?.countryName ?? ""
+            case .multiHop:
+                if let multihop = NetworkManager.shared.selectMultihop,
+                   let country = multihop.exit?.country {
+                    flag = country.flag
+                    nameSelect = country.name
+                }
             }
         } else {
             if let nodeSelect = NetworkManager.shared.getNodeConnect() {
@@ -590,21 +734,30 @@ class BoardViewModel: ObservableObject {
     }
     
     var speedTimer: DispatchSourceTimer?
+
+    var lastSent: UInt = UInt(0)
+    var lastReceived: UInt = UInt(0)
     
     func getSpeedRealTime() {
+        lastSent = UInt(0)
+        lastReceived = UInt(0)
         let queue = DispatchQueue.main
         speedTimer = DispatchSource.makeTimerSource(queue: queue)
         speedTimer!.schedule(deadline: .now(), repeating: .seconds(1))
         speedTimer!.setEventHandler { [weak self] in
-            if (NetworkManager.shared.selectConfig == .openVPNTCP || NetworkManager.shared.selectConfig == .openVPNUDP),
+            if [.openVPNTCP, .openVPNUDP].contains(NetworkManager.shared.getValueConfigProtocol),
                let dataCount = OpenVPNManager.shared.getDataCount() {
-                self?.uploadSpeed = dataCount.sent.descriptionAsDataUnit
-                self?.downloadSpeed = dataCount.received.descriptionAsDataUnit
+                let uploadSpeed = abs(Int32(dataCount.sent - (self?.lastSent ?? 0)))
+                let downSpeed = abs(Int32(dataCount.received - (self?.lastReceived ?? 0)))
+                self?.uploadSpeed = UInt(uploadSpeed).descriptionAsDataUnit
+                self?.downloadSpeed = UInt(downSpeed).descriptionAsDataUnit
+                self?.lastSent = dataCount.sent
+                self?.lastReceived = dataCount.received
             }
         }
         speedTimer!.resume()
     }
-    
+        
     func stopSpeedTimer() {
         speedTimer = nil
     }
@@ -644,6 +797,8 @@ class BoardViewModel: ObservableObject {
             NetworkManager.shared.selectNode = node
         }
         
+        showMap.toggle()
+        
         ServiceManager.shared.getRequestCertificate(asNewConnection: asNewConnection)
             .subscribe { [weak self] response in
                 guard let `self` = self else {
@@ -651,8 +806,8 @@ class BoardViewModel: ObservableObject {
                 }
                 self.showProgressView = false
                 if let result = response.result {
-                    switch NetworkManager.shared.selectConfig {
-                    case .openVPNTCP, .recommended, .openVPNUDP:
+                    switch NetworkManager.shared.getValueConfigProtocol {
+                    case .openVPNTCP, .openVPNUDP:
                         if let cer = result.getRequestCer {
                             if !cer.exceedLimit {
                                 if cer.allowReconnect {
@@ -756,62 +911,6 @@ class BoardViewModel: ObservableObject {
                 }
             }
             .disposed(by: disposedBag)
-    }
-    
-    func getRecommendNode(_ nodeList: [Node]) {
-        if nodeList.count > 0 {
-            if let _ = NetworkManager.shared.selectNode {
-                
-            } else {
-                NetworkManager.shared.selectNode = nodeList.first
-            }
-            
-            AppSetting.shared.saveRecommendedCountries(nodeList)
-        }
-    }
-    
-    func getDataFromLocal() {
-        if let dataMapLocal = AppSetting.shared.getDataMap() {
-            configCountryList(dataMapLocal)
-        }
-        
-        if let multihopListLocal = AppSetting.shared.getMutilhopList() {
-            mutilhopList = multihopListLocal
-            if mutilhopList.count > 0 {
-                NetworkManager.shared.selectMultihop = mutilhopList.first
-            }
-        }
-    }
-    
-    func configCountryList(_ result: CountryListResultModel) {
-        
-        let countryNodes = result.availableCountries
-        var cityNodes = [Node]()
-        countryNodes.forEach { cityNodes.append(contentsOf: $0.cityNodeList) }
-        
-        locationData = [
-            NodeGroup(nodeList: result.recommendedCountries, type: .recommend),
-            NodeGroup(nodeList: result.availableCountries, type: .all),
-        ]
-        
-        staticIPData = result.staticServers
-        
-        if staticIPData.count > 0 {
-            if let staticLocal = NetworkManager.shared.selectStaticServer {
-                if self.staticIPData.filter({ staticLocal.id == $0.id }).count == 0 {
-                    NetworkManager.shared.selectStaticServer = staticIPData.first
-                }
-            } else {
-                NetworkManager.shared.selectStaticServer = staticIPData.first
-            }
-        }
-        
-        self.mesh?.configNode(countryNodes: countryNodes,
-                              cityNodes: cityNodes,
-                              staticNodes: staticIPData,
-                              clientCountryNode: result.clientCountryDetail)
-        
-        getRecommendNode(result.recommendedCountries)
     }
     
     func disconnectSession() {

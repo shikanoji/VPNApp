@@ -10,21 +10,24 @@ import TunnelKitManager
 import TunnelKitCore
 
 struct StatusLocationView: View {
-    
-    @Binding var node: Node?
     @Binding var statusConnect: VPNStatus
+    @Binding var flag: String
+    @Binding var name: String
+    
     let imageSize: CGFloat = Constant.BoardList.heightImageNode / 2
     
     var body: some View {
         HStack(spacing: 0) {
-            if let node = node, statusConnect == .connected {
-                ImageView(withURL: node.flag, size: imageSize, placeholder: Constant.BoardList.iconCity)
+            if statusConnect == .connected {
+                ImageView(withURL: flag,
+                          size: imageSize,
+                          placeholder: Constant.BoardList.iconCity)
                     .clipShape(Circle())
                     .padding()
-                Text(node.name)
+                Text(name)
                     .font(Constant.BoardList.fontLocationStatus)
                     .foregroundColor(.white)
-                NetworkWaveView(lineNumber: AppSetting.shared.lineNetwork)
+                NetworkWaveView()
                     .padding()
             } else {
                 Text(L10n.Board.backToMap)
