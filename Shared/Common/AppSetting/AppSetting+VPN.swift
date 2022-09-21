@@ -175,6 +175,24 @@ extension AppSetting {
             UserDefaults.standard.setValue(newValue, forKey: AppKeys.selectCyberSec.rawValue)
         }
     }
+    
+    var selectTimeConnectedWhenTerminate: Date? {
+        get {
+            UserDefaults.standard.object(forKey: AppKeys.selectTimeConnectedWhenTerminate.rawValue) as? Date
+        }
+        set {
+            UserDefaults.standard.setValue(newValue, forKey: AppKeys.selectTimeConnectedWhenTerminate.rawValue)
+        }
+    }
+    
+    var selectCount: Int {
+        get {
+            UserDefaults.standard.integer(forKey: AppKeys.selectCount.rawValue)
+        }
+        set {
+            UserDefaults.standard.setValue(newValue, forKey: AppKeys.selectCount.rawValue)
+        }
+    }
 
     /// api get ip info in app
     func getIpInfo(completion: @escaping (String?) -> Void) {
