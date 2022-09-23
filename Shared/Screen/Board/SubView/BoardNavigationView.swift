@@ -18,25 +18,29 @@ struct BoardNavigationView: View {
         VStack {
             Spacer()
             HStack {
-                Image(Constant.Board.Image.setting)
-                    .resizable()
-                    .aspectRatio(contentMode: .fill)
-                    .onTapGesture {
-                        tapLeftIcon()
-                    }
-                    .frame(width: Constant.Board.IconFrame.leftIconWidth, height: Constant.Board.IconFrame.leftIconWidth)
+                Button {
+                    tapLeftIcon()
+                } label: {
+                    Image(Constant.Board.Image.setting)
+                        .resizable()
+                        .aspectRatio(contentMode: .fill)
+                        .frame(width: Constant.Board.IconFrame.leftIconWidth, height: Constant.Board.IconFrame.leftIconWidth)
+                }
+                
                 Spacer()
                 Text(status.title)
                     .font(.system(size: Constant.Board.Navigation.sizeFont, weight: Constant.Board.Navigation.weightFont))
                     .foregroundColor(.white)
                 Spacer()
-                Image(Constant.Board.Image.user)
-                    .resizable()
-                    .aspectRatio(contentMode: .fill)
-                    .frame(width: Constant.Board.IconFrame.rightIconWidth, height: Constant.Board.IconFrame.rightIconWidth)
-                    .onTapGesture {
-                        tapRightIcon()
-                    }
+                
+                Button {
+                    tapRightIcon()
+                } label: {
+                    Image(Constant.Board.Image.user)
+                        .resizable()
+                        .aspectRatio(contentMode: .fill)
+                        .frame(width: Constant.Board.IconFrame.rightIconWidth, height: Constant.Board.IconFrame.rightIconWidth)
+                }
             }
             .padding(.all, 5.0)
         }

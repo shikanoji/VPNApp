@@ -63,7 +63,7 @@ struct ConnectButton: View {
             }
             .frame(width:  Constant.Board.QuickButton.widthSize)
             SpeedConnectedView(uploadSpeed: viewModel.uploadSpeed, downLoadSpeed: viewModel.downloadSpeed)
-                .opacity(viewModel.stateUI == .connected ? ([.wireGuard, .recommended].contains(NetworkManager.shared.selectConfig) ? 0 : 1) : 0)
+                .opacity(viewModel.stateUI == .connected ? ([.openVPNTCP, .openVPNUDP].contains(NetworkManager.shared.getValueConfigProtocol) ? 1 : 0) : 0)
                 .frame(width: widthSpeed, height: Constant.Board.QuickButton.widthSize)
         }
     }

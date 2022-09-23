@@ -177,5 +177,6 @@ struct Constant {
         static let changeProtocolSetting = Notification.Name("changeProtocolSetting")
         static let sessionExpired = Notification.Name("sessionExpired")
         static let disconnectedVPN = Notification.Name("disconnectedVPN")
+        static let showMap = Notification.Name("showMap")
     }
 }

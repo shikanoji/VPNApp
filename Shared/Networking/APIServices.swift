@@ -89,6 +89,8 @@ enum APIService {
     case fetchPaymentHistory
     case deleteAccount
     case verifyReceipt(receipt: String)
+    case getStatsByServerId
+    case getServerStats
 }
 
 extension APIService: TargetType {
@@ -108,6 +110,23 @@ extension APIService: TargetType {
     // This is the path of each operation that will be appended to our base URL.
     var path: String {
         switch self {
+        case .getServerStats:
+            return Constant.api.path.getServerStats
+        case .getStatsByServerId:
+            var id = ""
+            switch NetworkManager.shared.getValueConfigProtocol {
+            case .openVPNUDP, .openVPNTCP:
+                if let idOpenVPN = NetworkManager.shared.requestCertificate?.server?.id {
+                    id = String(idOpenVPN)
+                }
+            case .wireGuard:
+                if let idWG = NetworkManager.shared.obtainCertificate?.server?.id {
+                    id = String(idWG)
+                }
+            default:
+                break
+            }
+            return Constant.api.path.getStatsByServerId + id
         case .getMultihopList:
             return Constant.api.path.getMultihopList
         case .getTopicQuestionList:
@@ -151,7 +170,7 @@ extension APIService: TargetType {
     // Here we specify which method our calls should use.
     var method: Moya.Method {
         switch self {
-        case .getCountryList, .getAppSettings, .getRequestCertificate, .ipInfoOptional, .getListSession, .getTopicQuestionList, .getMultihopList, .fetchPaymentHistory:
+        case .getCountryList, .getAppSettings, .getRequestCertificate, .ipInfoOptional, .getListSession, .getTopicQuestionList, .getMultihopList, .fetchPaymentHistory, .getStatsByServerId, .getServerStats:
             return .get
         case .register, .login, .loginSocial, .logout, .forgotPassword, .refreshToken, .verifyReceipt:
             return .post
@@ -169,6 +188,10 @@ extension APIService: TargetType {
     // In this example we will not pass anything in the body of the request.
     var task: Task {
         switch self {
+        case .getServerStats:
+            return .requestParameters(parameters: [:], encoding: URLEncoding.queryString)
+        case .getStatsByServerId:
+            return .requestParameters(parameters: [:], encoding: URLEncoding.queryString)
         case .getMultihopList:
             return .requestParameters(parameters: [:], encoding: URLEncoding.queryString)
         case .getTopicQuestionList:
@@ -225,8 +248,8 @@ extension APIService: TargetType {
             return .requestPlain
         case .getRequestCertificate(let asNewConnection):
             var param: [String: Any] = [:]
-            param["tech"] = NetworkManager.shared.selectConfig.getConfigParam
-            param["proto"] = NetworkManager.shared.selectConfig.getProtocolVPN
+            param["tech"] = NetworkManager.shared.getValueConfigProtocol.getConfigParam
+            param["proto"] = NetworkManager.shared.getValueConfigProtocol.getProtocolVPN
             param["dev"] = "tun"
             param["cybersec"] = AppSetting.shared.selectCyberSec ? 1 : 0
             
@@ -254,17 +277,20 @@ extension APIService: TargetType {
             case .multiHop:
                 param["isHop"] = 1
                 if let multihop = NetworkManager.shared.selectMultihop,
-                   let serverId = multihop.entry?.serverId {
+                   let serverId = multihop.entry?.serverId,
+                   let city = multihop.exit?.city {
+                    param["countryId"] = city.countryId
+                    param["cityId"] = city.id
                     param["serverId"] = serverId
                 }
                 break
             }
             
             var prevSessionId = ""
-            switch NetworkManager.shared.selectConfig {
+            switch NetworkManager.shared.getValueConfigProtocol {
             case .openVPNTCP, .openVPNUDP:
                 prevSessionId = NetworkManager.shared.requestCertificate?.sessionId ?? ""
-                param["proto"] = NetworkManager.shared.selectConfig.getProtocolVPN
+                param["proto"] = NetworkManager.shared.getValueConfigProtocol.getProtocolVPN
             case .wireGuard:
                 prevSessionId = NetworkManager.shared.obtainCertificate?.sessionId ?? ""
             default:
@@ -326,6 +352,14 @@ extension APIService: TargetType {
     // Usually you would pass auth tokens here.
     var headers: [String: String]? {
         switch self {
+        case .getServerStats:
+            return [
+                "Authorization": "Bearer \(AppSetting.shared.accessToken)"
+            ]
+        case .getStatsByServerId:
+            return [
+                "Authorization": "Bearer \(AppSetting.shared.accessToken)"
+            ]
         case .login, .register:
             return ["Content-type": "application/json"]
         case .getCountryList, .changePassword, .getListSession, .getTopicQuestionList, .getMultihopList, .disconnectSession, .deleteAccount:

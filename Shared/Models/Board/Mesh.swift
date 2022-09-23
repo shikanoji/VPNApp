@@ -52,11 +52,15 @@ class Mesh: ObservableObject {
     func configNode(countryNodes: [Node] = [],
                     cityNodes: [Node] = [],
                     staticNodes: [StaticServer] = [],
-                    clientCountryNode: Node?) {
+                    clientCountryNode: Node? = nil) {
         self.countryNodes = countryNodes
         self.cityNodes = cityNodes
         self.staticNodes = staticNodes
         self.clientCountryNode = clientCountryNode
+    }
+    
+    func updateStaticNodes(_ staticNodes: [StaticServer] = []) {
+        self.staticNodes = staticNodes
     }
     
     func updateCurrentTab(_ tab: StateTab) {

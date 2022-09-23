@@ -49,6 +49,20 @@ class NetworkManager: ObservableObject {
         }
     }
     
+    var recommendConfig: ItemCellType {
+        get {
+            let type = AppSetting.shared.getRecommendConfigProtocol()
+            return type
+        }
+        set {
+            AppSetting.shared.recommendConfig = newValue.rawValue
+        }
+    }
+    
+    var getValueConfigProtocol : ItemCellType {
+        return AppSetting.shared.getValueConfigProtocol()
+    }
+    
     var requestCertificate: RequestCertificateModel?
     
     var obtainCertificate: ObtainCertificateModel?

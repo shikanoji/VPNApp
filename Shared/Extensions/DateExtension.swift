@@ -18,3 +18,9 @@ extension Date: RawRepresentable {
         self = Date.formatter.date(from: rawValue) ?? Date()
     }
 }
+
+extension Date {
+    init(seconds:Double) {
+        self = Date(timeIntervalSince1970: TimeInterval(seconds))
+    }
+}

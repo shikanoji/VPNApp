@@ -59,6 +59,7 @@ struct LocationListView: View {
                                     showCityListView = true
                                 } else {
                                     nodeSelect = node
+                                    NotificationCenter.default.post(name: Constant.NameNotification.showMap, object: nil)
                                 }
                             }) {
                                 NodeCellView(node: node)

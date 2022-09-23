@@ -198,7 +198,7 @@ struct ZoomableScrollView<Content: View>: UIViewRepresentable {
         xOffSet = xOffSet < 0 ? 0 : xOffSet
         xOffSet = xOffSet > maxWidthScrollView ? maxWidthScrollView : xOffSet
         
-        yOffSet = yOffSet < 0 ? 0 : yOffSet
+        yOffSet = yOffSet < padding * uiView.zoomScale ? padding * uiView.zoomScale : yOffSet
         yOffSet = yOffSet > maxHeighScrollView ? maxHeighScrollView : yOffSet
         
         if enableUpdateMap {
