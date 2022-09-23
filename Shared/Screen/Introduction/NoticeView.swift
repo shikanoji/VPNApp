@@ -26,19 +26,29 @@ struct NoticeView: View {
                     Spacer().frame(height: 20)
                     Text(L10n.Notice.firstGraph).setLightBlackText()
                     Spacer().frame(height: 20)
-                    HStack(alignment: .firstTextBaseline) {
-                        Asset.Assets.checkmark.swiftUIImage
+                    HStack() {
+                        VStack {
+                            Spacer().frame(height: 7)
+                            Asset.Assets.checkmark.swiftUIImage
+                            Spacer()
+                        }
                         Spacer().frame(width: 10)
                         Text(L10n.Notice.firstTerm).setLightBlackText()
                         Spacer()
                     }
+                    .frame(height: 80)
                     Spacer().frame(height: 20)
-                    HStack(alignment: .firstTextBaseline) {
-                        Asset.Assets.checkmark.swiftUIImage
+                    HStack() {
+                        VStack {
+                            Spacer().frame(height: 7)
+                            Asset.Assets.checkmark.swiftUIImage
+                            Spacer()
+                        }
                         Spacer().frame(width: 10)
                         Text(L10n.Notice.secondTerm).setLightBlackText()
                         Spacer()
                     }
+                    .frame(height: 80)
                     Spacer().frame(height: 20)
                 }
                 Group {
