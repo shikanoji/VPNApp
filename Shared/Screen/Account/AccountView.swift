@@ -25,11 +25,7 @@ struct AccountView: View {
     @State var numberOfSession: Int
     
     @StateObject var viewModel: AccountViewModel
-    
-    @State var sections: [DataSection] = [
-        DataSection(type: .myAccount),
-        DataSection(type: .helpSupport)
-    ]
+
     
     var header: some View {
         HStack(spacing: 25) {
@@ -57,7 +53,6 @@ struct AccountView: View {
             ScrollView(showsIndicators: false) {
                 VStack(spacing: 0) {
                     sectionsView
-                        .animation(nil)
                     Spacer()
                     AppButton(style: .darkButton, width: UIScreen.main.bounds.size.width - 30, text: L10n.Account.signout) {
                         viewModel.showLogoutConfirmation = true
@@ -81,28 +76,32 @@ struct AccountView: View {
     }
     
     var sectionsView: some View {
-        ForEach(sections, id: \.id) { section in
-            VStack(alignment: .leading, spacing: 10) {
-                Text(section.type.title)
+        HStack() {
+            Spacer().frame(width: 25)
+            VStack(alignment: .leading) {
+                Spacer().frame(height: 10)
+                Text(L10n.Account.account)
                     .font(Constant.Menu.fontSectionTitle)
                     .foregroundColor(AppColor.lightBlackText)
-                ForEach(section.type.items) { item in
-                    ItemRowView(item: item).onTapGesture {
-                        switch item.type {
-                        case .statusAccount:
-                            self.showAccountStatus = true
-                        case .totalDevice:
-                            self.showTotalDevice = true
-                        case .questions:
-                            self.showFAQ = true
-                        default:
-                            return
-                        }
-                    }
+                Spacer().frame(height: 10)
+                ItemRowView(item: ItemCell(type: .statusAccount)).onTapGesture {
+                    self.showAccountStatus = true
+                }
+                Spacer().frame(height: 10)
+                ItemRowView(item: ItemCell(type: .totalDevice)).onTapGesture {
+                    self.showTotalDevice = true
+                }
+                Spacer().frame(height: 25)
+                Text(L10n.Account.itemHelpCenter)
+                    .font(Constant.Menu.fontSectionTitle)
+                    .foregroundColor(AppColor.lightBlackText)
+                Spacer().frame(height: 10)
+                ItemRowView(item: ItemCell(type: .helpCenter)).onTapGesture {
+                    self.showFAQ = true
                 }
             }
+            Spacer().frame(width: 25)
         }
-        .padding([.top, .leading])
     }
     
     var navigationLinks: some View {
