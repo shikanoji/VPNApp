@@ -31,8 +31,11 @@ struct FAQView: View {
                 tapLeftButton: {
                     presentationMode.wrappedValue.dismiss()
                 }, tapRightButton: {
-                    showFAQ = false
+                    UINavigationBar.setAnimationsEnabled(false)
                     showAccount = false
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+                        UINavigationBar.setAnimationsEnabled(true)
+                    }
                 }, statusConnect: $statusConnect)
             ScrollView(.vertical, showsIndicators: false) {
                 ZStack(alignment: .top) {

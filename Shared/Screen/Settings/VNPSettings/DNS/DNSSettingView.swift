@@ -64,8 +64,11 @@ struct DNSSettingView: View {
                     tapLeftButton: {
                         presentationMode.wrappedValue.dismiss()
                     }, tapRightButton: {
-                        showDNSSetting = false
+                        UINavigationBar.setAnimationsEnabled(false)
                         showSettings = false
+                        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+                            UINavigationBar.setAnimationsEnabled(true)
+                        }
                     }, statusConnect: $statusConnect)
                 VStack(alignment: .leading, spacing: 1) {
                     ItemRowCell(title: L10n.Settings.Dns.default, content: L10n.Settings.Dns.Default.content, showSwitch: true,  position: .all, switchValue: viewModel.selectedDefaultDns, onSwitchValueChange: { value in
