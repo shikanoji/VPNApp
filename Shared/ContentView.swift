@@ -34,8 +34,7 @@ struct ContentView: View {
             }
             .frame(width: UIScreen.main.bounds.width)
             .ignoresSafeArea()
-        }
-        else if viewModel.showSessionExpired {
+        } else if viewModel.showSessionExpired {
             ForceLogoutView {
                 viewModel.showSessionExpired = false
                 AppSetting.shared.refreshTokenError = false

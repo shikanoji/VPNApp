@@ -147,8 +147,6 @@ struct BoardView: View {
             }
         })
         .onChange(of: viewModel.showMap, perform: { newValue in
-            showAccount = false
-            showSettings = false
             showBoardList = false
         })
         .animation(Animation.linear(duration: 0.25))
