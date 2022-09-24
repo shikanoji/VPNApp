@@ -419,7 +419,9 @@ class BoardViewModel: ObservableObject {
     // MARK: - HANDLE CONFIG VPN
     
     @objc private func logoutNeedDisconnect() {
-        configDisconnect()
+        if state == .connected {
+            configDisconnect()
+        }
     }
     
     @objc private func disconnectCurrentSession() {
@@ -502,6 +504,9 @@ class BoardViewModel: ObservableObject {
         }
         
         AppSetting.shared.lineNetwork = 0
+        if connectOrDisconnectByUser {
+            AppSetting.shared.currentSessionId = ""
+        }
     }
     
     func configDisconnect() {
@@ -903,7 +908,9 @@ class BoardViewModel: ObservableObject {
                         return
                     }
                 } else {
-                    self.error = APIError.identified(message: error.localizedDescription)
+                    if let errorConfig = error as? APIError {
+                        self.error = errorConfig
+                    }
                     self.showProgressView = false
                     self.showAlert = true
                     completion(false)

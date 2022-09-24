@@ -68,7 +68,6 @@ extension ServiceManager {
     
     func refreshToken()-> Single<APIResponse<RegisterResultModel>> {
         return request(.refreshToken)
-            .filterSuccessfulStatusAndRedirectCodes()
             .map { response in
                 AppSetting.shared.isRefreshingToken = false
                 let refreshTokenResult = try JSONDecoder().decode(APIResponse<RegisterResultModel>.self, from: response.data)
@@ -85,6 +84,7 @@ extension ServiceManager {
                 return refreshTokenResult
             }
             .catch { error in
+                NotificationCenter.default.post(name: Constant.NameNotification.sessionExpired, object: nil)
                 AppSetting.shared.isRefreshingToken = false
                 throw APIError.someError
             }
