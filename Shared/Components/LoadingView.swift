@@ -15,7 +15,6 @@ struct LoadingView: View {
     
     @State private var offSetRight = minRange
     @State private var offSetLeft = maxRange
-    @State private var enableAnimation = false
     
     private var opacity: CGFloat
     
@@ -40,7 +39,7 @@ struct LoadingView: View {
                         height: Constant.Loading.sizeCircle)
                     .offset(x: offSetRight)
                     .zIndex(offSetRight < LoadingView.maxRange ? 1 : 0)
-                    .animation(enableAnimation ? Animation.easeInOut(duration: 0.7).repeatForever(autoreverses: true) : nil)
+                    .animation(Animation.easeInOut(duration: 0.7).repeatForever(autoreverses: true))
                 
                 Circle()
                     .foregroundColor(
@@ -50,14 +49,13 @@ struct LoadingView: View {
                         width: Constant.Loading.sizeCircle,
                         height: Constant.Loading.sizeCircle)
                     .offset(x: offSetLeft)
-                    .animation(enableAnimation ? Animation.easeInOut(duration: 0.7).repeatForever(autoreverses: true) : nil)
+                    .animation(Animation.easeInOut(duration: 0.7).repeatForever(autoreverses: true))
                     .zIndex(offSetRight < LoadingView.maxRange ? 0 : 1)
             }
         }
         .onAppear {
             offSetRight = LoadingView.maxRange
             offSetLeft = LoadingView.minRange
-            enableAnimation = true
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         .ignoresSafeArea()

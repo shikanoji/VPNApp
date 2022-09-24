@@ -71,6 +71,9 @@ class AccountViewModel: ObservableObject {
                 self.showSuccessfullyResendEmail = true
                 AppSetting.shared.lastTimeSendVerifyEmail = Int(Date().timeIntervalSince1970)
                 self.shouldShowResendEmailButton = false
+                DispatchQueue.main.asyncAfter(deadline: .now() + 60, execute: {
+                    self.shouldShowResendEmailButton = true
+                })
             } else {
                 self.showAlert = true
             }
