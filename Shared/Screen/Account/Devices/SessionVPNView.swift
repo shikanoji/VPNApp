@@ -67,13 +67,7 @@ struct SessionVPNView: View {
                 viewModel.showSessionTerminatedAlert = false
             })
         }
-        .popup(isPresented: $viewModel.showPopupView,
-               type: .floater(verticalPadding: 10),
-               position: .bottom,
-               animation: .easeInOut,
-               autohideIn: nil,
-               closeOnTap: true,
-               closeOnTapOutside: true) {
+        .sheet(isPresented: $viewModel.showPopupView) {
             BottomViewPopup(
                 titleStr: L10n.Account.Session.Terminal.title,
                 messageStr: L10n.Account.Session.Terminal.message,

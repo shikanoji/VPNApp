@@ -242,18 +242,18 @@ class BoardViewModel: ObservableObject {
         AppSetting.shared.fetchListSession()
         
         getIpInfo {
-            if !AppSetting.shared.isConnectedToVpn {
-                if AppSetting.shared.needLoadApiMap {
-                    self.getCountryList {
-                        self.getMultihopList {
-                        }
-                    }
-                } else {
-                    self.getDataFromLocal()
-                }
-            } else {
+            if AppSetting.shared.isConnectedToVpn || !AppSetting.shared.needLoadApiMap {
                 self.getDataFromLocal()
+            } else {
+                self.getCountryList {
+                    self.getMultihopList {
+                    }
+                }
             }
+        }
+        
+        if AppSetting.shared.isConnectedToVpn {
+            configConnected()
         }
     }
     
@@ -377,6 +377,11 @@ class BoardViewModel: ObservableObject {
     func getDataFromLocal() {
         if let dataMapLocal = AppSetting.shared.getDataMap() {
             configCountryList(dataMapLocal)
+        } else {
+            self.getCountryList {
+                self.getMultihopList {
+                }
+            }
         }
         
         if let multihopListLocal = AppSetting.shared.getMutilhopList() {
@@ -462,12 +467,17 @@ class BoardViewModel: ObservableObject {
         }
     }
     
+    var startConnectOrDisconnect = false
+    
     func ConnectOrDisconnectVPN() {
+        startConnectOrDisconnect = true
         switch autoConnectType {
         case .off:
                 switch state {
                 case .disconnected:
                     configStartConnectVPN()
+                case .connecting, .disconnecting:
+                    break
                 default:
                     configDisconnect()
                 }
@@ -596,6 +606,8 @@ class BoardViewModel: ObservableObject {
     
     func configConnected() {
         numberReconnect = 0
+        state = .connected
+        stateUI = .connected
         connectOrDisconnectByUser = false
         stopSpeedTimer()
         
@@ -663,11 +675,11 @@ class BoardViewModel: ObservableObject {
         case .connected:
             configConnected()
             if autoConnectType == .off {
-            if reconnectWhenLoseInternet <= 0 {
-                reconnectWhenLoseInternet = 1
-            } else if reconnectWhenLoseInternet == 2 {
-                reconnectWhenLoseInternet = 1
-            }
+                if reconnectWhenLoseInternet <= 0 {
+                    reconnectWhenLoseInternet = 1
+                } else if reconnectWhenLoseInternet == 2 {
+                    reconnectWhenLoseInternet = 1
+                }
             }
         case .disconnected:
             if autoConnectType == .off {
@@ -679,6 +691,14 @@ class BoardViewModel: ObservableObject {
                     reconnectWhenLoseInternet = 0
                 }
             }
+            
+            if !startConnectOrDisconnect {
+                if AppSetting.shared.isConnectedToVpn {
+                    configConnected()
+                    return
+                }
+            }
+            
             if isEnableReconect,
                !connectOrDisconnectByUser {
                 startConnectVPN()
@@ -728,11 +748,11 @@ class BoardViewModel: ObservableObject {
         checkInternetTimer!.setEventHandler { [weak self] in
             switch self?.autoConnectType {
             case .always, .onWifi, .onMobile:
-                if self?.stateUI == .disconnected {
+                if self?.stateUI == .disconnected && !AppSetting.shared.isConnectedToVpn {
                     self?.autoConnectWithConfig()
                 }
             case .off:
-                if self?.reconnectWhenLoseInternet == 2 && Connectivity.sharedInstance.isReachable && self?.stateUI == .disconnected {
+                if self?.reconnectWhenLoseInternet == 2 && Connectivity.sharedInstance.isReachable && self?.stateUI == .disconnected && !(self?.connectOrDisconnectByUser ?? false) {
                     self?.ConnectOrDisconnectVPN()
                 }
             default:
