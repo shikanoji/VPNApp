@@ -60,10 +60,10 @@ class ContentViewModel: ObservableObject {
     }
     
     func getState() {
-        if AppSetting.shared.accessToken == "" || AppSetting.shared.isConnectedToVpn {
-            self.getIpInfoSuccess = true
-        } else {
-            getIpInfo {
+        getIpInfo {
+            if AppSetting.shared.accessToken == "" || AppSetting.shared.isConnectedToVpn {
+                self.getIpInfoSuccess = true
+            } else {
                 if AppSetting.shared.needLoadApiMap {
                     self.getCountryList {
                         self.getMultihopList {

@@ -25,7 +25,7 @@ struct AccountView: View {
     @State var numberOfSession: Int
     
     @StateObject var viewModel: AccountViewModel
-
+    
     
     var header: some View {
         HStack(spacing: 25) {
@@ -166,13 +166,7 @@ struct AccountView: View {
         .onChange(of: AppSetting.shared.currentNumberDevice, perform: { numberOfDevices in
             self.numberOfSession = numberOfDevices
         })
-        .popup(isPresented: $viewModel.showLogoutConfirmation,
-               type: .floater(verticalPadding: 10),
-               position: .bottom,
-               animation: .easeInOut,
-               autohideIn: nil,
-               closeOnTap: true,
-               closeOnTapOutside: true) {
+        .sheet(isPresented: $viewModel.showLogoutConfirmation) {
             BottomViewPopup(cancel: {
                 viewModel.showLogoutConfirmation = false
             }, confim: {
