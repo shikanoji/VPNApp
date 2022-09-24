@@ -242,17 +242,21 @@ class BoardViewModel: ObservableObject {
         AppSetting.shared.fetchListSession()
         
         getIpInfo {
-            if AppSetting.shared.needLoadApiMap {
-                self.getCountryList {
-                    self.getMultihopList {
+            if !AppSetting.shared.isConnectedToVpn {
+                if AppSetting.shared.needLoadApiMap {
+                    self.getCountryList {
+                        self.getMultihopList {
+                        }
                     }
+                } else {
+                    self.getDataFromLocal()
                 }
             } else {
                 self.getDataFromLocal()
             }
         }
     }
-
+    
     ///Register background task
     private func beginBackgroundTask() {
         backgroundTaskId = UIApplication.shared.beginBackgroundTask(withName: "sysvpn.client.ios.vpnkeeper") { [weak self] in

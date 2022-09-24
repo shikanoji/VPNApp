@@ -29,8 +29,11 @@ struct AccountStatusView: View {
                         tapLeftButton: {
                             presentationMode.wrappedValue.dismiss()
                         }, tapRightButton: {
-                            showAccountStatus = false
+                            UINavigationBar.setAnimationsEnabled(false)
                             showAccount = false
+                            DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+                                UINavigationBar.setAnimationsEnabled(true)
+                            }
                         }, statusConnect: $statusConnect)
                     VStack(spacing: 1) {
                         ItemRowCell(title: ItemCellType.statusAccount.title,

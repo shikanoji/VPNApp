@@ -48,7 +48,11 @@ struct AutoConnectDestinationSelectView: View {
             .background(AppColor.background)
             .ignoresSafeArea()
             .onAppear(perform: {
-                viewModel.getCountryList()
+                if !AppSetting.shared.isConnectedToVpn {
+                    viewModel.getCountryList()
+                } else {
+                    viewModel.getDataFromLocal()
+                }
             })
         }
     }

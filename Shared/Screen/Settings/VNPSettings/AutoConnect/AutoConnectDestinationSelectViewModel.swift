@@ -62,4 +62,10 @@ class AutoConnectDestinationSelectViewModel: ObservableObject {
             NodeGroup(nodeList: result.availableCountries, type: .all),
         ]
     }
+    
+    func getDataFromLocal() {
+        if let dataMapLocal = AppSetting.shared.getDataMap() {
+            configLocation(dataMapLocal)
+        }
+    }
 }

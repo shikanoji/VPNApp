@@ -31,8 +31,11 @@ struct SettingVPNView: View {
                     tapLeftButton: {
                         presentationMode.wrappedValue.dismiss()
                     }, tapRightButton: {
+                        UINavigationBar.setAnimationsEnabled(false)
                         showSettings = false
-                        presentationMode.wrappedValue.dismiss()
+                        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+                            UINavigationBar.setAnimationsEnabled(true)
+                        }
                     }, statusConnect: $statusConnect)
                 VStack(spacing: 1) {
                     ForEach(viewModel.itemList) { item in

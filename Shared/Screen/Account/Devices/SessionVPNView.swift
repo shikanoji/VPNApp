@@ -29,9 +29,11 @@ struct SessionVPNView: View {
                             presentationMode.wrappedValue.dismiss()
                             shouldHideSessionList = true
                         }, tapRightButton: {
-                            showTotalDevice = false
+                            UINavigationBar.setAnimationsEnabled(false)
                             showAccount = false
-                            shouldHideSessionList = true
+                            DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+                                UINavigationBar.setAnimationsEnabled(true)
+                            }
                         }, statusConnect: $statusConnect)
                     .padding(.bottom, Constant.Menu.topPaddingCell)
                     Spacer().frame(height: 15)
