@@ -86,7 +86,7 @@ struct LoginView: View {
     }
     
     var body: some View {
-        ZStack {
+        LoadingScreen(isShowing: $viewModel.showProgressView) {
             Background() {
                 ScrollView(.vertical, showsIndicators: false) {
                     VStack(alignment: .center) {
@@ -116,9 +116,6 @@ struct LoginView: View {
             }.onAppear {
                 /// Pass authentication to view model because Environment object only receivable through view
                 viewModel.authentication = authentication
-            }
-            if viewModel.showProgressView {
-                LoadingView()
             }
         }.popup(isPresented: $viewModel.showAlert, type: .floater(verticalPadding: 10), position: .bottom, animation: .easeInOut, autohideIn: 10, closeOnTap: false, closeOnTapOutside: true) {
             PopupSelectView(message: viewModel.alertMessage,

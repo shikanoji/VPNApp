@@ -39,7 +39,6 @@ struct LicenseListView: View {
                         ForEach(viewModel.licenseTitleList.indices, id: \.self) { i in
                             NavigationLink {
                                 LicenseDetailView(viewModel: LicenseDetailViewModel(license: viewModel.licenseTitleList[i]))
-                                    .navigationBarHidden(false)
                             } label: {
                                 ItemRowCell(title: viewModel.licenseTitleList[i].title ?? "",
                                             showRightButton: true,

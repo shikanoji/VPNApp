@@ -43,10 +43,6 @@ struct RegisterView: View {
             Spacer().frame(height: textFieldSpacing)
             Form(placeholder: L10n.Register.retypePassword, value: $viewModel.retypePassword, isPassword: true, width: Constant.Global.widthFormAndButton)
             Spacer().frame(height: textFieldSpacing)
-            if viewModel.showProgressView {
-                ProgressView().progressViewStyle(CircularProgressViewStyle(tint: Color.white))
-            }
-            Spacer().frame(height: textFieldSpacing)
         }
     }
     
@@ -88,7 +84,7 @@ struct RegisterView: View {
     }
     
     var body: some View {
-        ZStack {
+        LoadingScreen(isShowing: $viewModel.showProgressView) {
             Background() {
                 ScrollView(.vertical, showsIndicators: false) {
                     VStack(alignment: .center) {
@@ -102,7 +98,6 @@ struct RegisterView: View {
                     }
                     .frame(minHeight: UIScreen.main.bounds.height)
                     .autocapitalization(.none)
-                    .disabled(viewModel.showProgressView)
                 }
                 .frame(maxWidth: .infinity, maxHeight: .infinity)
             }

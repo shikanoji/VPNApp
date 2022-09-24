@@ -42,25 +42,26 @@ struct ForgotPasswordView: View {
     }
     
     var body: some View {
-        Background() {
-            VStack {
-                CustomSimpleNavigationView(title: "", backgroundColor: Color.clear)
-                ScrollView(.vertical, showsIndicators: false) {
-                    VStack(alignment: .center) {
-                        Spacer().frame(minHeight: 20)
-                        Asset.Assets.logoMedium.swiftUIImage
-                        header
-                        emailForm
-                        Spacer().frame(height: 20)
-                        submitButton
-                        Spacer().frame(height: 30)
-                        footer
-                        Spacer().frame(minHeight: 20)
+        LoadingScreen(isShowing: $viewModel.showProgressView) {
+            Background() {
+                VStack {
+                    CustomSimpleNavigationView(title: "", backgroundColor: Color.clear)
+                    ScrollView(.vertical, showsIndicators: false) {
+                        VStack(alignment: .center) {
+                            Spacer().frame(minHeight: 20)
+                            Asset.Assets.logoMedium.swiftUIImage
+                            header
+                            emailForm
+                            Spacer().frame(height: 20)
+                            submitButton
+                            Spacer().frame(height: 30)
+                            footer
+                            Spacer().frame(minHeight: 20)
+                        }
+                        .frame(maxHeight: .infinity)
                     }
-                    .frame(maxHeight: .infinity)
+                    .autocapitalization(.none)
                 }
-                .autocapitalization(.none)
-                .disabled(viewModel.showProgressView)
             }
         }
         .navigationBarHidden(true)
