@@ -20,7 +20,10 @@ struct AppTextField: UIViewRepresentable {
         let tf = UITextField(frame: .zero)
         tf.attributedPlaceholder = NSAttributedString(
             string: placeholder,
-            attributes: [NSAttributedString.Key.foregroundColor: UIColor(Color.white.opacity(0.3))]
+            attributes: [
+                NSAttributedString.Key.foregroundColor: UIColor(Color.white.opacity(0.3)),
+                NSAttributedString.Key.font: UIFont.systemFont(ofSize: 16)
+            ]
         )
         tf.isUserInteractionEnabled = true
         tf.delegate = context.coordinator

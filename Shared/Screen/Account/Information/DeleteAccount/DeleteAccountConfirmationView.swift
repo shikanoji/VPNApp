@@ -51,29 +51,16 @@ struct DeleteAccountConfirmationView: View {
         }
         .padding(20)
         .frame(width: UIScreen.main.bounds.width)
-        .background(AppColor.darkButton)
+        .background(AppColor.background)
         .cornerRadius(radius: 15, corners: [.topLeft, .topRight])
     }
     
     var body: some View {
         ZStack {
-            Background{}
-                .opacity(0.8)
-                .onTapGesture {
-                    presentationMode.wrappedValue.dismiss()
-                }
             VStack {
-                Spacer().frame(height: 40)
-                HStack {
-                    Button {
-                        presentationMode.wrappedValue.dismiss()
-                    } label: {
-                        Asset.Assets.close.swiftUIImage
-                    }
-                    Spacer()
-                }
-                Spacer()
+                Color.clear
                 content
+                Spacer()
             }
             .onChange(of: viewModel.shouldDismissView) { shouldDismiss in
                 if shouldDismiss {

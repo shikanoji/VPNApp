@@ -58,26 +58,13 @@ struct MapView: View {
             enableUpdateMap = false
             self.currentAmount = $0
         })
-        .onChange(of: statusConnect) { value in
-            if statusConnect == .connected {
-                mesh.removeSelectNode()
-                switch AppSetting.shared.getCurrentTabConnected() {
-                case .location:
-                    if let node = NetworkManager.shared.selectNode {
-                        moveToNode(x: node.x, y: node.y)
-                    }
-                case .staticIP:
-                    if let staticServer = NetworkManager.shared.selectStaticServer {
-                        moveToNode(x: staticServer.x, y: staticServer.y)
-                    }
-                default:
-                    break
-                }
-            }
+        .onChange(of: statusConnect) { _ in
+            moveToNodeConnected(statusConnect == .connected)
         }
         .onAppear {
             self.mesh.removeSelectNode()
             self.enableUpdateMap = false
+            moveToNodeConnected(AppSetting.shared.isConnectedToVpn)
         }
         .onChange(of: mesh.selectedNode, perform: { newValue in
             if let node = newValue {
@@ -86,12 +73,32 @@ struct MapView: View {
             }
         })
         .onReceive(mesh.$clientCountryNode) {
-            if mesh.selectedNode == nil,
-               let node = $0 {
-                moveToNode(x: node.x, y: node.y)
+            if !AppSetting.shared.isConnectedToVpn {
+                if mesh.selectedNode == nil,
+                   let node = $0 {
+                    moveToNode(x: node.x, y: node.y)
+                }
             }
         }
         .edgesIgnoringSafeArea(.all)
+    }
+    
+    func moveToNodeConnected(_ connected: Bool = false) {
+        if connected {
+            mesh.removeSelectNode()
+            switch AppSetting.shared.getCurrentTabConnected() {
+            case .location:
+                if let node = NetworkManager.shared.selectNode {
+                    moveToNode(x: node.x, y: node.y)
+                }
+            case .staticIP:
+                if let staticServer = NetworkManager.shared.selectStaticServer {
+                    moveToNode(x: staticServer.x, y: staticServer.y)
+                }
+            default:
+                break
+            }
+        }
     }
     
     func moveToNode(x: CGFloat, y: CGFloat) {

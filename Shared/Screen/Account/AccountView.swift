@@ -67,7 +67,7 @@ struct AccountView: View {
                         verifyEmailSection
                     }
                     sectionsView
-                    Spacer().frame(minWidth: 50)
+                    Spacer().frame(minHeight: 50)
                     AppButton(style: .darkButton, width: UIScreen.main.bounds.size.width - 30, text: L10n.Account.signout) {
                         viewModel.showLogoutConfirmation = true
                     }

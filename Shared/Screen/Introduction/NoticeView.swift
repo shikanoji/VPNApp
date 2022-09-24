@@ -13,11 +13,16 @@ struct NoticeView: View {
     @State var showIntroduction: Bool = false
     @State var showTermsAndCondition: Bool = false
     @State var showPrivacyPolicies: Bool = false
+    
+    @Environment(\.safeAreaInsets) private var safeAreaInsets
+    
     var body: some View {
-        ZStack {
-            Background() {
-            }
-            
+//        ZStack {
+//            Background() {
+//            }
+        ScrollView(.vertical, showsIndicators: false) {
+            Spacer()
+                .frame(minHeight: safeAreaInsets.top)
             VStack{
                 Asset.Assets.lock.swiftUIImage
                 Spacer().frame(height: 20)
@@ -96,8 +101,12 @@ struct NoticeView: View {
             .frame(width: 343)
             .background(AppColor.lightBlack)
             .cornerRadius(15)
+            .frame(maxWidth: .infinity)
+            Spacer()
+                .frame(minHeight: safeAreaInsets.bottom)
         }
         .navigationBarHidden(true)
+        .padding()
     }
 }
 

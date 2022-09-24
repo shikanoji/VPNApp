@@ -36,18 +36,18 @@ struct ChangePasswordView: View {
                 Form(placeholder: L10n.Account.Infomation.currentPassword,
                      value: $viewModel.password,
                      isPassword: true,
-                     shouldAnimate: false)
+                     shouldAnimate: true)
                 Spacer().frame(height: 16)
             }
             Form(placeholder: L10n.Account.Infomation.newPassword,
                  value: $viewModel.newPassword,
                  isPassword: true,
-                 shouldAnimate: false)
+                 shouldAnimate: true)
             Spacer().frame(height: 16)
             Form(placeholder: L10n.Account.Infomation.retypePassword,
                  value: $viewModel.retypePassword,
                  isPassword: true,
-                 shouldAnimate: false)
+                 shouldAnimate: true)
             Spacer().frame(height: 16)
         }
     }
@@ -69,41 +69,30 @@ struct ChangePasswordView: View {
         }
         .frame(maxWidth: .infinity)
         .foregroundColor(.white)
-        .background(AppColor.darkButton)
+        .background(AppColor.background)
         .cornerRadius(radius: Constant.Menu.radiusCell * 2, corners: [PositionItemCell.top.rectCorner])
         .padding(.top, -Constant.Menu.radiusCell * 2)
     }
     
+    
     var body: some View {
-        ZStack {
-            VStack(spacing: 0) {
-                ZStack(alignment: .top) {
-                    VisualEffectView(effect: UIBlurEffect(style: .dark))
-                        .opacity(0.95)
-                        .onTapGesture {
-                            self.showChangePassword = false
-                        }
-                    HStack {
-                        Image(Constant.CustomNavigation.iconBack)
-                            .onTapGesture {
-                                self.showChangePassword = false
-                            }
-                        Spacer()
-                    }
-                    .padding(.top, 35.0)
-                }
+        LoadingScreen(isShowing: $viewModel.showProgressView) {
+            VStack {
+                Color.clear
                 content
                 Spacer().frame(height: keyboardHeight)
             }
-            if viewModel.showProgressView {
-                ProgressView().progressViewStyle(CircularProgressViewStyle(tint: Color.white))
+        }
+        .background(PopupBackgroundView())
+        .ignoresSafeArea()
+        .onReceive(Publishers.keyboardHeight) { height in
+            withAnimation(.spring(response: 0.4,
+                                  dampingFraction: 1, blendDuration: 0)) {
+                self.keyboardHeight = height
             }
         }
-        .frame(maxWidth: .infinity, maxHeight: .infinity)
-        .ignoresSafeArea()
-        .onReceive(Publishers.keyboardHeight) { self.keyboardHeight = $0 }
         .popup(isPresented: $viewModel.showAlert,
-               type: .floater(verticalPadding: 10),
+               type: .floater(verticalPadding: 20),
                position: .bottom,
                animation: .easeInOut,
                autohideIn: 10,
@@ -113,6 +102,11 @@ struct ChangePasswordView: View {
                             confirmAction: {
                 viewModel.showAlert = false
             })
+            .onDisappear {
+                if viewModel.changePasswordSuccess {
+                    showChangePassword = false
+                }
+            }
         }
     }
 }
