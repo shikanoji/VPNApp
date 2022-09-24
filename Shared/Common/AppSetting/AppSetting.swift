@@ -69,6 +69,7 @@ enum AppKeys: String {
     //Save time
     case selectTimeConnectedWhenTerminate = "selectTimeConnectedWhenTerminate"
     case selectCount = "selectCount"
+    case countTimeBackGround = "countTimeBackGround"
 }
 
 class AppSetting {
