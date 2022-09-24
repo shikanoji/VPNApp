@@ -23,6 +23,8 @@ extension Constant {
             static let loginSocial = "/shared/module_auth/v1/login-social"
             static let refreshToken = "/shared/module_auth/v1/refresh-tokens"
             static let forgotPassword = "/shared/module_auth/v1/forgot-password"
+            static let sendVerifyEmail = "/shared/module_user/v1/send-verify-email"
+
             static let getCountryList = "app/module_server/v1/country/get_list"
             static let ipInfo = "/app/module_server/v1/app_setting/get_app_settings"
             static let requestCertificate = "/app/module_server/v1/vpn/request_certificate"

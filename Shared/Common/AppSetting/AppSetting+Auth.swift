@@ -153,6 +153,31 @@ extension AppSetting {
         }
     }
 
+    var emailVerified: Bool {
+        get {
+            return UserDefaults.standard.bool(forKey: AppKeys.emailVerified.rawValue)
+        }
+        set {
+            UserDefaults.standard.setValue(newValue, forKey: AppKeys.emailVerified.rawValue)
+        }
+    }
+
+    var lastTimeSendVerifyEmail: Int? {
+        get {
+            return UserDefaults.standard.integer(forKey: AppKeys.lastTimeSendVerifyEmail.rawValue)
+        }
+        set {
+            UserDefaults.standard.setValue(newValue, forKey: AppKeys.lastTimeSendVerifyEmail.rawValue)
+        }
+    }
+
+    var shouldAllowSendVerifyEmail: Bool {
+        guard let lastTimeSend = lastTimeSendVerifyEmail else {
+            return true
+        }
+        return (Int(Date().timeIntervalSince1970) - lastTimeSend) > 30*60 ? true : false
+    }
+
     var isRefreshTokenValid: Bool {
         guard !refreshToken.isEmpty else {
             return false

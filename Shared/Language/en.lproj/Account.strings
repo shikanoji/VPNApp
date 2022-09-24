@@ -6,7 +6,7 @@
   
 */
 
-"tapControl" = "Tap to control profile";
+"viewProfile" = "View Profile";
 "itemAccount" = "Account status:";
 "itemDevices" = "Devices";
 "itemQuestions" = "Frequently Asked Questions";

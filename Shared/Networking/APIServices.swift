@@ -78,6 +78,8 @@ enum APIService {
     case logout
     case refreshToken
     case forgotPassword(email: String)
+    case sendVerifyEmail
+
     case getAppSettings
     case ipInfoOptional
     case getRequestCertificate(asNewConnection: Bool)
@@ -131,7 +133,6 @@ extension APIService: TargetType {
             return Constant.api.path.getMultihopList
         case .getTopicQuestionList:
             return ""
-            //            return Constant.api.path.getTopicFaq
         case .register:
             return Constant.api.path.register
         case .login:
@@ -164,6 +165,8 @@ extension APIService: TargetType {
             return Constant.api.path.deleteAccount
         case .verifyReceipt:
             return Constant.api.path.verifyReceipt
+        case .sendVerifyEmail:
+            return Constant.api.path.sendVerifyEmail
         }
     }
     
@@ -172,7 +175,7 @@ extension APIService: TargetType {
         switch self {
         case .getCountryList, .getAppSettings, .getRequestCertificate, .ipInfoOptional, .getListSession, .getTopicQuestionList, .getMultihopList, .fetchPaymentHistory, .getStatsByServerId, .getServerStats:
             return .get
-        case .register, .login, .loginSocial, .logout, .forgotPassword, .refreshToken, .verifyReceipt:
+        case .register, .login, .loginSocial, .logout, .forgotPassword, .refreshToken, .verifyReceipt, .sendVerifyEmail:
             return .post
         case .changePassword:
             return .put
@@ -343,6 +346,12 @@ extension APIService: TargetType {
                 bodyParameters: body,
                 bodyEncoding: JSONEncoding.prettyPrinted,
                 urlParameters: [:])
+        case .sendVerifyEmail:
+            var body: [String: Any] = [:]
+            if getInfoDevice() != "" {
+                body["deviceInfo"] = getInfoDevice()
+            }
+            return .requestCompositeParameters(bodyParameters: body, bodyEncoding: JSONEncoding.prettyPrinted, urlParameters: [:])
         default:
             return .requestParameters(parameters: [:], encoding: URLEncoding.queryString)
         }
@@ -362,7 +371,7 @@ extension APIService: TargetType {
             ]
         case .login, .register:
             return ["Content-type": "application/json"]
-        case .getCountryList, .changePassword, .getListSession, .getTopicQuestionList, .getMultihopList, .disconnectSession, .deleteAccount:
+        case .getCountryList, .changePassword, .getListSession, .getTopicQuestionList, .getMultihopList, .disconnectSession, .deleteAccount, .sendVerifyEmail:
             return [
                 "Content-type": "application/json",
                 "Authorization": "Bearer \(AppSetting.shared.accessToken)"
