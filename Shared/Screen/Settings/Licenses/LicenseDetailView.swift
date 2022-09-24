@@ -9,12 +9,11 @@ import Foundation
 import SwiftUI
 
 struct LicenseDetailView: View {
-    @Environment(\.safeAreaInsets) private var safeAreaInsets
-    
     @StateObject var viewModel: LicenseDetailViewModel
     var body: some View {
         VStack {
-            Spacer().frame(height: 70)
+            CustomSimpleNavigationView(title: viewModel.license.title ?? "")
+                .padding(.bottom, -10)
             ScrollView(.vertical, showsIndicators: false) {
                 ZStack(alignment: .top) {
                     VStack(spacing: 1) {
@@ -24,16 +23,11 @@ struct LicenseDetailView: View {
                             Spacer().frame(width: 20)
                         }
                         Spacer().frame(height: 40)
-                    }
+                    }.frame(height: Constant.Board.Map.heightScreen - 80)
                 }
             }
-            .frame(height: UIScreen.main.bounds.height - 60)
-            .clipped()
         }
-        .padding(.bottom, safeAreaInsets.bottom)
-        .background(AppColor.background)
-        .navigationBarTitle(viewModel.license.title ?? "")
-        .navigationBarTitleDisplayMode(.inline)
+        .navigationBarHidden(true)
         .ignoresSafeArea()
         .onAppear(perform: {
             viewModel.loadLicenseDetail()

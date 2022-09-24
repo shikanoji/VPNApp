@@ -175,7 +175,7 @@ extension AppSetting {
         guard let lastTimeSend = lastTimeSendVerifyEmail else {
             return true
         }
-        return (Int(Date().timeIntervalSince1970) - lastTimeSend) > 30*60 ? true : false
+        return (Int(Date().timeIntervalSince1970) - lastTimeSend) > 60 ? true : false
     }
 
     var isRefreshTokenValid: Bool {

@@ -63,8 +63,10 @@ class AccountViewModel: ObservableObject {
     }
 
     func resendVerifyEmail() {
+        self.showProgressView = true
         ServiceManager.shared.sendVerifiedEmail().subscribe {
             result in
+            self.showProgressView = false
             if result.success {
                 self.showSuccessfullyResendEmail = true
                 AppSetting.shared.lastTimeSendVerifyEmail = Int(Date().timeIntervalSince1970)
@@ -73,6 +75,7 @@ class AccountViewModel: ObservableObject {
                 self.showAlert = true
             }
         } onFailure: { error in
+            self.showProgressView = false
             self.showAlert = true
         }.disposed(by: self.disposedBag)
     }
