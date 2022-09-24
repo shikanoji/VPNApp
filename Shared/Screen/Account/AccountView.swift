@@ -11,22 +11,14 @@ import TunnelKitCore
 struct AccountView: View {
     @EnvironmentObject var authentication: Authentication
     @Binding var showAccount: Bool
-    
     @Binding var statusConnect: VPNStatus
-    
     @State private var showInfomation = false
-    
     @State private var showTotalDevice = false
-    
     @State private var showAccountStatus = false
-    
     @State private var showFAQ = false
-    
     @State var numberOfSession: Int
-    
     @StateObject var viewModel: AccountViewModel
-    
-    
+
     var header: some View {
         HStack(spacing: 25) {
             Image(Constant.Account.iconProfile)
@@ -35,8 +27,27 @@ struct AccountView: View {
             VStack(alignment: .leading, spacing: 8) {
                 Text(verbatim: AppSetting.shared.email)
                     .font(Constant.Account.fontEmail)
-                Text(L10n.Account.tapControl)
-                    .font(Constant.Account.fontSubEmail)
+                HStack {
+                    if AppSetting.shared.emailVerified {
+                        Asset.Assets.accountVerified.swiftUIImage
+                        Text("Verified")
+                            .font(.system(size: 12, weight: .semibold))
+                            .foregroundColor(.green)
+                    } else {
+                        Asset.Assets.accountNotVerified.swiftUIImage
+                        Text("Unverified")
+                            .font(.system(size: 12, weight: .semibold))
+                            .foregroundColor(Asset.Colors.pink.swiftUIColor)
+                    }
+                    Spacer().frame(width: 10)
+                    Text("-")
+                        .font(.system(size: 12, weight: .regular))
+                        .foregroundColor(Asset.Colors.lightBlackText.swiftUIColor)
+                    Spacer().frame(width: 10)
+                    Text(L10n.Account.viewProfile)
+                        .font(.system(size: 12, weight: .regular))
+                        .foregroundColor(Asset.Colors.lightBlackText.swiftUIColor)
+                }
             }
             .foregroundColor(Color.white)
             Spacer()
@@ -52,6 +63,9 @@ struct AccountView: View {
         GeometryReader { geometry in
             ScrollView(showsIndicators: false) {
                 VStack(spacing: 0) {
+                    if !AppSetting.shared.emailVerified {
+                        verifyEmailSection
+                    }
                     sectionsView
                     Spacer()
                     AppButton(style: .darkButton, width: UIScreen.main.bounds.size.width - 30, text: L10n.Account.signout) {
@@ -73,6 +87,44 @@ struct AccountView: View {
             maxHeight: .infinity,
             alignment: .bottom
         )
+    }
+
+    var verifyEmailSection: some View {
+        VStack {
+            Spacer().frame(height: 20)
+            HStack {
+                Spacer().frame(width: 20)
+                VStack(spacing: 20) {
+                    HStack {
+                        Spacer().frame(width: 5)
+                        Text("Verify your email")
+                            .font(.system(size: 14, weight: .semibold))
+                            .foregroundColor(Asset.Colors.pink.swiftUIColor)
+                        Spacer()
+                    }
+                    Text("We’re send an email to your account to verify your email address and active account. The link in the email will expire in 24 hours.")
+                        .font(.system(size: 14))
+                        .foregroundColor(Asset.Colors.lightBlackText.swiftUIColor)
+                    HStack {
+                        Spacer().frame(width: 5)
+                        Text("Resend email")
+                            .font(.system(size: 14))
+                            .foregroundColor(.white)
+                            .underline()
+                            .onTapGesture {
+                                viewModel.resendVerifyEmail()
+                            }
+                            .opacity(viewModel.shouldShowResendEmailButton ? 1 : 0)
+                        Spacer()
+                    }
+                }
+                .padding(20)
+                .background(Color.black)
+                .cornerRadius(15)
+                Spacer().frame(width: 20)
+            }
+            Spacer().frame(height: 20)
+        }
     }
     
     var sectionsView: some View {
@@ -163,18 +215,43 @@ struct AccountView: View {
                 LoadingView()
             }
         }
+        .ignoresSafeArea()
         .onChange(of: AppSetting.shared.currentNumberDevice, perform: { numberOfDevices in
             self.numberOfSession = numberOfDevices
         })
-        .sheet(isPresented: $viewModel.showLogoutConfirmation) {
-            BottomViewPopup(cancel: {
-                viewModel.showLogoutConfirmation = false
-            }, confim: {
-                viewModel.showLogoutConfirmation = false
-                viewModel.showProgressView = true
-                viewModel.logout()
+        .popup(isPresented: $viewModel.showSuccessfullyResendEmail,
+               type: .floater(verticalPadding: 25, useSafeAreaInset: true),
+               position: .bottom,
+               animation: .easeInOut,
+               autohideIn: 50,
+               closeOnTap: false,
+               closeOnTapOutside: true) {
+            PopupSelectView(message: "Successfully resend verify email.",
+                            confirmAction: {
+                viewModel.showSuccessfullyResendEmail = false
             })
         }
+               .popup(isPresented: $viewModel.showAlert,
+                      type: .floater(verticalPadding: 25, useSafeAreaInset: true),
+                      position: .bottom,
+                      animation: .easeInOut,
+                      autohideIn: 50,
+                      closeOnTap: false,
+                      closeOnTapOutside: true) {
+                   PopupSelectView(message: "An error occurred.",
+                                   confirmAction: {
+                       viewModel.showAlert = false
+                   })
+               }
+                      .sheet(isPresented: $viewModel.showLogoutConfirmation) {
+                          BottomViewPopup(cancel: {
+                              viewModel.showLogoutConfirmation = false
+                          }, confim: {
+                              viewModel.showLogoutConfirmation = false
+                              viewModel.showProgressView = true
+                              viewModel.logout()
+                          })
+                      }
     }
 }
 

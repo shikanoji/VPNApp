@@ -14,6 +14,7 @@ enum AppKeys: String {
     case email = "email"
     case isPremium = "isPremium"
     case premiumExpires = "premiumExpires"
+    case emailVerified = "emailVerified"
     case name = "name"
     case accessToken = "accessToken"
     case refreshToken = "refreshToken"
@@ -27,6 +28,7 @@ enum AppKeys: String {
     case showedIntroduction = "showedIntroduction"
     case isRefreshingToken = "isRefreshingToken"
     case refreshTokenError = "refreshTokenError"
+    case lastTimeSendVerifyEmail = "lastTimeSendVerifyEmail"
     ///Board Keys
     case dateMember = "dateMember"
     case idVPN = "idVPN"

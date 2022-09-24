@@ -46,7 +46,8 @@ struct User: Decodable {
          premiumExpire: Int? = nil,
          isPremium: Bool = false,
          name: String? = nil,
-         has_password: Bool = true) {
+         has_password: Bool = true,
+         email_verified: Bool = false) {
         self.id = id
         self.created_at = created_at
         self.updated_at = updated_at
@@ -56,6 +57,7 @@ struct User: Decodable {
         self.is_premium = isPremium
         self.name = name
         self.has_password = has_password
+        self.email_verified = email_verified
     }
 
     enum CodingKeys: String, CodingKey {
@@ -68,6 +70,7 @@ struct User: Decodable {
         case is_premium = "is_premium"
         case name = "name"
         case has_password = "has_password"
+        case email_verified = "email_verified"
     }
 
     init(from decoder: Decoder) throws {
@@ -95,6 +98,9 @@ struct User: Decodable {
         if values.contains(.has_password) {
             has_password = try values.decode(Bool.self, forKey: .has_password)
         }
+        if values.contains(.email_verified) {
+            email_verified = try values.decode(Bool.self, forKey: .email_verified)
+        }
     }
     
     var id: Int64 = 0
@@ -106,4 +112,5 @@ struct User: Decodable {
     var is_premium: Bool = false
     var premium_expire: Int? = nil
     var has_password: Bool = true
+    var email_verified: Bool = false
 }

@@ -133,4 +133,15 @@ extension ServiceManager {
                 throw APIError.someError
             }
     }
+
+    func sendVerifiedEmail() -> Single<APIResponse<EmptyResult>> {
+        return request(.sendVerifyEmail)
+            .map { response in
+                let result = try JSONDecoder().decode(APIResponse<EmptyResult>.self, from: response.data)
+                return result
+            }
+            .catch { error in
+                throw APIError.someError
+            }
+    }
 }
