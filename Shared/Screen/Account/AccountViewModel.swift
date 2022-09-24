@@ -31,19 +31,20 @@ class AccountViewModel: ObservableObject {
                     if response.success {
                         self.callLogoutAPI()
                     } else {
-                        self.showProgressView = false
-                        self.alertMessage = L10n.Global.somethingWrong
-                        self.showAlert = true
+                        self.disconnetAndLogout()
                     }
                 } onFailure: { error in
-                    self.showProgressView = false
-                    self.alertMessage = L10n.Global.somethingWrong
-                    self.showAlert = true
+                    self.disconnetAndLogout()
                 }
                 .disposed(by: self.disposedBag)
         } else {
             callLogoutAPI()
         }
+    }
+    
+    func disconnetAndLogout() {
+        NetworkManager.shared.disconnect()
+        callLogoutAPI()
     }
 
     func callLogoutAPI() {

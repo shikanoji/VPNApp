@@ -40,6 +40,8 @@ struct ContentView: View {
                 AppSetting.shared.refreshTokenError = false
                 authentication.logout()
                 authentication.showedIntroduction = true
+                viewModel.getIpInfoSuccess = true
+                enableAnimation = false
             }
             .frame(width: UIScreen.main.bounds.width)
             .ignoresSafeArea()

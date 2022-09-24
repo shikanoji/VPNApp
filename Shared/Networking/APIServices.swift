@@ -48,7 +48,7 @@ enum APIError: Error {
         case .badResponse(statusCode: let statusCode):
             return "bad response with status code \(statusCode)"
         case .someError:
-            return "some error"
+            return "An error occurred"
         case .tokenExpired:
             return "token error"
         case .permissionError:

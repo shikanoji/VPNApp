@@ -6,7 +6,7 @@
 //
 
 import Foundation
-
+import SwiftUI
 import Moya
 import RxMoya
 import RxSwift
@@ -35,7 +35,6 @@ class BaseServiceManager<API: TargetType> {
                 }
             }
             .handleResponse()
-//            .filterSuccessfulStatusCodes()
             .retry(AppSetting.shared.refreshTokenError ? 0 : 2)
     }
     

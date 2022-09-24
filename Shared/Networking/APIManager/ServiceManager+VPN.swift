@@ -94,11 +94,9 @@ extension ServiceManager {
             .map { response in
                 let result = try JSONDecoder().decode(APIResponse<[MultihopModel]>.self, from: response.data)
                 
-                print("getMutihopList request response")
                 return result
             }
             .catch { error in
-                print("getMutihopList request faild")
                 throw APIError.someError
             }
     }
