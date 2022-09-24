@@ -558,7 +558,7 @@ class BoardViewModel: ObservableObject {
         ServiceManager.shared.getServerStats()
             .subscribe { response in
                 if let result = response.result?.rows {
-                    let updateStaticNodesMesh = self.mesh?.staticNodes.map { staticNode in
+                    let updateStaticNodesMesh = self.mesh?.staticNodes.map { staticNode -> StaticServer in
                         var updateNode = staticNode
                         
                         if let statsNode = result.filter({
@@ -681,6 +681,9 @@ class BoardViewModel: ObservableObject {
             }
             if isEnableReconect,
                !connectOrDisconnectByUser {
+                AppSetting.shared.selectTimeConnectedWhenTerminate = nil
+                AppSetting.shared.selectCount = 0
+                AppSetting.shared.countTimeBackGround = 0
                 startConnectVPN()
             } else {
                 configDisconected()

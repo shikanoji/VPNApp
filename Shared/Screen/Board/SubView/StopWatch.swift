@@ -15,7 +15,7 @@ class StopWatch: ObservableObject {
     private var counter: Int = AppSetting.shared.selectCount
     private var timeConnectedTerminate = AppSetting.shared.selectTimeConnectedWhenTerminate
 
-    private var countTimerBG: Int = 0
+    private var countTimerBG: Int = AppSetting.shared.countTimeBackGround
     private var appDidEnterBackgroundDate: Date?
     private var updateTimerBG = false
     
@@ -110,16 +110,21 @@ class StopWatch: ObservableObject {
     }
     
     func getTime() -> Int {
-        guard let timeTerminate = timeConnectedTerminate else {
+        let timeTerminate: Date
+        if AppSetting.shared.isConnectedToVpn {
+            timeTerminate = timeConnectedTerminate ?? Date()
+        }
+        else {
             return 0
         }
         print("get time terminate: \(timeTerminate)")
         let diffirentTime = Date().seconds(from: timeTerminate)
         print("diffirentTime \(diffirentTime)")
-        let timeConnected = diffirentTime + self.counter
+        let timeConnected = diffirentTime + self.counter + self.countTimerBG
         AppSetting.shared.selectTimeConnectedWhenTerminate = nil
         AppSetting.shared.selectCount = 0
-        self.counter = 0
+        AppSetting.shared.countTimeBackGround = 0
+        self.countTimerBG = 0
         return timeConnected
     }
     

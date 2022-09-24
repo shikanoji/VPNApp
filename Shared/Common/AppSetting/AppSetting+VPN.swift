@@ -230,14 +230,23 @@ extension AppSetting {
     
     var isConnectedToVpn: Bool {
         if let settings = CFNetworkCopySystemProxySettings()?.takeRetainedValue() as? Dictionary<String, Any>,
-            let scopes = settings["__SCOPED__"] as? [String:Any] {
+           let scopes = settings["__SCOPED__"] as? [String:Any] {
             for (key, _) in scopes {
-             if key.contains("tap") || key.contains("tun") || key.contains("ppp") || key.contains("ipsec") {
+                if key.contains("tap") || key.contains("tun") || key.contains("ppp") || key.contains("ipsec") {
                     return true
                 }
             }
         }
         return false
+    }
+    
+    var countTimeBackGround: Int {
+        get {
+            UserDefaults.standard.integer(forKey: AppKeys.countTimeBackGround.rawValue)
+        }
+        set {
+            UserDefaults.standard.setValue(newValue, forKey: AppKeys.countTimeBackGround.rawValue)
+        }
     }
 
     /// api get ip info in app
