@@ -21,7 +21,7 @@ struct Constant {
         }
         
         struct SubBoard {
-            static let radius: CGFloat = 8
+            static let radius: CGFloat = 40
             static let height: CGFloat = 60
             static let fontSize: CGFloat = 12
             static let fontColor: Color = .white
@@ -30,8 +30,8 @@ struct Constant {
         }
         
         struct IconFrame {
-            static let leftIconWidth: CGFloat = 30
-            static let rightIconWidth: CGFloat = 30
+            static let leftIconWidth: CGFloat = 40
+            static let rightIconWidth: CGFloat = 40
         }
         
         struct Navigation {
@@ -53,7 +53,7 @@ struct Constant {
         }
         
         struct Tabs {
-            static let heightSize: CGFloat = 40
+            static let heightSize: CGFloat = 36
             static let topPadding: CGFloat = 50
         }
         
@@ -177,5 +177,6 @@ struct Constant {
         static let changeProtocolSetting = Notification.Name("changeProtocolSetting")
         static let sessionExpired = Notification.Name("sessionExpired")
         static let disconnectedVPN = Notification.Name("disconnectedVPN")
+        static let showMap = Notification.Name("showMap")
     }
 }

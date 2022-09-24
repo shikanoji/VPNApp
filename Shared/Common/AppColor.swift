@@ -36,7 +36,7 @@ extension Color {
 }
 
 struct AppColor {
-    static let disconectStateView = Color(hex: "#B92727")
+    static let disconectStateView = Asset.Colors.lightBlack.swiftUIColor
     static let connectedStateView = Color(hex: "#216E5A")
     static let planSelectSave = Color(hex: "#FFE766")
     

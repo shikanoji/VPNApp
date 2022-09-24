@@ -29,9 +29,11 @@ struct SessionVPNView: View {
                             presentationMode.wrappedValue.dismiss()
                             shouldHideSessionList = true
                         }, tapRightButton: {
-                            showTotalDevice = false
+                            UINavigationBar.setAnimationsEnabled(false)
                             showAccount = false
-                            shouldHideSessionList = true
+                            DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+                                UINavigationBar.setAnimationsEnabled(true)
+                            }
                         }, statusConnect: $statusConnect)
                     .padding(.bottom, Constant.Menu.topPaddingCell)
                     Spacer().frame(height: 15)
@@ -53,25 +55,33 @@ struct SessionVPNView: View {
         .navigationBarHidden(true)
         .background(AppColor.background)
         .ignoresSafeArea()
-        .popup(isPresented: $viewModel.showAlert, type: .floater(verticalPadding: 10), position: .bottom, animation: .easeInOut, autohideIn: 10, closeOnTap: false, closeOnTapOutside: true) {
-            PopupSelectView(message: viewModel.error?.description ?? "Error",
+        .popup(isPresented: $viewModel.showAlert,
+               type: .floater(verticalPadding: -10,
+                              useSafeAreaInset: true),
+               position: .bottom,
+               animation: .easeInOut,
+               autohideIn: 10,
+               closeOnTap: false,
+               closeOnTapOutside: true) {
+            PopupSelectView(message: viewModel.error?.description ?? "An error occurred",
                             confirmAction: {
                 viewModel.showAlert = false
             })
         }
-        .popup(isPresented: $viewModel.showSessionTerminatedAlert, type: .floater(verticalPadding: 10), position: .bottom, animation: .easeInOut, autohideIn: 10, closeOnTap: false, closeOnTapOutside: true) {
+        .popup(isPresented: $viewModel.showSessionTerminatedAlert,
+               type: .floater(verticalPadding: -10,
+                              useSafeAreaInset: true),
+               position: .bottom,
+               animation: .easeInOut,
+               autohideIn: 10,
+               closeOnTap: false,
+               closeOnTapOutside: true) {
             PopupSelectView(message: "Successfully terminate session!",
                             confirmAction: {
                 viewModel.showSessionTerminatedAlert = false
             })
         }
-        .popup(isPresented: $viewModel.showPopupView,
-               type: .floater(verticalPadding: 10),
-               position: .bottom,
-               animation: .easeInOut,
-               autohideIn: nil,
-               closeOnTap: true,
-               closeOnTapOutside: true) {
+        .sheet(isPresented: $viewModel.showPopupView) {
             BottomViewPopup(
                 titleStr: L10n.Account.Session.Terminal.title,
                 messageStr: L10n.Account.Session.Terminal.message,

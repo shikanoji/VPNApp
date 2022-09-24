@@ -14,6 +14,7 @@ enum AppKeys: String {
     case email = "email"
     case isPremium = "isPremium"
     case premiumExpires = "premiumExpires"
+    case emailVerified = "emailVerified"
     case name = "name"
     case accessToken = "accessToken"
     case refreshToken = "refreshToken"
@@ -27,6 +28,7 @@ enum AppKeys: String {
     case showedIntroduction = "showedIntroduction"
     case isRefreshingToken = "isRefreshingToken"
     case refreshTokenError = "refreshTokenError"
+    case lastTimeSendVerifyEmail = "lastTimeSendVerifyEmail"
     ///Board Keys
     case dateMember = "dateMember"
     case idVPN = "idVPN"
@@ -57,6 +59,7 @@ enum AppKeys: String {
     case updateDataMap = "updateDataMap"
     
     case selectConfig = "selectConfig"
+    case recommendConfig = "recommendConfig"
     //DNS
     case dnsSetting = "dnsSetting"
     case primaryDNSValue = "primaryDNSValue"
@@ -65,7 +68,10 @@ enum AppKeys: String {
     case wasJailBreak = "wasJailBreak"
     case currentSessionId = "currentSessionId"
     case selectCyberSec = "selectCyberSec"
-    case loadDataMap = "loadDataMap"
+    //Save time
+    case selectTimeConnectedWhenTerminate = "selectTimeConnectedWhenTerminate"
+    case selectCount = "selectCount"
+    case countTimeBackGround = "countTimeBackGround"
 }
 
 class AppSetting {

@@ -33,6 +33,7 @@ struct StaticIPListView: View {
                         ForEach(nodeListSearch) { node in
                             Button(action: {
                                 selectStaticServer = node
+                                NotificationCenter.default.post(name: Constant.NameNotification.showMap, object: nil)
                             }) {
                                 NodeCellStaticView(node: node)
                             }
@@ -41,6 +42,7 @@ struct StaticIPListView: View {
                         ForEach(staticIPData) { node in
                             Button(action: {
                                 selectStaticServer = node
+                                NotificationCenter.default.post(name: Constant.NameNotification.showMap, object: nil)
                             }) {
                                 NodeCellStaticView(node: node)
                             }

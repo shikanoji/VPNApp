@@ -63,8 +63,11 @@ struct InfomationView: View {
                         tapLeftButton: {
                             presentationMode.wrappedValue.dismiss()
                         }, tapRightButton: {
-                            showInfomation = false
+                            UINavigationBar.setAnimationsEnabled(false)
                             showAccount = false
+                            DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+                                UINavigationBar.setAnimationsEnabled(true)
+                            }
                         }, statusConnect: $statusConnect)
                     itemList
                     Spacer()

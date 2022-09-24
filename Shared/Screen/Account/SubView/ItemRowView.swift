@@ -41,6 +41,7 @@ struct ItemRowView: View {
                     Spacer().frame(width: 10)
                 }
             }
+            .contentShape(Rectangle())
             .frame(maxWidth: .infinity)
             .background(Color.clear)
         }

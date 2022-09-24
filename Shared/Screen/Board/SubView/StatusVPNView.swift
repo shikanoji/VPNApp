@@ -17,14 +17,14 @@ struct StatusVPNView: View {
     var body: some View {
         ZStack(alignment: .leading) {
             RoundedRectangle(cornerRadius: Constant.Board.SubBoard.radius)
-                .foregroundColor(status == .connected ? AppColor.connectedStateView : AppColor.disconectStateView)
+                .foregroundColor((status == .connected ? AppColor.connectedStateView : AppColor.disconectStateView).opacity(0.7))
             HStack(spacing: 15) {
                 if flag != "" && status == .connected {
                     ImageView(withURL: flag, size: 32, placeholder: UIImage(named: Constant.Board.Image.locationDefault))
                         .overlay(RoundedRectangle(cornerRadius: 16)
                             .stroke(Color.white, lineWidth: 2))
                 } else {
-                    ImageView(withURL: "", size: 32, placeholder: UIImage(named: Constant.Board.Image.locationDefault))
+                    Asset.Assets.iconLocationDefaultBoard.swiftUIImage
                 }
                 getStatusTextView()
             }

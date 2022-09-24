@@ -39,13 +39,13 @@ public enum L10n {
     public static let signout = L10n.tr("Account", "signout", fallback: #"Sign Out"#)
     /// Help & Support
     public static let support = L10n.tr("Account", "Support", fallback: #"Help & Support"#)
+    /// Account
+    public static let titleAccount = L10n.tr("Account", "titleAccount", fallback: #"Account"#)
     /// Settings.strings
     ///   SysVPN
     /// 
     ///   Created by Da Phan Van on 14/01/2022.
-    public static let tapControl = L10n.tr("Account", "tapControl", fallback: #"Tap to control profile"#)
-    /// Account
-    public static let titleAccount = L10n.tr("Account", "titleAccount", fallback: #"Account"#)
+    public static let viewProfile = L10n.tr("Account", "viewProfile", fallback: #"View Profile"#)
     public enum AccountStatus {
       /// Extend Subscription
       public static let extend = L10n.tr("Account", "AccountStatus.extend", fallback: #"Extend Subscription"#)

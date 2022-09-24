@@ -41,10 +41,9 @@ class Authentication: ObservableObject {
         AppSetting.shared.name = user.name
         AppSetting.shared.accountCreatedTime = user.created_at
         AppSetting.shared.hasPassword = user.has_password
+        AppSetting.shared.emailVerified = user.email_verified
         isValidated = AppSetting.shared.isRefreshTokenValid
         isPremium = AppSetting.shared.isPremium
-        
-        AppSetting.shared.loadDataMap = true
     }
     
     func upgradeToPremium(user: User) {
@@ -68,10 +67,11 @@ class Authentication: ObservableObject {
         AppSetting.shared.premiumExpires = nil
         AppSetting.shared.accountCreatedTime = nil
         AppSetting.shared.hasPassword = false
+        AppSetting.shared.emailVerified = false
 
         isValidated = AppSetting.shared.isRefreshTokenValid
         isPremium = AppSetting.shared.isPremium
-        AppSetting.shared.loadDataMap = false
+        AppSetting.shared.lastChange = 0
         AppSetting.shared.currentSessionId = ""
     }
 }

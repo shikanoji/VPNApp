@@ -27,8 +27,11 @@ struct ProtocolSettingView: View {
                     tapLeftButton: {
                         presentationMode.wrappedValue.dismiss()
                     }, tapRightButton: {
-                        showVPNSetting = false
+                        UINavigationBar.setAnimationsEnabled(false)
                         showSettings = false
+                        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+                            UINavigationBar.setAnimationsEnabled(true)
+                        }
                     }, statusConnect: $statusConnect)
                 VStack(alignment: .leading, spacing: 1) {
                     ForEach(viewModel.section.items) { item in

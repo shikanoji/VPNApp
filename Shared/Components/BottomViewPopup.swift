@@ -51,27 +51,11 @@ struct BottomViewPopup: View {
     }
     
     var body: some View {
-        ZStack {
-            Background{}
-                .opacity(0.9)
-                .onTapGesture {
-                    cancel?()
-                }
-            VStack {
-                Spacer().frame(height: 60)
-                HStack {
-                    Button {
-                        if cancel != nil {
-                            cancel?()
-                        }
-                    } label: {
-                        Asset.Assets.close.swiftUIImage
-                    }
-                    Spacer()
-                }
-                Spacer()
-                content
-            }
+        VStack {
+            Color.clear
+                .frame(height: .infinity)
+            content
+            Spacer()
         }
         .background(PopupBackgroundView())
         .ignoresSafeArea()

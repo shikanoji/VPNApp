@@ -12,6 +12,8 @@ class AccountViewModel: ObservableObject {
     @Published var showAlert = false
     @Published var showProgressView = false
     @Published var showLogoutConfirmation = false
+    @Published var showSuccessfullyResendEmail = false
+    @Published var shouldShowResendEmailButton = AppSetting.shared.shouldAllowSendVerifyEmail
     var disposedBag = DisposeBag()
     var alertTitle: String = ""
     var alertMessage: String = ""
@@ -31,19 +33,20 @@ class AccountViewModel: ObservableObject {
                     if response.success {
                         self.callLogoutAPI()
                     } else {
-                        self.showProgressView = false
-                        self.alertMessage = L10n.Global.somethingWrong
-                        self.showAlert = true
+                        self.disconnetAndLogout()
                     }
                 } onFailure: { error in
-                    self.showProgressView = false
-                    self.alertMessage = L10n.Global.somethingWrong
-                    self.showAlert = true
+                    self.disconnetAndLogout()
                 }
                 .disposed(by: self.disposedBag)
         } else {
             callLogoutAPI()
         }
+    }
+    
+    func disconnetAndLogout() {
+        NetworkManager.shared.disconnect()
+        callLogoutAPI()
     }
 
     func callLogoutAPI() {
@@ -57,5 +60,20 @@ class AccountViewModel: ObservableObject {
                 self.authentication?.logout()
             }.disposed(by: self.disposedBag)
         })
+    }
+
+    func resendVerifyEmail() {
+        ServiceManager.shared.sendVerifiedEmail().subscribe {
+            result in
+            if result.success {
+                self.showSuccessfullyResendEmail = true
+                AppSetting.shared.lastTimeSendVerifyEmail = Int(Date().timeIntervalSince1970)
+                self.shouldShowResendEmailButton = false
+            } else {
+                self.showAlert = true
+            }
+        } onFailure: { error in
+            self.showAlert = true
+        }.disposed(by: self.disposedBag)
     }
 }

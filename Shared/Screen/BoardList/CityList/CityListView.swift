@@ -41,6 +41,7 @@ struct CityListView: View {
                     ForEach(node.cityNodeList) { city in
                         Button {
                             nodeSelect = city
+                            NotificationCenter.default.post(name: Constant.NameNotification.showMap, object: nil)
                             if showAutoConnectDestinationView {
                                 showAutoConnectDestinationView = false
                             } else {

@@ -232,6 +232,7 @@
 		EEAD5C512779C2D3008181E3 /* SpeedConnectedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEAD5C502779C2D3008181E3 /* SpeedConnectedView.swift */; };
 		EEAD5C53277AC968008181E3 /* MapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEAD5C52277AC968008181E3 /* MapView.swift */; };
 		EEAD5C5B277D9654008181E3 /* NodeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEAD5C5A277D9654008181E3 /* NodeView.swift */; };
+		EEB2C4F228DD6D0F00B024E4 /* StatusResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEB2C4F128DD6D0F00B024E4 /* StatusResult.swift */; };
 		EEC5E48928C6F1F300286EBD /* BaseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEC5E48828C6F1F300286EBD /* BaseView.swift */; };
 		EEC5E48B28C7076600286EBD /* BottomViewPopup.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEC5E48A28C7076600286EBD /* BottomViewPopup.swift */; };
 		EED4F59F285448BC0098DF47 /* InfomationViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EED4F59E285448BC0098DF47 /* InfomationViewModel.swift */; };
@@ -487,6 +488,7 @@
 		EEAD5C502779C2D3008181E3 /* SpeedConnectedView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpeedConnectedView.swift; sourceTree = "<group>"; };
 		EEAD5C52277AC968008181E3 /* MapView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapView.swift; sourceTree = "<group>"; };
 		EEAD5C5A277D9654008181E3 /* NodeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NodeView.swift; sourceTree = "<group>"; };
+		EEB2C4F128DD6D0F00B024E4 /* StatusResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatusResult.swift; sourceTree = "<group>"; };
 		EEC5E48828C6F1F300286EBD /* BaseView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseView.swift; sourceTree = "<group>"; };
 		EEC5E48A28C7076600286EBD /* BottomViewPopup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BottomViewPopup.swift; sourceTree = "<group>"; };
 		EED4F59E285448BC0098DF47 /* InfomationViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfomationViewModel.swift; sourceTree = "<group>"; };
@@ -986,6 +988,7 @@
 				D79C225027BE31CE00B54613 /* RegisterResult.swift */,
 				EE514CBC27CC71DC00F82AD7 /* IpInfoResult.swift */,
 				ACB6DDD82818F23E007DA359 /* EmptyResult.swift */,
+				EEB2C4F128DD6D0F00B024E4 /* StatusResult.swift */,
 			);
 			path = Auth;
 			sourceTree = "<group>";
@@ -1634,6 +1637,7 @@
 				AC17E253288935D100C72E20 /* LicenseDetailViewModel.swift in Sources */,
 				D7874DFA277AFEE200ADC7AD /* ForgotPasswordViewModel.swift in Sources */,
 				D78F47282761D1840064A764 /* LoginView.swift in Sources */,
+				EEB2C4F228DD6D0F00B024E4 /* StatusResult.swift in Sources */,
 				D7F9695827B262190037A3D0 /* SessionVPNViewModel.swift in Sources */,
 				AC489252286405F6003F2795 /* PurchaseService.swift in Sources */,
 				EE85EDB627B21711000F967A /* CityCellView.swift in Sources */,
@@ -2139,7 +2143,7 @@
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
-				MARKETING_VERSION = "${APP_VERSION}";
+				MARKETING_VERSION = 1.0.0.14;
 				PRODUCT_BUNDLE_IDENTIFIER = com.sysvpn.client.ios.dev.wireguard;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = iphoneos;
@@ -2168,7 +2172,7 @@
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
-				MARKETING_VERSION = "${APP_VERSION}";
+				MARKETING_VERSION = 1.0.0.14;
 				PRODUCT_BUNDLE_IDENTIFIER = com.sysvpn.client.ios.wireguard;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = iphoneos;

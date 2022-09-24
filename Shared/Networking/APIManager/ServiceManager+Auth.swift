@@ -68,7 +68,6 @@ extension ServiceManager {
     
     func refreshToken()-> Single<APIResponse<RegisterResultModel>> {
         return request(.refreshToken)
-            .filterSuccessfulStatusAndRedirectCodes()
             .map { response in
                 AppSetting.shared.isRefreshingToken = false
                 let refreshTokenResult = try JSONDecoder().decode(APIResponse<RegisterResultModel>.self, from: response.data)
@@ -85,6 +84,7 @@ extension ServiceManager {
                 return refreshTokenResult
             }
             .catch { error in
+                NotificationCenter.default.post(name: Constant.NameNotification.sessionExpired, object: nil)
                 AppSetting.shared.isRefreshingToken = false
                 throw APIError.someError
             }
@@ -125,6 +125,17 @@ extension ServiceManager {
     
     func deleteAccount() -> Single<APIResponse<EmptyResult>> {
         return request(.deleteAccount)
+            .map { response in
+                let result = try JSONDecoder().decode(APIResponse<EmptyResult>.self, from: response.data)
+                return result
+            }
+            .catch { error in
+                throw APIError.someError
+            }
+    }
+
+    func sendVerifiedEmail() -> Single<APIResponse<EmptyResult>> {
+        return request(.sendVerifyEmail)
             .map { response in
                 let result = try JSONDecoder().decode(APIResponse<EmptyResult>.self, from: response.data)
                 return result

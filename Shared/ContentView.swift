@@ -23,13 +23,25 @@ struct ContentView: View {
         UINavigationBar.appearance().scrollEdgeAppearance = appearance
     }
     
+    private let transitionRight = AnyTransition.move(edge: .trailing)
+    
+    @State var enableAnimation = false
+    
     var body: some View {
-        if viewModel.showSessionExpired {
+        if !Connectivity.sharedInstance.isReachable {
+            ForceLogoutView(titleStr: "No internet", messageStr: "Please check your network connection", confirmStr: "Confirm") {
+                exit(0)
+            }
+            .frame(width: UIScreen.main.bounds.width)
+            .ignoresSafeArea()
+        } else if viewModel.showSessionExpired {
             ForceLogoutView {
                 viewModel.showSessionExpired = false
                 AppSetting.shared.refreshTokenError = false
                 authentication.logout()
                 authentication.showedIntroduction = true
+                viewModel.getIpInfoSuccess = true
+                enableAnimation = false
             }
             .frame(width: UIScreen.main.bounds.width)
             .ignoresSafeArea()
@@ -40,32 +52,45 @@ struct ContentView: View {
                     AnimationLogo()
                 } else {
                     NavigationView {
-                        if authentication.showNoticeAlert {
-                            if let appVersion = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String, AppSetting.shared.forceUpdateVersion.contains(appVersion) {
-                                ForceUpdateView()
-                            } else {
-                                if authentication.isValidated {
-                                    if authentication.isPremium {
-                                        BoardView(viewModel: BoardViewModel())
-                                    } else {
-                                        SubscriptionIntroduction()
-                                    }
+                        ZStack {
+                            AppColor.background
+                            if authentication.showNoticeAlert {
+                                if let appVersion = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String, AppSetting.shared.forceUpdateVersion.contains(appVersion) {
+                                    ForceUpdateView()
                                 } else {
-                                    if authentication.showedIntroduction {
-                                        if authentication.needToShowRegisterScreenBeforeLogin {
-                                            RegisterView(viewModel: RegisterViewModel())
+                                    if authentication.isValidated {
+                                        if authentication.isPremium {
+                                            BoardView(viewModel: BoardViewModel())
                                         } else {
-                                            LoginView(viewModel: LoginViewModel())
+                                            SubscriptionIntroduction()
                                         }
                                     } else {
-                                        IntroductionView()
+                                        if authentication.showedIntroduction {
+                                            if authentication.needToShowRegisterScreenBeforeLogin {
+                                                RegisterView(viewModel: RegisterViewModel())
+                                                    .transition(transitionRight)
+                                            } else {
+                                                LoginView(viewModel: LoginViewModel())
+                                                    .transition(transitionRight)
+                                            }
+                                        } else {
+                                            IntroductionView()
+                                        }
                                     }
                                 }
+                            } else {
+                                NoticeView()
                             }
-                        } else {
-                            NoticeView()
+                        }
+                        .ignoresSafeArea()
+                        .animation(enableAnimation ? .default : nil)
+                        .onAppear {
+                            DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+                                self.enableAnimation = true
+                            }
                         }
                     }
+                    .ignoresSafeArea()
                     .navigationViewStyle(StackNavigationViewStyle())
                     .navigationBarTitleDisplayMode(.inline)
                     .navigationAppearance(backgroundColor: UIColor(AppColor.background), foregroundColor: UIColor.white, tintColor: UIColor.white, hideSeparator: true)

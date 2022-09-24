@@ -31,9 +31,12 @@ struct AutoConnectView: View {
                         presentationMode.wrappedValue.dismiss()
                         shouldHideAutoConnect = true
                     }, tapRightButton: {
-                        showVPNSetting = false
-                        showSettings = false
+                        UINavigationBar.setAnimationsEnabled(false)
                         shouldHideAutoConnect = true
+                        showSettings = false
+                        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+                            UINavigationBar.setAnimationsEnabled(true)
+                        }
                     }, statusConnect: $statusConnect)
                 VStack(alignment: .leading, spacing: 1) {
                     ForEach(viewModel.sectionList, id: \.id) { section in

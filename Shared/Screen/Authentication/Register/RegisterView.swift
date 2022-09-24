@@ -9,39 +9,44 @@ import SwiftUI
 import PopupView
 
 struct RegisterView: View {
-    @StateObject var viewModel: RegisterViewModel
-    @State var toPlanSelection: Bool = false
     @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
     @EnvironmentObject var authentication: Authentication
+    @StateObject var viewModel: RegisterViewModel
+    @State var toPlanSelection: Bool = false
     @State var shouldPushLoginView: Bool = false
+
     var normalRegisterButton: some View {
         AppButton(style: .themeButton, width: Constant.Global.widthFormAndButton, text: L10n.Register.signup) {
             viewModel.signup()
         }
     }
-    
+
+    private let textFieldSpacing: CGFloat = 20
+    private let buttonSpacing: CGFloat = 30
+    private let minTopSpacing: CGFloat = 100
+
     var header: some View {
         Group{
             Spacer().frame(height: 50)
             Text(L10n.Register.title).setTitle()
-            Spacer().frame(height: 20)
+            Spacer().frame(height: textFieldSpacing)
             Text(L10n.Register.body).setDefault()
             Spacer().frame(height: 40)
         }
     }
     
-    var forms: some View {
+    var textInputs: some View {
         Group{
             Form(placeholder: L10n.Register.emailPlaceholder, value: $viewModel.email, width: Constant.Global.widthFormAndButton)
-            Spacer().frame(height: 20)
+            Spacer().frame(height: textFieldSpacing)
             Form(placeholder: L10n.Register.passwordPlaceholder, value: $viewModel.password, isPassword: true, width: Constant.Global.widthFormAndButton)
-            Spacer().frame(height: 20)
+            Spacer().frame(height: textFieldSpacing)
             Form(placeholder: L10n.Register.retypePassword, value: $viewModel.retypePassword, isPassword: true, width: Constant.Global.widthFormAndButton)
-            Spacer().frame(height: 20)
+            Spacer().frame(height: textFieldSpacing)
             if viewModel.showProgressView {
                 ProgressView().progressViewStyle(CircularProgressViewStyle(tint: Color.white))
             }
-            Spacer().frame(height: 20)
+            Spacer().frame(height: textFieldSpacing)
         }
     }
     
@@ -52,7 +57,7 @@ struct RegisterView: View {
                            isActive: $toPlanSelection) {
             }
             normalRegisterButton
-            Spacer().frame(height: 30)
+            Spacer().frame(height: buttonSpacing)
             AppButton(style: .darkButton, width: Constant.Global.widthFormAndButton, text: L10n.Register.signupWithGoogle, icon: Asset.Assets.google.swiftUIImage) {
                 viewModel.signupGoogle()
             }
@@ -60,7 +65,7 @@ struct RegisterView: View {
             AppButton(style: .darkButton, width: Constant.Global.widthFormAndButton, text: L10n.Register.signupWithApple, icon: Asset.Assets.apple.swiftUIImage) {
                 viewModel.signupApple()
             }
-            Spacer().frame(height: 30)
+            Spacer().frame(height: buttonSpacing)
         }
     }
     
@@ -87,13 +92,13 @@ struct RegisterView: View {
             Background() {
                 ScrollView(.vertical, showsIndicators: false) {
                     VStack(alignment: .center) {
-                        Spacer().frame(minHeight: 100)
+                        Spacer().frame(minHeight: minTopSpacing)
                         Asset.Assets.logoMedium.swiftUIImage
                         header
-                        forms
+                        textInputs
                         registerButtons
                         backToLoginLink
-                        Spacer().frame(minHeight: 100)
+                        Spacer().frame(minHeight: minTopSpacing)
                     }
                     .frame(minHeight: UIScreen.main.bounds.height)
                     .autocapitalization(.none)

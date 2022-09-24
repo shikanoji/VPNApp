@@ -9,7 +9,7 @@ import SwiftUI
 
 struct NetworkWaveView: View {
     
-    @State var lineNumber = 0
+    @State var lineNumber = AppSetting.shared.lineNetwork
     
     var body: some View {
         HStack(alignment: .bottom, spacing: 2.64) {
@@ -30,6 +30,9 @@ struct NetworkWaveView: View {
                 .frame(width: 3.96, height: 12)
         }
         .frame(width: 30.48, height: 12)
+        .onAppear {
+            lineNumber = AppSetting.shared.lineNetwork
+        }
     }
 }
 

@@ -19,6 +19,33 @@ struct ConnectButton: View {
     
     @State var hiddenDelay = 1.0
     
+    var widthSizeFrame = UIScreen.main.bounds.width
+    var heightSizeFrame = UIScreen.main.bounds.height
+    
+    func calculatebuttonsizeWidth(widthSizeFrame: CGFloat) -> CGFloat {
+        if widthSizeFrame < 375 {
+            return 350
+        }
+        else if widthSizeFrame > 768 {
+            return 600
+        }
+        else {
+            return UIScreen.main.bounds.width
+        }
+    }
+    
+    func calculatebuttonsizeHeight(heightSizeFrame: CGFloat) -> CGFloat {
+        if heightSizeFrame < 667 {
+            return 350
+        }
+        else if heightSizeFrame > 1024 {
+            return 600
+        }
+        else {
+            return UIScreen.main.bounds.height
+        }
+    }
+    
     var body: some View {
         HStack(alignment: .bottom, spacing: 0) {
             if(viewModel.stateUI != .connected) {
@@ -49,21 +76,21 @@ struct ConnectButton: View {
                 ZStack {
                     Circle()
                         .strokeBorder(viewModel.stateUI == .disconnected ? Color.white : AppColor.themeColor, lineWidth: Constant.Board.QuickButton.widthBorderMax)
-                        .frame(width: Constant.Board.QuickButton.widthSize + 20,
-                               height: Constant.Board.QuickButton.widthSize + 20)
+                        .frame(width: calculatebuttonsizeWidth(widthSizeFrame: widthSizeFrame)/4.5 + 20,
+                               height: calculatebuttonsizeHeight(heightSizeFrame: heightSizeFrame)/4.5 + 20)
                         .background(Circle().foregroundColor(viewModel.stateUI == .disconnected ? AppColor.themeColor : Color.white))
                     Circle()
                         .strokeBorder(Color.black, lineWidth: Constant.Board.QuickButton.widthBorderMax)
-                        .frame(width: Constant.Board.QuickButton.widthSize + 11,
-                               height: Constant.Board.QuickButton.widthSize + 11)
+                        .frame(width: calculatebuttonsizeWidth(widthSizeFrame: widthSizeFrame)/4.5 + 11,
+                               height: calculatebuttonsizeHeight(heightSizeFrame: heightSizeFrame)/4.5 + 11)
                     getContentButton()
                 }
-                .frame(width: Constant.Board.QuickButton.widthSize,
-                       height: Constant.Board.QuickButton.widthSize)
+                .frame(width: calculatebuttonsizeWidth(widthSizeFrame: widthSizeFrame)/4.5,
+                       height: calculatebuttonsizeWidth(widthSizeFrame: widthSizeFrame)/4.5)
             }
             .frame(width:  Constant.Board.QuickButton.widthSize)
             SpeedConnectedView(uploadSpeed: viewModel.uploadSpeed, downLoadSpeed: viewModel.downloadSpeed)
-                .opacity(viewModel.stateUI == .connected ? ([.wireGuard, .recommended].contains(NetworkManager.shared.selectConfig) ? 0 : 1) : 0)
+                .opacity(viewModel.stateUI == .connected ? ([.openVPNTCP, .openVPNUDP].contains(NetworkManager.shared.getValueConfigProtocol) ? 1 : 0) : 0)
                 .frame(width: widthSpeed, height: Constant.Board.QuickButton.widthSize)
         }
     }
@@ -78,7 +105,7 @@ struct ConnectButton: View {
             return AnyView(Text(L10n.Board.quickUnConnect)
                             .foregroundColor(Color.black)
                             .multilineTextAlignment(.center)
-                            .font(.system(size: 14, weight: .bold))
+                            .font(.system(size: calculatebuttonsizeWidth(widthSizeFrame: widthSizeFrame) * 0.038, weight: .bold))
                             .padding())
         case .connecting, .disconnecting:
             return AnyView(getDocAnimation()
@@ -87,7 +114,7 @@ struct ConnectButton: View {
             return AnyView(
                 Text("STOP").foregroundColor(Color.black)
                     .multilineTextAlignment(.center)
-                    .font(.system(size: 16, weight: .bold))
+                    .font(.system(size: calculatebuttonsizeWidth(widthSizeFrame: widthSizeFrame) * 0.038, weight: .bold))
                     .padding()
             )
         }

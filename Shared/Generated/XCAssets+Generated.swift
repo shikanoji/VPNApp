@@ -26,6 +26,8 @@ internal typealias AssetImageTypeAlias = ImageAsset.Image
 internal enum Asset {
   internal enum Assets {
     internal static let accentColor = ColorAsset(name: "AccentColor")
+    internal static let accountNotVerified = ImageAsset(name: "account_not_verified")
+    internal static let accountVerified = ImageAsset(name: "account_verified")
     internal static let iconAccountItemAccount = ImageAsset(name: "icon_account_item_account")
     internal static let iconAccountItemDevice = ImageAsset(name: "icon_account_item_device")
     internal static let iconAccountItemHelpCenter = ImageAsset(name: "icon_account_item_helpCenter")

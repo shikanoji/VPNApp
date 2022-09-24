@@ -20,72 +20,60 @@ struct SettingsView: View {
     @Binding var showAutoConnect: Bool
     @Binding var showProtocolConnect: Bool
     @Binding var showDNSSetting: Bool
-    
-    var sections: [DataSection] = [
-        DataSection(type: .vpnSetting),
-        DataSection(type: .otherSetting)
-    ]
-    
+        
     var body: some View {
-        ZStack {
-            VStack {
-                AppColor.darkButton
-                    .frame(height: 20)
-                CustomNavigationView(
-                    tapLeftButton: {
-                        showSettings = false
-                    }, tapRightButton: {
-                        showSettings = false
-                    }, statusConnect: $statusConnect)
-                ScrollView(showsIndicators: false) {
-                    VStack {
-                        sectionsView
-                            .animation(nil)
-                            .padding([.top, .leading])
-                        Spacer().frame(height: 34)
-                        navigationLinks
-                    }
-                }
-                .frame(maxHeight: .infinity)
-                .background(AppColor.background)
-                .ignoresSafeArea()
-            }
-            .background(AppColor.background)
-        }
-    }
-    
-    var sectionsView: some View {
-        ForEach(sections, id: \.id) { section in
-            VStack(alignment: .leading) {
-                Text(section.type.title)
-                    .font(Constant.Menu.fontSectionTitle)
-                    .foregroundColor(AppColor.lightBlackText)
+        VStack {
+            AppColor.darkButton
+                .frame(height: 20)
+            CustomNavigationView(
+                tapLeftButton: {
+                    showSettings = false
+                }, tapRightButton: {
+                    showSettings = false
+                }, statusConnect: $statusConnect)
+            ScrollView(showsIndicators: false) {
                 VStack {
-                    ForEach(section.type.items) { item in
-                        Button {
-                            switch item.type {
-                            case .vpnConnection:
-                                self.showVPNSetting = true
-                            case .tools:
-                                self.showToolsSetting = true
-                            case .licenses:
-                                self.showLicenseList = true
-                            case .termAndConditions:
-                                self.showTermsAndCondition = true
-                            case .privacyPolicy:
-                                self.showPrivacyPolicies = true
-                            default:
-                                return
-                            }
-                        } label: {
-                            ItemRowView(item: item)
-                        }
-                    }
+                    sectionsView
+                        .padding([.top, .leading])
+                    Spacer().frame(height: 34)
+                    navigationLinks
                 }
             }
+            .frame(maxHeight: .infinity)
+            .background(AppColor.background)
+            .ignoresSafeArea()
+        }
+        .background(AppColor.background)
+    }
+    var sectionsView: some View {
+        VStack(alignment: .leading) {
+            Spacer().frame(height: 10)
+            Text(L10n.Settings.sectionVPN)
+                .font(Constant.Menu.fontSectionTitle)
+                .foregroundColor(AppColor.lightBlackText)
+            ItemRowView(item: ItemCell(type: .vpnConnection)).onTapGesture {
+                self.showVPNSetting = true
+            }
+            ItemRowView(item: ItemCell(type: .tools)).onTapGesture {
+                self.showToolsSetting = true
+            }
+            Spacer().frame(height: 25)
+            Text(L10n.Settings.sectionOther)
+                .font(Constant.Menu.fontSectionTitle)
+                .foregroundColor(AppColor.lightBlackText)
+            ItemRowView(item: ItemCell(type: .privacyPolicy)).onTapGesture {
+                self.showPrivacyPolicies = true
+            }
+            ItemRowView(item: ItemCell(type: .termAndConditions)).onTapGesture {
+                self.showTermsAndCondition = true
+            }
+            ItemRowView(item: ItemCell(type: .licenses)).onTapGesture {
+                self.showLicenseList = true
+            }
+            ItemRowView(item: ItemCell(type: .currentVersion))
         }
     }
-    
+
     var navigationLinks: some View {
         Group {
             NavigationLink(destination:

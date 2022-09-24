@@ -8,6 +8,31 @@
 import Foundation
 import CoreGraphics
 
+struct ServerStats: Codable {
+    var rows: [StaticServer]
+    var count: Int
+    
+    enum CodingKeys: String, CodingKey {
+        case rows
+        case count
+    }
+    
+    init(from decoder: Decoder) throws {
+        let values = try decoder.container(keyedBy: CodingKeys.self)
+        if let _value = try? values.decode([StaticServer].self, forKey: .rows){
+            self.rows = _value
+        } else {
+            self.rows = []
+        }
+        
+        if let _value = try? values.decode(Int.self, forKey: .count){
+            self.count = _value
+        } else {
+            self.count = 0
+        }
+    }
+}
+
 struct StaticServer: Identifiable, Codable {
     var id: Int { serverId }
     var serverId: Int
@@ -23,6 +48,7 @@ struct StaticServer: Identifiable, Codable {
     var iso2: String
     var iso3: String
     var serverNumber: Int
+    var score: Int
     
     enum CodingKeys: String, CodingKey {
         case serverId
@@ -38,10 +64,16 @@ struct StaticServer: Identifiable, Codable {
         case serverNumber
         case iso2
         case iso3
+        case score
     }
     
     init(from decoder: Decoder) throws {
         let values = try decoder.container(keyedBy: CodingKeys.self)
+        if let _value = try? values.decode(Int.self, forKey: .score){
+            self.score = _value
+        } else {
+            self.score = 0
+        }
         if let _value = try? values.decode(String.self, forKey: .iso2){
             self.iso2 = _value
         } else {
@@ -121,7 +153,8 @@ struct StaticServer: Identifiable, Codable {
          currentLoad: CGFloat = 0,
          serverNumber: Int = 0,
          iso2: String = "",
-         iso3: String = "") {
+         iso3: String = "",
+         score: Int = 0) {
         self.serverId = serverId
         self.countryName = countryName
         self.cityName = cityName
@@ -134,10 +167,19 @@ struct StaticServer: Identifiable, Codable {
         self.serverNumber = serverNumber
         self.iso2 = iso2
         self.iso3 = iso3
+        self.score = score
     }
     
     func getTitleContentCell() -> String {
-        return countryName + " #\(serverNumber)"
+        var number = ""
+        if serverNumber < 10 {
+            number = "#00\(serverNumber)"
+        } else if serverNumber >= 10 && serverNumber < 100 {
+            number = "#0\(serverNumber)"
+        } else {
+            number = "#\(serverNumber)"
+        }
+        return countryName + " " + number
     }
     
     func getSubContentCell() -> String {
