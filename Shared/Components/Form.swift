@@ -41,7 +41,8 @@ struct Form: View {
         .background(Color.clear)
         .overlay(isFocused ? RoundedRectangle(cornerRadius: 5).stroke(Color.white.opacity(0.8), lineWidth: 3) : RoundedRectangle(cornerRadius: 5).stroke(Color.white.opacity(0.2), lineWidth: 3))
         .cornerRadius(5)
-        .animation(shouldAnimate ? Animation.interpolatingSpring(stiffness: 50, damping: 15) : nil)
+        .animation(shouldAnimate ? .spring(response: 0.4,
+                                           dampingFraction: 1, blendDuration: 0) : nil)
     }
 }
 
