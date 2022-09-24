@@ -210,6 +210,7 @@ struct AccountView: View {
             .background(AppColor.background)
             .onAppear() {
                 viewModel.authentication = authentication
+                viewModel.shouldShowResendEmailButton = AppSetting.shared.shouldAllowSendVerifyEmail
                 AppSetting.shared.fetchListSession()
             }
             .ignoresSafeArea()

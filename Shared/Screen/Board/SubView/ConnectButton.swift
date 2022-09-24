@@ -105,7 +105,7 @@ struct ConnectButton: View {
             return AnyView(Text(L10n.Board.quickUnConnect)
                             .foregroundColor(Color.black)
                             .multilineTextAlignment(.center)
-                            .font(.system(size: calculatebuttonsizeWidth(widthSizeFrame: widthSizeFrame) * 0.038, weight: .bold))
+                            .font(.system(size: calculatebuttonsizeWidth(widthSizeFrame: widthSizeFrame) * 0.038, weight: .semibold))
                             .padding())
         case .connecting, .disconnecting:
             return AnyView(getDocAnimation()
@@ -114,7 +114,7 @@ struct ConnectButton: View {
             return AnyView(
                 Text("STOP").foregroundColor(Color.black)
                     .multilineTextAlignment(.center)
-                    .font(.system(size: calculatebuttonsizeWidth(widthSizeFrame: widthSizeFrame) * 0.038, weight: .bold))
+                    .font(.system(size: calculatebuttonsizeWidth(widthSizeFrame: widthSizeFrame) * 0.038, weight: .semibold))
                     .padding()
             )
         }

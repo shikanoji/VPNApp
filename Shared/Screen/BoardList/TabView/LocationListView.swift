@@ -58,7 +58,10 @@ struct LocationListView: View {
                                     cityNode = node
                                     showCityListView = true
                                 } else {
-                                    nodeSelect = node
+                                    AppSetting.shared.temporaryDisableAutoConnect = false
+                                    if ItemCell(type: AppSetting.shared.getAutoConnectProtocol()).type == .off {
+                                        nodeSelect = node
+                                    }
                                     NotificationCenter.default.post(name: Constant.NameNotification.showMap, object: nil)
                                 }
                             }) {
@@ -77,7 +80,11 @@ struct LocationListView: View {
                                         cityNode = node
                                         showCityListView = true
                                     } else {
-                                        nodeSelect = node
+                                        AppSetting.shared.temporaryDisableAutoConnect = false
+                                        if ItemCell(type: AppSetting.shared.getAutoConnectProtocol()).type == .off {
+                                            nodeSelect = node
+                                        }
+                                        NotificationCenter.default.post(name: Constant.NameNotification.showMap, object: nil)
                                     }
                                 }) {
                                     NodeCellView(node: node)
