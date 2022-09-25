@@ -48,6 +48,7 @@ enum AppKeys: String {
     case currentTab = "currentTab"
     case currentTabConnected = "currentTabConnected"
     case nodeSelect = "nodeSelect"
+    case nodeConnecting = "nodeConnecting"
     case staticSelect = "staticSelect"
     case multiSelect = "multiSelect"
     case recommendedCountries = "recommendedCountries"

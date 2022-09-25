@@ -209,6 +209,20 @@ extension AppSetting {
         }
     }
     
+    func saveNodeConnecting(_ data: Node) {
+        if let encodedData = try? JSONEncoder().encode(data) {
+            UserDefaults.standard.set(encodedData, forKey: AppKeys.nodeConnecting.rawValue)
+        }
+    }
+    
+    func getNodeConnecting() -> Node? {
+        if let data = UserDefaults.standard.data(forKey: AppKeys.nodeConnecting.rawValue),
+           let node = try? JSONDecoder().decode(Node.self, from: data) {
+            return node
+        }
+        return nil
+    }
+    
     func getNodeSelect() -> Node? {
         if let data = UserDefaults.standard.data(forKey: AppKeys.nodeSelect.rawValue),
            let staticSelect = try? JSONDecoder().decode(Node.self, from: data) {
