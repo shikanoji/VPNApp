@@ -210,24 +210,15 @@ extension AppSetting {
         }
     }
     
-    var selectTimeConnectedWhenTerminate: Date? {
+    var saveTimeConnectedVPN: Date? {
         get {
-            UserDefaults.standard.object(forKey: AppKeys.selectTimeConnectedWhenTerminate.rawValue) as? Date
+            UserDefaults.standard.object(forKey: AppKeys.saveTimeConnectedVPN.rawValue) as? Date
         }
         set {
-            UserDefaults.standard.setValue(newValue, forKey: AppKeys.selectTimeConnectedWhenTerminate.rawValue)
+            UserDefaults.standard.setValue(newValue, forKey: AppKeys.saveTimeConnectedVPN.rawValue)
         }
     }
-    
-    var selectCount: Int {
-        get {
-            UserDefaults.standard.integer(forKey: AppKeys.selectCount.rawValue)
-        }
-        set {
-            UserDefaults.standard.setValue(newValue, forKey: AppKeys.selectCount.rawValue)
-        }
-    }
-    
+        
     var isConnectedToVpn: Bool {
         if let settings = CFNetworkCopySystemProxySettings()?.takeRetainedValue() as? Dictionary<String, Any>,
            let scopes = settings["__SCOPED__"] as? [String:Any] {
@@ -238,15 +229,6 @@ extension AppSetting {
             }
         }
         return false
-    }
-    
-    var countTimeBackGround: Int {
-        get {
-            UserDefaults.standard.integer(forKey: AppKeys.countTimeBackGround.rawValue)
-        }
-        set {
-            UserDefaults.standard.setValue(newValue, forKey: AppKeys.countTimeBackGround.rawValue)
-        }
     }
 
     /// api get ip info in app

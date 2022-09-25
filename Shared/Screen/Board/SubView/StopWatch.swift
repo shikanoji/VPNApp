@@ -12,39 +12,9 @@ import SwiftUI
 class StopWatch: ObservableObject {
     private var sourceTimer: DispatchSourceTimer?
     private let queue = DispatchQueue(label: "stopwatch.timer")
-    private var counter: Int = AppSetting.shared.selectCount
-    private var timeConnectedTerminate = AppSetting.shared.selectTimeConnectedWhenTerminate
-
-    private var countTimerBG: Int = AppSetting.shared.countTimeBackGround
-    private var appDidEnterBackgroundDate: Date?
-    private var updateTimerBG = false
+    private var counter: Int = 0
     
-    init() {
-        setup()
-    }
-    
-    func setup() {
-        NotificationCenter.default.addObserver(self, selector: #selector(applicationDidEnterBackground(_:)), name: UIApplication.didEnterBackgroundNotification, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(applicationWillEnterForeground(_:)), name: UIApplication.willEnterForegroundNotification, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(applicationWillSaveTimeWhenTerminate(_:)), name: UIApplication.willTerminateNotification, object: nil)
-    }
-
-    @objc func applicationDidEnterBackground(_ notification: NotificationCenter) {
-        appDidEnterBackgroundDate = Date()
-    }
-
-    @objc func applicationWillEnterForeground(_ notification: NotificationCenter) {
-        guard let previousDate = appDidEnterBackgroundDate else { return }
-        updateTimerBG = true
-        let calendar = Calendar.current
-        let difference = calendar.dateComponents([.second], from: previousDate, to: Date())
-        let seconds = difference.second!
-        countTimerBG += seconds
-    }
-    
-    @objc func applicationWillSaveTimeWhenTerminate(_ notification: NotificationCenter){
-        AppSetting.shared.selectCount = self.counter
-    }
+    private var saveTimeConnectedVPN: Date? = AppSetting.shared.saveTimeConnectedVPN ?? Date()
     
     var stopWatchTime = "00:00:00" {
         didSet {
@@ -55,18 +25,6 @@ class StopWatch: ObservableObject {
     var paused = true {
         didSet {
             self.update()
-        }
-    }
-    
-    var laps = [LapItem]() {
-        didSet {
-            self.update()
-        }
-    }
-    
-    private var currentLaps = [LapItem]() {
-        didSet {
-            self.laps = currentLaps.reversed()
         }
     }
     
@@ -86,19 +44,9 @@ class StopWatch: ObservableObject {
         self.sourceTimer?.suspend()
     }
     
-    func lap() {
-        if let firstLap = self.laps.first {
-            let difference = self.counter - firstLap.count
-            self.currentLaps.append(LapItem(count: self.counter, diff: difference))
-        } else {
-            self.currentLaps.append(LapItem(count: self.counter))
-        }
-    }
-    
     func reset() {
         self.stopWatchTime = "00:00:00"
         self.counter = 0
-        self.currentLaps = [LapItem]()
     }
     
     func update() {
@@ -109,30 +57,9 @@ class StopWatch: ObservableObject {
         return self.paused
     }
     
-    func getTime() -> Int {
-        let timeTerminate: Date
-        if AppSetting.shared.isConnectedToVpn {
-            timeTerminate = timeConnectedTerminate ?? Date()
-        }
-        else {
-            return 0
-        }
-        print("get time terminate: \(timeTerminate)")
-        let diffirentTime = Date().seconds(from: timeTerminate)
-        print("diffirentTime \(diffirentTime)")
-        let timeConnected = diffirentTime + self.counter + self.countTimerBG
-        AppSetting.shared.selectTimeConnectedWhenTerminate = nil
-        AppSetting.shared.selectCount = 0
-        AppSetting.shared.countTimeBackGround = 0
-        self.countTimerBG = 0
-        return timeConnected
-    }
-    
     private func startTimer() {
-        self.counter = getTime()
         self.sourceTimer = DispatchSource.makeTimerSource(flags: DispatchSource.TimerFlags.strict,
                                                           queue: self.queue)
-        
         self.resumeTimer()
     }
     
@@ -146,39 +73,19 @@ class StopWatch: ObservableObject {
         self.sourceTimer?.resume()
     }
     
-    private func updateTimerWithBG() {
-        if updateTimerBG {
-            self.counter += countTimerBG
-            countTimerBG = 0
-            updateTimerBG = false
-            appDidEnterBackgroundDate = nil
+    private func getTime() -> Int {
+        if AppSetting.shared.isConnectedToVpn {
+            let time = Date().seconds(from: saveTimeConnectedVPN ?? Date())
+            return Int(time)
         }
+        return 0
     }
     
     private func updateTimer() {
-//        updateTimerWithBG()
-        self.counter += 1
-        
+        self.counter = getTime()
+
         DispatchQueue.main.async {
             self.stopWatchTime = StopWatch.convertCountToTimeString(counter: self.counter)
-        }
-    }
-}
-
-extension StopWatch {
-    struct LapItem {
-        let uuid = UUID()
-        let count: Int
-        let stringTime: String
-        
-        init(count: Int, diff: Int = -1) {
-            self.count = count
-            
-            if diff < 0 {
-                self.stringTime = StopWatch.convertCountToTimeString(counter: count)
-            } else {
-                self.stringTime = StopWatch.convertCountToTimeString(counter: diff)
-            }
         }
     }
 }
