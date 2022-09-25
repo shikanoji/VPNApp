@@ -183,12 +183,12 @@ extension AppSetting {
         return nil
     }
     
-    func saveCurrentTabConnected(_ tab: StateTab) {
-        UserDefaults.standard.set(tab.rawValue, forKey: AppKeys.currentTabConnected.rawValue)
+    func saveBoardTabWhenConnecting(_ tab: StateTab) {
+        UserDefaults.standard.set(tab.rawValue, forKey: AppKeys.boardTabWhenConnecting.rawValue)
     }
     
-    func getCurrentTabConnected() -> StateTab {
-        let tabIndex = UserDefaults.standard.integer(forKey: AppKeys.currentTabConnected.rawValue)
+    func getBoardTabWhenConnecting() -> StateTab {
+        let tabIndex = UserDefaults.standard.integer(forKey: AppKeys.boardTabWhenConnecting.rawValue)
         let tab = StateTab(rawValue: tabIndex) ?? .location
         return tab
     }
@@ -207,6 +207,20 @@ extension AppSetting {
         if let encodedData = try? JSONEncoder().encode(node) {
             UserDefaults.standard.set(encodedData, forKey: AppKeys.nodeSelect.rawValue)
         }
+    }
+    
+    func saveNodeConnecting(_ data: Node) {
+        if let encodedData = try? JSONEncoder().encode(data) {
+            UserDefaults.standard.set(encodedData, forKey: AppKeys.nodeConnecting.rawValue)
+        }
+    }
+    
+    func getNodeConnecting() -> Node? {
+        if let data = UserDefaults.standard.data(forKey: AppKeys.nodeConnecting.rawValue),
+           let node = try? JSONDecoder().decode(Node.self, from: data) {
+            return node
+        }
+        return nil
     }
     
     func getNodeSelect() -> Node? {

@@ -183,7 +183,7 @@ struct BoardView: View {
     func boardListView() -> some View {
         BoardListView(showBoardList: $showBoardList,
                       currentTab: $viewModel.tab,
-                      node: $viewModel.nodeConnected,
+                      nodeSelect: $viewModel.nodeSelectFromBoardList,
                       locationData: $viewModel.locationData,
                       staticIPData: $viewModel.staticIPData,
                       staticNode: $viewModel.staticIPNodeSelecte,

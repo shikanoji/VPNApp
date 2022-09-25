@@ -256,7 +256,7 @@ extension APIService: TargetType {
             param["dev"] = "tun"
             param["cybersec"] = AppSetting.shared.selectCyberSec ? 1 : 0
             
-            switch AppSetting.shared.getCurrentTabConnected() {
+            switch AppSetting.shared.getBoardTabWhenConnecting() {
             case .location:
                 param["isHop"] = 0
                 
