@@ -12,7 +12,7 @@ import TunnelKitCore
 struct BoardListView: View {
     @Binding var showBoardList: Bool
     @Binding var currentTab: StateTab
-    @Binding var node: Node?
+    @Binding var nodeSelect: Node?
     
     @Binding var locationData: [NodeGroup]
     
@@ -43,7 +43,7 @@ struct BoardListView: View {
                     .frame(height: 8)
                 switch currentTab {
                 case .location:
-                    LocationListView(locationData: $locationData, nodeSelect: $node, showAutoConnectionDestinationView: .constant(false))
+                    LocationListView(locationData: $locationData, nodeSelect: $nodeSelect, showAutoConnectionDestinationView: .constant(false))
                 case .staticIP:
                     StaticIPListView(staticIPData: $staticIPData, selectStaticServer: $staticNode)
                 case .multiHop:

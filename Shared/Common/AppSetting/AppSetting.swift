@@ -46,7 +46,7 @@ enum AppKeys: String {
     case mutilhopList = "mutilhopList"
     case autoConnectNode = "autoConnectNode"
     case currentTab = "currentTab"
-    case currentTabConnected = "currentTabConnected"
+    case boardTabWhenConnecting = "boardTabWhenConnecting"
     case nodeSelect = "nodeSelect"
     case nodeConnecting = "nodeConnecting"
     case staticSelect = "staticSelect"
