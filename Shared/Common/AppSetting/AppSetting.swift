@@ -69,9 +69,7 @@ enum AppKeys: String {
     case currentSessionId = "currentSessionId"
     case selectCyberSec = "selectCyberSec"
     //Save time
-    case selectTimeConnectedWhenTerminate = "selectTimeConnectedWhenTerminate"
-    case selectCount = "selectCount"
-    case countTimeBackGround = "countTimeBackGround"
+    case saveTimeConnectedVPN = "saveTimeConnectedVPN"
 }
 
 class AppSetting {

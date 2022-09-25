@@ -24,9 +24,10 @@ struct InfomationView: View {
                   backgroundColor: AppColor.darkButton, textColor: AppColor.redradient,
                   textSize: 14, text: L10n.Account.deleteAccount) {
             deleteAccount = true
-        }.fullScreenCover(isPresented: $deleteAccount) {
-            DeleteAccountConfirmationView(viewModel: DeleteAccountConfirmationViewModel())
         }
+                  .sheet(isPresented: $deleteAccount) {
+                      DeleteAccountConfirmationView(viewModel: DeleteAccountConfirmationViewModel())
+                  }
     }
 
     var itemList: some View {
@@ -45,7 +46,7 @@ struct InfomationView: View {
         }
         .padding(Constant.Menu.hozitalPaddingCell)
         .padding(.top, Constant.Menu.topPaddingCell)
-        .fullScreenCover(isPresented: $showChangePassword) {
+        .sheet(isPresented: $showChangePassword) {
             ChangePasswordView(viewModel: ChangePasswordViewModel(), showChangePassword: $showChangePassword)
                 .clearModalBackground()
         }

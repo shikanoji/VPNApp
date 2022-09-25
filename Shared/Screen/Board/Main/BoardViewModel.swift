@@ -101,7 +101,9 @@ class BoardViewModel: ObservableObject {
                 NetworkManager.shared.selectNode = node
                 self.connectOrDisconnectByUser = true
                 self.ConnectOrDisconnectVPN()
-                self.showMap.toggle()
+                if autoConnectType == .off {
+                    self.showMap.toggle()
+                }
             }
         }
     }
@@ -215,12 +217,6 @@ class BoardViewModel: ObservableObject {
             object: nil
         )
         
-        NotificationCenter.default.addObserver(
-            self,
-            selector: #selector(applicationWillSaveTimeWhenTerminate(_:)),
-            name: UIApplication.willTerminateNotification,
-            object: nil)
-
         Task {
             await OpenVPNManager.shared.vpn.prepare()
         }
@@ -274,14 +270,7 @@ class BoardViewModel: ObservableObject {
         // End BG task to make sure app not be killed
         endBackgroundTask()
     }
-    
-    @objc
-    func applicationWillSaveTimeWhenTerminate(_ notification: NotificationCenter){
-        if(state == .connected){
-            AppSetting.shared.selectTimeConnectedWhenTerminate = Date()
-        }
-    }
-    
+        
     @objc
     func changeProtocolSetting() {
         if state == .connected {
@@ -521,6 +510,8 @@ class BoardViewModel: ObservableObject {
         if connectOrDisconnectByUser {
             AppSetting.shared.currentSessionId = ""
         }
+        
+        AppSetting.shared.saveTimeConnectedVPN = nil
     }
     
     func configDisconnect() {
@@ -605,6 +596,9 @@ class BoardViewModel: ObservableObject {
     }
     
     func configConnected() {
+        if AppSetting.shared.saveTimeConnectedVPN == nil {
+            AppSetting.shared.saveTimeConnectedVPN = Date()
+        }
         numberReconnect = 0
         state = .connected
         stateUI = .connected
@@ -631,7 +625,7 @@ class BoardViewModel: ObservableObject {
         if autoConnectType == .off {
             switch AppSetting.shared.getCurrentTabConnected() {
             case .location:
-                if let nodeSelect = NetworkManager.shared.selectNode {
+                if let nodeSelect = NetworkManager.shared.nodeConnecting {
                     flag = nodeSelect.flag
                     nameSelect = nodeSelect.isCity ? nodeSelect.name : nodeSelect.countryName
                 }
@@ -649,7 +643,7 @@ class BoardViewModel: ObservableObject {
                 }
             }
         } else {
-            if let nodeSelect = NetworkManager.shared.getNodeConnect() {
+            if let nodeSelect = NetworkManager.shared.nodeConnecting {
                 flag = nodeSelect.flag
                 nameSelect = nodeSelect.isCity ? nodeSelect.name : nodeSelect.countryName
             }
@@ -701,9 +695,6 @@ class BoardViewModel: ObservableObject {
             
             if isEnableReconect,
                !connectOrDisconnectByUser {
-                AppSetting.shared.selectTimeConnectedWhenTerminate = nil
-                AppSetting.shared.selectCount = 0
-                AppSetting.shared.countTimeBackGround = 0
                 startConnectVPN()
             } else {
                 configDisconected()

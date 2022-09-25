@@ -53,7 +53,6 @@ struct BottomViewPopup: View {
     var body: some View {
         VStack {
             Color.clear
-                .frame(height: .infinity)
             content
             Spacer()
         }

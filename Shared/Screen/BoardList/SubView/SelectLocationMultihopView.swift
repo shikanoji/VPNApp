@@ -55,7 +55,10 @@ struct SelectLocationMultihopView: View {
                                     cityNode = node
                                     showCityListView = true
                                 } else {
-                                    nodeSelect = node
+                                    AppSetting.shared.temporaryDisableAutoConnect = false
+                                    if ItemCell(type: AppSetting.shared.getAutoConnectProtocol()).type == .off {
+                                        nodeSelect = node
+                                    }
                                     presentationMode.wrappedValue.dismiss()
                                 }
                             }) {

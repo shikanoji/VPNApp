@@ -61,7 +61,10 @@ struct MultiHopView: View {
                     if let nodeEntry = item.entry?.country,
                        let nodeExit = item.exit?.country {
                         Button {
-                            multihopSelect = item
+                            AppSetting.shared.temporaryDisableAutoConnect = false
+                            if ItemCell(type: AppSetting.shared.getAutoConnectProtocol()).type == .off {
+                                multihopSelect = item
+                            }
                             NotificationCenter.default.post(name: Constant.NameNotification.showMap, object: nil)
                         } label: {
                             HStack {

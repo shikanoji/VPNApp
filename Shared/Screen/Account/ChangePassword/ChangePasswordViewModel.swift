@@ -14,6 +14,8 @@ class ChangePasswordViewModel: NSObject, ObservableObject {
     @Published var retypePassword = ""
     @Published var showProgressView: Bool = false
     @Published var showAlert: Bool = false
+    @Published var changePasswordSuccess = false
+    
     var alertTitle: String = ""
     var alertMessage: String = ""
     let disposedBag = DisposeBag()
@@ -31,6 +33,7 @@ class ChangePasswordViewModel: NSObject, ObservableObject {
                 self.showProgressView = false
                 if let _ = response.result {
                     alertMessage = L10n.Account.ChangePassword.success
+                    changePasswordSuccess = true
                     showAlert = true
                 } else {
                     let error = response.errors

@@ -31,10 +31,10 @@ class SessionVPNViewModel: ObservableObject {
         
         ServiceManager.shared.getListSession()
             .subscribe(onSuccess: { [weak self] response in
+                self?.showProgressView = false
                 guard let strongSelf = self else {
                     return
                 }
-                strongSelf.showProgressView = false
                 if let result = response.result {
                     strongSelf.deviceList = result.rows
                     strongSelf.currentNumberDevice = "\(result.rows.count)"
@@ -70,11 +70,10 @@ class SessionVPNViewModel: ObservableObject {
         self.showProgressView = true
         ServiceManager.shared.disconnectSession(sessionId: device.id, terminal: true)
             .subscribe { [weak self] response in
+                self?.showProgressView = false
                 guard let `self` = self else {
                     return
                 }
-
-                self.showProgressView = false
 
                 if response.success {
                     self.getListSession()

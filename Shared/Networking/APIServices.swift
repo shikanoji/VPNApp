@@ -261,7 +261,7 @@ extension APIService: TargetType {
                 param["isHop"] = 0
                 
                 if let cityNodeSelect = NetworkManager.shared.getNodeConnect() {
-                    print("cityNodeSelect \(cityNodeSelect)")
+                    NetworkManager.shared.nodeConnecting = cityNodeSelect
                     if cityNodeSelect.cityNodeList.count > 0 {
                         param["countryId"] = cityNodeSelect.id
                     } else {

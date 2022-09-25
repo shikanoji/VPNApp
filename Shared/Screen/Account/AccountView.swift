@@ -61,13 +61,13 @@ struct AccountView: View {
     
     var content: some View {
         GeometryReader { geometry in
-            ScrollView(showsIndicators: false) {
+            ScrollView(showsIndicators: true) {
                 VStack(spacing: 0) {
                     if !AppSetting.shared.emailVerified {
                         verifyEmailSection
                     }
                     sectionsView
-                    Spacer()
+                    Spacer().frame(minHeight: 50)
                     AppButton(style: .darkButton, width: UIScreen.main.bounds.size.width - 30, text: L10n.Account.signout) {
                         viewModel.showLogoutConfirmation = true
                     }
@@ -102,9 +102,10 @@ struct AccountView: View {
                             .foregroundColor(Asset.Colors.pink.swiftUIColor)
                         Spacer()
                     }
-                    Text("We’re send an email to your account to verify your email address and active account. The link in the email will expire in 24 hours.")
+                    Text("We’ve sent an email to your account to verify your email address and active account. The link in the email will expire in 24 hours.")
                         .font(.system(size: 14))
                         .foregroundColor(Asset.Colors.lightBlackText.swiftUIColor)
+                        .frame(height: 60)
                     HStack {
                         Spacer().frame(width: 5)
                         Text("Resend email")
@@ -119,7 +120,7 @@ struct AccountView: View {
                     }
                 }
                 .padding(20)
-                .background(Color.black)
+                .background(Asset.Colors.lightBlack.swiftUIColor)
                 .cornerRadius(15)
                 Spacer().frame(width: 20)
             }
@@ -193,7 +194,7 @@ struct AccountView: View {
     }
     
     var body: some View {
-        ZStack {
+        LoadingScreen(isShowing: $viewModel.showProgressView) {
             VStack {
                 AppColor.darkButton
                     .frame(height: 24)
@@ -209,49 +210,47 @@ struct AccountView: View {
             .background(AppColor.background)
             .onAppear() {
                 viewModel.authentication = authentication
+                viewModel.shouldShowResendEmailButton = AppSetting.shared.shouldAllowSendVerifyEmail
                 AppSetting.shared.fetchListSession()
             }
-            if viewModel.showProgressView {
-                LoadingView()
-            }
-        }
-        .ignoresSafeArea()
-        .onChange(of: AppSetting.shared.currentNumberDevice, perform: { numberOfDevices in
-            self.numberOfSession = numberOfDevices
-        })
-        .popup(isPresented: $viewModel.showSuccessfullyResendEmail,
-               type: .floater(verticalPadding: 25, useSafeAreaInset: true),
-               position: .bottom,
-               animation: .easeInOut,
-               autohideIn: 50,
-               closeOnTap: false,
-               closeOnTapOutside: true) {
-            PopupSelectView(message: "Successfully resend verify email.",
-                            confirmAction: {
-                viewModel.showSuccessfullyResendEmail = false
+            .ignoresSafeArea()
+            .onChange(of: AppSetting.shared.currentNumberDevice, perform: { numberOfDevices in
+                self.numberOfSession = numberOfDevices
+            })
+            .popup(isPresented: $viewModel.showSuccessfullyResendEmail,
+                   type: .floater(verticalPadding: 25, useSafeAreaInset: true),
+                   position: .bottom,
+                   animation: .easeInOut,
+                   autohideIn: 50,
+                   closeOnTap: false,
+                   closeOnTapOutside: true, view: {
+                PopupSelectView(message: "Successfully resend verify email.",
+                                confirmAction: {
+                    viewModel.showSuccessfullyResendEmail = false
+                })
+            })
+            .popup(isPresented: $viewModel.showAlert,
+                   type: .floater(verticalPadding: 25, useSafeAreaInset: true),
+                   position: .bottom,
+                   animation: .easeInOut,
+                   autohideIn: 50,
+                   closeOnTap: false,
+                   closeOnTapOutside: true, view: {
+                PopupSelectView(message: "An error occurred.",
+                                confirmAction: {
+                    viewModel.showAlert = false
+                })
+            })
+            .sheet(isPresented: $viewModel.showLogoutConfirmation, content: {
+                BottomViewPopup(cancel: {
+                    viewModel.showLogoutConfirmation = false
+                }, confim: {
+                    viewModel.showLogoutConfirmation = false
+                    viewModel.showProgressView = true
+                    viewModel.logout()
+                })
             })
         }
-               .popup(isPresented: $viewModel.showAlert,
-                      type: .floater(verticalPadding: 25, useSafeAreaInset: true),
-                      position: .bottom,
-                      animation: .easeInOut,
-                      autohideIn: 50,
-                      closeOnTap: false,
-                      closeOnTapOutside: true) {
-                   PopupSelectView(message: "An error occurred.",
-                                   confirmAction: {
-                       viewModel.showAlert = false
-                   })
-               }
-                      .sheet(isPresented: $viewModel.showLogoutConfirmation) {
-                          BottomViewPopup(cancel: {
-                              viewModel.showLogoutConfirmation = false
-                          }, confim: {
-                              viewModel.showLogoutConfirmation = false
-                              viewModel.showProgressView = true
-                              viewModel.logout()
-                          })
-                      }
     }
 }
 
