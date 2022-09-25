@@ -101,7 +101,9 @@ class BoardViewModel: ObservableObject {
                 NetworkManager.shared.selectNode = node
                 self.connectOrDisconnectByUser = true
                 self.ConnectOrDisconnectVPN()
-                self.showMap.toggle()
+                if autoConnectType == .off {
+                    self.showMap.toggle()
+                }
             }
         }
     }
@@ -623,7 +625,7 @@ class BoardViewModel: ObservableObject {
         if autoConnectType == .off {
             switch AppSetting.shared.getCurrentTabConnected() {
             case .location:
-                if let nodeSelect = NetworkManager.shared.selectNode {
+                if let nodeSelect = NetworkManager.shared.nodeConnecting {
                     flag = nodeSelect.flag
                     nameSelect = nodeSelect.isCity ? nodeSelect.name : nodeSelect.countryName
                 }
@@ -641,7 +643,7 @@ class BoardViewModel: ObservableObject {
                 }
             }
         } else {
-            if let nodeSelect = NetworkManager.shared.getNodeConnect() {
+            if let nodeSelect = NetworkManager.shared.nodeConnecting {
                 flag = nodeSelect.flag
                 nameSelect = nodeSelect.isCity ? nodeSelect.name : nodeSelect.countryName
             }

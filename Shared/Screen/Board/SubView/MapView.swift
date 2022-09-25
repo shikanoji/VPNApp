@@ -88,7 +88,7 @@ struct MapView: View {
             mesh.removeSelectNode()
             switch AppSetting.shared.getCurrentTabConnected() {
             case .location:
-                if let node = NetworkManager.shared.selectNode {
+                if let node = NetworkManager.shared.getNodeConnect() {
                     moveToNode(x: node.x, y: node.y)
                 }
             case .staticIP:
