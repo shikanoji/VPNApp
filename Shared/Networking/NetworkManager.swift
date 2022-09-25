@@ -67,7 +67,7 @@ class NetworkManager: ObservableObject {
     
     var obtainCertificate: ObtainCertificateModel?
     
-    var selectNode: Node? {
+    var nodeSelected: Node? {
         get {
             AppSetting.shared.getNodeSelect()
         }
@@ -142,6 +142,6 @@ class NetworkManager: ObservableObject {
     }
     
     func getNodeConnect() -> Node? {
-        return ItemCell(type: AppSetting.shared.getAutoConnectProtocol()).type != .off ? AppSetting.shared.getAutoConnectNodeToConnect() : selectNode
+        return ItemCell(type: AppSetting.shared.getAutoConnectProtocol()).type != .off ? AppSetting.shared.getAutoConnectNodeToConnect() : nodeSelected
     }
 }

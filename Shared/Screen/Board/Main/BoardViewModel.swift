@@ -92,13 +92,13 @@ class BoardViewModel: ObservableObject {
     
     @Published var showMap = true
       
-    @Published var nodeConnected: Node? = nil {
+    @Published var nodeSelectFromBoardList: Node? = nil {
         didSet {
-            if let node = nodeConnected {
+            if let node = nodeSelectFromBoardList {
                 mesh?.removeSelectNode()
-                AppSetting.shared.saveCurrentTabConnected(.location)
+                AppSetting.shared.saveBoardTabWhenConnecting(.location)
                 self.isSwitching = state == .connected
-                NetworkManager.shared.selectNode = node
+                NetworkManager.shared.nodeSelected = node
                 self.connectOrDisconnectByUser = true
                 self.ConnectOrDisconnectVPN()
                 if autoConnectType == .off {
@@ -115,7 +115,7 @@ class BoardViewModel: ObservableObject {
         didSet {
             if let staticIP = staticIPNodeSelecte {
                 mesh?.removeSelectNode()
-                AppSetting.shared.saveCurrentTabConnected(.staticIP)
+                AppSetting.shared.saveBoardTabWhenConnecting(.staticIP)
                 self.isSwitching = state == .connected
                 NetworkManager.shared.selectStaticServer = staticIP
                 self.connectOrDisconnectByUser = true
@@ -130,7 +130,7 @@ class BoardViewModel: ObservableObject {
         didSet {
             if let multihop = multihopSelect {
                 mesh?.removeSelectNode()
-                AppSetting.shared.saveCurrentTabConnected(.multiHop)
+                AppSetting.shared.saveBoardTabWhenConnecting(.multiHop)
                 self.isSwitching = state == .connected
                 NetworkManager.shared.selectMultihop = multihop
                 self.connectOrDisconnectByUser = true
@@ -353,10 +353,10 @@ class BoardViewModel: ObservableObject {
     
     func getRecommendNode(_ nodeList: [Node]) {
         if nodeList.count > 0 {
-            if let _ = NetworkManager.shared.selectNode {
+            if let _ = NetworkManager.shared.nodeSelected {
                 
             } else {
-                NetworkManager.shared.selectNode = nodeList.first
+                NetworkManager.shared.nodeSelected = nodeList.first
             }
             
             AppSetting.shared.saveRecommendedCountries(nodeList)
@@ -436,18 +436,18 @@ class BoardViewModel: ObservableObject {
             switch self.autoConnectType {
             case .always:
                 tab = .location
-                AppSetting.shared.saveCurrentTabConnected(.location)
+                AppSetting.shared.saveBoardTabWhenConnecting(.location)
                 ConnectOrDisconnectVPN()
             case .onWifi:
                 if Connectivity.sharedInstance.isReachableOnEthernetOrWiFi {
                     tab = .location
-                    AppSetting.shared.saveCurrentTabConnected(.location)
+                    AppSetting.shared.saveBoardTabWhenConnecting(.location)
                     ConnectOrDisconnectVPN()
                 }
             case .onMobile:
                 if Connectivity.sharedInstance.isReachableOnCellular {
                     tab = .location
-                    AppSetting.shared.saveCurrentTabConnected(.location)
+                    AppSetting.shared.saveBoardTabWhenConnecting(.location)
                     ConnectOrDisconnectVPN()
                 }
             default:
@@ -623,7 +623,7 @@ class BoardViewModel: ObservableObject {
         }
         
         if autoConnectType == .off {
-            switch AppSetting.shared.getCurrentTabConnected() {
+            switch AppSetting.shared.getBoardTabWhenConnecting() {
             case .location:
                 if let nodeSelect = NetworkManager.shared.nodeConnecting {
                     flag = nodeSelect.flag
@@ -816,8 +816,8 @@ class BoardViewModel: ObservableObject {
         }
         
         if let node = mesh?.selectedNode {
-            AppSetting.shared.saveCurrentTabConnected(.location)
-            NetworkManager.shared.selectNode = node
+            AppSetting.shared.saveBoardTabWhenConnecting(.location)
+            NetworkManager.shared.nodeSelected = node
         }
         
         showMap.toggle()

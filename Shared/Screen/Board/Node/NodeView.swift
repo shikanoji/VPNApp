@@ -66,7 +66,7 @@ struct NodeView: View {
     var showConnectedNode: Bool {
         var show = 0
 
-        switch statusConnect == .connected ? AppSetting.shared.getCurrentTabConnected() : AppSetting.shared.getCurrentTab() {
+        switch statusConnect == .connected ? AppSetting.shared.getBoardTabWhenConnecting() : AppSetting.shared.getCurrentTab() {
         case .location:
             if let nodeConnected = NetworkManager.shared.nodeConnecting {
                 show = nodeConnected.id == node.id ? 1 : 0
