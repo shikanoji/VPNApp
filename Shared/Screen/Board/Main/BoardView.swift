@@ -25,37 +25,6 @@ struct BoardView: View {
     
     @State var showPopup = false
     
-    @State private var dragged = CGSize.zero
-    @State private var accumulated = CGSize.zero
-    
-    let heightScreen = Constant.Board.Map.heightScreen
-    
-    func constraintOffSet(_ value: CGFloat) -> CGFloat {
-        var valueConstraint = value
-        valueConstraint = valueConstraint <= 0 ? 0 : valueConstraint
-        valueConstraint = valueConstraint >= heightScreen ? heightScreen : valueConstraint
-        return valueConstraint
-    }
-    
-    func caculatorDirection(_ value: CGFloat) -> CGFloat {
-        var valueConstraint = value
-        let caculatorHeightScreen = heightScreen * 0.4
-        if valueConstraint < caculatorHeightScreen {
-            valueConstraint = 0
-        } else {
-            withAnimation(.linear) {
-                valueConstraint = heightScreen
-            }
-            
-            DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
-                showBoardList = false
-                dragged.height = .zero
-                accumulated.height = .zero
-            }
-        }
-        return valueConstraint
-    }
-    
     let drag = DragGesture(minimumDistance: 0.0)
     
     var body: some View {

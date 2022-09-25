@@ -128,6 +128,8 @@ class NetworkManager: ObservableObject {
         }
     }
     
+    var nodeConnecting: Node?
+    
     func getNodeConnect() -> Node? {
         return ItemCell(type: AppSetting.shared.getAutoConnectProtocol()).type != .off ? AppSetting.shared.getAutoConnectNodeToConnect() : selectNode
     }
