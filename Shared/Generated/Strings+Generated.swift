@@ -47,8 +47,8 @@ public enum L10n {
     ///   Created by Da Phan Van on 14/01/2022.
     public static let viewProfile = L10n.tr("Account", "viewProfile", fallback: #"View Profile"#)
     public enum AccountStatus {
-      /// Extend Subscription
-      public static let extend = L10n.tr("Account", "AccountStatus.extend", fallback: #"Extend Subscription"#)
+      /// Change Plan
+      public static let extend = L10n.tr("Account", "AccountStatus.extend", fallback: #"Change Plan"#)
       /// Joined
       public static let joined = L10n.tr("Account", "AccountStatus.joined", fallback: #"Joined"#)
       /// Payment history

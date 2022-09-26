@@ -89,7 +89,8 @@ struct MapView: View {
             switch AppSetting.shared.getBoardTabWhenConnecting() {
             case .location:
                 if let node = NetworkManager.shared.getNodeConnect() {
-                    moveToNode(x: node.x, y: node.y)
+                    let moveNode = mesh.getNodeToMove(node)
+                    moveToNode(x: moveNode.x, y: moveNode.y)
                 }
             case .staticIP:
                 if let staticServer = NetworkManager.shared.selectStaticServer {

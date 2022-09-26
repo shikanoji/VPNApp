@@ -55,6 +55,7 @@ internal enum Asset {
     internal static let logoConnected = ImageAsset(name: "logo_connected")
     internal static let logoConnectedBackground = ImageAsset(name: "logo_connected_background")
     internal static let map = ImageAsset(name: "map")
+    internal static let nodeNotConnected = ImageAsset(name: "node_notConnected")
     internal static let appIcon = ImageAsset(name: "app-icon")
     internal static let greenLinearGradient = ImageAsset(name: "green-linear-gradient")
     internal static let checkmark = ImageAsset(name: "Checkmark")
