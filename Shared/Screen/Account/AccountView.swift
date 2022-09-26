@@ -92,40 +92,30 @@ struct AccountView: View {
     var verifyEmailSection: some View {
         VStack {
             Spacer().frame(height: 20)
-            HStack {
-                Spacer().frame(width: 20)
-                VStack(spacing: 20) {
-                    HStack {
-                        Spacer().frame(width: 5)
-                        Text("Verify your email")
-                            .font(.system(size: 14, weight: .semibold))
-                            .foregroundColor(Asset.Colors.pink.swiftUIColor)
-                        Spacer()
-                    }
+            VStack(alignment: .leading, spacing: 20) {
+                    Text("Verify your email")
+                        .font(.system(size: 14, weight: .semibold))
+                        .foregroundColor(Asset.Colors.pink.swiftUIColor)
                     Text("We’ve sent an email to your account to verify your email address and active account. The link in the email will expire in 24 hours.")
                         .font(.system(size: 14))
                         .foregroundColor(Asset.Colors.lightBlackText.swiftUIColor)
-                        .frame(height: 60)
-                    HStack {
-                        Spacer().frame(width: 5)
-                        Text("Resend email")
-                            .font(.system(size: 14))
-                            .foregroundColor(.white)
-                            .underline()
-                            .onTapGesture {
-                                viewModel.resendVerifyEmail()
-                            }
-                            .opacity(viewModel.shouldShowResendEmailButton ? 1 : 0)
-                        Spacer()
-                    }
+                        .frame(height: 60, alignment: .leading)
+                    Text("Resend email")
+                        .font(.system(size: 14))
+                        .foregroundColor(.white)
+                        .underline()
+                        .onTapGesture {
+                            viewModel.resendVerifyEmail()
+                        }
+                        .opacity(viewModel.shouldShowResendEmailButton ? 1 : 0)
                 }
                 .padding(20)
                 .background(Asset.Colors.lightBlack.swiftUIColor)
                 .cornerRadius(15)
                 Spacer().frame(width: 20)
-            }
             Spacer().frame(height: 20)
         }
+        .padding(.horizontal, 16)
     }
     
     var sectionsView: some View {

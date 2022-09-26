@@ -7,7 +7,7 @@
 */
 
 "IP" = "Your IP: ";
-"SubIP" = "Connect to VPN for online sercurity";
+"SubIP" = "Connect to VPN for online security";
 "Unconnect" = "Unprotected";
 "Connected" = "Protected";
 "Connecting" = "Connecting..";
