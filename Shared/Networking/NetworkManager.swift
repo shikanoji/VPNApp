@@ -107,8 +107,8 @@ class NetworkManager: ObservableObject {
     }
     
     func connect() {
-        switch selectConfig {
-        case .openVPNTCP, .recommended, .openVPNUDP:
+        switch getValueConfigProtocol {
+        case .openVPNTCP, .openVPNUDP:
             OpenVPNManager.shared.connect()
         case .wireGuard:
             WireGuardManager.shared.connect()
@@ -118,8 +118,8 @@ class NetworkManager: ObservableObject {
     }
     
     func disconnect() {
-        switch selectConfig {
-        case .openVPNTCP, .recommended, .openVPNUDP:
+        switch getValueConfigProtocol {
+        case .openVPNTCP, .openVPNUDP:
             OpenVPNManager.shared.disconnect()
         case .wireGuard:
             WireGuardManager.shared.disconnect()

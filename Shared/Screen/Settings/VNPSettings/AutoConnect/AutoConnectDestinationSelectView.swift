@@ -20,40 +20,24 @@ struct AutoConnectDestinationSelectView: View {
     @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
     
     var body: some View {
-        NavigationView {
-            ZStack {
-                ScrollView(showsIndicators: false) {
-                    VStack {
-                        HStack {
-                            Button {
-                                showAutoConnectDestinationSelection = false
-                            } label: {
-                                Asset.Assets.close.swiftUIImage
-                            }
-                            Spacer()
-                        }
-                        .frame(height: 50)
-                        LocationListView(locationData: $viewModel.locationData,
-                                         nodeSelect: $viewModel.node,
-                                         hasFastestOption: true,
-                                         showAutoConnectionDestinationView: $showAutoConnectDestinationSelection)
-                    }
-                    .onChange(of: viewModel.shouldAutoCloseView){ shouldCloseView in
-                        if shouldCloseView {
-                            showAutoConnectDestinationSelection = false
-                        }
-                    }
-                }
+        LocationListView(locationData: $viewModel.locationData,
+                         nodeSelect: $viewModel.node,
+                         hasFastestOption: true,
+                         showAutoConnectionDestinationView: $showAutoConnectDestinationSelection)
+        .padding(.top)
+        .onChange(of: viewModel.shouldAutoCloseView){ shouldCloseView in
+            if shouldCloseView {
+                showAutoConnectDestinationSelection = false
             }
-            .background(AppColor.background)
-            .ignoresSafeArea()
-            .onAppear(perform: {
-                if !AppSetting.shared.isConnectedToVpn {
-                    viewModel.getCountryList()
-                } else {
-                    viewModel.getDataFromLocal()
-                }
-            })
         }
+        .background(AppColor.background)
+        .ignoresSafeArea()
+        .onAppear(perform: {
+            if !AppSetting.shared.isConnectedToVpn {
+                viewModel.getCountryList()
+            } else {
+                viewModel.getDataFromLocal()
+            }
+        })
     }
 }

@@ -230,13 +230,13 @@ struct BoardView: View {
                     StatusVPNView(ip: viewModel.ip, status: viewModel.stateUI, flag: viewModel.flag, name: viewModel.nameSelect)
                     .padding(.top, 0)
                     Spacer()
-                    ConnectButton(viewModel: viewModel)
-                    .onTapGesture {
+                    ConnectButton(viewModel: viewModel,
+                                  tapButton: {
                         viewModel.onlyDisconnectWithoutEndsession = true
                         AppSetting.shared.temporaryDisableAutoConnect = false
                         viewModel.connectOrDisconnectByUser = true
                         viewModel.ConnectOrDisconnectVPN()
-                    }
+                    })
                     Spacer()
                         .frame(height: Constant.Board.Tabs.topPadding)
                     BoardTabView(tab: $viewModel.tab, showBoardList: $showBoardList)

@@ -46,11 +46,10 @@ struct NodeView: View {
                             .frame(width: sizeNode * multi * 1.5,
                                    height: sizeNode * multi * 1.5)
                     } else {
-                        Asset.Assets.node.swiftUIImage
+                        Asset.Assets.nodeNotConnected.swiftUIImage
                             .resizable()
-                            .frame(width: sizeNode * multi * 0.9,
-                                   height: sizeNode * multi * 0.9)
-                            .opacity(0.2)
+                            .frame(width: sizeNode * multi,
+                                   height: sizeNode * multi)
                     }
                 } else {
                     Asset.Assets.node.swiftUIImage

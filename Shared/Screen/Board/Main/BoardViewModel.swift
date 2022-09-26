@@ -768,14 +768,19 @@ class BoardViewModel: ObservableObject {
         speedTimer = DispatchSource.makeTimerSource(queue: queue)
         speedTimer!.schedule(deadline: .now(), repeating: .seconds(1))
         speedTimer!.setEventHandler { [weak self] in
+            guard let `self` = self else {
+                return
+            }
             if [.openVPNTCP, .openVPNUDP].contains(NetworkManager.shared.getValueConfigProtocol),
                let dataCount = OpenVPNManager.shared.getDataCount() {
-                let uploadSpeed = abs(Int32(dataCount.sent - (self?.lastSent ?? 0)))
-                let downSpeed = abs(Int32(dataCount.received - (self?.lastReceived ?? 0)))
-                self?.uploadSpeed = UInt(uploadSpeed).descriptionAsDataUnit
-                self?.downloadSpeed = UInt(downSpeed).descriptionAsDataUnit
-                self?.lastSent = dataCount.sent
-                self?.lastReceived = dataCount.received
+                let uploadSpeed = abs(Int(dataCount.sent - self.lastSent))
+                let downSpeed = abs(Int(dataCount.received - self.lastReceived))
+                self.uploadSpeed = UInt(uploadSpeed).descriptionAsDataUnit
+                self.downloadSpeed = UInt(downSpeed).descriptionAsDataUnit
+                self.lastSent = dataCount.sent
+                self.lastReceived = dataCount.received
+            } else {
+                print("no data")
             }
         }
         speedTimer!.resume()

@@ -82,6 +82,40 @@ class Mesh: ObservableObject {
     func isNodeSelected(_ node: Node) -> Bool {
         return selectedNode?.id == node.id
     }
+    
+    func getNodeToMove(_ node: Node) -> Node {
+        if showCityNodes {
+            return getCityNode(node)
+        } else {
+            return getCountryNode(node)
+        }
+    }
+    
+    func getCityNode(_ node: Node) -> Node {
+        if !node.isCity {
+            if let cityNode =  cityNodes.filter({
+                node.id == $0.countryId
+            }).first {
+                return cityNode
+            }
+            return node
+        } else {
+            return node
+        }
+    }
+    
+    func getCountryNode(_ node: Node) -> Node {
+        if node.isCity {
+            if let countryNode =  countryNodes.filter({
+                node.countryId == $0.id
+            }).first {
+                return countryNode
+            }
+            return node
+        } else {
+            return node
+        }
+    }
 }
 
 extension Mesh {

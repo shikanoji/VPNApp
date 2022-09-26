@@ -22,6 +22,8 @@ struct ConnectButton: View {
     var widthSizeFrame = UIScreen.main.bounds.width
     var heightSizeFrame = UIScreen.main.bounds.height
     
+    var tapButton: (() -> Void)? = nil
+    
     func calculatebuttonsizeWidth(widthSizeFrame: CGFloat) -> CGFloat {
         if widthSizeFrame < 375 {
             return 350
@@ -60,7 +62,7 @@ struct ConnectButton: View {
                 if viewModel.stateUI == .connected {
                     getConnectAlert()
                         .padding(.bottom, 5)
-                        .padding(.bottom, startAlertScroll ? 0 : Constant.Board.Map.heightScreen / 4)
+                        .padding(.bottom, startAlertScroll ? 0 : 70)
                         .onAppear {
                             DispatchQueue.main.asyncAfter(deadline: .now() + 0.2, execute: {
                                 startAlertScroll = true
@@ -69,7 +71,7 @@ struct ConnectButton: View {
                         .onDisappear {
                             startAlertScroll = false
                         }
-                        .animation(Animation.easeInOut(duration: 0.5))
+                        .animation(Animation.easeInOut(duration: 0.3))
                         .frame(width: Constant.Board.QuickButton.widthSize * 2)
                         .opacity(!startAlertScroll ? 0 : 1)
                 }
@@ -81,12 +83,15 @@ struct ConnectButton: View {
                         .background(Circle().foregroundColor(viewModel.stateUI == .disconnected ? AppColor.themeColor : Color.white))
                     Circle()
                         .strokeBorder(Color.black, lineWidth: Constant.Board.QuickButton.widthBorderMax)
-                        .frame(width: calculatebuttonsizeWidth(widthSizeFrame: widthSizeFrame)/4.5 + 11,
-                               height: calculatebuttonsizeHeight(heightSizeFrame: heightSizeFrame)/4.5 + 11)
+                        .frame(width: calculatebuttonsizeWidth(widthSizeFrame: widthSizeFrame)/4.5 + 14,
+                               height: calculatebuttonsizeHeight(heightSizeFrame: heightSizeFrame)/4.5 + 14)
                     getContentButton()
                 }
                 .frame(width: calculatebuttonsizeWidth(widthSizeFrame: widthSizeFrame)/4.5,
                        height: calculatebuttonsizeWidth(widthSizeFrame: widthSizeFrame)/4.5)
+                .onTapGesture {
+                    tapButton?()
+                }
             }
             .frame(width:  Constant.Board.QuickButton.widthSize)
             SpeedConnectedView(uploadSpeed: viewModel.uploadSpeed, downLoadSpeed: viewModel.downloadSpeed)
@@ -105,7 +110,7 @@ struct ConnectButton: View {
             return AnyView(Text(L10n.Board.quickUnConnect)
                             .foregroundColor(Color.black)
                             .multilineTextAlignment(.center)
-                            .font(.system(size: calculatebuttonsizeWidth(widthSizeFrame: widthSizeFrame) * 0.038, weight: .semibold))
+                            .font(.system(size: calculatebuttonsizeWidth(widthSizeFrame: widthSizeFrame) * 0.038, weight: .bold))
                             .padding())
         case .connecting, .disconnecting:
             return AnyView(getDocAnimation()

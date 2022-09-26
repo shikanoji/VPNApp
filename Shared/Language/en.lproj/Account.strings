@@ -38,7 +38,7 @@
 "AccountStatus.joined" = "Joined";
 "AccountStatus.paymentHistory" = "Payment history";
 "AccountStatus.tapToShow" = "Tap to show";
-"AccountStatus.extend" = "Extend Subscription";
+"AccountStatus.extend" = "Change Plan";
 "AccountStatus.upgradeToPremium" = "Premium plan only $3/month";
 "PaymentHistory.cancelSubscription" = "Cancel Subscription";
 "contentTotalDevices" = "Multiple devices online";
