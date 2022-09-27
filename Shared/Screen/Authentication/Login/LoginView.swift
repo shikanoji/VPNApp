@@ -117,7 +117,7 @@ struct LoginView: View {
                 /// Pass authentication to view model because Environment object only receivable through view
                 viewModel.authentication = authentication
             }
-        }.popup(isPresented: $viewModel.showAlert, type: .floater(verticalPadding: 10), position: .bottom, animation: .easeInOut, autohideIn: 10, closeOnTap: false, closeOnTapOutside: true) {
+        }.popup(isPresented: $viewModel.showAlert, type: .floater(verticalPadding: 10), position: .bottom, animation: .easeInOut, autohideIn: 5, closeOnTap: false, closeOnTapOutside: true) {
             PopupSelectView(message: viewModel.alertMessage,
                             confirmAction: {
                 viewModel.showAlert = false

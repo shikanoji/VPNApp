@@ -211,7 +211,7 @@ struct AccountView: View {
                    type: .floater(verticalPadding: 25, useSafeAreaInset: true),
                    position: .bottom,
                    animation: .easeInOut,
-                   autohideIn: 50,
+                   autohideIn: 5,
                    closeOnTap: false,
                    closeOnTapOutside: true, view: {
                 PopupSelectView(message: "Successfully resend verify email.",
@@ -223,7 +223,7 @@ struct AccountView: View {
                    type: .floater(verticalPadding: 25, useSafeAreaInset: true),
                    position: .bottom,
                    animation: .easeInOut,
-                   autohideIn: 50,
+                   autohideIn: 5,
                    closeOnTap: false,
                    closeOnTapOutside: true, view: {
                 PopupSelectView(message: "An error occurred.",

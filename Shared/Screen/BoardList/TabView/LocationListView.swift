@@ -15,7 +15,7 @@ struct LocationListView: View {
     @State var showCityListView = false
     @State var cityNode: Node?
     var hasFastestOption: Bool = false
-    @Binding var showAutoConnectionDestinationView: Bool
+    
     var fastestServerSection: some View {
         VStack {
             HStack {
@@ -96,8 +96,7 @@ struct LocationListView: View {
             }
             Spacer()
             NavigationLink(destination: CityListView(nodeSelect: $nodeSelect,
-                                                     node: cityNode ?? Node.country,
-                                                     showAutoConnectDestinationView: $showAutoConnectionDestinationView), isActive: $showCityListView) { }
+                                                     node: cityNode ?? Node.country), isActive: $showCityListView) { }
         }
         .frame(maxHeight: .infinity)
         .navigationBarHidden(true)
@@ -129,6 +128,6 @@ struct LocationListView_Previews: PreviewProvider {
     @State static var nodeSelect: Node? = nil
     
     static var previews: some View {
-        LocationListView(locationData: $locationData, nodeSelect: $nodeSelect, showAutoConnectionDestinationView: .constant(false))
+        LocationListView(locationData: $locationData, nodeSelect: $nodeSelect)
     }
 }

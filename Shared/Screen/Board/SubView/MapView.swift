@@ -69,7 +69,6 @@ struct MapView: View {
         .onChange(of: mesh.selectedNode, perform: { newValue in
             if let node = newValue {
                 moveToNode(x: node.x, y: node.y)
-                AppSetting.shared.saveBoardTabWhenConnecting(.location)
             }
         })
         .onReceive(mesh.$clientCountryNode) {
@@ -88,8 +87,8 @@ struct MapView: View {
             mesh.removeSelectNode()
             switch AppSetting.shared.getBoardTabWhenConnecting() {
             case .location:
-                if let node = NetworkManager.shared.getNodeConnect() {
-                    let moveNode = mesh.getNodeToMove(node)
+                if let node = NetworkManager.shared.getNodeConnect(),
+                   let moveNode = mesh.getNodeInMap(node) {
                     moveToNode(x: moveNode.x, y: moveNode.y)
                 }
             case .staticIP:

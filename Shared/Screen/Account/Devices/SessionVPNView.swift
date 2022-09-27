@@ -56,7 +56,7 @@ struct SessionVPNView: View {
                                   useSafeAreaInset: true),
                    position: .bottom,
                    animation: .easeInOut,
-                   autohideIn: 10,
+                   autohideIn: 5,
                    closeOnTap: false,
                    closeOnTapOutside: true,
                    view: {
@@ -70,7 +70,7 @@ struct SessionVPNView: View {
                                   useSafeAreaInset: true),
                    position: .bottom,
                    animation: .easeInOut,
-                   autohideIn: 10,
+                   autohideIn: 5,
                    closeOnTap: false,
                    closeOnTapOutside: true,
                    view: {

@@ -83,7 +83,40 @@ class Mesh: ObservableObject {
         return selectedNode?.id == node.id
     }
     
-    func getNodeToMove(_ node: Node) -> Node {
+    func showConnectedNode(_ node: Node, nodeSelected: Node) -> Bool {
+        if showCityNodes {
+            return getCityNode(node)?.id == getCityNode(nodeSelected)?.id
+        } else {
+            return getCountryNode(node)?.id == getCountryNode(nodeSelected)?.id
+        }
+    }
+    
+    func getNodeByStaticServer(_ staticServer: StaticServer) -> Node? {
+        if showCityNodes {
+            return getCityNodeByStaticServer(staticServer)
+        } else {
+            return getCountryNodeByStaticServer(staticServer)
+        }
+    }
+    
+    func getCityNodeByStaticServer(_ staticServer: StaticServer) -> Node? {
+        if let countryNode = getCountryNodeByStaticServer(staticServer),
+           let cityNode = getCityNode(countryNode) {
+            return cityNode
+        }
+        return nil
+    }
+    
+    func getCountryNodeByStaticServer(_ staticServer: StaticServer) -> Node? {
+        if let countryNode = countryNodes.filter({
+            staticServer.countryId == $0.id
+        }).first {
+            return countryNode
+        }
+        return nil
+    }
+    
+    func getNodeInMap(_ node: Node) -> Node? {
         if showCityNodes {
             return getCityNode(node)
         } else {
@@ -91,29 +124,29 @@ class Mesh: ObservableObject {
         }
     }
     
-    func getCityNode(_ node: Node) -> Node {
-        if !node.isCity {
+    func getCityNode(_ node: Node) -> Node? {
+        if node.isCity {
+            return node
+        } else {
             if let cityNode =  cityNodes.filter({
                 node.id == $0.countryId
             }).first {
                 return cityNode
             }
-            return node
-        } else {
-            return node
+            return nil
         }
     }
     
-    func getCountryNode(_ node: Node) -> Node {
-        if node.isCity {
+    func getCountryNode(_ node: Node) -> Node? {
+        if !node.isCity {
+            return node
+        } else {
             if let countryNode =  countryNodes.filter({
                 node.countryId == $0.id
             }).first {
                 return countryNode
             }
-            return node
-        } else {
-            return node
+            return nil
         }
     }
 }

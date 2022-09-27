@@ -48,51 +48,68 @@ struct BoardView: View {
             if !viewModel.shouldHideSession {
                 sessionVPNView()
             }
-            
-            if viewModel.showAlert {
-                toastView()
-            }
-            
-            if viewModel.showAlertSessionSetting {
-                VStack{
-                    Spacer()
-                    PopupSelectView(message: "Need terminate other sessions",
-                                    confirmTitle: "Open Sessions",
-                                    confirmAction: {
-                        viewModel.showAlertSessionSetting = false
-                        viewModel.shouldHideSession = false
-                    })
-                    .frame(alignment: .bottom)
-                    .padding(.bottom, 20)
-                }
-            }
-
-            if viewModel.showSessionTerminatedAlert {
-                VStack{
-                    Spacer()
-                    PopupSelectView(message: "Session terminated",
-                                    confirmTitle: "OK",
-                                    confirmAction: {
-                        viewModel.showSessionTerminatedAlert = false
-                    })
-                    .frame(alignment: .bottom)
-                    .padding(.bottom, 20)
-                }
-            }
-            
-            if viewModel.showAlertAutoConnectSetting {
-                VStack{
-                    Spacer()
-                    PopupSelectView(message: "Disable auto-conenct",
-                                    confirmTitle: "SETTINGS",
-                                    confirmAction: {
-                        viewModel.showAlertAutoConnectSetting = false
-                        viewModel.shouldHideAutoConnect = false
-                    })
-                    .frame(alignment: .bottom)
-                    .padding(.bottom, 20)
-                }
-            }
+        }
+        .popup(isPresented: $viewModel.showAlert,
+               type: .floater(verticalPadding: 20),
+               position: .bottom,
+               animation: .easeInOut,
+               autohideIn: 5,
+               closeOnTap: false,
+               closeOnTapOutside: true) {
+            PopupSelectView(message: viewModel.error?.description ?? "An error occurred",
+                            confirmTitle: "DISMISS",
+                            confirmAction: {
+                viewModel.showAlert = false
+            })
+            .frame(alignment: .bottom)
+            .padding(.bottom, 20)
+        }
+        .popup(isPresented: $viewModel.showSessionTerminatedAlert,
+               type: .floater(verticalPadding: 20),
+               position: .bottom,
+               animation: .easeInOut,
+               autohideIn: 5,
+               closeOnTap: false,
+               closeOnTapOutside: true) {
+            PopupSelectView(message: "Session terminated",
+                            confirmTitle: "OK",
+                            confirmAction: {
+                viewModel.showSessionTerminatedAlert = false
+            })
+            .frame(alignment: .bottom)
+            .padding(.bottom, 20)
+        }
+        .popup(isPresented: $viewModel.showAlertSessionSetting,
+               type: .floater(verticalPadding: 20),
+               position: .bottom,
+               animation: .easeInOut,
+               autohideIn: 5,
+               closeOnTap: false,
+               closeOnTapOutside: true) {
+            PopupSelectView(message: "Need terminate other sessions",
+                            confirmTitle: "Open Sessions",
+                            confirmAction: {
+                viewModel.showAlertSessionSetting = false
+                viewModel.shouldHideSession = false
+            })
+            .frame(alignment: .bottom)
+            .padding(.bottom, 20)
+        }
+        .popup(isPresented: $viewModel.showAlertAutoConnectSetting,
+                   type: .floater(verticalPadding: 20),
+                   position: .bottom,
+                   animation: .easeInOut,
+                   autohideIn: 5,
+                   closeOnTap: false,
+                   closeOnTapOutside: true) {
+            PopupSelectView(message: "Disable auto-conenct",
+                            confirmTitle: "SETTINGS",
+                            confirmAction: {
+                viewModel.showAlertAutoConnectSetting = false
+                viewModel.shouldHideAutoConnect = false
+            })
+            .frame(alignment: .bottom)
+            .padding(.bottom, 20)
         }
         .onChange(of: viewModel.showAlert, perform: { newValue in
             if newValue {
@@ -156,20 +173,6 @@ struct BoardView: View {
             statusConnect: $viewModel.stateUI,
             viewModel: SessionVPNViewModel(),
             shouldHideSessionList: $viewModel.shouldHideSession)
-    }
-    
-    func toastView() -> some View {
-        VStack{
-            Spacer()
-            
-            PopupSelectView(message: viewModel.error?.description ?? "An error occurred",
-                            confirmTitle: "DISMISS",
-                            confirmAction: {
-                viewModel.showAlert = false
-            })
-            .frame(alignment: .bottom)
-            .padding(.bottom, 20)
-        }
     }
     
     func settingView() -> some View {
@@ -236,6 +239,7 @@ struct BoardView: View {
                         AppSetting.shared.temporaryDisableAutoConnect = false
                         viewModel.connectOrDisconnectByUser = true
                         viewModel.ConnectOrDisconnectVPN()
+                        AppSetting.shared.saveTimeConnectedVPN = Date()
                     })
                     Spacer()
                         .frame(height: Constant.Board.Tabs.topPadding)

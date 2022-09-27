@@ -111,7 +111,7 @@ struct RegisterView: View {
                type: .floater(verticalPadding: 10),
                position: .bottom,
                animation: .easeInOut,
-               autohideIn: 10,
+               autohideIn: 5,
                closeOnTap: false,
                closeOnTapOutside: true) {
             PopupSelectView(message: viewModel.alertMessage,

@@ -43,7 +43,7 @@ struct BoardListView: View {
                     .frame(height: 8)
                 switch currentTab {
                 case .location:
-                    LocationListView(locationData: $locationData, nodeSelect: $nodeSelect, showAutoConnectionDestinationView: .constant(false))
+                    LocationListView(locationData: $locationData, nodeSelect: $nodeSelect)
                 case .staticIP:
                     StaticIPListView(staticIPData: $staticIPData, selectStaticServer: $staticNode)
                 case .multiHop:

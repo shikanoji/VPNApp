@@ -23,13 +23,14 @@ struct InfomationView: View {
         AppButton(style: .none, width: UIScreen.main.bounds.size.width - 30, height: 44,
                   backgroundColor: AppColor.darkButton, textColor: AppColor.redradient,
                   textSize: 14, text: L10n.Account.deleteAccount) {
-            deleteAccount = true
-        }
+            deleteAccount = true }
                   .sheet(isPresented: $deleteAccount) {
-                      DeleteAccountConfirmationView(viewModel: DeleteAccountConfirmationViewModel())
+                      DeleteAccountConfirmationView(viewModel: DeleteAccountConfirmationViewModel()) {
+                          deleteAccount = false
+                      }
                   }
     }
-
+    
     var itemList: some View {
         VStack(spacing: 1) {
             ForEach(viewModel.section.items, id: \.id) { item in
@@ -47,7 +48,9 @@ struct InfomationView: View {
         .padding(Constant.Menu.hozitalPaddingCell)
         .padding(.top, Constant.Menu.topPaddingCell)
         .sheet(isPresented: $showChangePassword) {
-            ChangePasswordView(viewModel: ChangePasswordViewModel(), showChangePassword: $showChangePassword)
+            ChangePasswordView(viewModel: ChangePasswordViewModel(), showChangePassword: $showChangePassword) {
+                showChangePassword = false
+            }
                 .clearModalBackground()
         }
     }
