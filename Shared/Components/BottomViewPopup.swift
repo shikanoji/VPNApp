@@ -8,6 +8,18 @@
 import Foundation
 import SwiftUI
 
+struct LedgeTopView: View {
+    var body: some View {
+        HStack(alignment: .center) {
+            Spacer()
+            Color.gray
+                .clipShape(Capsule())
+                .frame(width: 50, height: 2)
+            Spacer()
+        }
+    }
+}
+
 struct BottomViewPopup: View {
     
     var titleStr = L10n.Account.Logout.confirm
@@ -36,6 +48,8 @@ struct BottomViewPopup: View {
     
     var content: some View {
         VStack(alignment: .leading, spacing: 30) {
+            LedgeTopView()
+                .padding(.top, -10)
             title
             message
             AppButton(width: .infinity, backgroundColor: warning ? AppColor.redradient : AppColor.darkButton, textColor: Color.white , text: confirmStr) {
@@ -53,8 +67,11 @@ struct BottomViewPopup: View {
     var body: some View {
         VStack {
             Color.clear
+                .contentShape(Rectangle())
+                .onTapGesture {
+                    cancel?()
+                }
             content
-            Spacer()
         }
         .background(PopupBackgroundView())
         .ignoresSafeArea()

@@ -168,8 +168,8 @@ public enum L10n {
     public static let speed = L10n.tr("Board", "Speed", fallback: #"/s"#)
     /// Static IP
     public static let staticIPTitleTab = L10n.tr("Board", "StaticIPTitleTab", fallback: #"Static IP"#)
-    /// Connect to VPN for online sercurity
-    public static let subIP = L10n.tr("Board", "SubIP", fallback: #"Connect to VPN for online sercurity"#)
+    /// Connect to VPN for online security
+    public static let subIP = L10n.tr("Board", "SubIP", fallback: #"Connect to VPN for online security"#)
     /// Unprotected
     public static let unconnect = L10n.tr("Board", "Unconnect", fallback: #"Unprotected"#)
     public enum BoardList {

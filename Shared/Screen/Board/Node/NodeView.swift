@@ -15,7 +15,7 @@ struct NodeView: View {
     // 1
     @State var node: Node
     //2
-    @ObservedObject var mesh: Mesh
+    @EnvironmentObject var mesh: Mesh
     //3
     
     @Binding var statusConnect: VPNStatus
@@ -40,7 +40,7 @@ struct NodeView: View {
             .frame(height: node.isCity ? 65 : 25)
             ZStack {
                 if statusConnect == .connected {
-                    if showConnectedNode {
+                    if isConnectedNode {
                         Asset.Assets.nodeChange.swiftUIImage
                             .resizable()
                             .frame(width: sizeNode * multi * 1.5,
@@ -60,34 +60,44 @@ struct NodeView: View {
             }
         }
         .scaleEffect(1 / scale, anchor: .bottom)
+        .zIndex(zIndex)
     }
     
-    var showConnectedNode: Bool {
-        var show = 0
-
+    var zIndex: Double {
+        if isConnectedNode {
+            return 1
+        }
+        return mesh.isNodeSelected(node) ? 1 : 0
+    }
+    
+    var isConnectedNode: Bool {
         switch statusConnect == .connected ? AppSetting.shared.getBoardTabWhenConnecting() : AppSetting.shared.getCurrentTab() {
         case .location:
-            if let nodeConnected = NetworkManager.shared.nodeConnecting {
-                show = nodeConnected.id == node.id ? 1 : 0
-                node.cityNodeList.forEach {
-                    if nodeConnected.id == $0.id {
-                        show += 1
-                    }
-                }
+            if let nodeConnected = NetworkManager.shared.nodeConnecting,
+               let nodeInMap = mesh.getCountryNode(nodeConnected) {
+                return mesh.showConnectedNode(node, nodeSelected: nodeInMap)
             }
         case .staticIP:
-            if let staticIP = NetworkManager.shared.selectStaticServer {
-                show = staticIP.countryId == node.id ? 1 : 0
-                node.cityNodeList.forEach {
-                    if staticIP.countryId == $0.id {
-                        show += 1
+            if let staticServer = NetworkManager.shared.selectStaticServer,
+               let nodeInMap = mesh.getNodeByStaticServer(staticServer) {
+                return mesh.showConnectedNode(node, nodeSelected: nodeInMap)
+            }
+        case .multiHop:
+            if let multi = NetworkManager.shared.selectMultihop,
+               let entryCity = multi.entry?.city,
+               let exitCity = multi.exit?.city {
+                if let entryCityInMap = mesh.getNodeInMap(entryCity) {
+                    if mesh.showConnectedNode(node, nodeSelected: entryCityInMap) {
+                        return true
+                    }
+                }
+                if let exitCityInMap = mesh.getNodeInMap(exitCity) {
+                    if mesh.showConnectedNode(node, nodeSelected: exitCityInMap) {
+                        return true
                     }
                 }
             }
-        case .multiHop:
-            break
         }
-        
-        return show > 0
+        return false
     }
 }

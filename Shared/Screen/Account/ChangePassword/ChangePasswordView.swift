@@ -19,53 +19,58 @@ struct ChangePasswordView: View {
     @Binding var showChangePassword: Bool
     @State private var keyboardHeight: CGFloat = 0
     
+    var cancel: (() -> Void)? = nil
+    
     var header: some View {
-        VStack(alignment: .leading, spacing: 8) {
-            Text(AppSetting.shared.hasPassword ? L10n.Account.Infomation.changePassword : L10n.Account.Infomation.setPassword)
-                .font(Constant.ChangePassWord.fontTitle)
-            Text(AppSetting.shared.hasPassword ? L10n.Account.Infomation.introChangePassword : L10n.Account.Infomation.setPasswordNote)
-                .font(Constant.ChangePassWord.fontSubContent)
-                .foregroundColor(Asset.Colors.lightBlackText.swiftUIColor)
+        HStack {
+            Spacer().frame(width: 32)
+            VStack(alignment: .leading, spacing: 8) {
+                Text(AppSetting.shared.hasPassword ? L10n.Account.Infomation.changePassword : L10n.Account.Infomation.setPassword)
+                    .font(Constant.ChangePassWord.fontTitle)
+                Text(AppSetting.shared.hasPassword ? L10n.Account.Infomation.introChangePassword : L10n.Account.Infomation.setPasswordNote)
+                    .font(Constant.ChangePassWord.fontSubContent)
+                    .foregroundColor(Asset.Colors.lightBlackText.swiftUIColor)
+            }
+            Spacer()
         }
-        .padding(.vertical)
     }
     
     var passwordForms: some View {
-        VStack {
+        VStack(spacing: 16) {
             if AppSetting.shared.hasPassword {
                 Form(placeholder: L10n.Account.Infomation.currentPassword,
                      value: $viewModel.password,
                      isPassword: true,
-                     shouldAnimate: true)
-                Spacer().frame(height: 16)
+                     shouldAnimate: true,
+                     width: Constant.Global.widthFormAndButton)
             }
             Form(placeholder: L10n.Account.Infomation.newPassword,
                  value: $viewModel.newPassword,
                  isPassword: true,
-                 shouldAnimate: true)
-            Spacer().frame(height: 16)
+                 shouldAnimate: true,
+                 width: Constant.Global.widthFormAndButton)
             Form(placeholder: L10n.Account.Infomation.retypePassword,
                  value: $viewModel.retypePassword,
                  isPassword: true,
-                 shouldAnimate: true)
-            Spacer().frame(height: 16)
+                 shouldAnimate: true,
+                 width: Constant.Global.widthFormAndButton)
         }
     }
     
     var submitButton: some View {
-        AppButton(style: .themeButton, width: 311, text: L10n.Account.Infomation.save) {
+        AppButton(style: .themeButton,width: Constant.Global.widthFormAndButton, text: L10n.Account.Infomation.save) {
             viewModel.changePassword()
         }
     }
     
     var content: some View {
-        VStack(alignment: .leading) {
-            Spacer().frame(height: 20)
+        VStack(spacing: 20) {
+            LedgeTopView()
+                .padding(.top, 10)
             header
             passwordForms
-            Spacer().frame(height: 20)
             submitButton
-            Spacer().frame(height: 40)
+            Spacer().frame(height: 20)
         }
         .frame(maxWidth: .infinity)
         .foregroundColor(.white)
@@ -79,6 +84,10 @@ struct ChangePasswordView: View {
         LoadingScreen(isShowing: $viewModel.showProgressView) {
             VStack {
                 Color.clear
+                    .contentShape(Rectangle())
+                    .onTapGesture {
+                        cancel?()
+                    }
                 content
                 Spacer().frame(height: keyboardHeight)
             }
@@ -95,7 +104,7 @@ struct ChangePasswordView: View {
                type: .floater(verticalPadding: 20),
                position: .bottom,
                animation: .easeInOut,
-               autohideIn: 10,
+               autohideIn: 5,
                closeOnTap: false,
                closeOnTapOutside: true) {
             PopupSelectView(message: viewModel.alertMessage,

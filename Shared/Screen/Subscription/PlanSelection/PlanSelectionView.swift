@@ -85,7 +85,7 @@ struct PlanSelectionView: View {
                 viewModel.authentication = authentication
             })
 
-            .popup(isPresented: $viewModel.showAlert, type: .floater(verticalPadding: 10), position: .bottom, animation: .easeInOut, autohideIn: 10, closeOnTap: false, closeOnTapOutside: true) {
+            .popup(isPresented: $viewModel.showAlert, type: .floater(verticalPadding: 10), position: .bottom, animation: .easeInOut, autohideIn: 5, closeOnTap: false, closeOnTapOutside: true) {
                 PopupSelectView(message: viewModel.alertMessage, confirmTitle: "Retry", confirmAction: {
                     Task {
                         await viewModel.verifyReceipt()
