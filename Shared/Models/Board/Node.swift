@@ -122,6 +122,7 @@ struct Node: Identifiable, Codable {
             var updateCity = city
             updateCity.flag = flag
             updateCity.countryName = name
+            updateCity.countryId = id
             return updateCity
         }
         

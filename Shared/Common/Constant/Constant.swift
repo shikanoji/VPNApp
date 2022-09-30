@@ -85,6 +85,17 @@ struct Constant {
             static let heightMapOrigin: CGFloat = 1588
             static let ration: CGFloat = widthMapOrigin / heightMapOrigin
         }
+        
+        struct Node {
+            static let sizeNode: CGFloat = 16
+            static let heightPopupCity: CGFloat = 65
+            static let heightPopupCountry: CGFloat = 25
+            static let multiConnected: CGFloat = 1.8
+            static let multiCityNode: CGFloat = 1.4
+            static let multiCountryNode: CGFloat = 1
+            static let paddingCenterCity = heightPopupCity - 12
+            static let paddingCenterCountry = heightPopupCountry + 12
+        }
     }
     
     struct Account {
@@ -113,7 +124,7 @@ struct Constant {
         static let sizeIconItemMenu: CGFloat = 32
         static let fontItem = Font.system(size: 15, weight: .bold)
         static let radiusCell: CGFloat = 10
-        static let heightItemCell: CGFloat = 63
+        static let heightItemCell: CGFloat = 65
         static let hozitalPaddingCell: CGFloat = 16
         static let topPaddingCell: CGFloat = 15
     }

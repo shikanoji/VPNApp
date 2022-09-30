@@ -59,6 +59,12 @@ public enum L10n {
       public static let title = L10n.tr("Account", "AccountStatus.title", fallback: #"Your Subscription"#)
       /// Premium plan only $3/month
       public static let upgradeToPremium = L10n.tr("Account", "AccountStatus.upgradeToPremium", fallback: #"Premium plan only $3/month"#)
+      public enum PaymentHistory {
+        /// Failed
+        public static let failed = L10n.tr("Account", "AccountStatus.paymentHistory.Failed", fallback: #"Failed"#)
+        /// Success
+        public static let success = L10n.tr("Account", "AccountStatus.paymentHistory.Success", fallback: #"Success"#)
+      }
     }
     public enum ChangePassword {
       /// Confirm password does not matche
@@ -144,8 +150,8 @@ public enum L10n {
     public static let connected = L10n.tr("Board", "Connected", fallback: #"Protected"#)
     /// Connected
     public static let connectedAlert = L10n.tr("Board", "ConnectedAlert", fallback: #"Connected"#)
-    /// Connecting..
-    public static let connecting = L10n.tr("Board", "Connecting", fallback: #"Connecting.."#)
+    /// Connecting...
+    public static let connecting = L10n.tr("Board", "Connecting", fallback: #"Connecting..."#)
     /// strings
     ///   SysVPN
     /// 
@@ -161,9 +167,9 @@ public enum L10n {
     public static let navigationTitleConnecting = L10n.tr("Board", "NavigationTitleConnecting", fallback: #"Connecting..."#)
     /// VPN not connected
     public static let navigationTitleNotConnect = L10n.tr("Board", "NavigationTitleNotConnect", fallback: #"VPN not connected"#)
-    /// Quick
-    /// Connect
-    public static let quickUnConnect = L10n.tr("Board", "QuickUnConnect", fallback: #"Quick\nConnect"#)
+    /// Quick 
+    ///  Connect
+    public static let quickUnConnect = L10n.tr("Board", "QuickUnConnect", fallback: #"Quick \n Connect"#)
     /// /s
     public static let speed = L10n.tr("Board", "Speed", fallback: #"/s"#)
     /// Static IP

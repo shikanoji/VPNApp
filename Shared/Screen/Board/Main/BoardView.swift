@@ -235,6 +235,12 @@ struct BoardView: View {
                     Spacer()
                     ConnectButton(viewModel: viewModel,
                                   tapButton: {
+                        if viewModel.state != .connected {
+                            AppSetting.shared.saveBoardTabWhenConnecting(.location)
+                            if mesh.selectedNode == nil {
+                                NetworkManager.shared.nodeSelected = AppSetting.shared.getRecommendedCountries().first
+                            }
+                        }
                         viewModel.onlyDisconnectWithoutEndsession = true
                         AppSetting.shared.temporaryDisableAutoConnect = false
                         viewModel.connectOrDisconnectByUser = true

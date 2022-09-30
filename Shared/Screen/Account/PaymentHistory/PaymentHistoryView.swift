@@ -19,8 +19,8 @@ struct PaymentHistoryView: View {
     @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
     
     var body: some View {
-        ScrollView(.vertical, showsIndicators: false) {
-            ZStack(alignment: .top) {
+        LoadingScreen(isShowing: $viewModel.showProgressView) {
+            ScrollView(.vertical, showsIndicators: false) {
                 VStack {
                     AppColor.darkButton
                         .frame(height: 10)
@@ -39,10 +39,15 @@ struct PaymentHistoryView: View {
                     VStack(spacing: 1) {
                         ForEach(viewModel.paymentHistory.indices, id: \.self) { index in
                             let item = viewModel.paymentHistory[index]
-                            ItemRowCell(title: item.packageName,
-                                        content: item.status + " - " + item.paymentDate,
-                                        alertContent: "",
+                            ItemRowCell(title: item.packageCharge.productName,
+                                        content: (item.status == "complete" ?
+                                                  L10n.Account.AccountStatus.PaymentHistory.success : L10n.Account.AccountStatus.PaymentHistory.failed) + " - " + item.paymentDate,
                                         position: viewModel.paymentHistory.getPosition(index))
+                            .onAppear {
+                                if index == viewModel.paymentHistory.count - 1, viewModel.enableLoadMore, !viewModel.showProgressView {
+                                    viewModel.fetchPaymentHistory(true)
+                                }
+                            }
                         }
                     }
                     .padding(Constant.Menu.hozitalPaddingCell)
@@ -52,9 +57,9 @@ struct PaymentHistoryView: View {
                     viewModel.fetchPaymentHistory()
                 }
             }
+            .navigationBarHidden(true)
+            .background(AppColor.background)
         }
-        .navigationBarHidden(true)
-        .background(AppColor.background)
         .ignoresSafeArea()
     }
 }

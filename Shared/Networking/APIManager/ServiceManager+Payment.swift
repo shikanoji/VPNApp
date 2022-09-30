@@ -11,8 +11,8 @@ import RxSwift
 import SwiftyJSON
 
 extension ServiceManager {
-    func fetchPaymentHistory() -> Single<APIResponse<PaymentHistory>> {
-        return request(.fetchPaymentHistory)
+    func fetchPaymentHistory(page: Int) -> Single<APIResponse<PaymentHistory>> {
+        return request(.fetchPaymentHistory(page: page))
             .map { response in
                 let paymentHistory = try JSONDecoder().decode(APIResponse<PaymentHistory>.self, from: response.data)
                 return paymentHistory

@@ -36,6 +36,7 @@ struct CityListView: View {
                 VStack(alignment: .leading) {
                     ForEach(node.cityNodeList) { city in
                         Button {
+                            AppSetting.shared.temporaryDisableAutoConnect = false
                             nodeSelect = city
                             NotificationCenter.default.post(name: Constant.NameNotification.showMap, object: nil)
                         } label: {

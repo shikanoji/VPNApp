@@ -8,10 +8,32 @@
 import SwiftUI
 import TunnelKitManager
 
+struct NumberMultiView: View {
+    var text: String
+    
+    var body: some View {
+        VStack(spacing: 0) {
+            Text(text)
+                .font(.system(size: 12))
+                .frame(width: 20, height: 20, alignment: .center)
+                .overlay(
+                    Circle()
+                        .size(width: 20, height: 20)
+                        .stroke(Color.white, lineWidth: 3)
+                )
+            
+            Triangle(soft: false)
+                .frame(width: Constant.Board.NodePopupView.widthTriangle - 3,
+                       height: Constant.Board.NodePopupView.heightTriangle + 2)
+                .foregroundColor(Constant.Board.NodePopupView.backgroudTriangle)
+        }
+    }
+}
+
 struct NodeView: View {
     @Binding var scale: CGFloat
     
-    @State var sizeNode = CGFloat(16)
+    let sizeNode = Constant.Board.Node.sizeNode
     // 1
     @State var node: Node
     //2
@@ -25,7 +47,16 @@ struct NodeView: View {
     }
     
     var multi: CGFloat {
-        return mesh.showCityNodes ? 1.4 : 1
+        return mesh.showCityNodes ? Constant.Board.Node.multiCityNode : Constant.Board.Node.multiCountryNode
+    }
+    
+    func nodeDefaultNotConnected() -> some View {
+        AnyView(
+            Asset.Assets.nodeNotConnected.swiftUIImage
+            .resizable()
+            .frame(width: sizeNode * multi,
+                   height: sizeNode * multi)
+        )
     }
     
     var body: some View {
@@ -37,19 +68,38 @@ struct NodeView: View {
                     Spacer()
                 }
             }
-            .frame(height: node.isCity ? 65 : 25)
+            .frame(height: node.isCity ? Constant.Board.Node.heightPopupCity : Constant.Board.Node.heightPopupCountry)
             ZStack {
                 if statusConnect == .connected {
-                    if isConnectedNode {
-                        Asset.Assets.nodeChange.swiftUIImage
-                            .resizable()
-                            .frame(width: sizeNode * multi * 1.5,
-                                   height: sizeNode * multi * 1.5)
+                    if isMultihopNode {
+                        if isEntryNodeMulti {
+                            VStack(spacing: 2) {
+                                NumberMultiView(text: "1")
+                                Asset.Assets.nodeEntry.swiftUIImage
+                                    .resizable()
+                                    .frame(width: sizeNode * Constant.Board.Node.multiConnected * 0.9,
+                                           height: sizeNode * Constant.Board.Node.multiConnected * 0.9)
+                            }
+                        } else if isExitNodeMulti {
+                            VStack(spacing: 2) {
+                                NumberMultiView(text: "2")
+                                Asset.Assets.nodeChange.swiftUIImage
+                                    .resizable()
+                                    .frame(width: sizeNode * Constant.Board.Node.multiConnected,
+                                           height: sizeNode * Constant.Board.Node.multiConnected)
+                            }
+                        } else {
+                            nodeDefaultNotConnected()
+                        }
                     } else {
-                        Asset.Assets.nodeNotConnected.swiftUIImage
-                            .resizable()
-                            .frame(width: sizeNode * multi,
-                                   height: sizeNode * multi)
+                        if isConnectedNode {
+                            Asset.Assets.nodeChange.swiftUIImage
+                                .resizable()
+                                .frame(width: sizeNode * Constant.Board.Node.multiConnected,
+                                       height: sizeNode * Constant.Board.Node.multiConnected)
+                        } else {
+                            nodeDefaultNotConnected()
+                        }
                     }
                 } else {
                     Asset.Assets.node.swiftUIImage
@@ -66,12 +116,40 @@ struct NodeView: View {
     var zIndex: Double {
         if isConnectedNode {
             return 1
+        } else if (isEntryNodeMulti || isExitNodeMulti) {
+            return 1
         }
         return mesh.isNodeSelected(node) ? 1 : 0
     }
     
+    var currentTab: StateTab {
+        return statusConnect == .connected ? AppSetting.shared.getBoardTabWhenConnecting() : AppSetting.shared.getCurrentTab()
+    }
+    
+    var isMultihopNode: Bool {
+        return currentTab == .multiHop
+    }
+    
+    var isEntryNodeMulti: Bool {
+        if let multi = NetworkManager.shared.selectMultihop,
+           let entryCity = multi.entry?.city,
+           let entryCityInMap = mesh.getNodeInMap(entryCity) {
+            return mesh.showConnectedNode(node, nodeSelected: entryCityInMap)
+        }
+        return false
+    }
+    
+    var isExitNodeMulti: Bool {
+        if let multi = NetworkManager.shared.selectMultihop,
+           let exitCity = multi.exit?.city,
+           let exitCityInMap = mesh.getNodeInMap(exitCity) {
+            return mesh.showConnectedNode(node, nodeSelected: exitCityInMap)
+        }
+        return false
+    }
+    
     var isConnectedNode: Bool {
-        switch statusConnect == .connected ? AppSetting.shared.getBoardTabWhenConnecting() : AppSetting.shared.getCurrentTab() {
+        switch currentTab {
         case .location:
             if let nodeConnected = NetworkManager.shared.nodeConnecting,
                let nodeInMap = mesh.getCountryNode(nodeConnected) {
@@ -82,21 +160,8 @@ struct NodeView: View {
                let nodeInMap = mesh.getNodeByStaticServer(staticServer) {
                 return mesh.showConnectedNode(node, nodeSelected: nodeInMap)
             }
-        case .multiHop:
-            if let multi = NetworkManager.shared.selectMultihop,
-               let entryCity = multi.entry?.city,
-               let exitCity = multi.exit?.city {
-                if let entryCityInMap = mesh.getNodeInMap(entryCity) {
-                    if mesh.showConnectedNode(node, nodeSelected: entryCityInMap) {
-                        return true
-                    }
-                }
-                if let exitCityInMap = mesh.getNodeInMap(exitCity) {
-                    if mesh.showConnectedNode(node, nodeSelected: exitCityInMap) {
-                        return true
-                    }
-                }
-            }
+        default:
+            break
         }
         return false
     }
