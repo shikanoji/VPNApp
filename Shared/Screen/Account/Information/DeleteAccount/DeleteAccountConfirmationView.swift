@@ -18,7 +18,7 @@ struct DeleteAccountConfirmationView: View {
     var title: some View {
         HStack {
             Text(L10n.Account.deleteAccount)
-                .font(.system(size: 18, weight: .bold))
+                .font(.system(size: Constant.TextSize.Global.titleDefault, weight: .bold))
                 .foregroundColor(Color.white)
             Spacer()
         }
@@ -27,7 +27,7 @@ struct DeleteAccountConfirmationView: View {
     var note: some View {
         HStack {
             Text(L10n.Account.DeleteAccount.note)
-                .font(.system(size: 14, weight: .regular))
+                .font(.system(size: Constant.TextSize.Global.detailDefault, weight: .regular))
                 .foregroundColor(AppColor.yellowGradient)
             Spacer()
         }
@@ -35,7 +35,7 @@ struct DeleteAccountConfirmationView: View {
     
     var message: some View {
         Text(L10n.Account.DeleteAccount.message)
-            .font(.system(size: 14, weight: .regular))
+            .font(.system(size: Constant.TextSize.Global.detailDefault, weight: .regular))
             .foregroundColor(Color.white)
     }
     

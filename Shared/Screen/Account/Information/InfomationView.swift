@@ -21,8 +21,7 @@ struct InfomationView: View {
     
     var deleteAccountButton: some View {
         AppButton(style: .none, width: UIScreen.main.bounds.size.width - 30, height: 44,
-                  backgroundColor: AppColor.darkButton, textColor: AppColor.redradient,
-                  textSize: 14, text: L10n.Account.deleteAccount) {
+                  backgroundColor: AppColor.darkButton, textColor: AppColor.redradient, text: L10n.Account.deleteAccount) {
             deleteAccount = true }
                   .sheet(isPresented: $deleteAccount) {
                       DeleteAccountConfirmationView(viewModel: DeleteAccountConfirmationViewModel()) {

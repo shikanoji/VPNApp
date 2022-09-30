@@ -9,24 +9,32 @@ import SwiftUI
 
 struct DefaultLabel: ViewModifier {
     func body(content: Content) -> some View {
-        content.foregroundColor(AppColor.textColor).font(.system(size: 14))
+        content
+            .foregroundColor(AppColor.textColor)
+            .font(.system(size: Constant.TextSize.Global.detailDefault))
     }
 }
 
 struct DefaultBold: ViewModifier {
     func body(content: Content) -> some View {
-        content.foregroundColor(AppColor.textColor).font(.system(size: 14, weight: .bold))
+        content
+            .foregroundColor(AppColor.textColor)
+            .font(.system(size: Constant.TextSize.Global.detailDefault, weight: .bold))
     }
 }
 
 struct TitleLabel: ViewModifier {
     func body(content: Content) -> some View {
-        content.foregroundColor(AppColor.textColor).font(.system(size: 24, weight: .bold))
+        content
+            .foregroundColor(AppColor.textColor)
+            .font(.system(size: Constant.TextSize.Global.titleLarge, weight: .bold))
     }
 }
 
 struct LightBlackText: ViewModifier {
     func body(content: Content) -> some View {
-        content.foregroundColor(AppColor.lightBlackText).font(.system(size: 14))
+        content
+            .foregroundColor(AppColor.lightBlackText)
+            .font(.system(size: Constant.TextSize.Global.detailDefault))
     }
 }

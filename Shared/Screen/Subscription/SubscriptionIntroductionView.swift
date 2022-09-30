@@ -60,7 +60,10 @@ struct SubscriptionIntroduction: View {
 //                        }
                         Spacer().frame(height: 15)
                     }
-                    Text(L10n.SubscriptionIntro.note).foregroundColor(AppColor.lightBlackText).font(.system(size: 11)).frame(width: widthConent)
+                    Text(L10n.SubscriptionIntro.note)
+                        .foregroundColor(AppColor.lightBlackText)
+                        .font(.system(size: Constant.TextSize.Global.subcription))
+                        .frame(width: widthConent)
 //                    Spacer().frame(minHeight: 10)
                 }
                 .frame(minHeight: UIScreen.main.bounds.height)

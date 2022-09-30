@@ -20,12 +20,14 @@ struct PlanListCell: View {
                 VStack(alignment: .leading, spacing: 10) {
                     HStack {
                         Text(plan.name)
-                            .font(.system(size: 16, weight: .semibold))
+                            .font(.system(size: Constant.TextSize.PlanListCell.name, weight: .semibold))
                             .foregroundColor(Color.white)
                             .frame(maxWidth: .infinity, alignment: .leading)
                         if !plan.savingText.isEmpty {
                             VStack{
-                                Text(plan.savingText + "%").foregroundColor( AppColor.blackText).font(.system(size: 11, weight: .semibold))
+                                Text(plan.savingText + "%")
+                                    .foregroundColor( AppColor.blackText)
+                                    .font(.system(size: Constant.TextSize.PlanListCell.savingText, weight: .semibold))
                             }
                             .padding(8)
                             .background(focus ? AppColor.planSelectSave : Color.white)
@@ -35,14 +37,16 @@ struct PlanListCell: View {
                     }
                     
                     HStack {
-                        Text(plan.price).font(.system(size: 24, weight: .semibold))
+                        Text(plan.price)
+                            .font(.system(size: Constant.TextSize.PlanListCell.price, weight: .semibold))
                             .foregroundColor(AppColor.themeColor)
-                        Text(" /" + L10n.PlanSelect.month).font(.system(size: 12))
+                        Text(" /" + L10n.PlanSelect.month)
+                            .font(.system(size: Constant.TextSize.PlanListCell.description))
                             .foregroundColor(Color.gray)
                     }
                     
                     Text(plan.description)
-                        .font(.system(size: 12))
+                        .font(.system(size: Constant.TextSize.PlanListCell.description))
                         .foregroundColor(Color.white).lineSpacing(5)
                         .frame(maxWidth: .infinity, alignment: .leading)
                 }

@@ -179,4 +179,35 @@ struct Constant {
         static let disconnectedVPN = Notification.Name("disconnectedVPN")
         static let showMap = Notification.Name("showMap")
     }
+    
+    struct TextSize {
+                
+        struct Global {
+            static let titleLarge: CGFloat = 24
+            static let titleMedium: CGFloat = 18
+            static let titleDefault: CGFloat = 16
+            static let detailDefault: CGFloat = 14
+            static let small:CGFloat = 13
+            static let description:CGFloat = 12
+            static let subcription:CGFloat = 11
+        }
+        
+        struct PlanListCell {
+            static let name: CGFloat = 16
+            static let savingText: CGFloat = 11
+            static let price: CGFloat = 24
+            static let description: CGFloat = 12
+        }
+        
+        struct StaticIPListView {
+            static let staticIP: CGFloat = 12
+            static let currentLoad: CGFloat = 9
+        }
+    }
+            
+    struct TextSizeButton {
+        struct Default {
+            static let medium: CGFloat = 14
+        }
+    }
 }
