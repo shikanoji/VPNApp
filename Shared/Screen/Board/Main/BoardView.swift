@@ -239,7 +239,6 @@ struct BoardView: View {
                         AppSetting.shared.temporaryDisableAutoConnect = false
                         viewModel.connectOrDisconnectByUser = true
                         viewModel.ConnectOrDisconnectVPN()
-                        AppSetting.shared.saveTimeConnectedVPN = Date()
                     })
                     Spacer()
                         .frame(height: Constant.Board.Tabs.topPadding)

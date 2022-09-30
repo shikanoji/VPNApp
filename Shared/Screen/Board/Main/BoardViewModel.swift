@@ -464,10 +464,12 @@ class BoardViewModel: ObservableObject {
         case .off:
                 switch state {
                 case .disconnected:
+                    AppSetting.shared.saveTimeConnectedVPN = nil
                     configStartConnectVPN()
                 case .connecting, .disconnecting:
                     break
                 default:
+                    AppSetting.shared.saveTimeConnectedVPN = Date()
                     configDisconnect()
                 }
         default:
@@ -476,6 +478,7 @@ class BoardViewModel: ObservableObject {
                 return
             }
             if connectOrDisconnectByUser, state == .connected {
+                AppSetting.shared.saveTimeConnectedVPN = Date()
                 showAlertAutoConnectSetting = true
             } else {
                 switch state {
@@ -773,8 +776,8 @@ class BoardViewModel: ObservableObject {
             }
             if [.openVPNTCP, .openVPNUDP].contains(NetworkManager.shared.getValueConfigProtocol),
                let dataCount = OpenVPNManager.shared.getDataCount() {
-                let uploadSpeed = abs(Int(dataCount.sent - self.lastSent))
-                let downSpeed = abs(Int(dataCount.received - self.lastReceived))
+                let uploadSpeed = abs(Int(dataCount.sent &- self.lastSent))
+                let downSpeed = abs(Int(dataCount.received &- self.lastReceived))
                 self.uploadSpeed = UInt(uploadSpeed).descriptionAsDataUnit
                 self.downloadSpeed = UInt(downSpeed).descriptionAsDataUnit
                 self.lastSent = dataCount.sent
