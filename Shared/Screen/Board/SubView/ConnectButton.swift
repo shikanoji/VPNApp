@@ -78,8 +78,8 @@ struct ConnectButton: View {
                 ZStack {
                     Circle()
                         .strokeBorder(viewModel.stateUI == .disconnected ? Color.white : AppColor.themeColor, lineWidth: Constant.Board.QuickButton.widthBorderMax)
-                        .frame(width: calculatebuttonsizeWidth(widthSizeFrame: widthSizeFrame)/4.5 + 20,
-                               height: calculatebuttonsizeHeight(heightSizeFrame: heightSizeFrame)/4.5 + 20)
+                        .frame(width: calculatebuttonsizeWidth(widthSizeFrame: widthSizeFrame)/4.5 + 21,
+                               height: calculatebuttonsizeHeight(heightSizeFrame: heightSizeFrame)/4.5 + 21)
                         .background(Circle().foregroundColor(viewModel.stateUI == .disconnected ? AppColor.themeColor : Color.white))
                     Circle()
                         .strokeBorder(Color.black, lineWidth: Constant.Board.QuickButton.widthBorderMax)
@@ -157,8 +157,8 @@ struct TimeConnectedView: View {
     @StateObject var stopWatch = StopWatch()
     
     var body: some View {
-        VStack(alignment: .trailing, spacing: 0) {
-            Text("Connected")
+        VStack(alignment: .leading, spacing: 0) {
+            Text("   " + "Session")
                 .foregroundColor(Color.gray)
                 .font(.system(size: 14, weight: .bold))
                 .lineLimit(1)
@@ -179,8 +179,8 @@ struct TimeConnectedView: View {
                 }
                 .frame(width: 100, alignment: .leading)
         }
-        .frame(width: Constant.Board.QuickButton.heightSize + 5,
-               height: Constant.Board.QuickButton.heightSize + 5)
+        .frame(width: Constant.Board.QuickButton.heightSize,
+               height: Constant.Board.QuickButton.heightSize)
 
     }
 }

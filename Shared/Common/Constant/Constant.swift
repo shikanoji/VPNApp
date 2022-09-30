@@ -43,7 +43,7 @@ struct Constant {
         struct QuickButton {
             static let widthSize: CGFloat = 95
             static let heightSize: CGFloat = 135
-            static let widthBorderMax: CGFloat = 5
+            static let widthBorderMax: CGFloat = 4
             static let sizeDoc: CGFloat = 8
         }
         
