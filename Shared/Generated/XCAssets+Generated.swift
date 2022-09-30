@@ -72,6 +72,7 @@ internal enum Asset {
     internal static let logoMedium = ImageAsset(name: "Logo-medium")
     internal static let logoSmall = ImageAsset(name: "Logo-small")
     internal static let nodeChange = ImageAsset(name: "Node-Change")
+    internal static let nodeEntry = ImageAsset(name: "Node-Entry")
     internal static let node = ImageAsset(name: "Node")
     internal static let iconCheckbox = ImageAsset(name: "icon_checkbox")
     internal static let iconSettingsItemApps = ImageAsset(name: "icon_settings_item_apps")
@@ -100,6 +101,8 @@ internal enum Asset {
   }
   internal enum Colors {
     internal static let colorLogo = ColorAsset(name: "ColorLogo")
+    internal static let gradientEntry = ColorAsset(name: "GradientEntry")
+    internal static let gradientExit = ColorAsset(name: "GradientExit")
     internal static let vpnConnected = ColorAsset(name: "VPNConnected")
     internal static let vpnUnconnected = ColorAsset(name: "VPNUnconnected")
     internal static let background = ColorAsset(name: "background")

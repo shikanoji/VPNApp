@@ -47,10 +47,6 @@ struct AccountView: View {
                     Text(L10n.Account.viewProfile)
                         .font(.system(size: Constant.TextSize.Global.description, weight: .regular))
                         .foregroundColor(Asset.Colors.lightBlackText.swiftUIColor)
-                    Spacer().frame(width: 10)
-                    Text(L10n.Account.viewProfile)
-                        .font(.system(size: Constant.TextSize.Global.description, weight: .regular))
-                        .foregroundColor(Asset.Colors.lightBlackText.swiftUIColor)
                 }
             }
             .foregroundColor(Color.white)
@@ -100,13 +96,6 @@ struct AccountView: View {
                     Text("Verify your email")
                     .font(.system(size: Constant.TextSize.Global.detailDefault,
                                   weight: .semibold))
-                        .foregroundColor(Asset.Colors.pink.swiftUIColor)
-                    Text("We’ve sent an email to your account to verify your email address and active account. The link in the email will expire in 24 hours.")
-                        .font(.system(size: Constant.TextSize.Global.detailDefault))
-                        .foregroundColor(Asset.Colors.lightBlackText.swiftUIColor)
-                        .frame(height: 60, alignment: .leading)
-                    Text("Resend email")
-                        .font(.system(size: Constant.TextSize.Global.detailDefault))
                         .foregroundColor(Asset.Colors.pink.swiftUIColor)
                     Text("We’ve sent an email to your account to verify your email address and active account. The link in the email will expire in 24 hours.")
                         .font(.system(size: Constant.TextSize.Global.detailDefault))

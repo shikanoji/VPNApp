@@ -10,8 +10,8 @@
 "SubIP" = "Connect to VPN for online security";
 "Unconnect" = "Unprotected";
 "Connected" = "Protected";
-"Connecting" = "Connecting..";
-"QuickUnConnect" = "Quick\nConnect";
+"Connecting" = "Connecting...";
+"QuickUnConnect" = "Quick \n Connect";
 "NavigationTitleNotConnect" = "VPN not connected";
 "NavigationTitleConnecting" = "Connecting...";
 "NavigationTitleConnected" = "VPN connected";

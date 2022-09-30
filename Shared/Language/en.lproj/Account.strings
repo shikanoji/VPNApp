@@ -37,6 +37,8 @@
 "AccountStatus.title" = "Your Subscription";
 "AccountStatus.joined" = "Joined";
 "AccountStatus.paymentHistory" = "Payment history";
+"AccountStatus.paymentHistory.Success" = "Success";
+"AccountStatus.paymentHistory.Failed" = "Failed";
 "AccountStatus.tapToShow" = "Tap to show";
 "AccountStatus.extend" = "Change Plan";
 "AccountStatus.upgradeToPremium" = "Premium plan only $3/month";

@@ -292,11 +292,11 @@ extension AppSetting {
 
         if NetworkManager.shared.selectConfig == .recommended {
             if let vpnSetting = result.appSettings?.vpn {
-                if vpnSetting.defaultTech == "wireguard" {
+                if vpnSetting.defaultTech == "wg" {
                     NetworkManager.shared.recommendConfig = .wireGuard
                 } else if vpnSetting.defaultTech == "openVPN" {
                     if let defaultProtocol = vpnSetting.defaultProtocol {
-                        if defaultProtocol == "UDP" {
+                        if defaultProtocol == "udp" {
                             NetworkManager.shared.recommendConfig = .openVPNUDP
                         } else {
                             NetworkManager.shared.recommendConfig = .openVPNTCP

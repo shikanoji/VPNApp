@@ -80,7 +80,10 @@ class Mesh: ObservableObject {
     }
     
     func isNodeSelected(_ node: Node) -> Bool {
-        return selectedNode?.id == node.id
+        if let selectedNode = selectedNode {
+            return showConnectedNode(node, nodeSelected: selectedNode)
+        }
+        return false
     }
     
     func showConnectedNode(_ node: Node, nodeSelected: Node) -> Bool {

@@ -334,15 +334,6 @@ class BoardViewModel: ObservableObject {
                 if let result = response.result {
                     AppSetting.shared.saveMutilhopList(result)
                     self.mutilhopList = result
-                    if result.count > 0 {
-                        if let selectLocal = NetworkManager.shared.selectMultihop {
-                            if self.mutilhopList.filter({ selectLocal.id == $0.id }).count == 0 {
-                                NetworkManager.shared.selectMultihop = result.first
-                            }
-                        } else {
-                            NetworkManager.shared.selectMultihop = result.first
-                        }
-                    }
                 }
                 completion()
             } onFailure: { error in
@@ -375,9 +366,6 @@ class BoardViewModel: ObservableObject {
         
         if let multihopListLocal = AppSetting.shared.getMutilhopList() {
             mutilhopList = multihopListLocal
-            if mutilhopList.count > 0 {
-                NetworkManager.shared.selectMultihop = mutilhopList.first
-            }
         }
     }
     
@@ -393,16 +381,6 @@ class BoardViewModel: ObservableObject {
         ]
         
         staticIPData = result.staticServers
-        
-        if staticIPData.count > 0 {
-            if let staticLocal = NetworkManager.shared.selectStaticServer {
-                if self.staticIPData.filter({ staticLocal.id == $0.id }).count == 0 {
-                    NetworkManager.shared.selectStaticServer = staticIPData.first
-                }
-            } else {
-                NetworkManager.shared.selectStaticServer = staticIPData.first
-            }
-        }
         
         self.mesh?.configNode(countryNodes: countryNodes,
                               cityNodes: cityNodes,
@@ -776,10 +754,16 @@ class BoardViewModel: ObservableObject {
             }
             if [.openVPNTCP, .openVPNUDP].contains(NetworkManager.shared.getValueConfigProtocol),
                let dataCount = OpenVPNManager.shared.getDataCount() {
-                let uploadSpeed = abs(Int(dataCount.sent &- self.lastSent))
-                let downSpeed = abs(Int(dataCount.received &- self.lastReceived))
+                let intDataCountSent = Int(dataCount.sent)
+                let intLastDataCountSent = Int(self.lastSent)
+                let uploadSpeed = abs(intDataCountSent - intLastDataCountSent)
+                
+                let intDataCountReceived = Int(dataCount.received)
+                let intLastDataCountReceived = Int(self.lastReceived)
+                let downSpeed = abs(intDataCountReceived - intLastDataCountReceived)
                 self.uploadSpeed = UInt(uploadSpeed).descriptionAsDataUnit
                 self.downloadSpeed = UInt(downSpeed).descriptionAsDataUnit
+                
                 self.lastSent = dataCount.sent
                 self.lastReceived = dataCount.received
             } else {
@@ -827,6 +811,12 @@ class BoardViewModel: ObservableObject {
             AppSetting.shared.saveBoardTabWhenConnecting(.location)
             NetworkManager.shared.nodeSelected = node
         }
+        
+        if !connectOrDisconnectByUser {
+            AppSetting.shared.temporaryDisableAutoConnect = true
+        }
+        
+        stopSpeedTimer()
         
         showMap.toggle()
         

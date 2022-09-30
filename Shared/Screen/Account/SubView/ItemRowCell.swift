@@ -82,7 +82,6 @@ struct ItemRowCell: View {
             Group {
                 if showRightButton {
                     Image(Constant.Account.rightButton)
-                        .padding()
                 } else if showSwitch {
                     Toggle(isOn: Binding<Bool>(
                         get: { switchValue },
@@ -108,8 +107,9 @@ struct ItemRowCell: View {
             .frame(width: 50)
             Spacer().frame(width: 15)
         }
-        .padding(.vertical, 8.0)
+        .padding(.vertical, 8)
         .frame(maxWidth: .infinity)
+        .frame(height: 65)
         .background(AppColor.darkButton)
         .cornerRadius(radius: Constant.Menu.radiusCell, corners: [position.rectCorner])
     }

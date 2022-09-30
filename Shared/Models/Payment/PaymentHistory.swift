@@ -43,33 +43,63 @@ struct PaymentHistory: Decodable {
     }
 }
 
-struct PaymentHistoryRow: Decodable {
-    var status: String = ""
-    var packageName: String = ""
-    var paymentDate: String = ""
+struct PaymentCharge: Decodable {
+    var id: String = ""
+    var productName: String = ""
     
     enum CodingKeys: String, CodingKey {
-        case packageName = "packageName"
-        case paymentDate = "paymentDate"
-        case status = "status"
+        case id = "_id"
+        case productName = "productName"
     }
     
     init(from decoder: Decoder) throws {
         let values = try decoder.container(keyedBy: CodingKeys.self)
-        if values.contains(.packageName) {
-            packageName = try values.decode(String.self, forKey: .packageName)
+        
+        if values.contains(.productName) {
+            productName = try values.decode(String.self, forKey: .productName)
+        }
+    }
+    
+    init() { }
+}
+
+struct PaymentHistoryRow: Decodable {
+    var id: String = ""
+    var status: String = ""
+    var packageCharge: PaymentCharge
+    var paymentDate: String = ""
+    
+    enum CodingKeys: String, CodingKey {
+        case id
+        case paymentDate = "paymentDate"
+        case status = "status"
+        case packageCharge
+    }
+    
+    init(from decoder: Decoder) throws {
+        let values = try decoder.container(keyedBy: CodingKeys.self)
+        
+        if values.contains(.id) {
+            status = try values.decode(String.self, forKey: .id)
         }
         
         if values.contains(.status) {
-                    status = try values.decode(String.self, forKey: .status)
+            status = try values.decode(String.self, forKey: .status)
+        }
+        
+        if values.contains(.packageCharge) {
+            packageCharge = try values.decode(PaymentCharge.self, forKey: .packageCharge)
+        } else {
+            packageCharge = PaymentCharge()
         }
         
         if values.contains(.paymentDate) {
-            guard let date = try values.decode(Int?.self, forKey: .paymentDate) else { return }
+            guard let date = try values.decode(Int?.self, forKey: .paymentDate) else {
+                return
+            }
             let expireInteval = TimeInterval(date)
             let expireDate = DateInRegion(seconds: expireInteval, region: .local)
-            paymentDate = expireDate.toFormat("hh:mm:ss dd-MM-yyyy")
+            paymentDate = expireDate.toFormat("hh:mm dd-MM-yyyy")
         }
-        
     }
 }
