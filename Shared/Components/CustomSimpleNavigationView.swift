@@ -29,7 +29,7 @@ struct CustomSimpleNavigationView: View {
                 Spacer().frame(height: UIDevice.current.hasNotch ? 40 : 0)
                 HStack {
                     Spacer()
-                    Text(title).font(.system(size: 16, weight: .bold))
+                    Text(title).font(.system(size: Constant.TextSize.CustomSimpleNavigationView.titleDefault, weight: .bold))
                     Spacer()
                 }.frame(height: 60)
             }

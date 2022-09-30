@@ -34,7 +34,7 @@ struct BottomViewPopup: View {
     var title: some View {
         HStack {
             Text(titleStr)
-                .font(.system(size: 18, weight: .bold))
+                .font(.system(size: Constant.TextSize.BottomViewPopUp.titleDefault, weight: .bold))
                 .foregroundColor(Color.white)
             Spacer()
         }
@@ -42,7 +42,7 @@ struct BottomViewPopup: View {
     
     var message: some View {
         Text(messageStr)
-            .font(.system(size: 14, weight: .regular))
+            .font(.system(size: Constant.TextSize.BottomViewPopUp.detailDefault, weight: .regular))
             .foregroundColor(AppColor.yellowGradient)
     }
     

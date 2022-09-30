@@ -179,4 +179,100 @@ struct Constant {
         static let disconnectedVPN = Notification.Name("disconnectedVPN")
         static let showMap = Notification.Name("showMap")
     }
+    
+    struct TextSize {
+        struct TextModifier {
+            static let titleDefault: CGFloat = 24
+            static let detailDefault: CGFloat = 14
+        }
+        
+        struct AccountView {
+            static let titleDefault: CGFloat = 12
+            static let detailDefault: CGFloat = 14
+        }
+        
+        struct SelectionLocationMultihopView {
+            static let detailDefault: CGFloat = 14
+        }
+        
+        struct AutoConnectView {
+            static let titleDefault: CGFloat = 12
+        }
+        
+        struct DNSSettingView {
+            static let titleDefault: CGFloat = 16
+        }
+        
+        struct DeleteAccountConfirmationView {
+            static let titleDefault: CGFloat = 18
+            static let detailDefault: CGFloat = 14
+        }
+        
+        struct BottomViewPopUp {
+            static let titleDefault: CGFloat = 18
+            static let detailDefault: CGFloat = 14
+        }
+        
+        struct ForceLogoutView {
+            static let titleDefault: CGFloat = 18
+            static let detailDefault: CGFloat = 14
+        }
+        
+        struct CustomSimpleNavigationView {
+            static let titleDefault: CGFloat = 16
+        }
+        
+        struct PlanListCell {
+            static let name: CGFloat = 16
+            static let savingText: CGFloat = 11
+            static let price: CGFloat = 24
+            static let month: CGFloat = 12
+            static let description: CGFloat = 12
+        }
+        
+        struct SubscriptionIntroductionView {
+            static let subcriptionIntro: CGFloat = 11
+        }
+        
+        struct AccountLimitedView {
+            static let accountLimit: CGFloat = 24
+            static let accountLimitNote: CGFloat = 14
+        }
+        
+        struct SearchBar {
+            static let textSearch: CGFloat = 14
+        }
+        
+        struct StaticIPListView {
+            static let staticIP: CGFloat = 12
+            static let currentLoad: CGFloat = 9
+        }
+        
+        struct TimeConnectedView {
+            static let detailDefault: CGFloat = 14
+        }
+        
+        struct SpeedConnectedView {
+            static let detailDefault: CGFloat = 14
+        }
+
+        struct Introduction {
+            static let introBottomTitle: CGFloat = 11
+        }
+        
+        struct NoticeView {
+            static let detailDefault: CGFloat = 14
+        }
+        
+        struct ForceUpdateView {
+            static let updateRequired: CGFloat = 24
+            static let updateRequiredNote: CGFloat = 24
+        }
+    }
+            
+    struct TextSizeButton {
+        struct Default {
+            static let medium: CGFloat = 14
+        }
+    }
 }

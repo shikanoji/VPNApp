@@ -31,7 +31,7 @@ struct DNSSettingView: View {
             Spacer().frame(height: 30)
             HStack {
                 Text(L10n.Settings.Dns.Custom.title)
-                    .font(.system(size: 16, weight: .bold))
+                    .font(.system(size: Constant.TextSize.DNSSettingView.titleDefault, weight: .bold))
                     .foregroundColor(Color.white)
                 Spacer()
             }.frame(width: componentWidth)

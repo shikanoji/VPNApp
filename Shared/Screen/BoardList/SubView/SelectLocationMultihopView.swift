@@ -31,7 +31,7 @@ struct SelectLocationMultihopView: View {
                 HStack {
                     Image(Constant.CustomNavigation.iconLeft)
                     Text(leftText)
-                        .font(.system(size: 14, weight: .medium))
+                        .font(.system(size: Constant.TextSize.SelectionLocationMultihopView.detailDefault, weight: .medium))
                         .foregroundColor(.white)
                     Spacer()
                 }

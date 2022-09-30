@@ -160,7 +160,7 @@ struct TimeConnectedView: View {
         VStack(alignment: .leading, spacing: 0) {
             Text("   " + "Session")
                 .foregroundColor(Color.gray)
-                .font(.system(size: 14, weight: .bold))
+                .font(.system(size: Constant.TextSize.TimeConnectedView.detailDefault, weight: .bold))
                 .lineLimit(1)
                 .onAppear {
                     if self.stopWatch.isPaused() {
@@ -170,7 +170,7 @@ struct TimeConnectedView: View {
                 .frame(width: 100, alignment: .leading)
             Text(self.stopWatch.stopWatchTime)
                 .foregroundColor(Color.white)
-                .font(.system(size: 14, weight: .bold))
+                .font(.system(size: Constant.TextSize.TimeConnectedView.detailDefault, weight: .bold))
                 .lineLimit(1)
                 .onAppear {
                     if self.stopWatch.isPaused() {

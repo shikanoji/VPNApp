@@ -44,7 +44,7 @@ struct AutoConnectView: View {
                             Text(section.type.title)
                                 .padding(.vertical)
                                 .foregroundColor(AppColor.lightBlackText)
-                                .font(Font.system(size: 12))
+                                .font(Font.system(size: Constant.TextSize.AutoConnectView.titleDefault))
                         }
                         ForEach(section.items, id: \.id) { item in
                             ItemRowCell(title: item.type.title,

@@ -27,7 +27,16 @@ struct AppButton: View {
     let icon: Image?
     private let action: () -> Void
     
-    init(style: AppButtonStyle = .none, width: CGFloat = 200, height: CGFloat = 50, backgroundColor: Color = AppColor.themeColor, textColor: Color = AppColor.blackText, textSize: CGFloat = 14, text: String = "", cornerRadius: CGFloat = 10, borderWidth: CGFloat = 0, borderColor: Color = Color.clear, icon: Image? = nil, action: @escaping () -> Void) {
+    init(style: AppButtonStyle = .none, width: CGFloat = 200, height: CGFloat = 50,
+         backgroundColor: Color = AppColor.themeColor,
+         textColor: Color = AppColor.blackText,
+         textSize: CGFloat = Constant.TextSizeButton.Default.medium,
+         text: String = "",
+         cornerRadius: CGFloat = 10,
+         borderWidth: CGFloat = 0,
+         borderColor: Color = Color.clear,
+         icon: Image? = nil,
+         action: @escaping () -> Void) {
         self.style = style
         switch style {
         case .darkButton:

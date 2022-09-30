@@ -58,7 +58,7 @@ struct NoticeView: View {
                         Spacer().frame(height: 5)
                         HStack {
                             Text(L10n.Notice.termOfService)
-                                .font(.system(size: 14, weight: .semibold))
+                                .font(.system(size: Constant.TextSize.NoticeView.detailDefault, weight: .semibold))
                                 .foregroundColor(Color.white)
                                 .underline()
                                 .onTapGesture {
@@ -68,7 +68,7 @@ struct NoticeView: View {
                             Text(L10n.Notice.and).setLightBlackText()
                             Spacer().frame(width: 5)
                             Text(L10n.Notice.privacyPolicy)
-                                .font(.system(size: 14, weight: .semibold))
+                                .font(.system(size: Constant.TextSize.NoticeView.detailDefault, weight: .semibold))
                                 .foregroundColor(Color.white)
                                 .underline()
                                 .onTapGesture {

@@ -17,18 +17,18 @@ struct AccountLimitedView: View {
             Asset.Assets.accountLinked.swiftUIImage
             Spacer().frame(height: 20)
             Text(L10n.PlanSelect.accountLimit)
-                .font(.system(size: 24, weight: .bold))
+                .font(.system(size: Constant.TextSize.AccountLimitedView.accountLimit, weight: .bold))
                 .foregroundColor(Asset.Colors.pink.swiftUIColor)
             Spacer().frame(height: 20)
             HStack {
                 Spacer().frame(width: 30)
                 Text(L10n.PlanSelect.accountLimitNote)
-                    .font(.system(size: 14, weight: .regular))
+                    .font(.system(size: Constant.TextSize.AccountLimitedView.accountLimitNote, weight: .regular))
                     .foregroundColor(Color.white)
                 Spacer().frame(width: 30)
             }
             Spacer().frame(height: 50)
-            AppButton(width: 190, height: 50, backgroundColor: Color.white, textColor: Color.black, textSize: 14, text: L10n.PlanSelect.gotIt) {
+            AppButton(width: 190, height: 50, backgroundColor: Color.white, textColor: Color.black, text: L10n.PlanSelect.gotIt) {
                 //Handle
                 authentication.logout()
             }

@@ -14,13 +14,13 @@ struct ForceUpdateView: View {
             Asset.Assets.appIcon.swiftUIImage
             Spacer().frame(height: 20)
             Text(L10n.Introduction.updateRequired)
-                .font(.system(size: 24, weight: .bold))
+                .font(.system(size: Constant.TextSize.ForceUpdateView.updateRequired, weight: .bold))
                 .foregroundColor(Color.white)
             Spacer().frame(height: 20)
             HStack {
                 Spacer().frame(width: 30)
                 Text(L10n.Introduction.updateRequiredNote)
-                    .font(.system(size: 14, weight: .regular))
+                    .font(.system(size: Constant.TextSize.ForceUpdateView.updateRequiredNote, weight: .regular))
                     .foregroundColor(Color.white)
                     .multilineTextAlignment(.center)
                 Spacer().frame(width: 30)
