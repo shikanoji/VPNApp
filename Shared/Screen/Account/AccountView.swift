@@ -31,21 +31,25 @@ struct AccountView: View {
                     if AppSetting.shared.emailVerified {
                         Asset.Assets.accountVerified.swiftUIImage
                         Text("Verified")
-                            .font(.system(size: 12, weight: .semibold))
+                            .font(.system(size: Constant.TextSize.Global.description, weight: .semibold))
                             .foregroundColor(.green)
                     } else {
                         Asset.Assets.accountNotVerified.swiftUIImage
                         Text("Unverified")
-                            .font(.system(size: 12, weight: .semibold))
+                            .font(.system(size: Constant.TextSize.Global.description, weight: .semibold))
                             .foregroundColor(Asset.Colors.pink.swiftUIColor)
                     }
                     Spacer().frame(width: 10)
                     Text("-")
-                        .font(.system(size: 12, weight: .regular))
+                        .font(.system(size: Constant.TextSize.Global.description, weight: .regular))
                         .foregroundColor(Asset.Colors.lightBlackText.swiftUIColor)
                     Spacer().frame(width: 10)
                     Text(L10n.Account.viewProfile)
-                        .font(.system(size: 12, weight: .regular))
+                        .font(.system(size: Constant.TextSize.Global.description, weight: .regular))
+                        .foregroundColor(Asset.Colors.lightBlackText.swiftUIColor)
+                    Spacer().frame(width: 10)
+                    Text(L10n.Account.viewProfile)
+                        .font(.system(size: Constant.TextSize.Global.description, weight: .regular))
                         .foregroundColor(Asset.Colors.lightBlackText.swiftUIColor)
                 }
             }
@@ -94,14 +98,22 @@ struct AccountView: View {
             Spacer().frame(height: 20)
             VStack(alignment: .leading, spacing: 20) {
                     Text("Verify your email")
-                        .font(.system(size: 14, weight: .semibold))
+                    .font(.system(size: Constant.TextSize.Global.detailDefault,
+                                  weight: .semibold))
                         .foregroundColor(Asset.Colors.pink.swiftUIColor)
                     Text("We’ve sent an email to your account to verify your email address and active account. The link in the email will expire in 24 hours.")
-                        .font(.system(size: 14))
+                        .font(.system(size: Constant.TextSize.Global.detailDefault))
                         .foregroundColor(Asset.Colors.lightBlackText.swiftUIColor)
                         .frame(height: 60, alignment: .leading)
                     Text("Resend email")
-                        .font(.system(size: 14))
+                        .font(.system(size: Constant.TextSize.Global.detailDefault))
+                        .foregroundColor(Asset.Colors.pink.swiftUIColor)
+                    Text("We’ve sent an email to your account to verify your email address and active account. The link in the email will expire in 24 hours.")
+                        .font(.system(size: Constant.TextSize.Global.detailDefault))
+                        .foregroundColor(Asset.Colors.lightBlackText.swiftUIColor)
+                        .frame(height: 60, alignment: .leading)
+                    Text("Resend email")
+                        .font(.system(size: Constant.TextSize.Global.detailDefault))
                         .foregroundColor(.white)
                         .underline()
                         .onTapGesture {
