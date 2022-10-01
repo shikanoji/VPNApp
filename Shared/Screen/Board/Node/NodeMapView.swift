@@ -38,12 +38,12 @@ struct NodeMapView: View {
     var body: some View {
         ZStack {
             ForEach(mesh.showCityNodes ? mesh.cityNodes : mesh.countryNodes) { node in
-                if !(showMultihop && isZooming && !(isEntryNodeMulti(node) || isExitNodeMulti(node))) {
+                if !(showMultihop && isZooming && !isMultihopNode(node)) {
                     NodeView(scale: $scale,
                              node: node,
                              statusConnect: $statusConnect)
                     .position(x: Constant.convertXToMap(node.x),
-                              y: Constant.convertYToMap(node.y, mesh.showCityNodes))
+                              y: Constant.convertYToMap(node.y, mesh.showCityNodes, isMultihopNode(node) && showMultihop))
                     .onTapGesture {
                         self.mesh.selectNode(node)
                     }
@@ -71,6 +71,10 @@ struct NodeMapView: View {
         .onTapGesture {
             self.mesh.removeSelectNode()
         }
+    }
+    
+    func isMultihopNode(_ node: Node) -> Bool {
+        return isEntryNodeMulti(node) || isExitNodeMulti(node)
     }
     
     var showMultihop: Bool {
@@ -117,11 +121,11 @@ struct NodeMapView: View {
                    let exitCityInMap = mesh.getNodeInMap(exitCity) {
                     
                     let point1 = CGPoint(x: Constant.convertXToMap(entryCityInMap.x),
-                                         y: Constant.convertYToMap(entryCityInMap.y, mesh.showCityNodes) + paddingCenter + paddingCenter * scale * 0.05)
+                                         y: Constant.convertYToMap(entryCityInMap.y, mesh.showCityNodes) + paddingCenter + paddingCenter * scale * 0.06)
                     
                     let point2 = CGPoint(x: Constant.convertXToMap(exitCityInMap.x),
                                          y: Constant.convertYToMap(exitCityInMap.y, mesh.showCityNodes)
-                                         + paddingCenter + paddingCenter * scale * 0.05)
+                                         + paddingCenter + paddingCenter * scale * 0.06)
                     
                     let middlePoint = CGPoint(x: (point2.x + point1.x) / 2,
                                               y: min(point1.y, point2.y) - 50)

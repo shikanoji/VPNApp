@@ -94,8 +94,8 @@ struct Constant {
             static let multiConnected: CGFloat = 1.8
             static let multiCityNode: CGFloat = 1.4
             static let multiCountryNode: CGFloat = 1
-            static let paddingCenterCity = heightPopupCity - 12
-            static let paddingCenterCountry = heightPopupCountry + 12
+            static let paddingCenterCity = heightPopupCity - 22
+            static let paddingCenterCountry = heightPopupCountry - 4
         }
     }
     
@@ -177,9 +177,10 @@ struct Constant {
         return (x / Constant.Board.Map.widthMapOrigin) * (Constant.Board.Map.heightScreen * Constant.Board.Map.ration)
     }
     
-    static func convertYToMap(_ y: CGFloat, _ isCityView: Bool = false) -> CGFloat {
+    static func convertYToMap(_ y: CGFloat, _ isCityView: Bool = false, _ isMultihopNode: Bool = false) -> CGFloat {
         let statusPopView: CGFloat = isCityView ? 45 : 16
-        return (y / Constant.Board.Map.heightMapOrigin) * Constant.Board.Map.heightScreen - statusPopView
+        let topViewMultihop: CGFloat = isMultihopNode ? (isCityView ? 12 : 16) : 0
+        return (y / Constant.Board.Map.heightMapOrigin) * Constant.Board.Map.heightScreen - statusPopView - topViewMultihop
     }
     
     struct NameNotification {

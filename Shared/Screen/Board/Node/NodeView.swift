@@ -73,7 +73,7 @@ struct NodeView: View {
                 if statusConnect == .connected {
                     if isMultihopNode {
                         if isEntryNodeMulti {
-                            VStack(spacing: 2) {
+                            VStack(spacing: 0) {
                                 NumberMultiView(text: "1")
                                 Asset.Assets.nodeEntry.swiftUIImage
                                     .resizable()
@@ -81,7 +81,7 @@ struct NodeView: View {
                                            height: sizeNode * Constant.Board.Node.multiConnected * 0.9)
                             }
                         } else if isExitNodeMulti {
-                            VStack(spacing: 2) {
+                            VStack(spacing: 0) {
                                 NumberMultiView(text: "2")
                                 Asset.Assets.nodeChange.swiftUIImage
                                     .resizable()
@@ -152,7 +152,7 @@ struct NodeView: View {
         switch currentTab {
         case .location:
             if let nodeConnected = NetworkManager.shared.nodeConnecting,
-               let nodeInMap = mesh.getCountryNode(nodeConnected) {
+               let nodeInMap = mesh.getNodeInMap(nodeConnected) {
                 return mesh.showConnectedNode(node, nodeSelected: nodeInMap)
             }
         case .staticIP:
