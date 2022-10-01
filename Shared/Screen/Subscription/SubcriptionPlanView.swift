@@ -75,7 +75,9 @@ struct SubcriptionPlanView: View {
                     }
                 }
             }
+
         }
+        .background(AppColor.blackText)
         .ignoresSafeArea()
     }
 }

@@ -44,7 +44,7 @@ struct PlanSelectionView: View {
                                 }
                                 
                                 NavigationLink(destination: SubcriptionPlanView(
-                                    plan: viewModel.planListViewModel.selectedPlan),
+                                    plan: viewModel.planListViewModel.selectedPlan).navigationBarHidden(true),
                                                isActive: $viewModel.showIntroPlanListView) { }
                                 
                                 NavigationLink(destination: EmptyView()) {
@@ -106,6 +106,7 @@ struct PlanSelectionView: View {
         }
         .navigationBarHidden(!viewModel.shouldAllowLogout)
         .navigationBarBackButtonHidden(true)
+        .navigationAppearance(backgroundColor: Asset.Colors.blackText.color, foregroundColor: .white)
     }
 }
 
