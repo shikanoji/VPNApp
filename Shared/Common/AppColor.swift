@@ -74,4 +74,6 @@ struct AppColor {
     static let backgroundLoading = Asset.Colors.backgroundLoading.swiftUIColor
     
     static let grayBackground = Asset.Colors.grayCenterBackground.swiftUIColor
+    
+    static let freeTrial = Asset.Colors.freeTrial.swiftUIColor
 }

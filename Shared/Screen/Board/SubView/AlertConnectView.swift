@@ -33,7 +33,20 @@ struct AlertConnectView: View {
     
     func AlertConnectView() -> some View {
         HStack(spacing: 10) {
-            ImageView(withURL: flag, size: ensignSize)
+            Group {
+                if let url = URL(string: flag) {
+                    AsyncImage(
+                        url: url,
+                        placeholder: {
+                            Asset.Assets.flagDefault.swiftUIImage
+                                .resizable()
+                        },
+                        image: { Image(uiImage: $0).resizable() })
+                } else {
+                    Asset.Assets.flagDefault.swiftUIImage
+                }
+            }
+//            ImageView(withURL: flag, size: ensignSize)
                 .clipShape(Circle())
                 .frame(width: Constant.Board.NodePopupView.frameEnsign,
                        height: Constant.Board.NodePopupView.frameEnsign)

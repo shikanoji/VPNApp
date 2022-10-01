@@ -44,10 +44,22 @@ struct NodePopupView: View {
                     .padding(8)
                     .background(AppColor.backgroundCity)
                     HStack(spacing: 6) {
-                        ImageView(withURL: node.flag, size: ensignSize)
-                            .clipShape(Circle())
-                            .frame(width: Constant.Board.NodePopupView.frameEnsign,
-                                   height: Constant.Board.NodePopupView.frameEnsign)
+                        Group {
+                            if let url = URL(string: node.flag) {
+                                AsyncImage(
+                                    url: url,
+                                    placeholder: {
+                                        Asset.Assets.flagDefault.swiftUIImage
+                                            .resizable()
+                                    },
+                                    image: { Image(uiImage: $0).resizable() })
+                            } else {
+                                Asset.Assets.flagDefault.swiftUIImage
+                            }
+                        }
+                        .clipShape(Circle())
+                        .frame(width: Constant.Board.NodePopupView.frameEnsign,
+                               height: Constant.Board.NodePopupView.frameEnsign)
                         
                         Text(node.name)
                             .font(.system(size: Constant.Board.NodePopupView.sizeFont,
@@ -63,10 +75,22 @@ struct NodePopupView: View {
         } else {
             return AnyView(
                 HStack(spacing: 10) {
-                    ImageView(withURL: node.flag, size: ensignSize)
-                        .clipShape(Circle())
-                        .frame(width: Constant.Board.NodePopupView.frameEnsign,
-                               height: Constant.Board.NodePopupView.frameEnsign)
+                    Group {
+                        if let url = URL(string: node.flag) {
+                            AsyncImage(
+                                url: url,
+                                placeholder: {
+                                    Asset.Assets.flagDefault.swiftUIImage
+                                        .resizable()
+                                },
+                                image: { Image(uiImage: $0).resizable() })
+                        } else {
+                            Asset.Assets.flagDefault.swiftUIImage
+                        }
+                    }
+                    .clipShape(Circle())
+                    .frame(width: Constant.Board.NodePopupView.frameEnsign,
+                           height: Constant.Board.NodePopupView.frameEnsign)
                     
                     Text(node.name)
                         .font(.system(size: Constant.Board.NodePopupView.sizeFont + 2,

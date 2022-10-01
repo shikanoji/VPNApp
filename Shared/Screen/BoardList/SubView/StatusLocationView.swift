@@ -19,10 +19,22 @@ struct StatusLocationView: View {
     var body: some View {
         HStack(spacing: 0) {
             if statusConnect == .connected {
-                ImageView(withURL: flag,
-                          size: imageSize,
-                          placeholder: Constant.BoardList.iconCity)
+                Group {
+                    if let url = URL(string: flag) {
+                        AsyncImage(
+                            url: url,
+                            placeholder: {
+                                Asset.Assets.flagDefault.swiftUIImage
+                                    .resizable()
+                            },
+                            image: { Image(uiImage: $0).resizable() })
+                    } else {
+                        Asset.Assets.flagDefault.swiftUIImage
+                    }
+                }
                     .clipShape(Circle())
+                    .frame(width: imageSize + 4,
+                           height: imageSize + 4)
                     .padding()
                 Text(name)
                     .font(Constant.BoardList.fontLocationStatus)

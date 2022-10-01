@@ -45,7 +45,9 @@ struct PaymentHistoryView: View {
                                         position: viewModel.paymentHistory.getPosition(index))
                             .onAppear {
                                 if index == viewModel.paymentHistory.count - 1, viewModel.enableLoadMore, !viewModel.showProgressView {
-                                    viewModel.fetchPaymentHistory(true)
+                                    DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
+                                        viewModel.fetchPaymentHistory(true)
+                                    }
                                 }
                             }
                         }

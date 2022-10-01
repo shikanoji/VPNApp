@@ -68,12 +68,40 @@ struct MultiHopView: View {
                             NotificationCenter.default.post(name: Constant.NameNotification.showMap, object: nil)
                         } label: {
                             HStack {
-                                ImageView(withURL: nodeEntry.flag, size: sizeIcon - 8)
+                                Group {
+                                    if let url = URL(string: nodeEntry.flag) {
+                                        AsyncImage(
+                                            url: url,
+                                            placeholder: {
+                                                Asset.Assets.flagDefault.swiftUIImage
+                                                    .resizable()
+                                            },
+                                            image: { Image(uiImage: $0).resizable() })
+                                    } else {
+                                        Asset.Assets.flagDefault.swiftUIImage
+                                    }
+                                }
+                                .frame(width: sizeIcon - 6,
+                                       height: sizeIcon - 6)
                                     .clipShape(Circle())
                                     .brightness(-0.5)
                                     .padding(.trailing, -5)
-                                ImageView(withURL: nodeExit.flag, size: sizeIcon)
+                                Group {
+                                    if let url = URL(string: nodeExit.flag) {
+                                        AsyncImage(
+                                            url: url,
+                                            placeholder: {
+                                                Asset.Assets.flagDefault.swiftUIImage
+                                                    .resizable()
+                                            },
+                                            image: { Image(uiImage: $0).resizable() })
+                                    } else {
+                                        Asset.Assets.flagDefault.swiftUIImage
+                                    }
+                                }
                                     .clipShape(Circle())
+                                    .frame(width: sizeIcon,
+                                           height: sizeIcon)
                                 Text(nodeEntry.name)
                                     .foregroundColor(.gray)
                                     .font(Constant.BoardList.fontNodeList)
