@@ -38,18 +38,20 @@ struct NodeMapView: View {
     var body: some View {
         ZStack {
             ForEach(mesh.showCityNodes ? mesh.cityNodes : mesh.countryNodes) { node in
-                NodeView(scale: $scale,
-                         node: node,
-                         statusConnect: $statusConnect)
-                .position(x: Constant.convertXToMap(node.x),
-                          y: Constant.convertYToMap(node.y, mesh.showCityNodes))
-                .onTapGesture {
-                    self.mesh.selectNode(node)
+                if !(showMultihop && isZooming && !(isEntryNodeMulti(node) || isExitNodeMulti(node))) {
+                    NodeView(scale: $scale,
+                             node: node,
+                             statusConnect: $statusConnect)
+                    .position(x: Constant.convertXToMap(node.x),
+                              y: Constant.convertYToMap(node.y, mesh.showCityNodes))
+                    .onTapGesture {
+                        self.mesh.selectNode(node)
+                    }
+                    .animation(nil)
                 }
-                .animation(nil)
             }
             
-            if (statusConnect == .connected && AppSetting.shared.getBoardTabWhenConnecting() == .multiHop) {
+            if showMultihop {
                 if !isZooming {
                     multiView()
                         .stroke(
@@ -61,6 +63,7 @@ struct NodeMapView: View {
                         .onDisappear {
                             mesh.removeSelectNode()
                         }
+                        .animation(.default)
                 }
             }
         }
@@ -68,6 +71,10 @@ struct NodeMapView: View {
         .onTapGesture {
             self.mesh.removeSelectNode()
         }
+    }
+    
+    var showMultihop: Bool {
+        statusConnect == .connected && AppSetting.shared.getBoardTabWhenConnecting() == .multiHop
     }
     
     var paddingCenter: CGFloat {
@@ -79,6 +86,24 @@ struct NodeMapView: View {
            let entry = multi.entry?.country,
            let exit = multi.exit?.country {
             return entry.x < exit.x
+        }
+        return false
+    }
+    
+    func isEntryNodeMulti(_ node: Node) -> Bool {
+        if let multi = NetworkManager.shared.selectMultihop,
+           let entryCity = multi.entry?.city,
+           let entryCityInMap = mesh.getNodeInMap(entryCity) {
+            return mesh.showConnectedNode(node, nodeSelected: entryCityInMap)
+        }
+        return false
+    }
+    
+    func isExitNodeMulti(_ node: Node) -> Bool {
+        if let multi = NetworkManager.shared.selectMultihop,
+           let exitCity = multi.exit?.city,
+           let exitCityInMap = mesh.getNodeInMap(exitCity) {
+            return mesh.showConnectedNode(node, nodeSelected: exitCityInMap)
         }
         return false
     }
