@@ -11,10 +11,13 @@ struct CustomSimpleNavigationView: View {
     @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
     var title: String
     var backgroundColor: Color = AppColor.background
+    
+    @Environment(\.safeAreaInsets) private var safeAreaInsets
+    
     var body: some View {
         ZStack {
             VStack {
-                Spacer().frame(height: UIDevice.current.hasNotch ? 40 : 0)
+                Spacer().frame(height: safeAreaInsets.top)
                 HStack{
                     Spacer().frame(width: 15)
                     Label(L10n.Global.back, systemImage: "chevron.backward")
@@ -23,16 +26,18 @@ struct CustomSimpleNavigationView: View {
                             presentationMode.wrappedValue.dismiss()
                         }
                     Spacer()
-                }.frame(height: 60)
+                }
             }
             VStack {
-                Spacer().frame(height: UIDevice.current.hasNotch ? 40 : 0)
+                Spacer().frame(height: safeAreaInsets.top)
                 HStack {
                     Spacer()
                     Text(title).font(.system(size: Constant.TextSize.Global.titleMedium, weight: .bold))
                     Spacer()
-                }.frame(height: 60)
+                }
             }
-        }.background(backgroundColor)
+        }
+        .frame(height: 60 + safeAreaInsets.top)
+        .background(backgroundColor)
     }
 }

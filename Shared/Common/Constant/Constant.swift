@@ -18,6 +18,7 @@ struct Constant {
             static let connected = "icon_connected_board"
             static let uploadSpeed = "icon_board_up_speed"
             static let downloadSpeed = "icon_board_down_speed"
+            static let falgDefault = "flag-default"
         }
         
         struct SubBoard {
@@ -189,6 +190,8 @@ struct Constant {
         static let sessionExpired = Notification.Name("sessionExpired")
         static let disconnectedVPN = Notification.Name("disconnectedVPN")
         static let showMap = Notification.Name("showMap")
+        static let showIntroPlan = Notification.Name("showIntroPlan")
+        static let startFree7DayTrial = Notification.Name("startFree7DayTrial")
     }
     
     struct TextSize {
@@ -204,10 +207,13 @@ struct Constant {
         }
         
         struct PlanListCell {
-            static let name: CGFloat = 16
+            static let name: CGFloat = 14
             static let savingText: CGFloat = 11
-            static let price: CGFloat = 24
+            static let price: CGFloat = 20
             static let description: CGFloat = 12
+            static let titleSubcription: CGFloat = 32
+            static let header: CGFloat = 15
+            static let body: CGFloat = 13
         }
         
         struct StaticIPListView {
@@ -220,5 +226,14 @@ struct Constant {
         struct Default {
             static let medium: CGFloat = 14
         }
+    }
+    
+    struct SizeImage {
+        static let widthButton: CGFloat = 30
+        static let heightButton: CGFloat = 30
+    }
+    
+    struct SizeButton {
+        static let widthButtonFull = Constant.Board.Map.widthScreen - 80
     }
 }

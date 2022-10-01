@@ -12,49 +12,60 @@ struct PlanSelectionView: View {
     @Environment(\.presentationMode) var presentationMode
     @EnvironmentObject var authentication: Authentication
     @StateObject var viewModel: PlanSelectionViewModel
-    let widthConent = Constant.Board.Map.widthScreen - 80
+    
+    let widthContent = Constant.SizeButton.widthButtonFull
     
     var body: some View {
         LoadingScreen(isShowing: $viewModel.showProgressView) {
             Background {
-                VStack {
-                    CustomSimpleNavigationView(title: "", backgroundColor: .clear).opacity(viewModel.shouldAllowLogout ? 0 : 1)
-                    Group {
-                        Spacer().frame(height: 50)
-                        Text(L10n.PlanSelect.title).setTitle()
-                        Spacer().frame(height: 10)
-                        Text(L10n.PlanSelect.body).setDefault()
-                    }
-                    
-                    Group {
-                        Spacer().frame(height: 20)
-                        PlanListView(viewModel: viewModel.planListViewModel, widthConent: widthConent)
-                        Spacer().frame(height: 20)
-                    }
-                    Group {
-                        NavigationLink(destination: WelcomeView().navigationBarHidden(true),
-                                       isActive: $viewModel.toWelcomeScreen) {
-                        }
-                        NavigationLink(destination: AccountLimitedView().navigationBarHidden(true),
-                                       isActive: $viewModel.shouldShowAccountLimitedView) {
-                        }
-                        NavigationLink(destination: EmptyView()) {
-                            EmptyView()
-                        }
-                    }
-                    
-                    AppButton(width: widthConent, text: L10n.PlanSelect.continueButton) {
+                ZStack {
+                    AppColor.blackText
+                    ScrollView {
+                        VStack {
+                            CustomSimpleNavigationView(title: "", backgroundColor: .clear).opacity(viewModel.shouldAllowLogout ? 0 : 1)
+                            Group {
+                                Spacer().frame(height: 30)
+                                Text(L10n.PlanSelect.title).setTitle()
+                                Spacer().frame(height: 10)
+                                Text(L10n.PlanSelect.body).setDefault()
+                            }
+                            
+                            Group {
+                                Spacer().frame(height: 20)
+                                PlanListView(viewModel: viewModel.planListViewModel)
+                                Spacer().frame(height: 20)
+                            }
+                            Group {
+                                NavigationLink(destination: WelcomeView().navigationBarHidden(true),
+                                               isActive: $viewModel.toWelcomeScreen) {
+                                }
+                                NavigationLink(destination: AccountLimitedView().navigationBarHidden(true),
+                                               isActive: $viewModel.shouldShowAccountLimitedView) {
+                                }
+                                
+                                NavigationLink(destination: SubcriptionPlanView(
+                                    plan: viewModel.planListViewModel.selectedPlan),
+                                               isActive: $viewModel.showIntroPlanListView) { }
+                                
+                                NavigationLink(destination: EmptyView()) {
+                                    EmptyView()
+                                }
+                            }
+                            
+                            AppButton(width: widthContent, text: L10n.PlanSelect.continueButton) {
 #if DEBUG
-                        viewModel.toWelcomeScreen = true
+                                viewModel.toWelcomeScreen = true
 #else
-                        viewModel.purchasePlan()
+                                viewModel.purchasePlan()
 #endif
+                            }
+                            Spacer().frame(height: 20)
+                            
+                            Text(L10n.PlanSelect.notePlan).setDefault()
+                            
+                            Spacer()
+                        }
                     }
-                    Spacer().frame(height: 20)
-                    
-                    Text(L10n.PlanSelect.notePlan).setDefault()
-
-                    Spacer()
                 }
                 .toolbar {
                     ToolbarItem(placement: .navigationBarTrailing) {

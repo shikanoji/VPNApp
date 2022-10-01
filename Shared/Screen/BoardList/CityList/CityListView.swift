@@ -22,8 +22,21 @@ struct CityListView: View {
             }) {
                 HStack {
                     Image(Constant.CustomNavigation.iconLeft)
-                    ImageView(withURL: $node.flag.wrappedValue, size: imageSize)
+                    Group {
+                        if let url = URL(string: node.flag) {
+                            AsyncImage(
+                                url: url,
+                                placeholder: {
+                                    Asset.Assets.flagDefault.swiftUIImage
+                                        .resizable()
+                                },
+                                image: { Image(uiImage: $0).resizable() })
+                        } else {
+                            Asset.Assets.flagDefault.swiftUIImage
+                        }
+                    }
                         .clipShape(Circle())
+                        .frame(width: imageSize, height: imageSize)
                     Text(node.name)
                         .font(Constant.BoardList.fontNameCity)
                         .foregroundColor(.white)

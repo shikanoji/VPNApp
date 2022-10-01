@@ -9,54 +9,119 @@ import Foundation
 import Combine
 import SwiftUI
 
-class ImageLoader: ObservableObject {
-    var didChange = PassthroughSubject<Data, Never>()
+struct AsyncImage<Placeholder: View>: View {
+    @StateObject private var loader: ImageLoader
+    private let placeholder: Placeholder
+    private let image: (UIImage) -> Image
     
-    var data: Data = Data()
-    {
-        didSet {
-            didChange.send(data)
-        }
-    }
-    
-    init(urlString:String) {
-        guard let url = URL(string: urlString) else {
-            DispatchQueue.main.async {
-                self.data = Data()
-            }
-            return
-        }
-        let task = URLSession.shared.dataTask(with: url) { data, response, error in
-            guard let data = data else {
-                return
-            }
-            DispatchQueue.main.async {
-                self.data = data
-            }
-        }
-        task.resume()
-    }
-}
-
-struct ImageView: View {
-    @ObservedObject var imageLoader:ImageLoader
-    @State var image:UIImage = UIImage()
-    @State var placeholder:UIImage = UIImage()
-    @State var size: CGFloat = 100
-    
-    init(withURL url:String, size: CGFloat = 100, placeholder: UIImage? = nil) {
-        self.size = size
-        self.placeholder = placeholder ?? UIImage()
-        imageLoader = ImageLoader(urlString:url)
+    init(
+        url: URL,
+        @ViewBuilder placeholder: () -> Placeholder,
+        @ViewBuilder image: @escaping (UIImage) -> Image = Image.init(uiImage:)
+    ) {
+        self.placeholder = placeholder()
+        self.image = image
+        _loader = StateObject(wrappedValue: ImageLoader(url: url, cache: Environment(\.imageCache).wrappedValue))
     }
     
     var body: some View {
-        Image(uiImage: image)
-            .resizable()
-            .aspectRatio(contentMode: .fit)
-            .frame(width:size, height:size)
-            .onReceive(imageLoader.didChange) { data in
-                self.image = UIImage(data: data) ?? self.placeholder
+        content
+            .onAppear(perform: loader.load)
+    }
+    
+    private var content: some View {
+        Group {
+            if loader.image != nil {
+                image(loader.image!)
+            } else {
+                placeholder
             }
+        }
+    }
+}
+
+class ImageLoader: ObservableObject {
+    @Published var image: UIImage?
+    
+    private(set) var isLoading = false
+    
+    private let url: URL
+    private var cache: ImageCache?
+    private var cancellable: AnyCancellable?
+    
+    private static let imageProcessingQueue = DispatchQueue(label: "image-processing")
+    
+    init(url: URL, cache: ImageCache? = nil) {
+        self.url = url
+        self.cache = cache
+    }
+    
+    deinit {
+        cancel()
+    }
+    
+    func load() {
+        guard !isLoading else { return }
+
+        if let image = cache?[url] {
+            self.image = image
+            return
+        }
+        
+        cancellable = URLSession.shared.dataTaskPublisher(for: url)
+            .map { UIImage(data: $0.data) }
+            .replaceError(with: nil)
+            .handleEvents(receiveSubscription: { [weak self] _ in self?.onStart() },
+                          receiveOutput: { [weak self] in self?.cache($0) },
+                          receiveCompletion: { [weak self] _ in self?.onFinish() },
+                          receiveCancel: { [weak self] in self?.onFinish() })
+            .subscribe(on: Self.imageProcessingQueue)
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] in self?.image = $0 }
+    }
+    
+    func cancel() {
+        cancellable?.cancel()
+    }
+    
+    private func onStart() {
+        isLoading = true
+    }
+    
+    private func onFinish() {
+        isLoading = false
+    }
+    
+    private func cache(_ image: UIImage?) {
+        image.map { cache?[url] = $0 }
+    }
+}
+
+protocol ImageCache {
+    subscript(_ url: URL) -> UIImage? { get set }
+}
+
+struct TemporaryImageCache: ImageCache {
+    private let cache: NSCache<NSURL, UIImage> = {
+        let cache = NSCache<NSURL, UIImage>()
+        cache.countLimit = 100 // 100 items
+        cache.totalCostLimit = 1024 * 1024 * 100 // 100 MB
+        return cache
+    }()
+    
+    subscript(_ key: URL) -> UIImage? {
+        get { cache.object(forKey: key as NSURL) }
+        set { newValue == nil ? cache.removeObject(forKey: key as NSURL) : cache.setObject(newValue!, forKey: key as NSURL) }
+    }
+}
+
+struct ImageCacheKey: EnvironmentKey {
+    static let defaultValue: ImageCache = TemporaryImageCache()
+}
+
+extension EnvironmentValues {
+    var imageCache: ImageCache {
+        get { self[ImageCacheKey.self] }
+        set { self[ImageCacheKey.self] = newValue }
     }
 }

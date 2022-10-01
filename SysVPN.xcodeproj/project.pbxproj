@@ -239,6 +239,7 @@
 		EED4F5A52855A5600098DF47 /* FAQDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EED4F5A42855A5600098DF47 /* FAQDetailView.swift */; };
 		EED4F5A92855A5DA0098DF47 /* WebView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EED4F5A82855A5DA0098DF47 /* WebView.swift */; };
 		EED4F5AB2855D2A90098DF47 /* MultiopNodeModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EED4F5AA2855D2A90098DF47 /* MultiopNodeModel.swift */; };
+		EED9DB6728E8101300E75882 /* SubcriptionPlanView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EED9DB6628E8101300E75882 /* SubcriptionPlanView.swift */; };
 		EEEAF2172782E1A100A96114 /* NodeMapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEEAF2162782E1A100A96114 /* NodeMapView.swift */; };
 		EEEAF2192785834200A96114 /* NodePopupView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEEAF2182785834200A96114 /* NodePopupView.swift */; };
 /* End PBXBuildFile section */
@@ -495,6 +496,7 @@
 		EED4F5A42855A5600098DF47 /* FAQDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FAQDetailView.swift; sourceTree = "<group>"; };
 		EED4F5A82855A5DA0098DF47 /* WebView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebView.swift; sourceTree = "<group>"; };
 		EED4F5AA2855D2A90098DF47 /* MultiopNodeModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MultiopNodeModel.swift; sourceTree = "<group>"; };
+		EED9DB6628E8101300E75882 /* SubcriptionPlanView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubcriptionPlanView.swift; sourceTree = "<group>"; };
 		EEEAF2162782E1A100A96114 /* NodeMapView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NodeMapView.swift; sourceTree = "<group>"; };
 		EEEAF2182785834200A96114 /* NodePopupView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NodePopupView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -701,6 +703,7 @@
 				D79E82942796F671009E36F3 /* WelcomeView.swift */,
 				D79E829827970649009E36F3 /* SetupVPNView.swift */,
 				AC91BDEE287C5C3A002776E6 /* AccountLimitedView.swift */,
+				EED9DB6628E8101300E75882 /* SubcriptionPlanView.swift */,
 			);
 			path = Subscription;
 			sourceTree = "<group>";
@@ -1598,6 +1601,7 @@
 				D7A4AC472795743300C88162 /* NotificationNameExtension.swift in Sources */,
 				D79C224E27BE0FA100B54613 /* AppSetting+Board.swift in Sources */,
 				D7A4AC4127952C4700C88162 /* PlanListView.swift in Sources */,
+				EED9DB6728E8101300E75882 /* SubcriptionPlanView.swift in Sources */,
 				EE85EDBD27B26FC4000F967A /* DescriptionMultihopView.swift in Sources */,
 				D78044F227590E990086E59D /* TextModifier.swift in Sources */,
 				D79E82952796F671009E36F3 /* WelcomeView.swift in Sources */,

@@ -18,6 +18,7 @@ class PlanSelectionViewModel: ObservableObject {
     @Published var showProgressView = false
     @Published var shouldShowAccountLimitedView = false
     @Published var showAlert = false
+    @Published var showIntroPlanListView = false
     var shouldAllowLogout: Bool
     var authentication: Authentication?
     var alertMessage: String = ""
@@ -26,7 +27,34 @@ class PlanSelectionViewModel: ObservableObject {
         planList = []
         planListViewModel = PlanListViewModel()
         self.shouldAllowLogout = shouldAllowLogout
+        
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(showIntroPlan),
+            name: Constant.NameNotification.showIntroPlan,
+            object: nil
+        )
+        
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(startFree7DayTrial),
+            name: Constant.NameNotification.startFree7DayTrial,
+            object: nil
+        )
     }
+    
+    @objc private func startFree7DayTrial() {
+#if DEBUG
+        toWelcomeScreen = true
+#else
+        purchasePlan()
+#endif
+    }
+    
+    @objc private func showIntroPlan() {
+        showIntroPlanListView = true
+    }
+    
     func loadPlans() {
         IAPHandler.shared.setProductIds(ids: productIDs)
         IAPHandler.shared.fetchAvailableProducts { [weak self] products in

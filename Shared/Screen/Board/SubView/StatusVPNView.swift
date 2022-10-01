@@ -20,9 +20,24 @@ struct StatusVPNView: View {
                 .foregroundColor((status == .connected ? AppColor.connectedStateView : AppColor.disconectStateView).opacity(0.7))
             HStack(spacing: 15) {
                 if flag != "" && status == .connected {
-                    ImageView(withURL: flag, size: 32, placeholder: UIImage(named: Constant.Board.Image.locationDefault))
-                        .overlay(RoundedRectangle(cornerRadius: 16)
-                            .stroke(Color.white, lineWidth: 2))
+                    Group {
+                        if let url = URL(string: flag) {
+                            AsyncImage(
+                                url: url,
+                                placeholder: {
+                                    Asset.Assets.iconLocationDefaultBoard.swiftUIImage
+                                        .resizable()
+                                },
+                                image: { Image(uiImage: $0).resizable() })
+                        } else {
+                            Asset.Assets.iconLocationDefaultBoard.swiftUIImage
+                                .resizable()
+                        }
+                    }
+                    .overlay(RoundedRectangle(cornerRadius: 16)
+                        .stroke(Color.white, lineWidth: 2))
+                    .frame(width: 32,
+                           height: 32)
                 } else {
                     Asset.Assets.iconLocationDefaultBoard.swiftUIImage
                 }
