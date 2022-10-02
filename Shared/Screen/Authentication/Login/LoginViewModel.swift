@@ -24,7 +24,6 @@ class LoginViewModel: NSObject, ObservableObject {
     var authentication: Authentication?
     var loginDisable: Bool {
         return false
-        email.isEmpty || password.isEmpty
     }
     
     func fullLogin() {
@@ -43,7 +42,7 @@ class LoginViewModel: NSObject, ObservableObject {
         }
         showProgressView = true
         
-        ServiceManager.shared.login(email: "test@gmail.com", password: "X12345678")
+        ServiceManager.shared.login(email: email, password: password)
             .subscribe(onSuccess: { [self] response in
                 self.showProgressView = false
                 if let result = response.result {

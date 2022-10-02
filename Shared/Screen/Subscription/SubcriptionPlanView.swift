@@ -22,7 +22,6 @@ struct SubcriptionPlanView: View {
     
     func textBody(_ text: String) -> some View {
         Text(text)
-            .underline()
             .font(.system(size: Constant.TextSize.PlanListCell.body, weight: .medium))
             .foregroundColor(Color.white).lineSpacing(5)
             .multilineTextAlignment(.center)
@@ -64,6 +63,8 @@ struct SubcriptionPlanView: View {
                         .foregroundColor(Color.white)
                 }
                 
+                Spacer()
+                
                 VStack(spacing: 16) {
                     AppButton(width: widthConent, text: L10n.Introduction.trialButton) {
                         NotificationCenter.default.post(name: Constant.NameNotification.startFree7DayTrial, object: nil)
@@ -74,8 +75,9 @@ struct SubcriptionPlanView: View {
                         presentationMode.wrappedValue.dismiss()
                     }
                 }
+                
+                Spacer().frame(minHeight: 20)
             }
-
         }
         .background(AppColor.blackText)
         .ignoresSafeArea()

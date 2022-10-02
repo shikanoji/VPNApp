@@ -95,7 +95,7 @@ struct Constant {
             static let multiCityNode: CGFloat = 1.4
             static let multiCountryNode: CGFloat = 1
             static let paddingCenterCity = heightPopupCity - 22
-            static let paddingCenterCountry = heightPopupCountry - 4
+            static let paddingCenterCountry = heightPopupCountry
         }
     }
     
@@ -179,7 +179,7 @@ struct Constant {
     
     static func convertYToMap(_ y: CGFloat, _ isCityView: Bool = false, _ isMultihopNode: Bool = false) -> CGFloat {
         let statusPopView: CGFloat = isCityView ? 45 : 16
-        let topViewMultihop: CGFloat = isMultihopNode ? (isCityView ? 12 : 16) : 0
+        let topViewMultihop: CGFloat = isMultihopNode ? 12 : 0
         return (y / Constant.Board.Map.heightMapOrigin) * Constant.Board.Map.heightScreen - statusPopView - topViewMultihop
     }
     

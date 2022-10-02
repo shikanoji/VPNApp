@@ -229,6 +229,7 @@ struct BoardView: View {
                     }, tapRightIcon: {
                         handlerTapRightNavigation()
                     })
+                    .zIndex(3)
                     .padding(.top)
                     StatusVPNView(ip: viewModel.ip, status: viewModel.stateUI, flag: viewModel.flag, name: viewModel.nameSelect)
                     .padding(.top, 0)

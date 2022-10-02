@@ -50,15 +50,6 @@ struct NodeView: View {
         return mesh.showCityNodes ? Constant.Board.Node.multiCityNode : Constant.Board.Node.multiCountryNode
     }
     
-    func nodeDefaultNotConnected() -> some View {
-        AnyView(
-            Asset.Assets.nodeNotConnected.swiftUIImage
-            .resizable()
-            .frame(width: sizeNode * multi,
-                   height: sizeNode * multi)
-        )
-    }
-    
     var body: some View {
         VStack(spacing: 10) {
             Group {
@@ -89,7 +80,10 @@ struct NodeView: View {
                                            height: sizeNode * Constant.Board.Node.multiConnected)
                             }
                         } else {
-                            nodeDefaultNotConnected()
+                            Asset.Assets.nodeNotConnected.swiftUIImage
+                                .resizable()
+                                .frame(width: sizeNode * multi,
+                                       height: sizeNode * multi)
                         }
                     } else {
                         if isConnectedNode {
@@ -98,7 +92,10 @@ struct NodeView: View {
                                 .frame(width: sizeNode * Constant.Board.Node.multiConnected,
                                        height: sizeNode * Constant.Board.Node.multiConnected)
                         } else {
-                            nodeDefaultNotConnected()
+                            Asset.Assets.nodeNotConnected.swiftUIImage
+                                .resizable()
+                                .frame(width: sizeNode * multi,
+                                       height: sizeNode * multi)
                         }
                     }
                 } else {

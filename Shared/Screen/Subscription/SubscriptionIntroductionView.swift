@@ -18,10 +18,8 @@ struct SubscriptionIntroduction: View {
         Background {
             ScrollView(.vertical, showsIndicators: false) {
                 VStack(alignment: .center) {
-//                    Spacer().frame(minHeight: 10)
                     Text(L10n.SubscriptionIntro.title).setTitle()
                     Asset.Assets.subscriptionIntroImage.swiftUIImage
-//                    Group {
                         Spacer().frame(height: 20)
                         HStack{
                             Asset.Assets.unlimited.swiftUIImage
@@ -44,7 +42,6 @@ struct SubscriptionIntroduction: View {
                             Spacer()
                         }.frame(width: widthConent)
                         Spacer().frame(height: 30)
-//                    }
                     Group {
                         NavigationLink(destination: PlanSelectionView(viewModel: PlanSelectionViewModel(shouldAllowLogout: true)),
                                        isActive: $toPlanSelection) {
@@ -55,16 +52,12 @@ struct SubscriptionIntroduction: View {
                         Spacer().frame(height: 20)
                         NavigationLink(destination: WelcomeView(), isActive: $toWelcomeScreen) {
                         }
-//                        AppButton(width: 250, backgroundColor: Color.clear, textColor: AppColor.lightBlackText, text: L10n.SubscriptionIntro.continueWithoutSub) {
-//                            toWelcomeScreen = true
-//                        }
                         Spacer().frame(height: 15)
                     }
                     Text(L10n.SubscriptionIntro.note)
                         .foregroundColor(AppColor.lightBlackText)
                         .font(.system(size: Constant.TextSize.Global.subcription))
                         .frame(width: widthConent)
-//                    Spacer().frame(minHeight: 10)
                 }
                 .frame(minHeight: UIScreen.main.bounds.height)
             }
