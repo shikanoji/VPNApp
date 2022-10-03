@@ -41,6 +41,7 @@ class WireGuardManager: ObservableObject {
                 )
             } catch {
                 print(error)
+                postError()
             }
         }
     }
@@ -49,6 +50,10 @@ class WireGuardManager: ObservableObject {
         Task {
             await vpn.prepare()
         }
+    }
+    
+    func postError() {
+        NotificationCenter.default.post(name: Constant.NameNotification.connectVPNError, object: nil)
     }
     
     func disconnect() {

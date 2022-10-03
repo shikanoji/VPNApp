@@ -45,11 +45,17 @@ class OpenVPNManager: ObservableObject {
                     )
                 } catch {
                     print(error)
+                    postError()
                 }
             }
         } catch {
             print(error)
+            postError()
         }
+    }
+    
+    func postError() {
+        NotificationCenter.default.post(name: Constant.NameNotification.connectVPNError, object: nil)
     }
     
     func getDataCount() -> DataCount? {

@@ -129,10 +129,64 @@ struct ConnectButton: View {
     
     func getDocAnimation() -> some View {
         return HStack(spacing: 5) {
-            DocAnimationView(timeWait: 0.2)
-            DocAnimationView(timeWait: 0.4)
-            DocAnimationView(timeWait: 0.6)
+//            DocAnimationView(timeWait: 0.2)
+//            DocAnimationView(timeWait: 0.4)
+//            DocAnimationView(timeWait: 0.6)
+            DocAnimationView1()
+            DocAnimationView2()
+            DocAnimationView3()
         }
+    }
+}
+
+struct DocAnimationView1: View {
+    @State private var change = false
+    let imageChangeTimer = Timer.publish(every: 0.5, on: .main, in: .common).autoconnect()
+    
+    var body: some View {
+        Circle()
+            .frame(width: Constant.Board.QuickButton.sizeDoc,
+                   height: Constant.Board.QuickButton.sizeDoc)
+            .offset(y: change ? 5 : -5)
+            .foregroundColor(Color.black)
+            .onReceive(imageChangeTimer) { _ in
+                change.toggle()
+            }
+            .animation(Animation.linear)
+    }
+}
+
+struct DocAnimationView2: View {
+    @State private var change = false
+    let imageChangeTimer = Timer.publish(every: 0.5, on: .main, in: .common).autoconnect()
+    
+    var body: some View {
+        Circle()
+            .frame(width: Constant.Board.QuickButton.sizeDoc,
+                   height: Constant.Board.QuickButton.sizeDoc)
+            .offset(y: change ? 5 : -5)
+            .foregroundColor(Color.black)
+            .onReceive(imageChangeTimer) { _ in
+                change.toggle()
+            }
+            .animation(Animation.linear.delay(0.2))
+    }
+}
+
+struct DocAnimationView3: View {
+    @State private var change = false
+    let imageChangeTimer = Timer.publish(every: 0.5, on: .main, in: .common).autoconnect()
+    
+    var body: some View {
+        Circle()
+            .frame(width: Constant.Board.QuickButton.sizeDoc,
+                   height: Constant.Board.QuickButton.sizeDoc)
+            .offset(y: change ? 5 : -5)
+            .foregroundColor(Color.black)
+            .onReceive(imageChangeTimer) { _ in
+                change.toggle()
+            }
+            .animation(Animation.linear.delay(0.4))
     }
 }
 
@@ -147,7 +201,9 @@ struct DocAnimationView: View {
             .offset(y: change ? 5 : -5)
             .foregroundColor(Color.black)
             .onAppear {
-                self.change.toggle()
+                DispatchQueue.main.async {
+                    self.change.toggle()
+                }
             }
             .animation(Animation.linear(duration: 0.5).repeatForever().delay(timeWait))
     }

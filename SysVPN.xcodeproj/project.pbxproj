@@ -164,9 +164,6 @@
 		EE514CBB27CC707F00F82AD7 /* ContentViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE514CBA27CC707F00F82AD7 /* ContentViewModel.swift */; };
 		EE514CBD27CC71DC00F82AD7 /* IpInfoResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE514CBC27CC71DC00F82AD7 /* IpInfoResult.swift */; };
 		EE514CBF27CCC14500F82AD7 /* LoadingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE514CBE27CCC14500F82AD7 /* LoadingView.swift */; };
-		EE78F73B280E732700F49903 /* wg_ios_client.conf in Resources */ = {isa = PBXBuildFile; fileRef = EE78F73A280E732700F49903 /* wg_ios_client.conf */; };
-		EE78F73F280E732700F49903 /* wg_ios_client.conf in Resources */ = {isa = PBXBuildFile; fileRef = EE78F73A280E732700F49903 /* wg_ios_client.conf */; };
-		EE78F740280E732700F49903 /* wg_ios_client.conf in Resources */ = {isa = PBXBuildFile; fileRef = EE78F73A280E732700F49903 /* wg_ios_client.conf */; };
 		EE78F74A280E781100F49903 /* WireGuardManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE78F742280E763400F49903 /* WireGuardManager.swift */; };
 		EE78F750280FA08100F49903 /* TunnelKit in Frameworks */ = {isa = PBXBuildFile; productRef = EE78F74F280FA08100F49903 /* TunnelKit */; };
 		EE78F768280FB6CE00F49903 /* NetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE78F767280FB6CE00F49903 /* NetworkManager.swift */; };
@@ -430,7 +427,6 @@
 		EE514CBA27CC707F00F82AD7 /* ContentViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentViewModel.swift; sourceTree = "<group>"; };
 		EE514CBC27CC71DC00F82AD7 /* IpInfoResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IpInfoResult.swift; sourceTree = "<group>"; };
 		EE514CBE27CCC14500F82AD7 /* LoadingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingView.swift; sourceTree = "<group>"; };
-		EE78F73A280E732700F49903 /* wg_ios_client.conf */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = wg_ios_client.conf; sourceTree = "<group>"; };
 		EE78F742280E763400F49903 /* WireGuardManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WireGuardManager.swift; sourceTree = "<group>"; };
 		EE78F767280FB6CE00F49903 /* NetworkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkManager.swift; sourceTree = "<group>"; };
 		EE78F77D2811526B00F49903 /* RequestCertificateModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RequestCertificateModel.swift; sourceTree = "<group>"; };
@@ -775,7 +771,6 @@
 			children = (
 				AC8EFD6728B125DE00D90F57 /* SysVPNDebug.entitlements */,
 				AC17E2402888FC4500C72E20 /* Settings.bundle */,
-				EE78F73A280E732700F49903 /* wg_ios_client.conf */,
 				EE46BCFB280D1509003C4FEB /* build_wireguard_go_bridge.sh */,
 				AC6074D827DB74CB00DD5667 /* swiftgen.yml */,
 				D78C8FC92774914400D4A46F /* SysVPN (iOS).entitlements */,
@@ -1474,7 +1469,6 @@
 				AC60750827DE431A00DD5667 /* Welcome.strings in Resources */,
 				AC60750527DE431700DD5667 /* PlanSelect.strings in Resources */,
 				AC60750227DE431500DD5667 /* SubscriptionIntro.strings in Resources */,
-				EE78F73B280E732700F49903 /* wg_ios_client.conf in Resources */,
 				D784FA65275DA89B00A7A7F1 /* Global.strings in Resources */,
 				AC6074F327DE42FE00DD5667 /* Login.strings in Resources */,
 				EE46BCFC280D1509003C4FEB /* build_wireguard_go_bridge.sh in Resources */,
@@ -1491,7 +1485,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				EE78F73F280E732700F49903 /* wg_ios_client.conf in Resources */,
 				EE46BD00280D1509003C4FEB /* build_wireguard_go_bridge.sh in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1500,7 +1493,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				EE78F740280E732700F49903 /* wg_ios_client.conf in Resources */,
 				EE46BD01280D1509003C4FEB /* build_wireguard_go_bridge.sh in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

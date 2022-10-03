@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct SubcriptionPlanView: View {
-    let plan: Plan?
+    let plan: Plan
     
     let widthConent = Constant.SizeButton.widthButtonFull
     
@@ -39,6 +39,7 @@ struct SubcriptionPlanView: View {
                 Text(L10n.PlanSelect.headerSubcription)
                     .font(.system(size: Constant.TextSize.PlanListCell.titleSubcription, weight: .bold))
                     .foregroundColor(Color.white)
+                    .multilineTextAlignment(.center)
                 VStack(spacing: 30) {
                     VStack(alignment: .center, spacing: 12) {
                         textHeader(L10n.PlanSelect.header1)
@@ -54,11 +55,11 @@ struct SubcriptionPlanView: View {
                     
                     VStack(alignment: .center, spacing: 12) {
                         textHeader(L10n.PlanSelect.header3)
-                        textBody(L10n.PlanSelect.content3)
+                        textBody(plan.noteTrial)
                         arrowIcon()
                     }
                     
-                    Text(plan?.description ?? "")
+                    Text(plan.description)
                         .font(.system(size: Constant.TextSize.PlanListCell.description))
                         .foregroundColor(Color.white)
                 }
@@ -79,6 +80,7 @@ struct SubcriptionPlanView: View {
                 Spacer().frame(minHeight: 20)
             }
         }
+        .padding(.horizontal)
         .background(AppColor.blackText)
         .ignoresSafeArea()
     }

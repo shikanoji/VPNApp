@@ -122,7 +122,7 @@ extension AppSetting {
             }
         }
 
-        return .openVPNTCP
+        return .recommended
     }
     
     func getRecommendConfigProtocol() -> ItemCellType {

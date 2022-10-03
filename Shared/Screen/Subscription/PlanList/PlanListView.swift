@@ -9,16 +9,19 @@ import Foundation
 import SwiftUI
 
 struct PlanListView: View {
-    @StateObject var viewModel: PlanListViewModel
+    @Binding var selectedPlan: Plan?
+    
+    var changePlan = false
     
     var body: some View {
         VStack(spacing: 16) {
             ForEach(Plan.getListPlan(), id: \.self) { item in
                 PlanListCell(
-                    focus: (viewModel.selectedPlan?.name ?? "") == item.name,
-                    plan: item)
+                    focus: (selectedPlan?.name ?? "") == item.name,
+                    plan: item,
+                    changePlan: changePlan)
                 .onTapGesture {
-                    viewModel.selectPlan(plan: item)
+                    selectedPlan = item
                 }
             }
         }
@@ -30,7 +33,7 @@ struct PlanListView: View {
 #if DEBUG
 struct PlanListView_Preview: PreviewProvider {
     static var previews: some View {
-        PlanListView(viewModel: PlanListViewModel())
+        PlanListView(selectedPlan: .constant(Plan.planA))
     }
 }
 #endif

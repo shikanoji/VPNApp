@@ -11,6 +11,7 @@ import SwiftUI
 struct PlanListCell: View {
     var focus: Bool
     var plan: Plan
+    var changePlan = false
     
     let widthContent = Constant.SizeButton.widthButtonFull
     
@@ -38,11 +39,11 @@ struct PlanListCell: View {
                     }
                     .padding(.top, 18)
                     
-                    HStack(alignment: .bottom) {
+                    HStack(alignment: .center) {
                         Text(plan.price)
                             .font(.system(size: Constant.TextSize.PlanListCell.price, weight: .semibold))
                             .foregroundColor(Color.white)
-                        Text(" /" + L10n.PlanSelect.month)
+                        Text("/" + L10n.PlanSelect.month)
                             .font(.system(size: Constant.TextSize.PlanListCell.description))
                             .foregroundColor(Color.gray)
                     }
@@ -52,12 +53,12 @@ struct PlanListCell: View {
                         .foregroundColor(Color.white).lineSpacing(5)
                         .frame(maxWidth: .infinity, alignment: .leading)
                     
-                    if focus {
+                    if focus && !changePlan {
                         HStack {
                             Button(action : {
                                 NotificationCenter.default.post(name: Constant.NameNotification.showIntroPlan, object: nil)
                             }) {
-                                HStack(alignment: .center) {
+                                HStack {
                                     Spacer().frame(width: 10)
                                     VStack(alignment: .leading, spacing: 4) {
                                         Text(L10n.PlanSelect.dayFreeTrial)
@@ -67,7 +68,8 @@ struct PlanListCell: View {
                                             .font(.system(size: Constant.TextSize.Global.description))
                                             .foregroundColor(AppColor.leftCircle)
                                     }
-                                    .padding()
+                                    .padding(.horizontal)
+                                    .padding(.vertical, 8)
                                     Spacer()
                                     Asset.Assets.buttonNext.swiftUIImage
                                         .resizable()
@@ -78,7 +80,7 @@ struct PlanListCell: View {
                             .padding(.trailing, 20)
                             .frame(maxWidth: .infinity)
                             .background(AppColor.freeTrial)
-                            .cornerRadius(30)
+                            .cornerRadius(35)
                             Spacer().frame(width: 20)
                         }
                     }
