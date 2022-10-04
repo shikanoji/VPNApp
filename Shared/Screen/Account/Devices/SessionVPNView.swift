@@ -24,7 +24,7 @@ struct SessionVPNView: View {
                         AppColor.darkButton
                             .frame(height: 20)
                         CustomNavigationViewUpdate(
-                            leftTitle: L10n.Account.AccountStatus.title,
+                            leftTitle: L10n.Account.titleAccount,
                             currentTitle: $viewModel.currentNumberDevice,
                             tapLeftButton: {
                                 presentationMode.wrappedValue.dismiss()
