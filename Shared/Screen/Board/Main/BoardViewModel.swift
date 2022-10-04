@@ -675,7 +675,8 @@ class BoardViewModel: ObservableObject {
             }
             
             if isEnableReconect,
-               !connectOrDisconnectByUser {
+               !connectOrDisconnectByUser,
+               !AppSetting.shared.temporaryDisableAutoConnect {
                 startConnectVPN()
             } else {
                 configDisconected()
@@ -695,7 +696,7 @@ class BoardViewModel: ObservableObject {
             return
         }
         configDisconected()
-        if isEnableReconect, !connectOrDisconnectByUser {
+        if isEnableReconect, !connectOrDisconnectByUser, !AppSetting.shared.temporaryDisableAutoConnect {
             startConnectVPN()
         }
     }
@@ -793,7 +794,7 @@ class BoardViewModel: ObservableObject {
         self.showAlert = true
     }
     
-    func getRequestCertificate(asNewConnection: Bool = false, completion: @escaping (Bool) -> Void) {
+    func getRequestCertificate(asNewConnection: Bool = AppSetting.shared.needToStartNewSession, completion: @escaping (Bool) -> Void) {
         guard isEnableReconect else {
             completion(false)
             return
