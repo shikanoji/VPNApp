@@ -19,6 +19,8 @@ struct ConnectButton: View {
     
     @State var hiddenDelay = 1.0
     
+    @State var tap = false
+    
     var widthSizeFrame = UIScreen.main.bounds.width
     var heightSizeFrame = UIScreen.main.bounds.height
     
@@ -90,8 +92,13 @@ struct ConnectButton: View {
                 .frame(width: calculatebuttonsizeWidth(widthSizeFrame: widthSizeFrame)/4.5,
                        height: calculatebuttonsizeWidth(widthSizeFrame: widthSizeFrame)/4.5)
                 .onTapGesture {
+                    tap = true
                     tapButton?()
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
+                        tap = false
+                    }
                 }
+                .disabled(tap)
             }
             .frame(width:  Constant.Board.QuickButton.widthSize)
             SpeedConnectedView(uploadSpeed: viewModel.uploadSpeed, downLoadSpeed: viewModel.downloadSpeed)
