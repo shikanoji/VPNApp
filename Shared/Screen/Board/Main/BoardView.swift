@@ -15,7 +15,6 @@ struct BoardView: View {
     
     @State var showAccount = false
     @State var showSettings = false
-    @State var showBoardList = false
     
     private let transitionLeft = AnyTransition.asymmetric(insertion: .move(edge: .leading),
                                                       removal: .move(edge: .leading))
@@ -132,9 +131,6 @@ struct BoardView: View {
                 }
             }
         })
-        .onChange(of: viewModel.showMap, perform: { newValue in
-            showBoardList = false
-        })
         .animation(Animation.linear(duration: 0.25))
         .preferredColorScheme(.dark)
         .navigationBarHidden(true)
@@ -184,8 +180,7 @@ struct BoardView: View {
     }
     
     func boardListView() -> some View {
-        BoardListView(showBoardList: $showBoardList,
-                      selectedTab: $viewModel.selectedTab,
+        BoardListView(viewModel: viewModel,
                       nodeSelect: $viewModel.nodeSelectFromBoardList,
                       locationData: $viewModel.locationData,
                       staticIPData: $viewModel.staticIPData,
@@ -249,18 +244,18 @@ struct BoardView: View {
                     })
                     Spacer()
                         .frame(height: Constant.Board.Tabs.topPadding)
-                    BoardTabView(selectedTab: $viewModel.selectedTab, showBoardList: $showBoardList)
+                    BoardTabView(viewModel: viewModel)
                         .padding(.bottom, 10)
                         .zIndex(1)
                 }
                 .padding(/*@START_MENU_TOKEN@*/.all/*@END_MENU_TOKEN@*/)
             }
-            if viewModel.showProgressView {
-                // dont show loading
-            }
         }
-        .sheet(isPresented: $showBoardList) {
+        .sheet(isPresented: $viewModel.showBoardList) {
             boardListView()
+                .onWillDisappear {
+                    viewModel.showBoardList = false
+                }
         }
         .background(AppColor.background)
         .frame(alignment: .top)
@@ -271,5 +266,55 @@ struct BoardView: View {
 struct BoardView_Previews: PreviewProvider {
     static var previews: some View {
         BoardView(viewModel: BoardViewModel())
+    }
+}
+
+struct WillDisappearHandler: UIViewControllerRepresentable {
+    func makeCoordinator() -> WillDisappearHandler.Coordinator {
+        Coordinator(onWillDisappear: onWillDisappear)
+    }
+
+    let onWillDisappear: () -> Void
+
+    func makeUIViewController(context: UIViewControllerRepresentableContext<WillDisappearHandler>) -> UIViewController {
+        context.coordinator
+    }
+
+    func updateUIViewController(_ uiViewController: UIViewController, context: UIViewControllerRepresentableContext<WillDisappearHandler>) {
+    }
+
+    typealias UIViewControllerType = UIViewController
+
+    class Coordinator: UIViewController {
+        let onWillDisappear: () -> Void
+
+        init(onWillDisappear: @escaping () -> Void) {
+            self.onWillDisappear = onWillDisappear
+            super.init(nibName: nil, bundle: nil)
+        }
+
+        required init?(coder: NSCoder) {
+            fatalError("init(coder:) has not been implemented")
+        }
+
+        override func viewWillDisappear(_ animated: Bool) {
+            super.viewWillDisappear(animated)
+            onWillDisappear()
+        }
+    }
+}
+
+struct WillDisappearModifier: ViewModifier {
+    let callback: () -> Void
+
+    func body(content: Content) -> some View {
+        content
+            .background(WillDisappearHandler(onWillDisappear: callback))
+    }
+}
+
+extension View {
+    func onWillDisappear(_ perform: @escaping () -> Void) -> some View {
+        self.modifier(WillDisappearModifier(callback: perform))
     }
 }
