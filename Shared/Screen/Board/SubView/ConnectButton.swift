@@ -136,9 +136,6 @@ struct ConnectButton: View {
     
     func getDocAnimation() -> some View {
         return HStack(spacing: 5) {
-//            DocAnimationView(timeWait: 0.2)
-//            DocAnimationView(timeWait: 0.4)
-//            DocAnimationView(timeWait: 0.6)
             DocAnimationView1()
             DocAnimationView2()
             DocAnimationView3()
@@ -148,6 +145,8 @@ struct ConnectButton: View {
 
 struct DocAnimationView1: View {
     @State private var change = false
+    @State private var firstAppear = true
+    
     let imageChangeTimer = Timer.publish(every: 0.5, on: .main, in: .common).autoconnect()
     
     var body: some View {
@@ -158,6 +157,12 @@ struct DocAnimationView1: View {
             .foregroundColor(Color.black)
             .onReceive(imageChangeTimer) { _ in
                 change.toggle()
+            }
+            .onWillAppear {
+                if firstAppear {
+                    change.toggle()
+                    firstAppear = false
+                }
             }
             .animation(Animation.linear)
     }
@@ -165,6 +170,8 @@ struct DocAnimationView1: View {
 
 struct DocAnimationView2: View {
     @State private var change = false
+    @State private var firstAppear = true
+    
     let imageChangeTimer = Timer.publish(every: 0.5, on: .main, in: .common).autoconnect()
     
     var body: some View {
@@ -176,12 +183,20 @@ struct DocAnimationView2: View {
             .onReceive(imageChangeTimer) { _ in
                 change.toggle()
             }
+            .onWillAppear {
+                if firstAppear {
+                    change.toggle()
+                    firstAppear = false
+                }
+            }
             .animation(Animation.linear.delay(0.2))
     }
 }
 
 struct DocAnimationView3: View {
     @State private var change = false
+    @State private var firstAppear = true
+    
     let imageChangeTimer = Timer.publish(every: 0.5, on: .main, in: .common).autoconnect()
     
     var body: some View {
@@ -192,6 +207,12 @@ struct DocAnimationView3: View {
             .foregroundColor(Color.black)
             .onReceive(imageChangeTimer) { _ in
                 change.toggle()
+            }
+            .onWillAppear {
+                if firstAppear {
+                    change.toggle()
+                    firstAppear = false
+                }
             }
             .animation(Animation.linear.delay(0.4))
     }
