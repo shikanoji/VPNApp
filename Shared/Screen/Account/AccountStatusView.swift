@@ -18,23 +18,23 @@ struct AccountStatusView: View {
     @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
     
     var body: some View {
-        ScrollView(.vertical, showsIndicators: false) {
-            ZStack(alignment: .top) {
-                VStack {
-                    AppColor.darkButton
-                        .frame(height: 10)
-                    CustomNavigationView(
-                        leftTitle: L10n.Account.titleAccount,
-                        currentTitle: L10n.Account.AccountStatus.title,
-                        tapLeftButton: {
-                            presentationMode.wrappedValue.dismiss()
-                        }, tapRightButton: {
-                            UINavigationBar.setAnimationsEnabled(false)
-                            showAccount = false
-                            DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
-                                UINavigationBar.setAnimationsEnabled(true)
-                            }
-                        }, statusConnect: $statusConnect)
+        VStack {
+            AppColor.darkButton
+                .frame(height: 10)
+            CustomNavigationView(
+                leftTitle: L10n.Account.titleAccount,
+                currentTitle: L10n.Account.AccountStatus.title,
+                tapLeftButton: {
+                    presentationMode.wrappedValue.dismiss()
+                }, tapRightButton: {
+                    UINavigationBar.setAnimationsEnabled(false)
+                    showAccount = false
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+                        UINavigationBar.setAnimationsEnabled(true)
+                    }
+                }, statusConnect: $statusConnect)
+            ScrollView(.vertical, showsIndicators: false) {
+                ZStack(alignment: .top) {
                     VStack(spacing: 1) {
                         ItemRowCell(title: ItemCellType.statusAccount.title,
                                     content: AppSetting.shared.isPremium ?
@@ -45,9 +45,9 @@ struct AccountStatusView: View {
                                     content: ItemCellType.paymentHistory.content,
                                     showRightButton: true,
                                     position: .bot)
-                            .onTapGesture {
-                                self.showPayment = true
-                            }
+                        .onTapGesture {
+                            self.showPayment = true
+                        }
                         Spacer().frame(height: 32)
                         AppButton(style: .themeButton, width: UIScreen.main.bounds.size.width - 32, text: AppSetting.shared.isPremium ? L10n.Account.AccountStatus.extend : L10n.Account.AccountStatus.upgradeToPremium) {
                             self.showPlanListView = true
@@ -64,8 +64,8 @@ struct AccountStatusView: View {
                                 statusConnect: $statusConnect,
                                 viewModel: PaymentHistoryViewModel()),
                            isActive: $showPayment) { }
-            NavigationLink(destination: PlanSelectionView(viewModel: PlanSelectionViewModel())
-                                        .environmentObject(RegisterResultModel()),
+            NavigationLink(destination: PlanSelectionView(viewModel: PlanSelectionViewModel(), changePlan: true)
+                .environmentObject(RegisterResultModel()),
                            isActive: $showPlanListView) { }
         }
         .navigationBarHidden(true)

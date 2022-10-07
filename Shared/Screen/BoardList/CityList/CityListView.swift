@@ -51,7 +51,6 @@ struct CityListView: View {
                         Button {
                             AppSetting.shared.temporaryDisableAutoConnect = false
                             nodeSelect = city
-                            NotificationCenter.default.post(name: Constant.NameNotification.showMap, object: nil)
                         } label: {
                             CityCellView(node: city, subName: L10n.Board.BoardList.cityOf + " \(node.name)")
                         }

@@ -62,7 +62,6 @@ struct LocationListView: View {
                                     if ItemCell(type: AppSetting.shared.getAutoConnectProtocol()).type == .off {
                                         nodeSelect = node
                                     }
-                                    NotificationCenter.default.post(name: Constant.NameNotification.showMap, object: nil)
                                 }
                             }) {
                                 NodeCellView(node: node)
@@ -84,7 +83,6 @@ struct LocationListView: View {
                                         if ItemCell(type: AppSetting.shared.getAutoConnectProtocol()).type == .off {
                                             nodeSelect = node
                                         }
-                                        NotificationCenter.default.post(name: Constant.NameNotification.showMap, object: nil)
                                     }
                                 }) {
                                     NodeCellView(node: node)

@@ -185,7 +185,7 @@ struct BoardView: View {
     
     func boardListView() -> some View {
         BoardListView(showBoardList: $showBoardList,
-                      currentTab: $viewModel.tab,
+                      selectedTab: $viewModel.selectedTab,
                       nodeSelect: $viewModel.nodeSelectFromBoardList,
                       locationData: $viewModel.locationData,
                       staticIPData: $viewModel.staticIPData,
@@ -249,8 +249,9 @@ struct BoardView: View {
                     })
                     Spacer()
                         .frame(height: Constant.Board.Tabs.topPadding)
-                    BoardTabView(tab: $viewModel.tab, showBoardList: $showBoardList)
+                    BoardTabView(selectedTab: $viewModel.selectedTab, showBoardList: $showBoardList)
                         .padding(.bottom, 10)
+                        .zIndex(1)
                 }
                 .padding(/*@START_MENU_TOKEN@*/.all/*@END_MENU_TOKEN@*/)
             }

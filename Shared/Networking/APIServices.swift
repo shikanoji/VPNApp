@@ -317,7 +317,6 @@ extension APIService: TargetType {
             param["limit"] = limit
             param["isActive"] = isActive
             param["sortBy"] = "createdAt:desc"
-            param["userId"] = AppSetting.shared.idUser
             
             return .requestParameters(parameters: param, encoding: URLEncoding.queryString)
             

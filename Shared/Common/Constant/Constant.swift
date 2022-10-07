@@ -193,6 +193,7 @@ struct Constant {
         static let showMap = Notification.Name("showMap")
         static let showIntroPlan = Notification.Name("showIntroPlan")
         static let startFree7DayTrial = Notification.Name("startFree7DayTrial")
+        static let connectVPNError = Notification.Name("connectVPNError")
     }
     
     struct TextSize {

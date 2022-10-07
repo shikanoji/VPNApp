@@ -33,7 +33,7 @@ class PaymentHistoryViewModel: ObservableObject {
             .subscribe(onSuccess: { [weak self] response in
                 guard let strongSelf = self else { return }
                 if let result = response.result {
-                    strongSelf.enableLoadMore = result.rows.count >= 10
+                    strongSelf.enableLoadMore = (result.rows.count >= result.limit) && (strongSelf.page <= result.totalPages)
                     let paymentList = result.rows
                     strongSelf.showProgressView = false
                     if loadMore {

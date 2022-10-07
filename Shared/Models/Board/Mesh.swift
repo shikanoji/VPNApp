@@ -17,8 +17,6 @@ class Mesh: ObservableObject {
     @Published var showCityNodes: Bool = false
     @Published private(set) var selectedNode: Node?
     
-    var currentTab: StateTab = .location
-    
     init() {
         
     }
@@ -61,10 +59,6 @@ class Mesh: ObservableObject {
     
     func updateStaticNodes(_ staticNodes: [StaticServer] = []) {
         self.staticNodes = staticNodes
-    }
-    
-    func updateCurrentTab(_ tab: StateTab) {
-        currentTab = tab
     }
     
     func getNodeViewShow() -> [Node] {

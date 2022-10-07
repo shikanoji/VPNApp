@@ -15,6 +15,8 @@ struct PlanSelectionView: View {
     
     let widthContent = Constant.SizeButton.widthButtonFull
     
+    var changePlan = false
+    
     var body: some View {
         LoadingScreen(isShowing: $viewModel.showProgressView) {
             Background {
@@ -32,7 +34,7 @@ struct PlanSelectionView: View {
                             
                             Group {
                                 Spacer().frame(height: 20)
-                                PlanListView(viewModel: viewModel.planListViewModel)
+                                PlanListView(selectedPlan: $viewModel.selectedPlan, changePlan: changePlan)
                                 Spacer().frame(height: 20)
                             }
                             Group {
@@ -44,7 +46,7 @@ struct PlanSelectionView: View {
                                 }
                                 
                                 NavigationLink(destination: SubcriptionPlanView(
-                                    plan: viewModel.planListViewModel.selectedPlan).navigationBarHidden(true),
+                                    plan: viewModel.selectedPlan ?? Plan.planA).navigationBarHidden(true),
                                                isActive: $viewModel.showIntroPlanListView) { }
                                 
                                 NavigationLink(destination: EmptyView()) {
@@ -52,7 +54,7 @@ struct PlanSelectionView: View {
                                 }
                             }
                             
-                            AppButton(width: widthContent, text: L10n.PlanSelect.continueButton) {
+                            AppButton(width: widthContent, text: viewModel.selectedPlan?.get ?? L10n.PlanSelect.continueButton) {
 #if DEBUG
                                 viewModel.toWelcomeScreen = true
 #else
@@ -61,9 +63,14 @@ struct PlanSelectionView: View {
                             }
                             Spacer().frame(height: 20)
                             
-                            Text(L10n.PlanSelect.notePlan).setDefault()
+                            if let plan = viewModel.selectedPlan {
+                                Text(plan.note).setDefault()
+                                    .multilineTextAlignment(.center)
+                            }
                             
                             Spacer()
+                            
+                            Spacer().frame(height: 40)
                         }
                     }
                 }

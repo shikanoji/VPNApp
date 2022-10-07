@@ -12,20 +12,23 @@ import RxSwift
 
 class PlanSelectionViewModel: ObservableObject {
     let productIDs = ["sysvpn.ios.client.subscription.1year", "sysvpn.ios.client.subscription.6month", "sysvpn.ios.client.subscription.1month"]
-    @ObservedObject var planListViewModel: PlanListViewModel
+    
     @Published var planList: [SKProduct]
     @Published var toWelcomeScreen = false
     @Published var showProgressView = false
     @Published var shouldShowAccountLimitedView = false
     @Published var showAlert = false
     @Published var showIntroPlanListView = false
+    
+    @Published var selectPlan: Plan?
+    @Published var selectedPlan: Plan?
+    
     var shouldAllowLogout: Bool
     var authentication: Authentication?
     var alertMessage: String = ""
     let disposedBag = DisposeBag()
     init(shouldAllowLogout: Bool = false) {
         planList = []
-        planListViewModel = PlanListViewModel()
         self.shouldAllowLogout = shouldAllowLogout
         
         NotificationCenter.default.addObserver(
@@ -43,7 +46,7 @@ class PlanSelectionViewModel: ObservableObject {
         )
     }
     
-    @objc private func startFree7DayTrial() {
+    @MainActor @objc private func startFree7DayTrial() {
 #if DEBUG
         toWelcomeScreen = true
 #else
@@ -65,7 +68,7 @@ class PlanSelectionViewModel: ObservableObject {
     
     @MainActor func purchasePlan() {
         showProgressView = true
-        guard let selectedPlan = planListViewModel.selectedPlan else { return }
+        guard let selectedPlan = self.selectedPlan else { return }
         var product: SKProduct?
         for plan in planList {
             if plan.productIdentifier == selectedPlan.subscriptionID {

@@ -80,10 +80,9 @@ class BoardViewModel: ObservableObject {
     
     var isSwitchTab = false
     
-    @Published var tab: StateTab = .location {
+    @Published var selectedTab: StateTab = .location {
         didSet {
-            AppSetting.shared.saveCurrentTab(tab)
-            mesh?.currentTab = tab
+            AppSetting.shared.saveCurrentTab(selectedTab)
         }
     }
     
@@ -174,7 +173,7 @@ class BoardViewModel: ObservableObject {
     // MARK: INIT
     init() {
         beginBackgroundTask()
-        tab = AppSetting.shared.getCurrentTab()
+        selectedTab = AppSetting.shared.getCurrentTab()
         
         NotificationCenter.default.addObserver(
             self,
@@ -217,6 +216,13 @@ class BoardViewModel: ObservableObject {
             object: nil
         )
         
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(configDisconected),
+            name: Constant.NameNotification.connectVPNError,
+            object: nil
+        )
+        
         Task {
             await OpenVPNManager.shared.vpn.prepare()
         }
@@ -224,13 +230,6 @@ class BoardViewModel: ObservableObject {
         NotificationCenter.default.addObserver(forName: UIApplication.willTerminateNotification, object: nil, queue: .main) { _ in
             NetworkManager.shared.disconnect()
         }
-        
-        NotificationCenter.default.addObserver(
-            self,
-            selector: #selector(notiShowMap),
-            name: Constant.NameNotification.showMap,
-            object: nil
-        )
         
         checkInternetRealTime()
         
@@ -277,11 +276,6 @@ class BoardViewModel: ObservableObject {
             isSwitching = true
             configDisconnect()
         }
-    }
-    
-    @objc
-    func notiShowMap() {
-        showMap.toggle()
     }
     
     // MARK: - HANDLE DATA MAP
@@ -413,18 +407,15 @@ class BoardViewModel: ObservableObject {
         if Connectivity.sharedInstance.isReachable {
             switch self.autoConnectType {
             case .always:
-                tab = .location
                 AppSetting.shared.saveBoardTabWhenConnecting(.location)
                 ConnectOrDisconnectVPN()
             case .onWifi:
                 if Connectivity.sharedInstance.isReachableOnEthernetOrWiFi {
-                    tab = .location
                     AppSetting.shared.saveBoardTabWhenConnecting(.location)
                     ConnectOrDisconnectVPN()
                 }
             case .onMobile:
                 if Connectivity.sharedInstance.isReachableOnCellular {
-                    tab = .location
                     AppSetting.shared.saveBoardTabWhenConnecting(.location)
                     ConnectOrDisconnectVPN()
                 }
@@ -469,6 +460,7 @@ class BoardViewModel: ObservableObject {
         }
     }
     
+    @objc
     func configDisconected() {
         ip = AppSetting.shared.ip
         flag = ""
@@ -768,7 +760,7 @@ class BoardViewModel: ObservableObject {
                 self.lastSent = dataCount.sent
                 self.lastReceived = dataCount.received
             } else {
-                print("no data")
+                
             }
         }
         speedTimer!.resume()
@@ -818,8 +810,6 @@ class BoardViewModel: ObservableObject {
         }
         
         stopSpeedTimer()
-        
-        showMap.toggle()
         
         ServiceManager.shared.getRequestCertificate(asNewConnection: asNewConnection)
             .subscribe { [weak self] response in

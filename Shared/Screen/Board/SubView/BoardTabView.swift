@@ -8,15 +8,20 @@
 import SwiftUI
 
 struct BoardTabView: View {
-    @Binding var tab: StateTab
-    @Binding var showBoardList: Bool
+    @Binding var selectedTab: StateTab
+//    @Binding var showBoardList: Bool
+    var showBoardList: Binding<Bool> {
+        didSet {
+            print("BoardTabView \(showBoardList) tab: \(selectedTab)")
+        }
+    }
     
     var body: some View {
         ZStack {
             HStack(spacing: 5) {
-                BoardTabViewCustom(typeTab: .location, currentTab: $tab, showBoardList: $showBoardList)
-                BoardTabViewCustom(typeTab: .staticIP, currentTab: $tab, showBoardList: $showBoardList)
-                BoardTabViewCustom(typeTab: .multiHop, currentTab: $tab, showBoardList: $showBoardList)
+                BoardTabViewCustom(typeTab: .location, selectedTab: $selectedTab, showBoardList: showBoardList)
+                BoardTabViewCustom(typeTab: .staticIP, selectedTab: $selectedTab, showBoardList: showBoardList)
+                BoardTabViewCustom(typeTab: .multiHop, selectedTab: $selectedTab, showBoardList: showBoardList)
             }
             .cornerRadius(Constant.Board.SubBoard.radius)
             .padding(6)
@@ -29,14 +34,15 @@ struct BoardTabView: View {
 }
 
 struct BoardTabViewCustom: View {
-    @Binding private var selected: Bool
-    @Binding var currentTab: StateTab
-    @Binding var showBoardList: Bool
+    var selected: Binding<Bool>
+    var selectedTab: Binding<StateTab>
+    
+    var showBoardList: Binding<Bool>
     
     var typeTab: StateTab
     var title: String
     
-    init(typeTab: StateTab, currentTab: Binding<StateTab>, showBoardList: Binding<Bool>) {
+    init(typeTab: StateTab, selectedTab: Binding<StateTab>, showBoardList: Binding<Bool>) {
         switch typeTab {
         case .location:
             self.title = L10n.Board.locationTitleTab
@@ -47,20 +53,21 @@ struct BoardTabViewCustom: View {
         }
         
         self.typeTab = typeTab
-        self._currentTab = currentTab
-        self._selected = Binding<Bool>.constant(currentTab.wrappedValue == typeTab)
-        self._showBoardList = showBoardList
+        self.selectedTab = selectedTab
+        self.selected = Binding<Bool>.constant(selectedTab.wrappedValue == typeTab)
+        self.showBoardList = showBoardList
     }
     
     var body: some View {
         Button(title) {
-            if !selected {
-                selected = true
-                currentTab = typeTab
+            if !selected.wrappedValue {
+                selectedTab.wrappedValue = typeTab
             }
-            showBoardList = true
+            if !showBoardList.wrappedValue {
+                showBoardList.wrappedValue = true
+            }
         }
-        .buttonStyle(PrimaryButtonStyle(backgroundColor: selected ? AppColor.darkButton : AppColor.lightBlack, cornerRadius: Constant.Board.SubBoard.radius))
+        .buttonStyle(PrimaryButtonStyle(backgroundColor: selected.wrappedValue ? AppColor.darkButton : AppColor.lightBlack, cornerRadius: Constant.Board.SubBoard.radius))
     }
 }
 
@@ -68,7 +75,7 @@ struct BoardTabView_Previews: PreviewProvider {
     @State static var show = false
     
     static var previews: some View {
-        BoardTabView(tab: Binding<StateTab>.constant(.staticIP), showBoardList: $show)
+        BoardTabView(selectedTab: Binding<StateTab>.constant(.staticIP), showBoardList: $show)
             .previewLayout(.fixed(width: 343.0, height: Constant.Board.Tabs.heightSize))
     }
 }

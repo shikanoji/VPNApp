@@ -111,12 +111,10 @@ struct NodeView: View {
     }
     
     var zIndex: Double {
-        if isConnectedNode {
-            return 1
-        } else if (isEntryNodeMulti || isExitNodeMulti) {
+        if mesh.isNodeSelected(node) {
             return 1
         }
-        return mesh.isNodeSelected(node) ? 1 : 0
+        return isConnectedNode ? 1 : 0
     }
     
     var currentTab: StateTab {
@@ -146,19 +144,21 @@ struct NodeView: View {
     }
     
     var isConnectedNode: Bool {
-        switch currentTab {
-        case .location:
-            if let nodeConnected = NetworkManager.shared.nodeConnecting,
-               let nodeInMap = mesh.getNodeInMap(nodeConnected) {
-                return mesh.showConnectedNode(node, nodeSelected: nodeInMap)
+        if statusConnect == .connected {
+            switch AppSetting.shared.getBoardTabWhenConnecting() {
+            case .location:
+                if let nodeConnected = NetworkManager.shared.nodeConnecting,
+                   let nodeInMap = mesh.getNodeInMap(nodeConnected) {
+                    return mesh.showConnectedNode(node, nodeSelected: nodeInMap)
+                }
+            case .staticIP:
+                if let staticServer = NetworkManager.shared.selectStaticServer,
+                   let nodeInMap = mesh.getNodeByStaticServer(staticServer) {
+                    return mesh.showConnectedNode(node, nodeSelected: nodeInMap)
+                }
+            case .multiHop:
+                return isEntryNodeMulti || isExitNodeMulti
             }
-        case .staticIP:
-            if let staticServer = NetworkManager.shared.selectStaticServer,
-               let nodeInMap = mesh.getNodeByStaticServer(staticServer) {
-                return mesh.showConnectedNode(node, nodeSelected: nodeInMap)
-            }
-        default:
-            break
         }
         return false
     }

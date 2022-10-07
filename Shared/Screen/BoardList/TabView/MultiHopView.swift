@@ -65,7 +65,6 @@ struct MultiHopView: View {
                             if ItemCell(type: AppSetting.shared.getAutoConnectProtocol()).type == .off {
                                 multihopSelect = item
                             }
-                            NotificationCenter.default.post(name: Constant.NameNotification.showMap, object: nil)
                         } label: {
                             HStack {
                                 Group {

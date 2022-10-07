@@ -36,7 +36,6 @@ struct StaticIPListView: View {
                                 if ItemCell(type: AppSetting.shared.getAutoConnectProtocol()).type == .off {
                                     selectStaticServer = node
                                 }
-                                NotificationCenter.default.post(name: Constant.NameNotification.showMap, object: nil)
                             }) {
                                 NodeCellStaticView(node: node)
                             }
@@ -48,7 +47,6 @@ struct StaticIPListView: View {
                                 if ItemCell(type: AppSetting.shared.getAutoConnectProtocol()).type == .off {
                                     selectStaticServer = node
                                 }
-                                NotificationCenter.default.post(name: Constant.NameNotification.showMap, object: nil)
                             }) {
                                 NodeCellStaticView(node: node)
                             }
