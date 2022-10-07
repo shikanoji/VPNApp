@@ -10,9 +10,7 @@ import TunnelKitManager
 import TunnelKitCore
 
 struct BoardListView: View {
-//    @Binding var showBoardList: Bool
-    var showBoardList: Binding<Bool>
-    @Binding var selectedTab: StateTab 
+    @StateObject var viewModel: BoardViewModel
     @Binding var nodeSelect: Node?
     
     @Binding var locationData: [NodeGroup]
@@ -35,14 +33,14 @@ struct BoardListView: View {
                                    name: $name)
                 .onTapGesture {
                     withAnimation {
-                        showBoardList.wrappedValue.toggle()
+                        viewModel.showBoardList = false
                         }
                     }
-                BoardTabView(selectedTab: $selectedTab, showBoardList: showBoardList)
+                BoardTabView(viewModel: viewModel)
                     .padding([.leading, .trailing])
                 Spacer()
                     .frame(height: 8)
-                switch selectedTab {
+                switch viewModel.selectedTab {
                 case .location:
                     LocationListView(locationData: $locationData, nodeSelect: $nodeSelect)
                 case .staticIP:

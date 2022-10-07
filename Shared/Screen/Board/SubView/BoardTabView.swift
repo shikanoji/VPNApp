@@ -8,20 +8,14 @@
 import SwiftUI
 
 struct BoardTabView: View {
-    @Binding var selectedTab: StateTab
-//    @Binding var showBoardList: Bool
-    var showBoardList: Binding<Bool> {
-        didSet {
-            print("BoardTabView \(showBoardList) tab: \(selectedTab)")
-        }
-    }
+    @StateObject var viewModel: BoardViewModel
     
     var body: some View {
         ZStack {
             HStack(spacing: 5) {
-                BoardTabViewCustom(typeTab: .location, selectedTab: $selectedTab, showBoardList: showBoardList)
-                BoardTabViewCustom(typeTab: .staticIP, selectedTab: $selectedTab, showBoardList: showBoardList)
-                BoardTabViewCustom(typeTab: .multiHop, selectedTab: $selectedTab, showBoardList: showBoardList)
+                BoardTabViewCustom(typeTab: .location, viewModel: viewModel)
+                BoardTabViewCustom(typeTab: .staticIP, viewModel: viewModel)
+                BoardTabViewCustom(typeTab: .multiHop, viewModel: viewModel)
             }
             .cornerRadius(Constant.Board.SubBoard.radius)
             .padding(6)
@@ -34,49 +28,16 @@ struct BoardTabView: View {
 }
 
 struct BoardTabViewCustom: View {
-    var selected: Binding<Bool>
-    var selectedTab: Binding<StateTab>
-    
-    var showBoardList: Binding<Bool>
     
     var typeTab: StateTab
-    var title: String
-    
-    init(typeTab: StateTab, selectedTab: Binding<StateTab>, showBoardList: Binding<Bool>) {
-        switch typeTab {
-        case .location:
-            self.title = L10n.Board.locationTitleTab
-        case .staticIP:
-            self.title = L10n.Board.staticIPTitleTab
-        case .multiHop:
-            self.title = L10n.Board.multiHopTitleTab
-        }
-        
-        self.typeTab = typeTab
-        self.selectedTab = selectedTab
-        self.selected = Binding<Bool>.constant(selectedTab.wrappedValue == typeTab)
-        self.showBoardList = showBoardList
-    }
+    @StateObject var viewModel: BoardViewModel
     
     var body: some View {
-        Button(title) {
-            if !selected.wrappedValue {
-                selectedTab.wrappedValue = typeTab
-            }
-            if !showBoardList.wrappedValue {
-                showBoardList.wrappedValue = true
-            }
+        Button(typeTab.title) {
+            viewModel.selectedTab = typeTab
+            viewModel.showBoardList = true
         }
-        .buttonStyle(PrimaryButtonStyle(backgroundColor: selected.wrappedValue ? AppColor.darkButton : AppColor.lightBlack, cornerRadius: Constant.Board.SubBoard.radius))
-    }
-}
-
-struct BoardTabView_Previews: PreviewProvider {
-    @State static var show = false
-    
-    static var previews: some View {
-        BoardTabView(selectedTab: Binding<StateTab>.constant(.staticIP), showBoardList: $show)
-            .previewLayout(.fixed(width: 343.0, height: Constant.Board.Tabs.heightSize))
+        .buttonStyle(PrimaryButtonStyle(backgroundColor: viewModel.selectedTab == typeTab ? AppColor.darkButton : AppColor.lightBlack, cornerRadius: Constant.Board.SubBoard.radius))
     }
 }
 
