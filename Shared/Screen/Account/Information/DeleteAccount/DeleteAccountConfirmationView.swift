@@ -12,10 +12,13 @@ struct DeleteAccountConfirmationView: View {
     @Environment(\.presentationMode) var presentationMode
     @EnvironmentObject var authentication: Authentication
     @StateObject var viewModel: DeleteAccountConfirmationViewModel
+    
+    var cancel: (() -> Void)? = nil
+    
     var title: some View {
         HStack {
             Text(L10n.Account.deleteAccount)
-                .font(.system(size: 18, weight: .bold))
+                .font(.system(size: Constant.TextSize.Global.titleDefault, weight: .bold))
                 .foregroundColor(Color.white)
             Spacer()
         }
@@ -24,7 +27,7 @@ struct DeleteAccountConfirmationView: View {
     var note: some View {
         HStack {
             Text(L10n.Account.DeleteAccount.note)
-                .font(.system(size: 14, weight: .regular))
+                .font(.system(size: Constant.TextSize.Global.detailDefault, weight: .regular))
                 .foregroundColor(AppColor.yellowGradient)
             Spacer()
         }
@@ -32,12 +35,14 @@ struct DeleteAccountConfirmationView: View {
     
     var message: some View {
         Text(L10n.Account.DeleteAccount.message)
-            .font(.system(size: 14, weight: .regular))
+            .font(.system(size: Constant.TextSize.Global.detailDefault, weight: .regular))
             .foregroundColor(Color.white)
     }
     
     var content: some View {
         VStack {
+            LedgeTopView()
+                .padding(.top, -10)
             title
             Spacer().frame(height:10)
             note
@@ -56,16 +61,17 @@ struct DeleteAccountConfirmationView: View {
     }
     
     var body: some View {
-        ZStack {
-            VStack {
-                Color.clear
-                content
-                Spacer()
-            }
-            .onChange(of: viewModel.shouldDismissView) { shouldDismiss in
-                if shouldDismiss {
-                    presentationMode.wrappedValue.dismiss()
+        VStack {
+            Color.clear
+                .contentShape(Rectangle())
+                .onTapGesture {
+                    cancel?()
                 }
+            content
+        }
+        .onChange(of: viewModel.shouldDismissView) { shouldDismiss in
+            if shouldDismiss {
+                presentationMode.wrappedValue.dismiss()
             }
         }
         .background(PopupBackgroundView())
@@ -74,7 +80,7 @@ struct DeleteAccountConfirmationView: View {
             /// Pass authentication to view model because Environment object only receivable through view
             viewModel.authentication = authentication
         }
-        .popup(isPresented: $viewModel.showAlert, type: .floater(verticalPadding: 10), position: .bottom, animation: .easeInOut, autohideIn: 10, closeOnTap: false, closeOnTapOutside: true) {
+        .popup(isPresented: $viewModel.showAlert, type: .floater(verticalPadding: 10), position: .bottom, animation: .easeInOut, autohideIn: 5, closeOnTap: false, closeOnTapOutside: true) {
             PopupSelectView(message: viewModel.alertMessage,
                             confirmAction: {
                 viewModel.showAlert = false

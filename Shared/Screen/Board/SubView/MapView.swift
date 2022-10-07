@@ -39,6 +39,8 @@ struct MapView: View {
     
     @Environment(\.safeAreaInsets) private var safeAreaInsets
     
+    @State var isZooming = false 
+    
     var body: some View {
         ZoomableScrollView(content: {
             AppColor.background
@@ -49,7 +51,8 @@ struct MapView: View {
                     .aspectRatio(contentMode: .fill)
                 
                 NodeMapView(scale: $currentAmount,
-                            statusConnect: $statusConnect)
+                            statusConnect: $statusConnect,
+                            isZooming: $isZooming)
                 .animation(.easeIn)
             }
             .padding(.bottom, -safeAreaInsets.bottom)
@@ -57,6 +60,8 @@ struct MapView: View {
         }, location: $location, enableUpdateMap: enableUpdateMap, updateZoomScale: {
             enableUpdateMap = false
             self.currentAmount = $0
+        }, isZooming: {
+            self.isZooming = $0
         })
         .onChange(of: statusConnect) { _ in
             moveToNodeConnected(statusConnect == .connected)
@@ -69,7 +74,6 @@ struct MapView: View {
         .onChange(of: mesh.selectedNode, perform: { newValue in
             if let node = newValue {
                 moveToNode(x: node.x, y: node.y)
-                AppSetting.shared.saveBoardTabWhenConnecting(.location)
             }
         })
         .onReceive(mesh.$clientCountryNode) {
@@ -88,8 +92,8 @@ struct MapView: View {
             mesh.removeSelectNode()
             switch AppSetting.shared.getBoardTabWhenConnecting() {
             case .location:
-                if let node = NetworkManager.shared.getNodeConnect() {
-                    let moveNode = mesh.getNodeToMove(node)
+                if let node = NetworkManager.shared.nodeConnecting,
+                   let moveNode = mesh.getNodeInMap(node) {
                     moveToNode(x: moveNode.x, y: moveNode.y)
                 }
             case .staticIP:
@@ -128,6 +132,7 @@ extension Binding {
 struct ZoomableScrollView<Content: View>: UIViewRepresentable {
     
     var updateZoomScale: (Double) -> Void?
+    var isZooming: (Bool) -> Void?
     
     private var content: Content
     
@@ -143,8 +148,10 @@ struct ZoomableScrollView<Content: View>: UIViewRepresentable {
     init(@ViewBuilder content: () -> Content,
          location: Binding<CGPoint>,
          enableUpdateMap: Bool,
-         updateZoomScale: @escaping (Double)-> Void = { _ in }
+         updateZoomScale: @escaping (Double)-> Void = { _ in },
+         isZooming: @escaping (Bool)-> Void = { _ in }
     ) {
+        self.isZooming = isZooming
         self.updateZoomScale = updateZoomScale
         self.content = content()
         self._location = location
@@ -185,7 +192,7 @@ struct ZoomableScrollView<Content: View>: UIViewRepresentable {
     }
     
     func makeCoordinator() -> Coordinator {
-        return Coordinator(hostingController: UIHostingController(rootView: self.content), self, padding: padding)
+        return Coordinator(hostingController: UIHostingController(rootView: self.content), self, padding: padding, isZooming: isZooming)
     }
     
     func updateUIView(_ uiView: UIScrollView, context: Context) {
@@ -229,14 +236,26 @@ struct ZoomableScrollView<Content: View>: UIViewRepresentable {
         var parent: ZoomableScrollView
         let padding: CGFloat
         
-        init(hostingController: UIHostingController<Content>, _ parent: ZoomableScrollView, padding: CGFloat) {
+        var isZooming: (Bool) -> Void?
+        
+        init(hostingController: UIHostingController<Content>, _ parent: ZoomableScrollView, padding: CGFloat,
+             isZooming: @escaping (Bool) -> Void?) {
             self.parent = parent
             self.hostingController = hostingController
             self.padding = padding
+            self.isZooming = isZooming
         }
         
         func viewForZooming(in scrollView: UIScrollView) -> UIView? {
             return hostingController.view
+        }
+        
+        func scrollViewWillBeginZooming(_ scrollView: UIScrollView, with view: UIView?) {
+            isZooming(true)
+        }
+        
+        func scrollViewDidEndZooming(_ scrollView: UIScrollView, with view: UIView?, atScale scale: CGFloat) {
+            isZooming(false)
         }
         
         func scrollViewDidScroll(_ scrollView: UIScrollView) {

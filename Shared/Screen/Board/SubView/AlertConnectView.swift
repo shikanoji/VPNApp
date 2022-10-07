@@ -33,7 +33,20 @@ struct AlertConnectView: View {
     
     func AlertConnectView() -> some View {
         HStack(spacing: 10) {
-            ImageView(withURL: flag, size: ensignSize)
+            Group {
+                if let url = URL(string: flag) {
+                    AsyncImage(
+                        url: url,
+                        placeholder: {
+                            Asset.Assets.flagDefault.swiftUIImage
+                                .resizable()
+                        },
+                        image: { Image(uiImage: $0).resizable() })
+                } else {
+                    Asset.Assets.flagDefault.swiftUIImage
+                }
+            }
+//            ImageView(withURL: flag, size: ensignSize)
                 .clipShape(Circle())
                 .frame(width: Constant.Board.NodePopupView.frameEnsign,
                        height: Constant.Board.NodePopupView.frameEnsign)
@@ -47,20 +60,20 @@ struct AlertConnectView: View {
 }
 
 struct Triangle : Shape {
+    var soft = true
+    
     func path(in rect: CGRect) -> Path {
         Path { path in
             let width: CGFloat = rect.width
             let height: CGFloat = rect.height
             let cornerRadius = height / 3
             path.move(to: CGPoint(x: width, y: 0))
-            path.addArc(center: CGPoint(x: width / 2, y: height - cornerRadius), radius: cornerRadius, startAngle: Angle(degrees: 45), endAngle: Angle(degrees: 135), clockwise: false)
+            if soft {
+                path.addArc(center: CGPoint(x: width / 2, y: height - cornerRadius), radius: cornerRadius, startAngle: Angle(degrees: 45), endAngle: Angle(degrees: 135), clockwise: false)
+            } else {
+                path.addLine(to: CGPoint(x: width / 2, y: height - cornerRadius))
+            }
             path.addLine(to: CGPoint(x: 0, y: 0))
         }
     }
 }
-
-//struct AlertConnectView_Previews: PreviewProvider {
-//    static var previews: some View {
-//        AlertConnectView()
-//    }
-//}

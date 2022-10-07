@@ -20,24 +20,29 @@ struct AutoConnectDestinationSelectView: View {
     @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
     
     var body: some View {
-        LocationListView(locationData: $viewModel.locationData,
-                         nodeSelect: $viewModel.node,
-                         hasFastestOption: true,
-                         showAutoConnectionDestinationView: $showAutoConnectDestinationSelection)
-        .padding(.top)
-        .onChange(of: viewModel.shouldAutoCloseView){ shouldCloseView in
-            if shouldCloseView {
-                showAutoConnectDestinationSelection = false
+        NavigationView {
+            VStack {
+                LedgeTopView()
+                    .padding(.top, 10)
+                LocationListView(locationData: $viewModel.locationData,
+                                 nodeSelect: $viewModel.node,
+                                 hasFastestOption: true)
+                .padding(.top)
+                .onChange(of: viewModel.shouldAutoCloseView){ shouldCloseView in
+                    if shouldCloseView {
+                        showAutoConnectDestinationSelection = false
+                    }
+                }
             }
+            .background(AppColor.background)
+            .ignoresSafeArea()
+            .onAppear(perform: {
+                if !AppSetting.shared.isConnectedToVpn {
+                    viewModel.getCountryList()
+                } else {
+                    viewModel.getDataFromLocal()
+                }
+            })
         }
-        .background(AppColor.background)
-        .ignoresSafeArea()
-        .onAppear(perform: {
-            if !AppSetting.shared.isConnectedToVpn {
-                viewModel.getCountryList()
-            } else {
-                viewModel.getDataFromLocal()
-            }
-        })
     }
 }

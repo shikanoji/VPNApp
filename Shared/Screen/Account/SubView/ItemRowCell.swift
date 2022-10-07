@@ -54,13 +54,23 @@ struct ItemRowCell: View {
         HStack {
             Spacer().frame(width: 16)
             if item?.type == .fastestServer {
-                if let autoConnectNode = AppSetting.shared.getAutoConnectNode(),
-                   let flag = autoConnectNode.flag {
-                    ImageView(withURL: flag, size: Constant.BoardList.heightImageNode)
-                        .clipShape(Circle())
-                } else {
-                    Asset.Assets.fastestServerIcon.swiftUIImage
+                Group {
+                    if let autoConnectNode = AppSetting.shared.getAutoConnectNode(),
+                       let url = URL(string: autoConnectNode.flag) {
+                        AsyncImage(
+                            url: url,
+                            placeholder: {
+                                Asset.Assets.flagDefault.swiftUIImage
+                                    .resizable()
+                            },
+                            image: { Image(uiImage: $0).resizable() })
+                    } else {
+                        Asset.Assets.fastestServerIcon.swiftUIImage
+                    }
                 }
+                .clipShape(Circle())
+                .frame(width: Constant.BoardList.heightImageNode,
+                       height: Constant.BoardList.heightImageNode)
                 Spacer().frame(width: 16)
             }
             VStack(alignment: .leading, spacing: 6) {
@@ -82,7 +92,6 @@ struct ItemRowCell: View {
             Group {
                 if showRightButton {
                     Image(Constant.Account.rightButton)
-                        .padding()
                 } else if showSwitch {
                     Toggle(isOn: Binding<Bool>(
                         get: { switchValue },
@@ -105,11 +114,12 @@ struct ItemRowCell: View {
                         .toggleStyle(SelectToggleStyle())
                 }
             }
-            .frame(width: 50)
+            .frame(width: 40)
             Spacer().frame(width: 15)
         }
-        .padding(.vertical, 8.0)
+        .padding(.vertical, 8)
         .frame(maxWidth: .infinity)
+        .frame(height: 65)
         .background(AppColor.darkButton)
         .cornerRadius(radius: Constant.Menu.radiusCell, corners: [position.rectCorner])
     }

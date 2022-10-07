@@ -56,6 +56,8 @@ struct AppColor {
     static let VPNConnected = Asset.Colors.vpnConnected.swiftUIColor
     static let VPNUnconnect = Asset.Colors.vpnUnconnected.swiftUIColor
     static let backgroundCity = Asset.Colors.backgroundCity.swiftUIColor
+    static let gradientEntry = Asset.Colors.gradientEntry.swiftUIColor
+    static let gradientExit = Asset.Colors.gradientExit.swiftUIColor
     
     static let whiteStatus = Asset.Colors.whiteStatus.swiftUIColor
     static let borderSearch = Asset.Colors.borderSearch.swiftUIColor
@@ -72,4 +74,6 @@ struct AppColor {
     static let backgroundLoading = Asset.Colors.backgroundLoading.swiftUIColor
     
     static let grayBackground = Asset.Colors.grayCenterBackground.swiftUIColor
+    
+    static let freeTrial = Asset.Colors.freeTrial.swiftUIColor
 }

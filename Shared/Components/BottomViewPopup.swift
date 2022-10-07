@@ -8,6 +8,18 @@
 import Foundation
 import SwiftUI
 
+struct LedgeTopView: View {
+    var body: some View {
+        HStack(alignment: .center) {
+            Spacer()
+            Color.gray
+                .clipShape(Capsule())
+                .frame(width: 50, height: 2)
+            Spacer()
+        }
+    }
+}
+
 struct BottomViewPopup: View {
     
     var titleStr = L10n.Account.Logout.confirm
@@ -22,7 +34,7 @@ struct BottomViewPopup: View {
     var title: some View {
         HStack {
             Text(titleStr)
-                .font(.system(size: 18, weight: .bold))
+                .font(.system(size: Constant.TextSize.Global.titleMedium, weight: .bold))
                 .foregroundColor(Color.white)
             Spacer()
         }
@@ -30,12 +42,14 @@ struct BottomViewPopup: View {
     
     var message: some View {
         Text(messageStr)
-            .font(.system(size: 14, weight: .regular))
+            .font(.system(size: Constant.TextSize.Global.detailDefault, weight: .regular))
             .foregroundColor(AppColor.yellowGradient)
     }
     
     var content: some View {
         VStack(alignment: .leading, spacing: 30) {
+            LedgeTopView()
+                .padding(.top, -10)
             title
             message
             AppButton(width: .infinity, backgroundColor: warning ? AppColor.redradient : AppColor.darkButton, textColor: Color.white , text: confirmStr) {
@@ -53,8 +67,11 @@ struct BottomViewPopup: View {
     var body: some View {
         VStack {
             Color.clear
+                .contentShape(Rectangle())
+                .onTapGesture {
+                    cancel?()
+                }
             content
-            Spacer()
         }
         .background(PopupBackgroundView())
         .ignoresSafeArea()

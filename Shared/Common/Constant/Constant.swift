@@ -18,6 +18,7 @@ struct Constant {
             static let connected = "icon_connected_board"
             static let uploadSpeed = "icon_board_up_speed"
             static let downloadSpeed = "icon_board_down_speed"
+            static let falgDefault = "flag-default"
         }
         
         struct SubBoard {
@@ -43,7 +44,7 @@ struct Constant {
         struct QuickButton {
             static let widthSize: CGFloat = 95
             static let heightSize: CGFloat = 135
-            static let widthBorderMax: CGFloat = 5
+            static let widthBorderMax: CGFloat = 4
             static let sizeDoc: CGFloat = 8
         }
         
@@ -85,6 +86,17 @@ struct Constant {
             static let heightMapOrigin: CGFloat = 1588
             static let ration: CGFloat = widthMapOrigin / heightMapOrigin
         }
+        
+        struct Node {
+            static let sizeNode: CGFloat = 16
+            static let heightPopupCity: CGFloat = 65
+            static let heightPopupCountry: CGFloat = 25
+            static let multiConnected: CGFloat = 1.8
+            static let multiCityNode: CGFloat = 1.4
+            static let multiCountryNode: CGFloat = 1
+            static let paddingCenterCity = heightPopupCity - 22
+            static let paddingCenterCountry = heightPopupCountry
+        }
     }
     
     struct Account {
@@ -113,7 +125,7 @@ struct Constant {
         static let sizeIconItemMenu: CGFloat = 32
         static let fontItem = Font.system(size: 15, weight: .bold)
         static let radiusCell: CGFloat = 10
-        static let heightItemCell: CGFloat = 63
+        static let heightItemCell: CGFloat = 65
         static let hozitalPaddingCell: CGFloat = 16
         static let topPaddingCell: CGFloat = 15
     }
@@ -165,9 +177,10 @@ struct Constant {
         return (x / Constant.Board.Map.widthMapOrigin) * (Constant.Board.Map.heightScreen * Constant.Board.Map.ration)
     }
     
-    static func convertYToMap(_ y: CGFloat, _ isCityView: Bool = false) -> CGFloat {
+    static func convertYToMap(_ y: CGFloat, _ isCityView: Bool = false, _ isMultihopNode: Bool = false) -> CGFloat {
         let statusPopView: CGFloat = isCityView ? 45 : 16
-        return (y / Constant.Board.Map.heightMapOrigin) * Constant.Board.Map.heightScreen - statusPopView
+        let topViewMultihop: CGFloat = isMultihopNode ? 12 : 0
+        return (y / Constant.Board.Map.heightMapOrigin) * Constant.Board.Map.heightScreen - statusPopView - topViewMultihop
     }
     
     struct NameNotification {
@@ -178,5 +191,51 @@ struct Constant {
         static let sessionExpired = Notification.Name("sessionExpired")
         static let disconnectedVPN = Notification.Name("disconnectedVPN")
         static let showMap = Notification.Name("showMap")
+        static let showIntroPlan = Notification.Name("showIntroPlan")
+        static let startFree7DayTrial = Notification.Name("startFree7DayTrial")
+        static let connectVPNError = Notification.Name("connectVPNError")
+    }
+    
+    struct TextSize {
+                
+        struct Global {
+            static let titleLarge: CGFloat = 24
+            static let titleMedium: CGFloat = 18
+            static let titleDefault: CGFloat = 16
+            static let detailDefault: CGFloat = 14
+            static let small:CGFloat = 13
+            static let description:CGFloat = 12
+            static let subcription:CGFloat = 11
+        }
+        
+        struct PlanListCell {
+            static let name: CGFloat = 14
+            static let savingText: CGFloat = 11
+            static let price: CGFloat = 20
+            static let description: CGFloat = 12
+            static let titleSubcription: CGFloat = 32
+            static let header: CGFloat = 15
+            static let body: CGFloat = 13
+        }
+        
+        struct StaticIPListView {
+            static let staticIP: CGFloat = 12
+            static let currentLoad: CGFloat = 9
+        }
+    }
+            
+    struct TextSizeButton {
+        struct Default {
+            static let medium: CGFloat = 14
+        }
+    }
+    
+    struct SizeImage {
+        static let widthButton: CGFloat = 30
+        static let heightButton: CGFloat = 30
+    }
+    
+    struct SizeButton {
+        static let widthButtonFull = Constant.Board.Map.widthScreen - 80
     }
 }

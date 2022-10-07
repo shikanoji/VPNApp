@@ -31,7 +31,7 @@ struct DNSSettingView: View {
             Spacer().frame(height: 30)
             HStack {
                 Text(L10n.Settings.Dns.Custom.title)
-                    .font(.system(size: 16, weight: .bold))
+                    .font(.system(size: Constant.TextSize.Global.titleDefault, weight: .bold))
                     .foregroundColor(Color.white)
                 Spacer()
             }.frame(width: componentWidth)
@@ -88,7 +88,7 @@ struct DNSSettingView: View {
         .navigationBarHidden(true)
         .background(AppColor.background)
         .ignoresSafeArea()
-        .popup(isPresented: $viewModel.showAlert, type: .floater(verticalPadding: 10), position: .bottom, animation: .easeInOut, autohideIn: 10, closeOnTap: false, closeOnTapOutside: true) {
+        .popup(isPresented: $viewModel.showAlert, type: .floater(verticalPadding: 10), position: .bottom, animation: .easeInOut, autohideIn: 5, closeOnTap: false, closeOnTapOutside: true) {
             PopupSelectView(message: viewModel.alertMessage,
                             confirmAction: {
                 viewModel.showAlert = false

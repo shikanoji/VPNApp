@@ -15,7 +15,6 @@ struct BoardView: View {
     
     @State var showAccount = false
     @State var showSettings = false
-    @State var showBoardList = false
     
     private let transitionLeft = AnyTransition.asymmetric(insertion: .move(edge: .leading),
                                                       removal: .move(edge: .leading))
@@ -48,51 +47,68 @@ struct BoardView: View {
             if !viewModel.shouldHideSession {
                 sessionVPNView()
             }
-            
-            if viewModel.showAlert {
-                toastView()
-            }
-            
-            if viewModel.showAlertSessionSetting {
-                VStack{
-                    Spacer()
-                    PopupSelectView(message: "Need terminate other sessions",
-                                    confirmTitle: "Open Sessions",
-                                    confirmAction: {
-                        viewModel.showAlertSessionSetting = false
-                        viewModel.shouldHideSession = false
-                    })
-                    .frame(alignment: .bottom)
-                    .padding(.bottom, 20)
-                }
-            }
-
-            if viewModel.showSessionTerminatedAlert {
-                VStack{
-                    Spacer()
-                    PopupSelectView(message: "Session terminated",
-                                    confirmTitle: "OK",
-                                    confirmAction: {
-                        viewModel.showSessionTerminatedAlert = false
-                    })
-                    .frame(alignment: .bottom)
-                    .padding(.bottom, 20)
-                }
-            }
-            
-            if viewModel.showAlertAutoConnectSetting {
-                VStack{
-                    Spacer()
-                    PopupSelectView(message: "Disable auto-conenct",
-                                    confirmTitle: "SETTINGS",
-                                    confirmAction: {
-                        viewModel.showAlertAutoConnectSetting = false
-                        viewModel.shouldHideAutoConnect = false
-                    })
-                    .frame(alignment: .bottom)
-                    .padding(.bottom, 20)
-                }
-            }
+        }
+        .popup(isPresented: $viewModel.showAlert,
+               type: .floater(verticalPadding: 20),
+               position: .bottom,
+               animation: .easeInOut,
+               autohideIn: 5,
+               closeOnTap: false,
+               closeOnTapOutside: true) {
+            PopupSelectView(message: viewModel.error?.description ?? "An error occurred",
+                            confirmTitle: "DISMISS",
+                            confirmAction: {
+                viewModel.showAlert = false
+            })
+            .frame(alignment: .bottom)
+            .padding(.bottom, 20)
+        }
+        .popup(isPresented: $viewModel.showSessionTerminatedAlert,
+               type: .floater(verticalPadding: 20),
+               position: .bottom,
+               animation: .easeInOut,
+               autohideIn: 5,
+               closeOnTap: false,
+               closeOnTapOutside: true) {
+            PopupSelectView(message: "Session terminated",
+                            confirmTitle: "OK",
+                            confirmAction: {
+                viewModel.showSessionTerminatedAlert = false
+            })
+            .frame(alignment: .bottom)
+            .padding(.bottom, 20)
+        }
+        .popup(isPresented: $viewModel.showAlertSessionSetting,
+               type: .floater(verticalPadding: 20),
+               position: .bottom,
+               animation: .easeInOut,
+               autohideIn: 5,
+               closeOnTap: false,
+               closeOnTapOutside: true) {
+            PopupSelectView(message: "Need terminate other sessions",
+                            confirmTitle: "Open Sessions",
+                            confirmAction: {
+                viewModel.showAlertSessionSetting = false
+                viewModel.shouldHideSession = false
+            })
+            .frame(alignment: .bottom)
+            .padding(.bottom, 20)
+        }
+        .popup(isPresented: $viewModel.showAlertAutoConnectSetting,
+                   type: .floater(verticalPadding: 20),
+                   position: .bottom,
+                   animation: .easeInOut,
+                   autohideIn: 5,
+                   closeOnTap: false,
+                   closeOnTapOutside: true) {
+            PopupSelectView(message: "Disable auto-conenct",
+                            confirmTitle: "SETTINGS",
+                            confirmAction: {
+                viewModel.showAlertAutoConnectSetting = false
+                viewModel.shouldHideAutoConnect = false
+            })
+            .frame(alignment: .bottom)
+            .padding(.bottom, 20)
         }
         .onChange(of: viewModel.showAlert, perform: { newValue in
             if newValue {
@@ -114,9 +130,6 @@ struct BoardView: View {
                     viewModel.showAlertAutoConnectSetting = false
                 }
             }
-        })
-        .onChange(of: viewModel.showMap, perform: { newValue in
-            showBoardList = false
         })
         .animation(Animation.linear(duration: 0.25))
         .preferredColorScheme(.dark)
@@ -158,20 +171,6 @@ struct BoardView: View {
             shouldHideSessionList: $viewModel.shouldHideSession)
     }
     
-    func toastView() -> some View {
-        VStack{
-            Spacer()
-            
-            PopupSelectView(message: viewModel.error?.description ?? "An error occurred",
-                            confirmTitle: "DISMISS",
-                            confirmAction: {
-                viewModel.showAlert = false
-            })
-            .frame(alignment: .bottom)
-            .padding(.bottom, 20)
-        }
-    }
-    
     func settingView() -> some View {
         SettingsView(showSettings: $showSettings,
                      statusConnect: $viewModel.stateUI,
@@ -181,8 +180,7 @@ struct BoardView: View {
     }
     
     func boardListView() -> some View {
-        BoardListView(showBoardList: $showBoardList,
-                      currentTab: $viewModel.tab,
+        BoardListView(viewModel: viewModel,
                       nodeSelect: $viewModel.nodeSelectFromBoardList,
                       locationData: $viewModel.locationData,
                       staticIPData: $viewModel.staticIPData,
@@ -226,12 +224,19 @@ struct BoardView: View {
                     }, tapRightIcon: {
                         handlerTapRightNavigation()
                     })
+                    .zIndex(3)
                     .padding(.top)
                     StatusVPNView(ip: viewModel.ip, status: viewModel.stateUI, flag: viewModel.flag, name: viewModel.nameSelect)
                     .padding(.top, 0)
                     Spacer()
                     ConnectButton(viewModel: viewModel,
                                   tapButton: {
+                        if viewModel.state != .connected {
+                            AppSetting.shared.saveBoardTabWhenConnecting(.location)
+                            if mesh.selectedNode == nil {
+                                NetworkManager.shared.nodeSelected = AppSetting.shared.getRecommendedCountries().first
+                            }
+                        }
                         viewModel.onlyDisconnectWithoutEndsession = true
                         AppSetting.shared.temporaryDisableAutoConnect = false
                         viewModel.connectOrDisconnectByUser = true
@@ -239,17 +244,18 @@ struct BoardView: View {
                     })
                     Spacer()
                         .frame(height: Constant.Board.Tabs.topPadding)
-                    BoardTabView(tab: $viewModel.tab, showBoardList: $showBoardList)
+                    BoardTabView(viewModel: viewModel)
                         .padding(.bottom, 10)
+                        .zIndex(1)
                 }
                 .padding(/*@START_MENU_TOKEN@*/.all/*@END_MENU_TOKEN@*/)
             }
-            if viewModel.showProgressView {
-                // dont show loading
-            }
         }
-        .sheet(isPresented: $showBoardList) {
+        .sheet(isPresented: $viewModel.showBoardList) {
             boardListView()
+                .onWillDisappear {
+                    viewModel.showBoardList = false
+                }
         }
         .background(AppColor.background)
         .frame(alignment: .top)
@@ -260,5 +266,55 @@ struct BoardView: View {
 struct BoardView_Previews: PreviewProvider {
     static var previews: some View {
         BoardView(viewModel: BoardViewModel())
+    }
+}
+
+struct WillDisappearHandler: UIViewControllerRepresentable {
+    func makeCoordinator() -> WillDisappearHandler.Coordinator {
+        Coordinator(onWillDisappear: onWillDisappear)
+    }
+
+    let onWillDisappear: () -> Void
+
+    func makeUIViewController(context: UIViewControllerRepresentableContext<WillDisappearHandler>) -> UIViewController {
+        context.coordinator
+    }
+
+    func updateUIViewController(_ uiViewController: UIViewController, context: UIViewControllerRepresentableContext<WillDisappearHandler>) {
+    }
+
+    typealias UIViewControllerType = UIViewController
+
+    class Coordinator: UIViewController {
+        let onWillDisappear: () -> Void
+
+        init(onWillDisappear: @escaping () -> Void) {
+            self.onWillDisappear = onWillDisappear
+            super.init(nibName: nil, bundle: nil)
+        }
+
+        required init?(coder: NSCoder) {
+            fatalError("init(coder:) has not been implemented")
+        }
+
+        override func viewWillDisappear(_ animated: Bool) {
+            super.viewWillDisappear(animated)
+            onWillDisappear()
+        }
+    }
+}
+
+struct WillDisappearModifier: ViewModifier {
+    let callback: () -> Void
+
+    func body(content: Content) -> some View {
+        content
+            .background(WillDisappearHandler(onWillDisappear: callback))
+    }
+}
+
+extension View {
+    func onWillDisappear(_ perform: @escaping () -> Void) -> some View {
+        self.modifier(WillDisappearModifier(callback: perform))
     }
 }

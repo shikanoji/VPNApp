@@ -30,7 +30,7 @@ extension Constant {
             static let requestCertificate = "/app/module_server/v1/vpn/request_certificate"
             static let obtainCertificate = "/app/module_server/v1/vpn/obtain_certificate"
             static let changePassword = "/shared/module_user/v1/change-password"
-            static let getListSession = "/log/module_session/v1/sessions"
+            static let getListSession = "/app/module_session/v1/sessions"
             static let disconnectSession = "/shared/module_server/v1/vpn/disconnect_session"
             static let getTopicFaq = "shared/app/module_faq/v1/faqs"
             static let getMultihopList = "app/module_server/v1/multi_hop/get_list"

@@ -8,15 +8,14 @@
 import SwiftUI
 
 struct BoardTabView: View {
-    @Binding var tab: StateTab
-    @Binding var showBoardList: Bool
+    @StateObject var viewModel: BoardViewModel
     
     var body: some View {
         ZStack {
             HStack(spacing: 5) {
-                BoardTabViewCustom(typeTab: .location, currentTab: $tab, showBoardList: $showBoardList)
-                BoardTabViewCustom(typeTab: .staticIP, currentTab: $tab, showBoardList: $showBoardList)
-                BoardTabViewCustom(typeTab: .multiHop, currentTab: $tab, showBoardList: $showBoardList)
+                BoardTabViewCustom(typeTab: .location, viewModel: viewModel)
+                BoardTabViewCustom(typeTab: .staticIP, viewModel: viewModel)
+                BoardTabViewCustom(typeTab: .multiHop, viewModel: viewModel)
             }
             .cornerRadius(Constant.Board.SubBoard.radius)
             .padding(6)
@@ -29,47 +28,16 @@ struct BoardTabView: View {
 }
 
 struct BoardTabViewCustom: View {
-    @Binding private var selected: Bool
-    @Binding var currentTab: StateTab
-    @Binding var showBoardList: Bool
     
     var typeTab: StateTab
-    var title: String
-    
-    init(typeTab: StateTab, currentTab: Binding<StateTab>, showBoardList: Binding<Bool>) {
-        switch typeTab {
-        case .location:
-            self.title = L10n.Board.locationTitleTab
-        case .staticIP:
-            self.title = L10n.Board.staticIPTitleTab
-        case .multiHop:
-            self.title = L10n.Board.multiHopTitleTab
-        }
-        
-        self.typeTab = typeTab
-        self._currentTab = currentTab
-        self._selected = Binding<Bool>.constant(currentTab.wrappedValue == typeTab)
-        self._showBoardList = showBoardList
-    }
+    @StateObject var viewModel: BoardViewModel
     
     var body: some View {
-        Button(title) {
-            if !selected {
-                selected = true
-                currentTab = typeTab
-            }
-            showBoardList = true
+        Button(typeTab.title) {
+            viewModel.selectedTab = typeTab
+            viewModel.showBoardList = true
         }
-        .buttonStyle(PrimaryButtonStyle(backgroundColor: selected ? AppColor.darkButton : AppColor.lightBlack, cornerRadius: Constant.Board.SubBoard.radius))
-    }
-}
-
-struct BoardTabView_Previews: PreviewProvider {
-    @State static var show = false
-    
-    static var previews: some View {
-        BoardTabView(tab: Binding<StateTab>.constant(.staticIP), showBoardList: $show)
-            .previewLayout(.fixed(width: 343.0, height: Constant.Board.Tabs.heightSize))
+        .buttonStyle(PrimaryButtonStyle(backgroundColor: viewModel.selectedTab == typeTab ? AppColor.darkButton : AppColor.lightBlack, cornerRadius: Constant.Board.SubBoard.radius))
     }
 }
 

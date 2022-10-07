@@ -21,11 +21,11 @@ struct StaticIPListView: View {
                 HStack {
                     Text(L10n.StaticIP.staticIP)
                         .foregroundColor(AppColor.lightBlackText)
-                        .font(.system(size: 12))
+                        .font(.system(size: Constant.TextSize.StaticIPListView.staticIP))
                     Spacer()
                     Text(L10n.StaticIP.currentLoad)
                         .foregroundColor(AppColor.backgroundStatusView)
-                        .font(.system(size: 9))
+                        .font(.system(size: Constant.TextSize.StaticIPListView.currentLoad))
                 }
                 .padding([.top, .leading, .trailing])
                 VStack(alignment: .leading) {
@@ -36,7 +36,6 @@ struct StaticIPListView: View {
                                 if ItemCell(type: AppSetting.shared.getAutoConnectProtocol()).type == .off {
                                     selectStaticServer = node
                                 }
-                                NotificationCenter.default.post(name: Constant.NameNotification.showMap, object: nil)
                             }) {
                                 NodeCellStaticView(node: node)
                             }
@@ -48,7 +47,6 @@ struct StaticIPListView: View {
                                 if ItemCell(type: AppSetting.shared.getAutoConnectProtocol()).type == .off {
                                     selectStaticServer = node
                                 }
-                                NotificationCenter.default.post(name: Constant.NameNotification.showMap, object: nil)
                             }) {
                                 NodeCellStaticView(node: node)
                             }

@@ -164,9 +164,6 @@
 		EE514CBB27CC707F00F82AD7 /* ContentViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE514CBA27CC707F00F82AD7 /* ContentViewModel.swift */; };
 		EE514CBD27CC71DC00F82AD7 /* IpInfoResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE514CBC27CC71DC00F82AD7 /* IpInfoResult.swift */; };
 		EE514CBF27CCC14500F82AD7 /* LoadingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE514CBE27CCC14500F82AD7 /* LoadingView.swift */; };
-		EE78F73B280E732700F49903 /* wg_ios_client.conf in Resources */ = {isa = PBXBuildFile; fileRef = EE78F73A280E732700F49903 /* wg_ios_client.conf */; };
-		EE78F73F280E732700F49903 /* wg_ios_client.conf in Resources */ = {isa = PBXBuildFile; fileRef = EE78F73A280E732700F49903 /* wg_ios_client.conf */; };
-		EE78F740280E732700F49903 /* wg_ios_client.conf in Resources */ = {isa = PBXBuildFile; fileRef = EE78F73A280E732700F49903 /* wg_ios_client.conf */; };
 		EE78F74A280E781100F49903 /* WireGuardManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE78F742280E763400F49903 /* WireGuardManager.swift */; };
 		EE78F750280FA08100F49903 /* TunnelKit in Frameworks */ = {isa = PBXBuildFile; productRef = EE78F74F280FA08100F49903 /* TunnelKit */; };
 		EE78F768280FB6CE00F49903 /* NetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE78F767280FB6CE00F49903 /* NetworkManager.swift */; };
@@ -239,6 +236,7 @@
 		EED4F5A52855A5600098DF47 /* FAQDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EED4F5A42855A5600098DF47 /* FAQDetailView.swift */; };
 		EED4F5A92855A5DA0098DF47 /* WebView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EED4F5A82855A5DA0098DF47 /* WebView.swift */; };
 		EED4F5AB2855D2A90098DF47 /* MultiopNodeModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EED4F5AA2855D2A90098DF47 /* MultiopNodeModel.swift */; };
+		EED9DB6728E8101300E75882 /* SubcriptionPlanView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EED9DB6628E8101300E75882 /* SubcriptionPlanView.swift */; };
 		EEEAF2172782E1A100A96114 /* NodeMapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEEAF2162782E1A100A96114 /* NodeMapView.swift */; };
 		EEEAF2192785834200A96114 /* NodePopupView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEEAF2182785834200A96114 /* NodePopupView.swift */; };
 /* End PBXBuildFile section */
@@ -429,7 +427,6 @@
 		EE514CBA27CC707F00F82AD7 /* ContentViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentViewModel.swift; sourceTree = "<group>"; };
 		EE514CBC27CC71DC00F82AD7 /* IpInfoResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IpInfoResult.swift; sourceTree = "<group>"; };
 		EE514CBE27CCC14500F82AD7 /* LoadingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingView.swift; sourceTree = "<group>"; };
-		EE78F73A280E732700F49903 /* wg_ios_client.conf */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = wg_ios_client.conf; sourceTree = "<group>"; };
 		EE78F742280E763400F49903 /* WireGuardManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WireGuardManager.swift; sourceTree = "<group>"; };
 		EE78F767280FB6CE00F49903 /* NetworkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkManager.swift; sourceTree = "<group>"; };
 		EE78F77D2811526B00F49903 /* RequestCertificateModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RequestCertificateModel.swift; sourceTree = "<group>"; };
@@ -495,6 +492,7 @@
 		EED4F5A42855A5600098DF47 /* FAQDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FAQDetailView.swift; sourceTree = "<group>"; };
 		EED4F5A82855A5DA0098DF47 /* WebView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebView.swift; sourceTree = "<group>"; };
 		EED4F5AA2855D2A90098DF47 /* MultiopNodeModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MultiopNodeModel.swift; sourceTree = "<group>"; };
+		EED9DB6628E8101300E75882 /* SubcriptionPlanView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubcriptionPlanView.swift; sourceTree = "<group>"; };
 		EEEAF2162782E1A100A96114 /* NodeMapView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NodeMapView.swift; sourceTree = "<group>"; };
 		EEEAF2182785834200A96114 /* NodePopupView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NodePopupView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -701,6 +699,7 @@
 				D79E82942796F671009E36F3 /* WelcomeView.swift */,
 				D79E829827970649009E36F3 /* SetupVPNView.swift */,
 				AC91BDEE287C5C3A002776E6 /* AccountLimitedView.swift */,
+				EED9DB6628E8101300E75882 /* SubcriptionPlanView.swift */,
 			);
 			path = Subscription;
 			sourceTree = "<group>";
@@ -772,7 +771,6 @@
 			children = (
 				AC8EFD6728B125DE00D90F57 /* SysVPNDebug.entitlements */,
 				AC17E2402888FC4500C72E20 /* Settings.bundle */,
-				EE78F73A280E732700F49903 /* wg_ios_client.conf */,
 				EE46BCFB280D1509003C4FEB /* build_wireguard_go_bridge.sh */,
 				AC6074D827DB74CB00DD5667 /* swiftgen.yml */,
 				D78C8FC92774914400D4A46F /* SysVPN (iOS).entitlements */,
@@ -1471,7 +1469,6 @@
 				AC60750827DE431A00DD5667 /* Welcome.strings in Resources */,
 				AC60750527DE431700DD5667 /* PlanSelect.strings in Resources */,
 				AC60750227DE431500DD5667 /* SubscriptionIntro.strings in Resources */,
-				EE78F73B280E732700F49903 /* wg_ios_client.conf in Resources */,
 				D784FA65275DA89B00A7A7F1 /* Global.strings in Resources */,
 				AC6074F327DE42FE00DD5667 /* Login.strings in Resources */,
 				EE46BCFC280D1509003C4FEB /* build_wireguard_go_bridge.sh in Resources */,
@@ -1488,7 +1485,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				EE78F73F280E732700F49903 /* wg_ios_client.conf in Resources */,
 				EE46BD00280D1509003C4FEB /* build_wireguard_go_bridge.sh in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1497,7 +1493,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				EE78F740280E732700F49903 /* wg_ios_client.conf in Resources */,
 				EE46BD01280D1509003C4FEB /* build_wireguard_go_bridge.sh in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1598,6 +1593,7 @@
 				D7A4AC472795743300C88162 /* NotificationNameExtension.swift in Sources */,
 				D79C224E27BE0FA100B54613 /* AppSetting+Board.swift in Sources */,
 				D7A4AC4127952C4700C88162 /* PlanListView.swift in Sources */,
+				EED9DB6728E8101300E75882 /* SubcriptionPlanView.swift in Sources */,
 				EE85EDBD27B26FC4000F967A /* DescriptionMultihopView.swift in Sources */,
 				D78044F227590E990086E59D /* TextModifier.swift in Sources */,
 				D79E82952796F671009E36F3 /* WelcomeView.swift in Sources */,

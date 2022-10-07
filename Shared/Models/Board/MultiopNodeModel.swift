@@ -33,11 +33,15 @@ struct MultiopNodeModel: Codable {
             country = nil
         }
         
+        country?.isCity = false
+        
         if let _node = try? values.decode(Node.self, forKey: .city) {
             city = _node
         } else {
             city = nil
         }
+        
+        city?.isCity = true
     }
 }
 

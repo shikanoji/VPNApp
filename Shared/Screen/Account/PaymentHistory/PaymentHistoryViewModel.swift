@@ -12,15 +12,35 @@ class PaymentHistoryViewModel: ObservableObject {
     let disposedBag = DisposeBag()
     @Published var paymentHistory: [PaymentHistoryRow] = []
     @Published var showProgressView: Bool = false
-    func fetchPaymentHistory() {
+    
+    var page = 1
+    var enableLoadMore = false
+    
+    func fetchPaymentHistory(_ loadMore: Bool = false) {
         showProgressView = true
-        ServiceManager.shared.fetchPaymentHistory()
+        
+        if loadMore {
+            if enableLoadMore {
+                page += 1
+            } else {
+                return
+            }
+        } else {
+            page = 1
+        }
+        
+        ServiceManager.shared.fetchPaymentHistory(page: page)
             .subscribe(onSuccess: { [weak self] response in
                 guard let strongSelf = self else { return }
                 if let result = response.result {
+                    strongSelf.enableLoadMore = (result.rows.count >= result.limit) && (strongSelf.page <= result.totalPages)
                     let paymentList = result.rows
                     strongSelf.showProgressView = false
-                    strongSelf.paymentHistory = paymentList
+                    if loadMore {
+                        strongSelf.paymentHistory += paymentList
+                    } else {
+                        strongSelf.paymentHistory = paymentList
+                    }
                 }
                 
             }, onFailure: { [weak self]  error in

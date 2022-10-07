@@ -52,7 +52,7 @@ struct SearchBar: View {
                     isEditing = text != ""
                 })
                 .foregroundColor(.white)
-                .font(.system(size: 14))
+                .font(.system(size: Constant.TextSize.Global.detailDefault))
         }
     }
 }

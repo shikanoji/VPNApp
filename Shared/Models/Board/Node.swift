@@ -118,12 +118,15 @@ struct Node: Identifiable, Codable {
             self.countryName = _countryName
         }
         
-        cityNodeList = cityNodeList.map { city -> Node in
-            var updateCity = city
-            updateCity.flag = flag
-            updateCity.countryName = name
-            return updateCity
-        }
+        if cityNodeList.count > 0 {
+            cityNodeList = cityNodeList.map { city -> Node in
+                var updateCity = city
+                updateCity.flag = flag
+                updateCity.countryName = name
+                updateCity.countryId = id
+                return updateCity
+            }
+        } 
         
         isCity = cityNodeList.count == 0
         

@@ -23,7 +23,7 @@ class LoginViewModel: NSObject, ObservableObject {
     private let disposedBag = DisposeBag()
     var authentication: Authentication?
     var loginDisable: Bool {
-        email.isEmpty || password.isEmpty
+        return email.isEmpty || password.isEmpty
     }
     
     func fullLogin() {

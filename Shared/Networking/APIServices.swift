@@ -88,7 +88,7 @@ enum APIService {
     case disconnectSession(sessionId: String, terminal: Bool)
     case getTopicQuestionList
     case getMultihopList
-    case fetchPaymentHistory
+    case fetchPaymentHistory(page: Int)
     case deleteAccount
     case verifyReceipt(receipt: String)
     case getStatsByServerId
@@ -317,7 +317,6 @@ extension APIService: TargetType {
             param["limit"] = limit
             param["isActive"] = isActive
             param["sortBy"] = "createdAt:desc"
-            param["userId"] = AppSetting.shared.idUser
             
             return .requestParameters(parameters: param, encoding: URLEncoding.queryString)
             
@@ -330,10 +329,9 @@ extension APIService: TargetType {
                 bodyParameters: body,
                 bodyEncoding: JSONEncoding.prettyPrinted,
                 urlParameters:  [:])
-        case .fetchPaymentHistory:
+        case .fetchPaymentHistory(let page):
             var param: [String: Any] = [:]
-            param["userId"] = AppSetting.shared.idUser
-            
+            param["page"] = page
             return .requestParameters(parameters: param, encoding: URLEncoding.queryString)
         case .verifyReceipt(let receipt):
             
@@ -361,6 +359,12 @@ extension APIService: TargetType {
     // Usually you would pass auth tokens here.
     var headers: [String: String]? {
         switch self {
+        case .fetchPaymentHistory:
+            return [
+                "Authorization": "Bearer \(AppSetting.shared.accessToken)",
+                "Content-type": "application/json",
+                "x-api-key": "4368c9a9-e8a7-4e66-89cb-97c801c5dd88"
+            ]
         case .getServerStats:
             return [
                 "Authorization": "Bearer \(AppSetting.shared.accessToken)"
@@ -388,7 +392,7 @@ extension APIService: TargetType {
             baseHeader["x-user-info"] = "{\"id\": \(AppSetting.shared.idUser)}"
             
             return baseHeader
-        case .fetchPaymentHistory, .verifyReceipt:
+        case .verifyReceipt:
             let baseHeader = [
                 "Content-type": "application/json",
                 "x-api-key": "4368c9a9-e8a7-4e66-89cb-97c801c5dd88"

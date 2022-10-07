@@ -31,7 +31,7 @@ struct SelectLocationMultihopView: View {
                 HStack {
                     Image(Constant.CustomNavigation.iconLeft)
                     Text(leftText)
-                        .font(.system(size: 14, weight: .medium))
+                        .font(.system(size: Constant.TextSize.Global.detailDefault, weight: .medium))
                         .foregroundColor(.white)
                     Spacer()
                 }
@@ -71,8 +71,7 @@ struct SelectLocationMultihopView: View {
             }
             Spacer()
             NavigationLink(destination: CityListView(nodeSelect: $nodeSelect,
-                                                     node: cityNode ?? Node.country,
-                                                     showAutoConnectDestinationView: .constant(false)),
+                                                     node: cityNode ?? Node.country),
                            isActive: $showCityListView) { }
         }
         .onChange(of: nodeSelect, perform: { newValue in

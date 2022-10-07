@@ -10,7 +10,7 @@ import SwiftUI
 struct CityListView: View {
     @Binding var nodeSelect: Node?
     @State var node: Node
-    @Binding var showAutoConnectDestinationView: Bool
+    
     let imageSize: CGFloat = Constant.BoardList.heightImageNode
     
     @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
@@ -18,16 +18,25 @@ struct CityListView: View {
     var body: some View {
         VStack(spacing: 8) {
             Button(action: {
-                if showAutoConnectDestinationView {
-                    showAutoConnectDestinationView = false
-                } else {
                     presentationMode.wrappedValue.dismiss()
-                }
             }) {
                 HStack {
                     Image(Constant.CustomNavigation.iconLeft)
-                    ImageView(withURL: $node.flag.wrappedValue, size: imageSize)
+                    Group {
+                        if let url = URL(string: node.flag) {
+                            AsyncImage(
+                                url: url,
+                                placeholder: {
+                                    Asset.Assets.flagDefault.swiftUIImage
+                                        .resizable()
+                                },
+                                image: { Image(uiImage: $0).resizable() })
+                        } else {
+                            Asset.Assets.flagDefault.swiftUIImage
+                        }
+                    }
                         .clipShape(Circle())
+                        .frame(width: imageSize, height: imageSize)
                     Text(node.name)
                         .font(Constant.BoardList.fontNameCity)
                         .foregroundColor(.white)
@@ -40,13 +49,8 @@ struct CityListView: View {
                 VStack(alignment: .leading) {
                     ForEach(node.cityNodeList) { city in
                         Button {
+                            AppSetting.shared.temporaryDisableAutoConnect = false
                             nodeSelect = city
-                            NotificationCenter.default.post(name: Constant.NameNotification.showMap, object: nil)
-                            if showAutoConnectDestinationView {
-                                showAutoConnectDestinationView = false
-                            } else {
-//                                presentationMode.wrappedValue.dismiss()
-                            }
                         } label: {
                             CityCellView(node: city, subName: L10n.Board.BoardList.cityOf + " \(node.name)")
                         }
@@ -67,6 +71,6 @@ struct CityListView_Previews: PreviewProvider {
     @State static var nodeSelect: Node? = Node.country
     
     static var previews: some View {
-        CityListView(nodeSelect: $nodeSelect, node: node, showAutoConnectDestinationView: .constant(false))
+        CityListView(nodeSelect: $nodeSelect, node: node)
     }
 }

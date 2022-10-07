@@ -59,6 +59,12 @@ public enum L10n {
       public static let title = L10n.tr("Account", "AccountStatus.title", fallback: #"Your Subscription"#)
       /// Premium plan only $3/month
       public static let upgradeToPremium = L10n.tr("Account", "AccountStatus.upgradeToPremium", fallback: #"Premium plan only $3/month"#)
+      public enum PaymentHistory {
+        /// Failed
+        public static let failed = L10n.tr("Account", "AccountStatus.paymentHistory.Failed", fallback: #"Failed"#)
+        /// Success
+        public static let success = L10n.tr("Account", "AccountStatus.paymentHistory.Success", fallback: #"Success"#)
+      }
     }
     public enum ChangePassword {
       /// Confirm password does not matche
@@ -144,8 +150,8 @@ public enum L10n {
     public static let connected = L10n.tr("Board", "Connected", fallback: #"Protected"#)
     /// Connected
     public static let connectedAlert = L10n.tr("Board", "ConnectedAlert", fallback: #"Connected"#)
-    /// Connecting..
-    public static let connecting = L10n.tr("Board", "Connecting", fallback: #"Connecting.."#)
+    /// Connecting...
+    public static let connecting = L10n.tr("Board", "Connecting", fallback: #"Connecting..."#)
     /// strings
     ///   SysVPN
     /// 
@@ -161,15 +167,15 @@ public enum L10n {
     public static let navigationTitleConnecting = L10n.tr("Board", "NavigationTitleConnecting", fallback: #"Connecting..."#)
     /// VPN not connected
     public static let navigationTitleNotConnect = L10n.tr("Board", "NavigationTitleNotConnect", fallback: #"VPN not connected"#)
-    /// Quick
-    /// Connect
-    public static let quickUnConnect = L10n.tr("Board", "QuickUnConnect", fallback: #"Quick\nConnect"#)
+    /// Quick 
+    ///  Connect
+    public static let quickUnConnect = L10n.tr("Board", "QuickUnConnect", fallback: #"Quick \n Connect"#)
     /// /s
     public static let speed = L10n.tr("Board", "Speed", fallback: #"/s"#)
     /// Static IP
     public static let staticIPTitleTab = L10n.tr("Board", "StaticIPTitleTab", fallback: #"Static IP"#)
-    /// Connect to VPN for online sercurity
-    public static let subIP = L10n.tr("Board", "SubIP", fallback: #"Connect to VPN for online sercurity"#)
+    /// Connect to VPN for online security
+    public static let subIP = L10n.tr("Board", "SubIP", fallback: #"Connect to VPN for online security"#)
     /// Unprotected
     public static let unconnect = L10n.tr("Board", "Unconnect", fallback: #"Unprotected"#)
     public enum BoardList {
@@ -352,58 +358,91 @@ public enum L10n {
     public static let accountLimitNote = L10n.tr("PlanSelect", "AccountLimitNote", fallback: #"You already have a SysVPN account associated with Apple ID. Please log in on that account to continue."#)
     /// All plans include protection for 6 devices
     public static let body = L10n.tr("PlanSelect", "body", fallback: #"All plans include protection for 6 devices"#)
-    /// Subscribe
-    public static let continueButton = L10n.tr("PlanSelect", "continueButton", fallback: #"Subscribe"#)
+    /// Start exploring and enjoy all  
+    ///  cybersercurity features for free
+    public static let content1 = L10n.tr("PlanSelect", "content1", fallback: #"Start exploring and enjoy all  \n cybersercurity features for free"#)
+    /// Receive a reminder email about the 
+    ///  upcoming free trial expiration
+    public static let content2 = L10n.tr("PlanSelect", "content2", fallback: #"Receive a reminder email about the \n upcoming free trial expiration"#)
+    /// Pay for your 6-month plan for $100 if you 
+    ///  haven’t canceled your subscription before the trial ends.
+    public static let content3 = L10n.tr("PlanSelect", "content3", fallback: #"Pay for your 6-month plan for $100 if you \n haven’t canceled your subscription before the trial ends."#)
+    /// Continue
+    public static let continueButton = L10n.tr("PlanSelect", "continueButton", fallback: #"Continue"#)
+    /// 7-day Free Trial
+    public static let dayFreeTrial = L10n.tr("PlanSelect", "dayFreeTrial", fallback: #"7-day Free Trial"#)
+    /// See how free trial works.
+    public static let dayFreeTrialSub = L10n.tr("PlanSelect", "dayFreeTrialSub", fallback: #"See how free trial works."#)
     /// Got it
     public static let gotIt = L10n.tr("PlanSelect", "GotIt", fallback: #"Got it"#)
-    /// mo
-    public static let month = L10n.tr("PlanSelect", "month", fallback: #"mo"#)
-    /// Pay after 7 days. Subscription auto-renews every 1 years
-    /// until canceled.
-    public static let note = L10n.tr("PlanSelect", "note", fallback: #"Pay after 7 days. Subscription auto-renews every 1 years\nuntil canceled."#)
-    /// Subscription auto-renews until canceled.
-    public static let notePlan = L10n.tr("PlanSelect", "notePlan", fallback: #"Subscription auto-renews until canceled."#)
+    /// Today: Full access to SYSVPN
+    public static let header1 = L10n.tr("PlanSelect", "header1", fallback: #"Today: Full access to SYSVPN"#)
+    /// Day 5: Reminder email
+    public static let header2 = L10n.tr("PlanSelect", "header2", fallback: #"Day 5: Reminder email"#)
+    /// Day 7: Free trial ends
+    public static let header3 = L10n.tr("PlanSelect", "header3", fallback: #"Day 7: Free trial ends"#)
+    /// How 7-day free trial 
+    ///  works
+    public static let headerSubcription = L10n.tr("PlanSelect", "headerSubcription", fallback: #"How 7-day free trial \n works"#)
+    /// month
+    public static let month = L10n.tr("PlanSelect", "month", fallback: #"month"#)
+    /// See all plans
+    public static let seeAllPlan = L10n.tr("PlanSelect", "seeAllPlan", fallback: #"See all plans"#)
     /// strings
     ///   SysVPN
     /// 
     ///   Created by Nguyễn Đình Thạch on 13/01/2022.
     public static let title = L10n.tr("PlanSelect", "title", fallback: #"Select a plan"#)
     public enum PlanA {
-      /// $44.99 billed every year. 7-day free trial.
-      public static let description = L10n.tr("PlanSelect", "PlanA.description", fallback: #"$44.99 billed every year. 7-day free trial."#)
-      /// Pay after 7 days. Subscription auto-renews every year
-      /// until canceled.
-      public static let note = L10n.tr("PlanSelect", "PlanA.note", fallback: #"Pay after 7 days. Subscription auto-renews every year\nuntil canceled."#)
+      /// $44.99 billed every 12 months.
+      public static let description = L10n.tr("PlanSelect", "PlanA.description", fallback: #"$44.99 billed every 12 months."#)
+      /// Get 12-month plan
+      public static let `get` = L10n.tr("PlanSelect", "PlanA.get", fallback: #"Get 12-month plan"#)
+      /// Subscription auto-renews every 12 months 
+      ///  until canceled.
+      public static let note = L10n.tr("PlanSelect", "PlanA.note", fallback: #"Subscription auto-renews every 12 months \n until canceled."#)
+      /// Pay for your 12-month plan for $44.99 if you haven’t canceled your subscription before the trial ends.
+      public static let noteTrial = L10n.tr("PlanSelect", "PlanA.noteTrial", fallback: #"Pay for your 12-month plan for $44.99 if you haven’t canceled your subscription before the trial ends."#)
       /// $3.75
       public static let price = L10n.tr("PlanSelect", "PlanA.price", fallback: #"$3.75"#)
       /// Save 69
       public static let savingText = L10n.tr("PlanSelect", "PlanA.savingText", fallback: #"Save 69"#)
-      /// 1-Year plan
-      public static let title = L10n.tr("PlanSelect", "PlanA.title", fallback: #"1-Year plan"#)
+      /// 12-month plan
+      public static let title = L10n.tr("PlanSelect", "PlanA.title", fallback: #"12-month plan"#)
     }
     public enum PlanB {
-      /// $31.99 billed every 6 months. 7-day free trial.
-      public static let description = L10n.tr("PlanSelect", "PlanB.description", fallback: #"$31.99 billed every 6 months. 7-day free trial."#)
-      /// Subscription auto-renews every 6 months until canceled.
-      public static let note = L10n.tr("PlanSelect", "PlanB.note", fallback: #"Subscription auto-renews every 6 months until canceled."#)
+      /// $31.99 billed every 6 months.
+      public static let description = L10n.tr("PlanSelect", "PlanB.description", fallback: #"$31.99 billed every 6 months."#)
+      /// Get 6-month plan
+      public static let `get` = L10n.tr("PlanSelect", "PlanB.get", fallback: #"Get 6-month plan"#)
+      /// Subscription auto-renews every 6 months 
+      ///  until canceled.
+      public static let note = L10n.tr("PlanSelect", "PlanB.note", fallback: #"Subscription auto-renews every 6 months \n until canceled."#)
+      /// Pay for your 6-month plan for $31.99 if you haven’t canceled your subscription before the trial ends.
+      public static let noteTrial = L10n.tr("PlanSelect", "PlanB.noteTrial", fallback: #"Pay for your 6-month plan for $31.99 if you haven’t canceled your subscription before the trial ends."#)
       /// $5.33
       public static let price = L10n.tr("PlanSelect", "PlanB.price", fallback: #"$5.33"#)
       /// Save 56
       public static let savingText = L10n.tr("PlanSelect", "PlanB.savingText", fallback: #"Save 56"#)
-      /// 6-Months Plan
-      public static let title = L10n.tr("PlanSelect", "PlanB.title", fallback: #"6-Months Plan"#)
+      /// 6-month plan
+      public static let title = L10n.tr("PlanSelect", "PlanB.title", fallback: #"6-month plan"#)
     }
     public enum PlanC {
-      /// $11.99 billed every month. 7-day free trial.
-      public static let description = L10n.tr("PlanSelect", "PlanC.description", fallback: #"$11.99 billed every month. 7-day free trial."#)
-      /// 
-      public static let note = L10n.tr("PlanSelect", "PlanC.note", fallback: #""#)
+      /// $11.99 billed every month.
+      public static let description = L10n.tr("PlanSelect", "PlanC.description", fallback: #"$11.99 billed every month."#)
+      /// Get Monthly plan
+      public static let `get` = L10n.tr("PlanSelect", "PlanC.get", fallback: #"Get Monthly plan"#)
+      /// Subscription auto-renews every month 
+      ///  until canceled.
+      public static let note = L10n.tr("PlanSelect", "PlanC.note", fallback: #"Subscription auto-renews every month \n until canceled."#)
+      /// Pay for your Monthly plan for $11.99 if you haven’t canceled your subscription before the trial ends.
+      public static let noteTrial = L10n.tr("PlanSelect", "PlanC.noteTrial", fallback: #"Pay for your Monthly plan for $11.99 if you haven’t canceled your subscription before the trial ends."#)
       /// $11.99
       public static let price = L10n.tr("PlanSelect", "PlanC.price", fallback: #"$11.99"#)
       /// 
       public static let savingText = L10n.tr("PlanSelect", "PlanC.savingText", fallback: #""#)
-      /// 1-Month Plan
-      public static let title = L10n.tr("PlanSelect", "PlanC.title", fallback: #"1-Month Plan"#)
+      /// Monthly plan
+      public static let title = L10n.tr("PlanSelect", "PlanC.title", fallback: #"Monthly plan"#)
     }
   }
   public enum Register {
