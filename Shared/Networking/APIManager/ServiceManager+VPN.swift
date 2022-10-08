@@ -93,7 +93,6 @@ extension ServiceManager {
         return request(.getMultihopList)
             .map { response in
                 let result = try JSONDecoder().decode(APIResponse<[MultihopModel]>.self, from: response.data)
-                
                 return result
             }
             .catch { error in
