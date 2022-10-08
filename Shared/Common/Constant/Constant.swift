@@ -238,4 +238,9 @@ struct Constant {
     struct SizeButton {
         static let widthButtonFull = Constant.Board.Map.widthScreen - 80
     }
+    
+    struct timeout {
+        static let timeoutIntervalForRequest = 10.0
+        static let timeoutIntervalForResource = 10.0
+    }
 }

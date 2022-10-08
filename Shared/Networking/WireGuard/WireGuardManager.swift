@@ -53,7 +53,9 @@ class WireGuardManager: ObservableObject {
     }
     
     func postError() {
-        NotificationCenter.default.post(name: Constant.NameNotification.connectVPNError, object: nil)
+        DispatchQueue.main.async {
+            NotificationCenter.default.post(name: Constant.NameNotification.connectVPNError, object: nil)
+        }
     }
     
     func disconnect() {
