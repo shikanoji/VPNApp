@@ -47,7 +47,6 @@ struct NodeMapView: View {
                     .onTapGesture {
                         self.mesh.selectNode(node)
                     }
-                    .animation(nil)
                 }
             }
             
@@ -71,6 +70,7 @@ struct NodeMapView: View {
         .onTapGesture {
             self.mesh.removeSelectNode()
         }
+        .animation(.none)
     }
     
     func isMultihopNode(_ node: Node) -> Bool {
