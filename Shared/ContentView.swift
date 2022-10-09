@@ -28,13 +28,7 @@ struct ContentView: View {
     @State var enableAnimation = false
     
     var body: some View {
-        if !viewModel.checkIfConnectedVPNHasNoInternet {
-            ZStack{
-                AppColor.background
-                AnimationLogo()
-            }
-            .ignoresSafeArea()
-        } else if !Connectivity.sharedInstance.isReachable {
+        if !Connectivity.sharedInstance.isReachable {
             ForceLogoutView(titleStr: "No internet", messageStr: "Please check your network connection", confirmStr: "Confirm") {
                 exit(0)
             }
@@ -54,7 +48,7 @@ struct ContentView: View {
         } else {
             ZStack{
                 AppColor.background
-                if !viewModel.getIpInfoSuccess {
+                if !viewModel.getIpInfoSuccess || !viewModel.checkIfConnectedVPNHasNoInternet {
                     AnimationLogo()
                 } else {
                     NavigationView {
