@@ -116,20 +116,22 @@ class ContentViewModel: ObservableObject {
     
     func getState() {
         getIpInfo {
-            if AppSetting.shared.accessToken == "" {
-                self.showSessionExpired = true
-            } else if AppSetting.shared.isConnectedToVpn {
-                self.getIpInfoSuccess = true
-            } else {
-                if AppSetting.shared.needLoadApiMap {
-                    self.getCountryList {
-                        self.getMultihopList {
-                            self.getIpInfoSuccess = true
+            if AppSetting.shared.idUser != 0 {
+                if AppSetting.shared.accessToken != "" {
+                    if !AppSetting.shared.isConnectedToVpn && AppSetting.shared.needLoadApiMap {
+                        self.getCountryList {
+                            self.getMultihopList {
+                                self.getIpInfoSuccess = true
+                            }
                         }
+                    } else {
+                        self.getIpInfoSuccess = true
                     }
                 } else {
-                    self.getIpInfoSuccess = true
+                    self.showSessionExpired = true
                 }
+            } else {
+                self.getIpInfoSuccess = true
             }
         }
     }
