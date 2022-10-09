@@ -48,7 +48,7 @@ struct ContentView: View {
         } else {
             ZStack{
                 AppColor.background
-                if !viewModel.getIpInfoSuccess {
+                if !viewModel.getIpInfoSuccess || !viewModel.checkIfConnectedVPNHasNoInternet {
                     AnimationLogo()
                 } else {
                     NavigationView {

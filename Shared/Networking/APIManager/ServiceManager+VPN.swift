@@ -12,6 +12,16 @@ import SwiftyJSON
 import SwiftUI
 
 extension ServiceManager {
+    func ping() -> Single<EmptyResult> {
+        return request(.pingGoogleCheckInternet)
+            .map { response in
+                return EmptyResult()
+            }
+            .catch { error in
+                throw error
+            }
+    }
+    
     func getServerStats() -> Single<APIResponse<ServerStats>> {
         return request(.getServerStats)
             .map { response in
@@ -93,7 +103,6 @@ extension ServiceManager {
         return request(.getMultihopList)
             .map { response in
                 let result = try JSONDecoder().decode(APIResponse<[MultihopModel]>.self, from: response.data)
-                
                 return result
             }
             .catch { error in

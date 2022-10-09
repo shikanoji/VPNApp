@@ -25,23 +25,24 @@ class WireGuardManager: ObservableObject {
     private var vpnStatus: VPNStatus = .disconnected
     
     static var shared = WireGuardManager()
-    private var cfg: WireGuard.ProviderConfiguration?
+    private var cfg: WireGuard.ProviderConfiguration!
     
     func connect() {
-        let string = NetworkManager.shared.obtainCertificate?.convertToString()
-        cfg = configuretionParaseFromContents(lines: string!.trimmedLines())
-        
-        Task {
-            do {
-                try await vpn.reconnect(
-                    tunnelIdentifier,
-                    configuration: cfg!,
-                    extra: nil,
-                    after: .seconds(2)
-                )
-            } catch {
-                print(error)
-                postError()
+        let string = NetworkManager.shared.obtainCertificate?.convertToString() ?? ""
+        if let cfgStr = configuretionParaseFromContents(lines: string.trimmedLines()) {
+            self.cfg = cfgStr
+            Task {
+                do {
+                    try await vpn.reconnect(
+                        tunnelIdentifier,
+                        configuration: cfgStr,
+                        extra: nil,
+                        after: .seconds(2)
+                    )
+                } catch {
+                    print(error)
+                    postError()
+                }
             }
         }
     }
@@ -53,7 +54,9 @@ class WireGuardManager: ObservableObject {
     }
     
     func postError() {
-        NotificationCenter.default.post(name: Constant.NameNotification.connectVPNError, object: nil)
+        DispatchQueue.main.async {
+            NotificationCenter.default.post(name: Constant.NameNotification.connectVPNError, object: nil)
+        }
     }
     
     func disconnect() {
@@ -75,15 +78,15 @@ class WireGuardManager: ObservableObject {
             if let privateKey = getValueParase(line, regexType: Regex.privateKey) {
                 clientPrivateKey = privateKey
             }
-
+            
             if let address = getValueParase(line, regexType: Regex.address) {
                 clientAddress = address
             }
-
+            
             if let dnsParase = getValueParase(line, regexType: Regex.dns) {
                 dns = dnsParase
             }
-
+            
             if let publicKey = getValueParase(line, regexType: Regex.publicKey) {
                 serverPublicKey = publicKey
             }

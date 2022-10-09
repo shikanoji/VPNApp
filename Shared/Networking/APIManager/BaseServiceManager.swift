@@ -10,14 +10,12 @@ import SwiftUI
 import Moya
 import RxMoya
 import RxSwift
+import Alamofire
 
 class BaseServiceManager<API: TargetType> {
-    let provider = MoyaProvider<API>(plugins: [NetworkLoggerPlugin(configuration: .init(logOptions: .formatRequestAscURL))])
-    
-    init() {
-        self.provider.session.sessionConfiguration.timeoutIntervalForRequest = 10
-        self.provider.session.sessionConfiguration.timeoutIntervalForResource = 10
-    }
+    let provider = MoyaProvider<API>(session: DefaultAlamofireSession.shared,
+        plugins: [NetworkLoggerPlugin(configuration: .init(logOptions: .formatRequestAscURL))]
+    )
     
     func request(_ api: API) -> Single<Response> {
         return provider.rx.request(api)
@@ -41,6 +39,17 @@ class BaseServiceManager<API: TargetType> {
     func cancelTask() {
         provider.session.session.finishTasksAndInvalidate()
     }
+}
+
+class DefaultAlamofireSession: Alamofire.Session {
+    static let shared: DefaultAlamofireSession = {
+        let config = URLSessionConfiguration.default
+        config.headers = .default
+        config.timeoutIntervalForRequest = Constant.timeout.timeoutIntervalForRequest
+        config.timeoutIntervalForResource = Constant.timeout.timeoutIntervalForResource
+        config.requestCachePolicy = .useProtocolCachePolicy
+        return DefaultAlamofireSession(configuration: config)
+    }()
 }
 
 extension PrimitiveSequence where Trait == SingleTrait, Element == Response {

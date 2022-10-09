@@ -93,6 +93,7 @@ enum APIService {
     case verifyReceipt(receipt: String)
     case getStatsByServerId
     case getServerStats
+    case pingGoogleCheckInternet
 }
 
 extension APIService: TargetType {
@@ -104,6 +105,8 @@ extension APIService: TargetType {
         case .getTopicQuestionList:
             // update soon
             return URL(string: "https://sysvpn.com/app/module_faq/v1/faqs")!
+        case .pingGoogleCheckInternet:
+            return URL(string: "https://www.google.com")!
         default:
             return URL(string: Constant.api.root)!
         }
@@ -112,6 +115,8 @@ extension APIService: TargetType {
     // This is the path of each operation that will be appended to our base URL.
     var path: String {
         switch self {
+        case .pingGoogleCheckInternet:
+            return ""
         case .getServerStats:
             return Constant.api.path.getServerStats
         case .getStatsByServerId:
@@ -173,6 +178,8 @@ extension APIService: TargetType {
     // Here we specify which method our calls should use.
     var method: Moya.Method {
         switch self {
+        case .pingGoogleCheckInternet:
+            return .get
         case .getCountryList, .getAppSettings, .getRequestCertificate, .ipInfoOptional, .getListSession, .getTopicQuestionList, .getMultihopList, .fetchPaymentHistory, .getStatsByServerId, .getServerStats:
             return .get
         case .register, .login, .loginSocial, .logout, .forgotPassword, .refreshToken, .verifyReceipt, .sendVerifyEmail:
