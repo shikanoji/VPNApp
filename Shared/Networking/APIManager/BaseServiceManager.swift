@@ -17,11 +17,6 @@ class BaseServiceManager<API: TargetType> {
         plugins: [NetworkLoggerPlugin(configuration: .init(logOptions: .formatRequestAscURL))]
     )
     
-    init() {
-        self.provider.session.sessionConfiguration.timeoutIntervalForRequest = 10
-        self.provider.session.sessionConfiguration.timeoutIntervalForResource = 10
-    }
-    
     func request(_ api: API) -> Single<Response> {
         return provider.rx.request(api)
             .flatMap {

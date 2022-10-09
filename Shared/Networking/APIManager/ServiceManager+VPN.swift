@@ -12,6 +12,17 @@ import SwiftyJSON
 import SwiftUI
 
 extension ServiceManager {
+    func ping() -> Single<APIResponse<EmptyResult>> {
+        return request(.pingGoogleCheckInternet)
+            .map { response in
+                let result = try JSONDecoder().decode(APIResponse<EmptyResult>.self, from: response.data)
+                return result
+            }
+            .catch { error in
+                throw error
+            }
+    }
+    
     func getServerStats() -> Single<APIResponse<ServerStats>> {
         return request(.getServerStats)
             .map { response in
