@@ -28,7 +28,13 @@ struct ContentView: View {
     @State var enableAnimation = false
     
     var body: some View {
-        if !Connectivity.sharedInstance.isReachable {
+        if !viewModel.checkIfConnectedVPNHasNoInternet {
+            ZStack{
+                AppColor.background
+                AnimationLogo()
+            }
+            .ignoresSafeArea()
+        } else if !Connectivity.sharedInstance.isReachable {
             ForceLogoutView(titleStr: "No internet", messageStr: "Please check your network connection", confirmStr: "Confirm") {
                 exit(0)
             }
