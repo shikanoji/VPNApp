@@ -749,6 +749,7 @@ class BoardViewModel: ObservableObject {
     func getSpeedRealTime() {
         lastSent = UInt(0)
         lastReceived = UInt(0)
+        firstLoadWireguard = true
         let queue = DispatchQueue.main
         speedTimer = DispatchSource.makeTimerSource(queue: queue)
         speedTimer!.schedule(deadline: .now(), repeating: .seconds(1))
@@ -771,12 +772,27 @@ class BoardViewModel: ObservableObject {
                 self.lastSent = dataCount.sent
                 self.lastReceived = dataCount.received
             } else {
+                let sent = SystemDataUsage.dataSent
+                let received = SystemDataUsage.dataReceived
                 
+                let uploadSpeed = abs(Int(sent) - Int(self.lastDataUsage.dataSent))
+                let downloadSpeed = abs(Int(received) - Int(self.lastDataUsage.dataReceived))
+                if self.firstLoadWireguard {
+                    self.firstLoadWireguard = false
+                } else {
+                    self.uploadSpeed = UInt(uploadSpeed).descriptionAsDataUnit
+                    self.downloadSpeed = UInt(downloadSpeed).descriptionAsDataUnit
+                }
+                
+                self.lastDataUsage = DataUsageInfo(dataReceived: received, dataSent: sent)
             }
         }
         speedTimer!.resume()
     }
-        
+    
+    var lastDataUsage: DataUsageInfo = DataUsageInfo()
+    var firstLoadWireguard = true
+    
     func stopSpeedTimer() {
         speedTimer = nil
     }
