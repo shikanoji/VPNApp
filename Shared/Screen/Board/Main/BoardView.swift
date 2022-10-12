@@ -101,7 +101,7 @@ struct BoardView: View {
                    autohideIn: 5,
                    closeOnTap: false,
                    closeOnTapOutside: true) {
-            PopupSelectView(message: "Disable auto-conenct",
+            PopupSelectView(message: "Disable auto-connect",
                             confirmTitle: "SETTINGS",
                             confirmAction: {
                 viewModel.showAlertAutoConnectSetting = false
