@@ -246,6 +246,8 @@ public enum L10n {
     public static let title = L10n.tr("ForgotPassword", "Title", fallback: #"Forgot Password"#)
   }
   public enum Global {
+    /// An error occurred
+    public static let anErrorOccurred = L10n.tr("Global", "An error occurred", fallback: #"An error occurred"#)
     /// Back
     public static let back = L10n.tr("Global", "Back", fallback: #"Back"#)
     /// Cancel
@@ -254,6 +256,8 @@ public enum L10n {
     public static let `default` = L10n.tr("Global", "default", fallback: #"Default"#)
     /// Error
     public static let error = L10n.tr("Global", "Error", fallback: #"Error"#)
+    /// Network is unstable! Please check your internet connection
+    public static let noInternet = L10n.tr("Global", "noInternet", fallback: #"Network is unstable! Please check your internet connection"#)
     /// Off
     public static let off = L10n.tr("Global", "off", fallback: #"Off"#)
     /// OK
@@ -269,6 +273,12 @@ public enum L10n {
     public static let slogan = L10n.tr("Global", "slogan", fallback: #"Right Protection, Right Time"#)
     /// Something went wrong
     public static let somethingWrong = L10n.tr("Global", "SomethingWrong", fallback: #"Something went wrong"#)
+    /// Unverified
+    public static let unverified = L10n.tr("Global", "Unverified", fallback: #"Unverified"#)
+    /// Verified
+    public static let verified = L10n.tr("Global", "Verified", fallback: #"Verified"#)
+    /// You're offline
+    public static let youReOffline = L10n.tr("Global", "You're offline", fallback: #"You're offline"#)
   }
   public enum Introduction {
     /// SysVPN brings top-notch security by encrypting your connection, masking your sensitive info, and disguising your online activities from hacker attacks.

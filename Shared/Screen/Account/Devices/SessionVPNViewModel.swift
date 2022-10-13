@@ -49,8 +49,10 @@ class SessionVPNViewModel: ObservableObject {
                     }
                 }
             }, onFailure: { error in
+                if let errorAPI = error as? APIError {
+                    self.error = errorAPI
+                }
                 self.showProgressView = false
-                self.error = APIError.identified(message: error.localizedDescription)
                 self.showAlert = true
             })
             .disposed(by: disposedBag)
@@ -89,11 +91,11 @@ class SessionVPNViewModel: ObservableObject {
                     }
                 }
             } onFailure: { error in
-                if let errorConfig = error as? APIError {
-                    self.error = errorConfig
+                if let errorAPI = error as? APIError {
+                    self.error = errorAPI
+                    self.showAlert = true
                 }
                 self.showProgressView = false
-                self.showAlert = true
             }
             .disposed(by: self.disposedBag)
     }

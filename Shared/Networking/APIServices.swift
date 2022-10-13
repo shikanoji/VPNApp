@@ -21,20 +21,7 @@ enum APIError: Error {
     case unknown
     case identified(alert: String = L10n.Global.error, message: String = L10n.Global.somethingWrong)
     case noInternet
-    
-    var localizedDescription: String {
-        /// User feedback
-        switch self {
-        case .badURL, .parsing, .unknown, .tokenExpired, .someError, .permissionError, .identified:
-            return "Sorry, something went wrong."
-        case .badResponse(_):
-            return "Sorry, the connection to our server failed."
-        case .url(let error):
-            return error?.localizedDescription ?? "Something went wrong."
-        case .noInternet:
-            return "No internet connection"
-        }
-    }
+    case noInternetConnect
     
     var description: String {
         /// Info for debugging
@@ -48,7 +35,7 @@ enum APIError: Error {
         case .badResponse(statusCode: let statusCode):
             return "bad response with status code \(statusCode)"
         case .someError:
-            return "An error occurred"
+            return L10n.Global.anErrorOccurred
         case .tokenExpired:
             return "token error"
         case .permissionError:
@@ -56,7 +43,9 @@ enum APIError: Error {
         case .identified(_ , let message):
             return message
         case .noInternet:
-            return "No internet connection"
+            return L10n.Global.noInternet
+        case .noInternetConnect:
+            return L10n.Global.youReOffline
         }
     }
     

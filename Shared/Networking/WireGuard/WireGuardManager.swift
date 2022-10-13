@@ -96,6 +96,7 @@ class WireGuardManager: ObservableObject {
         let string = NetworkManager.shared.obtainCertificate?.convertToString() ?? ""
         if let cfgStr = configuretionParaseFromContents(lines: string.trimmedLines()) {
             self.cfg = cfgStr
+            
             Task {
                 do {
                     try await vpn.reconnect(

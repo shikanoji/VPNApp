@@ -37,6 +37,10 @@ class DeleteAccountConfirmationViewModel: ObservableObject {
                     }
                 }
             }, onFailure: {[weak self] error in
+                if let errorAPI = error as? APIError {
+                    self?.alertMessage = errorAPI.description
+                    self?.showAlert = true
+                }
                 self?.showProgressView = false
             })
             .disposed(by: disposedBag)

@@ -247,19 +247,27 @@ class BoardViewModel: ObservableObject {
         assignJailBreakCheckType(type: .readAndWriteFiles)
         AppSetting.shared.fetchListSession()
         
+        configDataRemote()
+        
+        if AppSetting.shared.isConnectedToVpn {
+            configConnected()
+        }
+    }
+    
+    func configDataRemote() {
         getIpInfo {
-            if AppSetting.shared.isConnectedToVpn || !AppSetting.shared.needLoadApiMap {
-                self.getDataFromLocal()
-            } else {
+            if !AppSetting.shared.isConnectedToVpn && AppSetting.shared.needLoadApiMap && Connectivity.sharedInstance.isReachable {
                 self.getCountryList {
                     self.getMultihopList {
                     }
                 }
             }
         }
-        
-        if AppSetting.shared.isConnectedToVpn {
-            configConnected()
+    }
+    
+    func configDataLocal() {
+        if AppSetting.shared.isConnectedToVpn || !AppSetting.shared.needLoadApiMap || !Connectivity.sharedInstance.isReachable {
+            self.getDataFromLocal()
         }
     }
     
@@ -393,7 +401,6 @@ class BoardViewModel: ObservableObject {
                               clientCountryNode: result.clientCountryDetail)
         
         getRecommendNode(result.recommendedCountries)
-        
         getServerStats()
     }
     
@@ -633,6 +640,15 @@ class BoardViewModel: ObservableObject {
             }
         }
         getSpeedRealTime()
+        
+        DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
+            print("xxx second time")
+            self.getIpInfo {
+                self.getCountryList {
+                    
+                }
+            }
+        }
     }
     
     @objc private func VPNStatusDidChange(notification: Notification) {
@@ -757,35 +773,19 @@ class BoardViewModel: ObservableObject {
             guard let `self` = self else {
                 return
             }
-            if [.openVPNTCP, .openVPNUDP].contains(NetworkManager.shared.getValueConfigProtocol),
-               let dataCount = OpenVPNManager.shared.getDataCount() {
-                let intDataCountSent = Int(dataCount.sent)
-                let intLastDataCountSent = Int(self.lastSent)
-                let uploadSpeed = abs(intDataCountSent - intLastDataCountSent)
-                
-                let intDataCountReceived = Int(dataCount.received)
-                let intLastDataCountReceived = Int(self.lastReceived)
-                let downSpeed = abs(intDataCountReceived - intLastDataCountReceived)
-                self.uploadSpeed = UInt(uploadSpeed).descriptionAsDataUnit
-                self.downloadSpeed = UInt(downSpeed).descriptionAsDataUnit
-                
-                self.lastSent = dataCount.sent
-                self.lastReceived = dataCount.received
+            let sent = SystemDataUsage.dataSent
+            let received = SystemDataUsage.dataReceived
+            
+            let uploadSpeed = abs(Int(sent) - Int(self.lastDataUsage.dataSent))
+            let downloadSpeed = abs(Int(received) - Int(self.lastDataUsage.dataReceived))
+            if self.firstLoadWireguard {
+                self.firstLoadWireguard = false
             } else {
-                let sent = SystemDataUsage.dataSent
-                let received = SystemDataUsage.dataReceived
-                
-                let uploadSpeed = abs(Int(sent) - Int(self.lastDataUsage.dataSent))
-                let downloadSpeed = abs(Int(received) - Int(self.lastDataUsage.dataReceived))
-                if self.firstLoadWireguard {
-                    self.firstLoadWireguard = false
-                } else {
-                    self.uploadSpeed = UInt(uploadSpeed).descriptionAsDataUnit
-                    self.downloadSpeed = UInt(downloadSpeed).descriptionAsDataUnit
-                }
-                
-                self.lastDataUsage = DataUsageInfo(dataReceived: received, dataSent: sent)
+                self.uploadSpeed = UInt(uploadSpeed).descriptionAsDataUnit
+                self.downloadSpeed = UInt(downloadSpeed).descriptionAsDataUnit
             }
+            
+            self.lastDataUsage = DataUsageInfo(dataReceived: received, dataSent: sent)
         }
         speedTimer!.resume()
     }
@@ -808,7 +808,7 @@ class BoardViewModel: ObservableObject {
     }
     
     func internetNotAvaiable() {
-        self.error = APIError.noInternet
+        self.error = APIError.noInternetConnect
         self.showProgressView = false
         self.showAlert = true
     }
@@ -944,9 +944,9 @@ class BoardViewModel: ObservableObject {
                 } else {
                     if let errorConfig = error as? APIError {
                         self.error = errorConfig
+                        self.showAlert = true
                     }
                     self.showProgressView = false
-                    self.showAlert = true
                     completion(false)
                     return
                 }
