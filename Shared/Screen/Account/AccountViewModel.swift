@@ -78,8 +78,11 @@ class AccountViewModel: ObservableObject {
                 self.showAlert = true
             }
         } onFailure: { error in
+            if let errorAPI = error as? APIError {
+                self.alertMessage = errorAPI.description
+                self.showAlert = true
+            }
             self.showProgressView = false
-            self.showAlert = true
         }.disposed(by: self.disposedBag)
     }
 }

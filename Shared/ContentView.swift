@@ -28,13 +28,7 @@ struct ContentView: View {
     @State var enableAnimation = false
     
     var body: some View {
-        if !Connectivity.sharedInstance.isReachable {
-            ForceLogoutView(titleStr: "No internet", messageStr: "Please check your network connection", confirmStr: "Confirm") {
-                exit(0)
-            }
-            .frame(width: UIScreen.main.bounds.width)
-            .ignoresSafeArea()
-        } else if viewModel.showSessionExpired {
+        if viewModel.showSessionExpired {
             ForceLogoutView {
                 viewModel.showSessionExpired = false
                 AppSetting.shared.refreshTokenError = false

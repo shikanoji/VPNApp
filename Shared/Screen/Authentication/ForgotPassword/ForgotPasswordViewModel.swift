@@ -47,9 +47,11 @@ class ForgotPasswordViewModel: ObservableObject {
                     }
                 }
             }, onFailure: { error in
+                if let errorAPI = error as? APIError {
+                    self.alertMessage = errorAPI.description
+                    self.showAlert = true
+                }
                 self.showProgressView = false
-                self.alertMessage = L10n.Global.somethingWrong
-                self.showAlert = true
             })
             .disposed(by: disposedBag)
     }

@@ -18,7 +18,7 @@ extension ServiceManager {
                 return loginResult
             }
             .catch { error in
-                throw APIError.someError
+                throw error
             }
     }
     
@@ -29,7 +29,7 @@ extension ServiceManager {
                 return loginResult
             }
             .catch { error in
-                throw APIError.someError
+                throw error
             }
     }
     
@@ -40,7 +40,7 @@ extension ServiceManager {
                 return registerResult
             }
             .catch { error in
-                throw APIError.someError
+                throw error
             }
     }
     
@@ -51,7 +51,7 @@ extension ServiceManager {
                 return logoutResult
             }
             .catch { error in
-                throw APIError.someError
+                throw error
             }
     }
     
@@ -62,7 +62,7 @@ extension ServiceManager {
                 return result
             }
             .catch { error in
-                throw APIError.someError
+                throw error
             }
     }
     
@@ -86,7 +86,7 @@ extension ServiceManager {
             .catch { error in
                 NotificationCenter.default.post(name: Constant.NameNotification.sessionExpired, object: nil)
                 AppSetting.shared.isRefreshingToken = false
-                throw APIError.someError
+                throw error
             }
     }
     
@@ -97,7 +97,7 @@ extension ServiceManager {
                 return ipInfoResult
             }
             .catch { error in
-                throw APIError.someError
+                throw error
             }
     }
     
@@ -108,7 +108,7 @@ extension ServiceManager {
                 return ipInfoResult
             }
             .catch { error in
-                throw APIError.someError
+                throw error
             }
     }
     
@@ -119,7 +119,7 @@ extension ServiceManager {
                 return result
             }
             .catch { error in
-                throw APIError.someError
+                throw error
             }
     }
     
@@ -130,7 +130,7 @@ extension ServiceManager {
                 return result
             }
             .catch { error in
-                throw APIError.someError
+                throw error
             }
     }
 
@@ -141,7 +141,7 @@ extension ServiceManager {
                 return result
             }
             .catch { error in
-                throw APIError.someError
+                throw error
             }
     }
 }

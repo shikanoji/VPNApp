@@ -135,9 +135,10 @@ struct BoardView: View {
         .preferredColorScheme(.dark)
         .navigationBarHidden(true)
         .edgesIgnoringSafeArea(.all)
-        .onAppear(perform: {
+        .onWillAppear {
             viewModel.mesh = mesh
-        })
+            viewModel.configDataLocal()
+        }
     }
     
     func handlerTapLeftNavigation() {

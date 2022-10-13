@@ -15,3 +15,8 @@
 "Back" = "Back";
 "SomethingWrong" = "Something went wrong";
 "SaveSuccess" = "Saved successfully!";
+"noInternet" = "Network is unstable! Please check your internet connection";
+"You're offline" = "You're offline";
+"Verified" = "Verified";
+"Unverified" = "Unverified";
+"An error occurred" = "An error occurred";
