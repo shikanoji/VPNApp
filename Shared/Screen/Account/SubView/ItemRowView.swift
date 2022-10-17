@@ -11,6 +11,8 @@ struct ItemRowView: View {
     @State var item: ItemCell
     @State var subTitle = ""
     @State var subContent = ""
+    @State var title = ""
+    
     var hasContent: Bool {
         subContent != "" || item.type.content != ""
     }
@@ -26,7 +28,7 @@ struct ItemRowView: View {
                 }
                 
                 VStack(alignment: .leading, spacing: 8) {
-                    Text(item.type.title + subTitle)
+                    Text(title == "" ? (item.type.title + subTitle) : title)
                         .font(Constant.Menu.fontItem)
                         .foregroundColor(Color.white)
                     if subContent != "" || item.type.content != "" {
