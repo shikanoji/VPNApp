@@ -12,20 +12,11 @@ import Firebase
 import GoogleSignIn
 import AuthenticationServices
 import RxSwift
-import TunnelKitManager
-import TunnelKitCore
 
 class ContentViewModel: ObservableObject {
     @Published var showAlert: Bool = false
     @Published var showSessionExpired: Bool = false
     @Published var getIpInfoSuccess = false
-    @Published var checkIfConnectedVPNHasNoInternet = false {
-        didSet {
-            if checkIfConnectedVPNHasNoInternet {
-                self.getState()
-            }
-        }
-    }
     
     var alertMessage = ""
     
@@ -59,58 +50,21 @@ class ContentViewModel: ObservableObject {
             object: nil
         )
         
-        NotificationCenter.default.addObserver(
-            self,
-            selector: #selector(VPNStatusDidChange(notification:)),
-            name: VPNNotification.didChangeStatus,
-            object: nil
-        )
-        
-        checkVPNNoInternet {
-            if $0 {
-                self.checkIfConnectedVPNHasNoInternet = true
-            } else {
-                self.checkIfConnectedVPNHasNoInternet = false
-            }
+        guard Connectivity.sharedInstance.isReachable else {
+            self.getIpInfoSuccess = true
+            return
         }
+        
+        if AppSetting.shared.isConnectedToVpn {
+            self.getIpInfoSuccess = true
+        }
+        
+        self.getState()
     }
     
     @objc func sessionExpided() {
         if AppSetting.shared.accessToken != "" {
             showSessionExpired = true
-        }
-    }
-    
-    func checkVPNNoInternet(completion: @escaping (Bool) -> Void) {
-        if AppSetting.shared.isConnectedToVpn {
-            ServiceManager.shared.ping()
-                .subscribe { response in
-                    completion(true)
-                } onFailure: { error in
-                    if error.localizedDescription.contains("The request timed out") {
-                        NetworkManager.shared.disconnect()
-                    }
-                    completion(false)
-                }
-                .disposed(by: disposedBag)
-        } else {
-            checkIfConnectedVPNHasNoInternet = true
-        }
-    }
-    
-    @objc private func VPNStatusDidChange(notification: Notification) {
-       
-        print("VPNStatusDidChange: \(notification.vpnStatus)")
-        
-        let state = notification.vpnStatus
-        
-        switch state {
-        case .disconnected:
-            self.checkIfConnectedVPNHasNoInternet = true
-        case .connected:
-            break
-        default:
-            break
         }
     }
     

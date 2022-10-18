@@ -246,9 +246,6 @@ class BoardViewModel: ObservableObject {
         
         assignJailBreakCheckType(type: .readAndWriteFiles)
         AppSetting.shared.fetchListSession()
-        
-        configDataRemote()
-        
         if AppSetting.shared.isConnectedToVpn {
             configConnected()
         }
@@ -415,6 +412,8 @@ class BoardViewModel: ObservableObject {
     @objc private func disconnectCurrentSession() {
         onlyDisconnectWithoutEndsession = true
         configDisconnect()
+        AppSetting.shared.selectAutoConnect = ItemCellType.off.rawValue
+        checkAutoconnect()
     }
     
     @Published var shouldHideAutoConnect = true
@@ -484,7 +483,6 @@ class BoardViewModel: ObservableObject {
         flag = ""
         nameSelect = ""
         DispatchQueue.main.async {
-            self.stopSpeedTimer()
             self.state = .disconnected
             self.stateUI = .disconnected
         }
@@ -594,7 +592,6 @@ class BoardViewModel: ObservableObject {
         state = .connected
         stateUI = .connected
         connectOrDisconnectByUser = false
-        stopSpeedTimer()
         
         getStatsByServer()
         
@@ -639,16 +636,8 @@ class BoardViewModel: ObservableObject {
                 nameSelect = nodeSelect.isCity ? nodeSelect.name : nodeSelect.countryName
             }
         }
-        getSpeedRealTime()
-        
-        DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
-            print("xxx second time")
-            self.getIpInfo {
-                self.getCountryList {
-                    
-                }
-            }
-        }
+
+        AppSetting.shared.fetchListSession()
     }
     
     @objc private func VPNStatusDidChange(notification: Notification) {
@@ -707,7 +696,6 @@ class BoardViewModel: ObservableObject {
     
     @MainActor @objc private func VPNDidFail(notification: Notification) {
         print("VPNStatusDidFail: \(notification.vpnError.localizedDescription)")
-        stopSpeedTimer()
         guard notification.vpnError.localizedDescription != "permission denied" else {
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.5, execute: {
                 self.configDisconected()
@@ -757,52 +745,11 @@ class BoardViewModel: ObservableObject {
         checkInternetTimer!.resume()
     }
     
-    var speedTimer: DispatchSourceTimer?
-
-    var lastSent: UInt = UInt(0)
-    var lastReceived: UInt = UInt(0)
-    
-    func getSpeedRealTime() {
-        lastSent = UInt(0)
-        lastReceived = UInt(0)
-        firstLoadWireguard = true
-        let queue = DispatchQueue.main
-        speedTimer = DispatchSource.makeTimerSource(queue: queue)
-        speedTimer!.schedule(deadline: .now(), repeating: .seconds(1))
-        speedTimer!.setEventHandler { [weak self] in
-            guard let `self` = self else {
-                return
-            }
-            let sent = SystemDataUsage.dataSent
-            let received = SystemDataUsage.dataReceived
-            
-            let uploadSpeed = abs(Int(sent) - Int(self.lastDataUsage.dataSent))
-            let downloadSpeed = abs(Int(received) - Int(self.lastDataUsage.dataReceived))
-            if self.firstLoadWireguard {
-                self.firstLoadWireguard = false
-            } else {
-                self.uploadSpeed = UInt(uploadSpeed).descriptionAsDataUnit
-                self.downloadSpeed = UInt(downloadSpeed).descriptionAsDataUnit
-            }
-            
-            self.lastDataUsage = DataUsageInfo(dataReceived: received, dataSent: sent)
-        }
-        speedTimer!.resume()
-    }
-    
-    var lastDataUsage: DataUsageInfo = DataUsageInfo()
-    var firstLoadWireguard = true
-    
-    func stopSpeedTimer() {
-        speedTimer = nil
-    }
-    
     func stopAutoconnectTimer() {
         checkInternetTimer = nil
     }
     
     deinit {
-        stopSpeedTimer()
         stopAutoconnectTimer()
         endBackgroundTask()
     }
@@ -831,12 +778,6 @@ class BoardViewModel: ObservableObject {
             AppSetting.shared.saveBoardTabWhenConnecting(.location)
             NetworkManager.shared.nodeSelected = node
         }
-        
-        if !connectOrDisconnectByUser {
-            AppSetting.shared.temporaryDisableAutoConnect = true
-        }
-        
-        stopSpeedTimer()
         
         ServiceManager.shared.getRequestCertificate(asNewConnection: asNewConnection)
             .subscribe { [weak self] response in

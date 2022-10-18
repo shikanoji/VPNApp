@@ -14,13 +14,6 @@ struct AlertConnectView: View {
     
     var body: some View {
         VStack(spacing: 0) {
-//            Text(L10n.Board.connectedAlert)
-//                .font(.system(size: Constant.Board.Alert.sizeFont, weight: Constant.Board.Alert.weightFont))
-//                .lineLimit(1)
-//                .padding(15)
-//                .foregroundColor(.black)
-//                .background(Color.white)
-//                .cornerRadius(10)
             AlertConnectView()
                 .foregroundColor(.black)
                 .background(Constant.Board.NodePopupView.backgroudTriangle)
@@ -46,7 +39,6 @@ struct AlertConnectView: View {
                     Asset.Assets.flagDefault.swiftUIImage
                 }
             }
-//            ImageView(withURL: flag, size: ensignSize)
                 .clipShape(Circle())
                 .frame(width: Constant.Board.NodePopupView.frameEnsign,
                        height: Constant.Board.NodePopupView.frameEnsign)

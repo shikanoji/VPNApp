@@ -137,8 +137,10 @@ struct BoardView: View {
         .edgesIgnoringSafeArea(.all)
         .onWillAppear {
             viewModel.mesh = mesh
+            viewModel.configDataRemote()
             viewModel.configDataLocal()
         }
+        
     }
     
     func handlerTapLeftNavigation() {
@@ -231,7 +233,7 @@ struct BoardView: View {
                     .padding(.top, 0)
                     Spacer()
                     ConnectButton(viewModel: viewModel,
-                                  tapButton: {
+                                  connectButtonViewModel: ConnectButtonViewModel(), tapButton: {
                         if viewModel.state != .connected {
                             AppSetting.shared.saveBoardTabWhenConnecting(.location)
                             if mesh.selectedNode == nil {

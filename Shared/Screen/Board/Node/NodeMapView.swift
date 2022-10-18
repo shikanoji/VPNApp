@@ -62,7 +62,6 @@ struct NodeMapView: View {
                         .onDisappear {
                             mesh.removeSelectNode()
                         }
-                        .animation(.default)
                 }
             }
         }
