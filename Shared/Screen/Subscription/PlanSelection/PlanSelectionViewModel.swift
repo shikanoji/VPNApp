@@ -104,10 +104,11 @@ class PlanSelectionViewModel: ObservableObject {
                 self.shouldShowAccountLimitedView = true
             }
         case .failure(let error):
-            print(error)
-            showProgressView = false
-            alertMessage = "An error occured. Please try again!"
-            showAlert = true
+            if let errorAPI = error as? APIError {
+                self.alertMessage = errorAPI.description
+                self.showAlert = true
+            }
+            self.showProgressView = false
         }
     }
 }

@@ -58,6 +58,10 @@ class LoginViewModel: NSObject, ObservableObject {
                     }
                 }
             }, onFailure: { error in
+                if let errorAPI = error as? APIError {
+                    self.alertMessage = errorAPI.description
+                    self.showAlert = true
+                }
                 self.showProgressView = false
             })
             .disposed(by: disposedBag)
@@ -100,6 +104,10 @@ class LoginViewModel: NSObject, ObservableObject {
                             }
                         }
                     }, onFailure: { error in
+                        if let errorAPI = error as? APIError {
+                            self.alertMessage = errorAPI.description
+                            self.showAlert = true
+                        }
                         self.showProgressView = false
                     })
                     .disposed(by: self.disposedBag)

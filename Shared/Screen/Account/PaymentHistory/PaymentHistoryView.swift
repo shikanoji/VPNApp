@@ -128,6 +128,18 @@ struct PaymentHistoryView: View {
         .onDisappear {
             UIScrollView.appearance().bounces = false
         }
+        .popup(isPresented: $viewModel.showAlert,
+               type: .floater(verticalPadding: 20),
+               position: .bottom,
+               animation: .easeInOut,
+               autohideIn: 5,
+               closeOnTap: false,
+               closeOnTapOutside: true) {
+            PopupSelectView(message: viewModel.error.description,
+                            confirmAction: {
+                viewModel.showAlert = false
+            })
+        }
         .background(AppColor.background)
         .ignoresSafeArea()
     }

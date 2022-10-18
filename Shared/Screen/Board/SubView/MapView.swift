@@ -11,7 +11,10 @@ import TunnelKitManager
 struct MapView: View {
     @State var currentAmount: CGFloat = 1.0 {
         didSet {
-            mesh.showCityNodes = currentAmount > Constant.Board.Map.enableCityZoom
+            let showCity = currentAmount > Constant.Board.Map.enableCityZoom
+            if mesh.showCityNodes != showCity {
+                mesh.showCityNodes = showCity
+            }
         }
     }
     
@@ -76,14 +79,14 @@ struct MapView: View {
                 moveToNode(x: node.x, y: node.y)
             }
         })
-        .onReceive(mesh.$clientCountryNode) {
+        .onChange(of: mesh.clientCountryNode, perform: { newValue in
             if !AppSetting.shared.isConnectedToVpn {
                 if mesh.selectedNode == nil,
-                   let node = $0 {
+                   let node = newValue {
                     moveToNode(x: node.x, y: node.y)
                 }
             }
-        }
+        })
         .edgesIgnoringSafeArea(.all)
     }
     
@@ -166,10 +169,12 @@ struct ZoomableScrollView<Content: View>: UIViewRepresentable {
         scrollView.minimumZoomScale = 1
         scrollView.maximumZoomScale = 5
         scrollView.bouncesZoom = false
-        scrollView.bounces = false
+        scrollView.bounces = true
         scrollView.showsVerticalScrollIndicator = false
         scrollView.showsHorizontalScrollIndicator = false
         scrollView.clipsToBounds = false
+        scrollView.alwaysBounceVertical = false
+        scrollView.alwaysBounceHorizontal = false
         
         let hostedView = context.coordinator.hostingController.view!
         

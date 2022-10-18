@@ -246,20 +246,25 @@ class BoardViewModel: ObservableObject {
         
         assignJailBreakCheckType(type: .readAndWriteFiles)
         AppSetting.shared.fetchListSession()
-        
+        if AppSetting.shared.isConnectedToVpn {
+            configConnected()
+        }
+    }
+    
+    func configDataRemote() {
         getIpInfo {
-            if AppSetting.shared.isConnectedToVpn || !AppSetting.shared.needLoadApiMap {
-                self.getDataFromLocal()
-            } else {
+            if !AppSetting.shared.isConnectedToVpn && AppSetting.shared.needLoadApiMap && Connectivity.sharedInstance.isReachable {
                 self.getCountryList {
                     self.getMultihopList {
                     }
                 }
             }
         }
-        
-        if AppSetting.shared.isConnectedToVpn {
-            configConnected()
+    }
+    
+    func configDataLocal() {
+        if AppSetting.shared.isConnectedToVpn || !AppSetting.shared.needLoadApiMap || !Connectivity.sharedInstance.isReachable {
+            self.getDataFromLocal()
         }
     }
     
@@ -393,7 +398,6 @@ class BoardViewModel: ObservableObject {
                               clientCountryNode: result.clientCountryDetail)
         
         getRecommendNode(result.recommendedCountries)
-        
         getServerStats()
     }
     
@@ -408,6 +412,8 @@ class BoardViewModel: ObservableObject {
     @objc private func disconnectCurrentSession() {
         onlyDisconnectWithoutEndsession = true
         configDisconnect()
+        AppSetting.shared.selectAutoConnect = ItemCellType.off.rawValue
+        checkAutoconnect()
     }
     
     @Published var shouldHideAutoConnect = true
@@ -477,7 +483,6 @@ class BoardViewModel: ObservableObject {
         flag = ""
         nameSelect = ""
         DispatchQueue.main.async {
-            self.stopSpeedTimer()
             self.state = .disconnected
             self.stateUI = .disconnected
         }
@@ -587,7 +592,6 @@ class BoardViewModel: ObservableObject {
         state = .connected
         stateUI = .connected
         connectOrDisconnectByUser = false
-        stopSpeedTimer()
         
         getStatsByServer()
         
@@ -632,7 +636,8 @@ class BoardViewModel: ObservableObject {
                 nameSelect = nodeSelect.isCity ? nodeSelect.name : nodeSelect.countryName
             }
         }
-        getSpeedRealTime()
+
+        AppSetting.shared.fetchListSession()
     }
     
     @objc private func VPNStatusDidChange(notification: Notification) {
@@ -691,7 +696,6 @@ class BoardViewModel: ObservableObject {
     
     @MainActor @objc private func VPNDidFail(notification: Notification) {
         print("VPNStatusDidFail: \(notification.vpnError.localizedDescription)")
-        stopSpeedTimer()
         guard notification.vpnError.localizedDescription != "permission denied" else {
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.5, execute: {
                 self.configDisconected()
@@ -741,58 +745,17 @@ class BoardViewModel: ObservableObject {
         checkInternetTimer!.resume()
     }
     
-    var speedTimer: DispatchSourceTimer?
-
-    var lastSent: UInt = UInt(0)
-    var lastReceived: UInt = UInt(0)
-    
-    func getSpeedRealTime() {
-        lastSent = UInt(0)
-        lastReceived = UInt(0)
-        let queue = DispatchQueue.main
-        speedTimer = DispatchSource.makeTimerSource(queue: queue)
-        speedTimer!.schedule(deadline: .now(), repeating: .seconds(1))
-        speedTimer!.setEventHandler { [weak self] in
-            guard let `self` = self else {
-                return
-            }
-            if [.openVPNTCP, .openVPNUDP].contains(NetworkManager.shared.getValueConfigProtocol),
-               let dataCount = OpenVPNManager.shared.getDataCount() {
-                let intDataCountSent = Int(dataCount.sent)
-                let intLastDataCountSent = Int(self.lastSent)
-                let uploadSpeed = abs(intDataCountSent - intLastDataCountSent)
-                
-                let intDataCountReceived = Int(dataCount.received)
-                let intLastDataCountReceived = Int(self.lastReceived)
-                let downSpeed = abs(intDataCountReceived - intLastDataCountReceived)
-                self.uploadSpeed = UInt(uploadSpeed).descriptionAsDataUnit
-                self.downloadSpeed = UInt(downSpeed).descriptionAsDataUnit
-                
-                self.lastSent = dataCount.sent
-                self.lastReceived = dataCount.received
-            } else {
-                
-            }
-        }
-        speedTimer!.resume()
-    }
-        
-    func stopSpeedTimer() {
-        speedTimer = nil
-    }
-    
     func stopAutoconnectTimer() {
         checkInternetTimer = nil
     }
     
     deinit {
-        stopSpeedTimer()
         stopAutoconnectTimer()
         endBackgroundTask()
     }
     
     func internetNotAvaiable() {
-        self.error = APIError.noInternet
+        self.error = APIError.noInternetConnect
         self.showProgressView = false
         self.showAlert = true
     }
@@ -815,12 +778,6 @@ class BoardViewModel: ObservableObject {
             AppSetting.shared.saveBoardTabWhenConnecting(.location)
             NetworkManager.shared.nodeSelected = node
         }
-        
-        if !connectOrDisconnectByUser {
-            AppSetting.shared.temporaryDisableAutoConnect = true
-        }
-        
-        stopSpeedTimer()
         
         ServiceManager.shared.getRequestCertificate(asNewConnection: asNewConnection)
             .subscribe { [weak self] response in
@@ -928,9 +885,9 @@ class BoardViewModel: ObservableObject {
                 } else {
                     if let errorConfig = error as? APIError {
                         self.error = errorConfig
+                        self.showAlert = true
                     }
                     self.showProgressView = false
-                    self.showAlert = true
                     completion(false)
                     return
                 }

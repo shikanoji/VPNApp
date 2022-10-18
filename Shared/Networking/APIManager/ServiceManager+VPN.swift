@@ -29,7 +29,7 @@ extension ServiceManager {
                 return result
             }
             .catch { error in
-                throw APIError.someError
+                throw error
             }
     }
     
@@ -40,7 +40,7 @@ extension ServiceManager {
                 return result
             }
             .catch { error in
-                throw APIError.someError
+                throw error
             }
     }
     
@@ -51,7 +51,7 @@ extension ServiceManager {
                 return result
             }
             .catch { error in
-                throw APIError.someError
+                throw error
             }
     }
     
@@ -62,7 +62,7 @@ extension ServiceManager {
                 return result
             }
             .catch { error in
-                throw APIError.someError
+                throw error
             }
     }
     
@@ -73,7 +73,7 @@ extension ServiceManager {
                 return result
             }
             .catch { error in
-                throw APIError.someError
+                throw error
             }
     }
     
@@ -84,7 +84,7 @@ extension ServiceManager {
                 return result
             }
             .catch { error in
-                throw APIError.someError
+                throw error
             }
     }
     
@@ -95,7 +95,7 @@ extension ServiceManager {
                 return result
             }
             .catch { error in
-                throw APIError.someError
+                throw error
             }
     }
     
@@ -106,7 +106,7 @@ extension ServiceManager {
                 return result
             }
             .catch { error in
-                throw APIError.someError
+                throw error
             }
     }
 }
@@ -152,7 +152,11 @@ extension PrimitiveSequenceType where Trait == SingleTrait {
                 disposable.dispose()
             case .failure(let error):
                 if let onFailure = onFailure {
-                    onFailure(error)
+                    if let errorConfig = error as? MoyaError, errorConfig.errorCode == 6 {
+                        onFailure(APIError.noInternet)
+                    } else {
+                        onFailure(APIError.someError)
+                    }
                 } else {
                     Hooks.defaultErrorHandler(callStack, error)
                 }

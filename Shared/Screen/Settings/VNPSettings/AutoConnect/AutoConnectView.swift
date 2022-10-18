@@ -82,14 +82,14 @@ struct AutoConnectView: View {
                                                      statusConnect: $statusConnect,
                                                      showAutoConnectDestinationSelection: $showAutoConnectDestinationSelection,
                                                      viewModel: AutoConnectDestinationSelectViewModel())
+                    .onWillDisappear {
+                        viewModel.configItem()
+                    }
                 }
             }
         }
         .navigationBarHidden(true)
         .background(AppColor.background)
         .ignoresSafeArea()
-        .onAppear {
-            viewModel.configItem()
-        }
     }
 }

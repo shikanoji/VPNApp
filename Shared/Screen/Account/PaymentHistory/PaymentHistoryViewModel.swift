@@ -12,6 +12,9 @@ class PaymentHistoryViewModel: ObservableObject {
     let disposedBag = DisposeBag()
     @Published var paymentHistory: [PaymentHistoryRow] = []
     @Published var showProgressView: Bool = false
+    @Published var showAlert: Bool = false
+    
+    var error: APIError = .someError
     
     var page = 1
     var enableLoadMore = false
@@ -44,8 +47,11 @@ class PaymentHistoryViewModel: ObservableObject {
                 }
                 
             }, onFailure: { [weak self]  error in
-                guard let strongSelf = self else { return }
-                strongSelf.showProgressView = false
+                if let errorAPI = error as? APIError {
+                    self?.error = errorAPI
+                    self?.showAlert = true
+                }
+                self?.showProgressView = false
             })
             .disposed(by: disposedBag)
     }

@@ -239,6 +239,7 @@
 		EED9DB6728E8101300E75882 /* SubcriptionPlanView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EED9DB6628E8101300E75882 /* SubcriptionPlanView.swift */; };
 		EEEAF2172782E1A100A96114 /* NodeMapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEEAF2162782E1A100A96114 /* NodeMapView.swift */; };
 		EEEAF2192785834200A96114 /* NodePopupView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEEAF2182785834200A96114 /* NodePopupView.swift */; };
+		EEF2ED3928FD10280009A129 /* ConnectButtonViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEF2ED3828FD10270009A129 /* ConnectButtonViewModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -495,6 +496,7 @@
 		EED9DB6628E8101300E75882 /* SubcriptionPlanView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubcriptionPlanView.swift; sourceTree = "<group>"; };
 		EEEAF2162782E1A100A96114 /* NodeMapView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NodeMapView.swift; sourceTree = "<group>"; };
 		EEEAF2182785834200A96114 /* NodePopupView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NodePopupView.swift; sourceTree = "<group>"; };
+		EEF2ED3828FD10270009A129 /* ConnectButtonViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConnectButtonViewModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -1119,6 +1121,7 @@
 				EE79F53227758896006F0E5D /* StopWatch.swift */,
 				EEAD5C502779C2D3008181E3 /* SpeedConnectedView.swift */,
 				EEAD5C52277AC968008181E3 /* MapView.swift */,
+				EEF2ED3828FD10270009A129 /* ConnectButtonViewModel.swift */,
 			);
 			path = SubView;
 			sourceTree = "<group>";
@@ -1680,6 +1683,7 @@
 				AC17E247288911D700C72E20 /* LicenseListView.swift in Sources */,
 				AC540338288400D800A5605E /* PaymentHistory.swift in Sources */,
 				EE79F52D27731A63006F0E5D /* ConnectButton.swift in Sources */,
+				EEF2ED3928FD10280009A129 /* ConnectButtonViewModel.swift in Sources */,
 				EE8910122796B8CF00ADF293 /* SessionVPNCell.swift in Sources */,
 				AC99848F28895F230038F216 /* UIDeviceExtension.swift in Sources */,
 				D795FFAA275F6ED200E54206 /* Introduction.swift in Sources */,
@@ -2020,6 +2024,7 @@
 				DEVELOPMENT_TEAM = JM6FBPTUR3;
 				ENABLE_BITCODE = NO;
 				ENABLE_PREVIEWS = YES;
+				ENABLE_TESTABILITY = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "SysVPN--iOS--Info.plist";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;

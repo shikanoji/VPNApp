@@ -62,7 +62,7 @@ struct PopupSelectView: View {
         }
         .padding(.vertical, 15)
         .frame(width: UIScreen.main.bounds.size.width - 40)
-        .background(Color.black.opacity(0.8).blur(radius: 2))
+        .background(Color.black.blur(radius: 2))
         .cornerRadius(15)
     }
 }

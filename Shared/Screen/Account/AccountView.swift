@@ -132,7 +132,7 @@ struct AccountView: View {
                     self.showAccountStatus = true
                 }
                 Spacer().frame(height: 10)
-                ItemRowView(item: ItemCell(type: .totalDevice)).onTapGesture {
+                ItemRowView(item: ItemCell(type: .totalDevice), title: L10n.Account.itemDevices + ": \(numberOfSession)/\(AppSetting.shared.maxNumberDevices)").onTapGesture {
                     self.showTotalDevice = true
                 }
                 Spacer().frame(height: 25)
@@ -199,7 +199,7 @@ struct AccountView: View {
                 content
             }
             .background(AppColor.background)
-            .onAppear() {
+            .onWillAppear {
                 viewModel.authentication = authentication
                 viewModel.shouldShowResendEmailButton = AppSetting.shared.shouldAllowSendVerifyEmail
                 AppSetting.shared.fetchListSession()

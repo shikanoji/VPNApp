@@ -240,7 +240,7 @@ struct Constant {
     }
     
     struct timeout {
-        static let timeoutIntervalForRequest = 10.0
-        static let timeoutIntervalForResource = 10.0
+        static let timeoutIntervalForRequest = 5.0
+        static let timeoutIntervalForResource = 5.0
     }
 }

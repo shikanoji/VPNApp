@@ -101,7 +101,7 @@ struct BoardView: View {
                    autohideIn: 5,
                    closeOnTap: false,
                    closeOnTapOutside: true) {
-            PopupSelectView(message: "Disable auto-conenct",
+            PopupSelectView(message: "Disable auto-connect",
                             confirmTitle: "SETTINGS",
                             confirmAction: {
                 viewModel.showAlertAutoConnectSetting = false
@@ -135,9 +135,12 @@ struct BoardView: View {
         .preferredColorScheme(.dark)
         .navigationBarHidden(true)
         .edgesIgnoringSafeArea(.all)
-        .onAppear(perform: {
+        .onWillAppear {
             viewModel.mesh = mesh
-        })
+            viewModel.configDataRemote()
+            viewModel.configDataLocal()
+        }
+        
     }
     
     func handlerTapLeftNavigation() {
@@ -230,7 +233,7 @@ struct BoardView: View {
                     .padding(.top, 0)
                     Spacer()
                     ConnectButton(viewModel: viewModel,
-                                  tapButton: {
+                                  connectButtonViewModel: ConnectButtonViewModel(), tapButton: {
                         if viewModel.state != .connected {
                             AppSetting.shared.saveBoardTabWhenConnecting(.location)
                             if mesh.selectedNode == nil {

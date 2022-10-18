@@ -16,9 +16,9 @@ struct ConnectButton: View {
     @State var startAlertScroll = false
     
     @StateObject var viewModel: BoardViewModel
+    @StateObject var connectButtonViewModel: ConnectButtonViewModel
     
     @State var hiddenDelay = 1.0
-    
     @State var tap = false
     
     var widthSizeFrame = UIScreen.main.bounds.width
@@ -101,9 +101,15 @@ struct ConnectButton: View {
                 .disabled(tap)
             }
             .frame(width:  Constant.Board.QuickButton.widthSize)
-            SpeedConnectedView(uploadSpeed: viewModel.uploadSpeed, downLoadSpeed: viewModel.downloadSpeed)
-                .opacity(viewModel.stateUI == .connected ? ([.openVPNTCP, .openVPNUDP].contains(NetworkManager.shared.getValueConfigProtocol) ? 1 : 0) : 0)
-                .frame(width: widthSpeed, height: Constant.Board.QuickButton.widthSize)
+            if viewModel.stateUI == .connected {
+                SpeedConnectedView(uploadSpeed: connectButtonViewModel.uploadSpeed, downLoadSpeed: connectButtonViewModel.downloadSpeed)
+                    .frame(width: widthSpeed, height: Constant.Board.QuickButton.widthSize)
+                    .onAppear {
+                        connectButtonViewModel.getSpeedRealTime()
+                    }
+            } else {
+                Spacer()
+            }
         }
     }
     
