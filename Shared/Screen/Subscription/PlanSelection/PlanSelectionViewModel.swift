@@ -68,7 +68,10 @@ class PlanSelectionViewModel: ObservableObject {
     
     @MainActor func purchasePlan() {
         showProgressView = true
-        guard let selectedPlan = self.selectedPlan else { return }
+        guard let selectedPlan = self.selectedPlan else {
+            showProgressView = false
+            return
+        }
         var product: SKProduct?
         for plan in planList {
             if plan.productIdentifier == selectedPlan.subscriptionID {

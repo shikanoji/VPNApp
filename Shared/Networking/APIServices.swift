@@ -391,7 +391,8 @@ extension APIService: TargetType {
         case .verifyReceipt:
             let baseHeader = [
                 "Content-type": "application/json",
-                "x-api-key": "4368c9a9-e8a7-4e66-89cb-97c801c5dd88"
+                "x-api-key": "4368c9a9-e8a7-4e66-89cb-97c801c5dd88",
+                "Authorization": "Bearer \(AppSetting.shared.accessToken)"
             ]
             return baseHeader
         default:

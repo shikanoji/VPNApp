@@ -23,6 +23,13 @@ class Authentication: ObservableObject {
         login(user: data.user, tokens: data.tokens)
     }
     
+    func saveIsPremium(_ isPremium : Bool) {
+        DispatchQueue.main.async {
+            self.isPremium = isPremium
+        }
+        AppSetting.shared.isPremium = isPremium
+    }
+    
     private func login(user: User, tokens: Tokens) {
         needToShowRegisterScreenBeforeLogin = false
         AppSetting.shared.idUser = Int(user.id)
@@ -34,7 +41,13 @@ class Authentication: ObservableObject {
         AppSetting.shared.isPremium = user.is_premium
         if user.is_premium {
             Task {
-                await AppstoreReceiptHelper.shared.verifyReceipt()
+                let verifyResult = await AppstoreReceiptHelper.shared.verifyReceipt()
+                switch verifyResult {
+                case .success:
+                    saveIsPremium(true)
+                case .failure:
+                    saveIsPremium(false)
+                }
             }
         }
         AppSetting.shared.premiumExpires = user.premium_expire

@@ -52,7 +52,7 @@ struct MapView: View {
                     .resizable()
                     .background(AppColor.background)
                     .aspectRatio(contentMode: .fill)
-                
+
                 NodeMapView(scale: $currentAmount,
                             statusConnect: $statusConnect,
                             isZooming: $isZooming)
@@ -169,12 +169,10 @@ struct ZoomableScrollView<Content: View>: UIViewRepresentable {
         scrollView.minimumZoomScale = 1
         scrollView.maximumZoomScale = 5
         scrollView.bouncesZoom = false
-        scrollView.bounces = true
         scrollView.showsVerticalScrollIndicator = false
         scrollView.showsHorizontalScrollIndicator = false
         scrollView.clipsToBounds = false
-        scrollView.alwaysBounceVertical = false
-        scrollView.alwaysBounceHorizontal = false
+        scrollView.bounces = false
         
         let hostedView = context.coordinator.hostingController.view!
         
@@ -186,9 +184,17 @@ struct ZoomableScrollView<Content: View>: UIViewRepresentable {
         
         scrollView.contentOffset = CGPoint(x: 0, y: 0)
         
-        scrollView.contentSize = CGSize(
-            width: hostedView.bounds.width,
-            height: hostedView.bounds.height)
+        if let hostedView = context.coordinator.hostingController.view {
+            hostedView.frame = CGRect(x: 0, y: 0,
+                                      width: Constant.Board.Map.heightScreen * Constant.Board.Map.ration,
+                                      height: Constant.Board.Map.heightScreen)
+            
+            scrollView.addSubview(hostedView)
+            
+            scrollView.contentSize = CGSize(
+                width: hostedView.bounds.width,
+                height: hostedView.bounds.height)
+        }
         
         scrollView.minimumZoomScale = Constant.Board.Map.minZoom
         scrollView.maximumZoomScale = Constant.Board.Map.maxZoom
@@ -270,9 +276,10 @@ struct ZoomableScrollView<Content: View>: UIViewRepresentable {
         }
         
         func scrollViewDidZoom(_ scrollView: UIScrollView) {
-            if(scrollView.zoomScale < 1){
-                let leftMargin: CGFloat = (scrollView.frame.size.width - hostingController.view!.frame.width)*0.5
-                let topMargin: CGFloat = (scrollView.frame.size.height - hostingController.view!.frame.height)*0.5
+            if (scrollView.zoomScale < 1) {
+                let frameHosting = hostingController.view.frame
+                let leftMargin: CGFloat = (scrollView.frame.size.width - frameHosting.width)*0.5
+                let topMargin: CGFloat = (scrollView.frame.size.height - frameHosting.height)*0.5
                 scrollView.contentInset = UIEdgeInsets(top: max(0, topMargin), left: max(0,leftMargin), bottom: 0, right: 0)
             }
             parent.updateZoomScale(scrollView.zoomScale)

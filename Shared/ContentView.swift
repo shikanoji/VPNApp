@@ -34,7 +34,7 @@ struct ContentView: View {
                 AppSetting.shared.refreshTokenError = false
                 authentication.logout()
                 authentication.showedIntroduction = true
-                viewModel.getIpInfoSuccess = true
+                viewModel.endLoading = true
                 enableAnimation = false
             }
             .frame(width: UIScreen.main.bounds.width)
@@ -42,7 +42,7 @@ struct ContentView: View {
         } else {
             ZStack{
                 AppColor.background
-                if !viewModel.getIpInfoSuccess {
+                if !viewModel.endLoading {
                     AnimationLogo()
                 } else {
                     NavigationView {
@@ -52,7 +52,10 @@ struct ContentView: View {
                                 if let appVersion = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String, AppSetting.shared.forceUpdateVersion.contains(appVersion) {
                                     ForceUpdateView()
                                 } else {
-                                    if authentication.isValidated {
+                                    if !authentication.isPremium && AppSetting.shared.idUser != 0 {
+                                        PlanSelectionView(viewModel: PlanSelectionViewModel())
+                                            .transition(transitionRight)
+                                    } else if authentication.isValidated {
                                         if authentication.isPremium {
                                             BoardView(viewModel: BoardViewModel())
                                         } else {
@@ -91,6 +94,9 @@ struct ContentView: View {
                 }
             }
             .ignoresSafeArea()
+            .onWillAppear {
+                viewModel.authentication = authentication
+            }
         }
     }
 }

@@ -151,6 +151,7 @@ class BoardViewModel: ObservableObject {
     }
     
     var mesh: Mesh?
+    var authentication: Authentication?
     
     @Published var showAlert: Bool = false {
         didSet {
@@ -864,6 +865,11 @@ class BoardViewModel: ObservableObject {
                         }
                     } else {
                         self.configDisconnect()
+                        if response.code == 503 {
+                            self.authentication?.saveIsPremium(false)
+                            completion(false)
+                            return
+                        }
                         let error = response.errors
                         if error.count > 0, let message = error[0] as? String {
                             self.error = APIError.identified(message: message)

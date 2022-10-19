@@ -33,8 +33,7 @@ struct SetupVPNView: View {
                     Spacer().frame(height: 30)
                     AppButton(width: 311, text: L10n.Welcome.setupButton) {
                         presentationMode.wrappedValue.dismiss()
-                        AppSetting.shared.isPremium = true
-                        authentication.isPremium = AppSetting.shared.isPremium
+                        authentication.saveIsPremium(true)
                     }
                     Spacer().frame(height: 5)
                 }
