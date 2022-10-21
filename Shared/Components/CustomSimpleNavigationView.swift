@@ -14,22 +14,18 @@ struct CustomSimpleNavigationView: View {
     
     @Environment(\.safeAreaInsets) private var safeAreaInsets
     
-    var showBackButton = true
-    
     var body: some View {
         ZStack {
             VStack {
                 Spacer().frame(height: safeAreaInsets.top)
-                if showBackButton {
-                    HStack{
-                        Spacer().frame(width: 15)
-                        Label(L10n.Global.back, systemImage: "chevron.backward")
-                            .foregroundColor(Color.white)
-                            .onTapGesture {
-                                presentationMode.wrappedValue.dismiss()
-                            }
-                        Spacer()
-                    }
+                HStack{
+                    Spacer().frame(width: 15)
+                    Label(L10n.Global.back, systemImage: "chevron.backward")
+                        .foregroundColor(Color.white)
+                        .onTapGesture {
+                            presentationMode.wrappedValue.dismiss()
+                        }
+                    Spacer()
                 }
             }
             VStack {
