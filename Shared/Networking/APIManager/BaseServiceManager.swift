@@ -67,6 +67,10 @@ extension PrimitiveSequence where Trait == SingleTrait, Element == Response {
                 return Single.just(response)
             }
             
+            if response.statusCode == 503 {
+                return Single.just(response)
+            }
+            
             if var error = try? response.map(ResponseError.self) {
                 error.statusCode = response.statusCode
                 return Single.error(error)

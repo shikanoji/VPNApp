@@ -19,6 +19,14 @@ class PaymentHistoryViewModel: ObservableObject {
     var page = 1
     var enableLoadMore = false
     
+    func preLoadMore(_ index: Int) {
+        if index == paymentHistory.count - 1,
+           enableLoadMore,
+           !showProgressView {
+            self.fetchPaymentHistory(true)
+        }
+    }
+    
     func fetchPaymentHistory(_ loadMore: Bool = false) {
         showProgressView = true
         
@@ -35,17 +43,17 @@ class PaymentHistoryViewModel: ObservableObject {
         ServiceManager.shared.fetchPaymentHistory(page: page)
             .subscribe(onSuccess: { [weak self] response in
                 guard let strongSelf = self else { return }
+                strongSelf.showProgressView = false
                 if let result = response.result {
-                    strongSelf.enableLoadMore = (result.rows.count >= result.limit) && (strongSelf.page <= result.totalPages)
                     let paymentList = result.rows
-                    strongSelf.showProgressView = false
                     if loadMore {
                         strongSelf.paymentHistory += paymentList
                     } else {
                         strongSelf.paymentHistory = paymentList
                     }
+                    
+                    strongSelf.enableLoadMore = (result.rows.count >= result.limit) && (strongSelf.page <= result.totalPages) && (strongSelf.paymentHistory.count < result.totalResults)
                 }
-                
             }, onFailure: { [weak self]  error in
                 if let errorAPI = error as? APIError {
                     self?.error = errorAPI

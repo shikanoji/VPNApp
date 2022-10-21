@@ -30,7 +30,7 @@ struct ConnectButton: View {
         if widthSizeFrame < 375 {
             return 350
         }
-        else if widthSizeFrame > 768 {
+        else if widthSizeFrame >= 768 {
             return 600
         }
         else {
@@ -42,7 +42,7 @@ struct ConnectButton: View {
         if heightSizeFrame < 667 {
             return 350
         }
-        else if heightSizeFrame > 1024 {
+        else if heightSizeFrame >= 1024 {
             return 600
         }
         else {

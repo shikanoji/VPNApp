@@ -108,6 +108,7 @@ struct NodeView: View {
         }
         .scaleEffect(1 / scale, anchor: .bottom)
         .zIndex(zIndex)
+        .animation(nil)
     }
     
     var zIndex: Double {

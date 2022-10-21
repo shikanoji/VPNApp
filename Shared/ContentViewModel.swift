@@ -16,11 +16,19 @@ import RxSwift
 class ContentViewModel: ObservableObject {
     @Published var showAlert: Bool = false
     @Published var showSessionExpired: Bool = false
-    @Published var getIpInfoSuccess = false
-    
+    @Published var endLoading = false
     var alertMessage = ""
     
     let disposedBag = DisposeBag()
+    var authentication: Authentication?
+    
+    var logged: Bool {
+        return AppSetting.shared.idUser != 0
+    }
+    
+    var tokenExit : Bool {
+        return AppSetting.shared.accessToken != ""
+    }
     
     /// api get ip info in app
     func getIpInfo(completion: @escaping () -> Void) {
@@ -51,41 +59,68 @@ class ContentViewModel: ObservableObject {
         )
         
         guard Connectivity.sharedInstance.isReachable else {
-            self.getIpInfoSuccess = true
+            self.endLoading = true
             return
         }
         
         if AppSetting.shared.isConnectedToVpn {
-            self.getIpInfoSuccess = true
+            self.endLoading = true
         }
         
-        self.getState()
+        self.configState()
     }
     
     @objc func sessionExpided() {
-        if AppSetting.shared.accessToken != "" {
+        if !tokenExit {
             showSessionExpired = true
         }
     }
     
-    func getState() {
-        getIpInfo {
-            if AppSetting.shared.idUser != 0 {
-                if AppSetting.shared.accessToken != "" {
-                    if !AppSetting.shared.isConnectedToVpn && AppSetting.shared.needLoadApiMap {
-                        self.getCountryList {
-                            self.getMultihopList {
-                                self.getIpInfoSuccess = true
-                            }
+    func configState() {
+        if logged {
+            if tokenExit {
+                accountIsPremium {
+                    if $0 {
+                        self.loadAppSettingAndData {
+                            self.endLoading = true
                         }
                     } else {
-                        self.getIpInfoSuccess = true
+                        DispatchQueue.main.async {
+                            self.authentication?.saveIsPremium(false)
+                            self.endLoading = true
+                        }
                     }
-                } else {
-                    self.showSessionExpired = true
                 }
             } else {
-                self.getIpInfoSuccess = true
+                self.showSessionExpired = true
+            }
+        } else {
+            endLoading = true
+        }
+    }
+    
+    func accountIsPremium(completion: @escaping (Bool) -> Void) {
+        Task {
+            let verifyResult = await AppstoreReceiptHelper.shared.verifyReceipt()
+            switch verifyResult {
+            case .success:
+                completion(true)
+            case .failure:
+                completion(false)
+            }
+        }
+    }
+    
+    func loadAppSettingAndData(completion: @escaping () -> Void) {
+        getIpInfo {
+            if !AppSetting.shared.isConnectedToVpn && AppSetting.shared.needLoadApiMap {
+                self.getCountryList {
+                    self.getMultihopList {
+                        completion()
+                    }
+                }
+            } else {
+                completion()
             }
         }
     }

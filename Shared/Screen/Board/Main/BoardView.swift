@@ -12,6 +12,7 @@ struct BoardView: View {
     @StateObject var viewModel: BoardViewModel
     @Environment(\.presentationMode) var presentationMode
     @EnvironmentObject var mesh: Mesh
+    @EnvironmentObject var authentication: Authentication
     
     @State var showAccount = false
     @State var showSettings = false
@@ -137,10 +138,10 @@ struct BoardView: View {
         .edgesIgnoringSafeArea(.all)
         .onWillAppear {
             viewModel.mesh = mesh
+            viewModel.authentication = authentication
             viewModel.configDataRemote()
             viewModel.configDataLocal()
         }
-        
     }
     
     func handlerTapLeftNavigation() {
