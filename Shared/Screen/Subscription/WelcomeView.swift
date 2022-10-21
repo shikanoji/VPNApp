@@ -28,6 +28,7 @@ struct WelcomeView: View {
         }.fullScreenCover(isPresented: $showingSetup) {
             SetupVPNView()
         }
+        .navigationBarHidden(true)
     }
 }
 

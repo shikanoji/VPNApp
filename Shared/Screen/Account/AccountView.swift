@@ -18,7 +18,7 @@ struct AccountView: View {
     @State private var showFAQ = false
     @State var numberOfSession: Int
     @StateObject var viewModel: AccountViewModel
-
+    
     var header: some View {
         HStack(spacing: 25) {
             Image(Constant.Account.iconProfile)
@@ -73,7 +73,11 @@ struct AccountView: View {
                         .padding(.horizontal, 16)
                     Spacer().frame(minHeight: 50)
                     AppButton(style: .darkButton, width: UIScreen.main.bounds.size.width - 30, text: L10n.Account.signout) {
-                        viewModel.showLogoutConfirmation = true
+                        if UIDevice.current.userInterfaceIdiom == .pad {
+                            viewModel.showLogoutConfirmationPad = true
+                        } else {
+                            viewModel.showLogoutConfirmationPhone = true
+                        }
                     }
                     Spacer()
                         .frame(height: 27)
@@ -92,7 +96,7 @@ struct AccountView: View {
             alignment: .bottom
         )
     }
-
+    
     var verifyEmailSection: some View {
         VStack(alignment: .leading, spacing: 20) {
             Text("Verify your email")
@@ -200,7 +204,9 @@ struct AccountView: View {
             .background(AppColor.background)
             .onWillAppear {
                 viewModel.authentication = authentication
-                viewModel.shouldShowResendEmailButton = AppSetting.shared.shouldAllowSendVerifyEmail
+                DispatchQueue.main.async {
+                    viewModel.shouldShowResendEmailButton = AppSetting.shared.shouldAllowSendVerifyEmail
+                }
                 AppSetting.shared.fetchListSession()
             }
             .ignoresSafeArea()
@@ -231,11 +237,20 @@ struct AccountView: View {
                     viewModel.showAlert = false
                 })
             })
-            .sheet(isPresented: $viewModel.showLogoutConfirmation, content: {
+            .fullScreenCover(isPresented: $viewModel.showLogoutConfirmationPad, content: {
                 BottomViewPopup(cancel: {
-                    viewModel.showLogoutConfirmation = false
+                    viewModel.showLogoutConfirmationPad = false
                 }, confim: {
-                    viewModel.showLogoutConfirmation = false
+                    viewModel.showLogoutConfirmationPad = false
+                    viewModel.showProgressView = true
+                    viewModel.logout()
+                })
+            })
+            .sheet(isPresented: $viewModel.showLogoutConfirmationPhone, content: {
+                BottomViewPopup(cancel: {
+                    viewModel.showLogoutConfirmationPhone = false
+                }, confim: {
+                    viewModel.showLogoutConfirmationPhone = false
                     viewModel.showProgressView = true
                     viewModel.logout()
                 })

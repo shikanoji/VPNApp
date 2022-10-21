@@ -17,6 +17,8 @@ struct PlanSelectionView: View {
     
     var changePlan = false
     
+    var showBackButton = true
+    
     var body: some View {
         LoadingScreen(isShowing: $viewModel.showProgressView) {
             Background {
@@ -24,7 +26,7 @@ struct PlanSelectionView: View {
                     AppColor.blackText
                     ScrollView {
                         VStack {
-                            CustomSimpleNavigationView(title: "", backgroundColor: .clear).opacity(viewModel.shouldAllowLogout ? 0 : 1)
+                            CustomSimpleNavigationView(title: "", backgroundColor: .clear, showBackButton: showBackButton).opacity(viewModel.shouldAllowLogout ? 0 : 1)
                             Group {
                                 Spacer().frame(height: 30)
                                 Text(L10n.PlanSelect.title).setTitle()
@@ -88,14 +90,16 @@ struct PlanSelectionView: View {
                 }
                 .toolbar {
                     ToolbarItem(placement: .navigationBarLeading) {
-                        Button {
-                            presentationMode.wrappedValue.dismiss()
-                        } label: {
-                            Image(systemName: "chevron.backward").foregroundColor(.white)
-                            Text(L10n.Global.back)
+                        if showBackButton {
+                            Button {
+                                presentationMode.wrappedValue.dismiss()
+                            } label: {
+                                Image(systemName: "chevron.backward").foregroundColor(.white)
+                                Text(L10n.Global.back)
+                            }
+                            .opacity(viewModel.shouldAllowLogout ? 1 : 0)
+                            .foregroundColor(Color.white)
                         }
-                        .opacity(viewModel.shouldAllowLogout ? 1 : 0)
-                        .foregroundColor(Color.white)
                     }
                 }
             }.onAppear(perform: {

@@ -53,7 +53,7 @@ struct ContentView: View {
                                     ForceUpdateView()
                                 } else {
                                     if !authentication.isPremium && AppSetting.shared.idUser != 0 {
-                                        PlanSelectionView(viewModel: PlanSelectionViewModel(shouldAllowLogout: true))
+                                        PlanSelectionView(viewModel: PlanSelectionViewModel(shouldAllowLogout: true), showBackButton: false)
                                             .transition(transitionRight)
                                     } else if authentication.isValidated {
                                         if authentication.isPremium {

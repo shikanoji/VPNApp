@@ -62,6 +62,7 @@ struct SubscriptionIntroduction: View {
                 .frame(minHeight: UIScreen.main.bounds.height)
             }
         }
+        .navigationBarHidden(true)
     }
 }
 
