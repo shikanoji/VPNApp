@@ -41,13 +41,7 @@ class Authentication: ObservableObject {
         AppSetting.shared.isPremium = user.is_premium
         if user.is_premium {
             Task {
-                let verifyResult = await AppstoreReceiptHelper.shared.verifyReceipt()
-                switch verifyResult {
-                case .success:
-                    saveIsPremium(true)
-                case .failure:
-                    saveIsPremium(false)
-                }
+                await AppstoreReceiptHelper.shared.verifyReceipt()
             }
         }
         AppSetting.shared.premiumExpires = user.premium_expire

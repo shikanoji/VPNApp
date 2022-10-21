@@ -79,35 +79,18 @@ class ContentViewModel: ObservableObject {
     func configState() {
         if logged {
             if tokenExit {
-                accountIsPremium {
-                    if $0 {
-                        self.loadAppSettingAndData {
-                            self.endLoading = true
-                        }
-                    } else {
-                        DispatchQueue.main.async {
-                            self.authentication?.saveIsPremium(false)
-                            self.endLoading = true
-                        }
+                if authentication?.isPremium ?? false {
+                    self.loadAppSettingAndData {
+                        self.endLoading = true
                     }
+                } else {
+                    self.endLoading = true
                 }
             } else {
                 self.showSessionExpired = true
             }
         } else {
             endLoading = true
-        }
-    }
-    
-    func accountIsPremium(completion: @escaping (Bool) -> Void) {
-        Task {
-            let verifyResult = await AppstoreReceiptHelper.shared.verifyReceipt()
-            switch verifyResult {
-            case .success:
-                completion(true)
-            case .failure:
-                completion(false)
-            }
         }
     }
     
