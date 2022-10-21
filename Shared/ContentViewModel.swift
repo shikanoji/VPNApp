@@ -84,6 +84,7 @@ class ContentViewModel: ObservableObject {
                         self.endLoading = true
                     }
                 } else {
+                    authentication?.isPremium = false
                     self.endLoading = true
                 }
             } else {

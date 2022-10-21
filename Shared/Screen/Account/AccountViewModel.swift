@@ -11,7 +11,8 @@ import RxSwift
 class AccountViewModel: ObservableObject {
     @Published var showAlert = false
     @Published var showProgressView = false
-    @Published var showLogoutConfirmation = false
+    @Published var showLogoutConfirmationPhone = false
+    @Published var showLogoutConfirmationPad = false
     @Published var showSuccessfullyResendEmail = false
     @Published var shouldShowResendEmailButton = AppSetting.shared.shouldAllowSendVerifyEmail
     var disposedBag = DisposeBag()
