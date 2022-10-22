@@ -237,8 +237,8 @@ public enum L10n {
     public static let emailPlaceholder = L10n.tr("ForgotPassword", "EmailPlaceholder", fallback: #"Your email"#)
     /// Send request
     public static let sendRequestButton = L10n.tr("ForgotPassword", "SendRequestButton", fallback: #"Send request"#)
-    /// Successfully sent request. Pleae check your e-mail for confirmation.
-    public static let success = L10n.tr("ForgotPassword", "Success", fallback: #"Successfully sent request. Pleae check your e-mail for confirmation."#)
+    /// Please check your e-mail to reset password.
+    public static let success = L10n.tr("ForgotPassword", "Success", fallback: #"Please check your e-mail to reset password."#)
     /// strings
     ///   SysVPN
     /// 
