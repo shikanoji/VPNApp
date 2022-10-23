@@ -1,0 +1,28 @@
+# file options
+--exclude Pods
+--exclude Externals
+--exclude Shim/Shim/Resources/Generated
+
+# disabled rules
+--disable blankLinesAroundMark,sortedImports,blankLinesAtEndOfScope,blankLinesAtStartOfScope,blankLinesBetweenScopes,blankLinesBetweenImports
+--disable consecutiveBlankLines,consecutiveSpaces,duplicateImports,emptyBraces,fileHeader,hoistPatternLet
+--disable linebreakAtEndOfFile,linebreaks,numberFormatting,spaceAroundOperators,redundantBackticks,redundantGet,redundantInit,redundantLet
+--disable redundantNilInit,redundantParens,redundantPattern,redundantRawValues,redundantReturn,redundantVoidReturnType,semicolons
+--disable spaceInsideBraces, spaceInsideBrackets,spaceInsideGenerics,spaceInsideParens,specifiers,todos,trailingClosures,
+--disable trailingCommas,trailingSpace
+--disable unusedArguments,void,wrapArguments, andOperator, anyObjectProtocol, redundantBreak, redundantExtensionACL, redundantFileprivate, redundantLetError, redundantObjc
+--disable typeSugar,wrap,strongOutlets
+--disable enumNamespaces,elseOnSameLine,wrapMultilineStatementBraces,redundantType,extensionAccessControl,initCoderUnavailable,modifierOrder,preferKeyPath
+
+
+# rules option
+--indent 4
+--ifdef outdent
+
+
+# enable options are below
+# yodaConditions,spaceAroundBraces,spaceAroundBrackets,spaceAroundComments,spaceAroundGenerics,spaceAroundOperators
+# spaceAroundParens,elseOnSameLine,redundantSelf,indent,braces,spaceInsideComments
+
+# swift version
+--swiftversion 5.3.2
