@@ -29,7 +29,7 @@ struct AccountLimitedView: View {
             }
             Spacer().frame(height: 50)
             AppButton(width: 190, height: 50, backgroundColor: Color.white, textColor: Color.black, text: L10n.PlanSelect.gotIt) {
-                //Handle
+                // Handle
                 authentication.logout()
             }
         }
@@ -38,7 +38,7 @@ struct AccountLimitedView: View {
         Background {
             ZStack {
                 Asset.Assets.redLinearGradient.swiftUIImage.resizable()
-                VStack(spacing: 20){
+                VStack(spacing: 20) {
                     Spacer().frame(height: 40)
                     HStack {
                         Spacer().frame(width: 20)

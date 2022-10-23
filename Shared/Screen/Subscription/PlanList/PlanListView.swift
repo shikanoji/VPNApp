@@ -20,9 +20,9 @@ struct PlanListView: View {
                     focus: (selectedPlan?.name ?? "") == item.name,
                     plan: item,
                     changePlan: changePlan)
-                .onTapGesture {
-                    selectedPlan = item
-                }
+                    .onTapGesture {
+                        selectedPlan = item
+                    }
             }
         }
         .background(Color.clear)

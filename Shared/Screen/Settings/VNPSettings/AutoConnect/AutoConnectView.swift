@@ -56,20 +56,20 @@ struct AutoConnectView: View {
                                         item: item,
                                         switchValue: item.select,
                                         onSwitchValueChange: { value in
-                                if value {
-                                    AppSetting.shared.temporaryDisableAutoConnect = false
-                                    viewModel.configItem(item)
-                                }
-                            })
-                            .environmentObject(viewModel)
-                            .onTapGesture {
-                                switch item.type {
-                                case .fastestServer:
-                                    showAutoConnectDestinationSelection = true
-                                default:
-                                    return
-                                }
-                            }
+                                            if value {
+                                                AppSetting.shared.temporaryDisableAutoConnect = false
+                                                viewModel.configItem(item)
+                                            }
+                                        })
+                                        .environmentObject(viewModel)
+                                        .onTapGesture {
+                                            switch item.type {
+                                            case .fastestServer:
+                                                showAutoConnectDestinationSelection = true
+                                            default:
+                                                return
+                                            }
+                                        }
                         }
                     }
                 }
@@ -82,9 +82,9 @@ struct AutoConnectView: View {
                                                      statusConnect: $statusConnect,
                                                      showAutoConnectDestinationSelection: $showAutoConnectDestinationSelection,
                                                      viewModel: AutoConnectDestinationSelectViewModel())
-                    .onWillDisappear {
-                        viewModel.configItem()
-                    }
+                        .onWillDisappear {
+                            viewModel.configItem()
+                        }
                 }
             }
         }

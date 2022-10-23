@@ -30,7 +30,7 @@ struct LicenseListView: View {
                     showSettings = false
                     presentationMode.wrappedValue.dismiss()
                 }, statusConnect: $statusConnect)
-            .padding(.bottom, Constant.Menu.topPaddingCell)
+                .padding(.bottom, Constant.Menu.topPaddingCell)
             
             ScrollView(.vertical, showsIndicators: false) {
                 ZStack(alignment: .top) {

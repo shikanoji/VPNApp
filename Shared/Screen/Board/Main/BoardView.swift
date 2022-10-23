@@ -12,15 +12,16 @@ struct BoardView: View {
     @StateObject var viewModel: BoardViewModel
     @Environment(\.presentationMode) var presentationMode
     @EnvironmentObject var mesh: Mesh
+    @EnvironmentObject var authentication: Authentication
     
     @State var showAccount = false
     @State var showSettings = false
     
     private let transitionLeft = AnyTransition.asymmetric(insertion: .move(edge: .leading),
-                                                      removal: .move(edge: .leading))
+                                                          removal: .move(edge: .leading))
     
     private let transitionRight = AnyTransition.asymmetric(insertion: .move(edge: .trailing),
-                                                      removal: .move(edge: .trailing))
+                                                           removal: .move(edge: .trailing))
     
     @State var showPopup = false
     
@@ -58,10 +59,10 @@ struct BoardView: View {
             PopupSelectView(message: viewModel.error?.description ?? "An error occurred",
                             confirmTitle: "DISMISS",
                             confirmAction: {
-                viewModel.showAlert = false
-            })
-            .frame(alignment: .bottom)
-            .padding(.bottom, 20)
+                                viewModel.showAlert = false
+                            })
+                            .frame(alignment: .bottom)
+                            .padding(.bottom, 20)
         }
         .popup(isPresented: $viewModel.showSessionTerminatedAlert,
                type: .floater(verticalPadding: 20),
@@ -73,10 +74,10 @@ struct BoardView: View {
             PopupSelectView(message: "Session terminated",
                             confirmTitle: "OK",
                             confirmAction: {
-                viewModel.showSessionTerminatedAlert = false
-            })
-            .frame(alignment: .bottom)
-            .padding(.bottom, 20)
+                                viewModel.showSessionTerminatedAlert = false
+                            })
+                            .frame(alignment: .bottom)
+                            .padding(.bottom, 20)
         }
         .popup(isPresented: $viewModel.showAlertSessionSetting,
                type: .floater(verticalPadding: 20),
@@ -88,27 +89,27 @@ struct BoardView: View {
             PopupSelectView(message: "Need terminate other sessions",
                             confirmTitle: "Open Sessions",
                             confirmAction: {
-                viewModel.showAlertSessionSetting = false
-                viewModel.shouldHideSession = false
-            })
-            .frame(alignment: .bottom)
-            .padding(.bottom, 20)
+                                viewModel.showAlertSessionSetting = false
+                                viewModel.shouldHideSession = false
+                            })
+                            .frame(alignment: .bottom)
+                            .padding(.bottom, 20)
         }
         .popup(isPresented: $viewModel.showAlertAutoConnectSetting,
-                   type: .floater(verticalPadding: 20),
-                   position: .bottom,
-                   animation: .easeInOut,
-                   autohideIn: 5,
-                   closeOnTap: false,
-                   closeOnTapOutside: true) {
+               type: .floater(verticalPadding: 20),
+               position: .bottom,
+               animation: .easeInOut,
+               autohideIn: 5,
+               closeOnTap: false,
+               closeOnTapOutside: true) {
             PopupSelectView(message: "Disable auto-connect",
                             confirmTitle: "SETTINGS",
                             confirmAction: {
-                viewModel.showAlertAutoConnectSetting = false
-                viewModel.shouldHideAutoConnect = false
-            })
-            .frame(alignment: .bottom)
-            .padding(.bottom, 20)
+                                viewModel.showAlertAutoConnectSetting = false
+                                viewModel.shouldHideAutoConnect = false
+                            })
+                            .frame(alignment: .bottom)
+                            .padding(.bottom, 20)
         }
         .onChange(of: viewModel.showAlert, perform: { newValue in
             if newValue {
@@ -137,10 +138,10 @@ struct BoardView: View {
         .edgesIgnoringSafeArea(.all)
         .onWillAppear {
             viewModel.mesh = mesh
+            viewModel.authentication = authentication
             viewModel.configDataRemote()
             viewModel.configDataLocal()
         }
-        
     }
     
     func handlerTapLeftNavigation() {
@@ -223,28 +224,28 @@ struct BoardView: View {
                 VStack {
                     BoardNavigationView(status: viewModel.stateUI,
                                         tapLeftIcon: {
-                        handlerTapLeftNavigation()
-                    }, tapRightIcon: {
-                        handlerTapRightNavigation()
-                    })
-                    .zIndex(3)
-                    .padding(.top)
+                                            handlerTapLeftNavigation()
+                                        }, tapRightIcon: {
+                                            handlerTapRightNavigation()
+                                        })
+                                        .zIndex(3)
+                                        .padding(.top)
                     StatusVPNView(ip: viewModel.ip, status: viewModel.stateUI, flag: viewModel.flag, name: viewModel.nameSelect)
-                    .padding(.top, 0)
+                        .padding(.top, 0)
                     Spacer()
                     ConnectButton(viewModel: viewModel,
                                   connectButtonViewModel: ConnectButtonViewModel(), tapButton: {
-                        if viewModel.state != .connected {
-                            AppSetting.shared.saveBoardTabWhenConnecting(.location)
-                            if mesh.selectedNode == nil {
-                                NetworkManager.shared.nodeSelected = AppSetting.shared.getRecommendedCountries().first
-                            }
-                        }
-                        viewModel.onlyDisconnectWithoutEndsession = true
-                        AppSetting.shared.temporaryDisableAutoConnect = false
-                        viewModel.connectOrDisconnectByUser = true
-                        viewModel.ConnectOrDisconnectVPN()
-                    })
+                                      if viewModel.state != .connected {
+                                          AppSetting.shared.saveBoardTabWhenConnecting(.location)
+                                          if mesh.selectedNode == nil {
+                                              NetworkManager.shared.nodeSelected = AppSetting.shared.getRecommendedCountries().first
+                                          }
+                                      }
+                                      viewModel.onlyDisconnectWithoutEndsession = true
+                                      AppSetting.shared.temporaryDisableAutoConnect = false
+                                      viewModel.connectOrDisconnectByUser = true
+                                      viewModel.ConnectOrDisconnectVPN()
+                                  })
                     Spacer()
                         .frame(height: Constant.Board.Tabs.topPadding)
                     BoardTabView(viewModel: viewModel)
@@ -331,10 +332,10 @@ struct StateViewModifier: ViewModifier {
 
 extension View {
     func onWillDisappear(_ perform: @escaping () -> Void) -> some View {
-        self.modifier(StateViewModifier(onWillDisappear: perform, onWillAppear: {}))
+        modifier(StateViewModifier(onWillDisappear: perform, onWillAppear: {}))
     }
     
     func onWillAppear(_ perform: @escaping () -> Void) -> some View {
-        self.modifier(StateViewModifier(onWillDisappear: {}, onWillAppear: perform))
+        modifier(StateViewModifier(onWillDisappear: {}, onWillAppear: perform))
     }
 }

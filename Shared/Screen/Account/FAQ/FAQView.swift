@@ -80,16 +80,16 @@ struct FAQView: View {
         .popup(isPresented: $viewModel.showAlert, type: .floater(verticalPadding: 10), position: .bottom, animation: .easeInOut, autohideIn: 5, closeOnTap: false, closeOnTapOutside: true) {
             PopupSelectView(message: viewModel.error?.description ?? "",
                             confirmAction: {
-                viewModel.showAlert = false
-            })
+                                viewModel.showAlert = false
+                            })
         }
         NavigationLink(destination:
-                        FAQDetailView(
-                            showAccount: $showAccount,
-                            showFAQView: $showFAQ,
-                            statusConnect: $statusConnect,
-                            question: .constant(faqSelect ?? QuestionModel())),
-                       isActive: $showFAQDetail) { }
+            FAQDetailView(
+                showAccount: $showAccount,
+                showFAQView: $showFAQ,
+                statusConnect: $statusConnect,
+                question: .constant(faqSelect ?? QuestionModel())),
+            isActive: $showFAQDetail) { }
     }
 }
 

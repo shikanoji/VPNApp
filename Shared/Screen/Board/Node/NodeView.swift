@@ -36,9 +36,9 @@ struct NodeView: View {
     let sizeNode = Constant.Board.Node.sizeNode
     // 1
     @State var node: Node
-    //2
+    // 2
     @EnvironmentObject var mesh: Mesh
-    //3
+    // 3
     
     @Binding var statusConnect: VPNStatus
     
@@ -108,6 +108,7 @@ struct NodeView: View {
         }
         .scaleEffect(1 / scale, anchor: .bottom)
         .zIndex(zIndex)
+        .animation(nil)
     }
     
     var zIndex: Double {

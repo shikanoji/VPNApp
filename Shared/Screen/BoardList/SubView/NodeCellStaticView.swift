@@ -27,8 +27,8 @@ struct NodeCellStaticView: View {
                     Asset.Assets.flagDefault.swiftUIImage
                 }
             }
-                .clipShape(Circle())
-                .frame(width: imageSize, height: imageSize)
+            .clipShape(Circle())
+            .frame(width: imageSize, height: imageSize)
             Constant.StaticIP.iconS
                 .frame(width: 20, height: 20)
             VStack(alignment: .leading, spacing: 6) {

@@ -23,21 +23,21 @@ struct QuestionModel: Codable, Identifiable, Equatable {
         let values = try decoder.container(keyedBy: CodingKeys.self)
         
         if let _id = try? values.decode(Int.self, forKey: .id) {
-            self.id = _id
+            id = _id
         } else {
-            self.id = nil
+            id = nil
         }
         
         if let _title = try? values.decode(String.self, forKey: .title) {
-            self.title = _title
+            title = _title
         } else {
-            self.title = ""
+            title = ""
         }
         
         if let _url = try? values.decode(String.self, forKey: .url) {
-            self.url = _url
+            url = _url
         } else {
-            self.url = ""
+            url = ""
         }
     }
     
@@ -60,21 +60,21 @@ struct TopicQuestionModel: Codable, Identifiable, Equatable {
         let values = try decoder.container(keyedBy: CodingKeys.self)
         
         if let _id = try? values.decode(Int.self, forKey: .id) {
-            self.id = _id
+            id = _id
         } else {
-            self.id = nil
+            id = nil
         }
         
         if let _name = try? values.decode(String.self, forKey: .name) {
-            self.name = _name
+            name = _name
         } else {
-            self.name = ""
+            name = ""
         }
         
         if let _faqs = try? values.decode([QuestionModel].self, forKey: .faqs) {
-            self.faqs = _faqs
+            faqs = _faqs
         } else {
-            self.faqs = []
+            faqs = []
         }
     }
 }

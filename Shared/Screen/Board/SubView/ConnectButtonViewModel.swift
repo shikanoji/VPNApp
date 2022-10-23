@@ -22,14 +22,14 @@ class ConnectButtonViewModel: ObservableObject {
         speedTimer = DispatchSource.makeTimerSource(queue: queue)
         speedTimer!.schedule(deadline: .now(), repeating: .seconds(1))
         speedTimer!.setEventHandler { [weak self] in
-            guard let `self` = self else {
+            guard let self = self else {
                 return
             }
             let sent = SystemDataUsage.dataSent
             let received = SystemDataUsage.dataReceived
             
-            let uploadSpeed = abs(Int(sent) - Int(self.lastDataUsage.dataSent))
-            let downloadSpeed = abs(Int(received) - Int(self.lastDataUsage.dataReceived))
+            let uploadSpeed = abs(Int(sent) - Int(self.lastDataUsage.sent))
+            let downloadSpeed = abs(Int(received) - Int(self.lastDataUsage.received))
             if self.firstLoadData {
                 self.firstLoadData = false
             } else {
@@ -37,7 +37,7 @@ class ConnectButtonViewModel: ObservableObject {
                 self.downloadSpeed = UInt(downloadSpeed).descriptionAsDataUnit
             }
             
-            self.lastDataUsage = DataUsageInfo(dataReceived: received, dataSent: sent)
+            self.lastDataUsage = DataUsageInfo(received: received, sent: sent)
         }
         speedTimer!.resume()
     }

@@ -38,16 +38,16 @@ struct AccountStatusView: View {
                     VStack(spacing: 1) {
                         ItemRowCell(title: ItemCellType.statusAccount.title,
                                     content: AppSetting.shared.isPremium ?
-                                    "\(L10n.Account.expire) \(AppSetting.shared.premiumExpireDate?.toFormat("dd-MM-yyyy") ?? "")"
-                                    : "\(L10n.Account.AccountStatus.joined): \(AppSetting.shared.joinedDate?.toFormat("dd-MM-yyyy") ?? "")",
+                                        "\(L10n.Account.expire) \(AppSetting.shared.premiumExpireDate?.toFormat("dd-MM-yyyy") ?? "")"
+                                        : "\(L10n.Account.AccountStatus.joined): \(AppSetting.shared.joinedDate?.toFormat("dd-MM-yyyy") ?? "")",
                                     position: .top)
                         ItemRowCell(title: ItemCellType.paymentHistory.title,
                                     content: ItemCellType.paymentHistory.content,
                                     showRightButton: true,
                                     position: .bot)
-                        .onTapGesture {
-                            self.showPayment = true
-                        }
+                            .onTapGesture {
+                                self.showPayment = true
+                            }
                         Spacer().frame(height: 32)
                         AppButton(style: .themeButton, width: UIScreen.main.bounds.size.width - 32, text: AppSetting.shared.isPremium ? L10n.Account.AccountStatus.extend : L10n.Account.AccountStatus.upgradeToPremium) {
                             self.showPlanListView = true
@@ -58,15 +58,15 @@ struct AccountStatusView: View {
                 }
             }
             NavigationLink(destination:
-                            PaymentHistoryView(
-                                showAccount: $showAccount,
-                                showAccountStatus: $showAccountStatus,
-                                statusConnect: $statusConnect,
-                                viewModel: PaymentHistoryViewModel()),
-                           isActive: $showPayment) { }
+                PaymentHistoryView(
+                    showAccount: $showAccount,
+                    showAccountStatus: $showAccountStatus,
+                    statusConnect: $statusConnect,
+                    viewModel: PaymentHistoryViewModel()),
+                isActive: $showPayment) { }
             NavigationLink(destination: PlanSelectionView(viewModel: PlanSelectionViewModel(), changePlan: true)
                 .environmentObject(RegisterResultModel()),
-                           isActive: $showPlanListView) { }
+                isActive: $showPlanListView) { }
         }
         .navigationBarHidden(true)
         .background(AppColor.background)

@@ -12,7 +12,7 @@ struct ForgotPasswordView: View {
     @StateObject var viewModel: ForgotPasswordViewModel
     @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
     var header: some View {
-        Group{
+        Group {
             Spacer().frame(height: 50)
             Text(L10n.ForgotPassword.title).setTitle()
             Spacer().frame(height: 20)
@@ -32,7 +32,7 @@ struct ForgotPasswordView: View {
     }
     
     var footer: some View {
-        HStack{
+        HStack {
             Text(L10n.Register.hadAccountText).setDefault()
             Spacer().frame(width: 5)
             Text(L10n.Register.signin).setDefaultBold().onTapGesture {
@@ -74,8 +74,8 @@ struct ForgotPasswordView: View {
                closeOnTapOutside: true) {
             PopupSelectView(message: viewModel.alertMessage,
                             confirmAction: {
-                viewModel.showAlert = false
-            })
+                                viewModel.showAlert = false
+                            })
         }
     }
 }

@@ -48,8 +48,8 @@ struct DNSSettingView: View {
                       width: componentWidth,
                       text: L10n.Settings.Dns.save,
                       action: {
-                viewModel.save()
-            })
+                          viewModel.save()
+                      })
         }
     }
     
@@ -91,8 +91,8 @@ struct DNSSettingView: View {
         .popup(isPresented: $viewModel.showAlert, type: .floater(verticalPadding: 10), position: .bottom, animation: .easeInOut, autohideIn: 5, closeOnTap: false, closeOnTapOutside: true) {
             PopupSelectView(message: viewModel.alertMessage,
                             confirmAction: {
-                viewModel.showAlert = false
-            })
+                                viewModel.showAlert = false
+                            })
         }
     }
 }

@@ -18,8 +18,8 @@ struct Background<Content: View>: View {
     var body: some View {
         AppColor.background
             .frame(maxWidth: .infinity, maxHeight: .infinity)
-        .overlay(content)
-        .ignoresSafeArea()
-        .navigationBarTitleDisplayMode(.inline)
+            .overlay(content)
+            .ignoresSafeArea()
+            .navigationBarTitleDisplayMode(.inline)
     }
 }

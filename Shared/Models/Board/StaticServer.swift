@@ -19,16 +19,16 @@ struct ServerStats: Codable {
     
     init(from decoder: Decoder) throws {
         let values = try decoder.container(keyedBy: CodingKeys.self)
-        if let _value = try? values.decode([StaticServer].self, forKey: .rows){
-            self.rows = _value
+        if let _value = try? values.decode([StaticServer].self, forKey: .rows) {
+            rows = _value
         } else {
-            self.rows = []
+            rows = []
         }
         
-        if let _value = try? values.decode(Int.self, forKey: .count){
-            self.count = _value
+        if let _value = try? values.decode(Int.self, forKey: .count) {
+            count = _value
         } else {
-            self.count = 0
+            count = 0
         }
     }
 }
@@ -69,75 +69,75 @@ struct StaticServer: Identifiable, Codable {
     
     init(from decoder: Decoder) throws {
         let values = try decoder.container(keyedBy: CodingKeys.self)
-        if let _value = try? values.decode(Int.self, forKey: .score){
-            self.score = _value
+        if let _value = try? values.decode(Int.self, forKey: .score) {
+            score = _value
         } else {
-            self.score = 0
+            score = 0
         }
-        if let _value = try? values.decode(String.self, forKey: .iso2){
-            self.iso2 = _value
+        if let _value = try? values.decode(String.self, forKey: .iso2) {
+            iso2 = _value
         } else {
-            self.iso2 = ""
+            iso2 = ""
         }
-        if let _value = try? values.decode(String.self, forKey: .iso3){
-            self.iso3 = _value
+        if let _value = try? values.decode(String.self, forKey: .iso3) {
+            iso3 = _value
         } else {
-            self.iso3 = ""
+            iso3 = ""
         }
-        if let _serverNumber = try? values.decode(Int.self, forKey: .serverNumber){
-            self.serverNumber = _serverNumber
+        if let _serverNumber = try? values.decode(Int.self, forKey: .serverNumber) {
+            serverNumber = _serverNumber
         } else {
-            self.serverNumber = 0
+            serverNumber = 0
         }
-        if let _serverId = try? values.decode(Int.self, forKey: .serverId){
-            self.serverId = _serverId
+        if let _serverId = try? values.decode(Int.self, forKey: .serverId) {
+            serverId = _serverId
         } else {
-            self.serverId = 0
+            serverId = 0
         }
-        if let _countryId = try? values.decode(Int.self, forKey: .countryId){
-            self.countryId = _countryId
+        if let _countryId = try? values.decode(Int.self, forKey: .countryId) {
+            countryId = _countryId
         } else {
-            self.countryId = nil
+            countryId = nil
         }
-        if let _countryName = try? values.decode(String.self, forKey: .countryName){
-            self.countryName = _countryName
+        if let _countryName = try? values.decode(String.self, forKey: .countryName) {
+            countryName = _countryName
         } else {
-            self.countryName = ""
+            countryName = ""
         }
-        if let _latitude = try? values.decode(String.self, forKey: .latitude){
-            self.latitude = _latitude
+        if let _latitude = try? values.decode(String.self, forKey: .latitude) {
+            latitude = _latitude
         } else {
-            self.latitude = ""
+            latitude = ""
         }
-        if let _longitude = try? values.decode(String.self, forKey: .longitude){
-            self.longitude = _longitude
+        if let _longitude = try? values.decode(String.self, forKey: .longitude) {
+            longitude = _longitude
         } else {
-            self.longitude = ""
+            longitude = ""
         }
-        if let _flag = try? values.decode(String.self, forKey: .flag){
-            self.flag = _flag
+        if let _flag = try? values.decode(String.self, forKey: .flag) {
+            flag = _flag
         } else {
-            self.flag = ""
+            flag = ""
         }
-        if let _x = try? values.decode(CGFloat.self, forKey: .x){
-            self.x = _x
+        if let _x = try? values.decode(CGFloat.self, forKey: .x) {
+            x = _x
         } else {
-            self.x = 0
+            x = 0
         }
-        if let _y = try? values.decode(CGFloat.self, forKey: .y){
-            self.y = _y
+        if let _y = try? values.decode(CGFloat.self, forKey: .y) {
+            y = _y
         } else {
-            self.y = 0
+            y = 0
         }
-        if let _currentLoad = try? values.decode(CGFloat.self, forKey: .currentLoad){
-            self.currentLoad = _currentLoad
+        if let _currentLoad = try? values.decode(CGFloat.self, forKey: .currentLoad) {
+            currentLoad = _currentLoad
         } else {
-            self.currentLoad = 0
+            currentLoad = 0
         }
-        if let _cityName = try? values.decode(String.self, forKey: .cityName){
-            self.cityName = _cityName
+        if let _cityName = try? values.decode(String.self, forKey: .cityName) {
+            cityName = _cityName
         } else {
-            self.cityName = ""
+            cityName = ""
         }
     }
     

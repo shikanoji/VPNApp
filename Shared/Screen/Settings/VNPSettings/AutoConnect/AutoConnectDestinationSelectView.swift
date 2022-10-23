@@ -27,12 +27,12 @@ struct AutoConnectDestinationSelectView: View {
                 LocationListView(locationData: $viewModel.locationData,
                                  nodeSelect: $viewModel.node,
                                  hasFastestOption: true)
-                .padding(.top)
-                .onChange(of: viewModel.shouldAutoCloseView){ shouldCloseView in
-                    if shouldCloseView {
-                        showAutoConnectDestinationSelection = false
+                    .padding(.top)
+                    .onChange(of: viewModel.shouldAutoCloseView) { shouldCloseView in
+                        if shouldCloseView {
+                            showAutoConnectDestinationSelection = false
+                        }
                     }
-                }
             }
             .background(AppColor.background)
             .ignoresSafeArea()

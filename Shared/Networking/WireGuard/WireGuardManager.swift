@@ -13,15 +13,57 @@ import TunnelKit
 extension SystemDataUsage {
     
     public static var dataSent: UInt64 {
-        return SystemDataUsage.getDataUsage().dataSent
+        return SystemDataUsage.getDataVPNUsage().sent
     }
     
     public static var dataReceived: UInt64 {
-        return SystemDataUsage.getDataUsage().dataReceived
+        return SystemDataUsage.getDataVPNUsage().received
     }
 }
 
 class SystemDataUsage {
+    
+    class func getDataVPNUsage() -> DataUsageInfo {
+        var dataUsageInfo = DataUsageInfo()
+        var vpnInterface:[String] = [];
+        if let settings = CFNetworkCopySystemProxySettings()?.takeRetainedValue() as? Dictionary<String, Any>,
+           let scopes = settings["__SCOPED__"] as? [String:Any] {
+            for (key, _) in scopes {
+                if key.contains("tap") || key.contains("tun") || key.contains("ppp") || key.contains("ipsec") {
+                    vpnInterface.append(key)
+                }
+            }
+        }
+         
+        var ifaddr: UnsafeMutablePointer<ifaddrs>?
+        guard getifaddrs(&ifaddr) == 0 else { return dataUsageInfo }
+        while let pointer = ifaddr {
+            let name: String! = String(cString: pointer.pointee.ifa_name)
+            let addr = pointer.pointee.ifa_addr.pointee
+            guard addr.sa_family == UInt8(AF_LINK) else {
+                ifaddr = pointer.pointee.ifa_next
+                continue
+            }
+            if !vpnInterface.contains(name) {
+                ifaddr = pointer.pointee.ifa_next
+                continue
+            }
+            
+            var networkData: UnsafeMutablePointer<if_data>?
+            networkData = unsafeBitCast(pointer.pointee.ifa_data, to: UnsafeMutablePointer<if_data>.self)
+            if let data = networkData {
+                let send = UInt64(data.pointee.ifi_obytes)
+                let received = UInt64(data.pointee.ifi_ibytes)
+                dataUsageInfo.received += received
+                dataUsageInfo.sent += send
+            }
+            ifaddr = pointer.pointee.ifa_next
+        }
+        
+        freeifaddrs(ifaddr)
+         
+        return dataUsageInfo
+    }
 
     class func getDataUsage() -> DataUsageInfo {
         var ifaddr: UnsafeMutablePointer<ifaddrs>?
@@ -57,8 +99,8 @@ class SystemDataUsage {
         
         networkData = unsafeBitCast(pointer.pointee.ifa_data, to: UnsafeMutablePointer<if_data>.self)
         if let data = networkData {
-            dataUsageInfo.dataSent += UInt64(data.pointee.ifi_obytes)
-            dataUsageInfo.dataReceived += UInt64(data.pointee.ifi_ibytes)
+            dataUsageInfo.sent += UInt64(data.pointee.ifi_obytes)
+            dataUsageInfo.received += UInt64(data.pointee.ifi_ibytes)
         }
         
         return dataUsageInfo
@@ -66,12 +108,12 @@ class SystemDataUsage {
 }
 
 struct DataUsageInfo {
-    var dataReceived: UInt64 = 0
-    var dataSent: UInt64 = 0
+    var received: UInt64 = 0
+    var sent: UInt64 = 0
 
     mutating func updateInfoByAdding(_ info: DataUsageInfo) {
-        dataReceived += info.dataReceived
-        dataSent += info.dataSent
+        received += info.received
+        sent += info.sent
     }
 }
 
@@ -95,7 +137,7 @@ class WireGuardManager: ObservableObject {
     func connect() {
         let string = NetworkManager.shared.obtainCertificate?.convertToString() ?? ""
         if let cfgStr = configuretionParaseFromContents(lines: string.trimmedLines()) {
-            self.cfg = cfgStr
+            cfg = cfgStr
             
             Task {
                 do {
@@ -188,7 +230,7 @@ class WireGuardManager: ObservableObject {
         var dnsList: [String] = []
         
         guard let dnsCyberSec = NetworkManager.shared.requestCertificate?.dns,
-              dnsCyberSec.count > 0 else {
+              !dnsCyberSec.isEmpty else {
             if AppSetting.shared.primaryDNSValue != "" {
                 dnsList.append(AppSetting.shared.primaryDNSValue)
             }

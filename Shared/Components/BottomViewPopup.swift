@@ -59,20 +59,25 @@ struct BottomViewPopup: View {
             }
         }
         .padding(20)
-        .frame(width: UIScreen.main.bounds.width)
         .background(AppColor.background)
         .cornerRadius(radius: 15, corners: [.topLeft, .topRight])
     }
     
     var body: some View {
         VStack {
-            Color.clear
+            AppColor.darkButton.opacity(0.2)
                 .contentShape(Rectangle())
                 .onTapGesture {
                     cancel?()
                 }
             content
         }
+        .gesture(DragGesture(minimumDistance: 0, coordinateSpace: .local)
+            .onEnded({ value in
+                if value.translation.height > 10 {
+                    cancel?()
+                }
+            }))
         .background(PopupBackgroundView())
         .ignoresSafeArea()
     }

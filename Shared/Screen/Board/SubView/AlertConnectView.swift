@@ -39,9 +39,9 @@ struct AlertConnectView: View {
                     Asset.Assets.flagDefault.swiftUIImage
                 }
             }
-                .clipShape(Circle())
-                .frame(width: Constant.Board.NodePopupView.frameEnsign,
-                       height: Constant.Board.NodePopupView.frameEnsign)
+            .clipShape(Circle())
+            .frame(width: Constant.Board.NodePopupView.frameEnsign,
+                   height: Constant.Board.NodePopupView.frameEnsign)
             Text(name)
                 .font(.system(size: Constant.Board.NodePopupView.sizeFont + 2,
                               weight: Constant.Board.NodePopupView.weightFont))

@@ -28,7 +28,7 @@ struct SectionCell: Equatable, Identifiable {
     
     init(_ type: SectionType) {
         self.type = type
-        self.items = type.items
+        items = type.items
     }
     
     mutating func updateSelectedItemListAndUnSelectOther(_ cell: ItemCell) {

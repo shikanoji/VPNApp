@@ -30,7 +30,7 @@ struct ConnectButton: View {
         if widthSizeFrame < 375 {
             return 350
         }
-        else if widthSizeFrame > 768 {
+        else if widthSizeFrame >= 768 {
             return 600
         }
         else {
@@ -42,7 +42,7 @@ struct ConnectButton: View {
         if heightSizeFrame < 667 {
             return 350
         }
-        else if heightSizeFrame > 1024 {
+        else if heightSizeFrame >= 1024 {
             return 600
         }
         else {
@@ -52,11 +52,11 @@ struct ConnectButton: View {
     
     var body: some View {
         HStack(alignment: .bottom, spacing: 0) {
-            if(viewModel.stateUI != .connected) {
+            if (viewModel.stateUI != .connected) {
                 Spacer()
                     .frame(width: widthSpeed)
             }
-            if(viewModel.stateUI == .connected) {
+            if (viewModel.stateUI == .connected) {
                 TimeConnectedView().frame(width: widthSpeed, height: Constant.Board.QuickButton.widthSize)
                     .opacity(viewModel.stateUI == .connected ? 1 : 0)
             }
@@ -121,13 +121,13 @@ struct ConnectButton: View {
         switch viewModel.stateUI {
         case .disconnected:
             return AnyView(Text(L10n.Board.quickUnConnect)
-                            .foregroundColor(Color.black)
-                            .multilineTextAlignment(.center)
-                            .font(.system(size: calculatebuttonsizeWidth(widthSizeFrame: widthSizeFrame) * 0.038, weight: .bold))
-                            .padding())
+                .foregroundColor(Color.black)
+                .multilineTextAlignment(.center)
+                .font(.system(size: calculatebuttonsizeWidth(widthSizeFrame: widthSizeFrame) * 0.038, weight: .bold))
+                .padding())
         case .connecting, .disconnecting:
             return AnyView(getDocAnimation()
-                            .padding())
+                .padding())
         case .connected:
             return AnyView(
                 Text("STOP").foregroundColor(Color.black)

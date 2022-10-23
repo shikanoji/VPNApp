@@ -20,28 +20,28 @@ struct SubscriptionIntroduction: View {
                 VStack(alignment: .center) {
                     Text(L10n.SubscriptionIntro.title).setTitle()
                     Asset.Assets.subscriptionIntroImage.swiftUIImage
-                        Spacer().frame(height: 20)
-                        HStack{
-                            Asset.Assets.unlimited.swiftUIImage
-                            Text(L10n.SubscriptionIntro.unlimited).setDefault()
-                            Spacer()
-                        }.frame(width: widthConent)
-                        HStack{
-                            Asset.Assets.cashReturn.swiftUIImage
-                            Text(L10n.SubscriptionIntro.cashback).setDefault()
-                            Spacer()
-                        }.frame(width: widthConent)
-                        HStack{
-                            Asset.Assets.rocketFast.swiftUIImage
-                            Text(L10n.SubscriptionIntro.rocketFast).setDefault()
-                            Spacer()
-                        }.frame(width: widthConent)
-                        HStack{
-                            Asset.Assets.liveSupport.swiftUIImage
-                            Text(L10n.SubscriptionIntro.liveSupport).setDefault()
-                            Spacer()
-                        }.frame(width: widthConent)
-                        Spacer().frame(height: 30)
+                    Spacer().frame(height: 20)
+                    HStack {
+                        Asset.Assets.unlimited.swiftUIImage
+                        Text(L10n.SubscriptionIntro.unlimited).setDefault()
+                        Spacer()
+                    }.frame(width: widthConent)
+                    HStack {
+                        Asset.Assets.cashReturn.swiftUIImage
+                        Text(L10n.SubscriptionIntro.cashback).setDefault()
+                        Spacer()
+                    }.frame(width: widthConent)
+                    HStack {
+                        Asset.Assets.rocketFast.swiftUIImage
+                        Text(L10n.SubscriptionIntro.rocketFast).setDefault()
+                        Spacer()
+                    }.frame(width: widthConent)
+                    HStack {
+                        Asset.Assets.liveSupport.swiftUIImage
+                        Text(L10n.SubscriptionIntro.liveSupport).setDefault()
+                        Spacer()
+                    }.frame(width: widthConent)
+                    Spacer().frame(height: 30)
                     Group {
                         NavigationLink(destination: PlanSelectionView(viewModel: PlanSelectionViewModel(shouldAllowLogout: true)),
                                        isActive: $toPlanSelection) {
@@ -62,6 +62,7 @@ struct SubscriptionIntroduction: View {
                 .frame(minHeight: UIScreen.main.bounds.height)
             }
         }
+        .navigationBarHidden(true)
     }
 }
 

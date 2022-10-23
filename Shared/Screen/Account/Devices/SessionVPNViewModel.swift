@@ -40,7 +40,7 @@ class SessionVPNViewModel: ObservableObject {
                     strongSelf.currentNumberDevice = "\(result.rows.count)"
                 } else {
                     let error = response.errors
-                    if error.count > 0, let message = error[0] as? String {
+                    if !error.isEmpty, let message = error[0] as? String {
                         strongSelf.error = APIError.identified(message: message)
                         strongSelf.showAlert = true
                     } else if !response.message.isEmpty {
@@ -69,11 +69,11 @@ class SessionVPNViewModel: ObservableObject {
             }
             NotificationCenter.default.post(name: Constant.NameNotification.disconnectCurrentSession, object: nil)
         }
-        self.showProgressView = true
+        showProgressView = true
         ServiceManager.shared.disconnectSession(sessionId: device.id, terminal: true)
             .subscribe { [weak self] response in
                 self?.showProgressView = false
-                guard let `self` = self else {
+                guard let self = self else {
                     return
                 }
 
@@ -82,7 +82,7 @@ class SessionVPNViewModel: ObservableObject {
                     self.showSessionTerminatedAlert = true
                 } else {
                     let error = response.errors
-                    if error.count > 0, let message = error[0] as? String {
+                    if !error.isEmpty, let message = error[0] as? String {
                         self.error = APIError.identified(message: message)
                         self.showAlert = true
                     } else if !response.message.isEmpty {
@@ -97,6 +97,6 @@ class SessionVPNViewModel: ObservableObject {
                 }
                 self.showProgressView = false
             }
-            .disposed(by: self.disposedBag)
+            .disposed(by: disposedBag)
     }
 }

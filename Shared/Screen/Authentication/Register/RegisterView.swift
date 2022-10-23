@@ -26,7 +26,7 @@ struct RegisterView: View {
     private let minTopSpacing: CGFloat = 100
 
     var header: some View {
-        Group{
+        Group {
             Spacer().frame(height: 50)
             Text(L10n.Register.title).setTitle()
             Spacer().frame(height: textFieldSpacing)
@@ -36,7 +36,7 @@ struct RegisterView: View {
     }
     
     var textInputs: some View {
-        Group{
+        Group {
             Form(placeholder: L10n.Register.emailPlaceholder, value: $viewModel.email, width: Constant.Global.widthFormAndButton)
             Spacer().frame(height: textFieldSpacing)
             Form(placeholder: L10n.Register.passwordPlaceholder, value: $viewModel.password, isPassword: true, width: Constant.Global.widthFormAndButton)
@@ -49,9 +49,9 @@ struct RegisterView: View {
     var registerButtons: some View {
         Group {
             NavigationLink(destination: SubscriptionIntroduction()
-                                            .navigationBarHidden(true),
-                           isActive: $toPlanSelection) {
-            }
+                .navigationBarHidden(true),
+                isActive: $toPlanSelection) {
+                }
             normalRegisterButton
             Spacer().frame(height: buttonSpacing)
             AppButton(style: .darkButton, width: Constant.Global.widthFormAndButton, text: L10n.Register.signupWithGoogle, icon: Asset.Assets.google.swiftUIImage) {
@@ -67,7 +67,7 @@ struct RegisterView: View {
     
     var backToLoginLink: some View {
         Group {
-            HStack{
+            HStack {
                 Text(L10n.Register.hadAccountText).setDefault()
                 Spacer().frame(width: 5)
                 Text(L10n.Register.signin).setDefaultBold().onTapGesture {
@@ -116,8 +116,8 @@ struct RegisterView: View {
                closeOnTapOutside: true) {
             PopupSelectView(message: viewModel.alertMessage,
                             confirmAction: {
-                viewModel.showAlert = false
-            })
+                                viewModel.showAlert = false
+                            })
         }
     }
 }

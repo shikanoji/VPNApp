@@ -82,9 +82,9 @@ struct MultiHopView: View {
                                 }
                                 .frame(width: sizeIcon - 6,
                                        height: sizeIcon - 6)
-                                    .clipShape(Circle())
-                                    .brightness(-0.5)
-                                    .padding(.trailing, -5)
+                                .clipShape(Circle())
+                                .brightness(-0.5)
+                                .padding(.trailing, -5)
                                 Group {
                                     if let url = URL(string: nodeExit.flag) {
                                         AsyncImage(
@@ -98,9 +98,9 @@ struct MultiHopView: View {
                                         Asset.Assets.flagDefault.swiftUIImage
                                     }
                                 }
-                                    .clipShape(Circle())
-                                    .frame(width: sizeIcon,
-                                           height: sizeIcon)
+                                .clipShape(Circle())
+                                .frame(width: sizeIcon,
+                                       height: sizeIcon)
                                 Text(nodeEntry.name)
                                     .foregroundColor(.gray)
                                     .font(Constant.BoardList.fontNodeList)

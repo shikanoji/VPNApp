@@ -49,38 +49,38 @@ struct PaymentHistoryView: View {
                         UINavigationBar.setAnimationsEnabled(true)
                     }
                 }, statusConnect: $statusConnect)
-            .padding(.bottom, Constant.Menu.topPaddingCell)
+                .padding(.bottom, Constant.Menu.topPaddingCell)
             LoadingScreen(isShowing: $viewModel.showProgressView) {
                 ScrollView(.vertical, showsIndicators: false) {
                     
-                    GeometryReader{ reader -> AnyView in
-                        
+                    GeometryReader { reader -> AnyView in
+
                         DispatchQueue.main.async {
                             if refresh.startOffset == 0 {
                                 refresh.startOffset = reader.frame(in: .global).minY
                             }
-                            
+
                             refresh.offset = reader.frame(in: .global).minY
-                            
+
                             if refresh.offset - refresh.startOffset > 40 && !refresh.started {
                                 refresh.started = true
                                 hiddenRefresh = false
                             }
-                            
+
                             if refresh.offset <= refresh.startOffset + 20 {
                                 withAnimation(Animation.linear) {
                                     hiddenRefresh = true
                                 }
                             }
-                            
-                            //Checking if refresh í started and drag is released
+
+                            // Checking if refresh í started and drag is released
                             if refresh.startOffset == refresh.offset && refresh.started && !refresh.released {
-                                withAnimation(Animation.linear){refresh.released = true}
+                                withAnimation(Animation.linear) {refresh.released = true}
                                 refreshData()
                             }
-                            
-                            //checking if invalid becomes valid
-                            if refresh.startOffset == refresh.offset && refresh.started && refresh.released && refresh.invalid{
+
+                            // checking if invalid becomes valid
+                            if refresh.startOffset == refresh.offset && refresh.started && refresh.released && refresh.invalid {
                                 refresh.invalid = false
                                 refreshData()
                             }
@@ -89,7 +89,7 @@ struct PaymentHistoryView: View {
                     }
                     .frame(width: 0, height: 0)
                     
-                    VStack(spacing: 1) {
+                    LazyVStack(spacing: 1) {
                         if refresh.started && !firstLoad && !hiddenRefresh {
                             Image(systemName: "arrow.clockwise.circle")
                                 .resizable()
@@ -97,19 +97,17 @@ struct PaymentHistoryView: View {
                                 .padding(.bottom)
                                 .padding(.top, -20)
                         }
-                            ForEach(viewModel.paymentHistory.indices, id: \.self) { index in
-                                let item = viewModel.paymentHistory[index]
-                                ItemRowCell(title: item.packageCharge.productName,
-                                            content: (item.status == "complete" ?
-                                                      L10n.Account.AccountStatus.PaymentHistory.success : L10n.Account.AccountStatus.PaymentHistory.failed) + " - " + item.paymentDate,
-                                            position: viewModel.paymentHistory.getPosition(index))
+                        ForEach(viewModel.paymentHistory.indices, id: \.self) { index in
+                            let item = viewModel.paymentHistory[index]
+                            ItemRowCell(title: item.packageCharge.productName,
+                                        content: (item.status == "complete" ?
+                                            L10n.Account.AccountStatus.PaymentHistory.success : L10n.Account.AccountStatus.PaymentHistory.failed) + " - " + item.paymentDate,
+                                        position: viewModel.paymentHistory.getPosition(index))
                                 .onAppear {
-                                    if index == viewModel.paymentHistory.count - 1, viewModel.enableLoadMore, !viewModel.showProgressView {
-                                    DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
-                                        viewModel.fetchPaymentHistory(true)
+                                    withAnimation(Animation.linear) {
+                                        viewModel.preLoadMore(index)
                                     }
                                 }
-                            }
                         }
                     }
                     .padding(Constant.Menu.hozitalPaddingCell)
@@ -137,14 +135,14 @@ struct PaymentHistoryView: View {
                closeOnTapOutside: true) {
             PopupSelectView(message: viewModel.error.description,
                             confirmAction: {
-                viewModel.showAlert = false
-            })
+                                viewModel.showAlert = false
+                            })
         }
         .background(AppColor.background)
         .ignoresSafeArea()
     }
     
-    func refreshData(){
+    func refreshData() {
         
         withAnimation(Animation.linear) {
             if refresh.startOffset == refresh.offset {

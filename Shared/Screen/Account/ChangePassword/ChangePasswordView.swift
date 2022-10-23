@@ -109,13 +109,13 @@ struct ChangePasswordView: View {
                closeOnTapOutside: true) {
             PopupSelectView(message: viewModel.alertMessage,
                             confirmAction: {
-                viewModel.showAlert = false
-            })
-            .onDisappear {
-                if viewModel.changePasswordSuccess {
-                    showChangePassword = false
-                }
-            }
+                                viewModel.showAlert = false
+                            })
+                            .onDisappear {
+                                if viewModel.changePasswordSuccess {
+                                    showChangePassword = false
+                                }
+                            }
         }
     }
 }

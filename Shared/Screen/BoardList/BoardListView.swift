@@ -31,9 +31,9 @@ struct BoardListView: View {
                 StatusLocationView(statusConnect: $statusConnect,
                                    flag: $flag,
                                    name: $name)
-                .onTapGesture {
-                    withAnimation {
-                        viewModel.showBoardList = false
+                    .onTapGesture {
+                        withAnimation {
+                            viewModel.showBoardList = false
                         }
                     }
                 BoardTabView(viewModel: viewModel)

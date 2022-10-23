@@ -35,14 +35,14 @@ struct IntroductionPage: Hashable {
 
 struct SlideIntroduction: View {
     
-    init(){
+    init() {
         UIPageControl.appearance().currentPageIndicatorTintColor = UIColor(Color.themeColor)
     }
     
     var body: some View {
         TabView {
             ForEach(IntroductionPage.getList(), id: \.self) { intro in
-                VStack{
+                VStack {
                     intro.image
                         .resizable()
                         .scaledToFit()

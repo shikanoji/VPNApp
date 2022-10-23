@@ -26,7 +26,7 @@ struct PlanListCell: View {
                             .foregroundColor(AppColor.themeColor)
                             .frame(maxWidth: .infinity, alignment: .leading)
                         if !plan.savingText.isEmpty {
-                            VStack{
+                            VStack {
                                 Text(plan.savingText + "%")
                                     .foregroundColor( AppColor.blackText)
                                     .font(.system(size: Constant.TextSize.PlanListCell.savingText, weight: .semibold))

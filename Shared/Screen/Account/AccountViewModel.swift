@@ -11,7 +11,8 @@ import RxSwift
 class AccountViewModel: ObservableObject {
     @Published var showAlert = false
     @Published var showProgressView = false
-    @Published var showLogoutConfirmation = false
+    @Published var showLogoutConfirmationPhone = false
+    @Published var showLogoutConfirmationPad = false
     @Published var showSuccessfullyResendEmail = false
     @Published var shouldShowResendEmailButton = AppSetting.shared.shouldAllowSendVerifyEmail
     var disposedBag = DisposeBag()
@@ -19,7 +20,7 @@ class AccountViewModel: ObservableObject {
     var alertMessage: String = ""
     var authentication: Authentication?
     
-    func logout(){
+    func logout() {
         AppSetting.shared.temporaryDisableAutoConnect = true
         AppSetting.shared.needToStartNewSession = true
         NotificationCenter.default.post(name: Constant.NameNotification.logoutNeedDisconnect, object: nil)
@@ -27,7 +28,7 @@ class AccountViewModel: ObservableObject {
         if !AppSetting.shared.currentSessionId.isEmpty {
             ServiceManager.shared.disconnectSession(sessionId: AppSetting.shared.currentSessionId, terminal: true)
                 .subscribe { [weak self] response in
-                    guard let `self` = self else {
+                    guard let self = self else {
                         return
                     }
                     if response.success {
@@ -38,7 +39,7 @@ class AccountViewModel: ObservableObject {
                 } onFailure: { error in
                     self.disconnetAndLogout()
                 }
-                .disposed(by: self.disposedBag)
+                .disposed(by: disposedBag)
         } else {
             callLogoutAPI()
         }
@@ -63,7 +64,7 @@ class AccountViewModel: ObservableObject {
     }
 
     func resendVerifyEmail() {
-        self.showProgressView = true
+        showProgressView = true
         ServiceManager.shared.sendVerifiedEmail().subscribe {
             result in
             self.showProgressView = false
@@ -83,6 +84,6 @@ class AccountViewModel: ObservableObject {
                 self.showAlert = true
             }
             self.showProgressView = false
-        }.disposed(by: self.disposedBag)
+        }.disposed(by: disposedBag)
     }
 }

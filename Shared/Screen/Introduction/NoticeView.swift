@@ -18,7 +18,7 @@ struct NoticeView: View {
         ScrollView(.vertical, showsIndicators: false) {
             VStack(alignment: .center) {
                 Spacer()
-                VStack{
+                VStack {
                     Asset.Assets.lock.swiftUIImage
                     Spacer().frame(height: 20)
                     Text(L10n.Notice.title).setTitle()
@@ -87,7 +87,7 @@ struct NoticeView: View {
                                        isActive: $showPrivacyPolicies) {}
                     }
                     
-                    AppButton(width: 295, text: L10n.Notice.buttonText){
+                    AppButton(width: 295, text: L10n.Notice.buttonText) {
                         AppSetting.shared.showedNotice = true
                         authentication.showNoticeAlert = true
                     }

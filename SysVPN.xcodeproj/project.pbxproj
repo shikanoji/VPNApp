@@ -31,11 +31,11 @@
 		AC273F9128B11A5F0010E632 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = AC273F9028B11A5F0010E632 /* GoogleService-Info.plist */; };
 		AC273F9328B11BE50010E632 /* GoogleService-Info-dev.plist in Resources */ = {isa = PBXBuildFile; fileRef = AC273F9228B11BE50010E632 /* GoogleService-Info-dev.plist */; };
 		AC3280C92885AB7E00FCCB50 /* DeleteAccountConfirmationViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC3280C82885AB7E00FCCB50 /* DeleteAccountConfirmationViewModel.swift */; };
+		AC3328AF290539CE00EAC979 /* Empty.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC3328AE290539CE00EAC979 /* Empty.swift */; };
 		AC489252286405F6003F2795 /* PurchaseService.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC489251286405F6003F2795 /* PurchaseService.swift */; };
 		AC490871281B9FC600DB430B /* NotificationExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC490870281B9FC600DB430B /* NotificationExtension.swift */; };
 		AC490873281B9FFB00DB430B /* PublisherExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC490872281B9FFB00DB430B /* PublisherExtension.swift */; };
 		AC4C96CA28A0F2820063B4AF /* ForceUpdateView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC4C96C928A0F2820063B4AF /* ForceUpdateView.swift */; };
-		AC4C96CD28A0FC030063B4AF /* swiftgen in Resources */ = {isa = PBXBuildFile; fileRef = AC4C96CC28A0FC030063B4AF /* swiftgen */; };
 		AC516FCE2869A91F00BEBC81 /* LoadingScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC516FCD2869A91F00BEBC81 /* LoadingScreen.swift */; };
 		AC516FD2286C50A000BEBC81 /* AutoConnectDestinationSelectView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC516FD1286C50A000BEBC81 /* AutoConnectDestinationSelectView.swift */; };
 		AC516FD4286C579800BEBC81 /* AutoConnectDestinationSelectViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC516FD3286C579800BEBC81 /* AutoConnectDestinationSelectViewModel.swift */; };
@@ -309,11 +309,12 @@
 		AC273F9028B11A5F0010E632 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		AC273F9228B11BE50010E632 /* GoogleService-Info-dev.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info-dev.plist"; sourceTree = "<group>"; };
 		AC3280C82885AB7E00FCCB50 /* DeleteAccountConfirmationViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeleteAccountConfirmationViewModel.swift; sourceTree = "<group>"; };
+		AC3328AC2905399300EAC979 /* Package.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Package.swift; sourceTree = "<group>"; };
+		AC3328AE290539CE00EAC979 /* Empty.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Empty.swift; sourceTree = "<group>"; };
 		AC489251286405F6003F2795 /* PurchaseService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PurchaseService.swift; sourceTree = "<group>"; };
 		AC490870281B9FC600DB430B /* NotificationExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationExtension.swift; sourceTree = "<group>"; };
 		AC490872281B9FFB00DB430B /* PublisherExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PublisherExtension.swift; sourceTree = "<group>"; };
 		AC4C96C928A0F2820063B4AF /* ForceUpdateView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForceUpdateView.swift; sourceTree = "<group>"; };
-		AC4C96CC28A0FC030063B4AF /* swiftgen */ = {isa = PBXFileReference; lastKnownFileType = folder; path = swiftgen; sourceTree = "<group>"; };
 		AC516FCD2869A91F00BEBC81 /* LoadingScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingScreen.swift; sourceTree = "<group>"; };
 		AC516FD1286C50A000BEBC81 /* AutoConnectDestinationSelectView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AutoConnectDestinationSelectView.swift; sourceTree = "<group>"; };
 		AC516FD3286C579800BEBC81 /* AutoConnectDestinationSelectViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AutoConnectDestinationSelectViewModel.swift; sourceTree = "<group>"; };
@@ -340,6 +341,7 @@
 		AC60750D27DE431C00DD5667 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Account.strings; sourceTree = "<group>"; };
 		AC60751127DE431F00DD5667 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Settings.strings; sourceTree = "<group>"; };
 		AC60751527DE432300DD5667 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/FAQ.strings; sourceTree = "<group>"; };
+		AC62CD4429053E80003DD208 /* .swiftformat */ = {isa = PBXFileReference; lastKnownFileType = text; path = .swiftformat; sourceTree = "<group>"; };
 		AC79CE08282CFA7800E1E874 /* ToolsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToolsView.swift; sourceTree = "<group>"; };
 		AC79CE0A282CFB9600E1E874 /* ToolsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToolsViewModel.swift; sourceTree = "<group>"; };
 		AC87539A2801ED10004C5F43 /* DeleteAccountConfirmationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeleteAccountConfirmationView.swift; sourceTree = "<group>"; };
@@ -646,6 +648,15 @@
 			path = DeleteAccount;
 			sourceTree = "<group>";
 		};
+		AC3328AB2905394C00EAC979 /* BuildTools */ = {
+			isa = PBXGroup;
+			children = (
+				AC3328AC2905399300EAC979 /* Package.swift */,
+				AC3328AE290539CE00EAC979 /* Empty.swift */,
+			);
+			path = BuildTools;
+			sourceTree = "<group>";
+		};
 		AC6074DB27DD011F00DD5667 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
@@ -771,19 +782,20 @@
 		D78044932758C6F90086E59D = {
 			isa = PBXGroup;
 			children = (
+				AC62CD4429053E80003DD208 /* .swiftformat */,
 				AC8EFD6728B125DE00D90F57 /* SysVPNDebug.entitlements */,
 				AC17E2402888FC4500C72E20 /* Settings.bundle */,
 				EE46BCFB280D1509003C4FEB /* build_wireguard_go_bridge.sh */,
 				AC6074D827DB74CB00DD5667 /* swiftgen.yml */,
 				D78C8FC92774914400D4A46F /* SysVPN (iOS).entitlements */,
 				D78C8FC827748EE200D4A46F /* SysVPN--iOS--Info.plist */,
+				AC3328AB2905394C00EAC979 /* BuildTools */,
 				AC09D7C428BF462A0078E928 /* Configuration */,
 				AC17E25428893BFE00C72E20 /* Licenses */,
 				D78044982758C6F90086E59D /* Shared */,
 				EE03443F28090AB7003DFB64 /* OpenVPN */,
 				EE46BCCD280963F4003C4FEB /* WireGuard */,
 				D78044A42758C6FB0086E59D /* Products */,
-				AC4C96CC28A0FC030063B4AF /* swiftgen */,
 				E384F2A7218657BACCD5156E /* Frameworks */,
 			);
 			sourceTree = "<group>";
@@ -1305,11 +1317,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = D78044D02758C6FC0086E59D /* Build configuration list for PBXNativeTarget "SysVPN" */;
 			buildPhases = (
-				AC6074DA27DC6B3800DD5667 /* SwiftGen */,
 				D780449F2758C6FB0086E59D /* Sources */,
 				D78044A02758C6FB0086E59D /* Frameworks */,
 				D78044A12758C6FB0086E59D /* Resources */,
 				EE03442728082ABD003DFB64 /* Embed App Extensions */,
+				AC3328B129053ABF00EAC979 /* SwiftFormat */,
+				AC6074DA27DC6B3800DD5667 /* SwiftGen */,
 			);
 			buildRules = (
 			);
@@ -1456,7 +1469,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				AC60750B27DE431C00DD5667 /* Account.strings in Resources */,
-				AC4C96CD28A0FC030063B4AF /* swiftgen in Resources */,
 				AC6074E727DE424600DD5667 /* StaticIP.strings in Resources */,
 				D78044CC2758C6FC0086E59D /* Assets.xcassets in Resources */,
 				AC273F9328B11BE50010E632 /* GoogleService-Info-dev.plist in Resources */,
@@ -1503,6 +1515,24 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
+		AC3328B129053ABF00EAC979 /* SwiftFormat */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 8;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			name = SwiftFormat;
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 1;
+			shellPath = /bin/sh;
+			shellScript = "cd BuildTools\nSDKROOT=(xcrun --sdk macosx --show-sdk-path)\n#swift package update #Uncomment this line temporarily to update the version used to the latest matching your BuildTools/Package.swift file\nswift run -c release swiftformat \"$SRCROOT\"\n";
+		};
 		AC6074DA27DC6B3800DD5667 /* SwiftGen */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -1519,7 +1549,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "if [[ -f \"${PROJECT_DIR}/swiftgen/bin/swiftgen\" ]]; then\n  \"${PROJECT_DIR}/swiftgen/bin/swiftgen\"\nelse\n  echo \"warning: SwiftGen is not installed. Run 'pod install --repo-update' to install it.\"\nfi\n";
+			shellScript = "cd BuildTools\nSDKROOT=(xcrun --sdk macosx --show-sdk-path)\n#swift package update #Uncomment this line temporarily to update the version used to the latest matching your BuildTools/Package.swift file\nswift run -c release swiftgen config run --config \"$SRCROOT/swiftgen.yml\"\n";
 		};
 /* End PBXShellScriptBuildPhase section */
 
@@ -1614,6 +1644,7 @@
 				AC54033A28840A7D00A5605E /* PaymentHistoryViewModel.swift in Sources */,
 				D767F27F276780C1005F7AA5 /* Form.swift in Sources */,
 				D78044C42758C6FC0086E59D /* SysVPN.xcdatamodeld in Sources */,
+				AC3328AF290539CE00EAC979 /* Empty.swift in Sources */,
 				D785DFC227B3F447001FC84B /* FAQCell.swift in Sources */,
 				EE8910682798129600ADF293 /* BoardListView.swift in Sources */,
 				EE034414280827D6003DFB64 /* OpenVPNManager.swift in Sources */,

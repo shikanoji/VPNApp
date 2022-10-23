@@ -26,7 +26,7 @@ class FAQViewModel: ObservableObject {
         
         ServiceManager.shared.getTopicQuestionList()
             .subscribe { [weak self] response in
-                guard let `self` = self else {
+                guard let self = self else {
                     return
                 }
                 
@@ -40,7 +40,7 @@ class FAQViewModel: ObservableObject {
                     
                 } else {
                     let error = response.errors
-                    if error.count > 0, let message = error[0] as? String {
+                    if !error.isEmpty, let message = error[0] as? String {
                         self.error = APIError.identified(message: message)
                         self.showAlert = true
                     } else if !response.message.isEmpty {

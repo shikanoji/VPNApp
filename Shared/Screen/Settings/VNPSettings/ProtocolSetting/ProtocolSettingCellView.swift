@@ -33,8 +33,8 @@ struct ProtocolSettingCellView: View {
                     viewModel.updateItem(newItem)
                 }
             )) { }
-            .toggleStyle(SelectToggleStyle())
-            .padding(.trailing, 15.0)
+                .toggleStyle(SelectToggleStyle())
+                .padding(.trailing, 15.0)
         }
         .padding(.vertical, 8.0)
         .frame(minHeight: Constant.Menu.heightItemMenu)

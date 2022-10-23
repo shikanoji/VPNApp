@@ -18,7 +18,7 @@ struct Form: View {
     let shouldAnimate: Bool
     var width: CGFloat
     
-    init(placeholder: String = "", value: Binding<String>, isPassword: Bool = false, shouldAnimate: Bool = true, width: CGFloat = 311){
+    init(placeholder: String = "", value: Binding<String>, isPassword: Bool = false, shouldAnimate: Bool = true, width: CGFloat = 311) {
         self.placeholder = placeholder
         _value = value
         self.isPassword = isPassword

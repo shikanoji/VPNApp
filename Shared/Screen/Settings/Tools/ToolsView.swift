@@ -38,11 +38,11 @@ struct ToolsView: View {
                                     position: viewModel.section.items.getPosition(item),
                                     switchValue: item.select,
                                     onSwitchValueChange: { value in
-                            var changeItem = item
-                            changeItem.select = value
-                            viewModel.configItem(changeItem)
-                        })
-                        .environmentObject(viewModel)
+                                        var changeItem = item
+                                        changeItem.select = value
+                                        viewModel.configItem(changeItem)
+                                    })
+                                    .environmentObject(viewModel)
                     }
                 }
                 .padding(Constant.Menu.hozitalPaddingCell)

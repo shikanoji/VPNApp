@@ -62,27 +62,27 @@ struct SettingVPNView: View {
                 Spacer().frame(height: 20)
             }
             NavigationLink(destination:
-                            AutoConnectView(
-                                showSettings: $showSettings,
-                                showVPNSetting: $showVPNSetting,
-                                shouldHideAutoConnect: .constant(false),
-                                statusConnect: $statusConnect,
-                                viewModel: AutoConnectViewModel()),
-                           isActive: $showAutoConnect) { }
+                AutoConnectView(
+                    showSettings: $showSettings,
+                    showVPNSetting: $showVPNSetting,
+                    shouldHideAutoConnect: .constant(false),
+                    statusConnect: $statusConnect,
+                    viewModel: AutoConnectViewModel()),
+                isActive: $showAutoConnect) { }
             NavigationLink(destination:
-                            ProtocolSettingView(
-                                showSettings: $showSettings,
-                                showVPNSetting: $showVPNSetting,
-                                viewModel: ProtocolSettingViewModel(),
-                                statusConnect: $statusConnect),
-                           isActive: $showProtocolConnect) { }
+                ProtocolSettingView(
+                    showSettings: $showSettings,
+                    showVPNSetting: $showVPNSetting,
+                    viewModel: ProtocolSettingViewModel(),
+                    statusConnect: $statusConnect),
+                isActive: $showProtocolConnect) { }
             NavigationLink(destination:
-                            DNSSettingView(showSettings: $showSettings,
-                                           showDNSSetting: $showDNSSetting,
-                                           viewModel: DNSSettingViewModel(),
-                                           statusConnect: $statusConnect,
-                                           dnsSetting: AppSetting.shared.dnsSetting),
-                           isActive: $showDNSSetting) { }
+                DNSSettingView(showSettings: $showSettings,
+                               showDNSSetting: $showDNSSetting,
+                               viewModel: DNSSettingViewModel(),
+                               statusConnect: $statusConnect,
+                               dnsSetting: AppSetting.shared.dnsSetting),
+                isActive: $showDNSSetting) { }
         }
         .onAppear {
             viewModel.refreshItemList()

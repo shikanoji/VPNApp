@@ -80,9 +80,9 @@ struct AppButton: View {
         .background(backgroundColor)
         .cornerRadius(cornerRadius)
         .overlay(
-                RoundedRectangle(cornerRadius: cornerRadius)
-                    .stroke(borderColor, lineWidth: borderWidth)
-            )
+            RoundedRectangle(cornerRadius: cornerRadius)
+                .stroke(borderColor, lineWidth: borderWidth)
+        )
     }
 }
 

@@ -44,6 +44,6 @@ struct AnimatableSystemFontModifier: AnimatableModifier {
 
 extension View {
     func animatableSystemFont(size: CGFloat, weight: Font.Weight = .regular, design: Font.Design = .default) -> some View {
-        self.modifier(AnimatableSystemFontModifier(size: size, weight: weight, design: design))
+        modifier(AnimatableSystemFontModifier(size: size, weight: weight, design: design))
     }
 }

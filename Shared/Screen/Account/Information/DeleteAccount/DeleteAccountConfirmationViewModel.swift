@@ -28,7 +28,7 @@ class DeleteAccountConfirmationViewModel: ObservableObject {
                     strongSelf.authentication?.logout()
                 } else {
                     let error = response.errors
-                    if error.count > 0, let message = error[0] as? String {
+                    if !error.isEmpty, let message = error[0] as? String {
                         strongSelf.alertMessage = message
                         strongSelf.showAlert = true
                     } else if !response.message.isEmpty {

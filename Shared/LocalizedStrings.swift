@@ -12,7 +12,7 @@ struct LocalizedStringKey {
         case slogan = "Global.slogan"
         
         var localized: String {
-            return NSLocalizedString(self.rawValue, tableName: "Localizations", comment: "")
+            return NSLocalizedString(rawValue, tableName: "Localizations", comment: "")
         }
     }
     
@@ -20,7 +20,7 @@ struct LocalizedStringKey {
         case trialButton = "Introduction.trialButton"
         
         var localized: String {
-            return NSLocalizedString(self.rawValue, tableName: "Localizations", comment: "")
+            return NSLocalizedString(rawValue, tableName: "Localizations", comment: "")
         }
     }
     
@@ -29,7 +29,7 @@ struct LocalizedStringKey {
         case body = "Login.Body"
         
         var localized: String {
-            return NSLocalizedString(self.rawValue, tableName: "Localizations", comment: "")
+            return NSLocalizedString(rawValue, tableName: "Localizations", comment: "")
         }
     }
     
@@ -48,7 +48,7 @@ struct LocalizedStringKey {
         case connectButton = "Board.QuickConnect"
         
         var localized: String {
-            return NSLocalizedString(self.rawValue, tableName: "Localizations", comment: "")
+            return NSLocalizedString(rawValue, tableName: "Localizations", comment: "")
         }
     }
 }

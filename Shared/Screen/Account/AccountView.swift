@@ -18,7 +18,7 @@ struct AccountView: View {
     @State private var showFAQ = false
     @State var numberOfSession: Int
     @StateObject var viewModel: AccountViewModel
-
+    
     var header: some View {
         HStack(spacing: 25) {
             Image(Constant.Account.iconProfile)
@@ -65,14 +65,22 @@ struct AccountView: View {
                 VStack(spacing: 0) {
                     if !AppSetting.shared.emailVerified {
                         verifyEmailSection
+                            .padding(.top, 24)
+                            .padding(.horizontal, 16)
                     }
                     sectionsView
+                        .padding(.top, 32)
+                        .padding(.horizontal, 16)
                     Spacer().frame(minHeight: 50)
                     AppButton(style: .darkButton, width: UIScreen.main.bounds.size.width - 30, text: L10n.Account.signout) {
-                        viewModel.showLogoutConfirmation = true
+                        if UIDevice.current.userInterfaceIdiom == .pad {
+                            viewModel.showLogoutConfirmationPad = true
+                        } else {
+                            viewModel.showLogoutConfirmationPhone = true
+                        }
                     }
                     Spacer()
-                        .frame(height: 34)
+                        .frame(height: 27)
                     navigationLinks
                 }
                 .frame(
@@ -88,40 +96,36 @@ struct AccountView: View {
             alignment: .bottom
         )
     }
-
+    
     var verifyEmailSection: some View {
-        VStack {
-            Spacer().frame(height: 20)
-            VStack(alignment: .leading, spacing: 20) {
-                    Text("Verify your email")
-                    .font(.system(size: Constant.TextSize.Global.detailDefault,
-                                  weight: .semibold))
-                        .foregroundColor(Asset.Colors.pink.swiftUIColor)
-                    Text("We’ve sent an email to your account to verify your email address and active account. The link in the email will expire in 24 hours.")
-                        .font(.system(size: Constant.TextSize.Global.detailDefault))
-                        .foregroundColor(Asset.Colors.lightBlackText.swiftUIColor)
-                        .frame(height: 60, alignment: .leading)
-                    Text("Resend email")
-                        .font(.system(size: Constant.TextSize.Global.detailDefault))
-                        .foregroundColor(.white)
-                        .underline()
-                        .onTapGesture {
-                            viewModel.resendVerifyEmail()
-                        }
-                        .opacity(viewModel.shouldShowResendEmailButton ? 1 : 0)
-                }
-                .padding(20)
-                .background(Asset.Colors.lightBlack.swiftUIColor)
-                .cornerRadius(15)
-                Spacer().frame(width: 20)
-            Spacer().frame(height: 20)
+        VStack(alignment: .leading, spacing: 20) {
+            Text("Verify your email")
+                .font(.system(size: Constant.TextSize.Global.detailDefault,
+                              weight: .semibold))
+                .foregroundColor(Asset.Colors.pink.swiftUIColor)
+            Text("We’ve sent an email to your account to verify your email address and active account. The link in the email will expire in 24 hours.")
+                .font(.system(size: Constant.TextSize.Global.detailDefault))
+                .foregroundColor(Asset.Colors.lightBlackText.swiftUIColor)
+                .frame(maxWidth: .infinity, maxHeight: 70, alignment: .leading)
+                .fixedSize(horizontal: false, vertical: true)
+            if (viewModel.shouldShowResendEmailButton == false) { }
+            else {
+                Text("Resend email")
+                    .font(.system(size: Constant.TextSize.Global.detailDefault))
+                    .foregroundColor(.white)
+                    .underline()
+                    .onTapGesture {
+                        viewModel.resendVerifyEmail()
+                    }
+            }
         }
-        .padding(.horizontal, 16)
+        .padding(24)
+        .background(Asset.Colors.lightBlack.swiftUIColor)
+        .cornerRadius(15)
     }
     
     var sectionsView: some View {
         HStack() {
-            Spacer().frame(width: 25)
             VStack(alignment: .leading) {
                 Spacer().frame(height: 10)
                 Text(L10n.Account.account)
@@ -135,7 +139,7 @@ struct AccountView: View {
                 ItemRowView(item: ItemCell(type: .totalDevice), title: L10n.Account.itemDevices + ": \(numberOfSession)/\(AppSetting.shared.maxNumberDevices)").onTapGesture {
                     self.showTotalDevice = true
                 }
-                Spacer().frame(height: 25)
+                Spacer().frame(height: 35)
                 Text(L10n.Account.itemHelpCenter)
                     .font(Constant.Menu.fontSectionTitle)
                     .foregroundColor(AppColor.lightBlackText)
@@ -144,43 +148,42 @@ struct AccountView: View {
                     self.showFAQ = true
                 }
             }
-            Spacer().frame(width: 25)
         }
     }
     
     var navigationLinks: some View {
         Group {
             NavigationLink(destination:
-                            InfomationView(
-                                showAccount: $showAccount,
-                                showInfomation: $showInfomation,
-                                statusConnect: $statusConnect,
-                                viewModel: InfomationViewModel()),
-                           isActive: $showInfomation) { }
+                InfomationView(
+                    showAccount: $showAccount,
+                    showInfomation: $showInfomation,
+                    statusConnect: $statusConnect,
+                    viewModel: InfomationViewModel()),
+                isActive: $showInfomation) { }
             
             NavigationLink(destination:
-                            AccountStatusView(
-                                showAccount: $showAccount,
-                                showAccountStatus: $showAccountStatus,
-                                statusConnect: $statusConnect),
-                           isActive: $showAccountStatus) { }
+                AccountStatusView(
+                    showAccount: $showAccount,
+                    showAccountStatus: $showAccountStatus,
+                    statusConnect: $statusConnect),
+                isActive: $showAccountStatus) { }
             
             NavigationLink(destination:
-                            SessionVPNView(
-                                showAccount: $showAccount,
-                                showTotalDevice: $showTotalDevice,
-                                statusConnect: $statusConnect,
-                                viewModel: SessionVPNViewModel(),
-                                shouldHideSessionList: .constant(false)),
-                           isActive: $showTotalDevice) { }
+                SessionVPNView(
+                    showAccount: $showAccount,
+                    showTotalDevice: $showTotalDevice,
+                    statusConnect: $statusConnect,
+                    viewModel: SessionVPNViewModel(),
+                    shouldHideSessionList: .constant(false)),
+                isActive: $showTotalDevice) { }
             
             NavigationLink(destination:
-                            FAQView(
-                                showAccount: $showAccount,
-                                showFAQ: $showFAQ,
-                                statusConnect: $statusConnect,
-                                viewModel: FAQViewModel()),
-                           isActive: $showFAQ) { }
+                FAQView(
+                    showAccount: $showAccount,
+                    showFAQ: $showFAQ,
+                    statusConnect: $statusConnect,
+                    viewModel: FAQViewModel()),
+                isActive: $showFAQ) { }
         }
     }
     
@@ -201,7 +204,9 @@ struct AccountView: View {
             .background(AppColor.background)
             .onWillAppear {
                 viewModel.authentication = authentication
-                viewModel.shouldShowResendEmailButton = AppSetting.shared.shouldAllowSendVerifyEmail
+                DispatchQueue.main.async {
+                    viewModel.shouldShowResendEmailButton = AppSetting.shared.shouldAllowSendVerifyEmail
+                }
                 AppSetting.shared.fetchListSession()
             }
             .ignoresSafeArea()
@@ -215,11 +220,11 @@ struct AccountView: View {
                    autohideIn: 5,
                    closeOnTap: false,
                    closeOnTapOutside: true, view: {
-                PopupSelectView(message: "Successfully resend verify email.",
-                                confirmAction: {
-                    viewModel.showSuccessfullyResendEmail = false
-                })
-            })
+                       PopupSelectView(message: "Successfully resend verify email.",
+                                       confirmAction: {
+                                           viewModel.showSuccessfullyResendEmail = false
+                                       })
+                   })
             .popup(isPresented: $viewModel.showAlert,
                    type: .floater(verticalPadding: 25, useSafeAreaInset: true),
                    position: .bottom,
@@ -227,16 +232,25 @@ struct AccountView: View {
                    autohideIn: 5,
                    closeOnTap: false,
                    closeOnTapOutside: true, view: {
-                PopupSelectView(message: "An error occurred.",
-                                confirmAction: {
-                    viewModel.showAlert = false
+                       PopupSelectView(message: "An error occurred.",
+                                       confirmAction: {
+                                           viewModel.showAlert = false
+                                       })
+                   })
+            .fullScreenCover(isPresented: $viewModel.showLogoutConfirmationPad, content: {
+                BottomViewPopup(cancel: {
+                    viewModel.showLogoutConfirmationPad = false
+                }, confim: {
+                    viewModel.showLogoutConfirmationPad = false
+                    viewModel.showProgressView = true
+                    viewModel.logout()
                 })
             })
-            .sheet(isPresented: $viewModel.showLogoutConfirmation, content: {
+            .sheet(isPresented: $viewModel.showLogoutConfirmationPhone, content: {
                 BottomViewPopup(cancel: {
-                    viewModel.showLogoutConfirmation = false
+                    viewModel.showLogoutConfirmationPhone = false
                 }, confim: {
-                    viewModel.showLogoutConfirmation = false
+                    viewModel.showLogoutConfirmationPhone = false
                     viewModel.showProgressView = true
                     viewModel.logout()
                 })
