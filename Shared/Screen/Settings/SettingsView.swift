@@ -77,23 +77,23 @@ struct SettingsView: View {
     var navigationLinks: some View {
         Group {
             NavigationLink(destination:
-                            SettingVPNView(
-                                showSettings: $showSettings,
-                                showVPNSetting: $showVPNSetting,
-                                statusConnect: $statusConnect,
-                                viewModel: SettingVPNViewModel()),
-                           isActive: $showVPNSetting) { }
+                SettingVPNView(
+                    showSettings: $showSettings,
+                    showVPNSetting: $showVPNSetting,
+                    statusConnect: $statusConnect,
+                    viewModel: SettingVPNViewModel()),
+                isActive: $showVPNSetting) { }
                 .isDetailLink(false)
             NavigationLink(destination:
-                            ToolsView(showSettings: $showSettings,
-                                      statusConnect: $statusConnect,
-                                      viewModel: ToolsViewModel()),
-                           isActive: $showToolsSetting) { }
+                ToolsView(showSettings: $showSettings,
+                          statusConnect: $statusConnect,
+                          viewModel: ToolsViewModel()),
+                isActive: $showToolsSetting) { }
             NavigationLink(destination:
-                            LicenseListView(showSettings: $showSettings,
-                                            statusConnect: $statusConnect,
-                                            viewModel: LicenseListViewModel()),
-                           isActive: $showLicenseList) { }
+                LicenseListView(showSettings: $showSettings,
+                                statusConnect: $statusConnect,
+                                viewModel: LicenseListViewModel()),
+                isActive: $showLicenseList) { }
             NavigationLink(destination: EmbedWebView(url: Constant.api.termsAndConditionsURL,
                                                      title: L10n.Settings.termAndCondition),
                            isActive: $showTermsAndCondition) { }

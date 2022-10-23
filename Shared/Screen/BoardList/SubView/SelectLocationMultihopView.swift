@@ -51,7 +51,7 @@ struct SelectLocationMultihopView: View {
                     } else {
                         ForEach(nodeList) { node in
                             Button(action: {
-                                if node.cityNodeList.count > 0 {
+                                if !node.cityNodeList.isEmpty {
                                     cityNode = node
                                     showCityListView = true
                                 } else {

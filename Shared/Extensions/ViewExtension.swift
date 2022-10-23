@@ -48,7 +48,7 @@ extension View {
 
 extension View {
     func navigationAppearance(backgroundColor: UIColor, foregroundColor: UIColor, tintColor: UIColor? = nil, hideSeparator: Bool = false) -> some View {
-        self.modifier(NavAppearanceModifier(backgroundColor: backgroundColor, foregroundColor: foregroundColor, tintColor: tintColor, hideSeparator: hideSeparator))
+        modifier(NavAppearanceModifier(backgroundColor: backgroundColor, foregroundColor: foregroundColor, tintColor: tintColor, hideSeparator: hideSeparator))
     }
 }
 
@@ -74,7 +74,7 @@ extension View {
 
 extension View {
     func clearModalBackground()->some View {
-        self.modifier(ClearBackgroundViewModifier())
+        modifier(ClearBackgroundViewModifier())
     }
 }
 

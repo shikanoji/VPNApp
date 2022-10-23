@@ -6,7 +6,7 @@
 //
 
 import SwiftUI
-///In case support iOS 13
+/// In case support iOS 13
 struct CustomPopupView<Content, PopupView>: View where Content: View, PopupView: View {
     @Binding var isPresented: Bool
     @ViewBuilder let content: () -> Content

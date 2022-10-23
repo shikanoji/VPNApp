@@ -15,11 +15,11 @@ class LicenseDetailViewModel: ObservableObject {
     }
     func loadLicenseDetail() {
         guard let plistUrl = Bundle.main.path(forResource: license.filePath, ofType: "plist"),
-                      let plistRawDict = NSDictionary(contentsOfFile: plistUrl) as? [String: LicensePlistType],
-                      let licenseBodyPlistArray = plistRawDict["PreferenceSpecifiers"],
-                      let licenseBodyPlist = licenseBodyPlistArray.first else {
-                    return
-                }
+              let plistRawDict = NSDictionary(contentsOfFile: plistUrl) as? [String: LicensePlistType],
+              let licenseBodyPlistArray = plistRawDict["PreferenceSpecifiers"],
+              let licenseBodyPlist = licenseBodyPlistArray.first else {
+            return
+        }
         licenseText = licenseBodyPlist["FooterText"] ?? ""
     }
 }

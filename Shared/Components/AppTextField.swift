@@ -15,7 +15,7 @@ struct AppTextField: UIViewRepresentable {
     @Binding var isRevealed: Bool
     @Binding var isFocused: Bool
     var placeholder: String = ""
-     // 2
+    // 2
     func makeUIView(context: UIViewRepresentableContext<AppTextField>) -> UITextField {
         let tf = UITextField(frame: .zero)
         tf.attributedPlaceholder = NSAttributedString(
@@ -58,7 +58,7 @@ struct AppTextField: UIViewRepresentable {
 
         func textFieldDidBeginEditing(_ textField: UITextField) {
             DispatchQueue.main.async {
-               self.isFocused = true
+                self.isFocused = true
             }
         }
 
@@ -84,7 +84,7 @@ struct PasswordField: View {
     var body: some View {
         HStack {
             AppTextField(text: $text,
-                        isRevealed: $isRevealed,
+                         isRevealed: $isRevealed,
                          isFocused: $isFocused, placeholder: placeholder)
             Spacer().frame(width: 10)
             Button(action: {

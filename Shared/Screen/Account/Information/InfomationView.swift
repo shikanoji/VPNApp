@@ -29,16 +29,16 @@ struct InfomationView: View {
                 viewModel.showDeleteAccountPhone = true
             }
         }
-                  .fullScreenCover(isPresented: $viewModel.showDeleteAccountPad) {
-                      DeleteAccountConfirmationView(viewModel: DeleteAccountConfirmationViewModel()) {
-                          viewModel.showDeleteAccountPad = false
-                      }
-                  }
-                  .sheet(isPresented: $viewModel.showDeleteAccountPhone) {
-                      DeleteAccountConfirmationView(viewModel: DeleteAccountConfirmationViewModel()) {
-                          viewModel.showDeleteAccountPhone = false
-                      }
-                  }
+        .fullScreenCover(isPresented: $viewModel.showDeleteAccountPad) {
+            DeleteAccountConfirmationView(viewModel: DeleteAccountConfirmationViewModel()) {
+                viewModel.showDeleteAccountPad = false
+            }
+        }
+        .sheet(isPresented: $viewModel.showDeleteAccountPhone) {
+            DeleteAccountConfirmationView(viewModel: DeleteAccountConfirmationViewModel()) {
+                viewModel.showDeleteAccountPhone = false
+            }
+        }
     }
     
     var itemList: some View {
@@ -47,17 +47,17 @@ struct InfomationView: View {
                 ItemRowCell(title: item.type.title,
                             content: item.type.content,
                             position: viewModel.section.items.getPosition(item))
-                .environmentObject(viewModel)
-                .onTapGesture {
-                    if item.type == .accountSecurity {
-                        showChangePassword = true
+                    .environmentObject(viewModel)
+                    .onTapGesture {
+                        if item.type == .accountSecurity {
+                            showChangePassword = true
+                        }
+                        if UIDevice.current.userInterfaceIdiom == .pad {
+                            viewModel.showChangePasswordPad = true
+                        } else {
+                            viewModel.showChangePasswordPhone = true
+                        }
                     }
-                    if UIDevice.current.userInterfaceIdiom == .pad {
-                        viewModel.showChangePasswordPad = true
-                    } else {
-                        viewModel.showChangePasswordPhone = true
-                    }
-                }
             }
         }
         .padding(Constant.Menu.hozitalPaddingCell)
@@ -67,14 +67,14 @@ struct InfomationView: View {
                 showChangePassword = false
                 viewModel.showChangePasswordPad = false
             }
-                .clearModalBackground()
+            .clearModalBackground()
         }
         .sheet(isPresented: $viewModel.showChangePasswordPhone) {
             ChangePasswordView(viewModel: ChangePasswordViewModel(), showChangePassword: $showChangePassword) {
                 showChangePassword = false
                 viewModel.showChangePasswordPhone = false
             }
-                .clearModalBackground()
+            .clearModalBackground()
         }
     }
     

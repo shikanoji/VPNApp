@@ -49,11 +49,11 @@ struct PaymentHistoryView: View {
                         UINavigationBar.setAnimationsEnabled(true)
                     }
                 }, statusConnect: $statusConnect)
-            .padding(.bottom, Constant.Menu.topPaddingCell)
+                .padding(.bottom, Constant.Menu.topPaddingCell)
             LoadingScreen(isShowing: $viewModel.showProgressView) {
                 ScrollView(.vertical, showsIndicators: false) {
                     
-                    GeometryReader{ reader -> AnyView in
+                    GeometryReader { reader -> AnyView in
 
                         DispatchQueue.main.async {
                             if refresh.startOffset == 0 {
@@ -73,14 +73,14 @@ struct PaymentHistoryView: View {
                                 }
                             }
 
-                            //Checking if refresh í started and drag is released
+                            // Checking if refresh í started and drag is released
                             if refresh.startOffset == refresh.offset && refresh.started && !refresh.released {
-                                withAnimation(Animation.linear){refresh.released = true}
+                                withAnimation(Animation.linear) {refresh.released = true}
                                 refreshData()
                             }
 
-                            //checking if invalid becomes valid
-                            if refresh.startOffset == refresh.offset && refresh.started && refresh.released && refresh.invalid{
+                            // checking if invalid becomes valid
+                            if refresh.startOffset == refresh.offset && refresh.started && refresh.released && refresh.invalid {
                                 refresh.invalid = false
                                 refreshData()
                             }
@@ -97,17 +97,17 @@ struct PaymentHistoryView: View {
                                 .padding(.bottom)
                                 .padding(.top, -20)
                         }
-                            ForEach(viewModel.paymentHistory.indices, id: \.self) { index in
-                                let item = viewModel.paymentHistory[index]
-                                ItemRowCell(title: item.packageCharge.productName,
-                                            content: (item.status == "complete" ?
-                                                      L10n.Account.AccountStatus.PaymentHistory.success : L10n.Account.AccountStatus.PaymentHistory.failed) + " - " + item.paymentDate,
-                                            position: viewModel.paymentHistory.getPosition(index))
+                        ForEach(viewModel.paymentHistory.indices, id: \.self) { index in
+                            let item = viewModel.paymentHistory[index]
+                            ItemRowCell(title: item.packageCharge.productName,
+                                        content: (item.status == "complete" ?
+                                            L10n.Account.AccountStatus.PaymentHistory.success : L10n.Account.AccountStatus.PaymentHistory.failed) + " - " + item.paymentDate,
+                                        position: viewModel.paymentHistory.getPosition(index))
                                 .onAppear {
                                     withAnimation(Animation.linear) {
                                         viewModel.preLoadMore(index)
                                     }
-                            }
+                                }
                         }
                     }
                     .padding(Constant.Menu.hozitalPaddingCell)
@@ -135,14 +135,14 @@ struct PaymentHistoryView: View {
                closeOnTapOutside: true) {
             PopupSelectView(message: viewModel.error.description,
                             confirmAction: {
-                viewModel.showAlert = false
-            })
+                                viewModel.showAlert = false
+                            })
         }
         .background(AppColor.background)
         .ignoresSafeArea()
     }
     
-    func refreshData(){
+    func refreshData() {
         
         withAnimation(Animation.linear) {
             if refresh.startOffset == refresh.offset {

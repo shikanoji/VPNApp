@@ -23,7 +23,7 @@ class PaymentHistoryViewModel: ObservableObject {
         if index == paymentHistory.count - 1,
            enableLoadMore,
            !showProgressView {
-            self.fetchPaymentHistory(true)
+            fetchPaymentHistory(true)
         }
     }
     

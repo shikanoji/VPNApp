@@ -54,7 +54,7 @@ struct LocationListView: View {
                     if isEditing {
                         ForEach(nodeListSearch) { node in
                             Button(action: {
-                                if node.cityNodeList.count > 0 {
+                                if !node.cityNodeList.isEmpty {
                                     cityNode = node
                                     showCityListView = true
                                 } else {
@@ -75,7 +75,7 @@ struct LocationListView: View {
                                 .padding([.top, .leading])
                             ForEach(nodeList.list) { node in
                                 Button(action: {
-                                    if node.cityNodeList.count > 0 {
+                                    if !node.cityNodeList.isEmpty {
                                         cityNode = node
                                         showCityListView = true
                                     } else {

@@ -74,18 +74,18 @@ public extension Check_Method_Of_JailBreak {
     //
     func assignJailBreakCheckType(type: TypeOfJailBreakCheckAPI) {
         // If it is run on simulator follow the regular flow of the app
-        if !isSimulator{
+        if !isSimulator {
             // Check if Cydia app is installed on the device
             guard UIApplication.shared.canOpenURL(URL(string: "cydia://")!) else {
                 
                 let checkStatus = type == .readAndWriteFiles ? canEditSandboxFilesForJailBreakDetecttion() : systemForkCall()
                 
-                self.sendTheStatusOfJailBreak(value: checkStatus)
+                sendTheStatusOfJailBreak(value: checkStatus)
                 return
             }
-            self.sendTheStatusOfJailBreak(value: true)
+            sendTheStatusOfJailBreak(value: true)
         }
-        self.sendTheStatusOfJailBreak(value: false)
+        sendTheStatusOfJailBreak(value: false)
     }
     
     // func - canEditSandboxFilesForJailBreakDetecttion
@@ -110,11 +110,11 @@ public extension Check_Method_Of_JailBreak {
     // are installed on the device
     // If file exist then it is jail broken
     //
-    func isJailBrokenFilesPresentInTheDirectory() -> Bool{
+    func isJailBrokenFilesPresentInTheDirectory() -> Bool {
         var checkFileIfExist: Bool = false
         filesPathToCheck.forEach {
             checkFileIfExist =  fm.fileExists(atPath: $0) ? true : false
-            if checkFileIfExist{
+            if checkFileIfExist {
                 return
             }
         }
@@ -126,16 +126,14 @@ public extension Check_Method_Of_JailBreak {
     //
     // It is used to check if there is a child process run at kernel level
     //
-    func systemForkCall() -> Bool{
+    func systemForkCall() -> Bool {
         
         let pid = getpgrp()
         
-        if pid < 0
-        {
+        if pid < 0 {
             return true
         }
-        else
-        {
+        else {
             return false
         }
         

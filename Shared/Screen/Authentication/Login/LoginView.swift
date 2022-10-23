@@ -59,7 +59,7 @@ struct LoginView: View {
     }
     
     var registerLink: some View {
-        HStack(spacing: 2){
+        HStack(spacing: 2) {
             Text(L10n.Login.noAccountQuestion).setDefault()
             NavigationLink(destination: RegisterView(viewModel: RegisterViewModel()), isActive: $createNewAccount) {
                 Text(L10n.Login.createNew).setDefaultBold()
@@ -79,7 +79,7 @@ struct LoginView: View {
             NavigationLink(destination: ForgotPasswordView(viewModel: ForgotPasswordViewModel()), isActive: $forgotPassword) {
             }
             Text(L10n.Login.forgotPassword).setDefault().onTapGesture {
-                //Handle Forgot Password
+                // Handle Forgot Password
                 self.forgotPassword = true
             }
         }
@@ -120,8 +120,8 @@ struct LoginView: View {
         }.popup(isPresented: $viewModel.showAlert, type: .floater(verticalPadding: 10), position: .bottom, animation: .easeInOut, autohideIn: 5, closeOnTap: false, closeOnTapOutside: true) {
             PopupSelectView(message: viewModel.alertMessage,
                             confirmAction: {
-                viewModel.showAlert = false
-            })
+                                viewModel.showAlert = false
+                            })
         }
         .navigationBarHidden(true)
     }

@@ -49,7 +49,7 @@ struct PlanSelectionView: View {
                                 
                                 NavigationLink(destination: SubcriptionPlanView(
                                     plan: viewModel.selectedPlan ?? Plan.planA).navigationBarHidden(true),
-                                               isActive: $viewModel.showIntroPlanListView) { }
+                                isActive: $viewModel.showIntroPlanListView) { }
                                 
                                 NavigationLink(destination: EmptyView()) {
                                     EmptyView()

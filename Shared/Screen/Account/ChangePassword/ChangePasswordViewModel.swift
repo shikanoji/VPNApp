@@ -39,7 +39,7 @@ class ChangePasswordViewModel: NSObject, ObservableObject {
                     showAlert = true
                 } else {
                     let error = response.errors
-                    if error.count > 0, let message = error[0] as? String {
+                    if !error.isEmpty, let message = error[0] as? String {
                         alertMessage = message
                         showAlert = true
                     } else if !response.message.isEmpty {

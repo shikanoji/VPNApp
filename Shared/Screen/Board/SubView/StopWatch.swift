@@ -18,35 +18,35 @@ class StopWatch: ObservableObject {
     
     var stopWatchTime = "00:00:00" {
         didSet {
-            self.update()
+            update()
         }
     }
     
     var paused = true {
         didSet {
-            self.update()
+            update()
         }
     }
     
     func start() {
-        self.paused = !self.paused
+        paused = !paused
         
-        guard let _ = self.sourceTimer else {
-            self.startTimer()
+        guard let _ = sourceTimer else {
+            startTimer()
             return
         }
         
-        self.resumeTimer()
+        resumeTimer()
     }
     
     func pause() {
-        self.paused = !self.paused
-        self.sourceTimer?.suspend()
+        paused = !paused
+        sourceTimer?.suspend()
     }
     
     func reset() {
-        self.stopWatchTime = "00:00:00"
-        self.counter = 0
+        stopWatchTime = "00:00:00"
+        counter = 0
     }
     
     func update() {
@@ -54,23 +54,23 @@ class StopWatch: ObservableObject {
     }
     
     func isPaused() -> Bool {
-        return self.paused
+        return paused
     }
     
     private func startTimer() {
-        self.sourceTimer = DispatchSource.makeTimerSource(flags: DispatchSource.TimerFlags.strict,
-                                                          queue: self.queue)
-        self.resumeTimer()
+        sourceTimer = DispatchSource.makeTimerSource(flags: DispatchSource.TimerFlags.strict,
+                                                     queue: queue)
+        resumeTimer()
     }
     
     private func resumeTimer() {
-        self.sourceTimer?.setEventHandler {
+        sourceTimer?.setEventHandler {
             self.updateTimer()
         }
         
-        self.sourceTimer?.schedule(deadline: .now(),
-                                   repeating: 1)
-        self.sourceTimer?.resume()
+        sourceTimer?.schedule(deadline: .now(),
+                              repeating: 1)
+        sourceTimer?.resume()
     }
     
     private func getTime() -> Int {
@@ -82,7 +82,7 @@ class StopWatch: ObservableObject {
     }
     
     private func updateTimer() {
-        self.counter = getTime()
+        counter = getTime()
 
         DispatchQueue.main.async {
             self.stopWatchTime = StopWatch.convertCountToTimeString(counter: self.counter)

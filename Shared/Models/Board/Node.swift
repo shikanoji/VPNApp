@@ -47,78 +47,78 @@ struct Node: Identifiable, Codable {
     init(from decoder: Decoder) throws {
         let values = try decoder.container(keyedBy: CodingKeys.self)
         
-        if let _id = try? values.decode(NodeID.self, forKey: .id){
-            self.id = _id
+        if let _id = try? values.decode(NodeID.self, forKey: .id) {
+            id = _id
         } else {
-            self.id = 0
+            id = 0
         }
-        if let _name = try? values.decode(String.self, forKey: .name){
-            self.name = _name
+        if let _name = try? values.decode(String.self, forKey: .name) {
+            name = _name
         } else {
-            self.name = ""
+            name = ""
         }
-        if let _iso2 = try? values.decode(String.self, forKey: .iso2){
-            self.iso2 = _iso2
+        if let _iso2 = try? values.decode(String.self, forKey: .iso2) {
+            iso2 = _iso2
         } else {
-            self.iso2 = ""
+            iso2 = ""
         }
-        if let _iso3 = try? values.decode(String.self, forKey: .iso3){
-            self.iso3 = _iso3
+        if let _iso3 = try? values.decode(String.self, forKey: .iso3) {
+            iso3 = _iso3
         } else {
-            self.iso3 = ""
+            iso3 = ""
         }
-        if let _region = try? values.decode(String.self, forKey: .region){
-            self.region = _region
+        if let _region = try? values.decode(String.self, forKey: .region) {
+            region = _region
         } else {
-            self.region = ""
+            region = ""
         }
-        if let _subRegion = try? values.decode(String.self, forKey: .subRegion){
-            self.subRegion = _subRegion
+        if let _subRegion = try? values.decode(String.self, forKey: .subRegion) {
+            subRegion = _subRegion
         } else {
-            self.subRegion = ""
+            subRegion = ""
         }
-        if let _latitude = try? values.decode(String.self, forKey: .latitude){
-            self.latitude = _latitude
+        if let _latitude = try? values.decode(String.self, forKey: .latitude) {
+            latitude = _latitude
         } else {
-            self.latitude = ""
+            latitude = ""
         }
-        if let _longitude = try? values.decode(String.self, forKey: .longitude){
-            self.longitude = _longitude
+        if let _longitude = try? values.decode(String.self, forKey: .longitude) {
+            longitude = _longitude
         } else {
-            self.longitude = ""
+            longitude = ""
         }
-        if let _flag = try? values.decode(String.self, forKey: .flag){
-            self.flag = _flag
+        if let _flag = try? values.decode(String.self, forKey: .flag) {
+            flag = _flag
         } else {
-            self.flag = ""
+            flag = ""
         }
-        if let _cityNodeList = try? values.decode([Node].self, forKey: .cityNodeList){
-            self.cityNodeList = _cityNodeList
+        if let _cityNodeList = try? values.decode([Node].self, forKey: .cityNodeList) {
+            cityNodeList = _cityNodeList
         } else {
-            self.cityNodeList = []
+            cityNodeList = []
         }
-        if let _x = try? values.decode(CGFloat.self, forKey: .x){
-            self.x = _x
+        if let _x = try? values.decode(CGFloat.self, forKey: .x) {
+            x = _x
         } else {
-            self.x = 0
+            x = 0
         }
-        if let _y = try? values.decode(CGFloat.self, forKey: .y){
-            self.y = _y
+        if let _y = try? values.decode(CGFloat.self, forKey: .y) {
+            y = _y
         } else {
-            self.y = 0
+            y = 0
         }
         
-        if let _countryId = try? values.decode(Int.self, forKey: .countryId){
-            self.countryId = _countryId
+        if let _countryId = try? values.decode(Int.self, forKey: .countryId) {
+            countryId = _countryId
         } else {
-            self.countryId = 0
+            countryId = 0
         }
         
-        if let _countryName = try? values.decode(String.self, forKey: .countryName){
-            self.countryName = _countryName
+        if let _countryName = try? values.decode(String.self, forKey: .countryName) {
+            countryName = _countryName
         }
         
-        if cityNodeList.count > 0 {
+        if !cityNodeList.isEmpty {
             cityNodeList = cityNodeList.map { city -> Node in
                 var updateCity = city
                 updateCity.flag = flag
@@ -254,7 +254,7 @@ struct NodeGroup: Codable {
     }
     
     init(nodeList: [Node], type: NodeGroupType) {
-        self.list = nodeList
+        list = nodeList
         self.type = type
     }
     
@@ -262,15 +262,15 @@ struct NodeGroup: Codable {
         let values = try decoder.container(keyedBy: CodingKeys.self)
         
         if let _type = try? values.decode(NodeGroupType.self, forKey: .type) {
-            self.type = _type
+            type = _type
         } else {
-            self.type = nil
+            type = nil
         }
         
         if let _list = try? values.decode([Node].self, forKey: .list) {
-            self.list = _list
+            list = _list
         } else {
-            self.list = []
+            list = []
         }
     }
 }

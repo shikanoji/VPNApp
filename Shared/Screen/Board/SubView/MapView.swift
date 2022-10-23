@@ -56,7 +56,7 @@ struct MapView: View {
                 NodeMapView(scale: $currentAmount,
                             statusConnect: $statusConnect,
                             isZooming: $isZooming)
-                .animation(.easeIn)
+                    .animation(.easeIn)
             }
             .padding(.bottom, -safeAreaInsets.bottom)
             .padding(.top, -safeAreaInsets.top)
@@ -157,7 +157,7 @@ struct ZoomableScrollView<Content: View>: UIViewRepresentable {
         self.isZooming = isZooming
         self.updateZoomScale = updateZoomScale
         self.content = content()
-        self._location = location
+        _location = location
         self.enableUpdateMap = enableUpdateMap
         scrollView.decelerationRate = UIScrollView.DecelerationRate(rawValue: 4)
         padding = safeAreaInsets.bottom
@@ -203,7 +203,7 @@ struct ZoomableScrollView<Content: View>: UIViewRepresentable {
     }
     
     func makeCoordinator() -> Coordinator {
-        return Coordinator(hostingController: UIHostingController(rootView: self.content), self, padding: padding, isZooming: isZooming)
+        return Coordinator(hostingController: UIHostingController(rootView: content), self, padding: padding, isZooming: isZooming)
     }
     
     func updateUIView(_ uiView: UIScrollView, context: Context) {
@@ -236,7 +236,7 @@ struct ZoomableScrollView<Content: View>: UIViewRepresentable {
                 y: yOffSet), animated: true)
         }
         
-        context.coordinator.hostingController.rootView = self.content
+        context.coordinator.hostingController.rootView = content
         assert(context.coordinator.hostingController.view.superview == uiView)
     }
     

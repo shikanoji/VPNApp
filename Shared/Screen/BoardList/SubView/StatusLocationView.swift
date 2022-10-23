@@ -32,10 +32,10 @@ struct StatusLocationView: View {
                         Asset.Assets.flagDefault.swiftUIImage
                     }
                 }
-                    .clipShape(Circle())
-                    .frame(width: imageSize + 4,
-                           height: imageSize + 4)
-                    .padding()
+                .clipShape(Circle())
+                .frame(width: imageSize + 4,
+                       height: imageSize + 4)
+                .padding()
                 Text(name)
                     .font(Constant.BoardList.fontLocationStatus)
                     .foregroundColor(.white)

@@ -42,11 +42,11 @@ struct NodeMapView: View {
                     NodeView(scale: $scale,
                              node: node,
                              statusConnect: $statusConnect)
-                    .position(x: Constant.convertXToMap(node.x),
-                              y: Constant.convertYToMap(node.y, mesh.showCityNodes, isMultihopNode(node) && showMultihop))
-                    .onTapGesture {
-                        self.mesh.selectNode(node)
-                    }
+                        .position(x: Constant.convertXToMap(node.x),
+                                  y: Constant.convertYToMap(node.y, mesh.showCityNodes, isMultihopNode(node) && showMultihop))
+                        .onTapGesture {
+                            self.mesh.selectNode(node)
+                        }
                 }
             }
             
@@ -124,7 +124,7 @@ struct NodeMapView: View {
                     
                     let point2 = CGPoint(x: Constant.convertXToMap(exitCityInMap.x),
                                          y: Constant.convertYToMap(exitCityInMap.y, mesh.showCityNodes)
-                                         + paddingCenter + paddingCenter * scale * 0.06)
+                                             + paddingCenter + paddingCenter * scale * 0.06)
                     
                     let middlePoint = CGPoint(x: (point2.x + point1.x) / 2,
                                               y: min(point1.y, point2.y) - 50)

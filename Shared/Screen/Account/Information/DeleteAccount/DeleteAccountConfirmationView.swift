@@ -89,8 +89,8 @@ struct DeleteAccountConfirmationView: View {
         .popup(isPresented: $viewModel.showAlert, type: .floater(verticalPadding: 10), position: .bottom, animation: .easeInOut, autohideIn: 5, closeOnTap: false, closeOnTapOutside: true) {
             PopupSelectView(message: viewModel.alertMessage,
                             confirmAction: {
-                viewModel.showAlert = false
-            })
+                                viewModel.showAlert = false
+                            })
         }
     }
 }

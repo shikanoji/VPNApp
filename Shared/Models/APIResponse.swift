@@ -27,14 +27,14 @@ struct APIResponse<T: Decodable>: Decodable {
         let values = try decoder.container(keyedBy: CodingKeys.self)
         success = try values.decode(Bool.self, forKey: .success)
         if let _message = try? values.decode(String.self, forKey: .message) {
-            self.message = _message
+            message = _message
         } else {
-            self.message = ""
+            message = ""
         }
         if let _errors = try? values.decode([Any].self, forKey: .errors) {
-            self.errors = _errors
+            errors = _errors
         } else {
-            self.errors = []
+            errors = []
         }
         
         if let _result = try? values.decode(T?.self, forKey: .result) {

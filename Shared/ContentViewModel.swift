@@ -34,7 +34,7 @@ class ContentViewModel: ObservableObject {
     func getIpInfo(completion: @escaping () -> Void) {
         ServiceManager.shared.getAppSettings()
             .subscribe(onSuccess: { [self] response in
-                if let result = response.result{
+                if let result = response.result {
                     AppSetting.shared.configAppSettings(result)
                     completion()
                 } else {
@@ -59,15 +59,15 @@ class ContentViewModel: ObservableObject {
         )
         
         guard Connectivity.sharedInstance.isReachable else {
-            self.endLoading = true
+            endLoading = true
             return
         }
         
         if AppSetting.shared.isConnectedToVpn {
-            self.endLoading = true
+            endLoading = true
         }
         
-        self.configState()
+        configState()
     }
     
     @objc func sessionExpided() {
@@ -80,15 +80,15 @@ class ContentViewModel: ObservableObject {
         if logged {
             if tokenExit {
                 if authentication?.isPremium ?? false {
-                    self.loadAppSettingAndData {
+                    loadAppSettingAndData {
                         self.endLoading = true
                     }
                 } else {
                     authentication?.isPremium = false
-                    self.endLoading = true
+                    endLoading = true
                 }
             } else {
-                self.showSessionExpired = true
+                showSessionExpired = true
             }
         } else {
             endLoading = true

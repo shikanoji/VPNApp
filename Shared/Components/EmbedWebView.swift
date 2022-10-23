@@ -34,7 +34,7 @@ struct EmbedWebView: View {
     var body: some View {
         VStack {
             CustomSimpleNavigationView(title: title)
-            .padding(.bottom, -10)
+                .padding(.bottom, -10)
             ScrollView(.vertical, showsIndicators: false) {
                 ZStack(alignment: .top) {
                     if !webViewFinishedLoading {

@@ -23,7 +23,7 @@ struct JSONCodingKeys: CodingKey {
 
 extension KeyedDecodingContainer {
     func decode(_ type: Dictionary<String, Any>.Type, forKey key: K) throws -> Dictionary<String, Any> {
-        let container = try self.nestedContainer(keyedBy: JSONCodingKeys.self, forKey: key)
+        let container = try nestedContainer(keyedBy: JSONCodingKeys.self, forKey: key)
         return try container.decode(type)
     }
     
@@ -38,7 +38,7 @@ extension KeyedDecodingContainer {
     }
     
     func decode(_ type: Array<Any>.Type, forKey key: K) throws -> Array<Any> {
-        var container = try self.nestedUnkeyedContainer(forKey: key)
+        var container = try nestedUnkeyedContainer(forKey: key)
         return try container.decode(type)
     }
     

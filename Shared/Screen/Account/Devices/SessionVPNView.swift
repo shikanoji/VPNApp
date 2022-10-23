@@ -38,11 +38,11 @@ struct SessionVPNView: View {
                         UINavigationBar.setAnimationsEnabled(true)
                     }
                 }, statusConnect: $statusConnect)
-            .padding(.bottom, Constant.Menu.topPaddingCell)
+                .padding(.bottom, Constant.Menu.topPaddingCell)
             Spacer().frame(height: 15)
             LoadingScreen(isShowing: $viewModel.showProgressView) {
                 ScrollView(.vertical, showsIndicators: false) {
-                    GeometryReader{ reader -> AnyView in
+                    GeometryReader { reader -> AnyView in
                         
                         DispatchQueue.main.async {
                             if refresh.startOffset == 0 {
@@ -62,14 +62,14 @@ struct SessionVPNView: View {
                                 }
                             }
                             
-                            //Checking if refresh í started and drag is released
+                            // Checking if refresh í started and drag is released
                             if refresh.startOffset == refresh.offset && refresh.started && !refresh.released {
-                                withAnimation(Animation.linear){refresh.released = true}
+                                withAnimation(Animation.linear) {refresh.released = true}
                                 refreshData()
                             }
                             
-                            //checking if invalid becomes valid
-                            if refresh.startOffset == refresh.offset && refresh.started && refresh.released && refresh.invalid{
+                            // checking if invalid becomes valid
+                            if refresh.startOffset == refresh.offset && refresh.started && refresh.released && refresh.invalid {
                                 refresh.invalid = false
                                 refreshData()
                             }
@@ -106,11 +106,11 @@ struct SessionVPNView: View {
                closeOnTap: false,
                closeOnTapOutside: true,
                view: {
-            PopupSelectView(message: viewModel.error?.description ?? "An error occurred",
-                            confirmAction: {
-                viewModel.showAlert = false
-            })
-        })
+                   PopupSelectView(message: viewModel.error?.description ?? "An error occurred",
+                                   confirmAction: {
+                                       viewModel.showAlert = false
+                                   })
+               })
         .popup(isPresented: $viewModel.showSessionTerminatedAlert,
                type: .floater(verticalPadding: 20,
                               useSafeAreaInset: true),
@@ -120,11 +120,11 @@ struct SessionVPNView: View {
                closeOnTap: false,
                closeOnTapOutside: true,
                view: {
-            PopupSelectView(message: "Successfully terminate session!",
-                            confirmAction: {
-                viewModel.showSessionTerminatedAlert = false
-            })
-        })
+                   PopupSelectView(message: "Successfully terminate session!",
+                                   confirmAction: {
+                                       viewModel.showSessionTerminatedAlert = false
+                                   })
+               })
         .sheet(isPresented: $viewModel.showPopupView, content: {
             BottomViewPopup(
                 titleStr: L10n.Account.Session.Terminal.title,
@@ -148,7 +148,7 @@ struct SessionVPNView: View {
         .ignoresSafeArea()
     }
     
-    func refreshData(){
+    func refreshData() {
         
         withAnimation(Animation.linear) {
             if refresh.startOffset == refresh.offset {

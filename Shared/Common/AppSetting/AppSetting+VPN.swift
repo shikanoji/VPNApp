@@ -236,12 +236,12 @@ extension AppSetting {
 
         ServiceManager.shared.getAppSettings()
             .subscribe(onSuccess: { [self] response in
-                if let result = response.result{
+                if let result = response.result {
                     configAppSettings(result)
                     completion(nil)
                 } else {
                     let error = response.errors
-                    if error.count > 0, let message = error[0] as? String {
+                    if !error.isEmpty, let message = error[0] as? String {
                         completion(message)
                     } else if !response.message.isEmpty {
                         completion(response.message)

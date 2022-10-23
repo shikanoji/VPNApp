@@ -21,7 +21,7 @@ struct CustomSimpleNavigationView: View {
             if showBackButton {
                 VStack {
                     Spacer().frame(height: safeAreaInsets.top)
-                    HStack{
+                    HStack {
                         Spacer().frame(width: 15)
                         Label(L10n.Global.back, systemImage: "chevron.backward")
                             .foregroundColor(Color.white)

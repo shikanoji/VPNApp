@@ -22,9 +22,9 @@ struct KeychainWrapperError: Error {
     init(status: OSStatus, type: KeychainErrorType) {
         self.type = type
         if let errorMessage = SecCopyErrorMessageString(status, nil) {
-            self.message = String(errorMessage)
+            message = String(errorMessage)
         } else {
-            self.message = "Status Code: \(status)"
+            message = "Status Code: \(status)"
         }
     }
     

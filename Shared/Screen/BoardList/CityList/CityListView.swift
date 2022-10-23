@@ -18,7 +18,7 @@ struct CityListView: View {
     var body: some View {
         VStack(spacing: 8) {
             Button(action: {
-                    presentationMode.wrappedValue.dismiss()
+                presentationMode.wrappedValue.dismiss()
             }) {
                 HStack {
                     Image(Constant.CustomNavigation.iconLeft)
@@ -35,8 +35,8 @@ struct CityListView: View {
                             Asset.Assets.flagDefault.swiftUIImage
                         }
                     }
-                        .clipShape(Circle())
-                        .frame(width: imageSize, height: imageSize)
+                    .clipShape(Circle())
+                    .frame(width: imageSize, height: imageSize)
                     Text(node.name)
                         .font(Constant.BoardList.fontNameCity)
                         .foregroundColor(.white)

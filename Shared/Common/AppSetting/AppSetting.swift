@@ -9,7 +9,7 @@ import Foundation
 import RxSwift
 
 enum AppKeys: String {
-    ///Auth Keys
+    /// Auth Keys
     case idUser = "idUser"
     case email = "email"
     case isPremium = "isPremium"
@@ -29,7 +29,7 @@ enum AppKeys: String {
     case isRefreshingToken = "isRefreshingToken"
     case refreshTokenError = "refreshTokenError"
     case lastTimeSendVerifyEmail = "lastTimeSendVerifyEmail"
-    ///Board Keys
+    /// Board Keys
     case dateMember = "dateMember"
     case idVPN = "idVPN"
     case currentNumberDevice = "currentNumberDevice"
@@ -55,13 +55,13 @@ enum AppKeys: String {
     case temporaryDisableAutoConnect = "temporaryDisableAutoConnect"
     case needToStartNewSession = "needToStartNewSession"
     
-    ///Last Time when Data Map Update
+    /// Last Time when Data Map Update
     case lastChange = "lastChange"
     case updateDataMap = "updateDataMap"
     
     case selectConfig = "selectConfig"
     case recommendConfig = "recommendConfig"
-    //DNS
+    // DNS
     case dnsSetting = "dnsSetting"
     case primaryDNSValue = "primaryDNSValue"
     case secondaryDNSValue = "secondaryDNSValue"
@@ -69,7 +69,7 @@ enum AppKeys: String {
     case wasJailBreak = "wasJailBreak"
     case currentSessionId = "currentSessionId"
     case selectCyberSec = "selectCyberSec"
-    //Save time
+    // Save time
     case saveTimeConnectedVPN = "saveTimeConnectedVPN"
 }
 
@@ -82,7 +82,7 @@ class AppSetting {
     
     func isExitSearch(_ search: String, name: String, iso2: String, iso3: String) -> Bool {
         return name.range(of: search, options: .caseInsensitive) != nil
-        || iso2.range(of: search, options: .caseInsensitive) != nil
-        || iso3.range(of: search, options: .caseInsensitive) != nil
+            || iso2.range(of: search, options: .caseInsensitive) != nil
+            || iso3.range(of: search, options: .caseInsensitive) != nil
     }
 }

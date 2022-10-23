@@ -114,7 +114,7 @@ extension ServiceManager {
 extension PrimitiveSequenceType where Trait == SingleTrait {
     public func subscribe(_ observer: @escaping (SingleEvent<Element>) -> Void) -> Disposable {
         var stopped = false
-        return self.primitiveSequence.asObservable().subscribe { event in
+        return primitiveSequence.asObservable().subscribe { event in
             if stopped { return }
             stopped = true
 
@@ -132,11 +132,11 @@ extension PrimitiveSequenceType where Trait == SingleTrait {
     public func subscribe(onSuccess: ((Element) -> Void)? = nil,
                           onFailure: ((Swift.Error) -> Void)? = nil,
                           onDisposed: (() -> Void)? = nil) -> Disposable {
-        #if DEBUG
-            let callStack = Hooks.recordCallStackOnError ? Thread.callStackSymbols : []
-        #else
-            let callStack = [String]()
-        #endif
+#if DEBUG
+        let callStack = Hooks.recordCallStackOnError ? Thread.callStackSymbols : []
+#else
+        let callStack = [String]()
+#endif
 
         let disposable: Disposable
         if let onDisposed = onDisposed {
@@ -165,7 +165,7 @@ extension PrimitiveSequenceType where Trait == SingleTrait {
         }
 
         return Disposables.create(
-            self.primitiveSequence.subscribe(observer),
+            primitiveSequence.subscribe(observer),
             disposable
         )
     }

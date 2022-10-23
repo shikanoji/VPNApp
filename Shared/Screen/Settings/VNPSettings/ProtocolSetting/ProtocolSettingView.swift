@@ -43,11 +43,11 @@ struct ProtocolSettingView: View {
                                     position: viewModel.section.items.getPosition(item),
                                     switchValue: item.select,
                                     onSwitchValueChange: { value in
-                            if value {
-                                viewModel.configItem(item)
-                            }
-                        })
-                        .environmentObject(viewModel)
+                                        if value {
+                                            viewModel.configItem(item)
+                                        }
+                                    })
+                                    .environmentObject(viewModel)
                     }
                 }
                 .padding(Constant.Menu.hozitalPaddingCell)

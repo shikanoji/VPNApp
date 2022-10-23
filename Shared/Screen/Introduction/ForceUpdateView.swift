@@ -31,13 +31,13 @@ struct ForceUpdateView: View {
         Background {
             ZStack {
                 Asset.Assets.greenLinearGradient.swiftUIImage.resizable()
-                VStack(spacing: 20){
+                VStack(spacing: 20) {
                     Spacer()
                     content
                     Spacer()
                     AppButton(style: .themeButton, width: UIScreen.main.bounds.size.width - 60, text: L10n.Introduction.updateNewVersion) {
                         if let url = URL(string: "https://apps.apple.com/app/id1630888108"),
-                           UIApplication.shared.canOpenURL(url){
+                           UIApplication.shared.canOpenURL(url) {
                             UIApplication.shared.open(url)
                         }
                     }

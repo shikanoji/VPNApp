@@ -18,9 +18,9 @@ struct StatusResult: Decodable {
         let values = try decoder.container(keyedBy: CodingKeys.self)
         
         if let _value = try? values.decode(Int.self, forKey: .score) {
-            self.score = _value
+            score = _value
         } else {
-            self.score = 0
+            score = 0
         }
     }
 }

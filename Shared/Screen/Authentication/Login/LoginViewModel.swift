@@ -49,7 +49,7 @@ class LoginViewModel: NSObject, ObservableObject {
                     authentication?.login(withLoginData: result)
                 } else {
                     let error = response.errors
-                    if error.count > 0, let message = error[0] as? String {
+                    if !error.isEmpty, let message = error[0] as? String {
                         alertMessage = message
                         showAlert = true
                     } else if !response.message.isEmpty {
@@ -67,7 +67,7 @@ class LoginViewModel: NSObject, ObservableObject {
             .disposed(by: disposedBag)
     }
     
-    //MARK: - Login with Google
+    // MARK: - Login with Google
     func loginGoogle() {
         guard let clientID = FirebaseApp.app()?.options.clientID else { return }
         // Create Google Sign In configuration object.
@@ -95,7 +95,7 @@ class LoginViewModel: NSObject, ObservableObject {
                             self.authentication?.login(withLoginData: result)
                         } else {
                             let error = response.errors
-                            if error.count > 0, let message = error[0] as? String {
+                            if !error.isEmpty, let message = error[0] as? String {
                                 alertMessage = message
                                 showAlert = true
                             } else if !response.message.isEmpty {
@@ -115,7 +115,7 @@ class LoginViewModel: NSObject, ObservableObject {
         }
     }
     
-    //MARK: - Login with Apple
+    // MARK: - Login with Apple
     func loginApple() {
         let provider = ASAuthorizationAppleIDProvider()
         let request = provider.createRequest()
@@ -139,8 +139,8 @@ extension LoginViewModel: ASAuthorizationControllerDelegate {
             // MARK: TODO
             /// 1. Set token here
             /// 2. Perform tasks to do after login
-            self.appleToken = token
-            self.showProgressView = true
+            appleToken = token
+            showProgressView = true
             ServiceManager.shared.loginSocial(socialProvider: "apple", token: token)
                 .subscribe(onSuccess: { [self] response in
                     self.showProgressView = false
@@ -148,7 +148,7 @@ extension LoginViewModel: ASAuthorizationControllerDelegate {
                         authentication?.login(withLoginData: result)
                     } else {
                         let error = response.errors
-                        if error.count > 0, let message = error[0] as? String {
+                        if !error.isEmpty, let message = error[0] as? String {
                             alertMessage = message
                             showAlert = true
                         } else if !response.message.isEmpty {

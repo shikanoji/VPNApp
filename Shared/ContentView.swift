@@ -40,7 +40,7 @@ struct ContentView: View {
             .frame(width: UIScreen.main.bounds.width)
             .ignoresSafeArea()
         } else {
-            ZStack{
+            ZStack {
                 AppColor.background
                 if !viewModel.endLoading {
                     AnimationLogo()

@@ -68,7 +68,7 @@ class PlanSelectionViewModel: ObservableObject {
     
     @MainActor func purchasePlan() {
         showProgressView = true
-        guard let selectedPlan = self.selectedPlan else {
+        guard let selectedPlan = selectedPlan else {
             showProgressView = false
             return
         }
@@ -100,18 +100,18 @@ class PlanSelectionViewModel: ObservableObject {
         switch verifyResult {
         case .success(let response):
             showProgressView = false
-            if response.success, let user = response.result, shouldAllowLogout{
+            if response.success, let user = response.result, shouldAllowLogout {
                 authentication?.upgradeToPremium(user: user)
                 toWelcomeScreen = true
             } else {
-                self.shouldShowAccountLimitedView = true
+                shouldShowAccountLimitedView = true
             }
         case .failure(let error):
             if let errorAPI = error as? APIError {
-                self.alertMessage = errorAPI.description
-                self.showAlert = true
+                alertMessage = errorAPI.description
+                showAlert = true
             }
-            self.showProgressView = false
+            showProgressView = false
         }
     }
 }

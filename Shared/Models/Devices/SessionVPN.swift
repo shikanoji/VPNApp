@@ -140,213 +140,213 @@ struct SessionVPN: Codable, Identifiable, Equatable {
         let values = try decoder.container(keyedBy: CodingKeys.self)
         
         if let _id = try? values.decode(String.self, forKey: .id) {
-            self.id = _id
+            id = _id
         } else {
-            self.id = ""
+            id = ""
         }
         
         if let _deviceId = try? values.decode(String.self, forKey: .deviceId) {
-            self.deviceId = _deviceId
+            deviceId = _deviceId
         } else {
-            self.deviceId = ""
+            deviceId = ""
         }
         
         if let _deviceCode = try? values.decode(String.self, forKey: .deviceCode) {
-            self.deviceCode = _deviceCode
+            deviceCode = _deviceCode
         } else {
-            self.deviceCode = ""
+            deviceCode = ""
         }
         
         if let _deviceBrand = try? values.decode(String.self, forKey: .deviceBrand) {
-            self.deviceBrand = _deviceBrand
+            deviceBrand = _deviceBrand
         } else {
-            self.deviceBrand = ""
+            deviceBrand = ""
         }
         
         if let _deviceApiVersion = try? values.decode(String.self, forKey: .deviceApiVersion) {
-            self.deviceApiVersion = _deviceApiVersion
+            deviceApiVersion = _deviceApiVersion
         } else {
-            self.deviceApiVersion = ""
+            deviceApiVersion = ""
         }
         
         if let _deviceFingerprint = try? values.decode(String.self, forKey: .deviceFingerprint) {
-            self.deviceFingerprint = _deviceFingerprint
+            deviceFingerprint = _deviceFingerprint
         } else {
-            self.deviceFingerprint = ""
+            deviceFingerprint = ""
         }
         
         if let _deviceOs = try? values.decode(String.self, forKey: .deviceOs) {
-            self.deviceOs = _deviceOs
+            deviceOs = _deviceOs
         } else {
-            self.deviceOs = ""
+            deviceOs = ""
         }
         
         if let _deviceSupportedAbis = try? values.decode([String].self, forKey: .deviceSupportedAbis) {
-            self.deviceSupportedAbis = _deviceSupportedAbis
+            deviceSupportedAbis = _deviceSupportedAbis
         } else {
-            self.deviceSupportedAbis = []
+            deviceSupportedAbis = []
         }
         
         if let _deviceModel = try? values.decode(String.self, forKey: .deviceModel) {
-            self.deviceModel = _deviceModel
+            deviceModel = _deviceModel
         } else {
-            self.deviceModel = ""
+            deviceModel = ""
         }
         
         if let _deviceIsRoot = try? values.decode(Int.self, forKey: .deviceIsRoot) {
-            self.deviceIsRoot = _deviceIsRoot
+            deviceIsRoot = _deviceIsRoot
         } else {
-            self.deviceIsRoot = 0
+            deviceIsRoot = 0
         }
         
         if let _deviceHardware = try? values.decode(String.self, forKey: .deviceHardware) {
-            self.deviceHardware = _deviceHardware
+            deviceHardware = _deviceHardware
         } else {
-            self.deviceHardware = ""
+            deviceHardware = ""
         }
         
         if let _deviceManufacture = try? values.decode(String.self, forKey: .deviceManufacture) {
-            self.deviceManufacture = _deviceManufacture
+            deviceManufacture = _deviceManufacture
         } else {
-            self.deviceManufacture = ""
+            deviceManufacture = ""
         }
         
         if let _deviceFreeMemory = try? values.decode(Int.self, forKey: .deviceFreeMemory) {
-            self.deviceFreeMemory = _deviceFreeMemory
+            deviceFreeMemory = _deviceFreeMemory
         } else {
-            self.deviceFreeMemory = 0
+            deviceFreeMemory = 0
         }
         
         if let _osBuildNumber = try? values.decode(String.self, forKey: .osBuildNumber) {
-            self.osBuildNumber = _osBuildNumber
+            osBuildNumber = _osBuildNumber
         } else {
-            self.osBuildNumber = ""
+            osBuildNumber = ""
         }
         
         if let _osIncremental = try? values.decode(String.self, forKey: .osIncremental) {
-            self.osIncremental = _osIncremental
+            osIncremental = _osIncremental
         } else {
-            self.osIncremental = ""
+            osIncremental = ""
         }
         
         if let _osSecurityPath = try? values.decode(String.self, forKey: .osSecurityPath) {
-            self.osSecurityPath = _osSecurityPath
+            osSecurityPath = _osSecurityPath
         } else {
-            self.osSecurityPath = ""
+            osSecurityPath = ""
         }
         
         if let _appVersion = try? values.decode(String.self, forKey: .appVersion) {
-            self.appVersion = _appVersion
+            appVersion = _appVersion
         } else {
-            self.appVersion = ""
+            appVersion = ""
         }
         
         if let _appBundleId = try? values.decode(String.self, forKey: .appBundleId) {
-            self.appBundleId = _appBundleId
+            appBundleId = _appBundleId
         } else {
-            self.appBundleId = ""
+            appBundleId = ""
         }
         
         if let _isEmulator = try? values.decode(Int.self, forKey: .isEmulator) {
-            self.isEmulator = _isEmulator
+            isEmulator = _isEmulator
         } else {
-            self.isEmulator = 0
+            isEmulator = 0
         }
         
         if let _isTablet = try? values.decode(Int.self, forKey: .isTablet) {
-            self.isTablet = _isTablet
+            isTablet = _isTablet
         } else {
-            self.isTablet = 0
+            isTablet = 0
         }
         
         if let _totalByteIn = try? values.decode(Int.self, forKey: .totalByteIn) {
-            self.totalByteIn = _totalByteIn
+            totalByteIn = _totalByteIn
         } else {
-            self.totalByteIn = 0
+            totalByteIn = 0
         }
         
         if let _totalByteOut = try? values.decode(Int.self, forKey: .totalByteOut) {
-            self.totalByteOut = _totalByteOut
+            totalByteOut = _totalByteOut
         } else {
-            self.totalByteOut = 0
+            totalByteOut = 0
         }
         
         if let _connectionType = try? values.decode(String.self, forKey: .connectionType) {
-            self.connectionType = _connectionType
+            connectionType = _connectionType
         } else {
-            self.connectionType = ""
+            connectionType = ""
         }
         
         if let _connectionProtocol = try? values.decode(String.self, forKey: .connectionProtocol) {
-            self.connectionProtocol = _connectionProtocol
+            connectionProtocol = _connectionProtocol
         } else {
-            self.connectionProtocol = ""
+            connectionProtocol = ""
         }
         
         if let _disconnectedAt = try? values.decode(Int.self, forKey: .disconnectedAt) {
-            self.disconnectedAt = _disconnectedAt
+            disconnectedAt = _disconnectedAt
         } else {
-            self.disconnectedAt = 0
+            disconnectedAt = 0
         }
         
         if let _disconnectedBy = try? values.decode(String.self, forKey: .disconnectedBy) {
-            self.disconnectedBy = _disconnectedBy
+            disconnectedBy = _disconnectedBy
         } else {
-            self.disconnectedBy = ""
+            disconnectedBy = ""
         }
         
         if let _userId = try? values.decode(Int.self, forKey: .userId) {
-            self.userId = _userId
+            userId = _userId
         } else {
-            self.userId = 0
+            userId = 0
         }
         
         if let _serverIp = try? values.decode(String.self, forKey: .serverIp) {
-            self.serverIp = _serverIp
+            serverIp = _serverIp
         } else {
-            self.serverIp = ""
+            serverIp = ""
         }
         
         if let _isActive = try? values.decode(Int.self, forKey: .isActive) {
-            self.isActive = _isActive
+            isActive = _isActive
         } else {
-            self.isActive = 0
+            isActive = 0
         }
         
         if let _userCountryCode = try? values.decode(String.self, forKey: .userCountryCode) {
-            self.userCountryCode = _userCountryCode
+            userCountryCode = _userCountryCode
         } else {
-            self.userCountryCode = ""
+            userCountryCode = ""
         }
         
         if let _userCountryName = try? values.decode(String.self, forKey: .userCountryName) {
-            self.userCountryName = _userCountryName
+            userCountryName = _userCountryName
         } else {
-            self.userCountryName = ""
+            userCountryName = ""
         }
         
         if let _userCity = try? values.decode(String.self, forKey: .userCity) {
-            self.userCity = _userCity
+            userCity = _userCity
         } else {
-            self.userCity = ""
+            userCity = ""
         }
         
         if let _userIp = try? values.decode(String.self, forKey: .userIp) {
-            self.userIp = _userIp
+            userIp = _userIp
         } else {
-            self.userIp = ""
+            userIp = ""
         }
         
         if let _createdAt = try? values.decode(String.self, forKey: .createdAt) {
-            self.createdAt = _createdAt
+            createdAt = _createdAt
         } else {
-            self.createdAt = ""
+            createdAt = ""
         }
         
         if let _connectedAt = try? values.decode(Int.self, forKey: .connectedAt) {
-            self.connectedAt = _connectedAt
+            connectedAt = _connectedAt
         } else {
-            self.connectedAt = 0
+            connectedAt = 0
         }
     }
     

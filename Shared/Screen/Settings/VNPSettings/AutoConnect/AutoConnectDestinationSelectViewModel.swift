@@ -27,11 +27,11 @@ class AutoConnectDestinationSelectViewModel: ObservableObject {
             return
         }
         
-        self.showProgressView = true
+        showProgressView = true
         
         ServiceManager.shared.getCountryList()
             .subscribe { [weak self] response in
-                guard let `self` = self else {
+                guard let self = self else {
                     return
                 }
                 self.showProgressView = false
@@ -40,7 +40,7 @@ class AutoConnectDestinationSelectViewModel: ObservableObject {
                     self.configLocation(result)
                 } else {
                     let error = response.errors
-                    if error.count > 0, let message = error[0] as? String {
+                    if !error.isEmpty, let message = error[0] as? String {
                         self.error = APIError.identified(message: message)
                         self.showAlert = true
                     } else if !response.message.isEmpty {

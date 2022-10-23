@@ -31,7 +31,7 @@ struct NodePopupView: View {
         if node.isCity {
             return AnyView(
                 VStack(alignment: .center, spacing: 0) {
-                    VStack{
+                    VStack {
                         Text(node.countryName)
                             .font(.system(size: Constant.Board.NodePopupView.sizeFont,
                                           weight: Constant.Board.NodePopupView.weightFont))
@@ -70,7 +70,7 @@ struct NodePopupView: View {
                     .padding(8)
                     .minimumScaleFactor(.leastNonzeroMagnitude)
                 }
-                    .fixedSize(horizontal: true, vertical: true)
+                .fixedSize(horizontal: true, vertical: true)
             )
         } else {
             return AnyView(
@@ -97,8 +97,8 @@ struct NodePopupView: View {
                                       weight: Constant.Board.NodePopupView.weightFont))
                         .lineLimit(Constant.Board.NodePopupView.numberLineText)
                 }
-                    .padding(8)
-                    .padding(.leading, 3)
+                .padding(8)
+                .padding(.leading, 3)
             )
         }
     }

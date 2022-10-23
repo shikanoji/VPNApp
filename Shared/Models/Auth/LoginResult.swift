@@ -22,8 +22,8 @@ struct Tokens: Decodable {
     var refresh: Token
 
     init(accessToken: Token = Token(), refreshToken: Token = Token()) {
-        self.access = accessToken
-        self.refresh = refreshToken
+        access = accessToken
+        refresh = refreshToken
     }
 }
 
@@ -53,8 +53,8 @@ struct User: Decodable {
         self.updated_at = updated_at
         self.email = email
         self.password = password
-        self.premium_expire = premiumExpire
-        self.is_premium = isPremium
+        premium_expire = premiumExpire
+        is_premium = isPremium
         self.name = name
         self.has_password = has_password
         self.email_verified = email_verified

@@ -28,9 +28,9 @@ struct NodeCellView: View {
                     Asset.Assets.flagDefault.swiftUIImage
                 }
             }
-                .clipShape(Circle())
-                .frame(width: imageSize,
-                       height: imageSize)
+            .clipShape(Circle())
+            .frame(width: imageSize,
+                   height: imageSize)
             VStack(alignment: .leading, spacing: 4) {
                 Text(node.name)
                     .font(Constant.BoardList.fontNameCity)
@@ -40,7 +40,7 @@ struct NodeCellView: View {
                     .foregroundColor(AppColor.lightBlackText)
             }
             Spacer()
-            if node.cityNodeList.count > 0 {
+            if !node.cityNodeList.isEmpty {
                 Image(Constant.Account.rightButton)
                     .padding()
             }

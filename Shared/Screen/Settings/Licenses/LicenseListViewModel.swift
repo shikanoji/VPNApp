@@ -22,7 +22,7 @@ struct LicenseTitle {
 class LicenseListViewModel: ObservableObject {
     var licenseTitlePlists: LicensePlistType?
     @Published var licenseTitleList: [LicenseTitle] = []
-    func loadLicenses(){
+    func loadLicenses() {
         guard let plistUrl = Bundle.main.path(forResource: "com.mono0926.LicensePlist", ofType: "plist") else {
             return
         }

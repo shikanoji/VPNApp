@@ -15,7 +15,7 @@ enum IAPHandlerAlertType {
     case purchased
     case canceled
     
-    var message: String{
+    var message: String {
         switch self {
         case .setProductIds: return "Product ids not set, call setProductIds method!"
         case .disabled: return "Purchases are disabled in your device!"
@@ -28,13 +28,13 @@ enum IAPHandlerAlertType {
 
 
 class IAPHandler: NSObject {
-    //MARK:- Shared Object
-    //MARK:-
+    // MARK:- Shared Object
+    // MARK:-
     static let shared = IAPHandler()
     private override init() { }
     
-    //MARK:- Properties
-    //MARK:- Private
+    // MARK:- Properties
+    // MARK:- Private
     fileprivate var productIds = [String]()
     fileprivate var productID = ""
     fileprivate var productsRequest = SKProductsRequest()
@@ -43,26 +43,26 @@ class IAPHandler: NSObject {
     fileprivate var productToPurchase: SKProduct?
     fileprivate var purchaseProductCompletion: ((IAPHandlerAlertType, SKProduct?, SKPaymentTransaction?)->Void)?
     
-    //MARK:- Public
+    // MARK:- Public
     var isLogEnabled: Bool = true
     
-    //MARK:- Methods
-    //MARK:- Public
+    // MARK:- Methods
+    // MARK:- Public
     
-    //Set Product Ids
+    // Set Product Ids
     func setProductIds(ids: [String]) {
-        self.productIds = ids
+        productIds = ids
     }
     
-    //MAKE PURCHASE OF A PRODUCT
+    // MAKE PURCHASE OF A PRODUCT
     func canMakePurchases() -> Bool {  return SKPaymentQueue.canMakePayments()  }
     
     func purchase(product: SKProduct, completion: @escaping ((IAPHandlerAlertType, SKProduct?, SKPaymentTransaction?)->Void)) {
         
-        self.purchaseProductCompletion = completion
-        self.productToPurchase = product
+        purchaseProductCompletion = completion
+        productToPurchase = product
         
-        if self.canMakePurchases() {
+        if canMakePurchases() {
             let payment = SKPayment(product: product)
             SKPaymentQueue.default().add(self)
             SKPaymentQueue.default().add(payment)
@@ -76,52 +76,52 @@ class IAPHandler: NSObject {
     }
     
     // RESTORE PURCHASE
-    func restorePurchase(){
+    func restorePurchase() {
         SKPaymentQueue.default().add(self)
         SKPaymentQueue.default().restoreCompletedTransactions()
     }
     
     
     // FETCH AVAILABLE IAP PRODUCTS
-    func fetchAvailableProducts(complition: @escaping (([SKProduct])->Void)){
+    func fetchAvailableProducts(complition: @escaping (([SKProduct])->Void)) {
         
-        self.fetchProductCompletion = complition
+        fetchProductCompletion = complition
         // Put here your IAP Products ID's
-        if self.productIds.isEmpty {
+        if productIds.isEmpty {
             log(IAPHandlerAlertType.setProductIds.message)
             fatalError(IAPHandlerAlertType.setProductIds.message)
         }
         else {
-            productsRequest = SKProductsRequest(productIdentifiers: Set(self.productIds))
+            productsRequest = SKProductsRequest(productIdentifiers: Set(productIds))
             productsRequest.delegate = self
             productsRequest.start()
         }
     }
     
-    //MARK:- Private
-    fileprivate func log <T> (_ object: T) {
+    // MARK:- Private
+    fileprivate func log<T>(_ object: T) {
         if isLogEnabled {
             NSLog("\(object)")
         }
     }
 }
 
-//MARK:- Product Request Delegate and Payment Transaction Methods
-//MARK:-
-extension IAPHandler: SKProductsRequestDelegate, SKPaymentTransactionObserver{
+// MARK:- Product Request Delegate and Payment Transaction Methods
+// MARK:-
+extension IAPHandler: SKProductsRequestDelegate, SKPaymentTransactionObserver {
     
     // REQUEST IAP PRODUCTS
-    @MainActor func productsRequest (_ request:SKProductsRequest, didReceive response:SKProductsResponse) {
+    @MainActor func productsRequest(_ request:SKProductsRequest, didReceive response:SKProductsResponse) {
         
-        if (response.products.count > 0) {
-            if let completion = self.fetchProductCompletion {
+        if (!response.products.isEmpty) {
+            if let completion = fetchProductCompletion {
                 completion(response.products)
             }
         }
     }
     
     func paymentQueueRestoreCompletedTransactionsFinished(_ queue: SKPaymentQueue) {
-        if let completion = self.purchaseProductCompletion {
+        if let completion = purchaseProductCompletion {
             completion(IAPHandlerAlertType.restored, nil, nil)
         }
     }
@@ -134,15 +134,15 @@ extension IAPHandler: SKProductsRequestDelegate, SKPaymentTransactionObserver{
                 case .purchased:
                     log("Product purchase done")
                     SKPaymentQueue.default().finishTransaction(transaction as! SKPaymentTransaction)
-                    if let completion = self.purchaseProductCompletion {
-                        completion(IAPHandlerAlertType.purchased, self.productToPurchase, trans)
+                    if let completion = purchaseProductCompletion {
+                        completion(IAPHandlerAlertType.purchased, productToPurchase, trans)
                     }
                     break
                     
                 case .failed:
                     log("Product purchase failed")
                     SKPaymentQueue.default().finishTransaction(transaction as! SKPaymentTransaction)
-                    if let completion = self.purchaseProductCompletion {
+                    if let completion = purchaseProductCompletion {
                         completion(IAPHandlerAlertType.canceled, nil, nil)
                     }
                     break
@@ -150,7 +150,7 @@ extension IAPHandler: SKProductsRequestDelegate, SKPaymentTransactionObserver{
                 case .restored:
                     log("Product restored")
                     SKPaymentQueue.default().finishTransaction(transaction as! SKPaymentTransaction)
-                    if let completion = self.purchaseProductCompletion {
+                    if let completion = purchaseProductCompletion {
                         completion(IAPHandlerAlertType.restored, nil, nil)
                     }
                     break
@@ -159,7 +159,7 @@ extension IAPHandler: SKProductsRequestDelegate, SKPaymentTransactionObserver{
                     break
                     
                 default:
-                    if let completion = self.purchaseProductCompletion {
+                    if let completion = purchaseProductCompletion {
                         completion(IAPHandlerAlertType.canceled, nil, nil)
                     }
                     break

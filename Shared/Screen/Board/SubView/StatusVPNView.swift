@@ -51,7 +51,7 @@ struct StatusVPNView: View {
     func getStatusTextView() -> some View {
         VStack(alignment: .leading, spacing: 5) {
             Text(L10n.Board.ip + " \(ip) - ")
-            + Text(status.statusTitle)
+                + Text(status.statusTitle)
                 .foregroundColor(status == .connected ? AppColor.VPNConnected : .white)
                 .fontWeight(.semibold)
             Text(name == "" ? L10n.Board.subIP : ("Location: " + name))

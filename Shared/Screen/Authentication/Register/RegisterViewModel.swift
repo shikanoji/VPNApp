@@ -29,8 +29,8 @@ class RegisterViewModel: NSObject, ObservableObject {
     
     func signup() {
         guard !registerDisable else {
-            self.alertMessage = "Invalid email or password"
-            self.showAlert = true
+            alertMessage = "Invalid email or password"
+            showAlert = true
             return
         }
         showProgressView = true
@@ -41,7 +41,7 @@ class RegisterViewModel: NSObject, ObservableObject {
                     self?.authentication?.login(withLoginData: result.convertToLoginModel())
                 } else {
                     let error = response.errors
-                    if error.count > 0, let message = error[0] as? String {
+                    if !error.isEmpty, let message = error[0] as? String {
                         self?.alertMessage = message
                         self?.showAlert = true
                     }
@@ -52,7 +52,7 @@ class RegisterViewModel: NSObject, ObservableObject {
             .disposed(by: disposedBag)
     }
     
-    //MARK: - Login with Google
+    // MARK: - Login with Google
     func signupGoogle() {
         guard let clientID = FirebaseApp.app()?.options.clientID else { return }
         // Create Google Sign In configuration object.
@@ -79,7 +79,7 @@ class RegisterViewModel: NSObject, ObservableObject {
                             self?.authentication?.login(withLoginData: result)
                         } else {
                             let error = response.errors
-                            if error.count > 0, let message = error[0] as? String {
+                            if !error.isEmpty, let message = error[0] as? String {
                                 self?.alertMessage = message
                                 self?.showAlert = true
                             } else if !response.message.isEmpty {
@@ -95,7 +95,7 @@ class RegisterViewModel: NSObject, ObservableObject {
         }
     }
     
-    //MARK: - Login with Apple
+    // MARK: - Login with Apple
     func signupApple() {
         let provider = ASAuthorizationAppleIDProvider()
         let request = provider.createRequest()
@@ -118,8 +118,8 @@ extension RegisterViewModel: ASAuthorizationControllerDelegate {
             // MARK: TODO
             /// 1. Set token here
             /// 2. Perform tasks to do after login
-            self.appleToken = token
-            self.showProgressView = true
+            appleToken = token
+            showProgressView = true
             ServiceManager.shared.loginSocial(socialProvider: "apple", token: token)
                 .subscribe(onSuccess: { [weak self] response in
                     self?.showProgressView = false
@@ -127,7 +127,7 @@ extension RegisterViewModel: ASAuthorizationControllerDelegate {
                         self?.authentication?.login(withLoginData: result)
                     } else {
                         let error = response.errors
-                        if error.count > 0, let message = error[0] as? String {
+                        if !error.isEmpty, let message = error[0] as? String {
                             self?.alertMessage = message
                             self?.showAlert = true
                         } else if !response.message.isEmpty {

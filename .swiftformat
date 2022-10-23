@@ -4,7 +4,7 @@
 --exclude Shim/Shim/Resources/Generated
 
 # disabled rules
---disable blankLinesAroundMark,sortedImports,blankLinesAtEndOfScope,blankLinesAtStartOfScope,blankLinesBetweenScopes,blankLinesBetweenImports
+--disable blankLinesAroundMark,sortedImports,blankLinesAtEndOfScope,blankLinesAtStartOfScope,blankLinesBetweenScopes
 --disable consecutiveBlankLines,consecutiveSpaces,duplicateImports,emptyBraces,fileHeader,hoistPatternLet
 --disable linebreakAtEndOfFile,linebreaks,numberFormatting,spaceAroundOperators,redundantBackticks,redundantGet,redundantInit,redundantLet
 --disable redundantNilInit,redundantParens,redundantPattern,redundantRawValues,redundantReturn,redundantVoidReturnType,semicolons

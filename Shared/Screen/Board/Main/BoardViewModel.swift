@@ -107,12 +107,12 @@ class BoardViewModel: ObservableObject {
             if let node = nodeSelectFromBoardList {
                 mesh?.removeSelectNode()
                 AppSetting.shared.saveBoardTabWhenConnecting(.location)
-                self.isSwitching = state == .connected
+                isSwitching = state == .connected
                 NetworkManager.shared.nodeSelected = node
-                self.connectOrDisconnectByUser = true
-                self.ConnectOrDisconnectVPN()
+                connectOrDisconnectByUser = true
+                ConnectOrDisconnectVPN()
                 if autoConnectType == .off {
-                    self.showBoardList = false
+                    showBoardList = false
                 }
             }
         }
@@ -126,11 +126,11 @@ class BoardViewModel: ObservableObject {
             if let staticIP = staticIPNodeSelecte {
                 mesh?.removeSelectNode()
                 AppSetting.shared.saveBoardTabWhenConnecting(.staticIP)
-                self.isSwitching = state == .connected
+                isSwitching = state == .connected
                 NetworkManager.shared.selectStaticServer = staticIP
-                self.connectOrDisconnectByUser = true
-                self.ConnectOrDisconnectVPN()
-                self.showBoardList = false
+                connectOrDisconnectByUser = true
+                ConnectOrDisconnectVPN()
+                showBoardList = false
             }
         }
     }
@@ -141,11 +141,11 @@ class BoardViewModel: ObservableObject {
             if let multihop = multihopSelect {
                 mesh?.removeSelectNode()
                 AppSetting.shared.saveBoardTabWhenConnecting(.multiHop)
-                self.isSwitching = state == .connected
+                isSwitching = state == .connected
                 NetworkManager.shared.selectMultihop = multihop
-                self.connectOrDisconnectByUser = true
-                self.ConnectOrDisconnectVPN()
-                self.showBoardList = false
+                connectOrDisconnectByUser = true
+                ConnectOrDisconnectVPN()
+                showBoardList = false
             }
         }
     }
@@ -265,11 +265,11 @@ class BoardViewModel: ObservableObject {
     
     func configDataLocal() {
         if AppSetting.shared.isConnectedToVpn || !AppSetting.shared.needLoadApiMap || !Connectivity.sharedInstance.isReachable {
-            self.getDataFromLocal()
+            getDataFromLocal()
         }
     }
     
-    ///Register background task
+    /// Register background task
     private func beginBackgroundTask() {
         backgroundTaskId = UIApplication.shared.beginBackgroundTask(withName: "sysvpn.client.ios.vpnkeeper") { [weak self] in
             self?.backgroundTaskExpired()
@@ -305,7 +305,7 @@ class BoardViewModel: ObservableObject {
         
         ServiceManager.shared.getAppSettings()
             .subscribe(onSuccess: { response in
-                if let result = response.result{
+                if let result = response.result {
                     AppSetting.shared.configAppSettings(result)
                 }
                 completion()
@@ -323,7 +323,7 @@ class BoardViewModel: ObservableObject {
         
         ServiceManager.shared.getCountryList()
             .subscribe { response in
-                if let result = response.result, result.availableCountries.count > 0 {
+                if let result = response.result, !result.availableCountries.isEmpty {
                     AppSetting.shared.saveDataMap(result)
                     self.configCountryList(result)
                 }
@@ -354,7 +354,7 @@ class BoardViewModel: ObservableObject {
     }
     
     func getRecommendNode(_ nodeList: [Node]) {
-        if nodeList.count > 0 {
+        if !nodeList.isEmpty {
             if let _ = NetworkManager.shared.nodeSelected {
                 
             } else {
@@ -369,7 +369,7 @@ class BoardViewModel: ObservableObject {
         if let dataMapLocal = AppSetting.shared.getDataMap() {
             configCountryList(dataMapLocal)
         } else {
-            self.getCountryList {
+            getCountryList {
                 self.getMultihopList {
                 }
             }
@@ -393,10 +393,10 @@ class BoardViewModel: ObservableObject {
         
         staticIPData = result.staticServers
         
-        self.mesh?.configNode(countryNodes: countryNodes,
-                              cityNodes: cityNodes,
-                              staticNodes: staticIPData,
-                              clientCountryNode: result.clientCountryDetail)
+        mesh?.configNode(countryNodes: countryNodes,
+                         cityNodes: cityNodes,
+                         staticNodes: staticIPData,
+                         clientCountryNode: result.clientCountryDetail)
         
         getRecommendNode(result.recommendedCountries)
         getServerStats()
@@ -423,7 +423,7 @@ class BoardViewModel: ObservableObject {
     
     @objc private func autoConnectWithConfig() {
         if Connectivity.sharedInstance.isReachable {
-            switch self.autoConnectType {
+            switch autoConnectType {
             case .always:
                 AppSetting.shared.saveBoardTabWhenConnecting(.location)
                 ConnectOrDisconnectVPN()
@@ -449,16 +449,16 @@ class BoardViewModel: ObservableObject {
         startConnectOrDisconnect = true
         switch autoConnectType {
         case .off:
-                switch state {
-                case .disconnected:
-                    AppSetting.shared.saveTimeConnectedVPN = nil
-                    configStartConnectVPN()
-                case .connecting, .disconnecting:
-                    break
-                default:
-                    AppSetting.shared.saveTimeConnectedVPN = Date()
-                    configDisconnect()
-                }
+            switch state {
+            case .disconnected:
+                AppSetting.shared.saveTimeConnectedVPN = nil
+                configStartConnectVPN()
+            case .connecting, .disconnecting:
+                break
+            default:
+                AppSetting.shared.saveTimeConnectedVPN = Date()
+                configDisconnect()
+            }
         default:
             guard !AppSetting.shared.temporaryDisableAutoConnect else {
                 configDisconnect()
@@ -756,9 +756,9 @@ class BoardViewModel: ObservableObject {
     }
     
     func internetNotAvaiable() {
-        self.error = APIError.noInternetConnect
-        self.showProgressView = false
-        self.showAlert = true
+        error = APIError.noInternetConnect
+        showProgressView = false
+        showAlert = true
     }
     
     func getRequestCertificate(asNewConnection: Bool = AppSetting.shared.needToStartNewSession, completion: @escaping (Bool) -> Void) {
@@ -782,7 +782,7 @@ class BoardViewModel: ObservableObject {
         
         ServiceManager.shared.getRequestCertificate(asNewConnection: asNewConnection)
             .subscribe { [weak self] response in
-                guard let `self` = self else {
+                guard let self = self else {
                     return
                 }
                 self.showProgressView = false
@@ -871,7 +871,7 @@ class BoardViewModel: ObservableObject {
                             return
                         }
                         let error = response.errors
-                        if error.count > 0, let message = error[0] as? String {
+                        if !error.isEmpty, let message = error[0] as? String {
                             self.error = APIError.identified(message: message)
                             self.showAlert = true
                         } else if !response.message.isEmpty {
@@ -904,7 +904,7 @@ class BoardViewModel: ObservableObject {
     func disconnectSession() {
         ServiceManager.shared.disconnectSession(sessionId: AppSetting.shared.currentSessionId, terminal: false)
             .subscribe { [weak self] response in
-                guard let `self` = self else {
+                guard let self = self else {
                     return
                 }
                 
@@ -924,7 +924,7 @@ class BoardViewModel: ObservableObject {
 extension BoardViewModel: Check_Method_Of_JailBreak {
     func sendTheStatusOfJailBreak(value: Bool) {
         AppSetting.shared.wasJailBreak = value ? 1 : 0
-        if value{
+        if value {
             UIControl().sendAction(#selector(URLSessionTask.suspend), to: UIApplication.shared, for: nil)
             // exit(-1)
         }

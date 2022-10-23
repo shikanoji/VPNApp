@@ -22,7 +22,7 @@ class ConnectButtonViewModel: ObservableObject {
         speedTimer = DispatchSource.makeTimerSource(queue: queue)
         speedTimer!.schedule(deadline: .now(), repeating: .seconds(1))
         speedTimer!.setEventHandler { [weak self] in
-            guard let `self` = self else {
+            guard let self = self else {
                 return
             }
             let sent = SystemDataUsage.dataSent

@@ -14,7 +14,7 @@ import Alamofire
 
 class BaseServiceManager<API: TargetType> {
     let provider = MoyaProvider<API>(session: DefaultAlamofireSession.shared,
-        plugins: [NetworkLoggerPlugin(configuration: .init(logOptions: .formatRequestAscURL))]
+                                     plugins: [NetworkLoggerPlugin(configuration: .init(logOptions: .formatRequestAscURL))]
     )
     
     func request(_ api: API) -> Single<Response> {

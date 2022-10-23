@@ -108,7 +108,7 @@ struct AccountView: View {
                 .foregroundColor(Asset.Colors.lightBlackText.swiftUIColor)
                 .frame(maxWidth: .infinity, maxHeight: 70, alignment: .leading)
                 .fixedSize(horizontal: false, vertical: true)
-            if(viewModel.shouldShowResendEmailButton == false) { }
+            if (viewModel.shouldShowResendEmailButton == false) { }
             else {
                 Text("Resend email")
                     .font(.system(size: Constant.TextSize.Global.detailDefault))
@@ -154,36 +154,36 @@ struct AccountView: View {
     var navigationLinks: some View {
         Group {
             NavigationLink(destination:
-                            InfomationView(
-                                showAccount: $showAccount,
-                                showInfomation: $showInfomation,
-                                statusConnect: $statusConnect,
-                                viewModel: InfomationViewModel()),
-                           isActive: $showInfomation) { }
+                InfomationView(
+                    showAccount: $showAccount,
+                    showInfomation: $showInfomation,
+                    statusConnect: $statusConnect,
+                    viewModel: InfomationViewModel()),
+                isActive: $showInfomation) { }
             
             NavigationLink(destination:
-                            AccountStatusView(
-                                showAccount: $showAccount,
-                                showAccountStatus: $showAccountStatus,
-                                statusConnect: $statusConnect),
-                           isActive: $showAccountStatus) { }
+                AccountStatusView(
+                    showAccount: $showAccount,
+                    showAccountStatus: $showAccountStatus,
+                    statusConnect: $statusConnect),
+                isActive: $showAccountStatus) { }
             
             NavigationLink(destination:
-                            SessionVPNView(
-                                showAccount: $showAccount,
-                                showTotalDevice: $showTotalDevice,
-                                statusConnect: $statusConnect,
-                                viewModel: SessionVPNViewModel(),
-                                shouldHideSessionList: .constant(false)),
-                           isActive: $showTotalDevice) { }
+                SessionVPNView(
+                    showAccount: $showAccount,
+                    showTotalDevice: $showTotalDevice,
+                    statusConnect: $statusConnect,
+                    viewModel: SessionVPNViewModel(),
+                    shouldHideSessionList: .constant(false)),
+                isActive: $showTotalDevice) { }
             
             NavigationLink(destination:
-                            FAQView(
-                                showAccount: $showAccount,
-                                showFAQ: $showFAQ,
-                                statusConnect: $statusConnect,
-                                viewModel: FAQViewModel()),
-                           isActive: $showFAQ) { }
+                FAQView(
+                    showAccount: $showAccount,
+                    showFAQ: $showFAQ,
+                    statusConnect: $statusConnect,
+                    viewModel: FAQViewModel()),
+                isActive: $showFAQ) { }
         }
     }
     
@@ -220,11 +220,11 @@ struct AccountView: View {
                    autohideIn: 5,
                    closeOnTap: false,
                    closeOnTapOutside: true, view: {
-                PopupSelectView(message: "Successfully resend verify email.",
-                                confirmAction: {
-                    viewModel.showSuccessfullyResendEmail = false
-                })
-            })
+                       PopupSelectView(message: "Successfully resend verify email.",
+                                       confirmAction: {
+                                           viewModel.showSuccessfullyResendEmail = false
+                                       })
+                   })
             .popup(isPresented: $viewModel.showAlert,
                    type: .floater(verticalPadding: 25, useSafeAreaInset: true),
                    position: .bottom,
@@ -232,11 +232,11 @@ struct AccountView: View {
                    autohideIn: 5,
                    closeOnTap: false,
                    closeOnTapOutside: true, view: {
-                PopupSelectView(message: "An error occurred.",
-                                confirmAction: {
-                    viewModel.showAlert = false
-                })
-            })
+                       PopupSelectView(message: "An error occurred.",
+                                       confirmAction: {
+                                           viewModel.showAlert = false
+                                       })
+                   })
             .fullScreenCover(isPresented: $viewModel.showLogoutConfirmationPad, content: {
                 BottomViewPopup(cancel: {
                     viewModel.showLogoutConfirmationPad = false

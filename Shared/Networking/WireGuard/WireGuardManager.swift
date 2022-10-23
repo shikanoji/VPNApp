@@ -27,7 +27,7 @@ class SystemDataUsage {
         var dataUsageInfo = DataUsageInfo()
         var vpnInterface:[String] = [];
         if let settings = CFNetworkCopySystemProxySettings()?.takeRetainedValue() as? Dictionary<String, Any>,
-            let scopes = settings["__SCOPED__"] as? [String:Any] {
+           let scopes = settings["__SCOPED__"] as? [String:Any] {
             for (key, _) in scopes {
                 if key.contains("tap") || key.contains("tun") || key.contains("ppp") || key.contains("ipsec") {
                     vpnInterface.append(key)
@@ -137,7 +137,7 @@ class WireGuardManager: ObservableObject {
     func connect() {
         let string = NetworkManager.shared.obtainCertificate?.convertToString() ?? ""
         if let cfgStr = configuretionParaseFromContents(lines: string.trimmedLines()) {
-            self.cfg = cfgStr
+            cfg = cfgStr
             
             Task {
                 do {
@@ -230,7 +230,7 @@ class WireGuardManager: ObservableObject {
         var dnsList: [String] = []
         
         guard let dnsCyberSec = NetworkManager.shared.requestCertificate?.dns,
-              dnsCyberSec.count > 0 else {
+              !dnsCyberSec.isEmpty else {
             if AppSetting.shared.primaryDNSValue != "" {
                 dnsList.append(AppSetting.shared.primaryDNSValue)
             }

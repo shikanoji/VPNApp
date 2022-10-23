@@ -51,7 +51,7 @@ struct AppColor {
     static var lightGray = Asset.Colors.lightGray.swiftUIColor
     static let navigationBar = Asset.Colors.navigationBar.swiftUIColor
     
-    ///Board
+    /// Board
     static let backgroundStatusView = Asset.Colors.backgroundStatusView.swiftUIColor
     static let VPNConnected = Asset.Colors.vpnConnected.swiftUIColor
     static let VPNUnconnect = Asset.Colors.vpnUnconnected.swiftUIColor
@@ -65,10 +65,10 @@ struct AppColor {
     static let yellowGradient = Asset.Colors.yellowGradient.swiftUIColor
     static let redradient = Asset.Colors.redGradient.swiftUIColor
     
-    ///Toast
+    /// Toast
     static let toastBackground = Asset.Colors.toastBackground.swiftUIColor
     
-    ///Loading
+    /// Loading
     static let rightCircle = Asset.Colors.rightCircle.swiftUIColor
     static let leftCircle = Asset.Colors.leftCircle.swiftUIColor
     static let backgroundLoading = Asset.Colors.backgroundLoading.swiftUIColor

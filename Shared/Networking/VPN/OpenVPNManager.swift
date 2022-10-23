@@ -59,7 +59,7 @@ class OpenVPNManager: ObservableObject {
     }
     
     func getDataCount() -> DataCount? {
-        return self.cfg?.dataCount
+        return cfg?.dataCount
     }
     
     init() {
@@ -78,7 +78,7 @@ class OpenVPNManager: ObservableObject {
         var stringData = ""
         
         guard let dnsCyberSec = NetworkManager.shared.requestCertificate?.dns,
-              dnsCyberSec.count > 0 else {
+              !dnsCyberSec.isEmpty else {
             if AppSetting.shared.primaryDNSValue != "" {
                 stringData += "dhcp-option DNS " + AppSetting.shared.primaryDNSValue + "\r\n"
             }

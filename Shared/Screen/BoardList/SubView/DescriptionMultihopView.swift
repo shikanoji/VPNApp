@@ -27,7 +27,7 @@ struct DescriptionMultihopView: View {
                     .padding(.top, 35.0)
                 }
                 VStack(alignment: .center) {
-                    Group{
+                    Group {
                         Spacer().frame(height: 32)
                         Text(L10n.Board.BoardList.MultiHop.what)
                             .font(Constant.ChangePassWord.fontTitle)

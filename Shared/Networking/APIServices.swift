@@ -258,7 +258,7 @@ extension APIService: TargetType {
                 
                 if let cityNodeSelect = NetworkManager.shared.getNodeConnect() {
                     NetworkManager.shared.nodeConnecting = cityNodeSelect
-                    if cityNodeSelect.cityNodeList.count > 0 {
+                    if !cityNodeSelect.cityNodeList.isEmpty {
                         param["countryId"] = cityNodeSelect.id
                     } else {
                         param["cityId"] = cityNodeSelect.id

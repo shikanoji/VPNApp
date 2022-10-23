@@ -16,11 +16,11 @@ class AppDelegate: NSObject, UIApplicationDelegate, MessagingDelegate {
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey : Any]? = nil) -> Bool {
         Messaging.messaging().delegate = self
         var filePath:String!
-        #if DEBUG
+#if DEBUG
         filePath = Bundle.main.path(forResource: "GoogleService-Info-dev", ofType: "plist")
-        #elseif RELEASE
+#elseif RELEASE
         filePath = Bundle.main.path(forResource: "GoogleService-Info", ofType: "plist")
-        #endif
+#endif
         guard let path = filePath, let fileopts = FirebaseOptions(contentsOfFile: path) else {
             assert(false, "Couldn't load config file")
             return true
@@ -56,7 +56,7 @@ class AppDelegate: NSObject, UIApplicationDelegate, MessagingDelegate {
     func application(
         _ application: UIApplication,
         didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data) {
-            Messaging.messaging().apnsToken = deviceToken
+        Messaging.messaging().apnsToken = deviceToken
     }
     
     func application(
@@ -74,18 +74,18 @@ class AppDelegate: NSObject, UIApplicationDelegate, MessagingDelegate {
     
     func messaging(_ messaging: Messaging, didReceiveRegistrationToken fcmToken: String?) {
         Messaging.messaging().token { token, error in
-          if let error = error {
-            print("Error fetching FCM registration token: \(error)")
-          } else if let token = token {
-            print("FCM registration token: \(token)")
-          }
+            if let error = error {
+                print("Error fetching FCM registration token: \(error)")
+            } else if let token = token {
+                print("FCM registration token: \(token)")
+            }
         }
     }
     
     @available(iOS 9.0, *)
     func application(_ application: UIApplication, open url: URL,
                      options: [UIApplication.OpenURLOptionsKey: Any])
-      -> Bool {
-      return GIDSignIn.sharedInstance.handle(url)
+        -> Bool {
+        return GIDSignIn.sharedInstance.handle(url)
     }
 }

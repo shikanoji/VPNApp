@@ -71,7 +71,7 @@ public extension UIDevice {
         }
 
         func mapToDevice(identifier: String) -> String { // swiftlint:disable:this cyclomatic_complexity
-            #if os(iOS)
+#if os(iOS)
             switch identifier {
             case "iPod5,1":                                       return "iPod touch (5th generation)"
             case "iPod7,1":                                       return "iPod touch (6th generation)"
@@ -143,14 +143,14 @@ public extension UIDevice {
             case "i386", "x86_64", "arm64":                       return "Simulator \(mapToDevice(identifier: ProcessInfo().environment["SIMULATOR_MODEL_IDENTIFIER"] ?? "iOS"))"
             default:                                              return identifier
             }
-            #elseif os(tvOS)
+#elseif os(tvOS)
             switch identifier {
             case "AppleTV5,3": return "Apple TV 4"
             case "AppleTV6,2": return "Apple TV 4K"
             case "i386", "x86_64": return "Simulator \(mapToDevice(identifier: ProcessInfo().environment["SIMULATOR_MODEL_IDENTIFIER"] ?? "tvOS"))"
             default: return identifier
             }
-            #endif
+#endif
         }
 
         return mapToDevice(identifier: identifier)
