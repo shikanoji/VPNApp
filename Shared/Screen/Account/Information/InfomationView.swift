@@ -22,10 +22,21 @@ struct InfomationView: View {
     var deleteAccountButton: some View {
         AppButton(style: .none, width: UIScreen.main.bounds.size.width - 30, height: 44,
                   backgroundColor: AppColor.darkButton, textColor: AppColor.redradient, text: L10n.Account.deleteAccount) {
-            deleteAccount = true }
-                  .sheet(isPresented: $deleteAccount) {
+            deleteAccount = true
+            if UIDevice.current.userInterfaceIdiom == .pad {
+                viewModel.showDeleteAccountPad = true
+            } else {
+                viewModel.showDeleteAccountPhone = true
+            }
+        }
+                  .fullScreenCover(isPresented: $viewModel.showDeleteAccountPad) {
                       DeleteAccountConfirmationView(viewModel: DeleteAccountConfirmationViewModel()) {
-                          deleteAccount = false
+                          viewModel.showDeleteAccountPad = false
+                      }
+                  }
+                  .sheet(isPresented: $viewModel.showDeleteAccountPhone) {
+                      DeleteAccountConfirmationView(viewModel: DeleteAccountConfirmationViewModel()) {
+                          viewModel.showDeleteAccountPhone = false
                       }
                   }
     }
@@ -41,14 +52,27 @@ struct InfomationView: View {
                     if item.type == .accountSecurity {
                         showChangePassword = true
                     }
+                    if UIDevice.current.userInterfaceIdiom == .pad {
+                        viewModel.showChangePasswordPad = true
+                    } else {
+                        viewModel.showChangePasswordPhone = true
+                    }
                 }
             }
         }
         .padding(Constant.Menu.hozitalPaddingCell)
         .padding(.top, Constant.Menu.topPaddingCell)
-        .sheet(isPresented: $showChangePassword) {
+        .fullScreenCover(isPresented: $viewModel.showChangePasswordPad) {
             ChangePasswordView(viewModel: ChangePasswordViewModel(), showChangePassword: $showChangePassword) {
                 showChangePassword = false
+                viewModel.showChangePasswordPad = false
+            }
+                .clearModalBackground()
+        }
+        .sheet(isPresented: $viewModel.showChangePasswordPhone) {
+            ChangePasswordView(viewModel: ChangePasswordViewModel(), showChangePassword: $showChangePassword) {
+                showChangePassword = false
+                viewModel.showChangePasswordPhone = false
             }
                 .clearModalBackground()
         }

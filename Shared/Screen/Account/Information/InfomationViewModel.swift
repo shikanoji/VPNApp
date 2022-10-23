@@ -9,7 +9,10 @@ import Foundation
 
 class InfomationViewModel: ObservableObject {
     @Published var section: SectionCell = .init(.infomation)
-    
+    @Published var showDeleteAccountPhone = false
+    @Published var showDeleteAccountPad = false
+    @Published var showChangePasswordPhone = false
+    @Published var showChangePasswordPad = false
     init() {
     }
 }

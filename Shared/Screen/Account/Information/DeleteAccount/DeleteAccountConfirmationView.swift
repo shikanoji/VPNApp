@@ -80,6 +80,12 @@ struct DeleteAccountConfirmationView: View {
             /// Pass authentication to view model because Environment object only receivable through view
             viewModel.authentication = authentication
         }
+        .gesture(DragGesture(minimumDistance: 0, coordinateSpace: .local)
+            .onEnded({ value in
+                if value.translation.height > 10 {
+                    cancel?()
+                }
+            }))
         .popup(isPresented: $viewModel.showAlert, type: .floater(verticalPadding: 10), position: .bottom, animation: .easeInOut, autohideIn: 5, closeOnTap: false, closeOnTapOutside: true) {
             PopupSelectView(message: viewModel.alertMessage,
                             confirmAction: {
