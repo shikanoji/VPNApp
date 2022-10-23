@@ -15,6 +15,8 @@ class ChangePasswordViewModel: NSObject, ObservableObject {
     @Published var showProgressView: Bool = false
     @Published var showAlert: Bool = false
     @Published var changePasswordSuccess = false
+    @Published var showChangePasswordPhone = false
+    @Published var showChangePasswordiPad = false
     
     var alertTitle: String = ""
     var alertMessage: String = ""
