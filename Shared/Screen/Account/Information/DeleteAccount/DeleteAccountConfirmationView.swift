@@ -50,7 +50,7 @@ struct DeleteAccountConfirmationView: View {
             message
             Spacer().frame(height: 30)
             AppButton(width: .infinity, backgroundColor: AppColor.redradient, textColor: Color.white , text: L10n.Account.DeleteAccount.delete) {
-                viewModel.deleteAccount()
+                viewModel.requestDeleteAccount()
             }
             Spacer().frame(height: 30)
         }
@@ -61,13 +61,15 @@ struct DeleteAccountConfirmationView: View {
     }
     
     var body: some View {
-        VStack {
-            Color.clear
-                .contentShape(Rectangle())
-                .onTapGesture {
-                    cancel?()
-                }
-            content
+        LoadingScreen(isShowing: $viewModel.showProgressView) {
+            VStack {
+                Color.clear
+                    .contentShape(Rectangle())
+                    .onTapGesture {
+                        cancel?()
+                    }
+                content
+            }
         }
         .onChange(of: viewModel.shouldDismissView) { shouldDismiss in
             if shouldDismiss {

@@ -20,3 +20,4 @@
 "Verified" = "Verified";
 "Unverified" = "Unverified";
 "An error occurred" = "An error occurred";
+"requestDeleteMessage" = "An email was sent to your email.";
