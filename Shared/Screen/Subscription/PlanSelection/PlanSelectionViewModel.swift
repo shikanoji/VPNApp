@@ -62,7 +62,9 @@ class PlanSelectionViewModel: ObservableObject {
         IAPHandler.shared.setProductIds(ids: productIDs)
         IAPHandler.shared.fetchAvailableProducts { [weak self] products in
             guard let strongSelf = self else { return }
-            strongSelf.planList = products
+            DispatchQueue.main.async {
+                strongSelf.planList = products
+            }
         }
     }
     
