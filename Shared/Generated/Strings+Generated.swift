@@ -264,6 +264,8 @@ public enum L10n {
     public static let ok = L10n.tr("Global", "ok", fallback: "OK")
     /// On
     public static let on = L10n.tr("Global", "on", fallback: "On")
+    /// An email was sent to your email.
+    public static let requestDeleteMessage = L10n.tr("Global", "requestDeleteMessage", fallback: "An email was sent to your email.")
     /// Saved successfully!
     public static let saveSuccess = L10n.tr("Global", "SaveSuccess", fallback: "Saved successfully!")
     /// Localizations.strings
