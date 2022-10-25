@@ -133,6 +133,17 @@ extension ServiceManager {
                 throw error
             }
     }
+    
+    func requestDeleteAccount() -> Single<APIResponse<EmptyResult>> {
+        return request(.requestDeleteAccount)
+            .map { response in
+                let result = try JSONDecoder().decode(APIResponse<EmptyResult>.self, from: response.data)
+                return result
+            }
+            .catch { error in
+                throw error
+            }
+    }
 
     func sendVerifiedEmail() -> Single<APIResponse<EmptyResult>> {
         return request(.sendVerifyEmail)

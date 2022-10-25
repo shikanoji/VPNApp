@@ -30,12 +30,18 @@ struct InfomationView: View {
             }
         }
         .fullScreenCover(isPresented: $viewModel.showDeleteAccountPad) {
-            DeleteAccountConfirmationView(viewModel: DeleteAccountConfirmationViewModel()) {
+            DeleteAccountConfirmationView(viewModel: DeleteAccountConfirmationViewModel(requestDeleteSucces: {
+                viewModel.showAlert = true
+                viewModel.alertMessage = L10n.Global.requestDeleteMessage
+            })) {
                 viewModel.showDeleteAccountPad = false
             }
         }
         .sheet(isPresented: $viewModel.showDeleteAccountPhone) {
-            DeleteAccountConfirmationView(viewModel: DeleteAccountConfirmationViewModel()) {
+            DeleteAccountConfirmationView(viewModel: DeleteAccountConfirmationViewModel(requestDeleteSucces: {
+                viewModel.showAlert = true
+                viewModel.alertMessage = L10n.Global.requestDeleteMessage
+            })) {
                 viewModel.showDeleteAccountPhone = false
             }
         }
@@ -101,6 +107,12 @@ struct InfomationView: View {
                     deleteAccountButton
                 }
             }
+        }
+        .popup(isPresented: $viewModel.showAlert, type: .floater(verticalPadding: 10), position: .bottom, animation: .easeInOut, autohideIn: 5, closeOnTap: false, closeOnTapOutside: true) {
+            PopupSelectView(message: viewModel.alertMessage,
+                            confirmAction: {
+                                viewModel.showAlert = false
+                            })
         }
         .navigationBarHidden(true)
         .background(AppColor.background)

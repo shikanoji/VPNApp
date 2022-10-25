@@ -83,6 +83,7 @@ enum APIService {
     case getStatsByServerId
     case getServerStats
     case pingGoogleCheckInternet
+    case requestDeleteAccount
 }
 
 extension APIService: TargetType {
@@ -104,6 +105,8 @@ extension APIService: TargetType {
     // This is the path of each operation that will be appended to our base URL.
     var path: String {
         switch self {
+        case .requestDeleteAccount:
+            return Constant.api.path.requestDeleteAccount
         case .pingGoogleCheckInternet:
             return ""
         case .getServerStats:
@@ -171,7 +174,7 @@ extension APIService: TargetType {
             return .get
         case .getCountryList, .getAppSettings, .getRequestCertificate, .ipInfoOptional, .getListSession, .getTopicQuestionList, .getMultihopList, .fetchPaymentHistory, .getStatsByServerId, .getServerStats:
             return .get
-        case .register, .login, .loginSocial, .logout, .forgotPassword, .refreshToken, .verifyReceipt, .sendVerifyEmail:
+        case .register, .login, .loginSocial, .logout, .forgotPassword, .refreshToken, .verifyReceipt, .sendVerifyEmail, .requestDeleteAccount:
             return .post
         case .changePassword:
             return .put
@@ -187,6 +190,12 @@ extension APIService: TargetType {
     // In this example we will not pass anything in the body of the request.
     var task: Task {
         switch self {
+        case .requestDeleteAccount:
+            var body: [String: Any] = [:]
+            if getInfoDevice() != "" {
+                body["deviceInfo"] = getInfoDevice()
+            }
+            return .requestCompositeParameters(bodyParameters: body, bodyEncoding: JSONEncoding.prettyPrinted, urlParameters: [:])
         case .getServerStats:
             return .requestParameters(parameters: [:], encoding: URLEncoding.queryString)
         case .getStatsByServerId:
@@ -361,7 +370,7 @@ extension APIService: TargetType {
                 "Content-type": "application/json",
                 "x-api-key": "4368c9a9-e8a7-4e66-89cb-97c801c5dd88"
             ]
-        case .getServerStats:
+        case .getServerStats, .requestDeleteAccount:
             return [
                 "Authorization": "Bearer \(AppSetting.shared.accessToken)"
             ]

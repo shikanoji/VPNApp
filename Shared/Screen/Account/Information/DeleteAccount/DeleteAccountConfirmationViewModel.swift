@@ -12,20 +12,28 @@ class DeleteAccountConfirmationViewModel: ObservableObject {
     @Published var showAlert: Bool = false
     @Published var showProgressView: Bool = false
     @Published var shouldDismissView: Bool = false
+    
+    var requestDeleteSucces: () -> Void
+    
     var authentication: Authentication?
     var alertTitle: String = ""
     var alertMessage: String = ""
     var appleToken: String = ""
     var disposedBag = DisposeBag()
-    func deleteAccount() {
+    
+    init(requestDeleteSucces: @escaping () -> Void) {
+        self.requestDeleteSucces = requestDeleteSucces
+    }
+    
+    func requestDeleteAccount() {
         showProgressView = true
-        ServiceManager.shared.deleteAccount()
+        ServiceManager.shared.requestDeleteAccount()
             .subscribe(onSuccess: {[weak self] response in
                 guard let strongSelf = self else { return }
                 strongSelf.showProgressView = false
-                if response.result != nil {
+                if response.success  {
+                    strongSelf.requestDeleteSucces()
                     strongSelf.shouldDismissView = true
-                    strongSelf.authentication?.logout()
                 } else {
                     let error = response.errors
                     if !error.isEmpty, let message = error[0] as? String {
