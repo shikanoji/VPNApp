@@ -1323,6 +1323,7 @@
 				EE03442728082ABD003DFB64 /* Embed App Extensions */,
 				AC3328B129053ABF00EAC979 /* SwiftFormat */,
 				AC6074DA27DC6B3800DD5667 /* SwiftGen */,
+				AC4896EA29093F5600997E67 /* Crashlytic */,
 			);
 			buildRules = (
 			);
@@ -1532,6 +1533,24 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "cd BuildTools\nSDKROOT=(xcrun --sdk macosx --show-sdk-path)\n#swift package update #Uncomment this line temporarily to update the version used to the latest matching your BuildTools/Package.swift file\nswift run -c release swiftformat \"$SRCROOT\"\n";
+		};
+		AC4896EA29093F5600997E67 /* Crashlytic */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			name = Crashlytic;
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "${BUILD_DIR%/Build/*}/SourcePackages/checkouts/firebase-ios-sdk/Crashlytics/run\n";
 		};
 		AC6074DA27DC6B3800DD5667 /* SwiftGen */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -2028,6 +2047,7 @@
 					"$(inherited)",
 				);
 				MARKETING_VERSION = "${APP_VERSION";
+				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_BUNDLE_IDENTIFIER = com.sysvpn.client.ios.dev;
 				PRODUCT_NAME = "SysVPN Dev";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -2075,6 +2095,7 @@
 				);
 				MARKETING_VERSION = "${APP_VERSION";
 				ONLY_ACTIVE_ARCH = NO;
+				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_BUNDLE_IDENTIFIER = com.sysvpn.client.ios;
 				PRODUCT_NAME = SysVPN;
 				PROVISIONING_PROFILE_SPECIFIER = "";
