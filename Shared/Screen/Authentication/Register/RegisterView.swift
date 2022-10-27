@@ -34,7 +34,7 @@ struct RegisterView: View {
             Spacer().frame(height: 40)
         }
     }
-    
+
     var textInputs: some View {
         Group {
             Form(placeholder: L10n.Register.emailPlaceholder, value: $viewModel.email, width: Constant.Global.widthFormAndButton)
@@ -45,7 +45,7 @@ struct RegisterView: View {
             Spacer().frame(height: textFieldSpacing)
         }
     }
-    
+
     var registerButtons: some View {
         Group {
             NavigationLink(destination: SubscriptionIntroduction()
@@ -64,7 +64,7 @@ struct RegisterView: View {
             Spacer().frame(height: buttonSpacing)
         }
     }
-    
+
     var backToLoginLink: some View {
         Group {
             HStack {
@@ -82,7 +82,7 @@ struct RegisterView: View {
             }
         }
     }
-    
+
     var body: some View {
         LoadingScreen(isShowing: $viewModel.showProgressView) {
             Background() {

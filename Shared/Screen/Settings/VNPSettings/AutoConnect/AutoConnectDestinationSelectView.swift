@@ -16,9 +16,9 @@ struct AutoConnectDestinationSelectView: View {
     @Binding var statusConnect: VPNStatus
     @Binding var showAutoConnectDestinationSelection: Bool
     @StateObject var viewModel: AutoConnectDestinationSelectViewModel
-    
+
     @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
-    
+
     var body: some View {
         NavigationView {
             VStack {

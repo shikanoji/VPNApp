@@ -16,7 +16,7 @@ class BaseServiceManager<API: TargetType> {
     let provider = MoyaProvider<API>(session: DefaultAlamofireSession.shared,
                                      plugins: [NetworkLoggerPlugin(configuration: .init(logOptions: .formatRequestAscURL))]
     )
-    
+
     func request(_ api: API) -> Single<Response> {
         return provider.rx.request(api)
             .flatMap {
@@ -35,7 +35,7 @@ class BaseServiceManager<API: TargetType> {
             .handleResponse()
             .retry(AppSetting.shared.refreshTokenError ? 0 : 2)
     }
-    
+
     func cancelTask() {
         provider.session.session.finishTasksAndInvalidate()
     }
@@ -58,24 +58,24 @@ extension PrimitiveSequence where Trait == SingleTrait, Element == Response {
 //            if (try? response.map(Token.self)) != nil {
 //                //Handle token
 //            }
-            
+
             if (200 ... 299) ~= response.statusCode {
                 return Single.just(response)
             }
-            
+
             if response.statusCode == 400 {
                 return Single.just(response)
             }
-            
+
             if response.statusCode == 503 {
                 return Single.just(response)
             }
-            
+
             if var error = try? response.map(ResponseError.self) {
                 error.statusCode = response.statusCode
                 return Single.error(error)
             }
-            
+
             // Its an error and can't decode error details from server, push generic message
             let genericError = ResponseError(statusCode: response.statusCode,
                                              message: "empty message")

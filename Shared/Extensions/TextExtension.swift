@@ -12,15 +12,15 @@ extension Text {
     func setDefault() -> some View {
         modifier(DefaultLabel())
     }
-    
+
     func setDefaultBold() -> some View {
         modifier(DefaultBold())
     }
-    
+
     func setTitle() -> some View {
         modifier(TitleLabel())
     }
-    
+
     func setLightBlackText() -> some View {
         modifier(LightBlackText())
     }

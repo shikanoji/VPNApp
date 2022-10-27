@@ -26,7 +26,7 @@ class RegisterViewModel: NSObject, ObservableObject {
         email.isEmpty || password.isEmpty || retypePassword.isEmpty
     }
     private let disposedBag = DisposeBag()
-    
+
     func signup() {
         guard !registerDisable else {
             alertMessage = "Invalid email or password"
@@ -51,7 +51,7 @@ class RegisterViewModel: NSObject, ObservableObject {
             })
             .disposed(by: disposedBag)
     }
-    
+
     // MARK: - Login with Google
     func signupGoogle() {
         guard let clientID = FirebaseApp.app()?.options.clientID else { return }
@@ -94,7 +94,7 @@ class RegisterViewModel: NSObject, ObservableObject {
             }
         }
     }
-    
+
     // MARK: - Login with Apple
     func signupApple() {
         let provider = ASAuthorizationAppleIDProvider()

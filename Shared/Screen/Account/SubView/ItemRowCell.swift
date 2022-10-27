@@ -7,10 +7,10 @@
 import SwiftUI
 
 struct RoundedCorner: Shape {
-    
+
     var radius: CGFloat = .infinity
     var corners: UIRectCorner = .allCorners
-    
+
     func path(in rect: CGRect) -> Path {
         let path = UIBezierPath(roundedRect: rect, byRoundingCorners: corners, cornerRadii: CGSize(width: radius, height: radius))
         return Path(path.cgPath)
@@ -22,7 +22,7 @@ enum PositionItemCell {
     case middle
     case bot
     case all
-    
+
     var rectCorner: UIRectCorner {
         switch self {
         case .top:
@@ -44,12 +44,12 @@ struct ItemRowCell: View {
     @State var showSwitch = false
     @State var showSelect = false
     @State var alertContent = ""
-    
+
     @State var position: PositionItemCell = .middle
     var item: ItemCell? = nil
     var switchValue: Bool = false
     var onSwitchValueChange: ((Bool) -> Void)?
-    
+
     var body: some View {
         HStack {
             Spacer().frame(width: 16)
@@ -155,7 +155,7 @@ struct CheckmarkToggleStyle: ToggleStyle {
 }
 
 struct SelectToggleStyle: ToggleStyle {
-    
+
     func makeBody(configuration: Configuration) -> some View {
         HStack {
             configuration.label

@@ -20,17 +20,17 @@ struct ForgotPasswordView: View {
             Spacer().frame(height: 40)
         }
     }
-    
+
     var emailForm: some View {
         Form(placeholder: L10n.ForgotPassword.emailPlaceholder, value: $viewModel.email, width: Constant.Global.widthFormAndButton)
     }
-    
+
     var submitButton: some View {
         AppButton(style: .themeButton, width: Constant.Global.widthFormAndButton, text: L10n.ForgotPassword.sendRequestButton) {
             viewModel.sendRequest()
         }.disabled(viewModel.sendRequestDisable)
     }
-    
+
     var footer: some View {
         HStack {
             Text(L10n.Register.hadAccountText).setDefault()
@@ -40,7 +40,7 @@ struct ForgotPasswordView: View {
             }
         }
     }
-    
+
     var body: some View {
         LoadingScreen(isShowing: $viewModel.showProgressView) {
             Background() {

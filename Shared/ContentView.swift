@@ -12,7 +12,7 @@ import UIKit
 struct ContentView: View {
     @StateObject var viewModel: ContentViewModel = ContentViewModel()
     @EnvironmentObject var authentication: Authentication
-    
+
     init() {
         UITextField.appearance().tintColor = .white
         UIScrollView.appearance().bounces = false
@@ -22,11 +22,11 @@ struct ContentView: View {
         UINavigationBar.appearance().standardAppearance = appearance
         UINavigationBar.appearance().scrollEdgeAppearance = appearance
     }
-    
+
     private let transitionRight = AnyTransition.move(edge: .trailing)
-    
+
     @State var enableAnimation = false
-    
+
     var body: some View {
         if viewModel.showSessionExpired {
             ForceLogoutView {

@@ -10,9 +10,9 @@ import SwiftUI
 import UIKit
 struct IntroductionView: View {
     @EnvironmentObject var authentication: Authentication
-    
+
     @Environment(\.safeAreaInsets) private var safeAreaInsets
-    
+
     var body: some View {
         Background() {
             VStack() {

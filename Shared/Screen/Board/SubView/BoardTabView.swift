@@ -9,7 +9,7 @@ import SwiftUI
 
 struct BoardTabView: View {
     @StateObject var viewModel: BoardViewModel
-    
+
     var body: some View {
         ZStack {
             HStack(spacing: 5) {
@@ -28,10 +28,10 @@ struct BoardTabView: View {
 }
 
 struct BoardTabViewCustom: View {
-    
+
     var typeTab: StateTab
     @StateObject var viewModel: BoardViewModel
-    
+
     var body: some View {
         Button(typeTab.title) {
             viewModel.selectedTab = typeTab
@@ -50,7 +50,7 @@ struct PrimaryButtonStyle: ButtonStyle {
     var disabled: Bool = false
     var textSidePadding: CGFloat = 30
     var weight: Font.Weight = .semibold
-    
+
     func makeBody(configuration: Configuration) -> some View {
         configuration.label
             .padding(.horizontal)

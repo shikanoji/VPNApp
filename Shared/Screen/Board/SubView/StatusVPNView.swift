@@ -13,7 +13,7 @@ struct StatusVPNView: View {
     var status: VPNStatus
     var flag: String
     var name: String
-    
+
     var body: some View {
         ZStack(alignment: .leading) {
             RoundedRectangle(cornerRadius: Constant.Board.SubBoard.radius)
@@ -47,7 +47,7 @@ struct StatusVPNView: View {
         }
         .frame(height: Constant.Board.SubBoard.height)
     }
-    
+
     func getStatusTextView() -> some View {
         VStack(alignment: .leading, spacing: 5) {
             Text(L10n.Board.ip + " \(ip) - ")

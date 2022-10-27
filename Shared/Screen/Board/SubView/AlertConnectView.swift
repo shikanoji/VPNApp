@@ -11,7 +11,7 @@ struct AlertConnectView: View {
     var flag: String
     var name: String
     let ensignSize: CGFloat = Constant.Board.NodePopupView.frameEnsign
-    
+
     var body: some View {
         VStack(spacing: 0) {
             AlertConnectView()
@@ -23,7 +23,7 @@ struct AlertConnectView: View {
                 .foregroundColor(.white)
         }
     }
-    
+
     func AlertConnectView() -> some View {
         HStack(spacing: 10) {
             Group {
@@ -53,7 +53,7 @@ struct AlertConnectView: View {
 
 struct Triangle : Shape {
     var soft = true
-    
+
     func path(in rect: CGRect) -> Path {
         Path { path in
             let width: CGFloat = rect.width

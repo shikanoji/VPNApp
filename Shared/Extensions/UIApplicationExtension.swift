@@ -18,7 +18,7 @@ extension UIApplication {
             .filter { $0.isKeyWindow }
             .first
     }
-    
+
     var rootViewController: UIViewController? {
         currentKeyWindow?.rootViewController
     }

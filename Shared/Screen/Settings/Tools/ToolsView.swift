@@ -14,8 +14,8 @@ struct ToolsView: View {
     @Binding var statusConnect: VPNStatus
     @StateObject var viewModel: ToolsViewModel
     @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
-    
-    
+
+
     var body: some View {
         ScrollView(.vertical, showsIndicators: false) {
             VStack {

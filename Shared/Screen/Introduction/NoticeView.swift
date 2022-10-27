@@ -13,7 +13,7 @@ struct NoticeView: View {
     @State var showIntroduction: Bool = false
     @State var showTermsAndCondition: Bool = false
     @State var showPrivacyPolicies: Bool = false
-    
+
     var body: some View {
         ScrollView(.vertical, showsIndicators: false) {
             VStack(alignment: .center) {
@@ -86,7 +86,7 @@ struct NoticeView: View {
                                                                  title: L10n.Settings.privacyPolicty),
                                        isActive: $showPrivacyPolicies) {}
                     }
-                    
+
                     AppButton(width: 295, text: L10n.Notice.buttonText) {
                         AppSetting.shared.showedNotice = true
                         authentication.showNoticeAlert = true

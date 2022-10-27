@@ -54,11 +54,11 @@ enum AppKeys: String {
     case recommendedCountries = "recommendedCountries"
     case temporaryDisableAutoConnect = "temporaryDisableAutoConnect"
     case needToStartNewSession = "needToStartNewSession"
-    
+
     /// Last Time when Data Map Update
     case lastChange = "lastChange"
     case updateDataMap = "updateDataMap"
-    
+
     case selectConfig = "selectConfig"
     case recommendConfig = "recommendConfig"
     // DNS
@@ -79,7 +79,7 @@ class AppSetting {
     var forceUpdateVersion: [String] = []
     @Published var currentNumberDevice: Int = 0
     init() {}
-    
+
     func isExitSearch(_ search: String, name: String, iso2: String, iso3: String) -> Bool {
         return name.range(of: search, options: .caseInsensitive) != nil
             || iso2.range(of: search, options: .caseInsensitive) != nil

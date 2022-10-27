@@ -11,26 +11,26 @@ import SwiftUI
 
 class ProtocolSettingViewModel: ObservableObject {
     @Published var section: SectionCell = SectionCell(.protocolConnect)
-    
+
     init() {
         configItem()
     }
-    
+
     func configItem(_ item: ItemCell? = nil) {
         var defaultItem: ItemCell?
-        
+
         if let updateItem = item {
             defaultItem = updateItem
         } else {
             defaultItem = ItemCell(type: NetworkManager.shared.selectConfig)
         }
-        
+
         guard let exitItem = defaultItem else {
             return
         }
 
         section.updateSelectedItemListAndUnSelectOther(exitItem)
-        
+
         if NetworkManager.shared.selectConfig != exitItem.type {
             NetworkManager.shared.selectConfig = exitItem.type
             NotificationCenter.default.post(name: Constant.NameNotification.changeProtocolSetting, object: nil)

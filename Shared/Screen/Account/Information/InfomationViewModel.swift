@@ -13,10 +13,10 @@ class InfomationViewModel: ObservableObject {
     @Published var showDeleteAccountPad = false
     @Published var showChangePasswordPhone = false
     @Published var showChangePasswordPad = false
-    
+
     @Published var showAlert: Bool = false
     var alertMessage: String = ""
-    
+
     init() {
     }
 }

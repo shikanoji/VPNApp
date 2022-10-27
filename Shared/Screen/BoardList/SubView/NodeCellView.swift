@@ -9,9 +9,9 @@ import SwiftUI
 
 struct NodeCellView: View {
     @State var node: Node
-    
+
     let imageSize: CGFloat = Constant.BoardList.heightImageNode
-    
+
     var body: some View {
         HStack(spacing: 16) {
 //            ImageView(withURL: $node.flag.wrappedValue, size: imageSize)

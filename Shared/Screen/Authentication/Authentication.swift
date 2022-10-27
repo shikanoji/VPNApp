@@ -14,22 +14,22 @@ class Authentication: ObservableObject {
     @Published var showNoticeAlert: Bool = AppSetting.shared.showedNotice
     @Published var showedIntroduction: Bool = AppSetting.shared.showedIntroduction
     @Published var needToShowRegisterScreenBeforeLogin: Bool = false
-    
+
     func login(withLoginData data: LoginResultModel) {
         login(user: data.user, tokens: data.tokens)
     }
-    
+
     func login(withRegisterData data: RegisterResultModel) {
         login(user: data.user, tokens: data.tokens)
     }
-    
+
     func saveIsPremium(_ isPremium : Bool) {
         DispatchQueue.main.async {
             self.isPremium = isPremium
         }
         AppSetting.shared.isPremium = isPremium
     }
-    
+
     private func login(user: User, tokens: Tokens) {
         needToShowRegisterScreenBeforeLogin = false
         AppSetting.shared.idUser = Int(user.id)
@@ -52,13 +52,13 @@ class Authentication: ObservableObject {
         isValidated = AppSetting.shared.isRefreshTokenValid
         isPremium = AppSetting.shared.isPremium
     }
-    
+
     func upgradeToPremium(user: User) {
         AppSetting.shared.isPremium = user.is_premium
         AppSetting.shared.premiumExpires = user.premium_expire
         isPremium = AppSetting.shared.isPremium
     }
-    
+
     func logout() {
         /// Should not clear ip, country code and city since it will make user unable to login again unless restarting app
         AppSetting.shared.idUser = 0

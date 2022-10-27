@@ -11,7 +11,7 @@ import SwiftyJSON
 struct LoginResultModel: Decodable {
     var user: User
     var tokens: Tokens
-    
+
     func convertToRegisterModel() -> RegisterResultModel {
         return RegisterResultModel(user: user, tokens: tokens)
     }
@@ -32,7 +32,7 @@ struct Token: Decodable {
         self.token = token
         self.expires = expires
     }
-    
+
     var token: String
     var expires: Int?
 }
@@ -102,7 +102,7 @@ struct User: Decodable {
             email_verified = try values.decode(Bool.self, forKey: .email_verified)
         }
     }
-    
+
     var id: Int64 = 0
     var created_at: Int? = nil
     var updated_at: Int? = nil
