@@ -16,11 +16,11 @@ struct FAQView: View {
     @StateObject var viewModel: FAQViewModel
     @State var showFAQDetail = false
     @State var faqSelect: QuestionModel!
-    
+
     @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
-    
+
     @Environment(\.safeAreaInsets) private var safeAreaInsets
-     
+
     var body: some View {
         VStack {
             AppColor.darkButton

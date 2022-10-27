@@ -9,9 +9,9 @@ import SwiftUI
 
 struct NodeCellStaticView: View {
     @State var node: StaticServer
-    
+
     let imageSize: CGFloat = Constant.BoardList.heightImageNode
-    
+
     var body: some View {
         HStack(spacing: 16) {
             Group {

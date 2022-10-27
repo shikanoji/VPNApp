@@ -11,7 +11,7 @@ import TunnelKitManager
 struct SettingsView: View {
     @Binding var showSettings: Bool
     @Binding var statusConnect: VPNStatus
-    
+
     @State var showVPNSetting = false
     @State var showToolsSetting = false
     @State var showLicenseList = false
@@ -20,7 +20,7 @@ struct SettingsView: View {
     @Binding var showAutoConnect: Bool
     @Binding var showProtocolConnect: Bool
     @Binding var showDNSSetting: Bool
-        
+
     var body: some View {
         VStack {
             AppColor.darkButton

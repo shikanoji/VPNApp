@@ -24,10 +24,10 @@ struct WebView: UIViewRepresentable {
             parent.finishedLoading = true
         }
     }
-    
+
     var url: URL
     @Binding var finishedLoading: Bool
-    
+
     func makeUIView(context: Context) -> WKWebView {
         let webView = WKWebView()
         webView.navigationDelegate = context.coordinator
@@ -39,10 +39,10 @@ struct WebView: UIViewRepresentable {
         webView.navigationDelegate = context.coordinator
         webView.load(request)
     }
-    
+
     func makeCoordinator() -> Coordinator {
         Coordinator(self)
     }
-    
-    
+
+
 }

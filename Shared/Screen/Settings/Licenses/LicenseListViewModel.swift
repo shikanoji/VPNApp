@@ -12,7 +12,7 @@ typealias LicensePlistType = [[String: String]]
 struct LicenseTitle {
     let filePath: String?
     let title: String?
-    
+
     init(rawData: [String: String]) {
         filePath = rawData["File"]
         title = rawData["Title"]

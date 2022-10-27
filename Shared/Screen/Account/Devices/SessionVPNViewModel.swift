@@ -21,14 +21,14 @@ class SessionVPNViewModel: ObservableObject {
 
     var error: APIError?
     var limit = AppSetting.shared.maxNumberDevices
-    
+
     let disposedBag = DisposeBag()
-    
+
     init() {}
-    
+
     func getListSession() {
         showProgressView = true
-        
+
         ServiceManager.shared.getListSession()
             .subscribe(onSuccess: { [weak self] response in
                 self?.showProgressView = false
@@ -57,7 +57,7 @@ class SessionVPNViewModel: ObservableObject {
             })
             .disposed(by: disposedBag)
     }
-    
+
     func disconnectSession() {
         guard let device = sessionSelect else {
             return

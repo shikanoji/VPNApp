@@ -13,7 +13,7 @@ struct SysVPNApp: App {
     @State var authentication = Authentication()
     @State var mesh = Mesh()
     @UIApplicationDelegateAdaptor(AppDelegate.self) var appDelegate
-    
+
     var body: some Scene {
         WindowGroup {
             ContentView()

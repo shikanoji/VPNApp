@@ -22,7 +22,7 @@ class AppDelegate: NSObject, UIApplicationDelegate, MessagingDelegate {
         filePath = Bundle.main.path(forResource: "GoogleService-Info", ofType: "plist")
 #endif
         guard let path = filePath, let fileopts = FirebaseOptions(contentsOfFile: path) else {
-            assert(false, "Couldn't load config file")
+            assertionFailure("Couldn't load config file")
             return true
         }
         FirebaseApp.configure(options: fileopts)

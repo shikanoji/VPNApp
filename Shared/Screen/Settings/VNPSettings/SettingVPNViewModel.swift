@@ -16,10 +16,10 @@ class SettingVPNViewModel: ObservableObject {
         // .localNetwork,
         // .metered
     ]
-    
+
     init() {
         refreshItemList()
-        
+
         NotificationCenter.default.addObserver(
             self,
             selector: #selector(refreshItemList),
@@ -27,7 +27,7 @@ class SettingVPNViewModel: ObservableObject {
             object: nil
         )
     }
-    
+
     @objc
     func refreshItemList() {
         itemList = [

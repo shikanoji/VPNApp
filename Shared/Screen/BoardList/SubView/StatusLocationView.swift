@@ -13,9 +13,9 @@ struct StatusLocationView: View {
     @Binding var statusConnect: VPNStatus
     @Binding var flag: String
     @Binding var name: String
-    
+
     let imageSize: CGFloat = Constant.BoardList.heightImageNode / 2
-    
+
     var body: some View {
         HStack(spacing: 0) {
             if statusConnect == .connected {

@@ -75,7 +75,7 @@ extension AppSetting {
             UserDefaults.standard.setValue(newValue, forKey: AppKeys.selectConfig.rawValue)
         }
     }
-    
+
     var recommendConfig: Int {
         get {
             UserDefaults.standard.integer(forKey: AppKeys.recommendConfig.rawValue)
@@ -124,7 +124,7 @@ extension AppSetting {
 
         return .recommended
     }
-    
+
     func getRecommendConfigProtocol() -> ItemCellType {
         if let type = ItemCellType(rawValue: AppSetting.shared.recommendConfig) {
             if [.wireGuard, .openVPNTCP, .openVPNUDP].contains(type) {
@@ -135,7 +135,7 @@ extension AppSetting {
 
         return .openVPNTCP
     }
-    
+
     func getValueConfigProtocol() -> ItemCellType {
         if let type = ItemCellType(rawValue: AppSetting.shared.selectConfig) {
             if [.wireGuard, .openVPNTCP, .openVPNUDP].contains(type) {
@@ -209,7 +209,7 @@ extension AppSetting {
             UserDefaults.standard.setValue(newValue, forKey: AppKeys.selectCyberSec.rawValue)
         }
     }
-    
+
     var saveTimeConnectedVPN: Date? {
         get {
             UserDefaults.standard.object(forKey: AppKeys.saveTimeConnectedVPN.rawValue) as? Date
@@ -218,7 +218,7 @@ extension AppSetting {
             UserDefaults.standard.setValue(newValue, forKey: AppKeys.saveTimeConnectedVPN.rawValue)
         }
     }
-        
+
     var isConnectedToVpn: Bool {
         if let settings = CFNetworkCopySystemProxySettings()?.takeRetainedValue() as? Dictionary<String, Any>,
            let scopes = settings["__SCOPED__"] as? [String:Any] {

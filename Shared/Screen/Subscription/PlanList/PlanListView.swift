@@ -10,9 +10,9 @@ import SwiftUI
 
 struct PlanListView: View {
     @Binding var selectedPlan: Plan?
-    
+
     var changePlan = false
-    
+
     var body: some View {
         VStack(spacing: 16) {
             ForEach(Plan.getListPlan(), id: \.self) { item in

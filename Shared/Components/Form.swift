@@ -17,7 +17,7 @@ struct Form: View {
     @State private var isFocused: Bool
     let shouldAnimate: Bool
     var width: CGFloat
-    
+
     init(placeholder: String = "", value: Binding<String>, isPassword: Bool = false, shouldAnimate: Bool = true, width: CGFloat = 311) {
         self.placeholder = placeholder
         _value = value
@@ -27,7 +27,7 @@ struct Form: View {
         self.shouldAnimate = shouldAnimate
         self.width = width
     }
-    
+
     var body: some View {
         VStack {
             if isPassword {

@@ -12,13 +12,13 @@ struct AutoConnectView: View {
     @Binding var showSettings: Bool
     @Binding var showVPNSetting: Bool
     @Binding var shouldHideAutoConnect: Bool
-    
+
     @Binding var statusConnect: VPNStatus
     @State var showAutoConnectDestinationSelection: Bool = false
     var sectionList: [SectionCell] = []
     @StateObject var viewModel: AutoConnectViewModel
     @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
-    
+
     var body: some View {
         ScrollView(.vertical, showsIndicators: false) {
             VStack() {

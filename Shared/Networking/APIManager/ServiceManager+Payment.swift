@@ -21,7 +21,7 @@ extension ServiceManager {
                 throw APIError.someError
             }
     }
-    
+
     func verifyReceipt(receiptString: String) -> Single<APIResponse<User>> {
         return request(.verifyReceipt(receipt: receiptString))
             .map { response in

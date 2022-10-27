@@ -15,13 +15,13 @@ struct PopupSelectView: View {
         static let buttonWidth: CGFloat = 120
     }
     var message: String = ""
-    
+
     var cancelTitle = ""
     var confirmTitle = "DISMISS"
-    
+
     var cancelAction: (() -> Void)? = nil
     var confirmAction: (() -> Void)? = nil
-    
+
     var body: some View {
         HStack(spacing: 0) {
             VStack(alignment: .leading, spacing: 5) {

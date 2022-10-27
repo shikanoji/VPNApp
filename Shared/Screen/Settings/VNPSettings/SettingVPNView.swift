@@ -12,14 +12,14 @@ struct SettingVPNView: View {
     @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
     @Binding var showSettings: Bool
     @Binding var showVPNSetting: Bool
-    
+
     @Binding var statusConnect: VPNStatus
     @State var showAutoConnect: Bool = false
     @State var showProtocolConnect: Bool = false
     @State var showDNSSetting: Bool = false
-    
+
     @StateObject var viewModel: SettingVPNViewModel
-    
+
     var body: some View {
         ScrollView(.vertical, showsIndicators: false) {
             VStack {

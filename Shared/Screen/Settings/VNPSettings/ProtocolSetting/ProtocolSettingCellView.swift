@@ -8,15 +8,15 @@
 import SwiftUI
 
 struct ProtocolSettingCellView: View {
-    
+
     @State var title: String
     @State var position: PositionItemCell = .middle
     @State var changeValue = false
-    
+
     @EnvironmentObject var viewModel: ProtocolSettingViewModel
-    
+
     var item: ItemCell
-    
+
     var body: some View {
         HStack {
             VStack(alignment: .leading, spacing: 6) {

@@ -11,12 +11,12 @@ import TunnelKitManager
 struct AccountStatusView: View {
     @Binding var showAccount: Bool
     @Binding var showAccountStatus: Bool
-    
+
     @State var showPayment = false
     @Binding var statusConnect: VPNStatus
     @State var showPlanListView: Bool = false
     @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
-    
+
     var body: some View {
         VStack {
             AppColor.darkButton
@@ -76,7 +76,7 @@ struct AccountStatusView: View {
 
 struct AccountStatusView_Previews: PreviewProvider {
     @State static var show = true
-    
+
     static var previews: some View {
         AccountStatusView(showAccount: $show, showAccountStatus: $show, statusConnect: .constant(.connected))
     }

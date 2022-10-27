@@ -26,7 +26,7 @@ struct AppButton: View {
     let borderColor: Color
     let icon: Image?
     private let action: () -> Void
-    
+
     init(style: AppButtonStyle = .none, width: CGFloat = 200, height: CGFloat = 50,
          backgroundColor: Color = AppColor.themeColor,
          textColor: Color = AppColor.blackText,
@@ -49,7 +49,7 @@ struct AppButton: View {
             self.backgroundColor = backgroundColor
             self.textColor = textColor
         }
-        
+
         self.width = width
         self.height = height
         self.text = text
@@ -60,7 +60,7 @@ struct AppButton: View {
         self.action = action
         self.icon = icon
     }
-    
+
     var body: some View {
         Button {
             self.action()
@@ -97,7 +97,7 @@ struct AppButton_Previews: PreviewProvider {
             }
             Spacer().frame(height: 20)
             AppButton(backgroundColor: Color.gray, textColor: Color.white, text: "Custom button", borderWidth: 1, borderColor: AppColor.lightGray) {
-                
+
             }
         }
     }
