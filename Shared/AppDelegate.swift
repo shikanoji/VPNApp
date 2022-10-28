@@ -14,7 +14,6 @@ import GoogleSignIn
 class AppDelegate: NSObject, UIApplicationDelegate, MessagingDelegate {
     static var orientationLock = UIInterfaceOrientationMask.portrait
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey : Any]? = nil) -> Bool {
-        Messaging.messaging().delegate = self
         var filePath:String!
 #if DEBUG
         filePath = Bundle.main.path(forResource: "GoogleService-Info-dev", ofType: "plist")
@@ -28,6 +27,8 @@ class AppDelegate: NSObject, UIApplicationDelegate, MessagingDelegate {
         FirebaseApp.configure(options: fileopts)
         AppSetting.shared.refreshTokenError = false
         AppSetting.shared.isRefreshingToken = false
+        Messaging.messaging().delegate = self
+        registerForPushNotifications()
         return true
     }
     

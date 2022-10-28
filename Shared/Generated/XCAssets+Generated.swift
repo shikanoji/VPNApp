@@ -65,13 +65,10 @@ internal enum Asset {
     internal static let introduction3 = ImageAsset(name: "Introduction-3")
     internal static let lock = ImageAsset(name: "Lock")
     internal static let launchScreen = ImageAsset(name: "LaunchScreen")
-    internal static let launchScreenBackGround2 = ImageAsset(name: "LaunchScreen_BackGround 2")
     internal static let launchScreenBackGround = ImageAsset(name: "LaunchScreen_BackGround")
     internal static let apple = ImageAsset(name: "apple")
     internal static let google = ImageAsset(name: "google")
-    internal static let logoText2 = ImageAsset(name: "Logo-Text 2")
     internal static let logoText = ImageAsset(name: "Logo-Text")
-    internal static let logoLarge2 = ImageAsset(name: "Logo-large 2")
     internal static let logoLarge = ImageAsset(name: "Logo-large")
     internal static let logoMedium = ImageAsset(name: "Logo-medium")
     internal static let logoSmall = ImageAsset(name: "Logo-small")
@@ -106,7 +103,6 @@ internal enum Asset {
     internal static let iconArrowRight = ImageAsset(name: "icon_arrow_right")
   }
   internal enum Colors {
-    internal static let colorLogo2 = ColorAsset(name: "ColorLogo 2")
     internal static let colorLogo = ColorAsset(name: "ColorLogo")
     internal static let freeTrial = ColorAsset(name: "FreeTrial")
     internal static let gradientEntry = ColorAsset(name: "GradientEntry")
