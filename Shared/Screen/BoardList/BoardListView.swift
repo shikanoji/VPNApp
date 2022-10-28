@@ -16,7 +16,7 @@ struct BoardListView: View {
     @Binding var locationData: [NodeGroup]
     
     @Binding var staticIPData: [StaticServer]
-    @Binding var staticNode: StaticServer?
+    @Binding var staticIPSelect: StaticServer?
     
     @Binding var mutilhopList: [MultihopModel]
     @Binding var multihopSelect: MultihopModel?
@@ -44,7 +44,7 @@ struct BoardListView: View {
                 case .location:
                     LocationListView(locationData: $locationData, nodeSelect: $nodeSelect)
                 case .staticIP:
-                    StaticIPListView(staticIPData: $staticIPData, selectStaticServer: $staticNode)
+                    StaticIPListView(staticIPData: $staticIPData, selectStaticServer: $staticIPSelect)
                 case .multiHop:
                     MultiHopView(mutilhopList: $mutilhopList,
                                  multihopSelect: $multihopSelect)

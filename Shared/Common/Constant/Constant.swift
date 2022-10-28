@@ -194,6 +194,7 @@ struct Constant {
         static let showIntroPlan = Notification.Name("showIntroPlan")
         static let startFree7DayTrial = Notification.Name("startFree7DayTrial")
         static let connectVPNError = Notification.Name("connectVPNError")
+        static let appReadyStart = Notification.Name("appReadyStart")
     }
     
     struct TextSize {

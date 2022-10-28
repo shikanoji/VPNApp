@@ -33,9 +33,7 @@ struct StaticIPListView: View {
                         ForEach(nodeListSearch) { node in
                             Button(action: {
                                 AppSetting.shared.temporaryDisableAutoConnect = false
-                                if ItemCell(type: AppSetting.shared.getAutoConnectProtocol()).type == .off {
-                                    selectStaticServer = node
-                                }
+                                selectStaticServer = node
                             }) {
                                 NodeCellStaticView(node: node)
                             }
@@ -44,9 +42,7 @@ struct StaticIPListView: View {
                         ForEach(staticIPData) { node in
                             Button(action: {
                                 AppSetting.shared.temporaryDisableAutoConnect = false
-                                if ItemCell(type: AppSetting.shared.getAutoConnectProtocol()).type == .off {
-                                    selectStaticServer = node
-                                }
+                                selectStaticServer = node
                             }) {
                                 NodeCellStaticView(node: node)
                             }

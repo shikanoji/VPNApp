@@ -11,7 +11,7 @@ import FirebaseAnalytics
 import FirebaseMessaging
 import GoogleSignIn
 
-class AppDelegate: NSObject, UIApplicationDelegate, MessagingDelegate {
+class AppDelegate: NSObject, UIApplicationDelegate, MessagingDelegate, UNUserNotificationCenterDelegate {
     static var orientationLock = UIInterfaceOrientationMask.portrait
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey : Any]? = nil) -> Bool {
         var filePath:String!
@@ -29,7 +29,28 @@ class AppDelegate: NSObject, UIApplicationDelegate, MessagingDelegate {
         AppSetting.shared.isRefreshingToken = false
         Messaging.messaging().delegate = self
         registerForPushNotifications()
+        initNotificationObs()
         return true
+    }
+    
+    func initNotificationObs() {
+        NotificationCenter.default.addObserver(self, selector: #selector(onReadyStart), name: Constant.NameNotification.appReadyStart, object: nil)
+    }
+
+    var timmerAppSetting: Timer?
+
+    @objc func onReadyStart() {
+        onStartApp()
+    }
+
+    func onStartApp() {
+        timmerAppSetting?.invalidate()
+        timmerAppSetting = Timer.scheduledTimer(timeInterval: 30.0, target: self, selector: #selector(onReloadAppSetting), userInfo: nil, repeats: true)
+        onReloadAppSetting()
+    }
+
+    @objc func onReloadAppSetting() {
+        AppSetting.shared.updaterServerIP()
     }
     
     func application(_ application: UIApplication, supportedInterfaceOrientationsFor window: UIWindow?) -> UIInterfaceOrientationMask {
