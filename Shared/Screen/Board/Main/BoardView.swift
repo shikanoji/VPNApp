@@ -246,12 +246,12 @@ struct BoardView: View {
                                               }
                                           }
                                       }
-                        NetworkManager.shared.needReconnect = false
-                        NetworkManager.shared.onlyDisconnectWithoutEndsession = true
-                        AppSetting.shared.temporaryDisableAutoConnect = false
-                        NetworkManager.shared.connectOrDisconnectByUser = true
-                        NetworkManager.shared.ConnectOrDisconnectVPN()
-                    })
+                                      NetworkManager.shared.needReconnect = false
+                                      NetworkManager.shared.onlyDisconnectWithoutEndsession = true
+                                      AppSetting.shared.temporaryDisableAutoConnect = false
+                                      NetworkManager.shared.connectOrDisconnectByUser = true
+                                      NetworkManager.shared.ConnectOrDisconnectVPN()
+                                  })
                     Spacer()
                         .frame(height: Constant.Board.Tabs.topPadding)
                     BoardTabView(viewModel: viewModel)
