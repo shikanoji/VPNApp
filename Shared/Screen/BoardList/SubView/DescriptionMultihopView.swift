@@ -8,9 +8,9 @@
 import SwiftUI
 
 struct DescriptionMultihopView: View {
-    
+
     @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
-    
+
     var body: some View {
         ZStack {
             VStack(spacing: 0) {

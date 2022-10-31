@@ -10,14 +10,14 @@ import RxSwift
 final class AppstoreReceiptHelper {
     static var shared: AppstoreReceiptHelper = AppstoreReceiptHelper()
     var disposedBag: DisposeBag = DisposeBag()
-    
+
     @MainActor
     func verifyReceipt() async -> Result<APIResponse<User>, Error> {
         if let appStoreReceiptURL = Bundle.main.appStoreReceiptURL,
            FileManager.default.fileExists(atPath: appStoreReceiptURL.path) {
             do {
                 let receiptData = try Data(contentsOf: appStoreReceiptURL, options: .alwaysMapped)
-                
+
                 let receiptString = receiptData.base64EncodedString(options: [])
                 return await withCheckedContinuation
                     { (continuation: CheckedContinuation<Result<APIResponse<User>, Error>, Never>) in

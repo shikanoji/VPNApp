@@ -10,9 +10,9 @@ import SwiftUI
 struct CityCellView: View {
     @State var node: Node
     @State var subName = ""
-    
+
     let imageSize: CGFloat = Constant.BoardList.heightImageNode
-    
+
     var body: some View {
         HStack(spacing: 16) {
             Image(uiImage: Constant.BoardList.iconCity!)

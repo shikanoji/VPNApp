@@ -11,7 +11,7 @@ import SwiftUI
 struct FAQCell: View {
     @State var question: QuestionModel
     @State var position: PositionItemCell = .middle
-    
+
     var body: some View {
         HStack {
             Text(question.title)

@@ -27,7 +27,7 @@ class ForgotPasswordViewModel: ObservableObject {
     var sendRequestDisable: Bool {
         email.isEmpty
     }
-    
+
     func sendRequest() {
         showProgressView = true
         ServiceManager.shared.forgotPassword(email: email)

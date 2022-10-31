@@ -11,9 +11,9 @@ import SwiftUI
 struct SubscriptionIntroduction: View {
     @State var toPlanSelection: Bool = false
     @State var toWelcomeScreen: Bool = false
-    
+
     let widthConent = Constant.Board.Map.widthScreen - 100
-    
+
     var body: some View {
         Background {
             ScrollView(.vertical, showsIndicators: false) {

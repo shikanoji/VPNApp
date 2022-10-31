@@ -18,19 +18,19 @@ struct Refresh {
 }
 
 struct PaymentHistoryView: View {
-    
+
     @Binding var showAccount: Bool
     @Binding var showAccountStatus: Bool
     @Binding var statusConnect: VPNStatus
     @StateObject var viewModel: PaymentHistoryViewModel
-    
+
     @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
-    
+
     @State var refresh = Refresh(started: false, released: false)
-    
+
     @State var firstLoad = true
     @State var hiddenRefresh = false
-    
+
     var body: some View {
         VStack {
             AppColor.darkButton
@@ -52,7 +52,7 @@ struct PaymentHistoryView: View {
                 .padding(.bottom, Constant.Menu.topPaddingCell)
             LoadingScreen(isShowing: $viewModel.showProgressView) {
                 ScrollView(.vertical, showsIndicators: false) {
-                    
+
                     GeometryReader { reader -> AnyView in
 
                         DispatchQueue.main.async {
@@ -88,7 +88,7 @@ struct PaymentHistoryView: View {
                         return AnyView(Color.black.frame(width: 0, height: 0))
                     }
                     .frame(width: 0, height: 0)
-                    
+
                     LazyVStack(spacing: 1) {
                         if refresh.started && !firstLoad && !hiddenRefresh {
                             Image(systemName: "arrow.clockwise.circle")
@@ -141,9 +141,9 @@ struct PaymentHistoryView: View {
         .background(AppColor.background)
         .ignoresSafeArea()
     }
-    
+
     func refreshData() {
-        
+
         withAnimation(Animation.linear) {
             if refresh.startOffset == refresh.offset {
                 viewModel.fetchPaymentHistory()
@@ -159,7 +159,7 @@ struct PaymentHistoryView: View {
 
 struct PaymentHistoryView_Previews: PreviewProvider {
     @State static var showAccount = true
-    
+
     static var previews: some View {
         PaymentHistoryView(showAccount: $showAccount, showAccountStatus: $showAccount, statusConnect: .constant(.connected), viewModel: PaymentHistoryViewModel())
     }

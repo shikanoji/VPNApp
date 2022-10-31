@@ -9,9 +9,9 @@ import SwiftUI
 
 struct SearchBar: View {
     @Binding var text: String
-    
+
     @Binding var isEditing: Bool
-    
+
     var body: some View {
         HStack {
             TextField("", text: $text)
@@ -60,7 +60,7 @@ struct SearchBar: View {
 struct SearchBar_Previews: PreviewProvider {
     @State static var isEditing = true
     @State static var txt = ""
-    
+
     static var previews: some View {
         SearchBar(text: $txt, isEditing: $isEditing)
             .preferredColorScheme(.dark)
@@ -73,7 +73,7 @@ extension View {
         when shouldShow: Bool,
         alignment: Alignment = .leading,
         @ViewBuilder placeholder: () -> Content) -> some View {
-            
+
         ZStack(alignment: alignment) {
             placeholder().opacity(shouldShow ? 1 : 0)
             self

@@ -20,12 +20,12 @@ struct DNSSettingView: View {
     @Binding var showDNSSetting: Bool
     @StateObject var viewModel: DNSSettingViewModel
     @Binding var statusConnect: VPNStatus
-    
+
     @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
     @State var dnsSetting: DNSSetting
-    
+
     private let componentWidth = UIScreen.main.bounds.width - 2 * Constant.Menu.hozitalPaddingCell
-    
+
     private var customDNSSection: some View {
         VStack {
             Spacer().frame(height: 30)
@@ -52,7 +52,7 @@ struct DNSSettingView: View {
                       })
         }
     }
-    
+
     var body: some View {
         ScrollView(.vertical, showsIndicators: false) {
             VStack() {

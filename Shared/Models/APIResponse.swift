@@ -14,7 +14,7 @@ struct APIResponse<T: Decodable>: Decodable {
     var errors: [Any]
     var result: T?
     var code: Int?
-    
+
     enum CodingKeys: String, CodingKey {
         case success = "success"
         case message = "message"
@@ -36,13 +36,13 @@ struct APIResponse<T: Decodable>: Decodable {
         } else {
             errors = []
         }
-        
+
         if let _result = try? values.decode(T?.self, forKey: .result) {
             result = _result
         } else {
             result = nil
         }
-        
+
         if let value = try? values.decode(Int.self, forKey: .code) {
             code = value
         } else {

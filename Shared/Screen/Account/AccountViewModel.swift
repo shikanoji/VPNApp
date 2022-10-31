@@ -19,7 +19,7 @@ class AccountViewModel: ObservableObject {
     var alertTitle: String = ""
     var alertMessage: String = ""
     var authentication: Authentication?
-    
+
     func logout() {
         AppSetting.shared.temporaryDisableAutoConnect = true
         AppSetting.shared.needToStartNewSession = true
@@ -44,7 +44,7 @@ class AccountViewModel: ObservableObject {
             callLogoutAPI()
         }
     }
-    
+
     func disconnetAndLogout() {
         NetworkManager.shared.disconnect()
         callLogoutAPI()

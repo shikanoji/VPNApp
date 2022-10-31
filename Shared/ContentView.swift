@@ -12,7 +12,9 @@ import UIKit
 struct ContentView: View {
     @StateObject var viewModel: ContentViewModel = ContentViewModel()
     @EnvironmentObject var authentication: Authentication
-    
+
+    @Environment(\.scenePhase) var scenePhase
+
     init() {
         UITextField.appearance().tintColor = .white
         UIScrollView.appearance().bounces = false
@@ -22,11 +24,11 @@ struct ContentView: View {
         UINavigationBar.appearance().standardAppearance = appearance
         UINavigationBar.appearance().scrollEdgeAppearance = appearance
     }
-    
+
     private let transitionRight = AnyTransition.move(edge: .trailing)
-    
+
     @State var enableAnimation = false
-    
+
     var body: some View {
         if viewModel.showSessionExpired {
             ForceLogoutView {
@@ -96,6 +98,14 @@ struct ContentView: View {
             .ignoresSafeArea()
             .onWillAppear {
                 viewModel.authentication = authentication
+            }
+            .onChange(of: scenePhase) { newPhase in
+                if newPhase == .active {
+                    self.viewModel.checkVPNKill()
+                    print("App in active")
+                } else if newPhase == .background {
+                    print("App in background")
+                }
             }
         }
     }

@@ -26,7 +26,7 @@ struct Node: Identifiable, Codable {
     var cityNodeList = [Node]()
     var countryId: Int = 0
     var countryName: String = ""
-    
+
     enum CodingKeys: String, CodingKey {
         case id
         case name
@@ -43,10 +43,10 @@ struct Node: Identifiable, Codable {
         case countryId
         case countryName
     }
-    
+
     init(from decoder: Decoder) throws {
         let values = try decoder.container(keyedBy: CodingKeys.self)
-        
+
         if let _id = try? values.decode(NodeID.self, forKey: .id) {
             id = _id
         } else {
@@ -107,17 +107,17 @@ struct Node: Identifiable, Codable {
         } else {
             y = 0
         }
-        
+
         if let _countryId = try? values.decode(Int.self, forKey: .countryId) {
             countryId = _countryId
         } else {
             countryId = 0
         }
-        
+
         if let _countryName = try? values.decode(String.self, forKey: .countryName) {
             countryName = _countryName
         }
-        
+
         if !cityNodeList.isEmpty {
             cityNodeList = cityNodeList.map { city -> Node in
                 var updateCity = city
@@ -127,14 +127,14 @@ struct Node: Identifiable, Codable {
                 return updateCity
             }
         } 
-        
+
         isCity = cityNodeList.count == 0
-        
+
         if !isCity {
             countryName = name
         }
     }
-    
+
     init(id: Int = 0,
          name: String = "",
          iso2: String = "",
@@ -175,7 +175,7 @@ extension Node {
 }
 
 extension Node: Equatable {
-    
+
 }
 
 extension Node {
@@ -231,7 +231,7 @@ enum NodeGroupType: Int, Codable {
     case recent = 0
     case recommend = 1
     case all = 2
-    
+
     var title: String {
         switch self {
         case .recent:
@@ -247,26 +247,26 @@ enum NodeGroupType: Int, Codable {
 struct NodeGroup: Codable {
     var type: NodeGroupType?
     var list: [Node]
-    
+
     enum CodingKeys: String, CodingKey {
         case type
         case list
     }
-    
+
     init(nodeList: [Node], type: NodeGroupType) {
         list = nodeList
         self.type = type
     }
-    
+
     init(from decoder: Decoder) throws {
         let values = try decoder.container(keyedBy: CodingKeys.self)
-        
+
         if let _type = try? values.decode(NodeGroupType.self, forKey: .type) {
             type = _type
         } else {
             type = nil
         }
-        
+
         if let _list = try? values.decode([Node].self, forKey: .list) {
             list = _list
         } else {
@@ -280,7 +280,7 @@ struct NodeTabData: Identifiable {
     var dataLocations: [NodeGroup] = []
     var dataStaticIP: [NodeGroup] = []
     var dataMultihop: [NodeGroup] = []
-    
+
     init(dataLocations: [NodeGroup] = [],
          dataStaticIP: [NodeGroup] = [],
          dataMultihop: [NodeGroup] = []) {
@@ -302,7 +302,7 @@ extension NodeTabData {
     static let example = [
         NodeTabData(dataLocations: NodeGroup.example)
     ]
-    
+
     static let location = NodeTabData(dataLocations: NodeGroup.example)
     static let multihop = NodeTabData()
 }

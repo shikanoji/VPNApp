@@ -62,9 +62,7 @@ struct MultiHopView: View {
                        let nodeExit = item.exit?.country {
                         Button {
                             AppSetting.shared.temporaryDisableAutoConnect = false
-                            if ItemCell(type: AppSetting.shared.getAutoConnectProtocol()).type == .off {
-                                multihopSelect = item
-                            }
+                            multihopSelect = item
                         } label: {
                             HStack {
                                 Group {

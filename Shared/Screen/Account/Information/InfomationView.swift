@@ -16,9 +16,9 @@ struct InfomationView: View {
     @Binding var statusConnect: VPNStatus
     @State var showChangePassword = false
     @State var deleteAccount = false
-    
+
     @StateObject var viewModel: InfomationViewModel
-    
+
     var deleteAccountButton: some View {
         AppButton(style: .none, width: UIScreen.main.bounds.size.width - 30, height: 44,
                   backgroundColor: AppColor.darkButton, textColor: AppColor.redradient, text: L10n.Account.deleteAccount) {
@@ -46,7 +46,7 @@ struct InfomationView: View {
             }
         }
     }
-    
+
     var itemList: some View {
         VStack(spacing: 1) {
             ForEach(viewModel.section.items, id: \.id) { item in
@@ -83,7 +83,7 @@ struct InfomationView: View {
             .clearModalBackground()
         }
     }
-    
+
     var body: some View {
         ScrollView(.vertical, showsIndicators: false) {
             ZStack(alignment: .top) {
@@ -121,11 +121,11 @@ struct InfomationView: View {
 }
 
 struct SettingInfomationView_Previews: PreviewProvider {
-    
+
     @State static var showChangePassword = false
     @State static var showAccount = true
     @State static var value: VPNStatus = .connected
-    
+
     static var previews: some View {
         InfomationView(showAccount: $showAccount, showInfomation: $showAccount, statusConnect: .constant(.connected), viewModel: InfomationViewModel())
     }

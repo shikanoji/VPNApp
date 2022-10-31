@@ -12,7 +12,7 @@ struct StaticIPListView: View {
     @Binding var selectStaticServer: StaticServer?
     @State var searchText = ""
     @State var isEditing = false
-    
+
     var body: some View {
         VStack(spacing: 8) {
             SearchBar(text: $searchText, isEditing: $isEditing)
@@ -33,9 +33,7 @@ struct StaticIPListView: View {
                         ForEach(nodeListSearch) { node in
                             Button(action: {
                                 AppSetting.shared.temporaryDisableAutoConnect = false
-                                if ItemCell(type: AppSetting.shared.getAutoConnectProtocol()).type == .off {
-                                    selectStaticServer = node
-                                }
+                                selectStaticServer = node
                             }) {
                                 NodeCellStaticView(node: node)
                             }
@@ -44,9 +42,7 @@ struct StaticIPListView: View {
                         ForEach(staticIPData) { node in
                             Button(action: {
                                 AppSetting.shared.temporaryDisableAutoConnect = false
-                                if ItemCell(type: AppSetting.shared.getAutoConnectProtocol()).type == .off {
-                                    selectStaticServer = node
-                                }
+                                selectStaticServer = node
                             }) {
                                 NodeCellStaticView(node: node)
                             }
@@ -62,7 +58,7 @@ struct StaticIPListView: View {
         .background(AppColor.background)
         .ignoresSafeArea()
     }
-    
+
     var nodeListSearch: [StaticServer] {
         if searchText.isEmpty {
             return staticIPData
@@ -77,7 +73,7 @@ struct StaticIPListView: View {
 struct StaticIPListView_Previews: PreviewProvider {
     @State static var nodeStaticList = [StaticServer()]
     @State static var nodeSelect: StaticServer? = nil
-    
+
     static var previews: some View {
         StaticIPListView(staticIPData: $nodeStaticList, selectStaticServer: $nodeSelect)
     }

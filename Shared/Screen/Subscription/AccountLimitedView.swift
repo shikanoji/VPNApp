@@ -11,7 +11,7 @@ import SwiftUI
 struct AccountLimitedView: View {
     @Environment(\.presentationMode) var presentationMode
     @EnvironmentObject var authentication: Authentication
-    
+
     var content: some View {
         VStack {
             Asset.Assets.accountLinked.swiftUIImage

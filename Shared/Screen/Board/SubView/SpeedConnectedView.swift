@@ -8,10 +8,10 @@
 import SwiftUI
 
 struct SpeedConnectedView: View {
-    
+
     var uploadSpeed: String
     var downLoadSpeed: String
-    
+
     var body: some View {
         VStack(alignment: .leading, spacing: 0) {
             HStack(spacing: 5) {

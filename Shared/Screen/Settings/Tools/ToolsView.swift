@@ -14,8 +14,8 @@ struct ToolsView: View {
     @Binding var statusConnect: VPNStatus
     @StateObject var viewModel: ToolsViewModel
     @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
-    
-    
+
+
     var body: some View {
         ScrollView(.vertical, showsIndicators: false) {
             VStack {
@@ -27,8 +27,11 @@ struct ToolsView: View {
                     tapLeftButton: {
                         presentationMode.wrappedValue.dismiss()
                     }, tapRightButton: {
+                        UINavigationBar.setAnimationsEnabled(false)
                         showSettings = false
-                        presentationMode.wrappedValue.dismiss()
+                        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+                            UINavigationBar.setAnimationsEnabled(true)
+                        }
                     }, statusConnect: $statusConnect)
                 VStack(spacing: 1) {
                     ForEach(viewModel.section.items, id: \.id) { item in

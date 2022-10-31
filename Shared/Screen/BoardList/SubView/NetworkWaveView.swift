@@ -8,9 +8,9 @@
 import SwiftUI
 
 struct NetworkWaveView: View {
-    
+
     @State var lineNumber = AppSetting.shared.lineNetwork
-    
+
     var body: some View {
         HStack(alignment: .bottom, spacing: 2.64) {
             RoundedRectangle(cornerRadius: 1)

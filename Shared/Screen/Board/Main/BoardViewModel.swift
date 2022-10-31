@@ -105,15 +105,17 @@ class BoardViewModel: ObservableObject {
     @Published var nodeSelectFromBoardList: Node? = nil {
         didSet {
             if let node = nodeSelectFromBoardList {
+                showBoardList = false
+                guard autoConnectType == .off else {
+                    showAlertAutoConnectSetting = true
+                    return
+                }
                 mesh?.removeSelectNode()
                 AppSetting.shared.saveBoardTabWhenConnecting(.location)
-                isSwitching = state == .connected
+                NetworkManager.shared.needReconnect = state == .connected
                 NetworkManager.shared.nodeSelected = node
-                connectOrDisconnectByUser = true
-                ConnectOrDisconnectVPN()
-                if autoConnectType == .off {
-                    showBoardList = false
-                }
+                NetworkManager.shared.connectOrDisconnectByUser = true
+                NetworkManager.shared.ConnectOrDisconnectVPN()
             }
         }
     }
@@ -121,16 +123,20 @@ class BoardViewModel: ObservableObject {
     @Published var locationData: [NodeGroup] = []
     
     @Published var staticIPData: [StaticServer] = []
-    @Published var staticIPNodeSelecte: StaticServer? = nil {
+    @Published var staticIPSelect: StaticServer? = nil {
         didSet {
-            if let staticIP = staticIPNodeSelecte {
+            if let staticIP = staticIPSelect {
+                showBoardList = false
+                guard autoConnectType == .off else {
+                    showAlertAutoConnectSetting = true
+                    return
+                }
                 mesh?.removeSelectNode()
                 AppSetting.shared.saveBoardTabWhenConnecting(.staticIP)
-                isSwitching = state == .connected
+                NetworkManager.shared.needReconnect = state == .connected
                 NetworkManager.shared.selectStaticServer = staticIP
-                connectOrDisconnectByUser = true
-                ConnectOrDisconnectVPN()
-                showBoardList = false
+                NetworkManager.shared.connectOrDisconnectByUser = true
+                NetworkManager.shared.ConnectOrDisconnectVPN()
             }
         }
     }
@@ -139,13 +145,17 @@ class BoardViewModel: ObservableObject {
     @Published var multihopSelect: MultihopModel? = nil {
         didSet {
             if let multihop = multihopSelect {
+                showBoardList = false
+                guard autoConnectType == .off else {
+                    showAlertAutoConnectSetting = true
+                    return
+                }
                 mesh?.removeSelectNode()
                 AppSetting.shared.saveBoardTabWhenConnecting(.multiHop)
-                isSwitching = state == .connected
+                NetworkManager.shared.needReconnect = state == .connected
                 NetworkManager.shared.selectMultihop = multihop
-                connectOrDisconnectByUser = true
-                ConnectOrDisconnectVPN()
-                showBoardList = false
+                NetworkManager.shared.connectOrDisconnectByUser = true
+                NetworkManager.shared.ConnectOrDisconnectVPN()
             }
         }
     }
@@ -189,33 +199,6 @@ class BoardViewModel: ObservableObject {
         
         NotificationCenter.default.addObserver(
             self,
-            selector: #selector(VPNStatusDidChange(notification:)),
-            name: VPNNotification.didChangeStatus,
-            object: nil
-        )
-        NotificationCenter.default.addObserver(
-            self,
-            selector: #selector(VPNDidFail(notification:)),
-            name: VPNNotification.didFail,
-            object: nil
-        )
-
-        NotificationCenter.default.addObserver(
-            self,
-            selector: #selector(checkAutoconnect),
-            name: Constant.NameNotification.checkAutoconnect,
-            object: nil
-        )
-        
-        NotificationCenter.default.addObserver(
-            self,
-            selector: #selector(disconnectCurrentSession),
-            name: Constant.NameNotification.disconnectCurrentSession,
-            object: nil
-        )
-        
-        NotificationCenter.default.addObserver(
-            self,
             selector: #selector(logoutNeedDisconnect),
             name: Constant.NameNotification.logoutNeedDisconnect,
             object: nil
@@ -235,6 +218,13 @@ class BoardViewModel: ObservableObject {
             object: nil
         )
         
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(checkAutoconnect),
+            name: Constant.NameNotification.checkAutoconnect,
+            object: nil
+        )
+        
         Task {
             await OpenVPNManager.shared.vpn.prepare()
         }
@@ -243,12 +233,43 @@ class BoardViewModel: ObservableObject {
             NetworkManager.shared.disconnect()
         }
         
-        checkInternetRealTime()
-        
         assignJailBreakCheckType(type: .readAndWriteFiles)
         AppSetting.shared.fetchListSession()
+        
         if AppSetting.shared.isConnectedToVpn {
-            configConnected()
+            NetworkManager.shared.configConnected()
+        }
+        
+        NetworkManager.shared.stateUICallBack = {
+            self.stateUI = $0
+        }
+        
+        NetworkManager.shared.stateCallBack = {
+            self.state = $0
+            switch $0 {
+            case .connected:
+                self.configConnected()
+            case .disconnected:
+                self.configDisconected()
+            default:
+                break
+            }
+        }
+        
+        NetworkManager.shared.errorCallBack = {
+            switch $0 {
+            case .fullSession:
+                self.showSessionTerminatedAlert = true
+            case .sessionTerminate:
+                self.showAlertSessionSetting = true
+            case .apiError(let apiError):
+                self.error = apiError
+                self.showAlert = true
+            case .autoConnecting:
+                self.showAlertAutoConnectSetting = true
+            case .authenNotPremium:
+                self.authentication?.saveIsPremium(false)
+            }
         }
     }
     
@@ -290,8 +311,8 @@ class BoardViewModel: ObservableObject {
     @objc
     func changeProtocolSetting() {
         if state == .connected {
-            isSwitching = true
-            configDisconnect()
+            NetworkManager.shared.needReconnect = true
+            NetworkManager.shared.configDisconnect()
         }
     }
     
@@ -406,15 +427,12 @@ class BoardViewModel: ObservableObject {
     
     @objc private func logoutNeedDisconnect() {
         if state == .connected {
-            configDisconnect()
+            NetworkManager.shared.configDisconnect()
         }
     }
     
-    @objc private func disconnectCurrentSession() {
-        onlyDisconnectWithoutEndsession = true
-        configDisconnect()
-        AppSetting.shared.selectAutoConnect = ItemCellType.off.rawValue
-        checkAutoconnect()
+    @objc func checkAutoconnect() {
+        autoConnectType = ItemCell(type: AppSetting.shared.getAutoConnectProtocol()).type
     }
     
     @Published var shouldHideAutoConnect = true
@@ -426,54 +444,19 @@ class BoardViewModel: ObservableObject {
             switch autoConnectType {
             case .always:
                 AppSetting.shared.saveBoardTabWhenConnecting(.location)
-                ConnectOrDisconnectVPN()
+                NetworkManager.shared.ConnectOrDisconnectVPN()
             case .onWifi:
                 if Connectivity.sharedInstance.isReachableOnEthernetOrWiFi {
                     AppSetting.shared.saveBoardTabWhenConnecting(.location)
-                    ConnectOrDisconnectVPN()
+                    NetworkManager.shared.ConnectOrDisconnectVPN()
                 }
             case .onMobile:
                 if Connectivity.sharedInstance.isReachableOnCellular {
                     AppSetting.shared.saveBoardTabWhenConnecting(.location)
-                    ConnectOrDisconnectVPN()
+                    NetworkManager.shared.ConnectOrDisconnectVPN()
                 }
             default:
                 break
-            }
-        }
-    }
-    
-    var startConnectOrDisconnect = false
-    
-    func ConnectOrDisconnectVPN() {
-        startConnectOrDisconnect = true
-        switch autoConnectType {
-        case .off:
-            switch state {
-            case .disconnected:
-                AppSetting.shared.saveTimeConnectedVPN = nil
-                configStartConnectVPN()
-            case .connecting, .disconnecting:
-                break
-            default:
-                AppSetting.shared.saveTimeConnectedVPN = Date()
-                configDisconnect()
-            }
-        default:
-            guard !AppSetting.shared.temporaryDisableAutoConnect else {
-                configDisconnect()
-                return
-            }
-            if connectOrDisconnectByUser, state == .connected {
-                AppSetting.shared.saveTimeConnectedVPN = Date()
-                showAlertAutoConnectSetting = true
-            } else {
-                switch state {
-                case .disconnected:
-                    configStartConnectVPN()
-                default:
-                    break
-                }
             }
         }
     }
@@ -495,51 +478,31 @@ class BoardViewModel: ObservableObject {
             isSwitching = false
             configStartConnectVPN()
         }
-        
-        AppSetting.shared.lineNetwork = 0
-        if connectOrDisconnectByUser {
-            AppSetting.shared.currentSessionId = ""
-        }
-        
-        AppSetting.shared.saveTimeConnectedVPN = nil
     }
     
     func configDisconnect() {
-        connectOrDisconnectByUser = true
-        numberReconnect = 0
         stateUI = .disconnected
-        NetworkManager.shared.disconnect()
+        NetworkManager.shared.configDisconnect()
     }
     
     func configStartConnectVPN() {
         if state == .disconnected {
-            numberReconnect = 0
             stateUI = .connecting
-            startConnectVPN()
-        }
-    }
-    
-    func startConnectVPN() {
-        getRequestCertificate(asNewConnection: AppSetting.shared.needToStartNewSession) {
-            if $0 {
-                NetworkManager.shared.connect()
-            } else {
-                if self.isSwitching {
-                    self.isSwitching = false
-                }
-                self.configDisconnect()
+            
+            if let node = mesh?.selectedNode {
+                AppSetting.shared.saveBoardTabWhenConnecting(.location)
+                NetworkManager.shared.nodeSelected = node
             }
+            
+            guard Connectivity.sharedInstance.isReachable else {
+                internetNotAvaiable()
+                configDisconected()
+                return
+            }
+            
+            NetworkManager.shared.startConnectVPN()
         }
     }
-    
-    let maximumReconnect = 3
-    var numberReconnect = 0
-    
-    var isEnableReconect: Bool {
-        get { numberReconnect < maximumReconnect }
-    }
-    
-    var connectOrDisconnectByUser = false
     
     func getServerStats() {
         guard Connectivity.sharedInstance.isReachable else {
@@ -585,16 +548,16 @@ class BoardViewModel: ObservableObject {
             .disposed(by: disposedBag)
     }
     
+    var autoConnectType = ItemCell(type: AppSetting.shared.getAutoConnectProtocol()).type
+    
     func configConnected() {
-        if AppSetting.shared.saveTimeConnectedVPN == nil {
-            AppSetting.shared.saveTimeConnectedVPN = Date()
-        }
-        numberReconnect = 0
         state = .connected
         stateUI = .connected
-        connectOrDisconnectByUser = false
         
-        getStatsByServer()
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+            self.getStatsByServer()
+            AppSetting.shared.fetchListSession()
+        }
         
         switch NetworkManager.shared.getValueConfigProtocol {
         case .openVPNTCP, .openVPNUDP:
@@ -637,121 +600,9 @@ class BoardViewModel: ObservableObject {
                 nameSelect = nodeSelect.isCity ? nodeSelect.name : nodeSelect.countryName
             }
         }
-
-        AppSetting.shared.fetchListSession()
-    }
-    
-    @objc private func VPNStatusDidChange(notification: Notification) {
-       
-        print("VPNStatusDidChange: \(notification.vpnStatus)")
-        
-        guard state != notification.vpnStatus else {
-            return
-        }
-        
-        state = notification.vpnStatus
-        
-        if stateUI != state {
-            stateUI = state
-        }
-        
-        switch stateUI {
-        case .connected:
-            configConnected()
-            if autoConnectType == .off {
-                if reconnectWhenLoseInternet <= 0 {
-                    reconnectWhenLoseInternet = 1
-                } else if reconnectWhenLoseInternet == 2 {
-                    reconnectWhenLoseInternet = 1
-                }
-            }
-        case .disconnected:
-            if autoConnectType == .off {
-                if !Connectivity.sharedInstance.isReachable {
-                    if reconnectWhenLoseInternet == 1 {
-                        reconnectWhenLoseInternet = 2
-                    }
-                } else {
-                    reconnectWhenLoseInternet = 0
-                }
-            }
-            
-            if !startConnectOrDisconnect {
-                if AppSetting.shared.isConnectedToVpn {
-                    configConnected()
-                    return
-                }
-            }
-            
-            if isEnableReconect,
-               !connectOrDisconnectByUser,
-               !AppSetting.shared.temporaryDisableAutoConnect {
-                startConnectVPN()
-            } else {
-                configDisconected()
-            }
-        default:
-            break
-        }
-    }
-    
-    @MainActor @objc private func VPNDidFail(notification: Notification) {
-        print("VPNStatusDidFail: \(notification.vpnError.localizedDescription)")
-        guard notification.vpnError.localizedDescription != "permission denied" else {
-            DispatchQueue.main.asyncAfter(deadline: .now() + 0.5, execute: {
-                self.configDisconected()
-            })
-            return
-        }
-        configDisconected()
-        if isEnableReconect, !connectOrDisconnectByUser, !AppSetting.shared.temporaryDisableAutoConnect {
-            startConnectVPN()
-        }
-    }
-    
-    var checkInternetTimer: DispatchSourceTimer?
-    
-    var autoConnectType = ItemCell(type: AppSetting.shared.getAutoConnectProtocol()).type
-    
-    @objc func checkAutoconnect() {
-        autoConnectType = ItemCell(type: AppSetting.shared.getAutoConnectProtocol()).type
-    }
-    
-    @objc func checkInternetRealTime() {
-        
-        guard !isCheckingAutoConnect else {
-            return
-        }
-        
-        isCheckingAutoConnect = true
-        
-        stopAutoconnectTimer()
-        let queue = DispatchQueue.main
-        checkInternetTimer = DispatchSource.makeTimerSource(queue: queue)
-        checkInternetTimer!.schedule(deadline: .now(), repeating: .seconds(3))
-        checkInternetTimer!.setEventHandler { [weak self] in
-            switch self?.autoConnectType {
-            case .always, .onWifi, .onMobile:
-                if self?.stateUI == .disconnected && !AppSetting.shared.isConnectedToVpn {
-                    self?.autoConnectWithConfig()
-                }
-            case .off:
-                if self?.reconnectWhenLoseInternet == 2 && Connectivity.sharedInstance.isReachable && self?.stateUI == .disconnected && !(self?.connectOrDisconnectByUser ?? false) {
-                    self?.ConnectOrDisconnectVPN()
-                }
-            default:
-                break
-            }
-        }
-        checkInternetTimer!.resume()
-    }
-    
-    func stopAutoconnectTimer() {
-        checkInternetTimer = nil
     }
     
     deinit {
-        stopAutoconnectTimer()
         endBackgroundTask()
     }
     
@@ -759,146 +610,6 @@ class BoardViewModel: ObservableObject {
         error = APIError.noInternetConnect
         showProgressView = false
         showAlert = true
-    }
-    
-    func getRequestCertificate(asNewConnection: Bool = AppSetting.shared.needToStartNewSession, completion: @escaping (Bool) -> Void) {
-        guard isEnableReconect else {
-            completion(false)
-            return
-        }
-        
-        numberReconnect += 1
-        
-        guard Connectivity.sharedInstance.isReachable else {
-            internetNotAvaiable()
-            configDisconected()
-            return
-        }
-        
-        if let node = mesh?.selectedNode {
-            AppSetting.shared.saveBoardTabWhenConnecting(.location)
-            NetworkManager.shared.nodeSelected = node
-        }
-        
-        ServiceManager.shared.getRequestCertificate(asNewConnection: asNewConnection)
-            .subscribe { [weak self] response in
-                guard let self = self else {
-                    return
-                }
-                self.showProgressView = false
-                if let result = response.result {
-                    switch NetworkManager.shared.getValueConfigProtocol {
-                    case .openVPNTCP, .openVPNUDP:
-                        if let cer = result.getRequestCer {
-                            if !cer.exceedLimit {
-                                if cer.allowReconnect {
-                                    NetworkManager.shared.requestCertificate = cer
-                                    AppSetting.shared.needToStartNewSession = false
-                                    AppSetting.shared.currentSessionId = NetworkManager.shared.requestCertificate?.sessionId ?? ""
-                                    completion(true)
-                                    return
-                                } else {
-                                    AppSetting.shared.temporaryDisableAutoConnect = true
-                                    AppSetting.shared.needToStartNewSession = true
-                                    self.showSessionTerminatedAlert = true
-                                    self.stateUI = .disconnected
-                                    completion(false)
-                                    return
-                                }
-                            } else {
-                                completion(false)
-                                self.showAlertSessionSetting = true
-                                return
-                            }
-                        } else if self.isEnableReconect {
-                            self.getRequestCertificate(asNewConnection: AppSetting.shared.needToStartNewSession) {
-                                completion($0)
-                                return
-                            }
-                        } else {
-                            self.stateUI = .disconnected
-                            completion(false)
-                            return
-                        }
-                    case .wireGuard:
-                        if let cer = result.getObtainCer {
-                            if !cer.exceedLimit {
-                                if cer.allowReconnect {
-                                    AppSetting.shared.needToStartNewSession = false
-                                    NetworkManager.shared.obtainCertificate = cer
-                                    AppSetting.shared.currentSessionId = cer.sessionId ?? ""
-                                    completion(true)
-                                    return
-                                } else {
-                                    AppSetting.shared.temporaryDisableAutoConnect = true
-                                    AppSetting.shared.needToStartNewSession = true
-                                    self.showSessionTerminatedAlert = true
-                                    self.stateUI = .disconnected
-                                    completion(false)
-                                    return
-                                }
-                            } else {
-                                completion(false)
-                                self.showAlertSessionSetting = true
-                                return
-                            }
-                        } else if self.isEnableReconect {
-                            self.getRequestCertificate(asNewConnection: AppSetting.shared.needToStartNewSession) {
-                                completion($0)
-                                return
-                            }
-                        } else {
-                            self.stateUI = .disconnected
-                            completion(false)
-                            return
-                        }
-                    default:
-                        self.stateUI = .disconnected
-                        completion(false)
-                        return
-                    }
-                } else {
-                    if self.isEnableReconect {
-                        self.getRequestCertificate(asNewConnection: AppSetting.shared.needToStartNewSession) {
-                            completion($0)
-                            return
-                        }
-                    } else {
-                        self.configDisconnect()
-                        if response.code == 503 {
-                            self.authentication?.saveIsPremium(false)
-                            completion(false)
-                            return
-                        }
-                        let error = response.errors
-                        if !error.isEmpty, let message = error[0] as? String {
-                            self.error = APIError.identified(message: message)
-                            self.showAlert = true
-                        } else if !response.message.isEmpty {
-                            self.error = APIError.identified(message: response.message)
-                            self.showAlert = true
-                        }
-                        completion(false)
-                        return
-                    }
-                }
-            } onFailure: { error in
-                if self.isEnableReconect {
-                    self.getRequestCertificate(asNewConnection: AppSetting.shared.needToStartNewSession) {
-                        completion($0)
-                        return
-                    }
-                } else {
-                    if let errorConfig = error as? APIError {
-                        self.error = errorConfig
-                        self.showAlert = true
-                    }
-                    self.showProgressView = false
-                    completion(false)
-                    return
-                }
-            }
-            .disposed(by: disposedBag)
     }
     
     func disconnectSession() {

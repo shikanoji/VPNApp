@@ -50,6 +50,30 @@ class ContentViewModel: ObservableObject {
             .disposed(by: disposedBag)
     }
     
+    func pingGoogleCheckInternet(completion: @escaping (Bool) -> Void) {
+        ServiceManager.shared.ping()
+            .subscribe(onSuccess: { [self] response in
+                completion(true)
+            }, onFailure: { error in
+                completion(false)
+            })
+            .disposed(by: disposedBag)
+    }
+    
+    func checkVPNKill() {
+        if AppSetting.shared.isConnectedToVpn {
+            if !Connectivity.sharedInstance.isReachable {
+                NetworkManager.shared.reconnectVPN()
+            } else {
+                pingGoogleCheckInternet {
+                    if !$0 {
+                        NetworkManager.shared.reconnectVPN()
+                    }
+                }
+            }
+        }
+    }
+    
     init() {
         NotificationCenter.default.addObserver(
             self,
@@ -68,6 +92,8 @@ class ContentViewModel: ObservableObject {
         }
         
         configState()
+        
+        NotificationCenter.default.post(name: Constant.NameNotification.appReadyStart, object: nil)
     }
     
     @objc func sessionExpided() {

@@ -12,10 +12,10 @@ struct ProtocolSettingView: View {
     @Binding var showSettings: Bool
     @Binding var showVPNSetting: Bool
     @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
-    
+
     @StateObject var viewModel: ProtocolSettingViewModel
     @Binding var statusConnect: VPNStatus
-    
+
     var body: some View {
         ScrollView(.vertical, showsIndicators: false) {
             VStack() {
@@ -63,7 +63,7 @@ struct ProtocolSettingView: View {
 struct ProtocolSettingView_Previews: PreviewProvider {
     @State static var show = true
     @State static var status: VPNStatus = .connected
-    
+
     static var previews: some View {
         ProtocolSettingView(showSettings: $show, showVPNSetting: $show, viewModel: ProtocolSettingViewModel(), statusConnect: $status)
     }

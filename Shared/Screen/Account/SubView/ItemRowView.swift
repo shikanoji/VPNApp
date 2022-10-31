@@ -12,7 +12,7 @@ struct ItemRowView: View {
     @State var subTitle = ""
     @State var subContent = ""
     @State var title = ""
-    
+
     var hasContent: Bool {
         subContent != "" || item.type.content != ""
     }
@@ -26,7 +26,7 @@ struct ItemRowView: View {
                         .frame(width: 38, height: 38)
                     Spacer().frame(width: 20)
                 }
-                
+
                 VStack(alignment: .leading, spacing: 8) {
                     Text(title == "" ? (item.type.title + subTitle) : title)
                         .font(Constant.Menu.fontItem)
