@@ -27,8 +27,11 @@ struct LicenseListView: View {
                 tapLeftButton: {
                     presentationMode.wrappedValue.dismiss()
                 }, tapRightButton: {
+                    UINavigationBar.setAnimationsEnabled(false)
                     showSettings = false
-                    presentationMode.wrappedValue.dismiss()
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+                        UINavigationBar.setAnimationsEnabled(true)
+                    }
                 }, statusConnect: $statusConnect)
                 .padding(.bottom, Constant.Menu.topPaddingCell)
             

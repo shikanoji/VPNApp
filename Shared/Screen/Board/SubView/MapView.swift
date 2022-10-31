@@ -42,7 +42,7 @@ struct MapView: View {
     
     @Environment(\.safeAreaInsets) private var safeAreaInsets
     
-    @State var isZooming = false 
+    @State var isZooming = false
     
     var body: some View {
         ZoomableScrollView(content: {
@@ -173,6 +173,8 @@ struct ZoomableScrollView<Content: View>: UIViewRepresentable {
         scrollView.showsHorizontalScrollIndicator = false
         scrollView.clipsToBounds = false
         scrollView.bounces = false
+        scrollView.alwaysBounceVertical = true
+        scrollView.alwaysBounceHorizontal = true
         
         let hostedView = context.coordinator.hostingController.view!
         
@@ -276,6 +278,7 @@ struct ZoomableScrollView<Content: View>: UIViewRepresentable {
         }
         
         func scrollViewDidZoom(_ scrollView: UIScrollView) {
+            scrollView.bouncesZoom = scrollView.zoomScale > 1
             if (scrollView.zoomScale < 1) {
                 let frameHosting = hostingController.view.frame
                 let leftMargin: CGFloat = (scrollView.frame.size.width - frameHosting.width)*0.5

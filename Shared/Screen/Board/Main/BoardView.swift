@@ -188,7 +188,7 @@ struct BoardView: View {
                       nodeSelect: $viewModel.nodeSelectFromBoardList,
                       locationData: $viewModel.locationData,
                       staticIPData: $viewModel.staticIPData,
-                      staticNode: $viewModel.staticIPNodeSelecte,
+                      staticIPSelect: $viewModel.staticIPSelect,
                       mutilhopList: $viewModel.mutilhopList,
                       multihopSelect: $viewModel.multihopSelect,
                       statusConnect: $viewModel.stateUI,
@@ -239,13 +239,19 @@ struct BoardView: View {
                                           AppSetting.shared.saveBoardTabWhenConnecting(.location)
                                           if mesh.selectedNode == nil {
                                               NetworkManager.shared.nodeSelected = AppSetting.shared.getRecommendedCountries().first
+                                          } else {
+                                              if let node = mesh.selectedNode {
+                                                  AppSetting.shared.saveBoardTabWhenConnecting(.location)
+                                                  NetworkManager.shared.nodeSelected = node
+                                              }
                                           }
                                       }
-                                      viewModel.onlyDisconnectWithoutEndsession = true
-                                      AppSetting.shared.temporaryDisableAutoConnect = false
-                                      viewModel.connectOrDisconnectByUser = true
-                                      viewModel.ConnectOrDisconnectVPN()
-                                  })
+                        NetworkManager.shared.needReconnect = false
+                        NetworkManager.shared.onlyDisconnectWithoutEndsession = true
+                        AppSetting.shared.temporaryDisableAutoConnect = false
+                        NetworkManager.shared.connectOrDisconnectByUser = true
+                        NetworkManager.shared.ConnectOrDisconnectVPN()
+                    })
                     Spacer()
                         .frame(height: Constant.Board.Tabs.topPadding)
                     BoardTabView(viewModel: viewModel)
