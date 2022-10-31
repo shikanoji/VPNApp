@@ -56,12 +56,11 @@ struct InfomationView: View {
                     .environmentObject(viewModel)
                     .onTapGesture {
                         if item.type == .accountSecurity {
-                            showChangePassword = true
-                        }
-                        if UIDevice.current.userInterfaceIdiom == .pad {
-                            viewModel.showChangePasswordPad = true
-                        } else {
-                            viewModel.showChangePasswordPhone = true
+                            if UIDevice.current.userInterfaceIdiom == .pad {
+                                viewModel.showChangePasswordPad = true
+                            } else {
+                                viewModel.showChangePasswordPhone = true
+                            }
                         }
                     }
             }
