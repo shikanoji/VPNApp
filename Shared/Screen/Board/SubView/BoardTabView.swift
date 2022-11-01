@@ -34,8 +34,10 @@ struct BoardTabViewCustom: View {
 
     var body: some View {
         Button(typeTab.title) {
-            viewModel.selectedTab = typeTab
-            viewModel.showBoardList = true
+            DispatchQueue.main.async {
+                viewModel.selectedTab = typeTab
+                viewModel.showBoardList = true
+            }
         }
         .buttonStyle(PrimaryButtonStyle(backgroundColor: viewModel.selectedTab == typeTab ? AppColor.darkButton : AppColor.lightBlack, cornerRadius: Constant.Board.SubBoard.radius))
     }

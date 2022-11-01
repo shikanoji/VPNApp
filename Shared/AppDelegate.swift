@@ -90,7 +90,15 @@ class AppDelegate: NSObject, UIApplicationDelegate, MessagingDelegate, UNUserNot
     func application(
         _ application: UIApplication, didReceiveRemoteNotification userInfo: [AnyHashable: Any],
         fetchCompletionHandler completionHandler: @escaping (UIBackgroundFetchResult) -> Void) {
-        print(userInfo)
+             
+        if let userInfoDict = userInfo as? [String: Any] {
+            if let needReconnect = userInfoDict["needReconnect"] as? String {
+                if needReconnect == "true" {
+                    NetworkManager.shared.checkVPNKill()
+                }
+            }
+        }
+            
         completionHandler(.newData)
     }
     
