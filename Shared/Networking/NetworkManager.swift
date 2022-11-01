@@ -11,6 +11,7 @@ import RxSwift
 import SwiftUI
 import TunnelKitManager
 import TunnelKitCore
+import Network
 
 extension ItemCellType {
     var getConfigParam: String {
@@ -212,6 +213,8 @@ class NetworkManager: ObservableObject {
         )
         
         checkInternetRealTime()
+        
+        beginBackgroundTask()
     }
     
     @objc private func disconnectCurrentSession() {
@@ -307,7 +310,6 @@ class NetworkManager: ObservableObject {
     }
     
     func ConnectOrDisconnectVPN() {
-        startConnectOrDisconnect = true
         checkAutoconnect()
         switch autoConnectType {
         case .off:
@@ -319,6 +321,7 @@ class NetworkManager: ObservableObject {
                 break
             default:
                 AppSetting.shared.saveTimeConnectedVPN = Date()
+                connectOrDisconnectByUser = true
                 configDisconnect()
             }
         default:
@@ -365,12 +368,9 @@ class NetworkManager: ObservableObject {
     }
     
     func configDisconnect() {
-        connectOrDisconnectByUser = true
         numberReconnect = 0
         disconnect()
     }
-    
-    var startConnectOrDisconnect = false
     
     @MainActor @objc private func VPNDidFail(notification: Notification) {
         print("VPNStatusDidFail: \(notification.vpnError.localizedDescription)")
@@ -397,10 +397,10 @@ class NetworkManager: ObservableObject {
         state = notification.vpnStatus
         
         if stateUI != state {
-            stateUI = state == .disconnected ? (needReconnect ? .connecting : .disconnected) : state
+            stateUI = state
         }
         
-        switch stateUI {
+        switch state {
         case .connected:
             configConnected()
             if autoConnectType == .off {
@@ -421,11 +421,10 @@ class NetworkManager: ObservableObject {
                 }
             }
             
-            if !startConnectOrDisconnect {
-                if AppSetting.shared.isConnectedToVpn {
-                    configConnected()
-                    return
-                }
+            
+            if AppSetting.shared.isConnectedToVpn {
+                configConnected()
+                return
             }
             
             if isEnableReconect,
@@ -442,9 +441,43 @@ class NetworkManager: ObservableObject {
     
     var onlyDisconnectWithoutEndsession = false
     
+    func checkVPN() {
+        if AppSetting.shared.isConnectedToVpn {
+            configConnected()
+        } else {
+            configDisconnect()
+        }
+    }
+    
     func reconnectVPN() {
-        NetworkManager.shared.needReconnect = true
-        NetworkManager.shared.configDisconnect()
+        needReconnect = true
+        configDisconnect()
+    }
+    
+    func checkVPNKill() {
+        checkVPN()
+        if AppSetting.shared.isConnectedToVpn {
+            reconnectVPN()
+//            if !Connectivity.sharedInstance.isReachable {
+//                reconnectVPN()
+//            } else {
+//                pingGoogleCheckInternet {
+//                    if !$0 {
+//                        self.reconnectVPN()
+//                    }
+//                }
+//            }
+        }
+    }
+    
+    func pingGoogleCheckInternet(completion: @escaping (Bool) -> Void) {
+        ServiceManager.shared.ping()
+            .subscribe(onSuccess: { [self] response in
+                completion(true)
+            }, onFailure: { error in
+                completion(false)
+            })
+            .disposed(by: disposedBag)
     }
     
     @objc
@@ -460,7 +493,6 @@ class NetworkManager: ObservableObject {
         if needReconnect {
             needReconnect = false
             DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
-                self.stateUI = .connecting
                 self.configStartConnectVPN()
             }
         }
@@ -519,6 +551,7 @@ class NetworkManager: ObservableObject {
         
         guard Connectivity.sharedInstance.isReachable else {
             configDisconected()
+            errorCallBack?(.apiError(.noInternet))
             return
         }
         

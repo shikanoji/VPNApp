@@ -106,7 +106,7 @@ class BoardViewModel: ObservableObject {
         didSet {
             if let node = nodeSelectFromBoardList {
                 showBoardList = false
-                guard autoConnectType == .off else {
+                guard NetworkManager.shared.autoConnectType == .off else {
                     showAlertAutoConnectSetting = true
                     return
                 }
@@ -127,7 +127,7 @@ class BoardViewModel: ObservableObject {
         didSet {
             if let staticIP = staticIPSelect {
                 showBoardList = false
-                guard autoConnectType == .off else {
+                guard NetworkManager.shared.autoConnectType == .off else {
                     showAlertAutoConnectSetting = true
                     return
                 }
@@ -146,7 +146,7 @@ class BoardViewModel: ObservableObject {
         didSet {
             if let multihop = multihopSelect {
                 showBoardList = false
-                guard autoConnectType == .off else {
+                guard NetworkManager.shared.autoConnectType == .off else {
                     showAlertAutoConnectSetting = true
                     return
                 }
@@ -184,8 +184,6 @@ class BoardViewModel: ObservableObject {
     
     let disposedBag = DisposeBag()
     
-    var isSwitching = false
-    
     var reconnectWhenLoseInternet = 0
 
     private var backgroundTaskId: UIBackgroundTaskIdentifier?
@@ -194,7 +192,6 @@ class BoardViewModel: ObservableObject {
     
     // MARK: INIT
     init() {
-        beginBackgroundTask()
         selectedTab = AppSetting.shared.getCurrentTab()
         
         NotificationCenter.default.addObserver(
@@ -218,13 +215,6 @@ class BoardViewModel: ObservableObject {
             object: nil
         )
         
-        NotificationCenter.default.addObserver(
-            self,
-            selector: #selector(checkAutoconnect),
-            name: Constant.NameNotification.checkAutoconnect,
-            object: nil
-        )
-        
         Task {
             await OpenVPNManager.shared.vpn.prepare()
         }
@@ -235,10 +225,6 @@ class BoardViewModel: ObservableObject {
         
         assignJailBreakCheckType(type: .readAndWriteFiles)
         AppSetting.shared.fetchListSession()
-        
-        if AppSetting.shared.isConnectedToVpn {
-            NetworkManager.shared.configConnected()
-        }
         
         NetworkManager.shared.stateUICallBack = {
             self.stateUI = $0
@@ -271,6 +257,12 @@ class BoardViewModel: ObservableObject {
                 self.authentication?.saveIsPremium(false)
             }
         }
+        
+        if NetworkManager.shared.state == .connected {
+            configConnected()
+        } else {
+            configDisconnect()
+        }
     }
     
     func configDataRemote() {
@@ -290,24 +282,6 @@ class BoardViewModel: ObservableObject {
         }
     }
     
-    /// Register background task
-    private func beginBackgroundTask() {
-        backgroundTaskId = UIApplication.shared.beginBackgroundTask(withName: "sysvpn.client.ios.vpnkeeper") { [weak self] in
-            self?.backgroundTaskExpired()
-        }
-    }
-
-    private func endBackgroundTask() {
-        guard let backgroundTaskId = backgroundTaskId else { return }
-        UIApplication.shared.endBackgroundTask(backgroundTaskId)
-        self.backgroundTaskId = nil
-    }
-
-    private func backgroundTaskExpired() {
-        // End BG task to make sure app not be killed
-        endBackgroundTask()
-    }
-        
     @objc
     func changeProtocolSetting() {
         if state == .connected {
@@ -431,17 +405,13 @@ class BoardViewModel: ObservableObject {
         }
     }
     
-    @objc func checkAutoconnect() {
-        autoConnectType = ItemCell(type: AppSetting.shared.getAutoConnectProtocol()).type
-    }
-    
     @Published var shouldHideAutoConnect = true
     
     var isCheckingAutoConnect = false
     
     @objc private func autoConnectWithConfig() {
         if Connectivity.sharedInstance.isReachable {
-            switch autoConnectType {
+            switch NetworkManager.shared.autoConnectType {
             case .always:
                 AppSetting.shared.saveBoardTabWhenConnecting(.location)
                 NetworkManager.shared.ConnectOrDisconnectVPN()
@@ -474,34 +444,11 @@ class BoardViewModel: ObservableObject {
             disconnectSession()
             onlyDisconnectWithoutEndsession = false
         }
-        if isSwitching {
-            isSwitching = false
-            configStartConnectVPN()
-        }
     }
     
     func configDisconnect() {
         stateUI = .disconnected
         NetworkManager.shared.configDisconnect()
-    }
-    
-    func configStartConnectVPN() {
-        if state == .disconnected {
-            stateUI = .connecting
-            
-            if let node = mesh?.selectedNode {
-                AppSetting.shared.saveBoardTabWhenConnecting(.location)
-                NetworkManager.shared.nodeSelected = node
-            }
-            
-            guard Connectivity.sharedInstance.isReachable else {
-                internetNotAvaiable()
-                configDisconected()
-                return
-            }
-            
-            NetworkManager.shared.startConnectVPN()
-        }
     }
     
     func getServerStats() {
@@ -548,8 +495,6 @@ class BoardViewModel: ObservableObject {
             .disposed(by: disposedBag)
     }
     
-    var autoConnectType = ItemCell(type: AppSetting.shared.getAutoConnectProtocol()).type
-    
     func configConnected() {
         state = .connected
         stateUI = .connected
@@ -574,7 +519,7 @@ class BoardViewModel: ObservableObject {
             break
         }
         
-        if autoConnectType == .off {
+        if NetworkManager.shared.autoConnectType == .off {
             switch AppSetting.shared.getBoardTabWhenConnecting() {
             case .location:
                 if let nodeSelect = NetworkManager.shared.nodeConnecting {
@@ -600,10 +545,6 @@ class BoardViewModel: ObservableObject {
                 nameSelect = nodeSelect.isCity ? nodeSelect.name : nodeSelect.countryName
             }
         }
-    }
-    
-    deinit {
-        endBackgroundTask()
     }
     
     func internetNotAvaiable() {
