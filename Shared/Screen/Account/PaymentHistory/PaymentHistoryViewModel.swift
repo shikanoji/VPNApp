@@ -19,7 +19,7 @@ class PaymentHistoryViewModel: ObservableObject {
     var page = 1
     var enableLoadMore = false
     
-    func preLoadMore(_ index: Int) {
+    @MainActor func preLoadMore(_ index: Int) {
         if index == paymentHistory.count - 1,
            enableLoadMore,
            !showProgressView {
@@ -27,13 +27,14 @@ class PaymentHistoryViewModel: ObservableObject {
         }
     }
     
-    func fetchPaymentHistory(_ loadMore: Bool = false) {
+    @MainActor func fetchPaymentHistory(_ loadMore: Bool = false) {
         showProgressView = true
         
         if loadMore {
             if enableLoadMore {
                 page += 1
             } else {
+                showProgressView = false
                 return
             }
         } else {

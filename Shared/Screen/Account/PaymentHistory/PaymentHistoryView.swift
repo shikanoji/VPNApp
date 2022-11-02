@@ -52,9 +52,7 @@ struct PaymentHistoryView: View {
                 .padding(.bottom, Constant.Menu.topPaddingCell)
             LoadingScreen(isShowing: $viewModel.showProgressView) {
                 ScrollView(.vertical, showsIndicators: false) {
-
                     GeometryReader { reader -> AnyView in
-
                         DispatchQueue.main.async {
                             if refresh.startOffset == 0 {
                                 refresh.startOffset = reader.frame(in: .global).minY
@@ -143,7 +141,6 @@ struct PaymentHistoryView: View {
     }
 
     func refreshData() {
-
         withAnimation(Animation.linear) {
             if refresh.startOffset == refresh.offset {
                 viewModel.fetchPaymentHistory()
