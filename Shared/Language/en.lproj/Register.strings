@@ -7,12 +7,12 @@
 */
 
 "Title" = "Create an account";
-"Body" = "Start protecting yourself with SysVPN";
-"EmailPlaceholder" = "Your Email";
-"PasswordPlaceholder" = "Your Password";
-"RetypePassword" = "Retype Your Password";
-"Signup" = "Create An Account";
+"Body" = "If not protect your virtual life now, then when?";
+"EmailPlaceholder" = "Your email";
+"PasswordPlaceholder" = "Password";
+"RetypePassword" = "Retype Password";
+"Signup" = "Create an account";
 "SignupWithGoogle" = "Sign up with Google";
 "SignupWithApple" = "Sign up with Apple";
 "HadAccountText" = "Already have an account?";
-"Signin" = "Sign In";
+"Signin" = "Sign in";
