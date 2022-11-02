@@ -50,6 +50,10 @@ class PaymentHistoryViewModel: ObservableObject {
                         strongSelf.paymentHistory += paymentList
                     } else {
                         strongSelf.paymentHistory = paymentList
+                        
+                        if CGFloat(paymentList.count * 65) < Constant.Board.Map.heightScreen {
+                            self?.fetchPaymentHistory(true)
+                        }
                     }
                     
                     strongSelf.enableLoadMore = (result.rows.count >= result.limit) && (strongSelf.page <= result.totalPages) && (strongSelf.paymentHistory.count < result.totalResults)

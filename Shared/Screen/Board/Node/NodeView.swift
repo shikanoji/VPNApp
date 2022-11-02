@@ -113,7 +113,7 @@ struct NodeView: View {
     
     var zIndex: Double {
         if mesh.isNodeSelected(node) {
-            return 1
+            return 2
         }
         return isConnectedNode ? 1 : 0
     }

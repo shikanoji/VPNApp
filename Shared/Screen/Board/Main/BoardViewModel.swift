@@ -106,7 +106,7 @@ class BoardViewModel: ObservableObject {
         didSet {
             if let node = nodeSelectFromBoardList {
                 showBoardList = false
-                guard NetworkManager.shared.autoConnectType == .off else {
+                guard !NetworkManager.shared.networkConnectIsCurrentNetwork() else {
                     showAlertAutoConnectSetting = true
                     return
                 }
@@ -127,7 +127,7 @@ class BoardViewModel: ObservableObject {
         didSet {
             if let staticIP = staticIPSelect {
                 showBoardList = false
-                guard NetworkManager.shared.autoConnectType == .off else {
+                guard !NetworkManager.shared.networkConnectIsCurrentNetwork() else {
                     showAlertAutoConnectSetting = true
                     return
                 }
@@ -146,7 +146,7 @@ class BoardViewModel: ObservableObject {
         didSet {
             if let multihop = multihopSelect {
                 showBoardList = false
-                guard NetworkManager.shared.autoConnectType == .off else {
+                guard !NetworkManager.shared.networkConnectIsCurrentNetwork() else {
                     showAlertAutoConnectSetting = true
                     return
                 }
