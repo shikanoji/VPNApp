@@ -252,22 +252,17 @@ struct TimeConnectedView: View {
                 .foregroundColor(Color.gray)
                 .font(.system(size: Constant.TextSize.Global.detailDefault, weight: .bold))
                 .lineLimit(1)
-                .onAppear {
-                    if self.stopWatch.isPaused() {
-                        self.stopWatch.start()
-                    }
-                }
                 .frame(width: 100, alignment: .leading)
             Text(self.stopWatch.stopWatchTime)
                 .foregroundColor(Color.white)
                 .font(.system(size: Constant.TextSize.Global.detailDefault, weight: .bold))
                 .lineLimit(1)
-                .onAppear {
-                    if self.stopWatch.isPaused() {
-                        self.stopWatch.start()
-                    }
-                }
                 .frame(width: 100, alignment: .leading)
+        }
+        .onAppear {
+            if self.stopWatch.isPaused() {
+                self.stopWatch.start()
+            }
         }
         .frame(width: Constant.Board.QuickButton.heightSize,
                height: Constant.Board.QuickButton.heightSize)

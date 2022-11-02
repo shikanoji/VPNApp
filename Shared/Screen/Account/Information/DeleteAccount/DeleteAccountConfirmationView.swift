@@ -100,7 +100,7 @@ struct DeleteAccountConfirmationView: View {
 #if DEBUG
 struct DeleteAccountConfirmationView_Preview: PreviewProvider {
     static var previews: some View {
-        DeleteAccountConfirmationView(viewModel: DeleteAccountConfirmationViewModel())
+        DeleteAccountConfirmationView(viewModel: DeleteAccountConfirmationViewModel(requestDeleteSucces: {}))
     }
 }
 #endif

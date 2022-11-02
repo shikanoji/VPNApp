@@ -183,6 +183,8 @@ class NetworkManager: ObservableObject {
         }
     }
     
+    var isCellularConnect = Connectivity.sharedInstance.isReachableOnCellular
+    
     init() {
         NotificationCenter.default.addObserver(
             self,
@@ -318,7 +320,7 @@ class NetworkManager: ObservableObject {
                 AppSetting.shared.saveTimeConnectedVPN = nil
                 configStartConnectVPN()
             case .connecting, .disconnecting:
-                break
+                configDisconnect()
             default:
                 AppSetting.shared.saveTimeConnectedVPN = Date()
                 connectOrDisconnectByUser = true
@@ -331,13 +333,17 @@ class NetworkManager: ObservableObject {
             }
             if connectOrDisconnectByUser, state == .connected {
                 AppSetting.shared.saveTimeConnectedVPN = Date()
-                errorCallBack?(.autoConnecting)
+                if networkConnectIsCurrentNetwork() {
+                    errorCallBack?(.autoConnecting)
+                } else {
+                    configDisconnect()
+                }
             } else {
                 switch state {
                 case .disconnected:
                     configStartConnectVPN()
                 default:
-                    break
+                    configDisconnect()
                 }
             }
         }
@@ -470,6 +476,19 @@ class NetworkManager: ObservableObject {
         }
     }
     
+    func networkConnectIsCurrentNetwork() -> Bool {
+        switch autoConnectType {
+        case .always:
+            return true
+        case .onWifi:
+            return !isCellularConnect
+        case .onMobile:
+            return isCellularConnect
+        default:
+            return false
+        }
+    }
+    
     func pingGoogleCheckInternet(completion: @escaping (Bool) -> Void) {
         ServiceManager.shared.ping()
             .subscribe(onSuccess: { [self] response in
@@ -539,6 +558,8 @@ class NetworkManager: ObservableObject {
         stateUI = .connected
         connectOrDisconnectByUser = false
         AppSetting.shared.fetchListSession()
+        
+        isCellularConnect = Connectivity.sharedInstance.isReachableOnCellular
     }
     
     func getRequestCertificate(asNewConnection: Bool = AppSetting.shared.needToStartNewSession, completion: @escaping (Bool) -> Void) {
