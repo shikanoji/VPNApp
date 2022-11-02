@@ -101,12 +101,12 @@ class BoardViewModel: ObservableObject {
     
     @Published var uploadSpeed: String = "0"
     @Published var downloadSpeed: String = "0"
-      
+
     @Published var nodeSelectFromBoardList: Node? = nil {
         didSet {
             if let node = nodeSelectFromBoardList {
                 showBoardList = false
-                guard NetworkManager.shared.autoConnectType == .off else {
+                guard !NetworkManager.shared.networkConnectIsCurrentNetwork() else {
                     showAlertAutoConnectSetting = true
                     return
                 }
@@ -127,7 +127,7 @@ class BoardViewModel: ObservableObject {
         didSet {
             if let staticIP = staticIPSelect {
                 showBoardList = false
-                guard NetworkManager.shared.autoConnectType == .off else {
+                guard !NetworkManager.shared.networkConnectIsCurrentNetwork() else {
                     showAlertAutoConnectSetting = true
                     return
                 }
@@ -146,7 +146,7 @@ class BoardViewModel: ObservableObject {
         didSet {
             if let multihop = multihopSelect {
                 showBoardList = false
-                guard NetworkManager.shared.autoConnectType == .off else {
+                guard !NetworkManager.shared.networkConnectIsCurrentNetwork() else {
                     showAlertAutoConnectSetting = true
                     return
                 }
@@ -229,19 +229,21 @@ class BoardViewModel: ObservableObject {
         NetworkManager.shared.stateUICallBack = {
             self.stateUI = $0
         }
-        
-        NetworkManager.shared.stateCallBack = {
-            self.state = $0
-            switch $0 {
-            case .connected:
-                self.configConnected()
-            case .disconnected:
-                self.configDisconected()
-            default:
-                break
+
+        DispatchQueue.main.async {
+            NetworkManager.shared.stateCallBack = {
+                self.state = $0
+                switch $0 {
+                case .connected:
+                    self.configConnected()
+                case .disconnected:
+                    self.configDisconected()
+                default:
+                    break
+                }
             }
         }
-        
+
         NetworkManager.shared.errorCallBack = {
             switch $0 {
             case .fullSession:
@@ -257,11 +259,12 @@ class BoardViewModel: ObservableObject {
                 self.authentication?.saveIsPremium(false)
             }
         }
-        
-        if NetworkManager.shared.state == .connected {
-            configConnected()
-        } else {
-            configDisconnect()
+        DispatchQueue.main.async {
+            if NetworkManager.shared.state == .connected {
+                self.configConnected()
+            } else {
+                self.configDisconnect()
+            }
         }
     }
     
@@ -432,21 +435,19 @@ class BoardViewModel: ObservableObject {
     }
     
     @objc
-    func configDisconected() {
+    @MainActor func configDisconected() {
         ip = AppSetting.shared.ip
         flag = ""
         nameSelect = ""
-        DispatchQueue.main.async {
-            self.state = .disconnected
-            self.stateUI = .disconnected
-        }
+        state = .disconnected
+        stateUI = .disconnected
         if onlyDisconnectWithoutEndsession {
             disconnectSession()
             onlyDisconnectWithoutEndsession = false
         }
     }
     
-    func configDisconnect() {
+    @MainActor func configDisconnect() {
         stateUI = .disconnected
         NetworkManager.shared.configDisconnect()
     }
@@ -474,7 +475,7 @@ class BoardViewModel: ObservableObject {
                     self.staticIPData = updateStaticNodesMesh ?? []
                 }
             } onFailure: { _ in
-               
+
             }
             .disposed(by: disposedBag)
     }
@@ -495,7 +496,7 @@ class BoardViewModel: ObservableObject {
             .disposed(by: disposedBag)
     }
     
-    func configConnected() {
+    @MainActor func configConnected() {
         state = .connected
         stateUI = .connected
         
@@ -546,13 +547,7 @@ class BoardViewModel: ObservableObject {
             }
         }
     }
-    
-    func internetNotAvaiable() {
-        error = APIError.noInternetConnect
-        showProgressView = false
-        showAlert = true
-    }
-    
+
     func disconnectSession() {
         ServiceManager.shared.disconnectSession(sessionId: AppSetting.shared.currentSessionId, terminal: false)
             .subscribe { [weak self] response in
@@ -563,7 +558,7 @@ class BoardViewModel: ObservableObject {
                 self.showProgressView = false
                 
                 if response.success {
-                  
+
                 } else {
 
                 }

@@ -37,19 +37,12 @@ struct FAQDetailView: View {
                     showFAQView = false
                 }, statusConnect: $statusConnect)
             title
-            ScrollView(.vertical, showsIndicators: false) {
-                ZStack(alignment: .top) {
-                    if !webViewFinishedLoading {
-                        LoadingView()
-                    }
-                    VStack(spacing: 0) {
-                        if let url = URL(string: question.url) {
-                            WebView(url: url, finishedLoading: $webViewFinishedLoading)
-                                .opacity(webViewFinishedLoading ? 1 : 0)
-                        }
-                    }
-                    .frame(height: Constant.Board.Map.heightScreen - Constant.Board.Navigation.heightNavigationBar)
-                }
+            if !webViewFinishedLoading {
+                LoadingView()
+            }
+            if let url = URL(string: question.url) {
+                WebView(url: url, finishedLoading: $webViewFinishedLoading)
+                    .opacity(webViewFinishedLoading ? 1 : 0)
             }
         }
         .navigationBarHidden(true)

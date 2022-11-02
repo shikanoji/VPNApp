@@ -29,7 +29,7 @@ struct IntroductionView: View {
                     AppSetting.shared.showedIntroduction = true
                     authentication.showedIntroduction = true
                 }
-                AppButton(style: .darkButton, width: Constant.Global.widthFormAndButton, height:50, text: "Sign In") {
+                AppButton(style: .darkButton, width: Constant.Global.widthFormAndButton, height:50, text: "Sign in") {
                     AppSetting.shared.showedIntroduction = true
                     authentication.showedIntroduction = true
                 }
