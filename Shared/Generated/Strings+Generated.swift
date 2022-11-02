@@ -283,27 +283,26 @@ public enum L10n {
     public static let youReOffline = L10n.tr("Global", "You're offline", fallback: "You're offline")
   }
   public enum Introduction {
-    /// SysVPN brings top-notch security by encrypting your connection, masking your sensitive info, and disguising your online activities from hacker attacks.
-    public static let intro1Body = L10n.tr("Introduction", "Intro1Body", fallback: "SysVPN brings top-notch security by encrypting your connection, masking your sensitive info, and disguising your online activities from hacker attacks.")
-    /// Get secure and private
-    /// access to the Internet
-    public static let intro1Title = L10n.tr("Introduction", "Intro1Title", fallback: "Get secure and private\naccess to the Internet")
+    /// SysVPN brings top-notch security by encrypting your connection, masking your sensitive info, and disguising your online activities from snoopers
+    public static let intro1Body = L10n.tr("Introduction", "Intro1Body", fallback: "SysVPN brings top-notch security by encrypting your connection, masking your sensitive info, and disguising your online activities from snoopers")
+    /// Shield your virtual life
+    public static let intro1Title = L10n.tr("Introduction", "Intro1Title", fallback: "Shield your virtual life")
     /// Best of all, with one SysVPN account, you can
     /// secure up to 6 devices at the same time
     public static let intro2Body = L10n.tr("Introduction", "Intro2Body", fallback: "Best of all, with one SysVPN account, you can\nsecure up to 6 devices at the same time")
-    /// Support Cross-Platform With Just One Subscription
-    public static let intro2Title = L10n.tr("Introduction", "Intro2Title", fallback: "Support Cross-Platform With Just One Subscription")
-    /// Whether it’s high-speed streaming, browsing, security, file sharing, or privacy; you get everything with SysVPN!
-    public static let intro3Body = L10n.tr("Introduction", "Intro3Body", fallback: "Whether it’s high-speed streaming, browsing, security, file sharing, or privacy; you get everything with SysVPN!")
-    /// Fast & Stable Speed From Anywhere To Everywhere
-    public static let intro3Title = L10n.tr("Introduction", "Intro3Title", fallback: "Fast & Stable Speed From Anywhere To Everywhere")
+    /// Support cross-platform with just one subscription
+    public static let intro2Title = L10n.tr("Introduction", "Intro2Title", fallback: "Support cross-platform with just one subscription")
+    /// Whether it’s high-speed streaming, browsing, file sharing, or privacy; you get everything with SysVPN!
+    public static let intro3Body = L10n.tr("Introduction", "Intro3Body", fallback: "Whether it’s high-speed streaming, browsing, file sharing, or privacy; you get everything with SysVPN!")
+    /// Fast & stable speed from anywhere to everywhere
+    public static let intro3Title = L10n.tr("Introduction", "Intro3Title", fallback: "Fast & stable speed from anywhere to everywhere")
     /// You won’t be charged until the trial period ends
     public static let introBottomTitle = L10n.tr("Introduction", "IntroBottomTitle", fallback: "You won’t be charged until the trial period ends")
     /// strings
     ///   SysVPN
     /// 
     ///   Created by Nguyễn Đình Thạch on 22/12/2021.
-    public static let trialButton = L10n.tr("Introduction", "trialButton", fallback: "START FREE 7-DAY TRIAL")
+    public static let trialButton = L10n.tr("Introduction", "trialButton", fallback: "Create a new account")
     /// Update New Version
     public static let updateNewVersion = L10n.tr("Introduction", "UpdateNewVersion", fallback: "Update New Version")
     /// Update Required
@@ -312,24 +311,24 @@ public enum L10n {
     public static let updateRequiredNote = L10n.tr("Introduction", "UpdateRequiredNote", fallback: "The current version of SYSVPN is no longer supported. Please update the app to continue using the app.")
   }
   public enum Login {
-    /// Start protecting yourself with SysVPN
-    public static let body = L10n.tr("Login", "Body", fallback: "Start protecting yourself with SysVPN")
+    /// If not protect your virtual life now, then when?
+    public static let body = L10n.tr("Login", "Body", fallback: "If not protect your virtual life now, then when?")
     /// Create new
     public static let createNew = L10n.tr("Login", "CreateNew", fallback: "Create new")
     /// Your email
     public static let emailPlaceholder = L10n.tr("Login", "EmailPlaceholder", fallback: "Your email")
-    /// Forgot password?
-    public static let forgotPassword = L10n.tr("Login", "ForgotPassword", fallback: "Forgot password?")
+    /// Forgot your password?
+    public static let forgotPassword = L10n.tr("Login", "ForgotPassword", fallback: "Forgot your password?")
     /// Don't have an account?
     public static let noAccountQuestion = L10n.tr("Login", "NoAccountQuestion", fallback: "Don't have an account?")
-    /// Your password
-    public static let passwordPlaceholder = L10n.tr("Login", "PasswordPlaceholder", fallback: "Your password")
-    /// Sign In
-    public static let signin = L10n.tr("Login", "Signin", fallback: "Sign In")
-    /// Sign In With Apple
-    public static let signinWithApple = L10n.tr("Login", "SigninWithApple", fallback: "Sign In With Apple")
-    /// Sign In With Google
-    public static let signinWithGoogle = L10n.tr("Login", "SigninWithGoogle", fallback: "Sign In With Google")
+    /// Password
+    public static let passwordPlaceholder = L10n.tr("Login", "PasswordPlaceholder", fallback: "Password")
+    /// Sign in
+    public static let signin = L10n.tr("Login", "Signin", fallback: "Sign in")
+    /// Sign in with Apple
+    public static let signinWithApple = L10n.tr("Login", "SigninWithApple", fallback: "Sign in with Apple")
+    /// Sign in with Google
+    public static let signinWithGoogle = L10n.tr("Login", "SigninWithGoogle", fallback: "Sign in with Google")
     /// strings
     ///   SysVPN
     /// 
@@ -458,20 +457,20 @@ public enum L10n {
     }
   }
   public enum Register {
-    /// Start protecting yourself with SysVPN
-    public static let body = L10n.tr("Register", "Body", fallback: "Start protecting yourself with SysVPN")
-    /// Your Email
-    public static let emailPlaceholder = L10n.tr("Register", "EmailPlaceholder", fallback: "Your Email")
+    /// If not protect your virtual life now, then when?
+    public static let body = L10n.tr("Register", "Body", fallback: "If not protect your virtual life now, then when?")
+    /// Your email
+    public static let emailPlaceholder = L10n.tr("Register", "EmailPlaceholder", fallback: "Your email")
     /// Already have an account?
     public static let hadAccountText = L10n.tr("Register", "HadAccountText", fallback: "Already have an account?")
-    /// Your Password
-    public static let passwordPlaceholder = L10n.tr("Register", "PasswordPlaceholder", fallback: "Your Password")
-    /// Retype Your Password
-    public static let retypePassword = L10n.tr("Register", "RetypePassword", fallback: "Retype Your Password")
-    /// Sign In
-    public static let signin = L10n.tr("Register", "Signin", fallback: "Sign In")
-    /// Create An Account
-    public static let signup = L10n.tr("Register", "Signup", fallback: "Create An Account")
+    /// Password
+    public static let passwordPlaceholder = L10n.tr("Register", "PasswordPlaceholder", fallback: "Password")
+    /// Retype Password
+    public static let retypePassword = L10n.tr("Register", "RetypePassword", fallback: "Retype Password")
+    /// Sign in
+    public static let signin = L10n.tr("Register", "Signin", fallback: "Sign in")
+    /// Create an account
+    public static let signup = L10n.tr("Register", "Signup", fallback: "Create an account")
     /// Sign up with Apple
     public static let signupWithApple = L10n.tr("Register", "SignupWithApple", fallback: "Sign up with Apple")
     /// Sign up with Google

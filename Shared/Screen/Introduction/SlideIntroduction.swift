@@ -17,7 +17,7 @@ struct IntroductionPage: Hashable {
         
         let intro1 = IntroductionPage(image: Asset.Assets.introduction1.swiftUIImage, title: L10n.Introduction.intro1Title, body: L10n.Introduction.intro1Body)
         
-        let intro2 = IntroductionPage(image: Asset.Assets.introduction2.swiftUIImage, title: L10n.Introduction.intro2Title, body: L10n.Introduction.intro2Title)
+        let intro2 = IntroductionPage(image: Asset.Assets.introduction2.swiftUIImage, title: L10n.Introduction.intro2Title, body: L10n.Introduction.intro2Body)
         
         let intro3 = IntroductionPage(image: Asset.Assets.introduction3.swiftUIImage, title: L10n.Introduction.intro3Title, body: L10n.Introduction.intro3Body)
         
