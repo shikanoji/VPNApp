@@ -234,7 +234,7 @@ struct BoardView: View {
                         .padding(.top, 0)
                     Spacer()
                     ConnectButton(viewModel: viewModel,
-                                  connectButtonViewModel: ConnectButtonViewModel(), tapButton: {
+                                  tapButton: {
                                       if viewModel.state != .connected {
                                           AppSetting.shared.saveBoardTabWhenConnecting(.location)
                                           if mesh.selectedNode == nil {

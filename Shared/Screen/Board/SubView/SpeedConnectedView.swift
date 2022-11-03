@@ -8,9 +8,7 @@
 import SwiftUI
 
 struct SpeedConnectedView: View {
-
-    var uploadSpeed: String
-    var downLoadSpeed: String
+    @EnvironmentObject var networkTraffic: NetworkTraffic
 
     var body: some View {
         VStack(alignment: .leading, spacing: 0) {
@@ -18,7 +16,7 @@ struct SpeedConnectedView: View {
                 Image(Constant.Board.Image.uploadSpeed)
                     .resizable()
                     .frame(width: Constant.Board.Speed.heightIcon, height: Constant.Board.Speed.heightIcon)
-                Text("\(uploadSpeed)\(L10n.Board.speed)")
+                Text(networkTraffic.uploadSpeed)
                     .lineLimit(1)
                     .foregroundColor(.white)
                     .font(.system(size: Constant.TextSize.Global.detailDefault, weight: .bold))
@@ -27,7 +25,7 @@ struct SpeedConnectedView: View {
                 Image(Constant.Board.Image.downloadSpeed)
                     .resizable()
                     .frame(width: Constant.Board.Speed.heightIcon, height: Constant.Board.Speed.heightIcon)
-                Text("\(downLoadSpeed)\(L10n.Board.speed)")
+                Text(networkTraffic.downloadSpeed)
                     .lineLimit(1)
                     .foregroundColor(.white)
                     .font(.system(size: Constant.TextSize.Global.detailDefault, weight: .bold))

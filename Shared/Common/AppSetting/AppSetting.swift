@@ -53,7 +53,6 @@ enum AppKeys: String {
     case multiSelect = "multiSelect"
     case recommendedCountries = "recommendedCountries"
     case temporaryDisableAutoConnect = "temporaryDisableAutoConnect"
-    case needToStartNewSession = "needToStartNewSession"
 
     /// Last Time when Data Map Update
     case lastChange = "lastChange"
@@ -74,7 +73,6 @@ enum AppKeys: String {
 }
 
 class AppSetting {
-    private let appGroup = "group.sysvpn.client.ios"
 
     static var shared = AppSetting()
     var disposedBag = DisposeBag()
@@ -86,43 +84,5 @@ class AppSetting {
         return name.range(of: search, options: .caseInsensitive) != nil
             || iso2.range(of: search, options: .caseInsensitive) != nil
             || iso3.range(of: search, options: .caseInsensitive) != nil
-    }
-
-    func updaterServerIP() {
-        if let hostName = URL(string: Constant.api.root)?.host {
-            let userDefaultsShared = UserDefaults(suiteName: appGroup)
-            let info = AppSetting.urlToIPGetHostByName(hostname: hostName)
-            userDefaultsShared?.setValue(info, forKey: "server_ips")
-        }
-    }
-
-    static func urlToIPGetHostByName(hostname: String) -> [String] {
-        var ipList: [String] = []
-
-        guard let host = hostname.withCString({ gethostbyname($0) }) else {
-            return ipList
-        }
-
-        guard host.pointee.h_length > 0 else {
-            return ipList
-        }
-
-        var index = 0
-
-        while host.pointee.h_addr_list[index] != nil {
-            var addr = in_addr()
-
-            memcpy(&addr.s_addr, host.pointee.h_addr_list[index], Int(host.pointee.h_length))
-
-            guard let remoteIPAsC = inet_ntoa(addr) else {
-                return ipList
-            }
-
-            ipList.append(String(cString: remoteIPAsC))
-
-            index += 1
-        }
-
-        return ipList
     }
 }

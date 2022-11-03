@@ -69,8 +69,7 @@ class ContentViewModel: ObservableObject {
         
         configState()
         
-        NotificationCenter.default.post(name: Constant.NameNotification.appReadyStart, object: nil)
-        
+        AppSettingIP.shared.startGetIP()
         NetworkManager.shared.checkVPN()
     }
     

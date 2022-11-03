@@ -16,7 +16,7 @@ struct ConnectButton: View {
     @State var startAlertScroll = false
     
     @StateObject var viewModel: BoardViewModel
-    @StateObject var connectButtonViewModel: ConnectButtonViewModel
+    @EnvironmentObject var networkTraffic: NetworkTraffic
     
     @State var hiddenDelay = 1.0
     @State var tap = false
@@ -57,8 +57,8 @@ struct ConnectButton: View {
                     .frame(width: widthSpeed)
             }
             if (viewModel.stateUI == .connected) {
-                TimeConnectedView().frame(width: widthSpeed, height: Constant.Board.QuickButton.widthSize)
-                    .opacity(viewModel.stateUI == .connected ? 1 : 0)
+                TimeConnectedView()
+                    .frame(width: widthSpeed, height: Constant.Board.QuickButton.widthSize)
             }
             VStack(spacing: 10) {
                 if viewModel.stateUI == .connected {
@@ -102,15 +102,39 @@ struct ConnectButton: View {
             }
             .frame(width:  Constant.Board.QuickButton.widthSize)
             if viewModel.stateUI == .connected {
-                SpeedConnectedView(uploadSpeed: connectButtonViewModel.uploadSpeed, downLoadSpeed: connectButtonViewModel.downloadSpeed)
+                SpeedConnectedView()
                     .frame(width: widthSpeed, height: Constant.Board.QuickButton.widthSize)
                     .onAppear {
-                        connectButtonViewModel.getSpeedRealTime()
+                        networkTraffic.startGetTraffic()
                     }
             } else {
                 Spacer()
             }
         }
+    }
+    
+    func getTime(now: Double) -> String {
+        let startTimeDate = AppSetting.shared.saveTimeConnectedVPN ?? Date()
+         
+        let diff = getStartTimeDouble(startTimeDate)
+        
+        if diff <= 0 {
+            return "00:00:00"
+        }
+       
+        let hour = floor(diff / 60 / 60)
+        let min = floor((diff - hour * 60 * 60) / 60)
+        let second = floor(diff - (hour * 60 * 60 + min * 60))
+         
+        return .init(format: "%02d:%02d:%02d", Int(hour), Int(min), Int(second))
+    }
+    
+    func getStartTimeDouble(_ startTimeDate: Date) -> Double {
+        if AppSetting.shared.isConnectedToVpn {
+            let time = Date().seconds(from: startTimeDate)
+            return Double(time)
+        }
+        return 0
     }
     
     func getConnectAlert() -> some View {
@@ -244,7 +268,7 @@ struct DocAnimationView: View {
 }
 
 struct TimeConnectedView: View {
-    @StateObject var stopWatch = StopWatch()
+    @EnvironmentObject var networkTraffic: NetworkTraffic
     
     var body: some View {
         VStack(alignment: .leading, spacing: 0) {
@@ -253,16 +277,11 @@ struct TimeConnectedView: View {
                 .font(.system(size: Constant.TextSize.Global.detailDefault, weight: .bold))
                 .lineLimit(1)
                 .frame(width: 100, alignment: .leading)
-            Text(self.stopWatch.stopWatchTime)
+            Text(networkTraffic.timeString)
                 .foregroundColor(Color.white)
                 .font(.system(size: Constant.TextSize.Global.detailDefault, weight: .bold))
                 .lineLimit(1)
                 .frame(width: 100, alignment: .leading)
-        }
-        .onAppear {
-            if self.stopWatch.isPaused() {
-                self.stopWatch.start()
-            }
         }
         .frame(width: Constant.Board.QuickButton.heightSize,
                height: Constant.Board.QuickButton.heightSize)
