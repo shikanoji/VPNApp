@@ -29,28 +29,8 @@ class AppDelegate: NSObject, UIApplicationDelegate, MessagingDelegate, UNUserNot
         AppSetting.shared.isRefreshingToken = false
         Messaging.messaging().delegate = self
         registerForPushNotifications()
-        initNotificationObs()
+        AppSettingIP.shared.resetIP()
         return true
-    }
-    
-    func initNotificationObs() {
-        NotificationCenter.default.addObserver(self, selector: #selector(onReadyStart), name: Constant.NameNotification.appReadyStart, object: nil)
-    }
-
-    var timmerAppSetting: Timer?
-
-    @objc func onReadyStart() {
-        onStartApp()
-    }
-
-    func onStartApp() {
-        timmerAppSetting?.invalidate()
-        timmerAppSetting = Timer.scheduledTimer(timeInterval: 30.0, target: self, selector: #selector(onReloadAppSetting), userInfo: nil, repeats: true)
-        onReloadAppSetting()
-    }
-
-    @objc func onReloadAppSetting() {
-        AppSetting.shared.updaterServerIP()
     }
     
     func application(_ application: UIApplication, supportedInterfaceOrientationsFor window: UIWindow?) -> UIInterfaceOrientationMask {

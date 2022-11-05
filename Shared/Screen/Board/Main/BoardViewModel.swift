@@ -210,7 +210,7 @@ class BoardViewModel: ObservableObject {
         
         NotificationCenter.default.addObserver(
             self,
-            selector: #selector(configDisconected),
+            selector: #selector(configDisconnected),
             name: Constant.NameNotification.connectVPNError,
             object: nil
         )
@@ -237,7 +237,7 @@ class BoardViewModel: ObservableObject {
                 case .connected:
                     self.configConnected()
                 case .disconnected:
-                    self.configDisconected()
+                    self.configDisconnected()
                 default:
                     break
                 }
@@ -259,11 +259,12 @@ class BoardViewModel: ObservableObject {
                 self.authentication?.saveIsPremium(false)
             }
         }
+        
         DispatchQueue.main.async {
             if NetworkManager.shared.state == .connected {
                 self.configConnected()
             } else {
-                self.configDisconnect()
+                self.configDisconnected()
             }
         }
     }
@@ -305,6 +306,7 @@ class BoardViewModel: ObservableObject {
             .subscribe(onSuccess: { response in
                 if let result = response.result {
                     AppSetting.shared.configAppSettings(result)
+                    print("getIpInfo \(result)")
                 }
                 completion()
             }, onFailure: { error in
@@ -412,30 +414,8 @@ class BoardViewModel: ObservableObject {
     
     var isCheckingAutoConnect = false
     
-    @objc private func autoConnectWithConfig() {
-        if Connectivity.sharedInstance.isReachable {
-            switch NetworkManager.shared.autoConnectType {
-            case .always:
-                AppSetting.shared.saveBoardTabWhenConnecting(.location)
-                NetworkManager.shared.ConnectOrDisconnectVPN()
-            case .onWifi:
-                if Connectivity.sharedInstance.isReachableOnEthernetOrWiFi {
-                    AppSetting.shared.saveBoardTabWhenConnecting(.location)
-                    NetworkManager.shared.ConnectOrDisconnectVPN()
-                }
-            case .onMobile:
-                if Connectivity.sharedInstance.isReachableOnCellular {
-                    AppSetting.shared.saveBoardTabWhenConnecting(.location)
-                    NetworkManager.shared.ConnectOrDisconnectVPN()
-                }
-            default:
-                break
-            }
-        }
-    }
-    
     @objc
-    @MainActor func configDisconected() {
+    @MainActor func configDisconnected() {
         ip = AppSetting.shared.ip
         flag = ""
         nameSelect = ""

@@ -22,7 +22,6 @@ class AccountViewModel: ObservableObject {
 
     func logout() {
         AppSetting.shared.temporaryDisableAutoConnect = true
-        AppSetting.shared.needToStartNewSession = true
         NotificationCenter.default.post(name: Constant.NameNotification.logoutNeedDisconnect, object: nil)
 
         if !AppSetting.shared.currentSessionId.isEmpty {

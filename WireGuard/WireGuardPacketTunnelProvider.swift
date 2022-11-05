@@ -19,9 +19,14 @@ class PacketTunnelProvider: WireGuardTunnelProvider {
                 setting.ipv4Settings = NEIPv4Settings(addresses: [], subnetMasks: [])
             }
 
-            let ips = ((userDefaultsShared?.array(forKey: "server_ips"))?.map { ip in
-                return NEIPv4Route(destinationAddress: ip as! String, subnetMask: "255.255.255.255")
-            }) ?? []
+            var ips = [NEIPv4Route]()
+
+            userDefaultsShared?.array(forKey: "server_ips")?.forEach { ip in
+                if let ip = ip as? String {
+                    ips.append(NEIPv4Route(destinationAddress: ip, subnetMask: "255.255.255.255"))
+                }
+            }
+
             setting.ipv4Settings?.excludedRoutes = ips
         }
 
