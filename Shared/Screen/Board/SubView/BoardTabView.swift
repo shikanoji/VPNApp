@@ -23,6 +23,7 @@ struct BoardTabView: View {
         .foregroundColor(Color.white)
         .background(AppColor.lightBlack)
         .frame(height: Constant.Board.Tabs.heightSize + 20)
+        .frame(width: UIScreen.main.bounds.size.width - 40)
         .cornerRadius(Constant.Board.SubBoard.radius + 6)
     }
 }

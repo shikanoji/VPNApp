@@ -17,8 +17,6 @@ struct NodeMapView: View {
     
     @Binding var statusConnect: VPNStatus
     
-    @Binding var isZooming: Bool
-    
     let colorsLeft = [
         AppColor.gradientEntry,
         AppColor.gradientEntry,
@@ -38,38 +36,33 @@ struct NodeMapView: View {
     var body: some View {
         ZStack {
             ForEach(mesh.showCityNodes ? mesh.cityNodes : mesh.countryNodes) { node in
-                if !(showMultihop && isZooming && !isMultihopNode(node)) {
-                    NodeView(scale: $scale,
-                             node: node,
-                             statusConnect: $statusConnect)
-                        .position(x: Constant.convertXToMap(node.x),
-                                  y: Constant.convertYToMap(node.y, mesh.showCityNodes, isMultihopNode(node) && showMultihop))
-                        .onTapGesture {
-                            self.mesh.selectNode(node)
-                        }
-                }
+                NodeView(scale: $scale,
+                         node: node,
+                         statusConnect: $statusConnect)
+                    .position(x: Constant.convertXToMap(node.x),
+                              y: Constant.convertYToMap(node.y, mesh.showCityNodes, isMultihopNode(node) && showMultihop))
+                    .onTapGesture {
+                        self.mesh.selectNode(node)
+                    }
             }
             
             if showMultihop {
-                if !isZooming {
-                    multiView()
-                        .stroke(
-                            LinearGradient(colors: xEntrySmallerxExitNode ? colorsLeft : colorsRight,
-                                           startPoint: .leading,
-                                           endPoint:  .trailing),
-                            lineWidth: 3 / scale
-                        )
-                        .onDisappear {
-                            mesh.removeSelectNode()
-                        }
-                }
+                multiView()
+                    .stroke(
+                        LinearGradient(colors: xEntrySmallerxExitNode ? colorsLeft : colorsRight,
+                                       startPoint: .leading,
+                                       endPoint:  .trailing),
+                        lineWidth: 3 / scale
+                    )
+                    .onDisappear {
+                        mesh.removeSelectNode()
+                    }
             }
         }
         .contentShape(Rectangle())
         .onTapGesture {
             self.mesh.removeSelectNode()
         }
-        .animation(.default)
     }
     
     func isMultihopNode(_ node: Node) -> Bool {

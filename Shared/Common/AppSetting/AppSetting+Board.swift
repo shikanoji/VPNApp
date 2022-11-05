@@ -97,15 +97,6 @@ extension AppSetting {
         }
     }
     
-    var needToStartNewSession: Bool {
-        get {
-            return UserDefaults.standard.bool(forKey: AppKeys.needToStartNewSession.rawValue)
-        }
-        set {
-            UserDefaults.standard.setValue(newValue, forKey: AppKeys.needToStartNewSession.rawValue)
-        }
-    }
-    
     func getLocationMap() -> CGPoint {
         guard let clientCountryNode = AppSetting.shared.getDataMap()?.clientCountryDetail else {
             return .init(

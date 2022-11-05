@@ -176,7 +176,8 @@ class NetworkManager: ObservableObject {
     }
     
     func getNodeConnect() -> Node? {
-        if ItemCell(type: AppSetting.shared.getAutoConnectProtocol()).type != .off {
+        checkAutoconnect()
+        if networkConnectIsCurrentNetwork() {
             return AppSetting.shared.getAutoConnectNodeToConnect()
         } else {
             return nodeSelected
@@ -244,7 +245,7 @@ class NetworkManager: ObservableObject {
         checkInternetTimer!.schedule(deadline: .now(), repeating: .seconds(3))
         checkInternetTimer!.setEventHandler { [weak self] in
             self?.checkAutoconnect()
-            
+            self?.checkStateTooLongTime()
             switch self?.autoConnectType {
             case .always, .onWifi, .onMobile:
                 if self?.stateUI == .disconnected && !AppSetting.shared.isConnectedToVpn {
@@ -252,13 +253,25 @@ class NetworkManager: ObservableObject {
                 }
             case .off:
                 if self?.reconnectWhenLoseInternet == 2 && Connectivity.sharedInstance.isReachable && self?.stateUI == .disconnected && !(self?.connectOrDisconnectByUser ?? false) {
-                    self?.ConnectOrDisconnectVPN()
+                    self?.configStartConnectVPN()
                 }
             default:
                 break
             }
         }
         checkInternetTimer!.resume()
+    }
+    
+    func checkStateTooLongTime() {
+        if stateUI == .disconnecting || stateUI == .connecting {
+            timeLastChangeStateUI += 1
+            
+            if timeLastChangeStateUI >= 2 {
+                connectOrDisconnectByUser = true
+                configDisconnect()
+                timeLastChangeStateUI = 0
+            }
+        }
     }
     
     @objc private func autoConnectWithConfig() {
@@ -360,8 +373,8 @@ class NetworkManager: ObservableObject {
         get { numberReconnect < maximumReconnect }
     }
     
-    func startConnectVPN() {
-        getRequestCertificate(asNewConnection: AppSetting.shared.needToStartNewSession) {
+    func startConnectVPN(asNewConnection: Bool) {
+        getRequestCertificate(asNewConnection: asNewConnection) {
             if $0 {
                 self.connect()
             } else {
@@ -388,9 +401,11 @@ class NetworkManager: ObservableObject {
         }
         configDisconected()
         if isEnableReconect, !connectOrDisconnectByUser, !AppSetting.shared.temporaryDisableAutoConnect {
-            startConnectVPN()
+            startConnectVPN(asNewConnection: false)
         }
     }
+    
+    var timeLastChangeStateUI = 0
     
     @objc private func VPNStatusDidChange(notification: Notification) {
        
@@ -401,6 +416,7 @@ class NetworkManager: ObservableObject {
         }
         
         state = notification.vpnStatus
+        timeLastChangeStateUI = 0
         
         if stateUI != state {
             stateUI = state
@@ -436,7 +452,7 @@ class NetworkManager: ObservableObject {
             if isEnableReconect,
                !connectOrDisconnectByUser,
                !AppSetting.shared.temporaryDisableAutoConnect {
-                startConnectVPN()
+                startConnectVPN(asNewConnection: false)
             } else {
                 configDisconected()
             }
@@ -511,7 +527,7 @@ class NetworkManager: ObservableObject {
         }
         if needReconnect {
             needReconnect = false
-            DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
                 self.configStartConnectVPN()
             }
         }
@@ -521,6 +537,7 @@ class NetworkManager: ObservableObject {
             AppSetting.shared.currentSessionId = ""
         }
         
+        connectOrDisconnectByUser = false
         AppSetting.shared.saveTimeConnectedVPN = nil
     }
     
@@ -528,7 +545,7 @@ class NetworkManager: ObservableObject {
         if state == .disconnected {
             numberReconnect = 0
             stateUI = .connecting
-            startConnectVPN()
+            startConnectVPN(asNewConnection: true)
         }
     }
     
@@ -562,7 +579,7 @@ class NetworkManager: ObservableObject {
         isCellularConnect = Connectivity.sharedInstance.isReachableOnCellular
     }
     
-    func getRequestCertificate(asNewConnection: Bool = AppSetting.shared.needToStartNewSession, completion: @escaping (Bool) -> Void) {
+    func getRequestCertificate(asNewConnection: Bool = true, completion: @escaping (Bool) -> Void) {
         guard isEnableReconect else {
             completion(false)
             return
@@ -588,13 +605,11 @@ class NetworkManager: ObservableObject {
                             if !cer.exceedLimit {
                                 if cer.allowReconnect {
                                     NetworkManager.shared.requestCertificate = cer
-                                    AppSetting.shared.needToStartNewSession = false
                                     AppSetting.shared.currentSessionId = NetworkManager.shared.requestCertificate?.sessionId ?? ""
                                     completion(true)
                                     return
                                 } else {
                                     AppSetting.shared.temporaryDisableAutoConnect = true
-                                    AppSetting.shared.needToStartNewSession = true
                                     self.errorCallBack?(.sessionTerminate)
                                     self.stateUI = .disconnected
                                     completion(false)
@@ -606,7 +621,7 @@ class NetworkManager: ObservableObject {
                                 return
                             }
                         } else if self.isEnableReconect {
-                            self.getRequestCertificate(asNewConnection: AppSetting.shared.needToStartNewSession) {
+                            self.getRequestCertificate(asNewConnection: true) {
                                 completion($0)
                                 return
                             }
@@ -619,14 +634,12 @@ class NetworkManager: ObservableObject {
                         if let cer = result.getObtainCer {
                             if !cer.exceedLimit {
                                 if cer.allowReconnect {
-                                    AppSetting.shared.needToStartNewSession = false
                                     NetworkManager.shared.obtainCertificate = cer
                                     AppSetting.shared.currentSessionId = cer.sessionId ?? ""
                                     completion(true)
                                     return
                                 } else {
                                     AppSetting.shared.temporaryDisableAutoConnect = true
-                                    AppSetting.shared.needToStartNewSession = true
                                     self.errorCallBack?(.sessionTerminate)
                                     self.stateUI = .disconnected
                                     completion(false)
@@ -638,7 +651,7 @@ class NetworkManager: ObservableObject {
                                 return
                             }
                         } else if self.isEnableReconect {
-                            self.getRequestCertificate(asNewConnection: AppSetting.shared.needToStartNewSession) {
+                            self.getRequestCertificate(asNewConnection: true) {
                                 completion($0)
                                 return
                             }
@@ -654,7 +667,7 @@ class NetworkManager: ObservableObject {
                     }
                 } else {
                     if self.isEnableReconect {
-                        self.getRequestCertificate(asNewConnection: AppSetting.shared.needToStartNewSession) {
+                        self.getRequestCertificate(asNewConnection: true) {
                             completion($0)
                             return
                         }
@@ -677,7 +690,7 @@ class NetworkManager: ObservableObject {
                 }
             } onFailure: { error in
                 if self.isEnableReconect {
-                    self.getRequestCertificate(asNewConnection: AppSetting.shared.needToStartNewSession) {
+                    self.getRequestCertificate(asNewConnection: true) {
                         completion($0)
                         return
                     }

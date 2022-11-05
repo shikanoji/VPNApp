@@ -81,11 +81,12 @@ class Mesh: ObservableObject {
     }
     
     func showConnectedNode(_ node: Node, nodeSelected: Node) -> Bool {
-        if showCityNodes {
-            return getCityNode(node)?.id == getCityNode(nodeSelected)?.id
-        } else {
-            return getCountryNode(node)?.id == getCountryNode(nodeSelected)?.id
-        }
+        return node.id == nodeSelected.id
+//        if showCityNodes {
+//            return getCityNode(node)?.id == getCityNode(nodeSelected)?.id
+//        } else {
+//            return getCountryNode(node)?.id == getCountryNode(nodeSelected)?.id
+//        }
     }
     
     func getNodeByStaticServer(_ staticServer: StaticServer) -> Node? {
