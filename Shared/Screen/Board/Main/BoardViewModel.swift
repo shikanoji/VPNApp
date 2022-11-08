@@ -89,7 +89,16 @@ class BoardViewModel: ObservableObject {
     @Published var nodes: [Node] = []
     @Published var errorMessage: String? = nil
     
-    @Published var showBoardList = false
+    @Published var showBoardListIphone = false
+    @Published var showBoardListIpad = false
+    
+    func configShowBoardList(_ config: Bool) {
+        if UIDevice.current.userInterfaceIdiom == .pad {
+            showBoardListIpad = config
+        } else {
+            showBoardListIphone = config
+        }
+    }
     
     var isSwitchTab = false
     
@@ -105,7 +114,7 @@ class BoardViewModel: ObservableObject {
     @Published var nodeSelectFromBoardList: Node? = nil {
         didSet {
             if let node = nodeSelectFromBoardList {
-                showBoardList = false
+                configShowBoardList(false)
                 guard !NetworkManager.shared.networkConnectIsCurrentNetwork() else {
                     showAlertAutoConnectSetting = true
                     return
@@ -126,7 +135,7 @@ class BoardViewModel: ObservableObject {
     @Published var staticIPSelect: StaticServer? = nil {
         didSet {
             if let staticIP = staticIPSelect {
-                showBoardList = false
+                configShowBoardList(false)
                 guard !NetworkManager.shared.networkConnectIsCurrentNetwork() else {
                     showAlertAutoConnectSetting = true
                     return
@@ -145,7 +154,7 @@ class BoardViewModel: ObservableObject {
     @Published var multihopSelect: MultihopModel? = nil {
         didSet {
             if let multihop = multihopSelect {
-                showBoardList = false
+                configShowBoardList(false)
                 guard !NetworkManager.shared.networkConnectIsCurrentNetwork() else {
                     showAlertAutoConnectSetting = true
                     return
