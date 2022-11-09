@@ -11,45 +11,45 @@ struct DescriptionMultihopView: View {
 
     @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
 
+    var cancel: (() -> Void)? = nil
+
     var body: some View {
-        ZStack {
-            VStack(spacing: 0) {
-                ZStack(alignment: .top) {
-                    VisualEffectView(effect: UIBlurEffect(style: .dark))
-                        .opacity(0.95)
-                    HStack {
-                        Image(Constant.CustomNavigation.iconBack)
-                            .onTapGesture {
-                                presentationMode.wrappedValue.dismiss()
-                            }
-                        Spacer()
-                    }
-                    .padding(.top, 35.0)
+        VStack(spacing: 0) {
+            AppColor.darkButton.opacity(0.2)
+                .contentShape(Rectangle())
+                .onTapGesture {
+                    cancel?()
                 }
-                VStack(alignment: .center) {
-                    Group {
-                        Spacer().frame(height: 32)
-                        Text(L10n.Board.BoardList.MultiHop.what)
-                            .font(Constant.ChangePassWord.fontTitle)
-                        Text(L10n.Board.BoardList.MultiHop.contentMultiHop)
-                            .font(Constant.ChangePassWord.fontSubContent)
-                            .padding(.vertical)
-                        Spacer().frame(height: 16)
-                        AppButton(style: .darkButton, width: UIScreen.main.bounds.size.width - 32, text: L10n.Board.BoardList.MultiHop.gotIt) {
-                            presentationMode.wrappedValue.dismiss()
-                        }
-                        Spacer().frame(height: 40)
+            VStack {
+                LedgeTopView()
+                    .padding(.top, -10)
+                Spacer().frame(height: 32)
+                Text(L10n.Board.BoardList.MultiHop.what)
+                    .font(Constant.ChangePassWord.fontTitle)
+                    .padding(.horizontal, 20)
+                Text(L10n.Board.BoardList.MultiHop.contentMultiHop)
+                    .font(Constant.ChangePassWord.fontSubContent)
+                    .padding(.vertical)
+                    .padding(.horizontal, 20)
+                Spacer().frame(height: 16)
+                AppButton(style: .darkButton,width: UIScreen.main.bounds.size.width - 32, text: L10n.Board.BoardList.MultiHop.gotIt) {
+                    if cancel != nil {
+                        cancel?()
                     }
-                    .padding(.horizontal)
                 }
-                .frame(maxWidth: .infinity)
-                .foregroundColor(.white)
-                .background(AppColor.lightBlack)
-                .cornerRadius(radius: Constant.Menu.radiusCell * 2, corners: [PositionItemCell.top.rectCorner])
-                .padding(.top, -Constant.Menu.radiusCell * 2)
+                .padding(.bottom, 20)
             }
+            .foregroundColor(.white)
+            .background(AppColor.blackText)
+            .cornerRadius(radius: 20, corners: [.topLeft, .topRight])
         }
-        .frame(maxWidth: .infinity, maxHeight: .infinity)
+        .gesture(DragGesture(minimumDistance: 0, coordinateSpace: .local)
+            .onEnded({ value in
+                if value.translation.height > 10 {
+                    cancel?()
+                }
+            }))
+        .background(PopupBackgroundView())
         .ignoresSafeArea()
     }
 }

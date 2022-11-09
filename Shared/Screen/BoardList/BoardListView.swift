@@ -33,7 +33,7 @@ struct BoardListView: View {
                                    name: $name)
                     .onTapGesture {
                         withAnimation {
-                            viewModel.showBoardList = false
+                            viewModel.configShowBoardList(false)
                         }
                     }
                 BoardTabView(viewModel: viewModel)

@@ -245,7 +245,7 @@ class NetworkManager: ObservableObject {
         checkInternetTimer!.schedule(deadline: .now(), repeating: .seconds(3))
         checkInternetTimer!.setEventHandler { [weak self] in
             self?.checkAutoconnect()
-            self?.checkStateTooLongTime()
+//            self?.checkStateTooLongTime()
             switch self?.autoConnectType {
             case .always, .onWifi, .onMobile:
                 if self?.stateUI == .disconnected && !AppSetting.shared.isConnectedToVpn {
@@ -266,7 +266,7 @@ class NetworkManager: ObservableObject {
         if stateUI == .disconnecting || stateUI == .connecting {
             timeLastChangeStateUI += 1
             
-            if timeLastChangeStateUI >= 2 {
+            if timeLastChangeStateUI >= 3 {
                 connectOrDisconnectByUser = true
                 configDisconnect()
                 timeLastChangeStateUI = 0
@@ -465,9 +465,13 @@ class NetworkManager: ObservableObject {
     
     func checkVPN() {
         if AppSetting.shared.isConnectedToVpn {
-            configConnected()
+            if state == .disconnected {
+                configConnected()
+            }
         } else {
-            configDisconnect()
+            if state != .disconnected && state != .disconnecting {
+                configDisconnect()
+            }
         }
     }
     

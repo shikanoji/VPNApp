@@ -261,10 +261,16 @@ struct BoardView: View {
                 .padding(/*@START_MENU_TOKEN@*/.all/*@END_MENU_TOKEN@*/)
             }
         }
-        .sheet(isPresented: $viewModel.showBoardList) {
+        .sheet(isPresented: $viewModel.showBoardListIphone) {
             boardListView()
                 .onWillDisappear {
-                    viewModel.showBoardList = false
+                    viewModel.showBoardListIphone = false
+                }
+        }
+        .fullScreenCover(isPresented: $viewModel.showBoardListIpad) {
+            boardListView()
+                .onWillDisappear {
+                    viewModel.showBoardListIpad = false
                 }
         }
         .background(AppColor.background)

@@ -67,7 +67,9 @@ class ContentViewModel: ObservableObject {
             endLoading = true
         }
         
-        configState()
+        getIpInfo {
+            self.configState()
+        }
         
         AppSettingIP.shared.startGetIP()
         NetworkManager.shared.checkVPN()
@@ -99,16 +101,14 @@ class ContentViewModel: ObservableObject {
     }
     
     func loadAppSettingAndData(completion: @escaping () -> Void) {
-        getIpInfo {
-            if !AppSetting.shared.isConnectedToVpn && AppSetting.shared.needLoadApiMap {
-                self.getCountryList {
-                    self.getMultihopList {
-                        completion()
-                    }
+        if !AppSetting.shared.isConnectedToVpn && AppSetting.shared.needLoadApiMap {
+            getCountryList {
+                self.getMultihopList {
+                    completion()
                 }
-            } else {
-                completion()
             }
+        } else {
+            completion()
         }
     }
     
