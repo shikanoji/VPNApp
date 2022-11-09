@@ -73,7 +73,6 @@ struct MultiHopView: View {
                     if let nodeEntry = item.entry?.country,
                        let nodeExit = item.exit?.country {
                         Button {
-                            AppSetting.shared.temporaryDisableAutoConnect = false
                             multihopSelect = item
                         } label: {
                             HStack {

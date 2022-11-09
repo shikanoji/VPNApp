@@ -49,7 +49,6 @@ struct CityListView: View {
                 VStack(alignment: .leading) {
                     ForEach(node.cityNodeList) { city in
                         Button {
-                            AppSetting.shared.temporaryDisableAutoConnect = false
                             nodeSelect = city
                         } label: {
                             CityCellView(node: city, subName: L10n.Board.BoardList.cityOf + " \(node.name)")

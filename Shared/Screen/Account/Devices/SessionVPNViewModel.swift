@@ -63,9 +63,6 @@ class SessionVPNViewModel: ObservableObject {
             return
         }
         if device.id == AppSetting.shared.currentSessionId {
-            if AppSetting.shared.isAutoConnectEnable {
-                AppSetting.shared.temporaryDisableAutoConnect = true
-            }
             NetworkManager.shared.connectOrDisconnectByUser = true
             NotificationCenter.default.post(name: Constant.NameNotification.disconnectCurrentSession, object: nil)
             AppSetting.shared.selectAutoConnect = ItemCellType.off.rawValue

@@ -12,6 +12,7 @@ import SwiftUI
 import TunnelKitManager
 import TunnelKitCore
 import Network
+import NetworkExtension
 
 extension ItemCellType {
     var getConfigParam: String {
@@ -184,8 +185,6 @@ class NetworkManager: ObservableObject {
         }
     }
     
-    var isCellularConnect = Connectivity.sharedInstance.isReachableOnCellular
-    
     init() {
         NotificationCenter.default.addObserver(
             self,
@@ -215,8 +214,6 @@ class NetworkManager: ObservableObject {
             object: nil
         )
         
-        checkInternetRealTime()
-        
         beginBackgroundTask()
     }
     
@@ -244,15 +241,19 @@ class NetworkManager: ObservableObject {
         checkInternetTimer = DispatchSource.makeTimerSource(queue: queue)
         checkInternetTimer!.schedule(deadline: .now(), repeating: .seconds(3))
         checkInternetTimer!.setEventHandler { [weak self] in
+            guard !(self?.loadingRequestCertificate ?? false) else {
+                return
+            }
             self?.checkAutoconnect()
-//            self?.checkStateTooLongTime()
+            self?.checkStateTooLongTime()
+            self?.checkConnectedVPNLostNetwork()
             switch self?.autoConnectType {
             case .always, .onWifi, .onMobile:
                 if self?.stateUI == .disconnected && !AppSetting.shared.isConnectedToVpn {
                     self?.autoConnectWithConfig()
                 }
             case .off:
-                if self?.reconnectWhenLoseInternet == 2 && Connectivity.sharedInstance.isReachable && self?.stateUI == .disconnected && !(self?.connectOrDisconnectByUser ?? false) {
+                if self?.reconnectWhenLoseInternet == 2 && Connectivity.sharedInstance.enableNetwork && self?.stateUI == .disconnected && !(self?.connectOrDisconnectByUser ?? false) {
                     self?.configStartConnectVPN()
                 }
             default:
@@ -260,6 +261,15 @@ class NetworkManager: ObservableObject {
             }
         }
         checkInternetTimer!.resume()
+    }
+    
+    func checkConnectedVPNLostNetwork() {
+        if AppSetting.shared.isConnectedToVpn && !Connectivity.sharedInstance.enableNetwork {
+            if stateUI == .connected {
+                connectOrDisconnectByUser = true
+                configDisconnect()
+            }
+        }
     }
     
     func checkStateTooLongTime() {
@@ -275,18 +285,18 @@ class NetworkManager: ObservableObject {
     }
     
     @objc private func autoConnectWithConfig() {
-        if Connectivity.sharedInstance.isReachable {
+        if Connectivity.sharedInstance.enableNetwork {
             switch autoConnectType {
             case .always:
                 AppSetting.shared.saveBoardTabWhenConnecting(.location)
                 ConnectOrDisconnectVPN()
             case .onWifi:
-                if Connectivity.sharedInstance.isReachableOnEthernetOrWiFi {
+                if Connectivity.sharedInstance.enableWifi {
                     AppSetting.shared.saveBoardTabWhenConnecting(.location)
                     ConnectOrDisconnectVPN()
                 }
             case .onMobile:
-                if Connectivity.sharedInstance.isReachableOnCellular {
+                if Connectivity.sharedInstance.enableCellular {
                     AppSetting.shared.saveBoardTabWhenConnecting(.location)
                     ConnectOrDisconnectVPN()
                 }
@@ -340,11 +350,7 @@ class NetworkManager: ObservableObject {
                 configDisconnect()
             }
         default:
-            guard !AppSetting.shared.temporaryDisableAutoConnect else {
-                configDisconnect()
-                return
-            }
-            if connectOrDisconnectByUser, state == .connected {
+            if connectOrDisconnectByUser, stateUI != .disconnected {
                 AppSetting.shared.saveTimeConnectedVPN = Date()
                 if networkConnectIsCurrentNetwork() {
                     errorCallBack?(.autoConnecting)
@@ -374,6 +380,7 @@ class NetworkManager: ObservableObject {
     }
     
     func startConnectVPN(asNewConnection: Bool) {
+        loadingRequestCertificate = true
         getRequestCertificate(asNewConnection: asNewConnection) {
             if $0 {
                 self.connect()
@@ -381,8 +388,9 @@ class NetworkManager: ObservableObject {
                 if self.isReconnect {
                     self.isReconnect = false
                 }
-                self.configDisconnect()
+                self.stateUI = .disconnected
             }
+            self.loadingRequestCertificate = false
         }
     }
     
@@ -400,7 +408,7 @@ class NetworkManager: ObservableObject {
             return
         }
         configDisconected()
-        if isEnableReconect, !connectOrDisconnectByUser, !AppSetting.shared.temporaryDisableAutoConnect {
+        if isEnableReconect, !connectOrDisconnectByUser {
             startConnectVPN(asNewConnection: false)
         }
     }
@@ -434,7 +442,7 @@ class NetworkManager: ObservableObject {
             }
         case .disconnected:
             if autoConnectType == .off {
-                if !Connectivity.sharedInstance.isReachable {
+                if !Connectivity.sharedInstance.enableNetwork {
                     if reconnectWhenLoseInternet == 1 {
                         reconnectWhenLoseInternet = 2
                     }
@@ -450,8 +458,7 @@ class NetworkManager: ObservableObject {
             }
             
             if isEnableReconect,
-               !connectOrDisconnectByUser,
-               !AppSetting.shared.temporaryDisableAutoConnect {
+               !connectOrDisconnectByUser {
                 startConnectVPN(asNewConnection: false)
             } else {
                 configDisconected()
@@ -464,7 +471,7 @@ class NetworkManager: ObservableObject {
     var onlyDisconnectWithoutEndsession = false
     
     func checkVPN() {
-        if AppSetting.shared.isConnectedToVpn {
+        if AppSetting.shared.isConnectedToVpn && Connectivity.sharedInstance.enableNetwork {
             if state == .disconnected {
                 configConnected()
             }
@@ -501,9 +508,9 @@ class NetworkManager: ObservableObject {
         case .always:
             return true
         case .onWifi:
-            return !isCellularConnect
+            return Connectivity.sharedInstance.enableWifi
         case .onMobile:
-            return isCellularConnect
+            return Connectivity.sharedInstance.enableCellular
         default:
             return false
         }
@@ -579,9 +586,9 @@ class NetworkManager: ObservableObject {
         stateUI = .connected
         connectOrDisconnectByUser = false
         AppSetting.shared.fetchListSession()
-        
-        isCellularConnect = Connectivity.sharedInstance.isReachableOnCellular
     }
+    
+    var loadingRequestCertificate = false
     
     func getRequestCertificate(asNewConnection: Bool = true, completion: @escaping (Bool) -> Void) {
         guard isEnableReconect else {
@@ -591,7 +598,7 @@ class NetworkManager: ObservableObject {
         
         numberReconnect += 1
         
-        guard Connectivity.sharedInstance.isReachable else {
+        guard Connectivity.sharedInstance.enableNetwork else {
             configDisconected()
             errorCallBack?(.apiError(.noInternet))
             return
@@ -613,9 +620,7 @@ class NetworkManager: ObservableObject {
                                     completion(true)
                                     return
                                 } else {
-                                    AppSetting.shared.temporaryDisableAutoConnect = true
                                     self.errorCallBack?(.sessionTerminate)
-                                    self.stateUI = .disconnected
                                     completion(false)
                                     return
                                 }
@@ -630,7 +635,6 @@ class NetworkManager: ObservableObject {
                                 return
                             }
                         } else {
-                            self.stateUI = .disconnected
                             completion(false)
                             return
                         }
@@ -643,9 +647,7 @@ class NetworkManager: ObservableObject {
                                     completion(true)
                                     return
                                 } else {
-                                    AppSetting.shared.temporaryDisableAutoConnect = true
                                     self.errorCallBack?(.sessionTerminate)
-                                    self.stateUI = .disconnected
                                     completion(false)
                                     return
                                 }
@@ -660,12 +662,10 @@ class NetworkManager: ObservableObject {
                                 return
                             }
                         } else {
-                            self.stateUI = .disconnected
                             completion(false)
                             return
                         }
                     default:
-                        self.stateUI = .disconnected
                         completion(false)
                         return
                     }
