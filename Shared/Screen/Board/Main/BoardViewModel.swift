@@ -11,6 +11,7 @@ import RxSwift
 import TunnelKitManager
 import TunnelKitCore
 import UIKit
+import NetworkExtension
 
 extension VPNStatus {
     var title: String {
@@ -76,7 +77,7 @@ enum StateTab: Int {
 class BoardViewModel: ObservableObject {
     
     // MARK: Variable
-    
+    private let monitorWiFi = NWPathMonitor()
     @Published var showAutoConnect: Bool = false
     @Published var showProtocolConnect: Bool = false
     @Published var showDNSSetting: Bool = false
@@ -276,6 +277,20 @@ class BoardViewModel: ObservableObject {
                 self.configDisconnected()
             }
         }
+
+        monitorWiFi.pathUpdateHandler = { path in
+            DispatchQueue.main.async {
+                switch path.status {
+                case .satisfied:
+                    //Internet connected
+                    break
+                default:
+                    //Internet disconnected
+                    break
+                }
+            }
+        }
+        monitorWiFi.start(queue: DispatchQueue(label: "monitorInternet"))
     }
     
     func configDataRemote() {
