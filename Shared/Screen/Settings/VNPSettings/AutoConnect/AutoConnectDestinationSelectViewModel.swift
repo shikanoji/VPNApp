@@ -23,7 +23,7 @@ class AutoConnectDestinationSelectViewModel: ObservableObject {
     }
     
     func getCountryList() {
-        guard Connectivity.sharedInstance.isReachable else {
+        guard Connectivity.sharedInstance.enableNetwork else {
             return
         }
         

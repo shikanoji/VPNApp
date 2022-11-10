@@ -11,7 +11,6 @@ import RxSwift
 import TunnelKitManager
 import TunnelKitCore
 import UIKit
-import NetworkExtension
 
 extension VPNStatus {
     var title: String {
@@ -77,7 +76,6 @@ enum StateTab: Int {
 class BoardViewModel: ObservableObject {
     
     // MARK: Variable
-    private let monitorWiFi = NWPathMonitor()
     @Published var showAutoConnect: Bool = false
     @Published var showProtocolConnect: Bool = false
     @Published var showDNSSetting: Bool = false
@@ -218,13 +216,6 @@ class BoardViewModel: ObservableObject {
             object: nil
         )
         
-        NotificationCenter.default.addObserver(
-            self,
-            selector: #selector(configDisconnected),
-            name: Constant.NameNotification.connectVPNError,
-            object: nil
-        )
-        
         Task {
             await OpenVPNManager.shared.vpn.prepare()
         }
@@ -277,25 +268,11 @@ class BoardViewModel: ObservableObject {
                 self.configDisconnected()
             }
         }
-
-        monitorWiFi.pathUpdateHandler = { path in
-            DispatchQueue.main.async {
-                switch path.status {
-                case .satisfied:
-                    //Internet connected
-                    break
-                default:
-                    //Internet disconnected
-                    break
-                }
-            }
-        }
-        monitorWiFi.start(queue: DispatchQueue(label: "monitorInternet"))
     }
     
     func configDataRemote() {
         getIpInfo {
-            if !AppSetting.shared.isConnectedToVpn && AppSetting.shared.needLoadApiMap && Connectivity.sharedInstance.isReachable {
+            if !AppSetting.shared.isConnectedToVpn && AppSetting.shared.needLoadApiMap && Connectivity.sharedInstance.enableNetwork {
                 self.getCountryList {
                     self.getMultihopList {
                     }
@@ -305,7 +282,7 @@ class BoardViewModel: ObservableObject {
     }
     
     func configDataLocal() {
-        if AppSetting.shared.isConnectedToVpn || !AppSetting.shared.needLoadApiMap || !Connectivity.sharedInstance.isReachable {
+        if AppSetting.shared.isConnectedToVpn || !AppSetting.shared.needLoadApiMap || !Connectivity.sharedInstance.enableNetwork {
             getDataFromLocal()
         }
     }
@@ -321,7 +298,7 @@ class BoardViewModel: ObservableObject {
     // MARK: - HANDLE DATA MAP
     
     func getIpInfo(completion: @escaping () -> Void) {
-        guard Connectivity.sharedInstance.isReachable else {
+        guard Connectivity.sharedInstance.enableNetwork else {
             completion()
             return
         }
@@ -340,7 +317,7 @@ class BoardViewModel: ObservableObject {
     }
     
     func getCountryList(completion: @escaping () -> Void) {
-        guard Connectivity.sharedInstance.isReachable else {
+        guard Connectivity.sharedInstance.enableNetwork else {
             completion()
             return
         }
@@ -359,7 +336,7 @@ class BoardViewModel: ObservableObject {
     }
     
     func getMultihopList(completion: @escaping () -> Void) {
-        guard Connectivity.sharedInstance.isReachable else {
+        guard Connectivity.sharedInstance.enableNetwork else {
             completion()
             return
         }
@@ -457,7 +434,7 @@ class BoardViewModel: ObservableObject {
     }
     
     func getServerStats() {
-        guard Connectivity.sharedInstance.isReachable else {
+        guard Connectivity.sharedInstance.enableNetwork else {
             return
         }
         
@@ -485,7 +462,7 @@ class BoardViewModel: ObservableObject {
     }
     
     func getStatsByServer() {
-        guard Connectivity.sharedInstance.isReachable else {
+        guard Connectivity.sharedInstance.enableNetwork else {
             return
         }
         

@@ -32,7 +32,6 @@ struct StaticIPListView: View {
                     if isEditing {
                         ForEach(nodeListSearch) { node in
                             Button(action: {
-                                AppSetting.shared.temporaryDisableAutoConnect = false
                                 selectStaticServer = node
                             }) {
                                 NodeCellStaticView(node: node)
@@ -41,7 +40,6 @@ struct StaticIPListView: View {
                     } else {
                         ForEach(staticIPData) { node in
                             Button(action: {
-                                AppSetting.shared.temporaryDisableAutoConnect = false
                                 selectStaticServer = node
                             }) {
                                 NodeCellStaticView(node: node)

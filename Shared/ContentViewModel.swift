@@ -58,7 +58,7 @@ class ContentViewModel: ObservableObject {
             object: nil
         )
         
-        guard Connectivity.sharedInstance.isReachable else {
+        guard Connectivity.sharedInstance.enableNetwork else {
             endLoading = true
             return
         }
@@ -113,7 +113,7 @@ class ContentViewModel: ObservableObject {
     }
     
     func getCountryList(completion: @escaping () -> Void) {
-        guard Connectivity.sharedInstance.isReachable else {
+        guard Connectivity.sharedInstance.enableNetwork else {
             completion()
             return
         }
@@ -131,7 +131,7 @@ class ContentViewModel: ObservableObject {
     }
     
     func getMultihopList(completion: @escaping () -> Void) {
-        guard Connectivity.sharedInstance.isReachable else {
+        guard Connectivity.sharedInstance.enableNetwork else {
             completion()
             return
         }

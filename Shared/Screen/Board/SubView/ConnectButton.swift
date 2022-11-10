@@ -143,13 +143,13 @@ struct ConnectButton: View {
     
     func getContentButton() -> some View {
         switch viewModel.stateUI {
-        case .disconnected:
+        case .disconnected, .disconnecting:
             return AnyView(Text(L10n.Board.quickUnConnect)
                 .foregroundColor(Color.black)
                 .multilineTextAlignment(.center)
                 .font(.system(size: calculatebuttonsizeWidth(widthSizeFrame: widthSizeFrame) * 0.038, weight: .bold))
                 .padding())
-        case .connecting, .disconnecting:
+        case .connecting:
             return AnyView(getDocAnimation()
                 .padding())
         case .connected:
@@ -189,10 +189,7 @@ struct DocAnimationView1: View {
                 change.toggle()
             }
             .onWillAppear {
-                if firstAppear {
-                    change.toggle()
-                    firstAppear = false
-                }
+                change.toggle()
             }
             .animation(Animation.linear)
     }
@@ -214,10 +211,7 @@ struct DocAnimationView2: View {
                 change.toggle()
             }
             .onWillAppear {
-                if firstAppear {
-                    change.toggle()
-                    firstAppear = false
-                }
+                change.toggle()
             }
             .animation(Animation.linear.delay(0.2))
     }
@@ -239,10 +233,7 @@ struct DocAnimationView3: View {
                 change.toggle()
             }
             .onWillAppear {
-                if firstAppear {
-                    change.toggle()
-                    firstAppear = false
-                }
+                change.toggle()
             }
             .animation(Animation.linear.delay(0.4))
     }

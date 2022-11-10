@@ -58,7 +58,6 @@ struct LocationListView: View {
                                     cityNode = node
                                     showCityListView = true
                                 } else {
-                                    AppSetting.shared.temporaryDisableAutoConnect = false
                                     if ItemCell(type: AppSetting.shared.getAutoConnectProtocol()).type == .off {
                                         nodeSelect = node
                                     }
@@ -79,7 +78,6 @@ struct LocationListView: View {
                                         cityNode = node
                                         showCityListView = true
                                     } else {
-                                        AppSetting.shared.temporaryDisableAutoConnect = false
                                         if ItemCell(type: AppSetting.shared.getAutoConnectProtocol()).type == .off {
                                             nodeSelect = node
                                         }

@@ -88,15 +88,6 @@ extension AppSetting {
         }
     }
     
-    var temporaryDisableAutoConnect: Bool {
-        get {
-            return UserDefaults.standard.bool(forKey: AppKeys.temporaryDisableAutoConnect.rawValue)
-        }
-        set {
-            UserDefaults.standard.setValue(newValue, forKey: AppKeys.temporaryDisableAutoConnect.rawValue)
-        }
-    }
-    
     func getLocationMap() -> CGPoint {
         guard let clientCountryNode = AppSetting.shared.getDataMap()?.clientCountryDetail else {
             return .init(
