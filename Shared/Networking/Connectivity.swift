@@ -15,8 +15,18 @@ class Connectivity: ObservableObject {
     private let monitorWiFi = NWPathMonitor(requiredInterfaceType: .wifi)
     private let monitorCellular = NWPathMonitor(requiredInterfaceType: .cellular)
     
-    var enableWifi = false
-    var enableCellular = false
+    var enableWifi = false {
+        didSet {
+            enableWifiCallBack?(enableWifi)
+            enableNetworkCallBack?(enableWifi || enableCellular)
+        }
+    }
+    var enableCellular = false {
+        didSet {
+            enableCellularCallBack?(enableCellular)
+            enableNetworkCallBack?(enableWifi || enableCellular)
+        }
+    }
     
     var enableNetwork: Bool {
         return enableWifi || enableCellular
@@ -25,6 +35,10 @@ class Connectivity: ObservableObject {
     init() {
         detectNetwork()
     }
+    
+    var enableNetworkCallBack: ((Bool) -> Void)?
+    var enableWifiCallBack: ((Bool) -> Void)?
+    var enableCellularCallBack: ((Bool) -> Void)?
     
     func detectNetwork() {
         monitorWiFi.pathUpdateHandler = { path in

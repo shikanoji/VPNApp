@@ -67,7 +67,6 @@ class NetworkManager: ObservableObject {
     var showProgressView = false
     var needReconnect = false
     var connectOrDisconnectByUser = false
-    var startProccessingVPN = false
     var isReconnect = false
     var showAlert = false
     
@@ -142,6 +141,12 @@ class NetworkManager: ObservableObject {
     }
     
     func connect() {
+        if stateProcessing == .end {
+            stateProcessing = .pre
+        }
+        if stateProcessing == .start {
+            return
+        }
         switch getValueConfigProtocol {
         case .openVPNTCP, .openVPNUDP:
             OpenVPNManager.shared.connect()
@@ -150,9 +155,18 @@ class NetworkManager: ObservableObject {
         default:
             break
         }
+        if stateProcessing == .pre {
+            stateProcessing = .start
+        }
     }
     
     func disconnect() {
+        if stateProcessing == .end {
+            stateProcessing = .pre
+        }
+        if stateProcessing == .start {
+            return
+        }
         switch getValueConfigProtocol {
         case .openVPNTCP, .openVPNUDP:
             OpenVPNManager.shared.disconnect()
@@ -160,6 +174,9 @@ class NetworkManager: ObservableObject {
             WireGuardManager.shared.disconnect()
         default:
             break
+        }
+        if stateProcessing == .pre {
+            stateProcessing = .start
         }
     }
     
@@ -202,7 +219,7 @@ class NetworkManager: ObservableObject {
         
         NotificationCenter.default.addObserver(
             self,
-            selector: #selector(checkAutoconnect),
+            selector: #selector(configAutoConnect),
             name: Constant.NameNotification.checkAutoconnect,
             object: nil
         )
@@ -214,7 +231,57 @@ class NetworkManager: ObservableObject {
             object: nil
         )
         
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(connectVPNError),
+            name: Constant.NameNotification.connectVPNError,
+            object: nil
+        )
+        
         beginBackgroundTask()
+        
+        Connectivity.sharedInstance.enableNetworkCallBack = {
+            if $0 {
+                if self.lostNetworkAfterConnect {
+                    self.stateUI = self.state
+                    self.lostNetworkAfterConnect = false
+                }
+            } else {
+                if self.state == .connected, AppSetting.shared.isConnectedToVpn, !self.lostNetworkAfterConnect {
+                    self.lostNetworkAfterConnect = true
+                    self.stateProcessing = .end
+                    self.stateUI = .connecting
+                    self.loadingRequestCertificate = false
+                }
+            }
+        }
+        
+        Connectivity.sharedInstance.enableWifiCallBack = {
+            print("enableWifiCallBack \($0)")
+        }
+        
+        Connectivity.sharedInstance.enableCellularCallBack = {
+            print("enableCellularCallBack \($0)")
+        }
+    }
+    
+    var lostNetworkAfterConnect = false
+    
+    @objc
+    func connectVPNError() {
+        loadingRequestCertificate = false
+        stateProcessing = .end
+        state = .disconnected
+        stateUI = .disconnected
+    }
+    
+    @objc
+    func configAutoConnect() {
+        checkAutoconnect()
+        
+        if networkConnectIsCurrentNetwork() && state == .disconnected  {
+            autoConnectWithConfig()
+        }
     }
     
     @objc private func disconnectCurrentSession() {
@@ -224,69 +291,11 @@ class NetworkManager: ObservableObject {
         checkAutoconnect()
     }
     
-    var isCheckingAutoConnect = false
-    
-    var checkInternetTimer: DispatchSourceTimer?
-    
-    @objc func checkInternetRealTime() {
-        
-        guard !isCheckingAutoConnect else {
-            return
-        }
-        
-        isCheckingAutoConnect = true
-        
-        stopAutoconnectTimer()
-        let queue = DispatchQueue.main
-        checkInternetTimer = DispatchSource.makeTimerSource(queue: queue)
-        checkInternetTimer!.schedule(deadline: .now(), repeating: .seconds(3))
-        checkInternetTimer!.setEventHandler { [weak self] in
-            guard !(self?.loadingRequestCertificate ?? false) else {
-                return
-            }
-            self?.checkAutoconnect()
-            self?.checkStateTooLongTime()
-            self?.checkConnectedVPNLostNetwork()
-            if (self?.networkConnectIsCurrentNetwork() ?? false) {
-                self?.autoConnectWithConfig()
-            } else {
-                if self?.reconnectWhenLoseInternet == 2 && Connectivity.sharedInstance.enableNetwork && self?.stateUI == .disconnected && !(self?.connectOrDisconnectByUser ?? false) {
-                    self?.configStartConnectVPN()
-                }
-            }
-//            switch self?.autoConnectType {
-//            case .always, .onWifi, .onMobile:
-//                if self?.stateUI == .disconnected && !AppSetting.shared.isConnectedToVpn {
-//                    self?.autoConnectWithConfig()
-//                }
-//            case .off:
-//                if self?.reconnectWhenLoseInternet == 2 && Connectivity.sharedInstance.enableNetwork && self?.stateUI == .disconnected && !(self?.connectOrDisconnectByUser ?? false) {
-//                    self?.configStartConnectVPN()
-//                }
-//            default:
-//                break
-//            }
-        }
-        checkInternetTimer!.resume()
-    }
-    
     func checkConnectedVPNLostNetwork() {
         if AppSetting.shared.isConnectedToVpn && !Connectivity.sharedInstance.enableNetwork {
             if stateUI == .connected {
                 connectOrDisconnectByUser = true
                 configDisconnect()
-            }
-        }
-    }
-    
-    func checkStateTooLongTime() {
-        if stateUI == .disconnecting || stateUI == .connecting {
-            timeLastChangeStateUI += 1
-            
-            if timeLastChangeStateUI >= 3 {
-                connectOrDisconnectByUser = true
-                configDisconnect()
-                timeLastChangeStateUI = 0
             }
         }
     }
@@ -313,12 +322,7 @@ class NetworkManager: ObservableObject {
         }
     }
     
-    func stopAutoconnectTimer() {
-        checkInternetTimer = nil
-    }
-    
     deinit {
-        stopAutoconnectTimer()
         endBackgroundTask()
     }
     
@@ -345,7 +349,7 @@ class NetworkManager: ObservableObject {
         checkAutoconnect()
         switch autoConnectType {
         case .off:
-            switch state {
+            switch stateUI {
             case .disconnected:
                 AppSetting.shared.saveTimeConnectedVPN = nil
                 configStartConnectVPN()
@@ -374,8 +378,6 @@ class NetworkManager: ObservableObject {
             }
         }
     }
-    
-    var reconnectWhenLoseInternet = 0
     
     let maximumReconnect = 3
     var numberReconnect = 0
@@ -420,7 +422,11 @@ class NetworkManager: ObservableObject {
         }
     }
     
-    var timeLastChangeStateUI = 0
+    enum StateProcess {
+        case pre, start, processing, end
+    }
+    
+    var stateProcessing: StateProcess = .pre
     
     @objc private func VPNStatusDidChange(notification: Notification) {
        
@@ -430,8 +436,11 @@ class NetworkManager: ObservableObject {
             return
         }
         
+        if state == .connecting || state == .disconnecting {
+            stateProcessing = .processing
+        }
+        
         state = notification.vpnStatus
-        timeLastChangeStateUI = 0
         
         if stateUI != state {
             stateUI = state
@@ -439,25 +448,14 @@ class NetworkManager: ObservableObject {
         
         switch state {
         case .connected:
+            if stateProcessing == .processing {
+                stateProcessing = .end
+            }
             configConnected()
-//            if autoConnectType == .off {
-                if reconnectWhenLoseInternet <= 0 {
-                    reconnectWhenLoseInternet = 1
-                } else if reconnectWhenLoseInternet == 2 {
-                    reconnectWhenLoseInternet = 1
-                }
-//            }
         case .disconnected:
-//            if autoConnectType == .off {
-                if !Connectivity.sharedInstance.enableNetwork {
-                    if reconnectWhenLoseInternet == 1 {
-                        reconnectWhenLoseInternet = 2
-                    }
-                } else {
-                    reconnectWhenLoseInternet = 0
-                }
-//            }
-            
+            if stateProcessing == .processing {
+                stateProcessing = .end
+            }
             
             if AppSetting.shared.isConnectedToVpn {
                 configConnected()
@@ -513,7 +511,7 @@ class NetworkManager: ObservableObject {
     func networkConnectIsCurrentNetwork() -> Bool {
         switch autoConnectType {
         case .always:
-            return true
+            return Connectivity.sharedInstance.enableNetwork
         case .onWifi:
             return Connectivity.sharedInstance.enableWifi
         case .onMobile:

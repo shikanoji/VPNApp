@@ -216,13 +216,6 @@ class BoardViewModel: ObservableObject {
             object: nil
         )
         
-        NotificationCenter.default.addObserver(
-            self,
-            selector: #selector(configDisconnected),
-            name: Constant.NameNotification.connectVPNError,
-            object: nil
-        )
-        
         Task {
             await OpenVPNManager.shared.vpn.prepare()
         }
@@ -275,8 +268,6 @@ class BoardViewModel: ObservableObject {
                 self.configDisconnected()
             }
         }
-        
-        NetworkManager.shared.checkInternetRealTime()
     }
     
     func configDataRemote() {
