@@ -247,18 +247,25 @@ class NetworkManager: ObservableObject {
             self?.checkAutoconnect()
             self?.checkStateTooLongTime()
             self?.checkConnectedVPNLostNetwork()
-            switch self?.autoConnectType {
-            case .always, .onWifi, .onMobile:
-                if self?.stateUI == .disconnected && !AppSetting.shared.isConnectedToVpn {
-                    self?.autoConnectWithConfig()
-                }
-            case .off:
+            if (self?.networkConnectIsCurrentNetwork() ?? false) {
+                self?.autoConnectWithConfig()
+            } else {
                 if self?.reconnectWhenLoseInternet == 2 && Connectivity.sharedInstance.enableNetwork && self?.stateUI == .disconnected && !(self?.connectOrDisconnectByUser ?? false) {
                     self?.configStartConnectVPN()
                 }
-            default:
-                break
             }
+//            switch self?.autoConnectType {
+//            case .always, .onWifi, .onMobile:
+//                if self?.stateUI == .disconnected && !AppSetting.shared.isConnectedToVpn {
+//                    self?.autoConnectWithConfig()
+//                }
+//            case .off:
+//                if self?.reconnectWhenLoseInternet == 2 && Connectivity.sharedInstance.enableNetwork && self?.stateUI == .disconnected && !(self?.connectOrDisconnectByUser ?? false) {
+//                    self?.configStartConnectVPN()
+//                }
+//            default:
+//                break
+//            }
         }
         checkInternetTimer!.resume()
     }
@@ -433,15 +440,15 @@ class NetworkManager: ObservableObject {
         switch state {
         case .connected:
             configConnected()
-            if autoConnectType == .off {
+//            if autoConnectType == .off {
                 if reconnectWhenLoseInternet <= 0 {
                     reconnectWhenLoseInternet = 1
                 } else if reconnectWhenLoseInternet == 2 {
                     reconnectWhenLoseInternet = 1
                 }
-            }
+//            }
         case .disconnected:
-            if autoConnectType == .off {
+//            if autoConnectType == .off {
                 if !Connectivity.sharedInstance.enableNetwork {
                     if reconnectWhenLoseInternet == 1 {
                         reconnectWhenLoseInternet = 2
@@ -449,7 +456,7 @@ class NetworkManager: ObservableObject {
                 } else {
                     reconnectWhenLoseInternet = 0
                 }
-            }
+//            }
             
             
             if AppSetting.shared.isConnectedToVpn {
