@@ -59,10 +59,9 @@ struct MapView: View {
                     .background(AppColor.background)
                     .aspectRatio(contentMode: .fill)
 
-                if showNodeMapView {
-                    NodeMapView(scale: $currentAmount,
-                                statusConnect: $statusConnect)
-                }
+                NodeMapView(scale: $currentAmount,
+                            statusConnect: $statusConnect)
+                    .opacity(showNodeMapView ? 1 : 0)
             }
             .padding(.bottom, -safeAreaInsets.bottom)
             .padding(.top, -safeAreaInsets.top)
@@ -72,7 +71,7 @@ struct MapView: View {
                 self.currentAmount = value
             }
         })
-        .animation(.default)
+        .animation(.linear)
         .onChange(of: statusConnect) { _ in
             moveToNodeConnected(statusConnect == .connected)
         }
