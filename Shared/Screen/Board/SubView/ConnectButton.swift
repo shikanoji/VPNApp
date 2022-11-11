@@ -94,7 +94,7 @@ struct ConnectButton: View {
                 .onTapGesture {
                     tap = true
                     tapButton?()
-                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
                         tap = false
                     }
                 }

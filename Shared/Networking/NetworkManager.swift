@@ -56,7 +56,7 @@ class NetworkManager: ObservableObject {
     
     var state: VPNStatus = .disconnected {
         didSet {
-            stateCallBack?(stateUI)
+            stateCallBack?(state)
         }
     }
     
@@ -141,12 +141,6 @@ class NetworkManager: ObservableObject {
     }
     
     func connect() {
-        if stateProcessing == .end {
-            stateProcessing = .pre
-        }
-        if stateProcessing == .start {
-            return
-        }
         switch getValueConfigProtocol {
         case .openVPNTCP, .openVPNUDP:
             OpenVPNManager.shared.connect()
@@ -155,18 +149,9 @@ class NetworkManager: ObservableObject {
         default:
             break
         }
-        if stateProcessing == .pre {
-            stateProcessing = .start
-        }
     }
     
     func disconnect() {
-        if stateProcessing == .end {
-            stateProcessing = .pre
-        }
-        if stateProcessing == .start {
-            return
-        }
         switch getValueConfigProtocol {
         case .openVPNTCP, .openVPNUDP:
             OpenVPNManager.shared.disconnect()
@@ -174,9 +159,6 @@ class NetworkManager: ObservableObject {
             WireGuardManager.shared.disconnect()
         default:
             break
-        }
-        if stateProcessing == .pre {
-            stateProcessing = .start
         }
     }
     
@@ -249,7 +231,6 @@ class NetworkManager: ObservableObject {
             } else {
                 if self.state == .connected, AppSetting.shared.isConnectedToVpn, !self.lostNetworkAfterConnect {
                     self.lostNetworkAfterConnect = true
-                    self.stateProcessing = .end
                     self.stateUI = .connecting
                     self.loadingRequestCertificate = false
                 }
@@ -270,7 +251,6 @@ class NetworkManager: ObservableObject {
     @objc
     func connectVPNError() {
         loadingRequestCertificate = false
-        stateProcessing = .end
         state = .disconnected
         stateUI = .disconnected
     }
@@ -356,13 +336,11 @@ class NetworkManager: ObservableObject {
             case .connecting, .disconnecting:
                 configDisconnect()
             default:
-                AppSetting.shared.saveTimeConnectedVPN = Date()
                 connectOrDisconnectByUser = true
                 configDisconnect()
             }
         default:
             if connectOrDisconnectByUser, stateUI != .disconnected {
-                AppSetting.shared.saveTimeConnectedVPN = Date()
                 if networkConnectIsCurrentNetwork() {
                     errorCallBack?(.autoConnecting)
                 } else {
@@ -371,6 +349,7 @@ class NetworkManager: ObservableObject {
             } else {
                 switch state {
                 case .disconnected:
+                    AppSetting.shared.saveTimeConnectedVPN = nil
                     configStartConnectVPN()
                 default:
                     configDisconnect()
@@ -398,6 +377,7 @@ class NetworkManager: ObservableObject {
                     self.isReconnect = false
                 }
                 self.stateUI = .disconnected
+                self.state = .disconnected
             }
             self.loadingRequestCertificate = false
         }
@@ -422,22 +402,12 @@ class NetworkManager: ObservableObject {
         }
     }
     
-    enum StateProcess {
-        case pre, start, processing, end
-    }
-    
-    var stateProcessing: StateProcess = .pre
-    
     @objc private func VPNStatusDidChange(notification: Notification) {
        
         print("VPNStatusDidChange: \(notification.vpnStatus)")
         
         guard state != notification.vpnStatus else {
             return
-        }
-        
-        if state == .connecting || state == .disconnecting {
-            stateProcessing = .processing
         }
         
         state = notification.vpnStatus
@@ -448,17 +418,10 @@ class NetworkManager: ObservableObject {
         
         switch state {
         case .connected:
-            if stateProcessing == .processing {
-                stateProcessing = .end
-            }
             configConnected()
         case .disconnected:
-            if stateProcessing == .processing {
-                stateProcessing = .end
-            }
-            
             if AppSetting.shared.isConnectedToVpn {
-                configConnected()
+                configStartConnectVPN()
                 return
             }
             

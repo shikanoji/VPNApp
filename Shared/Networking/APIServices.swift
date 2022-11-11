@@ -8,6 +8,7 @@
 import Moya
 import Alamofire
 import UIKit
+import FirebaseMessaging
 
 enum APIError: Error {
     case someError
@@ -260,6 +261,9 @@ extension APIService: TargetType {
             param["proto"] = NetworkManager.shared.getValueConfigProtocol.getProtocolVPN
             param["dev"] = "tun"
             param["cybersec"] = AppSetting.shared.selectCyberSec ? 1 : 0
+//            if let fcmToken = Messaging.messaging().fcmToken {
+//                param["fcmToken"] = fcmToken
+//            }
             
             switch AppSetting.shared.getBoardTabWhenConnecting() {
             case .location:
