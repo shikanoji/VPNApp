@@ -14,13 +14,19 @@ struct MultiHopView: View {
     @Binding var mutilhopList: [MultihopModel]
     @Binding var multihopSelect: MultihopModel?
     
-    @State var showDescriptionMultihop = false
+    @State var showDescriptionMultihopIpad = false
+    @State var showDescriptionMultihopIphone = false
     
     var body: some View {
         VStack(alignment: .leading, spacing: 8) {
             HStack {
                 Button {
-                    showDescriptionMultihop = true
+                    if UIDevice.current.userInterfaceIdiom == .pad {
+                        self.showDescriptionMultihopIpad = true
+                    } else {
+                        self.showDescriptionMultihopIphone = true
+                    }
+                    
                 } label: {
                     HStack {
                         Constant.MultiHop.iconWhat
@@ -41,11 +47,17 @@ struct MultiHopView: View {
         .navigationBarHidden(true)
         .background(AppColor.background)
         .ignoresSafeArea()
-        .fullScreenCover(isPresented: $showDescriptionMultihop) {
-            
-        } content: {
-            DescriptionMultihopView()
-                .clearModalBackground()
+        .sheet(isPresented: $showDescriptionMultihopIphone) {
+            DescriptionMultihopView(cancel: {
+                self.showDescriptionMultihopIphone = false
+            })
+            .clearModalBackground()
+        }
+        .fullScreenCover(isPresented: $showDescriptionMultihopIpad) {
+            DescriptionMultihopView(cancel: {
+                self.showDescriptionMultihopIpad = false
+            })
+            .clearModalBackground()
         }
     }
     
@@ -61,7 +73,6 @@ struct MultiHopView: View {
                     if let nodeEntry = item.entry?.country,
                        let nodeExit = item.exit?.country {
                         Button {
-                            AppSetting.shared.temporaryDisableAutoConnect = false
                             multihopSelect = item
                         } label: {
                             HStack {

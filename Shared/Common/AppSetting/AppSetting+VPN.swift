@@ -8,10 +8,6 @@
 import Foundation
 
 extension AppSetting {
-    var isAutoConnectEnable: Bool {
-        ItemCell(type: AppSetting.shared.getAutoConnectProtocol()).type != .off
-    }
-
     var countryCode: String {
         get {
             return UserDefaults.standard.string(forKey: AppKeys.countryCode.rawValue) ?? ""

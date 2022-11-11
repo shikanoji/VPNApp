@@ -60,8 +60,6 @@ class RegisterViewModel: NSObject, ObservableObject {
         if let rootView = UIApplication.shared.rootViewController {
             GIDSignIn.sharedInstance.signIn(with: config, presenting: rootView) { [unowned self] user, error in
                 if let _ = error {
-                    alertMessage = L10n.Global.somethingWrong
-                    showAlert = true
                     return
                 }
                 guard
