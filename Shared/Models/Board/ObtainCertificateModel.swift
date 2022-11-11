@@ -104,6 +104,7 @@ struct ObtainCertificateModel: Codable {
     var sessionId: String?
     var allowReconnect: Bool = true
     var exceedLimit: Bool = false
+    var dns: [String] = []
     
     enum CodingKeys: String, CodingKey {
         case server
@@ -112,10 +113,17 @@ struct ObtainCertificateModel: Codable {
         case sessionId
         case allowReconnect
         case exceedLimit
+        case dns
     }
     
     init(from decoder: Decoder) throws {
         let values = try decoder.container(keyedBy: CodingKeys.self)
+        
+        if let value = try? values.decode([String].self, forKey: .dns) {
+            dns = value
+        } else {
+            dns = []
+        }
         
         if let _exceedLimit = try? values.decode(Bool.self, forKey: .exceedLimit) {
             exceedLimit = _exceedLimit

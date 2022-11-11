@@ -28,15 +28,15 @@ class WireGuardManager: ObservableObject {
     private var cfg: WireGuard.ProviderConfiguration!
     
     func connect() {
-        let string = NetworkManager.shared.obtainCertificate?.convertToString() ?? ""
-        if let cfgStr = configuretionParaseFromContents(lines: string.trimmedLines()) {
-            cfg = cfgStr
+        if let obtainCer = NetworkManager.shared.obtainCertificate,
+           let cfgParase = configuretionParaseFromContents(obtainCer) {
+            cfg = cfgParase
             
             Task {
                 do {
                     try await vpn.reconnect(
                         tunnelIdentifier,
-                        configuration: cfgStr,
+                        configuration: cfgParase,
                         extra: nil,
                         after: .seconds(2)
                     )
@@ -66,7 +66,9 @@ class WireGuardManager: ObservableObject {
         }
     }
     
-    func configuretionParaseFromContents(lines: [String]) -> WireGuard.ProviderConfiguration? {
+    func configuretionParaseFromContents(_ obtainCer: ObtainCertificateModel) -> WireGuard.ProviderConfiguration? {
+        let lines = obtainCer.convertToString().trimmedLines()
+        
         var clientPrivateKey = ""
         var clientAddress = ""
         var dns = ""
@@ -104,7 +106,12 @@ class WireGuardManager: ObservableObject {
         do {
             var builder = try WireGuard.ConfigurationBuilder(clientPrivateKey)
             builder.addresses = [clientAddress]
-            builder.dnsServers = getCustomDNS().count > 0 ? getCustomDNS() : [dns]
+            
+            if AppSetting.shared.selectCyberSec, !obtainCer.dns.isEmpty {
+                builder.dnsServers = obtainCer.dns
+            } else {
+                builder.dnsServers = getCustomDNS().count > 0 ? getCustomDNS() : [dns]
+            }
             
             try builder.addPeer(serverPublicKey, endpoint: endPoint, allowedIPs: [allowedIPs])
             builder.addAllowedIP(allowedIPs, toPeer: 0)
