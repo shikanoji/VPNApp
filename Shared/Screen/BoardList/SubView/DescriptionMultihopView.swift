@@ -8,14 +8,14 @@
 import SwiftUI
 
 struct DescriptionMultihopView: View {
-
+    
     @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
 
     var cancel: (() -> Void)? = nil
 
     var body: some View {
         VStack(spacing: 0) {
-            AppColor.darkButton.opacity(0.2)
+            Color.clear
                 .contentShape(Rectangle())
                 .onTapGesture {
                     cancel?()

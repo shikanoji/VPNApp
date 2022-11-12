@@ -11,10 +11,7 @@ class SettingVPNViewModel: ObservableObject {
     @Published var itemList: [ItemCell] = [
         ItemCell(type: .autoConnect),
         ItemCell(type: .protocolConnect),
-        // .split,
-        ItemCell(type: .dns),
-        // .localNetwork,
-        // .metered
+        ItemCell(type: .dns)
     ]
 
     init() {
@@ -33,10 +30,7 @@ class SettingVPNViewModel: ObservableObject {
         itemList = [
             ItemCell(type: .autoConnect),
             ItemCell(type: .protocolConnect),
-            // .split,
             ItemCell(type: .dns),
-            // .localNetwork,
-            // .metered
         ]
     }
 }

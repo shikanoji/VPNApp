@@ -21,7 +21,6 @@ struct LedgeTopView: View {
 }
 
 struct BottomViewPopup: View {
-    
     var titleStr = L10n.Account.Logout.confirm
     var messageStr = L10n.Account.Logout.Confirm.message
     var confirmStr = L10n.Account.signout
@@ -29,7 +28,7 @@ struct BottomViewPopup: View {
     var warning = false
     
     var cancel: (() -> Void)? = nil
-    var confim: (() -> Void)? = nil
+    var confirm: (() -> Void)? = nil
     
     var title: some View {
         HStack {
@@ -53,8 +52,8 @@ struct BottomViewPopup: View {
             title
             message
             AppButton(width: .infinity, backgroundColor: warning ? AppColor.redradient : AppColor.darkButton, textColor: Color.white , text: confirmStr) {
-                if confim != nil {
-                    confim?()
+                if confirm != nil {
+                    confirm?()
                 }
             }
         }
@@ -62,10 +61,10 @@ struct BottomViewPopup: View {
         .background(AppColor.background)
         .cornerRadius(radius: 15, corners: [.topLeft, .topRight])
     }
-    
+
     var body: some View {
         VStack {
-            AppColor.darkButton.opacity(0.2)
+            Color.clear
                 .contentShape(Rectangle())
                 .onTapGesture {
                     cancel?()
