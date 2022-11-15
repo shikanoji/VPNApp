@@ -78,7 +78,7 @@ class OpenVPNManager: ObservableObject {
         var stringData = ""
         
         guard let dnsCyberSec = NetworkManager.shared.requestCertificate?.dns,
-              !dnsCyberSec.isEmpty else {
+              !dnsCyberSec.isEmpty, AppSetting.shared.selectCyberSec else {
             if AppSetting.shared.primaryDNSValue != "" {
                 stringData += "dhcp-option DNS " + AppSetting.shared.primaryDNSValue + "\r\n"
             }

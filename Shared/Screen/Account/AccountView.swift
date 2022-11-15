@@ -240,7 +240,7 @@ struct AccountView: View {
             .fullScreenCover(isPresented: $viewModel.showLogoutConfirmationPad, content: {
                 BottomViewPopup(cancel: {
                     viewModel.showLogoutConfirmationPad = false
-                }, confim: {
+                }, confirm: {
                     viewModel.showLogoutConfirmationPad = false
                     viewModel.showProgressView = true
                     viewModel.logout()
@@ -249,7 +249,7 @@ struct AccountView: View {
             .sheet(isPresented: $viewModel.showLogoutConfirmationPhone, content: {
                 BottomViewPopup(cancel: {
                     viewModel.showLogoutConfirmationPhone = false
-                }, confim: {
+                }, confirm: {
                     viewModel.showLogoutConfirmationPhone = false
                     viewModel.showProgressView = true
                     viewModel.logout()

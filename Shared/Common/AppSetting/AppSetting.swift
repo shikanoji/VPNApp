@@ -69,6 +69,7 @@ enum AppKeys: String {
     case selectCyberSec = "selectCyberSec"
     // Save time
     case saveTimeConnectedVPN = "saveTimeConnectedVPN"
+    case fcmToken = "fcmToken"
 }
 
 class AppSetting {

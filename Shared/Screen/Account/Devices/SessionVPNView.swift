@@ -133,7 +133,7 @@ struct SessionVPNView: View {
                 warning: true,
                 cancel: {
                     viewModel.showPopupView = false
-                }, confim: {
+                }, confirm: {
                     viewModel.showPopupView = false
                     viewModel.disconnectSession()
                 })

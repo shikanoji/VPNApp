@@ -437,7 +437,8 @@ extension APIService: TargetType {
             isTablet: UIDevice.current.userInterfaceIdiom == .pad ? 1 : 0,
             userCountryCode: AppSetting.shared.countryCode,
             userCountryName: AppSetting.shared.countryName,
-            userCity: AppSetting.shared.cityName)
+            userCity: AppSetting.shared.cityName,
+            fcmToken: AppSetting.shared.fcmToken)
         
         let jsonEncoder = JSONEncoder()
         if let jsonData = try? jsonEncoder.encode(info),

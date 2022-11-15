@@ -32,7 +32,8 @@ struct InfoDeviceModel: Codable {
              isTablet,
              userCountryCode,
              userCountryName,
-             userCity
+             userCity,
+             fcmToken
     }
 
     var ipAddress: String? = nil
@@ -58,6 +59,7 @@ struct InfoDeviceModel: Codable {
     var userCountryCode: String? = nil
     var userCountryName: String? = nil
     var userCity: String? = nil
+    var fcmToken: String? = nil
 }
 
 public extension UIDevice {
