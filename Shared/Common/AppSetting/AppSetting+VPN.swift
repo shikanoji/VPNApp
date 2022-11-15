@@ -8,6 +8,15 @@
 import Foundation
 
 extension AppSetting {
+    var fcmToken: String {
+        get {
+            return UserDefaults.standard.string(forKey: AppKeys.fcmToken.rawValue) ?? ""
+        }
+        set {
+            UserDefaults.standard.setValue(newValue, forKey: AppKeys.fcmToken.rawValue)
+        }
+    }
+
     var countryCode: String {
         get {
             return UserDefaults.standard.string(forKey: AppKeys.countryCode.rawValue) ?? ""

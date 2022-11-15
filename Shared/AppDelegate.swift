@@ -85,6 +85,7 @@ class AppDelegate: NSObject, UIApplicationDelegate, MessagingDelegate, UNUserNot
             if let error = error {
                 print("Error fetching FCM registration token: \(error)")
             } else if let token = token {
+                AppSetting.shared.fcmToken = token
                 print("FCM registration token: \(token)")
             }
         }

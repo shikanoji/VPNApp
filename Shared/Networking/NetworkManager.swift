@@ -456,9 +456,9 @@ class NetworkManager: ObservableObject {
     }
     
     func checkVPNKill() {
-        checkVPN()
-        if AppSetting.shared.isConnectedToVpn {
-            reconnectVPN()
+//        checkVPN()
+//        if AppSetting.shared.isConnectedToVpn {
+        reconnectVPN()
 //            if !Connectivity.sharedInstance.isReachable {
 //                reconnectVPN()
 //            } else {
@@ -468,7 +468,7 @@ class NetworkManager: ObservableObject {
 //                    }
 //                }
 //            }
-        }
+//        }
     }
     
     func networkConnectIsCurrentNetwork() -> Bool {
