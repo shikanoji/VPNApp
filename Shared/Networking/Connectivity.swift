@@ -27,7 +27,7 @@ class Connectivity: ObservableObject {
     private let checkVPNDroppedProcess = CheckIfVPNDroppedProcess()
     private let monitorWiFi = NWPathMonitor(requiredInterfaceType: .wifi)
     private let monitorCellular = NWPathMonitor(requiredInterfaceType: .cellular)
-    
+
     var enableWifi = false {
         didSet {
             enableWifiCallBack?(enableWifi)
@@ -40,19 +40,19 @@ class Connectivity: ObservableObject {
             enableNetworkCallBack?(enableWifi || enableCellular)
         }
     }
-    
+
     var enableNetwork: Bool {
         return enableWifi || enableCellular
     }
-    
+
     init() {
         detectNetwork()
     }
-    
+
     var enableNetworkCallBack: ((Bool) -> Void)?
     var enableWifiCallBack: ((Bool) -> Void)?
     var enableCellularCallBack: ((Bool) -> Void)?
-    
+
     func detectNetwork() {
         monitorWiFi.pathUpdateHandler = { path in
             DispatchQueue.main.async {
@@ -64,7 +64,7 @@ class Connectivity: ObservableObject {
                 }
             }
         }
-        
+
         monitorCellular.pathUpdateHandler = { path in
             DispatchQueue.main.async {
                 switch path.status {
@@ -75,7 +75,7 @@ class Connectivity: ObservableObject {
                 }
             }
         }
-        
+
         monitorWiFi.start(queue: DispatchQueue(label: "monitorWiFi"))
         monitorCellular.start(queue: DispatchQueue(label: "monitorCellular"))
     }
