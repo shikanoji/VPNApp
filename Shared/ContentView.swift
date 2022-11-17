@@ -12,6 +12,7 @@ import UIKit
 struct ContentView: View {
     @StateObject var viewModel: ContentViewModel = ContentViewModel()
     @EnvironmentObject var authentication: Authentication
+    @Environment(\.scenePhase) var scenePhase
 
     init() {
         UITextField.appearance().tintColor = .white
@@ -96,6 +97,16 @@ struct ContentView: View {
             .ignoresSafeArea()
             .onWillAppear {
                 viewModel.authentication = authentication
+            }
+            .onChange(of: scenePhase) { newPhase in
+                if newPhase == .active {
+                    print("Foreground")
+                    Connectivity.sharedInstance.checkIfVPNDropped()
+                } else if newPhase == .inactive {
+                    print("Inactive")
+                } else if newPhase == .background {
+                    print("Background")
+                }
             }
         }
     }

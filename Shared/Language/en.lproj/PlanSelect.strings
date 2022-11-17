@@ -43,4 +43,5 @@
 "content2" = "Receive a reminder email about the \n upcoming free trial expiration";
 "header3" = "Day 7: Free trial ends";
 "content3" = "Pay for your 6-month plan for $100 if you \n haven’t canceled your subscription before the trial ends.";
+"startFreeTrial" = "START FREE 7-DAY TRIAL";
 "seeAllPlan" = "See all plans";

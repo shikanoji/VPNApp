@@ -9,12 +9,25 @@ import Foundation
 import Alamofire
 import NetworkExtension
 
+actor CheckIfVPNDroppedProcess {
+    var isOnProgress: Bool = false
+
+    func activate() {
+        isOnProgress = true
+    }
+
+    func deactivate() {
+        isOnProgress = false
+    }
+}
+
+
 class Connectivity: ObservableObject {
     static var sharedInstance = Connectivity()
-    
+    private let checkVPNDroppedProcess = CheckIfVPNDroppedProcess()
     private let monitorWiFi = NWPathMonitor(requiredInterfaceType: .wifi)
     private let monitorCellular = NWPathMonitor(requiredInterfaceType: .cellular)
-    
+
     var enableWifi = false {
         didSet {
             enableWifiCallBack?(enableWifi)
@@ -27,19 +40,19 @@ class Connectivity: ObservableObject {
             enableNetworkCallBack?(enableWifi || enableCellular)
         }
     }
-    
+
     var enableNetwork: Bool {
         return enableWifi || enableCellular
     }
-    
+
     init() {
         detectNetwork()
     }
-    
+
     var enableNetworkCallBack: ((Bool) -> Void)?
     var enableWifiCallBack: ((Bool) -> Void)?
     var enableCellularCallBack: ((Bool) -> Void)?
-    
+
     func detectNetwork() {
         monitorWiFi.pathUpdateHandler = { path in
             DispatchQueue.main.async {
@@ -51,7 +64,7 @@ class Connectivity: ObservableObject {
                 }
             }
         }
-        
+
         monitorCellular.pathUpdateHandler = { path in
             DispatchQueue.main.async {
                 switch path.status {
@@ -62,8 +75,18 @@ class Connectivity: ObservableObject {
                 }
             }
         }
-        
+
         monitorWiFi.start(queue: DispatchQueue(label: "monitorWiFi"))
         monitorCellular.start(queue: DispatchQueue(label: "monitorCellular"))
+    }
+
+    func checkIfVPNDropped() {
+        Task {
+            if await !self.checkVPNDroppedProcess.isOnProgress, enableNetwork {
+                await self.checkVPNDroppedProcess.activate()
+                await NetworkManager.shared.checkIfVPNDropped()
+                await self.checkVPNDroppedProcess.deactivate()
+            }
+        }
     }
 }

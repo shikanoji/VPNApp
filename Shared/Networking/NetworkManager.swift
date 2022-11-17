@@ -456,19 +456,7 @@ class NetworkManager: ObservableObject {
     }
     
     func checkVPNKill() {
-//        checkVPN()
-//        if AppSetting.shared.isConnectedToVpn {
         reconnectVPN()
-//            if !Connectivity.sharedInstance.isReachable {
-//                reconnectVPN()
-//            } else {
-//                pingGoogleCheckInternet {
-//                    if !$0 {
-//                        self.reconnectVPN()
-//                    }
-//                }
-//            }
-//        }
     }
     
     func networkConnectIsCurrentNetwork() -> Bool {
@@ -486,7 +474,7 @@ class NetworkManager: ObservableObject {
     
     func pingGoogleCheckInternet(completion: @escaping (Bool) -> Void) {
         ServiceManager.shared.ping()
-            .subscribe(onSuccess: { [self] response in
+            .subscribe(onSuccess: { response in
                 completion(true)
             }, onFailure: { error in
                 completion(false)
@@ -679,5 +667,29 @@ class NetworkManager: ObservableObject {
     
     @objc func checkAutoconnect() {
         autoConnectType = ItemCell(type: AppSetting.shared.getAutoConnectProtocol()).type
+    }
+
+    func checkIfVPNDropped() async {
+        print("CHECK IF VPN IS DROPPED")
+        if state == .connected {
+            let pingGoogleResult = await pingGoogleCheckInternet()
+            print("PING GOOGLE RESULT = \(pingGoogleResult)")
+            if !pingGoogleResult {
+                configDisconnect()
+            } else {
+            }
+        }
+    }
+
+    func pingGoogleCheckInternet() async -> Bool {
+        await withCheckedContinuation { continuation in
+            ServiceManager.shared.ping()
+                .subscribe(onSuccess: { response in
+                    continuation.resume(returning: true)
+                }, onFailure: { error in
+                    continuation.resume(returning: false)
+                })
+                .disposed(by: disposedBag)
+        }
     }
 }
