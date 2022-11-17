@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct DescriptionMultihopView: View {
-    
+
     @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
 
     var cancel: (() -> Void)? = nil

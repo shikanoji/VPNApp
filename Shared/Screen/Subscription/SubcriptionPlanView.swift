@@ -67,7 +67,7 @@ struct SubcriptionPlanView: View {
                 Spacer()
                 
                 VStack(spacing: 16) {
-                    AppButton(width: widthConent, text: L10n.Introduction.trialButton) {
+                    AppButton(width: widthConent, text: L10n.PlanSelect.startFreeTrial) {
                         NotificationCenter.default.post(name: Constant.NameNotification.startFree7DayTrial, object: nil)
                         presentationMode.wrappedValue.dismiss()
                     }

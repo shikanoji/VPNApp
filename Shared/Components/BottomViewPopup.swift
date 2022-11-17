@@ -24,12 +24,12 @@ struct BottomViewPopup: View {
     var titleStr = L10n.Account.Logout.confirm
     var messageStr = L10n.Account.Logout.Confirm.message
     var confirmStr = L10n.Account.signout
-    
+
     var warning = false
-    
+
     var cancel: (() -> Void)? = nil
     var confirm: (() -> Void)? = nil
-    
+
     var title: some View {
         HStack {
             Text(titleStr)
@@ -38,13 +38,13 @@ struct BottomViewPopup: View {
             Spacer()
         }
     }
-    
+
     var message: some View {
         Text(messageStr)
             .font(.system(size: Constant.TextSize.Global.detailDefault, weight: .regular))
             .foregroundColor(AppColor.yellowGradient)
     }
-    
+
     var content: some View {
         VStack(alignment: .leading, spacing: 30) {
             LedgeTopView()
