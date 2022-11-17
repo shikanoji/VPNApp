@@ -248,9 +248,9 @@ class BoardViewModel: ObservableObject {
         NetworkManager.shared.errorCallBack = {
             switch $0 {
             case .fullSession:
-                self.showSessionTerminatedAlert = true
-            case .sessionTerminate:
                 self.showAlertSessionSetting = true
+            case .sessionTerminate:
+                self.showSessionTerminatedAlert = true
             case .apiError(let apiError):
                 self.error = apiError
                 self.showAlert = true
