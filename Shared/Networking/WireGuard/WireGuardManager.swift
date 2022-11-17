@@ -25,7 +25,7 @@ class WireGuardManager: ObservableObject {
     private var vpnStatus: VPNStatus = .disconnected
     
     static var shared = WireGuardManager()
-    private var cfg: WireGuard.ProviderConfiguration!
+    private var cfg: WireGuard.ProviderConfiguration?
     
     func connect() {
         if let obtainCer = NetworkManager.shared.obtainCertificate,
@@ -45,6 +45,8 @@ class WireGuardManager: ObservableObject {
                     postError()
                 }
             }
+        } else {
+            postError()
         }
     }
     

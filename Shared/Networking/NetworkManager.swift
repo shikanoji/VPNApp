@@ -253,6 +253,7 @@ class NetworkManager: ObservableObject {
         loadingRequestCertificate = false
         state = .disconnected
         stateUI = .disconnected
+        errorCallBack?(.apiError(APIError.identified()))
     }
     
     @objc
