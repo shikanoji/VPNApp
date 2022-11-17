@@ -399,6 +399,8 @@ public enum L10n {
     public static let month = L10n.tr("PlanSelect", "month", fallback: "month")
     /// See all plans
     public static let seeAllPlan = L10n.tr("PlanSelect", "seeAllPlan", fallback: "See all plans")
+    /// START FREE 7-DAY TRIAL
+    public static let startFreeTrial = L10n.tr("PlanSelect", "startFreeTrial", fallback: "START FREE 7-DAY TRIAL")
     /// strings
     ///   SysVPN
     /// 
