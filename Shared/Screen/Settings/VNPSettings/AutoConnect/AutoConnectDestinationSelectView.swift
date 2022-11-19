@@ -12,7 +12,8 @@ import TunnelKitManager
 struct AutoConnectDestinationSelectView: View {
     @Binding var showSettings: Bool
     @Binding var showVPNSetting: Bool
-    @Binding var shouldHideAutoConnect: Bool
+    @Binding var showAutoConnectView: Bool
+
     @Binding var statusConnect: VPNStatus
     @Binding var showAutoConnectDestinationSelection: Bool
     @StateObject var viewModel: AutoConnectDestinationSelectViewModel

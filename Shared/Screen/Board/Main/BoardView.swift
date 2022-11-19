@@ -27,6 +27,9 @@ struct BoardView: View {
     
     let drag = DragGesture(minimumDistance: 0.0)
     
+    @State var showSessionView = false
+    @State var showAutoConnectView = false
+    
     var body: some View {
         ZStack {
             contentMapView()
@@ -41,11 +44,11 @@ struct BoardView: View {
                     .zIndex(1)
             }
             
-            if !viewModel.shouldHideAutoConnect {
+            if showAutoConnectView {
                 autoConnectView()
             }
             
-            if !viewModel.shouldHideSession {
+            if showSessionView {
                 sessionVPNView()
             }
         }
@@ -90,7 +93,7 @@ struct BoardView: View {
                             confirmTitle: "Open Sessions",
                             confirmAction: {
                                 viewModel.showAlertSessionSetting = false
-                                viewModel.shouldHideSession = false
+                                showSessionView = true
                             })
                             .frame(alignment: .bottom)
                             .padding(.bottom, 20)
@@ -106,7 +109,7 @@ struct BoardView: View {
                             confirmTitle: "SETTINGS",
                             confirmAction: {
                                 viewModel.showAlertAutoConnectSetting = false
-                                viewModel.shouldHideAutoConnect = false
+                                showAutoConnectView = true
                             })
                             .frame(alignment: .bottom)
                             .padding(.bottom, 20)
@@ -161,7 +164,7 @@ struct BoardView: View {
         AutoConnectView(
             showSettings: .constant(true),
             showVPNSetting: .constant(true),
-            shouldHideAutoConnect: $viewModel.shouldHideAutoConnect,
+            showAutoConnectView: $showAutoConnectView,
             statusConnect: $viewModel.stateUI,
             viewModel: AutoConnectViewModel())
     }
@@ -169,10 +172,9 @@ struct BoardView: View {
     func sessionVPNView() -> some View {
         SessionVPNView(
             showAccount: .constant(true),
-            showTotalDevice: .constant(true),
+            showTotalDevice: $showSessionView,
             statusConnect: $viewModel.stateUI,
-            viewModel: SessionVPNViewModel(),
-            shouldHideSessionList: $viewModel.shouldHideSession)
+            viewModel: SessionVPNViewModel())
     }
     
     func settingView() -> some View {

@@ -65,7 +65,7 @@ struct SettingVPNView: View {
                 AutoConnectView(
                     showSettings: $showSettings,
                     showVPNSetting: $showVPNSetting,
-                    shouldHideAutoConnect: .constant(false),
+                    showAutoConnectView: .constant(false),
                     statusConnect: $statusConnect,
                     viewModel: AutoConnectViewModel()),
                 isActive: $showAutoConnect) { }
