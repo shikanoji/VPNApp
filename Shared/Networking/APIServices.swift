@@ -421,6 +421,7 @@ extension APIService: TargetType {
     
     
     func getInfoDevice() -> String {
+#if DEBUG
         let info = InfoDeviceModel(
             ipAddress: AppSetting.shared.ip,
             deviceId: UIDevice.current.identifierForVendor!.uuidString,
@@ -439,7 +440,25 @@ extension APIService: TargetType {
             userCountryName: AppSetting.shared.countryName,
             userCity: AppSetting.shared.cityName,
             fcmToken: AppSetting.shared.fcmToken)
-        
+#else
+        let info = InfoDeviceModel(
+            ipAddress: AppSetting.shared.ip,
+            deviceId: UIDevice.current.identifierForVendor!.uuidString,
+            deviceBrand: UIDevice.modelName,
+            deviceOs: "iOS",
+            deviceModel: UIDevice.current.model,
+            deviceIsRoot: AppSetting.shared.wasJailBreak,
+            deviceManufacture: "Apple",
+            deviceFreeMemory: Int(GetFreeMemory().get_free_memory()),
+            osBuildNumber: UIDevice.current.systemVersion,
+            appVersion: Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String,
+            appBundleId: Bundle.main.bundleIdentifier,
+            isEmulator: TARGET_OS_SIMULATOR != 0 ? 1 : 0,
+            isTablet: UIDevice.current.userInterfaceIdiom == .pad ? 1 : 0,
+            userCountryCode: AppSetting.shared.countryCode,
+            userCountryName: AppSetting.shared.countryName,
+            userCity: AppSetting.shared.cityName)
+#endif
         let jsonEncoder = JSONEncoder()
         if let jsonData = try? jsonEncoder.encode(info),
            let json = String(data: jsonData, encoding: String.Encoding.utf8) {
