@@ -11,6 +11,7 @@ import TunnelKitManager
 import TunnelKitOpenVPNCore
 import TunnelKitOpenVPNManager
 import TunnelKitCore
+import NetworkExtension
 
 private let appGroup = "group.sysvpn.client.ios"
 
@@ -36,11 +37,14 @@ class OpenVPNManager: ObservableObject {
             cfg = OpenVPN.ProviderConfiguration.init("openVPN", appGroup: appGroup, configuration: config)
             
             Task {
+                var extra = NetworkExtensionExtra()
+                extra.onDemandRules = []
+                
                 do {
                     try await vpn.reconnect(
                         tunnelIdentifier,
                         configuration: cfg!,
-                        extra: nil,
+                        extra: extra,
                         after: .seconds(2)
                     )
                 } catch {

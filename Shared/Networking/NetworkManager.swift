@@ -396,9 +396,11 @@ class NetworkManager: ObservableObject {
             })
             return
         }
-        configDisconected()
-        if isEnableReconect, !connectOrDisconnectByUser {
-            startConnectVPN(asNewConnection: false)
+        if state == .connected {
+            configDisconected()
+            if isEnableReconect, !connectOrDisconnectByUser {
+                startConnectVPN(asNewConnection: false)
+            }
         }
     }
     

@@ -9,6 +9,7 @@ import Foundation
 import UIKit
 import TunnelKitWireGuard
 import TunnelKit
+import NetworkExtension
 
 private let appGroup = "group.sysvpn.client.ios"
 
@@ -33,11 +34,14 @@ class WireGuardManager: ObservableObject {
             cfg = cfgParase
             
             Task {
+                var extra = NetworkExtensionExtra()
+                extra.onDemandRules = []
+                
                 do {
                     try await vpn.reconnect(
                         tunnelIdentifier,
                         configuration: cfgParase,
-                        extra: nil,
+                        extra: extra,
                         after: .seconds(2)
                     )
                 } catch {

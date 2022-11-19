@@ -13,7 +13,6 @@ struct SessionVPNView: View {
     @Binding var showTotalDevice: Bool
     @Binding var statusConnect: VPNStatus
     @StateObject var viewModel: SessionVPNViewModel
-    @Binding var shouldHideSessionList: Bool
     @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
     
     @State var refresh = Refresh(started: false, released: false)
@@ -29,11 +28,13 @@ struct SessionVPNView: View {
                 currentTitle: $viewModel.currentNumberDevice,
                 tapLeftButton: {
                     presentationMode.wrappedValue.dismiss()
-                    shouldHideSessionList = true
+                    showTotalDevice = false
                     UIScrollView.appearance().bounces = false
-                }, tapRightButton: {                    UIScrollView.appearance().bounces = false
+                }, tapRightButton: {
+                    UIScrollView.appearance().bounces = false
                     UINavigationBar.setAnimationsEnabled(false)
                     showAccount = false
+                    showTotalDevice = false
                     DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
                         UINavigationBar.setAnimationsEnabled(true)
                     }
@@ -84,7 +85,7 @@ struct SessionVPNView: View {
                             .frame(width: 20, height: 20)
                             .padding(.bottom)
                     }
-                    ForEach($viewModel.deviceList.indices, id: \.self) { i in
+                    ForEach(viewModel.deviceList.indices, id: \.self) { i in
                         SessionVPNCell(sessionVPN: viewModel.deviceList[i],
                                        position: viewModel.deviceList.getPosition(i)) {
                             viewModel.sessionSelect = viewModel.deviceList[i]
@@ -165,9 +166,9 @@ struct SessionVPNView: View {
 
 struct DevicesView_Previews: PreviewProvider {
     @State static var showAccount = true
-    
+
     static var previews: some View {
-        SessionVPNView(showAccount: $showAccount, showTotalDevice: $showAccount, statusConnect: .constant(.connected), viewModel: SessionVPNViewModel(), shouldHideSessionList: .constant(false))
+        SessionVPNView(showAccount: $showAccount, showTotalDevice: $showAccount, statusConnect: .constant(.connected), viewModel: SessionVPNViewModel())
     }
 }
 

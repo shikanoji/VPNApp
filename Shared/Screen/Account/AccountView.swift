@@ -173,8 +173,7 @@ struct AccountView: View {
                     showAccount: $showAccount,
                     showTotalDevice: $showTotalDevice,
                     statusConnect: $statusConnect,
-                    viewModel: SessionVPNViewModel(),
-                    shouldHideSessionList: .constant(false)),
+                    viewModel: SessionVPNViewModel()),
                 isActive: $showTotalDevice) { }
             
             NavigationLink(destination:

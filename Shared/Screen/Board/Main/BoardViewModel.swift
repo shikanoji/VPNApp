@@ -174,7 +174,9 @@ class BoardViewModel: ObservableObject {
     @Published var showAlert: Bool = false {
         didSet {
             if showAlert {
-                state = .disconnected
+                DispatchQueue.main.async {
+                    self.state = .disconnected
+                }
             }
         }
     }
@@ -216,10 +218,6 @@ class BoardViewModel: ObservableObject {
             object: nil
         )
         
-        Task {
-            await OpenVPNManager.shared.vpn.prepare()
-        }
-        
         NotificationCenter.default.addObserver(forName: UIApplication.willTerminateNotification, object: nil, queue: .main) { _ in
             NetworkManager.shared.disconnect()
         }
@@ -227,20 +225,24 @@ class BoardViewModel: ObservableObject {
         assignJailBreakCheckType(type: .readAndWriteFiles)
         AppSetting.shared.fetchListSession()
         
-        NetworkManager.shared.stateUICallBack = {
-            self.stateUI = $0
+        NetworkManager.shared.stateUICallBack = { stateUI in
+            DispatchQueue.main.async {
+                self.stateUI = stateUI
+            }
         }
 
         DispatchQueue.main.async {
-            NetworkManager.shared.stateCallBack = {
-                self.state = $0
-                switch $0 {
-                case .connected:
-                    self.configConnected()
-                case .disconnected:
-                    self.configDisconnected()
-                default:
-                    break
+            NetworkManager.shared.stateCallBack = { state in
+                DispatchQueue.main.async {
+                    self.state = state
+                    switch self.state {
+                    case .connected:
+                        self.configConnected()
+                    case .disconnected:
+                        self.configDisconnected()
+                    default:
+                        break
+                    }
                 }
             }
         }
@@ -254,7 +256,9 @@ class BoardViewModel: ObservableObject {
                 AppSetting.shared.selectAutoConnect = ItemCellType.off.rawValue
             case .apiError(let apiError):
                 self.error = apiError
-                self.showAlert = true
+                DispatchQueue.main.async {
+                    self.showAlert = true
+                }
             case .autoConnecting:
                 self.showAlertAutoConnectSetting = true
             case .authenNotPremium:
@@ -412,12 +416,10 @@ class BoardViewModel: ObservableObject {
         }
     }
     
-    @Published var shouldHideAutoConnect = true
-    
     var isCheckingAutoConnect = false
     
     @objc
-    @MainActor func configDisconnected() {
+    func configDisconnected() {
         ip = AppSetting.shared.ip
         flag = ""
         nameSelect = ""
