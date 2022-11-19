@@ -4,6 +4,7 @@
 <dict>
 	<key>BGTaskSchedulerPermittedIdentifiers</key>
 	<array>
+		<string>sysvpn.client.ios.scheduled_refresh</string>
 		<string>sysvpn.client.ios.vpnkeeper</string>
 	</array>
 	<key>CFBundleURLTypes</key>

@@ -220,8 +220,6 @@ class NetworkManager: ObservableObject {
             object: nil
         )
         
-        beginBackgroundTask()
-        
         Connectivity.sharedInstance.enableNetworkCallBack = {
             if $0 {
                 if self.lostNetworkAfterConnect {
@@ -250,6 +248,7 @@ class NetworkManager: ObservableObject {
     
     @objc
     func connectVPNError() {
+        connectOrDisconnectByUser = true
         loadingRequestCertificate = false
         state = .disconnected
         stateUI = .disconnected
@@ -503,17 +502,19 @@ class NetworkManager: ObservableObject {
         AppSetting.shared.lineNetwork = 0
         if connectOrDisconnectByUser {
             AppSetting.shared.currentSessionId = ""
+            AppSetting.shared.shouldReconnectVPNIfDropped = false
         }
         
         connectOrDisconnectByUser = false
         AppSetting.shared.saveTimeConnectedVPN = nil
+        endBackgroundTask()
     }
     
-    func configStartConnectVPN() {
+    func configStartConnectVPN(_ asNewConnection: Bool = true) {
         if state == .disconnected {
             numberReconnect = 0
             stateUI = .connecting
-            startConnectVPN(asNewConnection: true)
+            startConnectVPN(asNewConnection: asNewConnection)
         }
     }
     
@@ -543,11 +544,14 @@ class NetworkManager: ObservableObject {
         stateUI = .connected
         connectOrDisconnectByUser = false
         AppSetting.shared.fetchListSession()
+        endBackgroundTask()
+        AppSetting.shared.shouldReconnectVPNIfDropped = true
     }
     
     var loadingRequestCertificate = false
     
     func getRequestCertificate(asNewConnection: Bool = true, completion: @escaping (Bool) -> Void) {
+        beginBackgroundTask()
         guard isEnableReconect else {
             completion(false)
             return
@@ -679,6 +683,8 @@ class NetworkManager: ObservableObject {
                 configDisconnect()
             } else {
             }
+        } else if AppSetting.shared.shouldReconnectVPNIfDropped {
+            configStartConnectVPN(false)
         }
     }
 

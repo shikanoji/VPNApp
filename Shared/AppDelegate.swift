@@ -10,8 +10,10 @@ import Firebase
 import FirebaseAnalytics
 import FirebaseMessaging
 import GoogleSignIn
+import BackgroundTasks
 
 class AppDelegate: NSObject, UIApplicationDelegate, MessagingDelegate, UNUserNotificationCenterDelegate {
+    static private(set) var shared: AppDelegate! = nil
     static var orientationLock = UIInterfaceOrientationMask.portrait
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey : Any]? = nil) -> Bool {
         var filePath:String!
@@ -30,6 +32,11 @@ class AppDelegate: NSObject, UIApplicationDelegate, MessagingDelegate, UNUserNot
         Messaging.messaging().delegate = self
         registerForPushNotifications()
         AppSettingIP.shared.resetIP()
+        BGTaskScheduler.shared.register(forTaskWithIdentifier: "sysvpn.client.ios.scheduled_refresh", using: nil) { task in
+            // Downcast the parameter to an app refresh task as this identifier is used for a refresh request.
+            self.handleAppRefresh(task: task as! BGAppRefreshTask)
+        }
+        AppDelegate.shared = self
         return true
     }
     
@@ -96,5 +103,24 @@ class AppDelegate: NSObject, UIApplicationDelegate, MessagingDelegate, UNUserNot
                      options: [UIApplication.OpenURLOptionsKey: Any])
         -> Bool {
         return GIDSignIn.sharedInstance.handle(url)
+    }
+
+    func scheduleAppRefresh() {
+        print("SCHEDULING APP REFRESH")
+        let request = BGAppRefreshTaskRequest(identifier: "sysvpn.client.ios.scheduled_refresh")
+        request.earliestBeginDate = Date(timeIntervalSinceNow: 1 * 60)
+
+        do {
+            try BGTaskScheduler.shared.submit(request)
+        } catch {
+            print("Could not schedule app refresh: \(error)")
+        }
+    }
+
+    func handleAppRefresh(task: BGAppRefreshTask) {
+        print("REFRESHING APP")
+        scheduleAppRefresh()
+        Connectivity.sharedInstance.checkIfVPNDropped()
+        task.setTaskCompleted(success: true)
     }
 }

@@ -82,10 +82,10 @@ class Connectivity: ObservableObject {
 
     func checkIfVPNDropped() {
         Task {
-            if await !self.checkVPNDroppedProcess.isOnProgress, enableNetwork {
-                await self.checkVPNDroppedProcess.activate()
+            if await !checkVPNDroppedProcess.isOnProgress, enableNetwork {
+                await checkVPNDroppedProcess.activate()
                 await NetworkManager.shared.checkIfVPNDropped()
-                await self.checkVPNDroppedProcess.deactivate()
+                await checkVPNDroppedProcess.deactivate()
             }
         }
     }

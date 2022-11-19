@@ -70,6 +70,7 @@ enum AppKeys: String {
     // Save time
     case saveTimeConnectedVPN = "saveTimeConnectedVPN"
     case fcmToken = "fcmToken"
+    case shouldReconnectVPNIfDropped = "shouldReconnectVPNIfDropped"
 }
 
 class AppSetting {

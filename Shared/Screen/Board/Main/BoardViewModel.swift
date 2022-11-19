@@ -251,6 +251,7 @@ class BoardViewModel: ObservableObject {
                 self.showAlertSessionSetting = true
             case .sessionTerminate:
                 self.showSessionTerminatedAlert = true
+                AppSetting.shared.selectAutoConnect = ItemCellType.off.rawValue
             case .apiError(let apiError):
                 self.error = apiError
                 self.showAlert = true

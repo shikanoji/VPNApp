@@ -101,11 +101,14 @@ struct ContentView: View {
             .onChange(of: scenePhase) { newPhase in
                 if newPhase == .active {
                     print("Foreground")
-                    Connectivity.sharedInstance.checkIfVPNDropped()
+                    Task {
+                        Connectivity.sharedInstance.checkIfVPNDropped()
+                    }
                 } else if newPhase == .inactive {
                     print("Inactive")
                 } else if newPhase == .background {
                     print("Background")
+                    AppDelegate.shared.scheduleAppRefresh()
                 }
             }
         }
