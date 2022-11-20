@@ -453,6 +453,7 @@ class NetworkManager: ObservableObject {
     }
     
     func reconnectVPN() {
+        beginBackgroundTask()
         needReconnect = true
         configDisconnect()
     }
@@ -513,6 +514,7 @@ class NetworkManager: ObservableObject {
     }
     
     func configStartConnectVPN(_ asNewConnection: Bool = true) {
+        beginBackgroundTask()
         if state == .disconnected {
             numberReconnect = 0
             stateUI = .connecting
@@ -553,7 +555,6 @@ class NetworkManager: ObservableObject {
     var loadingRequestCertificate = false
     
     func getRequestCertificate(asNewConnection: Bool = true, completion: @escaping (Bool) -> Void) {
-        beginBackgroundTask()
         guard isEnableReconect else {
             completion(false)
             return
@@ -676,17 +677,20 @@ class NetworkManager: ObservableObject {
         autoConnectType = ItemCell(type: AppSetting.shared.getAutoConnectProtocol()).type
     }
 
-    func checkIfVPNDropped() async {
-        print("CHECK IF VPN IS DROPPED")
-        if state == .connected {
-            let pingGoogleResult = await pingGoogleCheckInternet()
-            print("PING GOOGLE RESULT = \(pingGoogleResult)")
-            if !pingGoogleResult {
-                configDisconnect()
-            } else {
+    func checkIfVPNDropped() {
+        Task {
+            beginBackgroundTask()
+            print("CHECK IF VPN IS DROPPED")
+            if state == .connected, Connectivity.sharedInstance.enableNetwork {
+                let pingGoogleResult = await pingGoogleCheckInternet()
+                print("PING GOOGLE RESULT = \(pingGoogleResult)")
+                if !pingGoogleResult {
+                    reconnectVPN()
+                } else {
+                }
+            } else if AppSetting.shared.shouldReconnectVPNIfDropped {
+                configStartConnectVPN(false)
             }
-        } else if AppSetting.shared.shouldReconnectVPNIfDropped {
-            configStartConnectVPN(false)
         }
     }
 

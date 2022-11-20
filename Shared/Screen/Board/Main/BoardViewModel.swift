@@ -224,10 +224,10 @@ class BoardViewModel: ObservableObject {
         
         assignJailBreakCheckType(type: .readAndWriteFiles)
         AppSetting.shared.fetchListSession()
-        
-        NetworkManager.shared.stateUICallBack = { stateUI in
+
+        NetworkManager.shared.stateUICallBack = { status -> () in
             DispatchQueue.main.async {
-                self.stateUI = stateUI
+                self.stateUI = status
             }
         }
 

@@ -33,7 +33,6 @@ class AppDelegate: NSObject, UIApplicationDelegate, MessagingDelegate, UNUserNot
         registerForPushNotifications()
         AppSettingIP.shared.resetIP()
         BGTaskScheduler.shared.register(forTaskWithIdentifier: "sysvpn.client.ios.scheduled_refresh", using: nil) { task in
-            // Downcast the parameter to an app refresh task as this identifier is used for a refresh request.
             self.handleAppRefresh(task: task as! BGAppRefreshTask)
         }
         AppDelegate.shared = self
@@ -76,13 +75,13 @@ class AppDelegate: NSObject, UIApplicationDelegate, MessagingDelegate, UNUserNot
         _ application: UIApplication, didReceiveRemoteNotification userInfo: [AnyHashable: Any],
         fetchCompletionHandler completionHandler: @escaping (UIBackgroundFetchResult) -> Void) {
              
-        if let userInfoDict = userInfo as? [String: Any] {
-            if let needReconnect = userInfoDict["needReconnect"] as? String {
-                if needReconnect == "true" {
-                    NetworkManager.shared.checkVPNKill()
-                }
-            }
-        }
+//        if let userInfoDict = userInfo as? [String: Any] {
+//            if let needReconnect = userInfoDict["needReconnect"] as? String {
+//                if needReconnect == "true" {
+//                    NetworkManager.shared.checkVPNKill()
+//                }
+//            }
+//        }
             
         completionHandler(.newData)
     }
@@ -118,9 +117,11 @@ class AppDelegate: NSObject, UIApplicationDelegate, MessagingDelegate, UNUserNot
     }
 
     func handleAppRefresh(task: BGAppRefreshTask) {
-        print("REFRESHING APP")
-        scheduleAppRefresh()
-        Connectivity.sharedInstance.checkIfVPNDropped()
-        task.setTaskCompleted(success: true)
+        Task {
+            print("REFRESHING APP")
+            scheduleAppRefresh()
+            await Connectivity.sharedInstance.checkIfVPNDropped()
+            task.setTaskCompleted(success: true)
+        }
     }
 }
