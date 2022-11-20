@@ -38,7 +38,9 @@ class OpenVPNManager: ObservableObject {
             
             Task {
                 var extra = NetworkExtensionExtra()
-                extra.onDemandRules = []
+                let rule = NEOnDemandRuleConnect()
+                
+                extra.onDemandRules = [rule]
                 
                 do {
                     try await vpn.reconnect(
