@@ -218,10 +218,6 @@ class BoardViewModel: ObservableObject {
             object: nil
         )
         
-        NotificationCenter.default.addObserver(forName: UIApplication.willTerminateNotification, object: nil, queue: .main) { _ in
-            NetworkManager.shared.disconnect()
-        }
-        
         assignJailBreakCheckType(type: .readAndWriteFiles)
         AppSetting.shared.fetchListSession()
 
@@ -387,25 +383,26 @@ class BoardViewModel: ObservableObject {
     }
     
     func configCountryList(_ result: CountryListResultModel) {
-        
-        let countryNodes = result.availableCountries
-        var cityNodes = [Node]()
-        countryNodes.forEach { cityNodes.append(contentsOf: $0.cityNodeList) }
-        
-        locationData = [
-            NodeGroup(nodeList: result.recommendedCountries, type: .recommend),
-            NodeGroup(nodeList: result.availableCountries, type: .all),
-        ]
-        
-        staticIPData = result.staticServers
-        
-        mesh?.configNode(countryNodes: countryNodes,
-                         cityNodes: cityNodes,
-                         staticNodes: staticIPData,
-                         clientCountryNode: result.clientCountryDetail)
-        
-        getRecommendNode(result.recommendedCountries)
-        getServerStats()
+        DispatchQueue.main.async {
+            let countryNodes = result.availableCountries
+            var cityNodes = [Node]()
+            countryNodes.forEach { cityNodes.append(contentsOf: $0.cityNodeList) }
+
+            self.locationData = [
+                NodeGroup(nodeList: result.recommendedCountries, type: .recommend),
+                NodeGroup(nodeList: result.availableCountries, type: .all),
+            ]
+
+            self.staticIPData = result.staticServers
+
+            self.mesh?.configNode(countryNodes: countryNodes,
+                                  cityNodes: cityNodes,
+                                  staticNodes: self.staticIPData,
+                                  clientCountryNode: result.clientCountryDetail)
+
+            self.getRecommendNode(result.recommendedCountries)
+            self.getServerStats()
+        }
     }
     
     // MARK: - HANDLE CONFIG VPN

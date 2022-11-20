@@ -422,17 +422,18 @@ class NetworkManager: ObservableObject {
         case .connected:
             configConnected()
         case .disconnected:
-            if AppSetting.shared.isConnectedToVpn {
-                configStartConnectVPN()
-                return
-            }
+//            if AppSetting.shared.isConnectedToVpn {
+//                configStartConnectVPN()
+//                return
+//            }
             
-            if isEnableReconect,
-               !connectOrDisconnectByUser {
-                startConnectVPN(asNewConnection: false)
-            } else {
-                configDisconected()
-            }
+//            if isEnableReconect,
+//               !connectOrDisconnectByUser {
+//                startConnectVPN(asNewConnection: false)
+//            } else {
+//                configDisconected()
+//            }
+            configDisconected()
         default:
             break
         }
@@ -453,7 +454,6 @@ class NetworkManager: ObservableObject {
     }
     
     func reconnectVPN() {
-        beginBackgroundTask()
         needReconnect = true
         configDisconnect()
     }
@@ -520,6 +520,7 @@ class NetworkManager: ObservableObject {
             stateUI = .connecting
             startConnectVPN(asNewConnection: asNewConnection)
         }
+        endBackgroundTask()
     }
     
     func disconnectSession() {
@@ -681,16 +682,18 @@ class NetworkManager: ObservableObject {
         Task {
             beginBackgroundTask()
             print("CHECK IF VPN IS DROPPED")
-            if state == .connected, Connectivity.sharedInstance.enableNetwork {
+            if state == .connected, !connectOrDisconnectByUser {
                 let pingGoogleResult = await pingGoogleCheckInternet()
                 print("PING GOOGLE RESULT = \(pingGoogleResult)")
                 if !pingGoogleResult {
-                    reconnectVPN()
+                    configDisconnect()
+                    configStartConnectVPN(true)
                 } else {
                 }
             } else if AppSetting.shared.shouldReconnectVPNIfDropped {
-                configStartConnectVPN(false)
+                configStartConnectVPN(true)
             }
+            endBackgroundTask()
         }
     }
 

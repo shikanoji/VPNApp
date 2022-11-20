@@ -33,7 +33,7 @@ class AppDelegate: NSObject, UIApplicationDelegate, MessagingDelegate, UNUserNot
         registerForPushNotifications()
         AppSettingIP.shared.resetIP()
         BGTaskScheduler.shared.register(forTaskWithIdentifier: "sysvpn.client.ios.scheduled_refresh", using: nil) { task in
-            self.handleAppRefresh(task: task as! BGAppRefreshTask)
+            self.handleAppRefresh(task: task as! BGProcessingTask)
         }
         AppDelegate.shared = self
         return true
@@ -106,7 +106,7 @@ class AppDelegate: NSObject, UIApplicationDelegate, MessagingDelegate, UNUserNot
 
     func scheduleAppRefresh() {
         print("SCHEDULING APP REFRESH")
-        let request = BGAppRefreshTaskRequest(identifier: "sysvpn.client.ios.scheduled_refresh")
+        let request = BGProcessingTaskRequest(identifier: "sysvpn.client.ios.scheduled_refresh")
         request.earliestBeginDate = Date(timeIntervalSinceNow: 1 * 60)
 
         do {
@@ -116,7 +116,7 @@ class AppDelegate: NSObject, UIApplicationDelegate, MessagingDelegate, UNUserNot
         }
     }
 
-    func handleAppRefresh(task: BGAppRefreshTask) {
+    func handleAppRefresh(task: BGProcessingTask) {
         Task {
             print("REFRESHING APP")
             scheduleAppRefresh()
