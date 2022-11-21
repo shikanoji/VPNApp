@@ -16,21 +16,16 @@ class SettingVPNViewModel: ObservableObject {
 
     init() {
         refreshItemList()
-
-        NotificationCenter.default.addObserver(
-            self,
-            selector: #selector(refreshItemList),
-            name: Constant.NameNotification.checkAutoconnect,
-            object: nil
-        )
     }
 
     @objc
     func refreshItemList() {
-        itemList = [
-            ItemCell(type: .autoConnect),
-            ItemCell(type: .protocolConnect),
-            ItemCell(type: .dns),
-        ]
+        DispatchQueue.main.async {
+            self.itemList = [
+                ItemCell(type: .autoConnect),
+                ItemCell(type: .protocolConnect),
+                ItemCell(type: .dns),
+            ]
+        }
     }
 }

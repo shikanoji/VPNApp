@@ -196,13 +196,6 @@ class NetworkManager: ObservableObject {
             object: nil
         )
         
-        NotificationCenter.default.addObserver(
-            self,
-            selector: #selector(configAutoConnect),
-            name: Constant.NameNotification.checkAutoconnect,
-            object: nil
-        )
-        
         Connectivity.sharedInstance.enableNetworkCallBack = {
             if $0 {
                 if self.lostNetworkAfterConnect {
@@ -232,8 +225,6 @@ class NetworkManager: ObservableObject {
     }
     
     // MARK: - FUNCTION - NOTIFICATION
-    
-    @objc
     func configAutoConnect() async {
         checkAutoconnect()
         
