@@ -297,7 +297,7 @@ class BoardViewModel: ObservableObject {
     @objc
     func changeProtocolSetting() {
         if state == .connected {
-            NetworkManager.shared.needReconnect = true
+            AppSetting.shared.shouldReconnectVPNIfDropped = true
             Task {
                 await NetworkManager.shared.configDisconnect()
             }
