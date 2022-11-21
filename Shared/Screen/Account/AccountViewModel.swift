@@ -20,7 +20,7 @@ class AccountViewModel: ObservableObject {
     var alertMessage: String = ""
     var authentication: Authentication?
 
-    func logout() {
+    func logout() async {
         NetworkManager.shared.logoutNeedDisconnect()
 
         if !AppSetting.shared.currentSessionId.isEmpty {
@@ -32,10 +32,14 @@ class AccountViewModel: ObservableObject {
                     if response.success {
                         self.callLogoutAPI()
                     } else {
-                        self.disconnetAndLogout()
+                        Task {
+                            await self.disconnectAndLogout()
+                        }
                     }
                 } onFailure: { error in
-                    self.disconnetAndLogout()
+                    Task {
+                        await self.disconnectAndLogout()
+                    }
                 }
                 .disposed(by: disposedBag)
         } else {
@@ -43,11 +47,9 @@ class AccountViewModel: ObservableObject {
         }
     }
 
-    func disconnetAndLogout() {
-        Task {
-            await NetworkManager.shared.disconnect()
-            callLogoutAPI()
-        }
+    func disconnectAndLogout() async {
+        await NetworkManager.shared.disconnect()
+        callLogoutAPI()
     }
 
     func callLogoutAPI() {

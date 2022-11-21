@@ -338,6 +338,7 @@ class NetworkManager: ObservableObject {
     func logoutNeedDisconnect() {
         if state == .connected {
             Task {
+                AppSetting.shared.shouldReconnectVPNIfDropped = false
                 await configDisconnect()
             }
         }
