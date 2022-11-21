@@ -312,6 +312,10 @@ class NetworkManager: ObservableObject {
         switch state {
         case .connected:
             configConnected()
+            if AppSetting.shared.vpnDropped {
+                AppSetting.shared.vpnDropped = false
+                NotificationCenter.default.post(name: Constant.NameNotification.restoreVPNSuccessfully, object: nil)
+            }
         case .disconnected:
             Task {
                 configDisconected()
@@ -692,10 +696,11 @@ class NetworkManager: ObservableObject {
         Task {
             beginBackgroundTask()
             print("CHECK IF VPN IS DROPPED")
-            if state == .connected, !connectOrDisconnectByUser {
+            if state == .connected {
                 let pingGoogleResult = await pingGoogleCheckInternet()
                 print("PING GOOGLE RESULT = \(pingGoogleResult)")
                 if !pingGoogleResult {
+                    AppSetting.shared.vpnDropped = true
                     AppSetting.shared.shouldReconnectVPNIfDropped = true
                     await configDisconnect()
                 } else {

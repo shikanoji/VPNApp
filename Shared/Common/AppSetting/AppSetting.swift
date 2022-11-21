@@ -67,6 +67,7 @@ enum AppKeys: String {
     case shouldReconnectVPNIfDropped = "shouldReconnectVPNIfDropped"
     // VPN
     case isConnectedToOurVPN = "isConnectedToOurVPN"
+    case vpnDropped = "vpnDropped"
 }
 
 class AppSetting {

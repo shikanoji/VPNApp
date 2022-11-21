@@ -15,6 +15,7 @@ import BackgroundTasks
 class AppDelegate: NSObject, UIApplicationDelegate, MessagingDelegate, UNUserNotificationCenterDelegate {
     static private(set) var shared: AppDelegate! = nil
     static var orientationLock = UIInterfaceOrientationMask.portrait
+    private var currentBackGroundTask: BGProcessingTask?
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey : Any]? = nil) -> Bool {
         var filePath:String!
 #if DEBUG
@@ -36,6 +37,12 @@ class AppDelegate: NSObject, UIApplicationDelegate, MessagingDelegate, UNUserNot
             self.handleAppRefresh(task: task as! BGProcessingTask)
         }
         AppDelegate.shared = self
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(endBGTaskOnSuccessfullyRestoreVPN),
+            name: Constant.NameNotification.restoreVPNSuccessfully,
+            object: nil
+        )
         return true
     }
     
@@ -120,8 +127,16 @@ class AppDelegate: NSObject, UIApplicationDelegate, MessagingDelegate, UNUserNot
         Task {
             print("REFRESHING APP")
             scheduleAppRefresh()
+            currentBackGroundTask = task
             await Connectivity.sharedInstance.checkIfVPNDropped()
-            task.setTaskCompleted(success: true)
+            currentBackGroundTask = task
+        }
+    }
+
+    @objc func endBGTaskOnSuccessfullyRestoreVPN() {
+        if currentBackGroundTask != nil {
+            currentBackGroundTask?.setTaskCompleted(success: true)
+            currentBackGroundTask = nil
         }
     }
 }
