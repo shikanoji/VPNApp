@@ -21,7 +21,7 @@ class AccountViewModel: ObservableObject {
     var authentication: Authentication?
 
     func logout() {
-        NotificationCenter.default.post(name: Constant.NameNotification.logoutNeedDisconnect, object: nil)
+        NetworkManager.shared.logoutNeedDisconnect()
 
         if !AppSetting.shared.currentSessionId.isEmpty {
             ServiceManager.shared.disconnectSession(sessionId: AppSetting.shared.currentSessionId, terminal: true)

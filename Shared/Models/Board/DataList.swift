@@ -176,7 +176,6 @@ enum ItemCellType: Int, Decodable {
 
     case email
     case joinMember
-    case sysVPNId
     case accountSecurity
     
     var title: String {
@@ -185,8 +184,6 @@ enum ItemCellType: Int, Decodable {
             return L10n.Account.Infomation.email
         case .joinMember:
             return L10n.Account.Infomation.member
-        case .sysVPNId:
-            return L10n.Account.Infomation.id
         case .accountSecurity:
             return L10n.Account.Infomation.security
         case .cyberSec:
@@ -289,8 +286,6 @@ enum ItemCellType: Int, Decodable {
             return AppSetting.shared.email
         case .joinMember:
             return AppSetting.shared.joinedDate?.toFormat("dd-MM-yyyy") ?? ""
-        case .sysVPNId:
-            return AppSetting.shared.idVPN
         case .accountSecurity:
             return L10n.Account.Infomation.tapToChangePassword
             

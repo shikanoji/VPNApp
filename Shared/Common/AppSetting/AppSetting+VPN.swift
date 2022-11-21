@@ -16,7 +16,7 @@ extension AppSetting {
             UserDefaults.standard.setValue(newValue, forKey: AppKeys.shouldReconnectVPNIfDropped.rawValue)
         }
     }
-    
+
     var fcmToken: String {
         get {
             return UserDefaults.standard.string(forKey: AppKeys.fcmToken.rawValue) ?? ""

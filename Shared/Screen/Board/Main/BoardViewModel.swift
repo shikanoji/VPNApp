@@ -80,35 +80,19 @@ class BoardViewModel: ObservableObject {
     @Published var showProtocolConnect: Bool = false
     @Published var showDNSSetting: Bool = false
     @Published var stateUI: VPNStatus = .disconnected
-    
     @Published var state: VPNStatus = .disconnected
     @Published var ip = AppSetting.shared.ip
     @Published var flag = ""
     @Published var nameSelect = ""
-    @Published var nodes: [Node] = []
-    @Published var errorMessage: String? = nil
     
     @Published var showBoardListIphone = false
     @Published var showBoardListIpad = false
-    
-    func configShowBoardList(_ config: Bool) {
-        if UIDevice.current.userInterfaceIdiom == .pad {
-            showBoardListIpad = config
-        } else {
-            showBoardListIphone = config
-        }
-    }
-    
-    var isSwitchTab = false
     
     @Published var selectedTab: StateTab = .location {
         didSet {
             AppSetting.shared.saveCurrentTab(selectedTab)
         }
     }
-    
-    @Published var uploadSpeed: String = "0"
-    @Published var downloadSpeed: String = "0"
 
     @Published var nodeSelectFromBoardList: Node? = nil {
         didSet {
@@ -120,7 +104,7 @@ class BoardViewModel: ObservableObject {
                 }
                 mesh?.removeSelectNode()
                 AppSetting.shared.saveBoardTabWhenConnecting(.location)
-                NetworkManager.shared.needReconnect = state == .connected
+                AppSetting.shared.shouldReconnectVPNIfDropped = state == .connected
                 NetworkManager.shared.nodeSelected = node
                 NetworkManager.shared.connectOrDisconnectByUser = true
                 Task {
@@ -143,7 +127,7 @@ class BoardViewModel: ObservableObject {
                 }
                 mesh?.removeSelectNode()
                 AppSetting.shared.saveBoardTabWhenConnecting(.staticIP)
-                NetworkManager.shared.needReconnect = state == .connected
+                AppSetting.shared.shouldReconnectVPNIfDropped = state == .connected
                 NetworkManager.shared.selectStaticServer = staticIP
                 NetworkManager.shared.connectOrDisconnectByUser = true
                 Task {
@@ -164,7 +148,7 @@ class BoardViewModel: ObservableObject {
                 }
                 mesh?.removeSelectNode()
                 AppSetting.shared.saveBoardTabWhenConnecting(.multiHop)
-                NetworkManager.shared.needReconnect = state == .connected
+                AppSetting.shared.shouldReconnectVPNIfDropped = state == .connected
                 NetworkManager.shared.selectMultihop = multihop
                 NetworkManager.shared.connectOrDisconnectByUser = true
                 Task {
@@ -192,37 +176,12 @@ class BoardViewModel: ObservableObject {
     @Published var showAlertSessionSetting: Bool = false
     @Published var shouldHideSession = true
     
-    @Published var showProgressView: Bool = false
-    
-    @Published var showLogoView: Bool = true
-    
     var error: APIError?
-    
     let disposedBag = DisposeBag()
-    
-    var reconnectWhenLoseInternet = 0
-
-    private var backgroundTaskId: UIBackgroundTaskIdentifier?
-    
-    var onlyDisconnectWithoutEndsession = false
     
     // MARK: INIT
     init() {
         selectedTab = AppSetting.shared.getCurrentTab()
-        
-        NotificationCenter.default.addObserver(
-            self,
-            selector: #selector(logoutNeedDisconnect),
-            name: Constant.NameNotification.logoutNeedDisconnect,
-            object: nil
-        )
-        
-        NotificationCenter.default.addObserver(
-            self,
-            selector: #selector(changeProtocolSetting),
-            name: Constant.NameNotification.changeProtocolSetting,
-            object: nil
-        )
         
         assignJailBreakCheckType(type: .readAndWriteFiles)
         AppSetting.shared.fetchListSession()
@@ -277,6 +236,14 @@ class BoardViewModel: ObservableObject {
         }
     }
     
+    func configShowBoardList(_ config: Bool) {
+        if UIDevice.current.userInterfaceIdiom == .pad {
+            showBoardListIpad = config
+        } else {
+            showBoardListIphone = config
+        }
+    }
+    
     func configDataRemote() {
         getIpInfo {
             if !AppSetting.shared.isConnectedToVpn && AppSetting.shared.needLoadApiMap && Connectivity.sharedInstance.enableNetwork {
@@ -291,16 +258,6 @@ class BoardViewModel: ObservableObject {
     func configDataLocal() {
         if AppSetting.shared.isConnectedToVpn || !AppSetting.shared.needLoadApiMap || !Connectivity.sharedInstance.enableNetwork {
             getDataFromLocal()
-        }
-    }
-    
-    @objc
-    func changeProtocolSetting() {
-        if state == .connected {
-            AppSetting.shared.shouldReconnectVPNIfDropped = true
-            Task {
-                await NetworkManager.shared.configDisconnect()
-            }
         }
     }
     
@@ -414,35 +371,12 @@ class BoardViewModel: ObservableObject {
     }
     
     // MARK: - HANDLE CONFIG VPN
-    
-    @objc private func logoutNeedDisconnect() {
-        if state == .connected {
-            Task {
-                await NetworkManager.shared.configDisconnect()
-            }
-        }
-    }
-    
-    var isCheckingAutoConnect = false
-    
-    @objc
     func configDisconnected() {
         ip = AppSetting.shared.ip
         flag = ""
         nameSelect = ""
         state = .disconnected
         stateUI = .disconnected
-        if onlyDisconnectWithoutEndsession {
-            disconnectSession()
-            onlyDisconnectWithoutEndsession = false
-        }
-    }
-    
-    @MainActor func configDisconnect() {
-        stateUI = .disconnected
-        Task {
-            await NetworkManager.shared.configDisconnect()
-        }
     }
     
     func getServerStats() {
@@ -539,25 +473,6 @@ class BoardViewModel: ObservableObject {
                 nameSelect = nodeSelect.isCity ? nodeSelect.name : nodeSelect.countryName
             }
         }
-    }
-
-    func disconnectSession() {
-        ServiceManager.shared.disconnectSession(sessionId: AppSetting.shared.currentSessionId, terminal: false)
-            .subscribe { [weak self] response in
-                guard let self = self else {
-                    return
-                }
-                
-                self.showProgressView = false
-                
-                if response.success {
-
-                } else {
-
-                }
-            } onFailure: { error in
-            }
-            .disposed(by: disposedBag)
     }
 }
 

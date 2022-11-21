@@ -67,7 +67,7 @@ class ContentViewModel: ObservableObject {
             endLoading = true
         }
         
-        getIpInfo {
+        AppSetting.shared.prepareForIpInfo { _ in
             self.configState()
         }
         

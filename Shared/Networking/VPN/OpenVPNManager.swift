@@ -59,7 +59,7 @@ class OpenVPNManager: ObservableObject {
     }
     
     func postError() {
-        NotificationCenter.default.post(name: Constant.NameNotification.connectVPNError, object: nil)
+        NetworkManager.shared.connectVPNError()
     }
     
     func getDataCount() -> DataCount? {

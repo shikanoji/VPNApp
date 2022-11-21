@@ -10,45 +10,9 @@ import SwiftUI
 
 extension AppSetting {
     /// Board Settings
-    var dateMember: Date? {
-        get {
-            return UserDefaults.standard.object(forKey: AppKeys.dateMember.rawValue) as! Date?
-        }
-        set {
-            UserDefaults.standard.setValue(newValue, forKey: AppKeys.dateMember.rawValue)
-        }
-    }
-    
-    var idVPN: String {
-        get {
-            return UserDefaults.standard.string(forKey: AppKeys.idVPN.rawValue) ?? "8966658"
-        }
-        set {
-            UserDefaults.standard.setValue(newValue, forKey: AppKeys.dateMember.rawValue)
-        }
-    }
-    
     var maxNumberDevices: Int {
         get {
             return 6
-        }
-    }
-    
-    var appShourtcuts: Bool {
-        get {
-            return UserDefaults.standard.bool(forKey: AppKeys.appShourtcuts.rawValue)
-        }
-        set {
-            UserDefaults.standard.setValue(newValue, forKey: AppKeys.appShourtcuts.rawValue)
-        }
-    }
-    
-    var protection: Bool {
-        get {
-            return UserDefaults.standard.bool(forKey: AppKeys.protection.rawValue)
-        }
-        set {
-            UserDefaults.standard.setValue(newValue, forKey: AppKeys.protection.rawValue)
         }
     }
     
@@ -79,15 +43,6 @@ extension AppSetting {
         }
     }
     
-    var token: String {
-        get {
-            return UserDefaults.standard.string(forKey: AppKeys.token.rawValue) ?? ""
-        }
-        set {
-            UserDefaults.standard.setValue(newValue, forKey: AppKeys.token.rawValue)
-        }
-    }
-    
     func getLocationMap() -> CGPoint {
         guard let clientCountryNode = AppSetting.shared.getDataMap()?.clientCountryDetail else {
             return .init(
@@ -101,18 +56,6 @@ extension AppSetting {
 }
 
 extension AppSetting {
-    func getDateMemberSince() -> String {
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "EEE, dd MMM yyyy HH:mm:ss z"
-        dateFormatter.locale = Locale(identifier: "en_US_POSIX")
-        dateFormatter.timeZone = TimeZone(abbreviation: "GMT")
-        
-        if let date = dateMember {
-            return dateFormatter.string(from: date)
-        } else {
-            return "2023-10-27 15:30 GMT+1"
-        }
-    }
     
     func saveDataMap(_ dataMap: CountryListResultModel) {
         let data = try! JSONEncoder().encode(dataMap )

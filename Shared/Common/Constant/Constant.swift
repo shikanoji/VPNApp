@@ -185,15 +185,11 @@ struct Constant {
     
     struct NameNotification {
         static let checkAutoconnect = Notification.Name("CheckAutoconnectIfNeeded")
-        static let disconnectCurrentSession = Notification.Name("disconnectCurrentSession")
-        static let logoutNeedDisconnect = Notification.Name("logoutNeedDisconnect")
-        static let changeProtocolSetting = Notification.Name("changeProtocolSetting")
         static let sessionExpired = Notification.Name("sessionExpired")
         static let disconnectedVPN = Notification.Name("disconnectedVPN")
         static let showMap = Notification.Name("showMap")
         static let showIntroPlan = Notification.Name("showIntroPlan")
         static let startFree7DayTrial = Notification.Name("startFree7DayTrial")
-        static let connectVPNError = Notification.Name("connectVPNError")
     }
     
     struct TextSize {
