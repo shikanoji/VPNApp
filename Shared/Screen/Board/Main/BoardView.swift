@@ -251,7 +251,9 @@ struct BoardView: View {
                                       NetworkManager.shared.needReconnect = false
                                       NetworkManager.shared.onlyDisconnectWithoutEndsession = true
                                       NetworkManager.shared.connectOrDisconnectByUser = true
-                                      NetworkManager.shared.ConnectOrDisconnectVPN()
+                                      Task {
+                                          await NetworkManager.shared.ConnectOrDisconnectVPN()
+                                      }
                                   })
                     Spacer()
                         .frame(height: Constant.Board.Tabs.topPadding)

@@ -44,8 +44,10 @@ class AccountViewModel: ObservableObject {
     }
 
     func disconnetAndLogout() {
-        NetworkManager.shared.disconnect()
-        callLogoutAPI()
+        Task {
+            await NetworkManager.shared.disconnect()
+            callLogoutAPI()
+        }
     }
 
     func callLogoutAPI() {

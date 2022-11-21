@@ -123,7 +123,9 @@ class BoardViewModel: ObservableObject {
                 NetworkManager.shared.needReconnect = state == .connected
                 NetworkManager.shared.nodeSelected = node
                 NetworkManager.shared.connectOrDisconnectByUser = true
-                NetworkManager.shared.ConnectOrDisconnectVPN()
+                Task {
+                    await NetworkManager.shared.ConnectOrDisconnectVPN()
+                }
             }
         }
     }
@@ -144,7 +146,9 @@ class BoardViewModel: ObservableObject {
                 NetworkManager.shared.needReconnect = state == .connected
                 NetworkManager.shared.selectStaticServer = staticIP
                 NetworkManager.shared.connectOrDisconnectByUser = true
-                NetworkManager.shared.ConnectOrDisconnectVPN()
+                Task {
+                    await NetworkManager.shared.ConnectOrDisconnectVPN()
+                }
             }
         }
     }
@@ -163,7 +167,9 @@ class BoardViewModel: ObservableObject {
                 NetworkManager.shared.needReconnect = state == .connected
                 NetworkManager.shared.selectMultihop = multihop
                 NetworkManager.shared.connectOrDisconnectByUser = true
-                NetworkManager.shared.ConnectOrDisconnectVPN()
+                Task {
+                    await NetworkManager.shared.ConnectOrDisconnectVPN()
+                }
             }
         }
     }
@@ -292,7 +298,9 @@ class BoardViewModel: ObservableObject {
     func changeProtocolSetting() {
         if state == .connected {
             NetworkManager.shared.needReconnect = true
-            NetworkManager.shared.configDisconnect()
+            Task {
+                await NetworkManager.shared.configDisconnect()
+            }
         }
     }
     
@@ -409,7 +417,9 @@ class BoardViewModel: ObservableObject {
     
     @objc private func logoutNeedDisconnect() {
         if state == .connected {
-            NetworkManager.shared.configDisconnect()
+            Task {
+                await NetworkManager.shared.configDisconnect()
+            }
         }
     }
     
@@ -430,7 +440,9 @@ class BoardViewModel: ObservableObject {
     
     @MainActor func configDisconnect() {
         stateUI = .disconnected
-        NetworkManager.shared.configDisconnect()
+        Task {
+            await NetworkManager.shared.configDisconnect()
+        }
     }
     
     func getServerStats() {

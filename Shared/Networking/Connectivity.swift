@@ -71,7 +71,9 @@ class Connectivity: ObservableObject {
     func checkIfVPNDropped() async {
         checkingVPNSerialQueue.async {
             if self.enableNetwork {
-                NetworkManager.shared.checkIfVPNDropped()
+                Task {
+                    await NetworkManager.shared.checkIfVPNDropped()
+                }
             }
         }
     }
