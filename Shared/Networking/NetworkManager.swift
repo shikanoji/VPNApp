@@ -46,15 +46,17 @@ enum ErrorBoardView {
 
 class NetworkManager: ObservableObject {
     
+    // MARK: - VARIABLE
+    
     static var shared = NetworkManager()
     
-    var stateUI: VPNStatus = .disconnected {
+    var stateUI: VPNStatus = AppSetting.shared.checkStateConnectedVPN ? .connected : .disconnected {
         didSet {
             stateUICallBack?(stateUI)
         }
     }
     
-    var state: VPNStatus = .disconnected {
+    var state: VPNStatus = AppSetting.shared.checkStateConnectedVPN ? .connected : .disconnected {
         didSet {
             stateCallBack?(state)
         }
@@ -65,10 +67,11 @@ class NetworkManager: ObservableObject {
     var errorCallBack: ((ErrorBoardView) -> Void)?
     
     var showProgressView = false
-    var needReconnect = false
     var connectOrDisconnectByUser = false
     var isReconnect = false
     var showAlert = false
+    
+    var onlyDisconnectWithoutEndsession = false
     
     var selectConfig: ItemCellType {
         get {
@@ -140,28 +143,6 @@ class NetworkManager: ObservableObject {
         }
     }
     
-    func connect() {
-        switch getValueConfigProtocol {
-        case .openVPNTCP, .openVPNUDP:
-            OpenVPNManager.shared.connect()
-        case .wireGuard:
-            WireGuardManager.shared.connect()
-        default:
-            break
-        }
-    }
-    
-    func disconnect() {
-        switch getValueConfigProtocol {
-        case .openVPNTCP, .openVPNUDP:
-            OpenVPNManager.shared.disconnect()
-        case .wireGuard:
-            WireGuardManager.shared.disconnect()
-        default:
-            break
-        }
-    }
-    
     var nodeConnecting: Node? {
         get {
             AppSetting.shared.getNodeConnecting()
@@ -184,7 +165,23 @@ class NetworkManager: ObservableObject {
         }
     }
     
+    let maximumReconnect = 3
+    var numberReconnect = 0
+    
+    let disposedBag = DisposeBag()
+    
+    var isEnableReconect: Bool {
+        get { numberReconnect < maximumReconnect }
+    }
+    
+    var lostNetworkAfterConnect = false
+    
+    var loadingRequestCertificate = false
+    
+    // MARK: INIT
+    
     init() {
+        
         NotificationCenter.default.addObserver(
             self,
             selector: #selector(VPNStatusDidChange(notification:)),
@@ -196,27 +193,6 @@ class NetworkManager: ObservableObject {
             self,
             selector: #selector(VPNDidFail(notification:)),
             name: VPNNotification.didFail,
-            object: nil
-        )
-        
-        NotificationCenter.default.addObserver(
-            self,
-            selector: #selector(configAutoConnect),
-            name: Constant.NameNotification.checkAutoconnect,
-            object: nil
-        )
-        
-        NotificationCenter.default.addObserver(
-            self,
-            selector: #selector(disconnectCurrentSession),
-            name: Constant.NameNotification.disconnectCurrentSession,
-            object: nil
-        )
-        
-        NotificationCenter.default.addObserver(
-            self,
-            selector: #selector(connectVPNError),
-            name: Constant.NameNotification.connectVPNError,
             object: nil
         )
         
@@ -244,9 +220,116 @@ class NetworkManager: ObservableObject {
         }
     }
     
-    var lostNetworkAfterConnect = false
+    deinit {
+        endBackgroundTask()
+    }
     
-    @objc
+    // MARK: - FUNCTION - NOTIFICATION
+    func configAutoConnect() async {
+        checkAutoconnect()
+        
+        if networkConnectIsCurrentNetwork() && state == .disconnected  {
+            await autoConnectWithConfig()
+        }
+    }
+    
+    func disconnectCurrentSession() async {
+        AppSetting.shared.shouldReconnectVPNIfDropped = false
+        connectOrDisconnectByUser = true
+        onlyDisconnectWithoutEndsession = true
+        await configDisconnect()
+        AppSetting.shared.selectAutoConnect = ItemCellType.off.rawValue
+        checkAutoconnect()
+    }
+    
+    func checkConnectedVPNLostNetwork() {
+        Task {
+            if AppSetting.shared.isConnectedToVpn && !Connectivity.sharedInstance.enableNetwork {
+                if stateUI == .connected {
+                    connectOrDisconnectByUser = true
+                    await configDisconnect()
+                }
+            }
+        }
+    }
+    
+    @objc private func autoConnectWithConfig() async {
+        if Connectivity.sharedInstance.enableNetwork {
+            switch autoConnectType {
+            case .always:
+                AppSetting.shared.saveBoardTabWhenConnecting(.location)
+                await ConnectOrDisconnectVPN()
+            case .onWifi:
+                if Connectivity.sharedInstance.enableWifi {
+                    AppSetting.shared.saveBoardTabWhenConnecting(.location)
+                    await ConnectOrDisconnectVPN()
+                }
+            case .onMobile:
+                if Connectivity.sharedInstance.enableCellular {
+                    AppSetting.shared.saveBoardTabWhenConnecting(.location)
+                    await ConnectOrDisconnectVPN()
+                }
+            default:
+                break
+            }
+        }
+    }
+    
+    @MainActor @objc private func VPNDidFail(notification: Notification) {
+        print("VPNStatusDidFail: \(notification.vpnError.localizedDescription)")
+        guard notification.vpnError.localizedDescription != "permission denied" else {
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.5, execute: {
+                self.configDisconected()
+            })
+            return
+        }
+        if state == .connected {
+            configDisconected()
+            if isEnableReconect, !connectOrDisconnectByUser {
+                Task {
+                    await startConnectVPN(asNewConnection: false)
+                }
+            }
+        } else {
+            configDisconected()
+        }
+    }
+    
+    @objc private func VPNStatusDidChange(notification: Notification) {
+       
+        print("VPNStatusDidChange: \(notification.vpnStatus)")
+        
+        guard state != notification.vpnStatus else {
+            return
+        }
+        
+        state = notification.vpnStatus
+        
+        if stateUI != state {
+            stateUI = state
+        }
+        
+        switch state {
+        case .connected:
+            configConnected()
+            if AppSetting.shared.vpnDropped {
+                AppSetting.shared.vpnDropped = false
+                NotificationCenter.default.post(name: Constant.NameNotification.restoreVPNSuccessfully, object: nil)
+            }
+        case .disconnected:
+            Task {
+                configDisconected()
+                if AppSetting.shared.shouldReconnectVPNIfDropped {
+                    await configStartConnectVPN(true)
+                }
+            }
+        default:
+            break
+        }
+    }
+    
+    // MARK: - FUNCTION - OTHER
+    
     func connectVPNError() {
         connectOrDisconnectByUser = true
         loadingRequestCertificate = false
@@ -255,55 +338,44 @@ class NetworkManager: ObservableObject {
         errorCallBack?(.apiError(APIError.identified()))
     }
     
-    @objc
-    func configAutoConnect() {
-        checkAutoconnect()
-        
-        if networkConnectIsCurrentNetwork() && state == .disconnected  {
-            autoConnectWithConfig()
-        }
-    }
-    
-    @objc private func disconnectCurrentSession() {
-        onlyDisconnectWithoutEndsession = true
-        configDisconnect()
-        AppSetting.shared.selectAutoConnect = ItemCellType.off.rawValue
-        checkAutoconnect()
-    }
-    
-    func checkConnectedVPNLostNetwork() {
-        if AppSetting.shared.isConnectedToVpn && !Connectivity.sharedInstance.enableNetwork {
-            if stateUI == .connected {
-                connectOrDisconnectByUser = true
-                configDisconnect()
+    func logoutNeedDisconnect() {
+        if state == .connected {
+            Task {
+                AppSetting.shared.shouldReconnectVPNIfDropped = false
+                await configDisconnect()
             }
         }
     }
     
-    @objc private func autoConnectWithConfig() {
-        if Connectivity.sharedInstance.enableNetwork {
-            switch autoConnectType {
-            case .always:
-                AppSetting.shared.saveBoardTabWhenConnecting(.location)
-                ConnectOrDisconnectVPN()
-            case .onWifi:
-                if Connectivity.sharedInstance.enableWifi {
-                    AppSetting.shared.saveBoardTabWhenConnecting(.location)
-                    ConnectOrDisconnectVPN()
-                }
-            case .onMobile:
-                if Connectivity.sharedInstance.enableCellular {
-                    AppSetting.shared.saveBoardTabWhenConnecting(.location)
-                    ConnectOrDisconnectVPN()
-                }
-            default:
-                break
+    func changeProtocolSetting() {
+        if state == .connected {
+            AppSetting.shared.shouldReconnectVPNIfDropped = true
+            Task {
+                await NetworkManager.shared.configDisconnect()
             }
         }
     }
     
-    deinit {
-        endBackgroundTask()
+    func connect() async {
+        switch getValueConfigProtocol {
+        case .openVPNTCP, .openVPNUDP:
+            await OpenVPNManager.shared.connect()
+        case .wireGuard:
+            await WireGuardManager.shared.connect()
+        default:
+            break
+        }
+    }
+    
+    func disconnect() async {
+        switch getValueConfigProtocol {
+        case .openVPNTCP, .openVPNUDP:
+            await OpenVPNManager.shared.disconnect()
+        case .wireGuard:
+            await WireGuardManager.shared.disconnect()
+        default:
+            break
+        }
     }
     
     private var backgroundTaskId: UIBackgroundTaskIdentifier?
@@ -325,53 +397,45 @@ class NetworkManager: ObservableObject {
         endBackgroundTask()
     }
     
-    func ConnectOrDisconnectVPN() {
+    func ConnectOrDisconnectVPN() async {
         checkAutoconnect()
         switch autoConnectType {
         case .off:
             switch stateUI {
             case .disconnected:
                 AppSetting.shared.saveTimeConnectedVPN = nil
-                configStartConnectVPN()
+                await configStartConnectVPN()
             case .connecting, .disconnecting:
-                configDisconnect()
+                await configDisconnect()
             default:
-                connectOrDisconnectByUser = true
-                configDisconnect()
+                await configDisconnect()
             }
         default:
             if connectOrDisconnectByUser, stateUI != .disconnected {
                 if networkConnectIsCurrentNetwork() {
                     errorCallBack?(.autoConnecting)
                 } else {
-                    configDisconnect()
+                    await configDisconnect()
                 }
             } else {
                 switch state {
                 case .disconnected:
                     AppSetting.shared.saveTimeConnectedVPN = nil
-                    configStartConnectVPN()
+                    await configStartConnectVPN()
                 default:
-                    configDisconnect()
+                    await configDisconnect()
                 }
             }
         }
     }
     
-    let maximumReconnect = 3
-    var numberReconnect = 0
-    
-    let disposedBag = DisposeBag()
-    
-    var isEnableReconect: Bool {
-        get { numberReconnect < maximumReconnect }
-    }
-    
-    func startConnectVPN(asNewConnection: Bool) {
+    func startConnectVPN(asNewConnection: Bool) async {
         loadingRequestCertificate = true
-        getRequestCertificate(asNewConnection: asNewConnection) {
+        await getRequestCertificate(asNewConnection: asNewConnection) {
             if $0 {
-                self.connect()
+                Task {
+                    await self.connect()
+                }
             } else {
                 if self.isReconnect {
                     self.isReconnect = false
@@ -383,83 +447,32 @@ class NetworkManager: ObservableObject {
         }
     }
     
-    func configDisconnect() {
+    func configDisconnect() async {
         numberReconnect = 0
-        disconnect()
+        await disconnect()
     }
     
-    @MainActor @objc private func VPNDidFail(notification: Notification) {
-        print("VPNStatusDidFail: \(notification.vpnError.localizedDescription)")
-        guard notification.vpnError.localizedDescription != "permission denied" else {
-            DispatchQueue.main.asyncAfter(deadline: .now() + 0.5, execute: {
-                self.configDisconected()
-            })
-            return
-        }
-        if state == .connected {
-            configDisconected()
-            if isEnableReconect, !connectOrDisconnectByUser {
-                startConnectVPN(asNewConnection: false)
-            }
-        }
-    }
-    
-    @objc private func VPNStatusDidChange(notification: Notification) {
-       
-        print("VPNStatusDidChange: \(notification.vpnStatus)")
-        
-        guard state != notification.vpnStatus else {
-            return
-        }
-        
-        state = notification.vpnStatus
-        
-        if stateUI != state {
-            stateUI = state
-        }
-        
-        switch state {
-        case .connected:
-            configConnected()
-        case .disconnected:
-            if AppSetting.shared.isConnectedToVpn {
-                configStartConnectVPN()
-                return
-            }
-            
-            if isEnableReconect,
-               !connectOrDisconnectByUser {
-                startConnectVPN(asNewConnection: false)
-            } else {
-                configDisconected()
-            }
-        default:
-            break
-        }
-    }
-    
-    var onlyDisconnectWithoutEndsession = false
-    
-    func checkVPN() {
+    func checkVPN() async {
         if AppSetting.shared.isConnectedToVpn && Connectivity.sharedInstance.enableNetwork {
             if state == .disconnected {
                 configConnected()
             }
         } else {
             if state != .disconnected && state != .disconnecting {
-                configDisconnect()
+                await configDisconnect()
             }
         }
     }
     
-    func reconnectVPN() {
-        beginBackgroundTask()
-        needReconnect = true
-        configDisconnect()
+    func reconnectVPN() async {
+        AppSetting.shared.shouldReconnectVPNIfDropped = true
+        Task {
+            await NetworkManager.shared.configDisconnect()
+        }
     }
     
-    func checkVPNKill() {
-        reconnectVPN()
+    func checkVPNKill() async {
+        await reconnectVPN()
     }
     
     func networkConnectIsCurrentNetwork() -> Bool {
@@ -485,7 +498,6 @@ class NetworkManager: ObservableObject {
             .disposed(by: disposedBag)
     }
     
-    @objc
     func configDisconected() {
         DispatchQueue.main.async {
             self.state = .disconnected
@@ -495,31 +507,26 @@ class NetworkManager: ObservableObject {
             disconnectSession()
             onlyDisconnectWithoutEndsession = false
         }
-        if needReconnect {
-            needReconnect = false
-            DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
-                self.configStartConnectVPN()
-            }
-        }
         
         AppSetting.shared.lineNetwork = 0
         if connectOrDisconnectByUser {
             AppSetting.shared.currentSessionId = ""
-            AppSetting.shared.shouldReconnectVPNIfDropped = false
         }
         
         connectOrDisconnectByUser = false
         AppSetting.shared.saveTimeConnectedVPN = nil
+        AppSetting.shared.isConnectedToOurVPN = false
         endBackgroundTask()
     }
     
-    func configStartConnectVPN(_ asNewConnection: Bool = true) {
+    func configStartConnectVPN(_ asNewConnection: Bool = true) async {
         beginBackgroundTask()
         if state == .disconnected {
             numberReconnect = 0
             stateUI = .connecting
-            startConnectVPN(asNewConnection: asNewConnection)
+            await startConnectVPN(asNewConnection: asNewConnection)
         }
+        endBackgroundTask()
     }
     
     func disconnectSession() {
@@ -547,14 +554,12 @@ class NetworkManager: ObservableObject {
         state = .connected
         stateUI = .connected
         connectOrDisconnectByUser = false
-        AppSetting.shared.fetchListSession()
         endBackgroundTask()
         AppSetting.shared.shouldReconnectVPNIfDropped = true
+        AppSetting.shared.isConnectedToOurVPN = true
     }
     
-    var loadingRequestCertificate = false
-    
-    func getRequestCertificate(asNewConnection: Bool = true, completion: @escaping (Bool) -> Void) {
+    func getRequestCertificate(asNewConnection: Bool = true, completion: @escaping (Bool) -> Void) async {
         guard isEnableReconect else {
             completion(false)
             return
@@ -594,9 +599,11 @@ class NetworkManager: ObservableObject {
                                 return
                             }
                         } else if self.isEnableReconect {
-                            self.getRequestCertificate(asNewConnection: true) {
-                                completion($0)
-                                return
+                            Task {
+                                await self.getRequestCertificate(asNewConnection: true) {
+                                    completion($0)
+                                    return
+                                }
                             }
                         } else {
                             completion(false)
@@ -621,9 +628,11 @@ class NetworkManager: ObservableObject {
                                 return
                             }
                         } else if self.isEnableReconect {
-                            self.getRequestCertificate(asNewConnection: true) {
-                                completion($0)
-                                return
+                            Task {
+                                await self.getRequestCertificate(asNewConnection: true) {
+                                    completion($0)
+                                    return
+                                }
                             }
                         } else {
                             completion(false)
@@ -635,32 +644,38 @@ class NetworkManager: ObservableObject {
                     }
                 } else {
                     if self.isEnableReconect {
-                        self.getRequestCertificate(asNewConnection: true) {
-                            completion($0)
-                            return
+                        Task {
+                            await self.getRequestCertificate(asNewConnection: true) {
+                                completion($0)
+                                return
+                            }
                         }
                     } else {
-                        self.configDisconnect()
-                        if response.code == 503 {
-                            self.errorCallBack?(.authenNotPremium)
+                        Task {
+                            await self.configDisconnect()
+                            if response.code == 503 {
+                                self.errorCallBack?(.authenNotPremium)
+                                completion(false)
+                                return
+                            }
+                            let error = response.errors
+                            if !error.isEmpty, let message = error[0] as? String {
+                                self.errorCallBack?(.apiError(APIError.identified(message: message)))
+                            } else if !response.message.isEmpty {
+                                self.errorCallBack?(.apiError(APIError.identified(message: response.message)))
+                            }
                             completion(false)
                             return
                         }
-                        let error = response.errors
-                        if !error.isEmpty, let message = error[0] as? String {
-                            self.errorCallBack?(.apiError(APIError.identified(message: message)))
-                        } else if !response.message.isEmpty {
-                            self.errorCallBack?(.apiError(APIError.identified(message: response.message)))
-                        }
-                        completion(false)
-                        return
                     }
                 }
             } onFailure: { error in
                 if self.isEnableReconect {
-                    self.getRequestCertificate(asNewConnection: true) {
-                        completion($0)
-                        return
+                    Task {
+                        await self.getRequestCertificate(asNewConnection: true) {
+                            completion($0)
+                            return
+                        }
                     }
                 } else {
                     if let errorConfig = error as? APIError {
@@ -673,24 +688,28 @@ class NetworkManager: ObservableObject {
             .disposed(by: disposedBag)
     }
     
-    @objc func checkAutoconnect() {
+    func checkAutoconnect() {
         autoConnectType = ItemCell(type: AppSetting.shared.getAutoConnectProtocol()).type
     }
 
-    func checkIfVPNDropped() {
+    func checkIfVPNDropped() async {
         Task {
             beginBackgroundTask()
             print("CHECK IF VPN IS DROPPED")
-            if state == .connected, Connectivity.sharedInstance.enableNetwork {
+            if state == .connected {
                 let pingGoogleResult = await pingGoogleCheckInternet()
                 print("PING GOOGLE RESULT = \(pingGoogleResult)")
                 if !pingGoogleResult {
-                    reconnectVPN()
+                    AppSetting.shared.vpnDropped = true
+                    AppSetting.shared.shouldReconnectVPNIfDropped = true
+                    await configDisconnect()
                 } else {
+                    
                 }
             } else if AppSetting.shared.shouldReconnectVPNIfDropped {
-                configStartConnectVPN(false)
+                await configStartConnectVPN(true)
             }
+            endBackgroundTask()
         }
     }
 

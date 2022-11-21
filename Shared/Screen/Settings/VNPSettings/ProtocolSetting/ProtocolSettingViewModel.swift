@@ -33,7 +33,7 @@ class ProtocolSettingViewModel: ObservableObject {
 
         if NetworkManager.shared.selectConfig != exitItem.type {
             NetworkManager.shared.selectConfig = exitItem.type
-            NotificationCenter.default.post(name: Constant.NameNotification.changeProtocolSetting, object: nil)
+            NetworkManager.shared.changeProtocolSetting()
         }
     }
 }

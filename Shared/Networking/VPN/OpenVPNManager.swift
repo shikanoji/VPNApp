@@ -30,29 +30,27 @@ class OpenVPNManager: ObservableObject {
     
     static var shared = OpenVPNManager()
     
-    func connect() {
+    func connect() async {
         do {
             let string = (NetworkManager.shared.requestCertificate?.convertToString() ?? "") + getDNS()
             let config = try OpenVPN.ConfigurationParser.parsed(fromContents: string).configuration
             cfg = OpenVPN.ProviderConfiguration.init("openVPN", appGroup: appGroup, configuration: config)
             
-            Task {
-                var extra = NetworkExtensionExtra()
-                let rule = NEOnDemandRuleConnect()
-                
-                extra.onDemandRules = [rule]
-                
-                do {
-                    try await vpn.reconnect(
-                        tunnelIdentifier,
-                        configuration: cfg!,
-                        extra: extra,
-                        after: .seconds(2)
-                    )
-                } catch {
-                    print(error)
-                    postError()
-                }
+            var extra = NetworkExtensionExtra()
+            let rule = NEOnDemandRuleConnect()
+
+            extra.onDemandRules = [rule]
+
+            do {
+                try await vpn.reconnect(
+                    tunnelIdentifier,
+                    configuration: cfg!,
+                    extra: extra,
+                    after: .seconds(2)
+                )
+            } catch {
+                print(error)
+                postError()
             }
         } catch {
             print(error)
@@ -61,7 +59,7 @@ class OpenVPNManager: ObservableObject {
     }
     
     func postError() {
-        NotificationCenter.default.post(name: Constant.NameNotification.connectVPNError, object: nil)
+        NetworkManager.shared.connectVPNError()
     }
     
     func getDataCount() -> DataCount? {
@@ -74,10 +72,8 @@ class OpenVPNManager: ObservableObject {
         }
     }
     
-    func disconnect() {
-        Task {
-            await vpn.disconnect()
-        }
+    func disconnect() async {
+        await vpn.disconnect()
     }
     
     func getDNS() -> String {
