@@ -48,13 +48,13 @@ class NetworkManager: ObservableObject {
     
     static var shared = NetworkManager()
     
-    var stateUI: VPNStatus = .disconnected {
+    var stateUI: VPNStatus = AppSetting.shared.isConnectedToVpn ? .connected : .disconnected {
         didSet {
             stateUICallBack?(stateUI)
         }
     }
     
-    var state: VPNStatus = .disconnected {
+    var state: VPNStatus = AppSetting.shared.isConnectedToVpn ? .connected : .disconnected {
         didSet {
             stateCallBack?(state)
         }
@@ -689,6 +689,7 @@ class NetworkManager: ObservableObject {
                     configDisconnect()
                     configStartConnectVPN(true)
                 } else {
+                    
                 }
             } else if AppSetting.shared.shouldReconnectVPNIfDropped {
                 configStartConnectVPN(true)

@@ -72,7 +72,6 @@ class ContentViewModel: ObservableObject {
         }
         
         AppSettingIP.shared.startGetIP()
-        NetworkManager.shared.checkVPN()
     }
     
     @objc func sessionExpided() {
