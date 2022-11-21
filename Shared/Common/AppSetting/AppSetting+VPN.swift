@@ -241,6 +241,10 @@ extension AppSetting {
             UserDefaults.standard.setValue(newValue, forKey: AppKeys.isConnectedToOurVPN.rawValue)
         }
     }
+    
+    var checkStateConnectedVPN: Bool {
+        return isConnectedToOurVPN && isConnectedToVpn
+    }
 
     var isConnectedToVpn: Bool {
         if let settings = CFNetworkCopySystemProxySettings()?.takeRetainedValue() as? Dictionary<String, Any>,
