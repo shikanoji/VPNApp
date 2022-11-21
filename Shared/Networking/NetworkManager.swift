@@ -50,13 +50,13 @@ class NetworkManager: ObservableObject {
     
     static var shared = NetworkManager()
     
-    var stateUI: VPNStatus = AppSetting.shared.isConnectedToVpn ? .connected : .disconnected {
+    var stateUI: VPNStatus = AppSetting.shared.isConnectedToOurVPN ? .connected : .disconnected {
         didSet {
             stateUICallBack?(stateUI)
         }
     }
     
-    var state: VPNStatus = AppSetting.shared.isConnectedToVpn ? .connected : .disconnected {
+    var state: VPNStatus = AppSetting.shared.isConnectedToOurVPN ? .connected : .disconnected {
         didSet {
             stateCallBack?(state)
         }
@@ -511,6 +511,7 @@ class NetworkManager: ObservableObject {
         
         connectOrDisconnectByUser = false
         AppSetting.shared.saveTimeConnectedVPN = nil
+        AppSetting.shared.isConnectedToOurVPN = false
         endBackgroundTask()
     }
     
@@ -551,6 +552,7 @@ class NetworkManager: ObservableObject {
         connectOrDisconnectByUser = false
         endBackgroundTask()
         AppSetting.shared.shouldReconnectVPNIfDropped = true
+        AppSetting.shared.isConnectedToOurVPN = true
     }
     
     func getRequestCertificate(asNewConnection: Bool = true, completion: @escaping (Bool) -> Void) async {

@@ -233,6 +233,15 @@ extension AppSetting {
         }
     }
 
+    var isConnectedToOurVPN: Bool {
+        get {
+            UserDefaults.standard.bool(forKey: AppKeys.isConnectedToOurVPN.rawValue)
+        }
+        set {
+            UserDefaults.standard.setValue(newValue, forKey: AppKeys.isConnectedToOurVPN.rawValue)
+        }
+    }
+
     var isConnectedToVpn: Bool {
         if let settings = CFNetworkCopySystemProxySettings()?.takeRetainedValue() as? Dictionary<String, Any>,
            let scopes = settings["__SCOPED__"] as? [String:Any] {
