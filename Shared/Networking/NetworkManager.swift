@@ -704,10 +704,13 @@ class NetworkManager: ObservableObject {
                     AppSetting.shared.shouldReconnectVPNIfDropped = true
                     await configDisconnect()
                 } else {
-                    
+                    NotificationCenter.default.post(name: Constant.NameNotification.restoreVPNSuccessfully, object: nil)
                 }
             } else if AppSetting.shared.shouldReconnectVPNIfDropped {
+                AppSetting.shared.vpnDropped = true
                 await configStartConnectVPN(true)
+            } else {
+                NotificationCenter.default.post(name: Constant.NameNotification.restoreVPNSuccessfully, object: nil)
             }
             endBackgroundTask()
         }
