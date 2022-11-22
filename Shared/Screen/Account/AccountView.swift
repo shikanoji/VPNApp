@@ -173,8 +173,7 @@ struct AccountView: View {
                     showAccount: $showAccount,
                     showTotalDevice: $showTotalDevice,
                     statusConnect: $statusConnect,
-                    viewModel: SessionVPNViewModel(),
-                    shouldHideSessionList: .constant(false)),
+                    viewModel: SessionVPNViewModel()),
                 isActive: $showTotalDevice) { }
             
             NavigationLink(destination:
@@ -243,7 +242,9 @@ struct AccountView: View {
                 }, confirm: {
                     viewModel.showLogoutConfirmationPad = false
                     viewModel.showProgressView = true
-                    viewModel.logout()
+                    Task {
+                        await viewModel.logout()
+                    }
                 })
             })
             .sheet(isPresented: $viewModel.showLogoutConfirmationPhone, content: {
@@ -252,7 +253,9 @@ struct AccountView: View {
                 }, confirm: {
                     viewModel.showLogoutConfirmationPhone = false
                     viewModel.showProgressView = true
-                    viewModel.logout()
+                    Task {
+                        await viewModel.logout()
+                    }
                 })
             })
         }

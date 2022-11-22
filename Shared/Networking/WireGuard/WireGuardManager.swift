@@ -9,6 +9,7 @@ import Foundation
 import UIKit
 import TunnelKitWireGuard
 import TunnelKit
+import NetworkExtension
 
 private let appGroup = "group.sysvpn.client.ios"
 
@@ -27,23 +28,24 @@ class WireGuardManager: ObservableObject {
     static var shared = WireGuardManager()
     private var cfg: WireGuard.ProviderConfiguration?
     
-    func connect() {
+    func connect() async {
         if let obtainCer = NetworkManager.shared.obtainCertificate,
            let cfgParase = configuretionParaseFromContents(obtainCer) {
             cfg = cfgParase
             
-            Task {
-                do {
-                    try await vpn.reconnect(
-                        tunnelIdentifier,
-                        configuration: cfgParase,
-                        extra: nil,
-                        after: .seconds(2)
-                    )
-                } catch {
-                    print(error)
-                    postError()
-                }
+            var extra = NetworkExtensionExtra()
+            extra.onDemandRules = []
+
+            do {
+                try await vpn.reconnect(
+                    tunnelIdentifier,
+                    configuration: cfgParase,
+                    extra: extra,
+                    after: .seconds(2)
+                )
+            } catch {
+                print(error)
+                postError()
             }
         } else {
             postError()
@@ -58,14 +60,12 @@ class WireGuardManager: ObservableObject {
     
     func postError() {
         DispatchQueue.main.async {
-            NotificationCenter.default.post(name: Constant.NameNotification.connectVPNError, object: nil)
+            NetworkManager.shared.connectVPNError()
         }
     }
     
-    func disconnect() {
-        Task {
-            await vpn.disconnect()
-        }
+    func disconnect() async {
+        await vpn.disconnect()
     }
     
     func configuretionParaseFromContents(_ obtainCer: ObtainCertificateModel) -> WireGuard.ProviderConfiguration? {

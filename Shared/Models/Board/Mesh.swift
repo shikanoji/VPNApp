@@ -51,10 +51,12 @@ class Mesh: ObservableObject {
                     cityNodes: [Node] = [],
                     staticNodes: [StaticServer] = [],
                     clientCountryNode: Node? = nil) {
-        self.countryNodes = countryNodes
-        self.cityNodes = cityNodes
-        self.staticNodes = staticNodes
-        self.clientCountryNode = clientCountryNode
+        DispatchQueue.main.async {
+            self.countryNodes = countryNodes
+            self.cityNodes = cityNodes
+            self.staticNodes = staticNodes
+            self.clientCountryNode = clientCountryNode
+        }
     }
     
     func updateStaticNodes(_ staticNodes: [StaticServer] = []) {

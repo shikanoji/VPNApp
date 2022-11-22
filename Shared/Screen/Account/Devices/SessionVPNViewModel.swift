@@ -63,10 +63,13 @@ class SessionVPNViewModel: ObservableObject {
             return
         }
         if device.id == AppSetting.shared.currentSessionId {
-            NetworkManager.shared.connectOrDisconnectByUser = true
-            NotificationCenter.default.post(name: Constant.NameNotification.disconnectCurrentSession, object: nil)
+
             AppSetting.shared.selectAutoConnect = ItemCellType.off.rawValue
             NetworkManager.shared.checkAutoconnect()
+
+            Task {
+                await NetworkManager.shared.disconnectCurrentSession()
+            }
         }
         showProgressView = true
         ServiceManager.shared.disconnectSession(sessionId: device.id, terminal: true)

@@ -15,11 +15,7 @@ struct MapView: View {
             if mesh.showCityNodes != showCity {
                 mesh.showCityNodes = showCity
                 
-                showNodeMapView = false
-                
-                DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
-                    self.showNodeMapView = true
-                }
+                showNodeMapView.toggle()
             }
         }
     }
@@ -61,11 +57,11 @@ struct MapView: View {
 
                 NodeMapView(scale: $currentAmount,
                             statusConnect: $statusConnect)
-                    .opacity(showNodeMapView ? 1 : 0)
+                    .transition(.opacity)
             }
             .padding(.bottom, -safeAreaInsets.bottom)
             .padding(.top, -safeAreaInsets.top)
-        }, location: $location, enableUpdateMap: enableUpdateMap, updateZoomScale: { value in
+        }, location: $location, enableUpdateMap: enableUpdateMap, bottom: safeAreaInsets.bottom, updateZoomScale: { value in
             DispatchQueue.main.async {
                 self.enableUpdateMap = false
                 self.currentAmount = value
@@ -148,14 +144,14 @@ struct ZoomableScrollView<Content: View>: UIViewRepresentable {
     
     @Binding var location: CGPoint
     
-    @Environment(\.safeAreaInsets) private var safeAreaInsets
-    var padding: CGFloat = 0
+    var padding: CGFloat
     
     var enableUpdateMap = true
     
     init(@ViewBuilder content: () -> Content,
          location: Binding<CGPoint>,
          enableUpdateMap: Bool,
+         bottom: CGFloat,
          updateZoomScale: @escaping (Double)-> Void = { _ in }
     ) {
         self.updateZoomScale = updateZoomScale
@@ -163,7 +159,7 @@ struct ZoomableScrollView<Content: View>: UIViewRepresentable {
         _location = location
         self.enableUpdateMap = enableUpdateMap
         scrollView.decelerationRate = UIScrollView.DecelerationRate(rawValue: 4)
-        padding = safeAreaInsets.bottom
+        padding = bottom
     }
     
     func makeUIView(context: Context) -> UIScrollView {

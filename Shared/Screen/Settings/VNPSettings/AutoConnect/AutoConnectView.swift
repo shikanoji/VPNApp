@@ -11,7 +11,7 @@ import TunnelKitManager
 struct AutoConnectView: View {
     @Binding var showSettings: Bool
     @Binding var showVPNSetting: Bool
-    @Binding var shouldHideAutoConnect: Bool
+    @Binding var showAutoConnectView: Bool
 
     @Binding var statusConnect: VPNStatus
     @State var showAutoConnectDestinationSelection: Bool = false
@@ -29,10 +29,10 @@ struct AutoConnectView: View {
                     currentTitle: "",
                     tapLeftButton: {
                         presentationMode.wrappedValue.dismiss()
-                        shouldHideAutoConnect = true
+                        showAutoConnectView = false
                     }, tapRightButton: {
                         UINavigationBar.setAnimationsEnabled(false)
-                        shouldHideAutoConnect = true
+                        showAutoConnectView = false
                         showSettings = false
                         DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
                             UINavigationBar.setAnimationsEnabled(true)
@@ -77,7 +77,7 @@ struct AutoConnectView: View {
                 .sheet(isPresented: $showAutoConnectDestinationSelection) {
                     AutoConnectDestinationSelectView(showSettings: $showSettings,
                                                      showVPNSetting: $showVPNSetting,
-                                                     shouldHideAutoConnect: $shouldHideAutoConnect,
+                                                     showAutoConnectView: $showAutoConnectView,
                                                      statusConnect: $statusConnect,
                                                      showAutoConnectDestinationSelection: $showAutoConnectDestinationSelection,
                                                      viewModel: AutoConnectDestinationSelectViewModel())

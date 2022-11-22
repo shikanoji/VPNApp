@@ -8,6 +8,15 @@
 import Foundation
 
 extension AppSetting {
+    var shouldReconnectVPNIfDropped: Bool {
+        get {
+            return UserDefaults.standard.bool(forKey: AppKeys.shouldReconnectVPNIfDropped.rawValue)
+        }
+        set {
+            UserDefaults.standard.setValue(newValue, forKey: AppKeys.shouldReconnectVPNIfDropped.rawValue)
+        }
+    }
+
     var fcmToken: String {
         get {
             return UserDefaults.standard.string(forKey: AppKeys.fcmToken.rawValue) ?? ""
@@ -221,6 +230,28 @@ extension AppSetting {
         }
         set {
             UserDefaults.standard.setValue(newValue, forKey: AppKeys.saveTimeConnectedVPN.rawValue)
+        }
+    }
+
+    var isConnectedToOurVPN: Bool {
+        get {
+            UserDefaults.standard.bool(forKey: AppKeys.isConnectedToOurVPN.rawValue)
+        }
+        set {
+            UserDefaults.standard.setValue(newValue, forKey: AppKeys.isConnectedToOurVPN.rawValue)
+        }
+    }
+    
+    var checkStateConnectedVPN: Bool {
+        return isConnectedToOurVPN && isConnectedToVpn
+    }
+
+    var vpnDropped: Bool {
+        get {
+            UserDefaults.standard.bool(forKey: AppKeys.vpnDropped.rawValue)
+        }
+        set {
+            UserDefaults.standard.setValue(newValue, forKey: AppKeys.vpnDropped.rawValue)
         }
     }
 

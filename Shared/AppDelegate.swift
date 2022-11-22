@@ -10,9 +10,12 @@ import Firebase
 import FirebaseAnalytics
 import FirebaseMessaging
 import GoogleSignIn
+import BackgroundTasks
 
 class AppDelegate: NSObject, UIApplicationDelegate, MessagingDelegate, UNUserNotificationCenterDelegate {
+    static private(set) var shared: AppDelegate! = nil
     static var orientationLock = UIInterfaceOrientationMask.portrait
+    private var currentBackGroundTask: BGProcessingTask?
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey : Any]? = nil) -> Bool {
         var filePath:String!
 #if DEBUG
@@ -30,6 +33,16 @@ class AppDelegate: NSObject, UIApplicationDelegate, MessagingDelegate, UNUserNot
         Messaging.messaging().delegate = self
         registerForPushNotifications()
         AppSettingIP.shared.resetIP()
+        BGTaskScheduler.shared.register(forTaskWithIdentifier: "sysvpn.client.ios.scheduled_refresh", using: nil) { task in
+            self.handleAppRefresh(task: task as! BGProcessingTask)
+        }
+        AppDelegate.shared = self
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(endBGTaskOnSuccessfullyRestoreVPN),
+            name: Constant.NameNotification.restoreVPNSuccessfully,
+            object: nil
+        )
         return true
     }
     
@@ -69,13 +82,13 @@ class AppDelegate: NSObject, UIApplicationDelegate, MessagingDelegate, UNUserNot
         _ application: UIApplication, didReceiveRemoteNotification userInfo: [AnyHashable: Any],
         fetchCompletionHandler completionHandler: @escaping (UIBackgroundFetchResult) -> Void) {
              
-        if let userInfoDict = userInfo as? [String: Any] {
-            if let needReconnect = userInfoDict["needReconnect"] as? String {
-                if needReconnect == "true" {
-                    NetworkManager.shared.checkVPNKill()
-                }
-            }
-        }
+//        if let userInfoDict = userInfo as? [String: Any] {
+//            if let needReconnect = userInfoDict["needReconnect"] as? String {
+//                if needReconnect == "true" {
+//                    NetworkManager.shared.checkVPNKill()
+//                }
+//            }
+//        }
             
         completionHandler(.newData)
     }
@@ -96,5 +109,34 @@ class AppDelegate: NSObject, UIApplicationDelegate, MessagingDelegate, UNUserNot
                      options: [UIApplication.OpenURLOptionsKey: Any])
         -> Bool {
         return GIDSignIn.sharedInstance.handle(url)
+    }
+
+    func scheduleAppRefresh() {
+        print("SCHEDULING APP REFRESH")
+        let request = BGProcessingTaskRequest(identifier: "sysvpn.client.ios.scheduled_refresh")
+        request.earliestBeginDate = Date(timeIntervalSinceNow: 1 * 60)
+
+        do {
+            try BGTaskScheduler.shared.submit(request)
+        } catch {
+            print("Could not schedule app refresh: \(error)")
+        }
+    }
+
+    func handleAppRefresh(task: BGProcessingTask) {
+        Task {
+            print("REFRESHING APP")
+            scheduleAppRefresh()
+            currentBackGroundTask = task
+            await Connectivity.sharedInstance.checkIfVPNDropped()
+            currentBackGroundTask = task
+        }
+    }
+
+    @objc func endBGTaskOnSuccessfullyRestoreVPN() {
+        if currentBackGroundTask != nil {
+            currentBackGroundTask?.setTaskCompleted(success: true)
+            currentBackGroundTask = nil
+        }
     }
 }
