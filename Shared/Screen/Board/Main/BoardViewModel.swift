@@ -238,7 +238,7 @@ class BoardViewModel: ObservableObject {
     }
     
     func configDataLocal() {
-        if AppSetting.shared.isConnectedToVpn || !AppSetting.shared.needLoadApiMap || !Connectivity.sharedInstance.enableNetwork {
+        if AppSetting.shared.isConnectedToVpn {
             getDataFromLocal()
         }
     }
@@ -265,7 +265,7 @@ class BoardViewModel: ObservableObject {
     }
     
     func getCountryList(completion: @escaping () -> Void) {
-        guard (Connectivity.sharedInstance.enableNetwork || Connectivity.isConnectedToInternet) else {
+        guard (Connectivity.sharedInstance.enableNetwork) else {
             completion()
             return
         }
@@ -284,7 +284,7 @@ class BoardViewModel: ObservableObject {
     }
     
     func getMultihopList(completion: @escaping () -> Void) {
-        guard (Connectivity.sharedInstance.enableNetwork || Connectivity.isConnectedToInternet) else {
+        guard (Connectivity.sharedInstance.enableNetwork) else {
             completion()
             return
         }

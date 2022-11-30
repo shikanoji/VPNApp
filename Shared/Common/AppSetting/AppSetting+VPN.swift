@@ -108,8 +108,6 @@ extension AppSetting {
         }
     }
 
-
-
     var vpnDropped: Bool {
         get {
             UserDefaults.standard.bool(forKey: AppKeys.vpnDropped.rawValue)
@@ -178,17 +176,15 @@ extension AppSetting {
             AppSetting.shared.forceUpdateVersion = _forceUpdateVersions
         }
 
-        if NetworkManager.shared.selectConfig == .recommended {
-            if let vpnSetting = result.appSettings?.vpn {
-                if vpnSetting.defaultTech == "wg" {
-                    NetworkManager.shared.recommendConfig = .wireGuard
-                } else if vpnSetting.defaultTech == "openVPN" {
-                    if let defaultProtocol = vpnSetting.defaultProtocol {
-                        if defaultProtocol == "udp" {
-                            NetworkManager.shared.recommendConfig = .openVPNUDP
-                        } else {
-                            NetworkManager.shared.recommendConfig = .openVPNTCP
-                        }
+        if let vpnSetting = result.appSettings?.vpn {
+            if vpnSetting.defaultTech == "wg" {
+                NetworkManager.shared.recommendConfig = .wireGuard
+            } else if vpnSetting.defaultTech == "openVPN" {
+                if let defaultProtocol = vpnSetting.defaultProtocol {
+                    if defaultProtocol == "udp" {
+                        NetworkManager.shared.recommendConfig = .openVPNUDP
+                    } else {
+                        NetworkManager.shared.recommendConfig = .openVPNTCP
                     }
                 }
             }
@@ -196,12 +192,12 @@ extension AppSetting {
     }
 
     func prepareForIpInfo(completion: @escaping (String?) -> Void) {
-        if AppSetting.shared.ip == "" {
-            AppSetting.shared.getIpInfo { message in
-                completion(message)
-            }
+//        if AppSetting.shared.ip == "" {
+        AppSetting.shared.getIpInfo { message in
+            completion(message)
         }
-        completion(nil)
+//        }
+//        completion(nil)
     }
 
     func fetchListSession() {

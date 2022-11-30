@@ -9,6 +9,15 @@ import Foundation
 import SwiftDate
 
 extension AppSetting {
+    var changeDomain: Bool {
+        get {
+            return UserDefaults.standard.bool(forKey: AppKeys.changeDomain.rawValue)
+        }
+        set {
+            UserDefaults.standard.setValue(newValue, forKey: AppKeys.changeDomain.rawValue)
+        }
+    }
+
     /// Auth Settings
     ///
     var email: String {

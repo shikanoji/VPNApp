@@ -9,9 +9,11 @@ import Foundation
 extension Constant {
     struct api {
 #if DEBUG
-        static let root = "https://api.sysvpnconnect.com"
+        static let originDomain = "https://api.sysvpnconnect.com"
+        static var root = "https://api.sysvpnconnect.com"
 #else
-        static let root = "https://prod.sysvpnconnect.com"
+        static let originDomain = "https://prod.sysvpnconnect.com"
+        static var root = "https://prod.sysvpnconnect.com"
 #endif
         static let ipInfoOptional = "https://ipinfo.io/json"
         static let termsAndConditionsURL = "https://sysvpn.com/webview/terms-of-service"
@@ -42,4 +44,51 @@ extension Constant {
             static let requestDeleteAccount = "/shared/module_user/v1/request-delete-account"
         }
     }
+}
+
+extension Constant {
+    static let domainList = [
+        "https://prod.sysvpnconnect.com",
+        "https://armoron.net",
+        "https://freedominternetwith.me"
+    ]
+
+    static var usedDomainList: [String] = [
+        Constant.api.originDomain
+    ]
+
+    static func resetDomain() {
+        usedDomainList = [
+            Constant.api.originDomain
+        ]
+
+        Constant.api.root = Constant.api.originDomain
+        AppSetting.shared.changeDomain = false
+    }
+
+#if DEBUG
+    static func changeDomain() {
+
+    }
+#else
+    static func changeDomain() {
+        let restDomain = Constant.domainList.filter {
+            !Constant.usedDomainList.contains($0)
+        }
+
+        if restDomain.isEmpty {
+            if let updateRoot = Constant.domainList.filter({
+                $0 != Constant.api.root
+            }).first {
+                Constant.usedDomainList = [updateRoot]
+                Constant.api.root = updateRoot
+            }
+        } else {
+            if let updateRoot = restDomain.first, !Constant.usedDomainList.contains(updateRoot) {
+                Constant.usedDomainList.append(updateRoot)
+                Constant.api.root = updateRoot
+            }
+        }
+    }
+#endif
 }

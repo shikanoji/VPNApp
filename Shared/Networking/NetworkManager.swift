@@ -447,6 +447,7 @@ class NetworkManager {
                 AppSetting.shared.saveTimeConnectedVPN = nil
                 await configStartConnectVPN()
             case .connecting, .disconnecting:
+                configDisconected()
                 await configDisconnect()
             default:
                 await configDisconnect()

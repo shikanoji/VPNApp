@@ -30,26 +30,6 @@ class ContentViewModel: ObservableObject {
         return AppSetting.shared.accessToken != ""
     }
     
-    /// api get ip info in app
-    func getIpInfo(completion: @escaping () -> Void) {
-        ServiceManager.shared.getAppSettings()
-            .subscribe(onSuccess: { [self] response in
-                if let result = response.result {
-                    AppSetting.shared.configAppSettings(result)
-                    completion()
-                } else {
-                    self.getIpInfoOptional { _ in
-                        completion()
-                    }
-                }
-            }, onFailure: { error in
-                self.getIpInfoOptional { _ in
-                    completion()
-                }
-            })
-            .disposed(by: disposedBag)
-    }
-    
     init() {
         NotificationCenter.default.addObserver(
             self,
@@ -75,9 +55,7 @@ class ContentViewModel: ObservableObject {
     }
     
     @objc func sessionExpided() {
-        if !tokenExit {
-            showSessionExpired = true
-        }
+        showSessionExpired = true
     }
     
     func configState() {
@@ -112,7 +90,7 @@ class ContentViewModel: ObservableObject {
     }
     
     func getCountryList(completion: @escaping () -> Void) {
-        guard (Connectivity.sharedInstance.enableNetwork || Connectivity.isConnectedToInternet) else {
+        guard (Connectivity.sharedInstance.enableNetwork) else {
             completion()
             return
         }
@@ -130,7 +108,7 @@ class ContentViewModel: ObservableObject {
     }
     
     func getMultihopList(completion: @escaping () -> Void) {
-        guard (Connectivity.sharedInstance.enableNetwork || Connectivity.isConnectedToInternet) else {
+        guard (Connectivity.sharedInstance.enableNetwork) else {
             completion()
             return
         }
@@ -145,25 +123,5 @@ class ContentViewModel: ObservableObject {
                 completion()
             }
             .disposed(by: disposedBag)
-    }
-    
-    /// api get ip info optional
-    func getIpInfoOptional(completion: @escaping (()) -> Void) {
-        ServiceManager.shared.getIpInfoOptional()
-            .subscribe(onSuccess: { [self] response in
-                configIpInfo(response)
-                completion(())
-            }, onFailure: { error in
-                completion(())
-            })
-            .disposed(by: disposedBag)
-    }
-    
-    func configIpInfo(_ ipInfo: IpInfoResultModel) {
-        AppSetting.shared.ip = ipInfo.ip
-        AppSetting.shared.countryCode = ipInfo.countryCode
-        AppSetting.shared.countryName = ipInfo.countryName
-        AppSetting.shared.cityName = ipInfo.city
-        AppSetting.shared.lastChange = ipInfo.lastChange ?? 0
     }
 }
