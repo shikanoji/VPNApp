@@ -11,6 +11,7 @@ import RxSwift
 import TunnelKitManager
 import TunnelKitCore
 import UIKit
+import Combine
 
 extension VPNStatus {
     var title: String {
@@ -87,6 +88,8 @@ class BoardViewModel: ObservableObject {
     
     @Published var showBoardListIphone = false
     @Published var showBoardListIpad = false
+    private var stateUIModerator = CurrentValueSubject<VPNStatus, Never>(.disconnected)
+    private var cancellables = Set<AnyCancellable>()
     
     @Published var selectedTab: StateTab = .location {
         didSet {
@@ -185,10 +188,17 @@ class BoardViewModel: ObservableObject {
         
         assignJailBreakCheckType(type: .readAndWriteFiles)
         AppSetting.shared.fetchListSession()
+        stateUIModerator
+            .throttle(for: 0.3, scheduler: DispatchQueue.main, latest: true)
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] vpnStatus in
+                self?.stateUI = vpnStatus
+            }
+            .store(in: &cancellables)
 
         NetworkManager.shared.stateUICallBack = { status -> () in
-            DispatchQueue.main.async {
-                self.stateUI = status
+            DispatchQueue.main.async { [weak self] in
+                self?.stateUIModerator.send(status)
             }
         }
 

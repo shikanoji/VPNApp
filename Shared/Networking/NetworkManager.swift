@@ -317,10 +317,19 @@ class NetworkManager: ObservableObject {
                 NotificationCenter.default.post(name: Constant.NameNotification.restoreVPNSuccessfully, object: nil)
             }
         case .disconnected:
-            Task {
-                configDisconected()
-                if AppSetting.shared.shouldReconnectVPNIfDropped {
-                    await configStartConnectVPN(true)
+            configDisconected()
+            if AppSetting.shared.shouldReconnectVPNIfDropped {
+                if [.openVPNTCP, .openVPNUDP].contains(getValueConfigProtocol) {
+                    DispatchQueue.global(qos: .background).asyncAfter(deadline: .now() + 1) { [weak self] in
+                        guard let self =  self else { return }
+                        Task {
+                            await self.configStartConnectVPN(true)
+                        }
+                    }
+                } else {
+                    Task {
+                        await configStartConnectVPN(true)
+                    }
                 }
             }
         default:
