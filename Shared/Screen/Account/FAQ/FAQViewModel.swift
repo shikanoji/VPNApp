@@ -13,7 +13,7 @@ class FAQViewModel: ObservableObject {
     @Published var showAlert: Bool = false
     @Published var showProgressView: Bool = false
     
-    var error: APIError?
+    var error: AppAPIError?
     let disposedBag = DisposeBag()
     
     init() {
@@ -41,16 +41,16 @@ class FAQViewModel: ObservableObject {
                 } else {
                     let error = response.errors
                     if !error.isEmpty, let message = error[0] as? String {
-                        self.error = APIError.identified(message: message)
+                        self.error = AppAPIError.identified(message: message)
                         self.showAlert = true
                     } else if !response.message.isEmpty {
-                        self.error = APIError.identified(message: response.message)
+                        self.error = AppAPIError.identified(message: response.message)
                         self.showAlert = true
                     }
                 }
             } onFailure: { error in
                 self.showProgressView = false
-                self.error = APIError.identified(message: error.localizedDescription)
+                self.error = AppAPIError.identified(message: error.localizedDescription)
                 self.showAlert = true
             }
             .disposed(by: disposedBag)

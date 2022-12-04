@@ -19,7 +19,7 @@ class SessionVPNViewModel: ObservableObject {
     @Published var disconnectCurrentSession: Bool = false
     var sessionSelect: SessionVPN?
 
-    var error: APIError?
+    var error: AppAPIError?
     var limit = AppSetting.shared.maxNumberDevices
 
     let disposedBag = DisposeBag()
@@ -41,15 +41,15 @@ class SessionVPNViewModel: ObservableObject {
                 } else {
                     let error = response.errors
                     if !error.isEmpty, let message = error[0] as? String {
-                        strongSelf.error = APIError.identified(message: message)
+                        strongSelf.error = AppAPIError.identified(message: message)
                         strongSelf.showAlert = true
                     } else if !response.message.isEmpty {
-                        strongSelf.error = APIError.identified(message: response.message)
+                        strongSelf.error = AppAPIError.identified(message: response.message)
                         strongSelf.showAlert = true
                     }
                 }
             }, onFailure: { error in
-                if let errorAPI = error as? APIError {
+                if let errorAPI = error as? AppAPIError {
                     self.error = errorAPI
                 }
                 self.showProgressView = false
@@ -85,15 +85,15 @@ class SessionVPNViewModel: ObservableObject {
                 } else {
                     let error = response.errors
                     if !error.isEmpty, let message = error[0] as? String {
-                        self.error = APIError.identified(message: message)
+                        self.error = AppAPIError.identified(message: message)
                         self.showAlert = true
                     } else if !response.message.isEmpty {
-                        self.error = APIError.identified(message: response.message)
+                        self.error = AppAPIError.identified(message: response.message)
                         self.showAlert = true
                     }
                 }
             } onFailure: { error in
-                if let errorAPI = error as? APIError {
+                if let errorAPI = error as? AppAPIError {
                     self.error = errorAPI
                     self.showAlert = true
                 }

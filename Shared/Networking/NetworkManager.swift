@@ -39,7 +39,7 @@ extension ItemCellType {
 enum ErrorBoardView {
     case fullSession
     case sessionTerminate
-    case apiError(APIError)
+    case apiError(AppAPIError)
     case autoConnecting
     case authenNotPremium
 }
@@ -346,7 +346,7 @@ class NetworkManager: ObservableObject {
         loadingRequestCertificate = false
         state = .disconnected
         stateUI = .disconnected
-        errorCallBack?(.apiError(APIError.identified()))
+        errorCallBack?(.apiError(AppAPIError.identified()))
     }
     
     func logoutNeedDisconnect() {
@@ -669,9 +669,9 @@ class NetworkManager: ObservableObject {
                             }
                             let error = response.errors
                             if !error.isEmpty, let message = error[0] as? String {
-                                self.errorCallBack?(.apiError(APIError.identified(message: message)))
+                                self.errorCallBack?(.apiError(AppAPIError.identified(message: message)))
                             } else if !response.message.isEmpty {
-                                self.errorCallBack?(.apiError(APIError.identified(message: response.message)))
+                                self.errorCallBack?(.apiError(AppAPIError.identified(message: response.message)))
                             }
                             completion(false)
                             return
@@ -687,7 +687,7 @@ class NetworkManager: ObservableObject {
                         }
                     }
                 } else {
-                    if let errorConfig = error as? APIError {
+                    if let errorConfig = error as? AppAPIError {
                         self.errorCallBack?(.apiError(errorConfig))
                     }
                     completion(false)

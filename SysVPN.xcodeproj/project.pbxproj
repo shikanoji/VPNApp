@@ -81,6 +81,21 @@
 		AC91BDEF287C5C3A002776E6 /* AccountLimitedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC91BDEE287C5C3A002776E6 /* AccountLimitedView.swift */; };
 		AC99848B288948A90038F216 /* EmbedWebView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC99848A288948A90038F216 /* EmbedWebView.swift */; };
 		AC99848F28895F230038F216 /* UIDeviceExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC99848E28895F230038F216 /* UIDeviceExtension.swift */; };
+		AC9A4617293C9EEB005690DE /* NWTCPConnection+DataTask.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC9A4616293C9EEB005690DE /* NWTCPConnection+DataTask.swift */; };
+		AC9A4618293C9EEB005690DE /* NWTCPConnection+DataTask.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC9A4616293C9EEB005690DE /* NWTCPConnection+DataTask.swift */; };
+		AC9A4619293C9EEB005690DE /* NWTCPConnection+DataTask.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC9A4616293C9EEB005690DE /* NWTCPConnection+DataTask.swift */; };
+		AC9A461B293C9F22005690DE /* URLRequest+HTTP.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC9A461A293C9F22005690DE /* URLRequest+HTTP.swift */; };
+		AC9A461C293C9F22005690DE /* URLRequest+HTTP.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC9A461A293C9F22005690DE /* URLRequest+HTTP.swift */; };
+		AC9A461D293C9F22005690DE /* URLRequest+HTTP.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC9A461A293C9F22005690DE /* URLRequest+HTTP.swift */; };
+		AC9A461F293C9F9A005690DE /* APIRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC9A461E293C9F9A005690DE /* APIRequest.swift */; };
+		AC9A4620293C9F9A005690DE /* APIRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC9A461E293C9F9A005690DE /* APIRequest.swift */; };
+		AC9A4621293C9F9A005690DE /* APIRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC9A461E293C9F9A005690DE /* APIRequest.swift */; };
+		AC9A4623293C9FF8005690DE /* TimerFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC9A4622293C9FF8005690DE /* TimerFactory.swift */; };
+		AC9A4624293C9FF8005690DE /* TimerFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC9A4622293C9FF8005690DE /* TimerFactory.swift */; };
+		AC9A4625293C9FF8005690DE /* TimerFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC9A4622293C9FF8005690DE /* TimerFactory.swift */; };
+		AC9A4627293CA031005690DE /* JSONKeyCoder.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC9A4626293CA031005690DE /* JSONKeyCoder.swift */; };
+		AC9A4628293CA031005690DE /* JSONKeyCoder.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC9A4626293CA031005690DE /* JSONKeyCoder.swift */; };
+		AC9A4629293CA031005690DE /* JSONKeyCoder.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC9A4626293CA031005690DE /* JSONKeyCoder.swift */; };
 		AC9A8F5B27D6236900FACD7D /* KeychainService.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC9A8F5A27D6236900FACD7D /* KeychainService.swift */; };
 		AC9A8F5D27D655C700FACD7D /* Constant+KeychainService.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC9A8F5C27D655C700FACD7D /* Constant+KeychainService.swift */; };
 		ACB6DDD92818F23E007DA359 /* EmptyResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACB6DDD82818F23E007DA359 /* EmptyResult.swift */; };
@@ -353,6 +368,11 @@
 		AC91BDEE287C5C3A002776E6 /* AccountLimitedView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountLimitedView.swift; sourceTree = "<group>"; };
 		AC99848A288948A90038F216 /* EmbedWebView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmbedWebView.swift; sourceTree = "<group>"; };
 		AC99848E28895F230038F216 /* UIDeviceExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIDeviceExtension.swift; sourceTree = "<group>"; };
+		AC9A4616293C9EEB005690DE /* NWTCPConnection+DataTask.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NWTCPConnection+DataTask.swift"; sourceTree = "<group>"; };
+		AC9A461A293C9F22005690DE /* URLRequest+HTTP.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "URLRequest+HTTP.swift"; sourceTree = "<group>"; };
+		AC9A461E293C9F9A005690DE /* APIRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = APIRequest.swift; sourceTree = "<group>"; };
+		AC9A4622293C9FF8005690DE /* TimerFactory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TimerFactory.swift; sourceTree = "<group>"; };
+		AC9A4626293CA031005690DE /* JSONKeyCoder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JSONKeyCoder.swift; sourceTree = "<group>"; };
 		AC9A8F5A27D6236900FACD7D /* KeychainService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeychainService.swift; sourceTree = "<group>"; };
 		AC9A8F5C27D655C700FACD7D /* Constant+KeychainService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Constant+KeychainService.swift"; sourceTree = "<group>"; };
 		ACB6DDD82818F23E007DA359 /* EmptyResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmptyResult.swift; sourceTree = "<group>"; };
@@ -859,6 +879,11 @@
 		D78044E427590D580086E59D /* Networking */ = {
 			isa = PBXGroup;
 			children = (
+				AC9A4626293CA031005690DE /* JSONKeyCoder.swift */,
+				AC9A461E293C9F9A005690DE /* APIRequest.swift */,
+				AC9A461A293C9F22005690DE /* URLRequest+HTTP.swift */,
+				AC9A4616293C9EEB005690DE /* NWTCPConnection+DataTask.swift */,
+				AC9A4622293C9FF8005690DE /* TimerFactory.swift */,
 				EE78F741280E762200F49903 /* WireGuard */,
 				EE034412280827C2003DFB64 /* VPN */,
 				D79BF75F27BD171700E76C37 /* APIManager */,
@@ -1653,13 +1678,16 @@
 				D7A4AC4127952C4700C88162 /* PlanListView.swift in Sources */,
 				EED9DB6728E8101300E75882 /* SubcriptionPlanView.swift in Sources */,
 				EE85EDBD27B26FC4000F967A /* DescriptionMultihopView.swift in Sources */,
+				AC9A4627293CA031005690DE /* JSONKeyCoder.swift in Sources */,
 				D78044F227590E990086E59D /* TextModifier.swift in Sources */,
 				D79E82952796F671009E36F3 /* WelcomeView.swift in Sources */,
 				EE85EE1427BDF5C7000F967A /* SessionVPN.swift in Sources */,
+				AC9A461B293C9F22005690DE /* URLRequest+HTTP.swift in Sources */,
 				D78AC3E527858D860056FCC0 /* NoticeView.swift in Sources */,
 				AC490871281B9FC600DB430B /* NotificationExtension.swift in Sources */,
 				6353F844276F3E8500B42334 /* BoardNavigationView.swift in Sources */,
 				EE514CBB27CC707F00F82AD7 /* ContentViewModel.swift in Sources */,
+				AC9A461F293C9F9A005690DE /* APIRequest.swift in Sources */,
 				6384B4F8276C43DD00E904D2 /* BoardViewModel.swift in Sources */,
 				AC09D7E428CED1750078E928 /* AppSetting+Auth.swift in Sources */,
 				EE85EE0F27BDF5B6000F967A /* Mesh.swift in Sources */,
@@ -1667,6 +1695,7 @@
 				EE890FE32791101E00ADF293 /* CustomNavigationView.swift in Sources */,
 				EED4F5AB2855D2A90098DF47 /* MultiopNodeModel.swift in Sources */,
 				AC54033A28840A7D00A5605E /* PaymentHistoryViewModel.swift in Sources */,
+				AC9A4623293C9FF8005690DE /* TimerFactory.swift in Sources */,
 				D767F27F276780C1005F7AA5 /* Form.swift in Sources */,
 				D78044C42758C6FC0086E59D /* SysVPN.xcdatamodeld in Sources */,
 				AC3328AF290539CE00EAC979 /* Empty.swift in Sources */,
@@ -1744,6 +1773,7 @@
 				EE8910122796B8CF00ADF293 /* SessionVPNCell.swift in Sources */,
 				AC99848F28895F230038F216 /* UIDeviceExtension.swift in Sources */,
 				D795FFAA275F6ED200E54206 /* Introduction.swift in Sources */,
+				AC9A4617293C9EEB005690DE /* NWTCPConnection+DataTask.swift in Sources */,
 				EE79F53327758896006F0E5D /* StopWatch.swift in Sources */,
 				EE9B77B8283F2F3B00240E89 /* AutoConnectViewModel.swift in Sources */,
 				EE89100427967AA200ADF293 /* AccountStatusView.swift in Sources */,
@@ -1762,7 +1792,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				AC9A4624293C9FF8005690DE /* TimerFactory.swift in Sources */,
+				AC9A4628293CA031005690DE /* JSONKeyCoder.swift in Sources */,
 				EE03444128090AB7003DFB64 /* OpenVPNPacketTunnelProvider.swift in Sources */,
+				AC9A461C293C9F22005690DE /* URLRequest+HTTP.swift in Sources */,
+				AC9A4620293C9F9A005690DE /* APIRequest.swift in Sources */,
+				AC9A4618293C9EEB005690DE /* NWTCPConnection+DataTask.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1770,7 +1805,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				AC9A4625293C9FF8005690DE /* TimerFactory.swift in Sources */,
+				AC9A4629293CA031005690DE /* JSONKeyCoder.swift in Sources */,
 				EE46BCCF280963F4003C4FEB /* WireGuardPacketTunnelProvider.swift in Sources */,
+				AC9A461D293C9F22005690DE /* URLRequest+HTTP.swift in Sources */,
+				AC9A4621293C9F9A005690DE /* APIRequest.swift in Sources */,
+				AC9A4619293C9EEB005690DE /* NWTCPConnection+DataTask.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

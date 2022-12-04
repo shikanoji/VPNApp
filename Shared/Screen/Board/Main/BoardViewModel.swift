@@ -175,7 +175,7 @@ class BoardViewModel: ObservableObject {
     @Published var showAlertSessionSetting: Bool = false
     @Published var shouldHideSession = true
     
-    var error: APIError?
+    var error: AppAPIError?
     let disposedBag = DisposeBag()
     
     // MARK: INIT

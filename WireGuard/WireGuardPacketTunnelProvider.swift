@@ -12,6 +12,34 @@ private let appGroup = "group.sysvpn.client.ios"
 
 class PacketTunnelProvider: WireGuardTunnelProvider {
     let userDefaultsShared = UserDefaults(suiteName: appGroup)
+    private var connectivityTimer: Timer?
+    private var dataTaskFactory: DataTaskFactory!
+    private var lastConnectivityCheck: Date = Date()
+    private var timerFactory: TimerFactory!
+
+    override init() {
+        super.init()
+        timerFactory = TimerFactoryImplementation()
+        let dataTaskFactoryGetter = { [unowned self] in dataTaskFactory! }
+        setDataTaskFactory(sendThroughTunnel: true)
+    }
+
+    override func startTunnel(options: [String: NSObject]?, completionHandler: @escaping (Error?) -> Void) {
+        super.startTunnel(options: options) { [weak self] error in
+            guard let error = error else {
+                completionHandler(nil)
+                self?.connectionEstablished()
+                return
+            }
+            completionHandler(error)
+        }
+
+    }
+
+    override func stopTunnel(with reason: NEProviderStopReason, completionHandler: @escaping () -> Void) {
+        self.stopTestingConnectivity()
+        super.stopTunnel(with: reason, completionHandler: completionHandler)
+    }
 
     override func setTunnelNetworkSettings(_ tunnelNetworkSettings: NETunnelNetworkSettings?, completionHandler: ((Error?) -> Void)? = nil) {
         if let setting = tunnelNetworkSettings as? NEPacketTunnelNetworkSettings {
@@ -32,4 +60,69 @@ class PacketTunnelProvider: WireGuardTunnelProvider {
 
         super.setTunnelNetworkSettings(tunnelNetworkSettings, completionHandler: completionHandler)
     }
+
+    override func sleep(completionHandler: @escaping () -> Void) {
+        self.stopTestingConnectivity()
+    }
+
+    override func wake() {
+        self.startTestingConnectivity()
+    }
+
+    private func connectionEstablished() {
+        // certificateRefreshManager?.start { }
+        startTestingConnectivity()
+    }
+
+    private func startTestingConnectivity() {
+        DispatchQueue.main.async {
+            self.connectivityTimer?.invalidate()
+            self.connectivityTimer = Timer.scheduledTimer(timeInterval: 300, target: self, selector: #selector(self.checkConnectivity), userInfo: nil, repeats: true)
+        }
+    }
+
+    private func stopTestingConnectivity() {
+        DispatchQueue.main.async {
+            self.connectivityTimer?.invalidate()
+            self.connectivityTimer = nil
+        }
+    }
+
+    @objc private func checkConnectivity() {
+        let timeDiff = -lastConnectivityCheck.timeIntervalSinceNow
+        if timeDiff > 60 * 3 {
+            print("Seems like phone was sleeping! Last connectivity check time diff: \(timeDiff)")
+        } else {
+            print("Last connectivity check time diff: \(timeDiff)")
+        }
+        check(url: "https://api64.ipify.org/")
+        lastConnectivityCheck = Date()
+    }
+
+    private func check(url urlString: String) {
+        guard let url = URL(string: urlString), let host = url.host else {
+            print("Can't get API endpoint hostname.")
+            return
+        }
+        let urlRequest = URLRequest(url: url)
+
+        let task = dataTaskFactory.dataTask(urlRequest) { data, response, error in
+            let responseData = data != nil ? String(data:data!, encoding: .utf8) : "nil"
+            print("Host check finished")
+            self.stopTunnel(with: .none) {
+                //
+            }
+        }
+        task.resume()
+    }
+
+    private func setDataTaskFactory(sendThroughTunnel: Bool) {
+        print("Routing API requests through \(sendThroughTunnel ? "tunnel" : "URLSession").")
+
+        dataTaskFactory = !sendThroughTunnel ?
+            URLSession.shared :
+            ConnectionTunnelDataTaskFactory(provider: self,
+                                            timerFactory: timerFactory)
+    }
+
 }

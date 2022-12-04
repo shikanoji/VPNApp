@@ -14,7 +14,7 @@ class PaymentHistoryViewModel: ObservableObject {
     @Published var showProgressView: Bool = false
     @Published var showAlert: Bool = false
     
-    var error: APIError = .someError
+    var error: AppAPIError = .someError
     
     var page = 1
     var enableLoadMore = false
@@ -60,7 +60,7 @@ class PaymentHistoryViewModel: ObservableObject {
                     strongSelf.enableLoadMore = (result.rows.count >= result.limit) && (strongSelf.page <= result.totalPages) && (strongSelf.paymentHistory.count < result.totalResults)
                 }
             }, onFailure: { [weak self]  error in
-                if let errorAPI = error as? APIError {
+                if let errorAPI = error as? AppAPIError {
                     self?.error = errorAPI
                     self?.showAlert = true
                 }

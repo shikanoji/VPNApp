@@ -124,7 +124,7 @@ extension PrimitiveSequenceType where Trait == SingleTrait {
             case .error(let error):
                 observer(.failure(error))
             case .completed:
-                observer(.failure(APIError.unknown))
+                observer(.failure(AppAPIError.unknown))
             }
         }
     }
@@ -153,9 +153,9 @@ extension PrimitiveSequenceType where Trait == SingleTrait {
             case .failure(let error):
                 if let onFailure = onFailure {
                     if let errorConfig = error as? MoyaError, errorConfig.errorCode == 6 {
-                        onFailure(APIError.noInternet)
+                        onFailure(AppAPIError.noInternet)
                     } else {
-                        onFailure(APIError.someError)
+                        onFailure(AppAPIError.someError)
                     }
                 } else {
                     Hooks.defaultErrorHandler(callStack, error)

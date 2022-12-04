@@ -36,4 +36,11 @@ class PacketTunnelProvider: OpenVPNTunnelProvider {
 
         super.setTunnelNetworkSettings(tunnelNetworkSettings, completionHandler: completionHandler)
     }
+
+    override func startTunnel(options: [String : NSObject]? = nil) async throws {
+        if let tunnel = protocolConfiguration as? NETunnelProviderProtocol {
+            let serverId = tunnel.providerConfiguration?["serverId"] as? Int
+            
+        }
+    }
 }

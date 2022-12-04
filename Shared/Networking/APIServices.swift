@@ -10,7 +10,7 @@ import Alamofire
 import UIKit
 import FirebaseMessaging
 
-enum APIError: Error {
+enum AppAPIError: Error {
     case someError
     case tokenExpired
     case permissionError

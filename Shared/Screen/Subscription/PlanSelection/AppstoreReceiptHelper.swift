@@ -34,7 +34,7 @@ final class AppstoreReceiptHelper {
                 return .failure(error)
             }
         } else {
-            return .failure(APIError.someError)
+            return .failure(AppAPIError.someError)
         }
     }
 }
