@@ -243,7 +243,7 @@ extension AppSetting {
     }
     
     var checkStateConnectedVPN: Bool {
-        return isConnectedToOurVPN && isConnectedToVpn
+        return isConnectedToOurVPN // && isConnectedToVpn
     }
 
     var vpnDropped: Bool {
