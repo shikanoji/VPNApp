@@ -37,7 +37,7 @@ class PacketTunnelProvider: WireGuardTunnelProvider {
     }
 
     override func stopTunnel(with reason: NEProviderStopReason, completionHandler: @escaping () -> Void) {
-        self.stopTestingConnectivity()
+        stopTestingConnectivity()
         super.stopTunnel(with: reason, completionHandler: completionHandler)
     }
 
@@ -62,11 +62,11 @@ class PacketTunnelProvider: WireGuardTunnelProvider {
     }
 
     override func sleep(completionHandler: @escaping () -> Void) {
-        self.stopTestingConnectivity()
+        stopTestingConnectivity()
     }
 
     override func wake() {
-        self.startTestingConnectivity()
+        startTestingConnectivity()
     }
 
     private func connectionEstablished() {
@@ -77,7 +77,7 @@ class PacketTunnelProvider: WireGuardTunnelProvider {
     private func startTestingConnectivity() {
         DispatchQueue.main.async {
             self.connectivityTimer?.invalidate()
-            self.connectivityTimer = Timer.scheduledTimer(timeInterval: 300, target: self, selector: #selector(self.checkConnectivity), userInfo: nil, repeats: true)
+            self.connectivityTimer = Timer.scheduledTimer(timeInterval: 60, target: self, selector: #selector(self.checkConnectivity), userInfo: nil, repeats: true)
         }
     }
 
@@ -100,17 +100,17 @@ class PacketTunnelProvider: WireGuardTunnelProvider {
     }
 
     private func check(url urlString: String) {
-        guard let url = URL(string: urlString), let host = url.host else {
+        guard let url = URL(string: urlString), let _ = url.host else {
             print("Can't get API endpoint hostname.")
             return
         }
         let urlRequest = URLRequest(url: url)
 
         let task = dataTaskFactory.dataTask(urlRequest) { data, response, error in
-            let responseData = data != nil ? String(data:data!, encoding: .utf8) : "nil"
-            print("Host check finished")
-            self.stopTunnel(with: .none) {
-                //
+            if error is POSIXError {
+                Task {
+                    await WireGuardManager.shared.disconnect()
+                }
             }
         }
         task.resume()
@@ -124,5 +124,4 @@ class PacketTunnelProvider: WireGuardTunnelProvider {
             ConnectionTunnelDataTaskFactory(provider: self,
                                             timerFactory: timerFactory)
     }
-
 }

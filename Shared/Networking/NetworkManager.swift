@@ -44,7 +44,7 @@ enum ErrorBoardView {
     case authenNotPremium
 }
 
-class NetworkManager: ObservableObject {
+class NetworkManager {
     
     // MARK: - VARIABLE
     
@@ -98,9 +98,17 @@ class NetworkManager: ObservableObject {
         return AppSetting.shared.getValueConfigProtocol()
     }
     
-    var requestCertificate: RequestCertificateModel?
+    var requestCertificate: RequestCertificateModel? {
+        didSet {
+            AppSetting.shared.requestCertificate = requestCertificate
+        }
+    }
     
-    var obtainCertificate: ObtainCertificateModel?
+    var obtainCertificate: ObtainCertificateModel? {
+        didSet {
+            AppSetting.shared.obtainCertificate = obtainCertificate
+        }
+    }
     
     var autoConnectType = ItemCell(type: AppSetting.shared.getAutoConnectProtocol()).type
     
@@ -372,7 +380,7 @@ class NetworkManager: ObservableObject {
         case .openVPNTCP, .openVPNUDP:
             await OpenVPNManager.shared.connect()
         case .wireGuard:
-            await WireGuardManager.shared.connect()
+            await WireGuardManager.shared.connect(NetworkManager.shared.obtainCertificate)
         default:
             break
         }
@@ -705,6 +713,7 @@ class NetworkManager: ObservableObject {
         Task {
             beginBackgroundTask()
             print("CHECK IF VPN IS DROPPED")
+            state = AppSetting.shared.checkStateConnectedVPN ? .connected : .disconnected 
             if state != .disconnected {
                 let pingGoogleResult = await pingGoogleCheckInternet()
                 print("PING GOOGLE RESULT = \(pingGoogleResult)")

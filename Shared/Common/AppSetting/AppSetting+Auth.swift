@@ -9,23 +9,6 @@ import Foundation
 import SwiftDate
 
 extension AppSetting {
-    var needLoadApiMap: Bool {
-        if Date().timeIntervalSince1970 >= lastChange {
-            return true
-        } else {
-            return false
-        }
-    }
-
-    var currentSessionId: String {
-        get {
-            return UserDefaults.standard.string(forKey: AppKeys.currentSessionId.rawValue) ?? ""
-        }
-        set {
-            UserDefaults.standard.setValue(newValue, forKey: AppKeys.currentSessionId.rawValue)
-        }
-    }
-
     /// Auth Settings
     ///
     var email: String {

@@ -201,7 +201,7 @@ enum RequestCerAPI: Codable {
     
     init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        switch NetworkManager.shared.getValueConfigProtocol {
+        switch AppSetting.shared.getValueConfigProtocol() {
         case .openVPNTCP, .openVPNUDP:
             if let _requestCer = try? container.decode(RequestCertificateModel.self) {
                 self = .requestCer(_requestCer)
@@ -215,8 +215,6 @@ enum RequestCerAPI: Codable {
         default:
             break
         }
-        
-        
         throw DecodingError.typeMismatch(RequestCerAPI.self, DecodingError.Context(codingPath: decoder.codingPath, debugDescription: "Wrong convert"))
     }
     

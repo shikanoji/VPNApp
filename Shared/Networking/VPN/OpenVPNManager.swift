@@ -32,7 +32,7 @@ class OpenVPNManager: ObservableObject {
     
     func connect() async {
         do {
-            let string = (NetworkManager.shared.requestCertificate?.convertToString() ?? "") + getDNS()
+            let string = (AppSetting.shared.requestCertificate?.convertToString() ?? "") + getDNS()
             let config = try OpenVPN.ConfigurationParser.parsed(fromContents: string).configuration
             cfg = OpenVPN.ProviderConfiguration.init("openVPN", appGroup: appGroup, configuration: config)
             
@@ -59,7 +59,7 @@ class OpenVPNManager: ObservableObject {
     }
     
     func postError() {
-        NetworkManager.shared.connectVPNError()
+        // NetworkManager.shared.connectVPNError()
     }
     
     func getDataCount() -> DataCount? {
@@ -79,7 +79,7 @@ class OpenVPNManager: ObservableObject {
     func getDNS() -> String {
         var stringData = ""
         
-        guard let dnsCyberSec = NetworkManager.shared.requestCertificate?.dns,
+        guard let dnsCyberSec = AppSetting.shared.requestCertificate?.dns,
               !dnsCyberSec.isEmpty, AppSetting.shared.selectCyberSec else {
             if AppSetting.shared.primaryDNSValue != "" {
                 stringData += "dhcp-option DNS " + AppSetting.shared.primaryDNSValue + "\r\n"

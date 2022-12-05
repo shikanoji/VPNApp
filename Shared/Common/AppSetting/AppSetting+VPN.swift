@@ -81,33 +81,6 @@ extension AppSetting {
         }
     }
 
-    var selectConfig: Int {
-        get {
-            UserDefaults.standard.integer(forKey: AppKeys.selectConfig.rawValue)
-        }
-        set {
-            UserDefaults.standard.setValue(newValue, forKey: AppKeys.selectConfig.rawValue)
-        }
-    }
-
-    var recommendConfig: Int {
-        get {
-            UserDefaults.standard.integer(forKey: AppKeys.recommendConfig.rawValue)
-        }
-        set {
-            UserDefaults.standard.setValue(newValue, forKey: AppKeys.recommendConfig.rawValue)
-        }
-    }
-
-    var selectAutoConnect: Int {
-        get {
-            UserDefaults.standard.integer(forKey: AppKeys.selectAutoConnect.rawValue)
-        }
-        set {
-            UserDefaults.standard.setValue(newValue, forKey: AppKeys.selectAutoConnect.rawValue)
-        }
-    }
-
     var wasJailBreak: Int {
         get {
             UserDefaults.standard.integer(forKey: AppKeys.wasJailBreak.rawValue)
@@ -126,104 +99,6 @@ extension AppSetting {
         }
     }
 
-    func getConfigProtocol() -> ItemCellType {
-        if let type = ItemCellType(rawValue: AppSetting.shared.selectConfig) {
-            if [.wireGuard, .openVPNTCP, .openVPNUDP].contains(type) {
-                return type
-            }
-            if type == .recommended {
-                return .recommended
-            }
-        }
-
-        return .recommended
-    }
-
-    func getRecommendConfigProtocol() -> ItemCellType {
-        if let type = ItemCellType(rawValue: AppSetting.shared.recommendConfig) {
-            if [.wireGuard, .openVPNTCP, .openVPNUDP].contains(type) {
-                return type
-            }
-            return .openVPNTCP
-        }
-
-        return .openVPNTCP
-    }
-
-    func getValueConfigProtocol() -> ItemCellType {
-        if let type = ItemCellType(rawValue: AppSetting.shared.selectConfig) {
-            if [.wireGuard, .openVPNTCP, .openVPNUDP].contains(type) {
-                return type
-            }
-            if type == .recommended {
-                return getRecommendConfigProtocol()
-            }
-        }
-        return .openVPNTCP
-    }
-
-    func getAutoConnectProtocol() -> ItemCellType {
-        if let type = ItemCellType(rawValue: AppSetting.shared.selectAutoConnect) {
-            if type != .always && type != .onWifi && type != .onMobile && type != .off {
-                return .off
-            }
-            return type
-        }
-        return .off
-    }
-
-    var dnsSetting: DNSSetting {
-        get {
-            guard let settingString = UserDefaults.standard.string(forKey: AppKeys.dnsSetting.rawValue) else {
-                return .system
-            }
-            return DNSSetting(rawValue: settingString) ?? .custom
-        }
-        set {
-            UserDefaults.standard.setValue(newValue.rawValue, forKey: AppKeys.dnsSetting.rawValue)
-        }
-    }
-
-    var primaryDNSValue: String {
-        get {
-            UserDefaults.standard.string(forKey: AppKeys.primaryDNSValue.rawValue) ?? ""
-        }
-        set {
-            UserDefaults.standard.setValue(newValue, forKey: AppKeys.primaryDNSValue.rawValue)
-        }
-    }
-
-    var secondaryDNSValue: String {
-        get {
-            UserDefaults.standard.string(forKey: AppKeys.secondaryDNSValue.rawValue) ?? ""
-        }
-        set {
-            UserDefaults.standard.setValue(newValue, forKey: AppKeys.secondaryDNSValue.rawValue)
-        }
-    }
-
-    func getContentDNSCell() -> String {
-        var defaultContent = L10n.Settings.Dns.default
-        if dnsSetting == .custom {
-            if primaryDNSValue != "" {
-                defaultContent = primaryDNSValue
-            }
-            if secondaryDNSValue != "" {
-                defaultContent = ", " + secondaryDNSValue
-            }
-        }
-        return defaultContent
-    }
-
-    var selectCyberSec: Bool {
-        get {
-            UserDefaults.standard.bool(forKey: AppKeys.selectCyberSec.rawValue)
-        }
-        set {
-            UserDefaults.standard.setValue(newValue, forKey: AppKeys.selectCyberSec.rawValue)
-        }
-    }
-
     var saveTimeConnectedVPN: Date? {
         get {
             UserDefaults.standard.object(forKey: AppKeys.saveTimeConnectedVPN.rawValue) as? Date
@@ -233,18 +108,7 @@ extension AppSetting {
         }
     }
 
-    var isConnectedToOurVPN: Bool {
-        get {
-            UserDefaults.standard.bool(forKey: AppKeys.isConnectedToOurVPN.rawValue)
-        }
-        set {
-            UserDefaults.standard.setValue(newValue, forKey: AppKeys.isConnectedToOurVPN.rawValue)
-        }
-    }
     
-    var checkStateConnectedVPN: Bool {
-        return isConnectedToOurVPN // && isConnectedToVpn
-    }
 
     var vpnDropped: Bool {
         get {
@@ -253,18 +117,6 @@ extension AppSetting {
         set {
             UserDefaults.standard.setValue(newValue, forKey: AppKeys.vpnDropped.rawValue)
         }
-    }
-
-    var isConnectedToVpn: Bool {
-        if let settings = CFNetworkCopySystemProxySettings()?.takeRetainedValue() as? Dictionary<String, Any>,
-           let scopes = settings["__SCOPED__"] as? [String:Any] {
-            for (key, _) in scopes {
-                if key.contains("tap") || key.contains("tun") || key.contains("ppp") || key.contains("ipsec") || key.contains("ipsec0") || key.contains("utun1") || key.contains("utun2") {
-                    return true
-                }
-            }
-        }
-        return false
     }
 
     /// api get ip info in app

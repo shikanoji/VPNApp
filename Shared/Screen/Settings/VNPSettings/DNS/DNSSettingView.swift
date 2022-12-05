@@ -10,11 +10,6 @@ import SwiftUI
 import PopupView
 import TunnelKitManager
 
-enum DNSSetting: String {
-    case system = "default"
-    case custom = "custom"
-}
-
 struct DNSSettingView: View {
     @Binding var showSettings: Bool
     @Binding var showDNSSetting: Bool

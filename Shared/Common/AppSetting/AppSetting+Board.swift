@@ -10,20 +10,6 @@ import SwiftUI
 
 extension AppSetting {
     /// Board Settings
-    var maxNumberDevices: Int {
-        get {
-            return 6
-        }
-    }
-    
-    var help: Bool {
-        get {
-            return UserDefaults.standard.bool(forKey: AppKeys.help.rawValue)
-        }
-        set {
-            UserDefaults.standard.setValue(newValue, forKey: AppKeys.help.rawValue)
-        }
-    }
     
     var autoConnect: Bool {
         get {
@@ -85,14 +71,6 @@ extension AppSetting {
         }
         
         return AppSetting.shared.getRecommendedCountries().first
-    }
-    
-    func getAutoConnectNode() -> Node? {
-        if let dataAutoConnectNode = UserDefaults.standard.data(forKey: AppKeys.autoConnectNode.rawValue) {
-            let autoConnectNode = try! JSONDecoder().decode(Node.self, from: dataAutoConnectNode)
-            return autoConnectNode
-        }
-        return nil
     }
     
     func saveMutilhopList(_ arr: [MultihopModel]) {

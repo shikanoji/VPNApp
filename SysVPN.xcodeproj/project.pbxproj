@@ -96,6 +96,45 @@
 		AC9A4627293CA031005690DE /* JSONKeyCoder.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC9A4626293CA031005690DE /* JSONKeyCoder.swift */; };
 		AC9A4628293CA031005690DE /* JSONKeyCoder.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC9A4626293CA031005690DE /* JSONKeyCoder.swift */; };
 		AC9A4629293CA031005690DE /* JSONKeyCoder.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC9A4626293CA031005690DE /* JSONKeyCoder.swift */; };
+		AC9A49BA293DA9D5005690DE /* WireGuardManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE78F742280E763400F49903 /* WireGuardManager.swift */; };
+		AC9A49BB293DAA56005690DE /* ObtainCertificateModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE2D6BFA281BD77D008E1431 /* ObtainCertificateModel.swift */; };
+		AC9A49BC293DAA57005690DE /* ObtainCertificateModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE2D6BFA281BD77D008E1431 /* ObtainCertificateModel.swift */; };
+		AC9A49BD293DAAA7005690DE /* RequestCertificateModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE78F77D2811526B00F49903 /* RequestCertificateModel.swift */; };
+		AC9A49BE293DAAA8005690DE /* RequestCertificateModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE78F77D2811526B00F49903 /* RequestCertificateModel.swift */; };
+		AC9A49BF293DADF7005690DE /* AppSetting.swift in Sources */ = {isa = PBXBuildFile; fileRef = D78044F3275912AC0086E59D /* AppSetting.swift */; };
+		AC9A49C0293DADF8005690DE /* AppSetting.swift in Sources */ = {isa = PBXBuildFile; fileRef = D78044F3275912AC0086E59D /* AppSetting.swift */; };
+		AC9A49C8293DAF90005690DE /* CountryListResultModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE85EE1727BE3C4C000F967A /* CountryListResultModel.swift */; };
+		AC9A49C9293DAF90005690DE /* CountryListResultModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE85EE1727BE3C4C000F967A /* CountryListResultModel.swift */; };
+		AC9A49CC293DB1AC005690DE /* Node.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE85EE0E27BDF5B6000F967A /* Node.swift */; };
+		AC9A49CD293DB1AC005690DE /* Node.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE85EE0E27BDF5B6000F967A /* Node.swift */; };
+		AC9A49CE293DB1C8005690DE /* StaticServer.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE9B8B5727C387C50077BCFC /* StaticServer.swift */; };
+		AC9A49D0293DB1CA005690DE /* StaticServer.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE9B8B5727C387C50077BCFC /* StaticServer.swift */; };
+		AC9A49D3293DB1DA005690DE /* MultiopNodeModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EED4F5AA2855D2A90098DF47 /* MultiopNodeModel.swift */; };
+		AC9A49D4293DB1DB005690DE /* MultiopNodeModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EED4F5AA2855D2A90098DF47 /* MultiopNodeModel.swift */; };
+		AC9A49D5293DB201005690DE /* Strings+Generated.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC6074ED27DE42C100DD5667 /* Strings+Generated.swift */; };
+		AC9A49D7293DB203005690DE /* Strings+Generated.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC6074ED27DE42C100DD5667 /* Strings+Generated.swift */; };
+		AC9A49D8293DB20F005690DE /* DataList.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE85EE0C27BDF5B6000F967A /* DataList.swift */; };
+		AC9A49DA293DB212005690DE /* DataList.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE85EE0C27BDF5B6000F967A /* DataList.swift */; };
+		AC9A49DC293DB252005690DE /* StateTab.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC9A49DB293DB252005690DE /* StateTab.swift */; };
+		AC9A49DD293DB257005690DE /* StateTab.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC9A49DB293DB252005690DE /* StateTab.swift */; };
+		AC9A49DE293DB258005690DE /* StateTab.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC9A49DB293DB252005690DE /* StateTab.swift */; };
+		AC9A49E0293DB2BB005690DE /* DNSSetting.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC9A49DF293DB2BB005690DE /* DNSSetting.swift */; };
+		AC9A49E1293DB2C0005690DE /* DNSSetting.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC9A49DF293DB2BB005690DE /* DNSSetting.swift */; };
+		AC9A49E2293DB2C1005690DE /* DNSSetting.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC9A49DF293DB2BB005690DE /* DNSSetting.swift */; };
+		AC9A49E5293DB328005690DE /* XCAssets+Generated.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC6074E127DD08D100DD5667 /* XCAssets+Generated.swift */; };
+		AC9A49E6293DB329005690DE /* XCAssets+Generated.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC6074E127DD08D100DD5667 /* XCAssets+Generated.swift */; };
+		AC9A49E7293DCCC3005690DE /* Constant+API.swift in Sources */ = {isa = PBXBuildFile; fileRef = D79BF75D27BD10D700E76C37 /* Constant+API.swift */; };
+		AC9A49E8293DCCC4005690DE /* Constant+API.swift in Sources */ = {isa = PBXBuildFile; fileRef = D79BF75D27BD10D700E76C37 /* Constant+API.swift */; };
+		AC9A49EC293DCECE005690DE /* Constant+Board.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC9A49EB293DCECE005690DE /* Constant+Board.swift */; };
+		AC9A49ED293DCEE4005690DE /* Constant.swift in Sources */ = {isa = PBXBuildFile; fileRef = D78044F52759133A0086E59D /* Constant.swift */; };
+		AC9A49EE293DCEE4005690DE /* Constant.swift in Sources */ = {isa = PBXBuildFile; fileRef = D78044F52759133A0086E59D /* Constant.swift */; };
+		AC9A49EF293DCFC1005690DE /* AppSetting+Auth.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC09D7E328CED1750078E928 /* AppSetting+Auth.swift */; };
+		AC9A49F0293DCFC2005690DE /* AppSetting+Auth.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC09D7E328CED1750078E928 /* AppSetting+Auth.swift */; };
+		AC9A4A03293DD885005690DE /* SwiftDate in Frameworks */ = {isa = PBXBuildFile; productRef = AC9A4A02293DD885005690DE /* SwiftDate */; };
+		AC9A4A0C293DD885005690DE /* RxSwift in Frameworks */ = {isa = PBXBuildFile; productRef = AC9A4A0B293DD885005690DE /* RxSwift */; };
+		AC9A4A0F293DDC53005690DE /* RxSwift in Frameworks */ = {isa = PBXBuildFile; productRef = AC9A4A0E293DDC53005690DE /* RxSwift */; };
+		AC9A4A11293DDE95005690DE /* SwiftDate in Frameworks */ = {isa = PBXBuildFile; productRef = AC9A4A10293DDE95005690DE /* SwiftDate */; };
+		AC9A4A12293DE288005690DE /* OpenVPNManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE034413280827D6003DFB64 /* OpenVPNManager.swift */; };
 		AC9A8F5B27D6236900FACD7D /* KeychainService.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC9A8F5A27D6236900FACD7D /* KeychainService.swift */; };
 		AC9A8F5D27D655C700FACD7D /* Constant+KeychainService.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC9A8F5C27D655C700FACD7D /* Constant+KeychainService.swift */; };
 		ACB6DDD92818F23E007DA359 /* EmptyResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACB6DDD82818F23E007DA359 /* EmptyResult.swift */; };
@@ -284,6 +323,26 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
+		AC9A49FD293DD85D005690DE /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		AC9A4A0D293DD885005690DE /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		EE03442728082ABD003DFB64 /* Embed App Extensions */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 12;
@@ -373,6 +432,9 @@
 		AC9A461E293C9F9A005690DE /* APIRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = APIRequest.swift; sourceTree = "<group>"; };
 		AC9A4622293C9FF8005690DE /* TimerFactory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TimerFactory.swift; sourceTree = "<group>"; };
 		AC9A4626293CA031005690DE /* JSONKeyCoder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JSONKeyCoder.swift; sourceTree = "<group>"; };
+		AC9A49DB293DB252005690DE /* StateTab.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StateTab.swift; sourceTree = "<group>"; };
+		AC9A49DF293DB2BB005690DE /* DNSSetting.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DNSSetting.swift; sourceTree = "<group>"; };
+		AC9A49EB293DCECE005690DE /* Constant+Board.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Constant+Board.swift"; sourceTree = "<group>"; };
 		AC9A8F5A27D6236900FACD7D /* KeychainService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeychainService.swift; sourceTree = "<group>"; };
 		AC9A8F5C27D655C700FACD7D /* Constant+KeychainService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Constant+KeychainService.swift"; sourceTree = "<group>"; };
 		ACB6DDD82818F23E007DA359 /* EmptyResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmptyResult.swift; sourceTree = "<group>"; };
@@ -560,8 +622,10 @@
 				EE78F76D2811056600F49903 /* TunnelKit in Frameworks */,
 				EE78F7732811056600F49903 /* TunnelKitWireGuardAppExtension in Frameworks */,
 				EE46BCE928096969003C4FEB /* TunnelKitOpenVPNAppExtension in Frameworks */,
+				AC9A4A03293DD885005690DE /* SwiftDate in Frameworks */,
 				EE46BCEB2809716C003C4FEB /* TunnelKitOpenVPN in Frameworks */,
 				EE78F76F2811056600F49903 /* TunnelKitLZO in Frameworks */,
+				AC9A4A0C293DD885005690DE /* RxSwift in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -575,7 +639,9 @@
 				EE46BCCC280963F4003C4FEB /* NetworkExtension.framework in Frameworks */,
 				EE78F7752811068C00F49903 /* TunnelKitLZO in Frameworks */,
 				EE78F7772811068C00F49903 /* TunnelKitOpenVPN in Frameworks */,
+				AC9A4A0F293DDC53005690DE /* RxSwift in Frameworks */,
 				EE78F77B2811068C00F49903 /* TunnelKitWireGuard in Frameworks */,
+				AC9A4A11293DDE95005690DE /* SwiftDate in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -607,6 +673,7 @@
 			children = (
 				AC1195D12844D71D002230F0 /* DNSSettingView.swift */,
 				AC1195DA28452313002230F0 /* DNSSettingViewModel.swift */,
+				AC9A49DF293DB2BB005690DE /* DNSSetting.swift */,
 			);
 			path = DNS;
 			sourceTree = "<group>";
@@ -888,8 +955,8 @@
 				EE034412280827C2003DFB64 /* VPN */,
 				D79BF75F27BD171700E76C37 /* APIManager */,
 				D72E50502771D023002357E8 /* Connectivity.swift */,
-				D78044EB27590DC30086E59D /* APIServices.swift */,
 				EE78F767280FB6CE00F49903 /* NetworkManager.swift */,
+				D78044EB27590DC30086E59D /* APIServices.swift */,
 				EE3235432913B69E0076AEF6 /* SystemDataUsage.swift */,
 			);
 			path = Networking;
@@ -1006,6 +1073,7 @@
 				D78044F52759133A0086E59D /* Constant.swift */,
 				D79BF75D27BD10D700E76C37 /* Constant+API.swift */,
 				AC9A8F5C27D655C700FACD7D /* Constant+KeychainService.swift */,
+				AC9A49EB293DCECE005690DE /* Constant+Board.swift */,
 			);
 			path = Constant;
 			sourceTree = "<group>";
@@ -1174,6 +1242,7 @@
 			children = (
 				6384B4F4276C374E00E904D2 /* BoardView.swift */,
 				6384B4F7276C43DD00E904D2 /* BoardViewModel.swift */,
+				AC9A49DB293DB252005690DE /* StateTab.swift */,
 			);
 			path = Main;
 			sourceTree = "<group>";
@@ -1394,6 +1463,7 @@
 				EE03443928090AB7003DFB64 /* Sources */,
 				EE03443A28090AB7003DFB64 /* Frameworks */,
 				EE03443B28090AB7003DFB64 /* Resources */,
+				AC9A4A0D293DD885005690DE /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
@@ -1407,6 +1477,8 @@
 				EE78F76E2811056600F49903 /* TunnelKitLZO */,
 				EE78F7702811056600F49903 /* TunnelKitWireGuard */,
 				EE78F7722811056600F49903 /* TunnelKitWireGuardAppExtension */,
+				AC9A4A02293DD885005690DE /* SwiftDate */,
+				AC9A4A0B293DD885005690DE /* RxSwift */,
 			);
 			productName = OpenVPN.daz;
 			productReference = EE03443D28090AB7003DFB64 /* OpenVPN.appex */;
@@ -1419,6 +1491,7 @@
 				EE46BCC7280963F4003C4FEB /* Sources */,
 				EE46BCC8280963F4003C4FEB /* Frameworks */,
 				EE46BCC9280963F4003C4FEB /* Resources */,
+				AC9A49FD293DD85D005690DE /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
@@ -1433,6 +1506,8 @@
 				EE78F7762811068C00F49903 /* TunnelKitOpenVPN */,
 				EE78F7782811068C00F49903 /* TunnelKitOpenVPNAppExtension */,
 				EE78F77A2811068C00F49903 /* TunnelKitWireGuard */,
+				AC9A4A0E293DDC53005690DE /* RxSwift */,
+				AC9A4A10293DDE95005690DE /* SwiftDate */,
 			);
 			productName = WireGuard;
 			productReference = EE46BCCB280963F4003C4FEB /* WireGuard.appex */;
@@ -1616,6 +1691,7 @@
 				EE890FF8279558EC00ADF293 /* DateExtension.swift in Sources */,
 				AC6074B227D8D2B200DD5667 /* CustomPopupView.swift in Sources */,
 				D78044E32758F54A0086E59D /* AppDelegate.swift in Sources */,
+				AC9A49EC293DCECE005690DE /* Constant+Board.swift in Sources */,
 				D785DFBF27B3B26F001FC84B /* FAQViewModel.swift in Sources */,
 				AC516FD4286C579800BEBC81 /* AutoConnectDestinationSelectViewModel.swift in Sources */,
 				EE514CBF27CCC14500F82AD7 /* LoadingView.swift in Sources */,
@@ -1659,6 +1735,7 @@
 				D72E50512771D023002357E8 /* Connectivity.swift in Sources */,
 				D79C225127BE31CE00B54613 /* RegisterResult.swift in Sources */,
 				EE85EDB327B21467000F967A /* CityListView.swift in Sources */,
+				AC9A49E0293DB2BB005690DE /* DNSSetting.swift in Sources */,
 				091C559D28C8CE3300270E4C /* SlideIntroduction.swift in Sources */,
 				AC273F8528AD493E0010E632 /* RequestLoggingPlugin.swift in Sources */,
 				D71CE4FD27903D4F00E8731D /* SubscriptionIntroductionView.swift in Sources */,
@@ -1743,6 +1820,7 @@
 				AC9A8F5B27D6236900FACD7D /* KeychainService.swift in Sources */,
 				AC9A8F5D27D655C700FACD7D /* Constant+KeychainService.swift in Sources */,
 				D78F472E2761D20C0064A764 /* RegisterViewModel.swift in Sources */,
+				AC9A49DC293DB252005690DE /* StateTab.swift in Sources */,
 				D79BF76127BD173600E76C37 /* ServiceManager+Auth.swift in Sources */,
 				EEAD5C5B277D9654008181E3 /* NodeView.swift in Sources */,
 				EE9B8B5627C37C320077BCFC /* LinearGradientStatus.swift in Sources */,
@@ -1793,10 +1871,26 @@
 			buildActionMask = 2147483647;
 			files = (
 				AC9A4624293C9FF8005690DE /* TimerFactory.swift in Sources */,
+				AC9A49D5293DB201005690DE /* Strings+Generated.swift in Sources */,
+				AC9A49C9293DAF90005690DE /* CountryListResultModel.swift in Sources */,
 				AC9A4628293CA031005690DE /* JSONKeyCoder.swift in Sources */,
+				AC9A49D3293DB1DA005690DE /* MultiopNodeModel.swift in Sources */,
 				EE03444128090AB7003DFB64 /* OpenVPNPacketTunnelProvider.swift in Sources */,
 				AC9A461C293C9F22005690DE /* URLRequest+HTTP.swift in Sources */,
+				AC9A49CC293DB1AC005690DE /* Node.swift in Sources */,
+				AC9A49EF293DCFC1005690DE /* AppSetting+Auth.swift in Sources */,
 				AC9A4620293C9F9A005690DE /* APIRequest.swift in Sources */,
+				AC9A49E5293DB328005690DE /* XCAssets+Generated.swift in Sources */,
+				AC9A49BF293DADF7005690DE /* AppSetting.swift in Sources */,
+				AC9A49BD293DAAA7005690DE /* RequestCertificateModel.swift in Sources */,
+				AC9A49E7293DCCC3005690DE /* Constant+API.swift in Sources */,
+				AC9A4A12293DE288005690DE /* OpenVPNManager.swift in Sources */,
+				AC9A49E1293DB2C0005690DE /* DNSSetting.swift in Sources */,
+				AC9A49ED293DCEE4005690DE /* Constant.swift in Sources */,
+				AC9A49DD293DB257005690DE /* StateTab.swift in Sources */,
+				AC9A49CE293DB1C8005690DE /* StaticServer.swift in Sources */,
+				AC9A49D8293DB20F005690DE /* DataList.swift in Sources */,
+				AC9A49BC293DAA57005690DE /* ObtainCertificateModel.swift in Sources */,
 				AC9A4618293C9EEB005690DE /* NWTCPConnection+DataTask.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1805,11 +1899,27 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				AC9A49C0293DADF8005690DE /* AppSetting.swift in Sources */,
+				AC9A49BB293DAA56005690DE /* ObtainCertificateModel.swift in Sources */,
+				AC9A49DE293DB258005690DE /* StateTab.swift in Sources */,
+				AC9A49E6293DB329005690DE /* XCAssets+Generated.swift in Sources */,
 				AC9A4625293C9FF8005690DE /* TimerFactory.swift in Sources */,
 				AC9A4629293CA031005690DE /* JSONKeyCoder.swift in Sources */,
+				AC9A49BE293DAAA8005690DE /* RequestCertificateModel.swift in Sources */,
+				AC9A49E8293DCCC4005690DE /* Constant+API.swift in Sources */,
+				AC9A49BA293DA9D5005690DE /* WireGuardManager.swift in Sources */,
+				AC9A49DA293DB212005690DE /* DataList.swift in Sources */,
+				AC9A49D4293DB1DB005690DE /* MultiopNodeModel.swift in Sources */,
+				AC9A49D7293DB203005690DE /* Strings+Generated.swift in Sources */,
 				EE46BCCF280963F4003C4FEB /* WireGuardPacketTunnelProvider.swift in Sources */,
+				AC9A49E2293DB2C1005690DE /* DNSSetting.swift in Sources */,
+				AC9A49F0293DCFC2005690DE /* AppSetting+Auth.swift in Sources */,
+				AC9A49C8293DAF90005690DE /* CountryListResultModel.swift in Sources */,
+				AC9A49CD293DB1AC005690DE /* Node.swift in Sources */,
 				AC9A461D293C9F22005690DE /* URLRequest+HTTP.swift in Sources */,
 				AC9A4621293C9F9A005690DE /* APIRequest.swift in Sources */,
+				AC9A49EE293DCEE4005690DE /* Constant.swift in Sources */,
+				AC9A49D0293DB1CA005690DE /* StaticServer.swift in Sources */,
 				AC9A4619293C9EEB005690DE /* NWTCPConnection+DataTask.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -2501,6 +2611,26 @@
 			isa = XCSwiftPackageProductDependency;
 			package = AC637783287FB7930015BB2E /* XCRemoteSwiftPackageReference "PopupView" */;
 			productName = PopupView;
+		};
+		AC9A4A02293DD885005690DE /* SwiftDate */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = AC637765287FB2800015BB2E /* XCRemoteSwiftPackageReference "SwiftDate" */;
+			productName = SwiftDate;
+		};
+		AC9A4A0B293DD885005690DE /* RxSwift */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = AC63776F287FB4A20015BB2E /* XCRemoteSwiftPackageReference "RxSwift" */;
+			productName = RxSwift;
+		};
+		AC9A4A0E293DDC53005690DE /* RxSwift */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = AC63776F287FB4A20015BB2E /* XCRemoteSwiftPackageReference "RxSwift" */;
+			productName = RxSwift;
+		};
+		AC9A4A10293DDE95005690DE /* SwiftDate */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = AC637765287FB2800015BB2E /* XCRemoteSwiftPackageReference "SwiftDate" */;
+			productName = SwiftDate;
 		};
 		EE03440628081044003DFB64 /* TunnelKit */ = {
 			isa = XCSwiftPackageProductDependency;
