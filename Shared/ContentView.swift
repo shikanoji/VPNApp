@@ -102,7 +102,7 @@ struct ContentView: View {
                 if newPhase == .active {
                     print("Foreground")
                     Task {
-                        await Connectivity.sharedInstance.checkIfVPNDropped()
+                        await NetworkManager.shared.checkIfVPNDropped()
                     }
                 } else if newPhase == .inactive {
                     print("Inactive")

@@ -228,20 +228,10 @@ class NetworkManager {
         
         Connectivity.sharedInstance.enableWifiCallBack = {
             print("enableWifiCallBack \($0)")
-            if $0 {
-                Task {
-                    await self.checkIfVPNDropped()
-                }
-            }
         }
         
         Connectivity.sharedInstance.enableCellularCallBack = {
             print("enableCellularCallBack \($0)")
-            if $0 {
-                Task {
-                    await self.checkIfVPNDropped()
-                }
-            }
         }
     }
     
@@ -302,16 +292,16 @@ class NetworkManager {
     
     @objc private func VPNDidFailConfig(notification: Notification) {
         errorCallBack?(.apiError(AppAPIError.identified()))
-        if state == .connected {
-            configDisconected()
-            if isEnableReconect, !connectOrDisconnectByUser {
-                Task {
-                    await startConnectVPN(asNewConnection: false)
-                }
-            }
-        } else {
-            configDisconected()
-        }
+//        if state == .connected {
+//            configDisconected()
+//            if isEnableReconect, !connectOrDisconnectByUser {
+//                Task {
+//                    await startConnectVPN(asNewConnection: false)
+//                }
+//            }
+//        } else {
+//            configDisconected()
+//        }
     }
     
     @MainActor @objc private func VPNDidFail(notification: Notification) {
@@ -360,24 +350,19 @@ class NetworkManager {
             configDisconected()
             endBackgroundTask()
             if AppSetting.shared.shouldReconnectVPNIfDropped {
-                DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
+                if [.openVPNTCP, .openVPNUDP].contains(getValueConfigProtocol) {
+                    let waitTime: DispatchTime = getValueConfigProtocol == .openVPNTCP ? (.now() + 1) : (.now() + 2)
+                    DispatchQueue.global(qos: .background).asyncAfter(deadline: waitTime) { [weak self] in
+                        guard let self =  self else { return }
+                        Task {
+                            await self.configStartConnectVPN(true)
+                        }
+                    }
+                } else {
                     Task {
-                        await self.configStartConnectVPN(true)
+                        await configStartConnectVPN(true)
                     }
                 }
-//                if [.openVPNTCP, .openVPNUDP].contains(getValueConfigProtocol) {
-//                    let waitTime: DispatchTime = getValueConfigProtocol == .openVPNTCP ? (.now() + 1) : (.now() + 2)
-//                    DispatchQueue.global(qos: .background).asyncAfter(deadline: waitTime) { [weak self] in
-//                        guard let self =  self else { return }
-//                        Task {
-//                            await self.configStartConnectVPN(true)
-//                        }
-//                    }
-//                } else {
-//                    Task {
-//                        await configStartConnectVPN(true)
-//                    }
-//                }
             }
         default:
             break
@@ -747,27 +732,32 @@ class NetworkManager {
     }
 
     func checkIfVPNDropped() async {
-        Task {
-            beginBackgroundTask()
-            print("CHECK IF VPN IS DROPPED")
-            state = AppSetting.shared.checkStateConnectedVPN ? .connected : .disconnected
-            if state != .disconnected {
-                let pingGoogleResult = await pingGoogleCheckInternet()
-                print("PING GOOGLE RESULT = \(pingGoogleResult)")
-                if !pingGoogleResult {
-                    AppSetting.shared.vpnDropped = true
-                    AppSetting.shared.shouldReconnectVPNIfDropped = true
-                    await configDisconnect()
-                } else {
-                    NotificationCenter.default.post(name: Constant.NameNotification.restoreVPNSuccessfully, object: nil)
-                    endBackgroundTask()
+        checkingVPNSerialQueue.async { [weak self] in
+            guard let self = self else { return }
+            if Connectivity.sharedInstance.enableNetwork {
+                Task {
+                    self.beginBackgroundTask()
+                    print("CHECK IF VPN IS DROPPED")
+                    self.state = AppSetting.shared.checkStateConnectedVPN ? .connected : .disconnected
+                    if self.state != .disconnected {
+                        let pingGoogleResult = await self.pingGoogleCheckInternet()
+                        print("PING GOOGLE RESULT = \(pingGoogleResult)")
+                        if !pingGoogleResult {
+                            AppSetting.shared.vpnDropped = true
+                            AppSetting.shared.shouldReconnectVPNIfDropped = true
+                            await self.configDisconnect()
+                        } else {
+                            NotificationCenter.default.post(name: Constant.NameNotification.restoreVPNSuccessfully, object: nil)
+                            self.endBackgroundTask()
+                        }
+                    } else if AppSetting.shared.shouldReconnectVPNIfDropped {
+                        AppSetting.shared.vpnDropped = true
+                        await self.configStartConnectVPN(true)
+                    } else {
+                        NotificationCenter.default.post(name: Constant.NameNotification.restoreVPNSuccessfully, object: nil)
+                        self.endBackgroundTask()
+                    }
                 }
-            } else if AppSetting.shared.shouldReconnectVPNIfDropped {
-                AppSetting.shared.vpnDropped = true
-                await configStartConnectVPN(true)
-            } else {
-                NotificationCenter.default.post(name: Constant.NameNotification.restoreVPNSuccessfully, object: nil)
-                endBackgroundTask()
             }
         }
     }
