@@ -9,11 +9,11 @@ import Foundation
 
 class AutoConnectViewModel: ObservableObject {
     @Published var sectionList: [SectionCell] = [SectionCell(.typeAutoConnect), SectionCell(.autoConnect)]
-    
+
     init() {
         configItem()
     }
-    
+
     func configItem(_ item: ItemCell = ItemCell(type: AppSetting.shared.getAutoConnectProtocol())) {
         AppSetting.shared.selectAutoConnect = item.type.rawValue
         DispatchQueue.main.async {

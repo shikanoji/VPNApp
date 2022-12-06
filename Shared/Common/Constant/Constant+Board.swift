@@ -191,6 +191,7 @@ extension Constant {
         static let showIntroPlan = Notification.Name("showIntroPlan")
         static let startFree7DayTrial = Notification.Name("startFree7DayTrial")
         static let restoreVPNSuccessfully = Notification.Name("restoreVPNSuccessfully")
+        static let vpnDidFailConfig = Notification.Name("vpnDidFailConfig")
     }
 
     struct TextSize {
@@ -235,7 +236,7 @@ extension Constant {
     struct SizeButton {
         static let widthButtonFull = Constant.Board.Map.widthScreen - 80
     }
-    
+
     struct timeout {
         static let timeoutIntervalForRequest = 5.0
         static let timeoutIntervalForResource = 5.0

@@ -204,6 +204,13 @@ class NetworkManager {
             object: nil
         )
         
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(VPNDidFailConfig(notification:)),
+            name: Constant.NameNotification.vpnDidFailConfig,
+            object: nil
+        )
+        
         Connectivity.sharedInstance.enableNetworkCallBack = {
             if $0 {
                 if self.lostNetworkAfterConnect {
@@ -221,10 +228,20 @@ class NetworkManager {
         
         Connectivity.sharedInstance.enableWifiCallBack = {
             print("enableWifiCallBack \($0)")
+            if $0 {
+                Task {
+                    await self.checkIfVPNDropped()
+                }
+            }
         }
         
         Connectivity.sharedInstance.enableCellularCallBack = {
             print("enableCellularCallBack \($0)")
+            if $0 {
+                Task {
+                    await self.checkIfVPNDropped()
+                }
+            }
         }
     }
     
@@ -283,6 +300,20 @@ class NetworkManager {
         }
     }
     
+    @objc private func VPNDidFailConfig(notification: Notification) {
+        errorCallBack?(.apiError(AppAPIError.identified()))
+        if state == .connected {
+            configDisconected()
+            if isEnableReconect, !connectOrDisconnectByUser {
+                Task {
+                    await startConnectVPN(asNewConnection: false)
+                }
+            }
+        } else {
+            configDisconected()
+        }
+    }
+    
     @MainActor @objc private func VPNDidFail(notification: Notification) {
         print("VPNStatusDidFail: \(notification.vpnError.localizedDescription)")
         guard notification.vpnError.localizedDescription != "permission denied" else {
@@ -327,20 +358,26 @@ class NetworkManager {
             endBackgroundTask()
         case .disconnected:
             configDisconected()
+            endBackgroundTask()
             if AppSetting.shared.shouldReconnectVPNIfDropped {
-                if [.openVPNTCP, .openVPNUDP].contains(getValueConfigProtocol) {
-                    let waitTime: DispatchTime = getValueConfigProtocol == .openVPNTCP ? (.now() + 1) : (.now() + 2)
-                    DispatchQueue.global(qos: .background).asyncAfter(deadline: waitTime) { [weak self] in
-                        guard let self =  self else { return }
-                        Task {
-                            await self.configStartConnectVPN(true)
-                        }
-                    }
-                } else {
+                DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
                     Task {
-                        await configStartConnectVPN(true)
+                        await self.configStartConnectVPN(true)
                     }
                 }
+//                if [.openVPNTCP, .openVPNUDP].contains(getValueConfigProtocol) {
+//                    let waitTime: DispatchTime = getValueConfigProtocol == .openVPNTCP ? (.now() + 1) : (.now() + 2)
+//                    DispatchQueue.global(qos: .background).asyncAfter(deadline: waitTime) { [weak self] in
+//                        guard let self =  self else { return }
+//                        Task {
+//                            await self.configStartConnectVPN(true)
+//                        }
+//                    }
+//                } else {
+//                    Task {
+//                        await configStartConnectVPN(true)
+//                    }
+//                }
             }
         default:
             break
@@ -713,7 +750,7 @@ class NetworkManager {
         Task {
             beginBackgroundTask()
             print("CHECK IF VPN IS DROPPED")
-            state = AppSetting.shared.checkStateConnectedVPN ? .connected : .disconnected 
+            state = AppSetting.shared.checkStateConnectedVPN ? .connected : .disconnected
             if state != .disconnected {
                 let pingGoogleResult = await pingGoogleCheckInternet()
                 print("PING GOOGLE RESULT = \(pingGoogleResult)")

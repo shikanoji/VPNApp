@@ -59,9 +59,7 @@ class WireGuardManager: ObservableObject {
     }
     
     func postError() {
-//        DispatchQueue.main.async {
-//            NetworkManager.shared.connectVPNError()
-//        }
+        NotificationCenter.default.post(name: Notification.Name("vpnDidFailConfig"), object: nil)
     }
     
     func disconnect() async {

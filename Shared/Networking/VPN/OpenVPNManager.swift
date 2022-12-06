@@ -34,11 +34,10 @@ class OpenVPNManager: ObservableObject {
         do {
             let string = (AppSetting.shared.requestCertificate?.convertToString() ?? "") + getDNS()
             let config = try OpenVPN.ConfigurationParser.parsed(fromContents: string).configuration
-            cfg = OpenVPN.ProviderConfiguration.init("openVPN", appGroup: appGroup, configuration: config)
+            cfg = OpenVPN.ProviderConfiguration.init("OpenVPN", appGroup: appGroup, configuration: config)
             
             var extra = NetworkExtensionExtra()
             let rule = NEOnDemandRuleConnect()
-
             extra.onDemandRules = [rule]
 
             do {
@@ -59,7 +58,7 @@ class OpenVPNManager: ObservableObject {
     }
     
     func postError() {
-        // NetworkManager.shared.connectVPNError()
+        NotificationCenter.default.post(name: Notification.Name("vpnDidFailConfig"), object: nil)
     }
     
     func getDataCount() -> DataCount? {

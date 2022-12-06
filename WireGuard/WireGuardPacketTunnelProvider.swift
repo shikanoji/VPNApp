@@ -77,7 +77,7 @@ class PacketTunnelProvider: WireGuardTunnelProvider {
     private func startTestingConnectivity() {
         DispatchQueue.main.async {
             self.connectivityTimer?.invalidate()
-            self.connectivityTimer = Timer.scheduledTimer(timeInterval: 60, target: self, selector: #selector(self.checkConnectivity), userInfo: nil, repeats: true)
+            self.connectivityTimer = Timer.scheduledTimer(timeInterval: 30, target: self, selector: #selector(self.checkConnectivity), userInfo: nil, repeats: true)
         }
     }
 

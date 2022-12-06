@@ -272,7 +272,7 @@ class AppSetting {
         }
         return false
     }
-    
+
     var checkStateConnectedVPN: Bool {
         return isConnectedToOurVPN && isConnectedToVpn
     }

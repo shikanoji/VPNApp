@@ -108,7 +108,7 @@ extension AppSetting {
         }
     }
 
-    
+
 
     var vpnDropped: Bool {
         get {
