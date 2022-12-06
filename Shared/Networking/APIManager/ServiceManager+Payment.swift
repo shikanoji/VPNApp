@@ -18,7 +18,7 @@ extension ServiceManager {
                 return paymentHistory
             }
             .catch { error in
-                throw APIError.someError
+                throw AppAPIError.someError
             }
     }
 
@@ -29,7 +29,7 @@ extension ServiceManager {
                 return verifyResult
             }
             .catch { error in
-                throw APIError.someError
+                throw AppAPIError.someError
             }
     }
 }

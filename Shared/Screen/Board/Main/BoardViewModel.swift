@@ -56,23 +56,6 @@ extension VPNStatus {
     }
 }
 
-enum StateTab: Int {
-    case location = 0
-    case staticIP = 1
-    case multiHop = 2
-    
-    var title: String {
-        switch self {
-        case .location:
-            return L10n.Board.locationTitleTab
-        case .staticIP:
-            return L10n.Board.staticIPTitleTab
-        case .multiHop:
-            return L10n.Board.multiHopTitleTab
-        }
-    }
-}
-
 class BoardViewModel: ObservableObject {
     
     // MARK: Variable
@@ -87,7 +70,6 @@ class BoardViewModel: ObservableObject {
     
     @Published var showBoardListIphone = false
     @Published var showBoardListIpad = false
-    
     @Published var selectedTab: StateTab = .location {
         didSet {
             AppSetting.shared.saveCurrentTab(selectedTab)
@@ -176,7 +158,7 @@ class BoardViewModel: ObservableObject {
     @Published var showAlertSessionSetting: Bool = false
     @Published var shouldHideSession = true
     
-    var error: APIError?
+    var error: AppAPIError?
     let disposedBag = DisposeBag()
     
     // MARK: INIT
@@ -187,8 +169,8 @@ class BoardViewModel: ObservableObject {
         AppSetting.shared.fetchListSession()
 
         NetworkManager.shared.stateUICallBack = { status -> () in
-            DispatchQueue.main.async {
-                self.stateUI = status
+            DispatchQueue.main.async { [weak self] in
+                self?.stateUI = status
             }
         }
 

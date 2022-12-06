@@ -67,14 +67,4 @@ class Connectivity: ObservableObject {
         monitorWiFi.start(queue: DispatchQueue(label: "monitorWiFi"))
         monitorCellular.start(queue: DispatchQueue(label: "monitorCellular"))
     }
-
-    func checkIfVPNDropped() async {
-        checkingVPNSerialQueue.async {
-            if self.enableNetwork {
-                Task {
-                    await NetworkManager.shared.checkIfVPNDropped()
-                }
-            }
-        }
-    }
 }

@@ -28,8 +28,8 @@ class WireGuardManager: ObservableObject {
     static var shared = WireGuardManager()
     private var cfg: WireGuard.ProviderConfiguration?
     
-    func connect() async {
-        if let obtainCer = NetworkManager.shared.obtainCertificate,
+    func connect(_ obtainCer: ObtainCertificateModel?) async {
+        if let obtainCer = obtainCer,
            let cfgParase = configuretionParaseFromContents(obtainCer) {
             cfg = cfgParase
             
@@ -59,9 +59,7 @@ class WireGuardManager: ObservableObject {
     }
     
     func postError() {
-        DispatchQueue.main.async {
-            NetworkManager.shared.connectVPNError()
-        }
+        NotificationCenter.default.post(name: Notification.Name("vpnDidFailConfig"), object: nil)
     }
     
     func disconnect() async {
@@ -131,7 +129,7 @@ class WireGuardManager: ObservableObject {
     func getCustomDNS() -> [String] {
         var dnsList: [String] = []
         
-        guard let dnsCyberSec = NetworkManager.shared.requestCertificate?.dns,
+        guard let dnsCyberSec = AppSetting.shared.requestCertificate?.dns,
               !dnsCyberSec.isEmpty else {
             if AppSetting.shared.primaryDNSValue != "" {
                 dnsList.append(AppSetting.shared.primaryDNSValue)

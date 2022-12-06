@@ -128,7 +128,7 @@ class AppDelegate: NSObject, UIApplicationDelegate, MessagingDelegate, UNUserNot
             print("REFRESHING APP")
             scheduleAppRefresh()
             currentBackGroundTask = task
-            await Connectivity.sharedInstance.checkIfVPNDropped()
+            await NetworkManager.shared.checkIfVPNDropped()
             currentBackGroundTask = task
         }
     }
