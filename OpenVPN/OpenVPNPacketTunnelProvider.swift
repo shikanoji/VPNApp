@@ -16,7 +16,9 @@ class PacketTunnelProvider: OpenVPNTunnelProvider {
     private var dataTaskFactory: DataTaskFactory!
     private var lastConnectivityCheck: Date = Date()
     private var timerFactory: TimerFactory!
-
+    private var nwPathMonitor: NWPathMonitor?
+    private var internetAvailable: Bool?
+    
     override init() {
         super.init()
         dataCountInterval = 1000
@@ -70,6 +72,11 @@ class PacketTunnelProvider: OpenVPNTunnelProvider {
         DispatchQueue.main.async {
             self.connectivityTimer?.invalidate()
             self.connectivityTimer = Timer.scheduledTimer(timeInterval: 30, target: self, selector: #selector(self.checkConnectivity), userInfo: nil, repeats: true)
+            self.nwPathMonitor = NWPathMonitor()
+            self.nwPathMonitor?.pathUpdateHandler = { path in
+                self.internetAvailable = path.status == .satisfied
+            }
+            self.nwPathMonitor?.start(queue: .main)
         }
     }
 
@@ -77,6 +84,7 @@ class PacketTunnelProvider: OpenVPNTunnelProvider {
         DispatchQueue.main.async {
             self.connectivityTimer?.invalidate()
             self.connectivityTimer = nil
+            self.nwPathMonitor = nil
         }
     }
 
@@ -92,7 +100,7 @@ class PacketTunnelProvider: OpenVPNTunnelProvider {
     }
 
     private func check(url urlString: String) {
-        guard let url = URL(string: urlString), let _ = url.host else {
+        guard let url = URL(string: urlString), let _ = url.host, internetAvailable == true else {
             print("Can't get API endpoint hostname.")
             return
         }
