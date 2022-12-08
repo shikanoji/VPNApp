@@ -7,6 +7,7 @@
 
 import NetworkExtension
 import TunnelKitWireGuardAppExtension
+import OSLog
 
 private let appGroup = "group.sysvpn.client.ios"
 
@@ -19,6 +20,8 @@ class PacketTunnelProvider: WireGuardTunnelProvider {
     private var nwPathMonitor: NWPathMonitor?
     private var internetAvailable: Bool?
 
+    var lastProviderConfiguration: [String: Any] = [:]
+
     override init() {
         super.init()
         timerFactory = TimerFactoryImplementation()
@@ -27,6 +30,10 @@ class PacketTunnelProvider: WireGuardTunnelProvider {
     }
 
     override func startTunnel(options: [String: NSObject]?, completionHandler: @escaping (Error?) -> Void) {
+        if let tunnel = protocolConfiguration as? NETunnelProviderProtocol,
+           let providerConfigutaion = tunnel.providerConfiguration {
+            lastProviderConfiguration = providerConfigutaion
+        }
         super.startTunnel(options: options) { [weak self] error in
             guard let error = error else {
                 completionHandler(nil)
@@ -79,7 +86,7 @@ class PacketTunnelProvider: WireGuardTunnelProvider {
     private func startTestingConnectivity() {
         DispatchQueue.main.async {
             self.connectivityTimer?.invalidate()
-            self.connectivityTimer = Timer.scheduledTimer(timeInterval: 30, target: self, selector: #selector(self.checkConnectivity), userInfo: nil, repeats: true)
+            self.connectivityTimer = Timer.scheduledTimer(timeInterval: 5, target: self, selector: #selector(self.checkConnectivity), userInfo: nil, repeats: true)
             self.nwPathMonitor = NWPathMonitor()
             self.nwPathMonitor?.pathUpdateHandler = { path in
                 self.internetAvailable = path.status == .satisfied
@@ -103,7 +110,12 @@ class PacketTunnelProvider: WireGuardTunnelProvider {
         } else {
             print("Last connectivity check time diff: \(timeDiff)")
         }
-        check(url: "https://api64.ipify.org/")
+//        check(url: "https://api64.ipify.org/")
+
+//        GetCertService.shared.getCert()
+
+        getCert()
+
         lastConnectivityCheck = Date()
     }
 
@@ -131,5 +143,45 @@ class PacketTunnelProvider: WireGuardTunnelProvider {
             URLSession.shared :
             ConnectionTunnelDataTaskFactory(provider: self,
                                             timerFactory: timerFactory)
+    }
+
+    func getCert() {
+        os_log("GetCertService")
+        let access = UserDefaults.standard.string(forKey: "accessToken") ?? ""
+        os_log("GetCertService: accessToken %{public}s", "\(access)")
+        os_log("GetCertService: headerGetCert %{public}s", "\(AppSetting.shared.headerGetCert)")
+        os_log("GetCertService ----")
+
+        if let url = URL(string: Constant.api.root + Constant.api.path.requestCertificate) {
+            var urlRequest = URLRequest(url: url)
+            urlRequest.httpMethod = "GET"
+
+            if let httpBody = try? JSONSerialization.data(withJSONObject: AppSetting.shared.paramGetCert, options: [.prettyPrinted]) {
+                urlRequest.httpBody = httpBody
+            }
+
+            os_log("GetCertService: convert %{public}s", "\(AppSetting.shared.headerGetCert)")
+
+            urlRequest.allHTTPHeaderFields = AppSetting.shared.headerGetCert
+
+            let session = URLSession.shared.dataTask(with: urlRequest) { data, response, error in
+                os_log("GetCertService: Success")
+                if let data = data {
+                    do {
+                        let json = try JSONSerialization.jsonObject(with: data, options: []) as? [String : Any]
+
+                        os_log("GetCertService: convert %{public}s", "\(json ?? nil)")
+                    } catch {
+
+                    }
+                }
+
+                if let error = error {
+                    os_log("GetCertService: error %{public}s", "\(error)")
+                }
+            }
+
+            session.resume()
+        }
     }
 }

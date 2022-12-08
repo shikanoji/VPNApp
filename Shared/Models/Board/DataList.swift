@@ -362,4 +362,24 @@ enum ItemCellType: Int, Decodable {
             return false
         }
     }
+    
+    var getConfigParam: String {
+        switch self {
+        case .openVPNTCP, .recommended, .openVPNUDP:
+            return "ovpn"
+        case .wireGuard:
+            return "wg"
+        default:
+            return ""
+        }
+    }
+    
+    var getProtocolVPN: String {
+        switch self {
+        case .openVPNTCP:
+            return "tcp"
+        default:
+            return "udp"
+        }
+    }
 }

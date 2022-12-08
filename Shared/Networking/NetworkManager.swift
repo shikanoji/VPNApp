@@ -14,28 +14,6 @@ import TunnelKitCore
 import Network
 import NetworkExtension
 
-extension ItemCellType {
-    var getConfigParam: String {
-        switch self {
-        case .openVPNTCP, .recommended, .openVPNUDP:
-            return "ovpn"
-        case .wireGuard:
-            return "wg"
-        default:
-            return ""
-        }
-    }
-    
-    var getProtocolVPN: String {
-        switch self {
-        case .openVPNTCP:
-            return "tcp"
-        default:
-            return "udp"
-        }
-    }
-}
-
 enum ErrorBoardView {
     case fullSession
     case sessionTerminate
@@ -350,17 +328,10 @@ class NetworkManager {
             configDisconected()
             endBackgroundTask()
             if AppSetting.shared.shouldReconnectVPNIfDropped {
-                if [.openVPNTCP, .openVPNUDP].contains(getValueConfigProtocol) {
-                    let waitTime: DispatchTime = getValueConfigProtocol == .openVPNTCP ? (.now() + 1) : (.now() + 2)
-                    DispatchQueue.global(qos: .background).asyncAfter(deadline: waitTime) { [weak self] in
-                        guard let self =  self else { return }
-                        Task {
-                            await self.configStartConnectVPN(true)
-                        }
-                    }
-                } else {
+                DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+                    AppSetting.shared.shouldReconnectVPNIfDropped = false
                     Task {
-                        await configStartConnectVPN(true)
+                        await self.configStartConnectVPN(true)
                     }
                 }
             }

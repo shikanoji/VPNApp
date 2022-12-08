@@ -236,6 +236,11 @@
 		EE79F53127742B21006F0E5D /* BoardTabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE79F53027742B21006F0E5D /* BoardTabView.swift */; };
 		EE79F53327758896006F0E5D /* StopWatch.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE79F53227758896006F0E5D /* StopWatch.swift */; };
 		EE79F5392775AFF3006F0E5D /* AlertConnectView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE79F5382775AFF3006F0E5D /* AlertConnectView.swift */; };
+		EE81E7F72941C72E00008589 /* GetCertService.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE81E7F62941C72E00008589 /* GetCertService.swift */; };
+		EE81E7F82941C72E00008589 /* GetCertService.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE81E7F62941C72E00008589 /* GetCertService.swift */; };
+		EE81E7F92941C72E00008589 /* GetCertService.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE81E7F62941C72E00008589 /* GetCertService.swift */; };
+		EE81E7FA2941CA9000008589 /* InfoDeviceModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE9B77D12849AFF400240E89 /* InfoDeviceModel.swift */; };
+		EE81E7FB2941CA9000008589 /* InfoDeviceModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE9B77D12849AFF400240E89 /* InfoDeviceModel.swift */; };
 		EE85EDB327B21467000F967A /* CityListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE85EDB227B21467000F967A /* CityListView.swift */; };
 		EE85EDB627B21711000F967A /* CityCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE85EDB527B21711000F967A /* CityCellView.swift */; };
 		EE85EDB927B21F7A000F967A /* LocationListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE85EDB827B21F7A000F967A /* LocationListView.swift */; };
@@ -523,6 +528,7 @@
 		EE79F53027742B21006F0E5D /* BoardTabView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoardTabView.swift; sourceTree = "<group>"; };
 		EE79F53227758896006F0E5D /* StopWatch.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StopWatch.swift; sourceTree = "<group>"; };
 		EE79F5382775AFF3006F0E5D /* AlertConnectView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertConnectView.swift; sourceTree = "<group>"; };
+		EE81E7F62941C72E00008589 /* GetCertService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetCertService.swift; sourceTree = "<group>"; };
 		EE85EDB227B21467000F967A /* CityListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CityListView.swift; sourceTree = "<group>"; };
 		EE85EDB527B21711000F967A /* CityCellView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CityCellView.swift; sourceTree = "<group>"; };
 		EE85EDB827B21F7A000F967A /* LocationListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationListView.swift; sourceTree = "<group>"; };
@@ -958,6 +964,7 @@
 				EE78F767280FB6CE00F49903 /* NetworkManager.swift */,
 				D78044EB27590DC30086E59D /* APIServices.swift */,
 				EE3235432913B69E0076AEF6 /* SystemDataUsage.swift */,
+				EE81E7F62941C72E00008589 /* GetCertService.swift */,
 			);
 			path = Networking;
 			sourceTree = "<group>";
@@ -1691,6 +1698,7 @@
 				EE890FF8279558EC00ADF293 /* DateExtension.swift in Sources */,
 				AC6074B227D8D2B200DD5667 /* CustomPopupView.swift in Sources */,
 				D78044E32758F54A0086E59D /* AppDelegate.swift in Sources */,
+				EE81E7F72941C72E00008589 /* GetCertService.swift in Sources */,
 				AC9A49EC293DCECE005690DE /* Constant+Board.swift in Sources */,
 				D785DFBF27B3B26F001FC84B /* FAQViewModel.swift in Sources */,
 				AC516FD4286C579800BEBC81 /* AutoConnectDestinationSelectViewModel.swift in Sources */,
@@ -1873,6 +1881,7 @@
 				AC9A4624293C9FF8005690DE /* TimerFactory.swift in Sources */,
 				AC9A49D5293DB201005690DE /* Strings+Generated.swift in Sources */,
 				AC9A49C9293DAF90005690DE /* CountryListResultModel.swift in Sources */,
+				EE81E7F82941C72E00008589 /* GetCertService.swift in Sources */,
 				AC9A4628293CA031005690DE /* JSONKeyCoder.swift in Sources */,
 				AC9A49D3293DB1DA005690DE /* MultiopNodeModel.swift in Sources */,
 				EE03444128090AB7003DFB64 /* OpenVPNPacketTunnelProvider.swift in Sources */,
@@ -1890,6 +1899,7 @@
 				AC9A49DD293DB257005690DE /* StateTab.swift in Sources */,
 				AC9A49CE293DB1C8005690DE /* StaticServer.swift in Sources */,
 				AC9A49D8293DB20F005690DE /* DataList.swift in Sources */,
+				EE81E7FA2941CA9000008589 /* InfoDeviceModel.swift in Sources */,
 				AC9A49BC293DAA57005690DE /* ObtainCertificateModel.swift in Sources */,
 				AC9A4618293C9EEB005690DE /* NWTCPConnection+DataTask.swift in Sources */,
 			);
@@ -1902,6 +1912,7 @@
 				AC9A49C0293DADF8005690DE /* AppSetting.swift in Sources */,
 				AC9A49BB293DAA56005690DE /* ObtainCertificateModel.swift in Sources */,
 				AC9A49DE293DB258005690DE /* StateTab.swift in Sources */,
+				EE81E7F92941C72E00008589 /* GetCertService.swift in Sources */,
 				AC9A49E6293DB329005690DE /* XCAssets+Generated.swift in Sources */,
 				AC9A4625293C9FF8005690DE /* TimerFactory.swift in Sources */,
 				AC9A4629293CA031005690DE /* JSONKeyCoder.swift in Sources */,
@@ -1919,6 +1930,7 @@
 				AC9A461D293C9F22005690DE /* URLRequest+HTTP.swift in Sources */,
 				AC9A4621293C9F9A005690DE /* APIRequest.swift in Sources */,
 				AC9A49EE293DCEE4005690DE /* Constant.swift in Sources */,
+				EE81E7FB2941CA9000008589 /* InfoDeviceModel.swift in Sources */,
 				AC9A49D0293DB1CA005690DE /* StaticServer.swift in Sources */,
 				AC9A4619293C9EEB005690DE /* NWTCPConnection+DataTask.swift in Sources */,
 			);
@@ -2289,12 +2301,14 @@
 					"@executable_path/../../Frameworks",
 				);
 				MARKETING_VERSION = "${APP_VERSION";
+				OTHER_LDFLAGS = "";
 				PRODUCT_BUNDLE_IDENTIFIER = com.sysvpn.client.ios.dev.openvpn;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
 				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_OBJC_BRIDGING_HEADER = "Shared/Models/SysVPN (iOS)-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -2321,12 +2335,14 @@
 					"@executable_path/../../Frameworks",
 				);
 				MARKETING_VERSION = "${APP_VERSION";
+				OTHER_LDFLAGS = "";
 				PRODUCT_BUNDLE_IDENTIFIER = com.sysvpn.client.ios.openvpn;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
 				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_OBJC_BRIDGING_HEADER = "Shared/Models/SysVPN (iOS)-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALIDATE_PRODUCT = YES;
@@ -2352,11 +2368,13 @@
 					"@executable_path/../../Frameworks",
 				);
 				MARKETING_VERSION = 1.0.0.14;
+				OTHER_LDFLAGS = "";
 				PRODUCT_BUNDLE_IDENTIFIER = com.sysvpn.client.ios.dev.wireguard;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
 				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_OBJC_BRIDGING_HEADER = "Shared/Models/SysVPN (iOS)-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -2381,11 +2399,13 @@
 					"@executable_path/../../Frameworks",
 				);
 				MARKETING_VERSION = 1.0.0.14;
+				OTHER_LDFLAGS = "";
 				PRODUCT_BUNDLE_IDENTIFIER = com.sysvpn.client.ios.wireguard;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
 				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_OBJC_BRIDGING_HEADER = "Shared/Models/SysVPN (iOS)-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALIDATE_PRODUCT = YES;

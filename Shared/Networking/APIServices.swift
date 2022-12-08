@@ -299,7 +299,6 @@ extension APIService: TargetType {
             switch NetworkManager.shared.getValueConfigProtocol {
             case .openVPNTCP, .openVPNUDP:
                 prevSessionId = NetworkManager.shared.requestCertificate?.sessionId ?? ""
-                param["proto"] = NetworkManager.shared.getValueConfigProtocol.getProtocolVPN
             case .wireGuard:
                 prevSessionId = NetworkManager.shared.obtainCertificate?.sessionId ?? ""
             default:
@@ -307,6 +306,14 @@ extension APIService: TargetType {
             }
             if prevSessionId != "", !asNewConnection {
                 param["prevSessionId"] = prevSessionId
+            }
+            
+            AppSetting.shared.paramGetCert = param
+            
+            print("param demo \(param)")
+            
+            if let httpBody = try? JSONSerialization.data(withJSONObject: AppSetting.shared.paramGetCert, options: [.prettyPrinted]) {
+                print("param demo \(httpBody)")
             }
             
             return .requestParameters(parameters: param, encoding: URLEncoding.queryString)
@@ -396,6 +403,8 @@ extension APIService: TargetType {
                 baseHeader["x-device-info"] = getInfoDevice()
             }
             baseHeader["x-user-info"] = "{\"id\": \(AppSetting.shared.idUser)}"
+            
+            AppSetting.shared.headerGetCert = baseHeader
             
             return baseHeader
         case .verifyReceipt:

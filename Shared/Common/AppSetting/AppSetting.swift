@@ -69,9 +69,30 @@ enum AppKeys: String {
     // VPN
     case isConnectedToOurVPN = "isConnectedToOurVPN"
     case vpnDropped = "vpnDropped"
+
+    case paramGetCert = "paramGetCert"
+    case headerGetCert = "headerGetCert"
 }
 
 class AppSetting {
+
+    var paramGetCert: [String: Any] {
+        get {
+            UserDefaults.standard.object(forKey: AppKeys.paramGetCert.rawValue) as! [String : Any]
+        }
+        set {
+            UserDefaults.standard.setValue(newValue, forKey: AppKeys.paramGetCert.rawValue)
+        }
+    }
+
+    var headerGetCert: [String: String] {
+        get {
+            UserDefaults.standard.object(forKey: AppKeys.headerGetCert.rawValue) as! [String : String]
+        }
+        set {
+            UserDefaults.standard.setValue(newValue, forKey: AppKeys.headerGetCert.rawValue)
+        }
+    }
 
     static var shared = AppSetting()
     var disposedBag = DisposeBag()
