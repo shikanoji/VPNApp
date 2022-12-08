@@ -7,6 +7,9 @@
 
 import NetworkExtension
 import TunnelKitOpenVPNAppExtension
+import OSLog
+import TunnelKitOpenVPNProtocol
+import TunnelKitOpenVPN
 
 private let appGroup = "group.sysvpn.client.ios"
 
@@ -18,7 +21,9 @@ class PacketTunnelProvider: OpenVPNTunnelProvider {
     private var timerFactory: TimerFactory!
     private var nwPathMonitor: NWPathMonitor?
     private var internetAvailable: Bool?
-
+    var lastProviderConfiguration: [String: Any] = [:]
+    var requestCert: RequestCertificateModel?
+    
     override init() {
         super.init()
         dataCountInterval = 1000
@@ -46,12 +51,19 @@ class PacketTunnelProvider: OpenVPNTunnelProvider {
         super.setTunnelNetworkSettings(tunnelNetworkSettings, completionHandler: completionHandler)
     }
 
-    override func startTunnel(options: [String : NSObject]? = nil) async throws {
+    override func startTunnel(options: [String: NSObject]?, completionHandler: @escaping (Error?) -> Void) {
+//        if let tunnel = protocolConfiguration as? NETunnelProviderProtocol,
+//           let providerConfigutaion = tunnel.providerConfiguration {
+//            lastProviderConfiguration = providerConfigutaion
+//        }
+
         super.startTunnel(options: options) { [weak self] error in
-            guard error != nil else {
+            guard let error = error else {
+                completionHandler(nil)
                 self?.connectionEstablished()
                 return
             }
+            completionHandler(error)
         }
     }
 
@@ -71,7 +83,11 @@ class PacketTunnelProvider: OpenVPNTunnelProvider {
     private func startTestingConnectivity() {
         DispatchQueue.main.async {
             self.connectivityTimer?.invalidate()
+<<<<<<< HEAD
             self.connectivityTimer = Timer.scheduledTimer(timeInterval: 30, target: self, selector: #selector(self.checkConnectivity), userInfo: nil, repeats: true)
+=======
+            self.connectivityTimer = Timer.scheduledTimer(timeInterval: 10, target: self, selector: #selector(self.checkConnectivity), userInfo: nil, repeats: false)
+>>>>>>> c309d7f (call api get cert)
             self.nwPathMonitor = NWPathMonitor()
             self.nwPathMonitor?.pathUpdateHandler = { path in
                 self.internetAvailable = path.status == .satisfied
@@ -96,7 +112,44 @@ class PacketTunnelProvider: OpenVPNTunnelProvider {
             print("Last connectivity check time diff: \(timeDiff)")
         }
         check(url: "https://api64.ipify.org/")
+
         lastConnectivityCheck = Date()
+    }
+
+    func reloadSessionAndConnect() {
+        let string = (requestCert?.convertToString() ?? "") + getDNS()
+        do {
+            let cfg = try OpenVPN.ConfigurationParser.parsed(fromContents: string).configuration
+            super.reloadSessionAndConnect(cfg: cfg)
+        } catch {
+            print(error)
+        }
+    }
+
+    func getDNS() -> String {
+        var stringData = ""
+
+        let primaryDNSValue = (lastProviderConfiguration["primaryDNSValue"] as? String) ?? ""
+        let secondaryDNSValue = (lastProviderConfiguration["secondaryDNSValue"] as? String) ?? ""
+        let selectCyberSec = ((lastProviderConfiguration["selectCyberSec"] as? Bool) ?? false)
+
+        guard let dnsCyberSec = requestCert?.dns,
+              !dnsCyberSec.isEmpty, selectCyberSec else {
+            if primaryDNSValue != "" {
+                stringData += "dhcp-option DNS " + primaryDNSValue + "\r\n"
+            }
+            if secondaryDNSValue != "" {
+                stringData += "dhcp-option DNS " + secondaryDNSValue + "\r\n"
+            }
+
+            return stringData
+        }
+
+        dnsCyberSec.forEach {
+            stringData += "dhcp-option DNS " + $0 + "\r\n"
+        }
+
+        return stringData
     }
 
     private func check(url urlString: String) {
@@ -107,9 +160,18 @@ class PacketTunnelProvider: OpenVPNTunnelProvider {
         let urlRequest = URLRequest(url: url)
 
         let task = dataTaskFactory.dataTask(urlRequest) { data, response, error in
-            if error is POSIXError {
-                Task {
-                    await OpenVPNManager.shared.disconnect()
+            if error is POSIXError, (error as? POSIXError)?.code == .ETIMEDOUT {
+//                Task {
+//                    await OpenVPNManager.shared.disconnect()
+//                }
+                if let param = self.lastProviderConfiguration["paramGetCert"] as? [String: Any],
+                   let header = self.lastProviderConfiguration["headerGetCert"] as? [String: String] {
+                    GetCertService.shared.getCert(param: param, header: header) {
+                        if let result = $0 {
+                            self.requestCert = result
+                            self.reloadSessionAndConnect()
+                        }
+                    }
                 }
             }
         }

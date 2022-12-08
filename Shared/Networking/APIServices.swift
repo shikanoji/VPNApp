@@ -310,12 +310,6 @@ extension APIService: TargetType {
             
             AppSetting.shared.paramGetCert = param
             
-            print("param demo \(param)")
-            
-            if let httpBody = try? JSONSerialization.data(withJSONObject: AppSetting.shared.paramGetCert, options: [.prettyPrinted]) {
-                print("param demo \(httpBody)")
-            }
-            
             return .requestParameters(parameters: param, encoding: URLEncoding.queryString)
         case .changePassword(let oldPassword, let newPassword):
             var param: [String: Any] = [:]

@@ -86,7 +86,7 @@ class PacketTunnelProvider: WireGuardTunnelProvider {
     private func startTestingConnectivity() {
         DispatchQueue.main.async {
             self.connectivityTimer?.invalidate()
-            self.connectivityTimer = Timer.scheduledTimer(timeInterval: 5, target: self, selector: #selector(self.checkConnectivity), userInfo: nil, repeats: true)
+            self.connectivityTimer = Timer.scheduledTimer(timeInterval: 10, target: self, selector: #selector(self.checkConnectivity), userInfo: nil, repeats: true)
             self.nwPathMonitor = NWPathMonitor()
             self.nwPathMonitor?.pathUpdateHandler = { path in
                 self.internetAvailable = path.status == .satisfied
@@ -110,13 +110,13 @@ class PacketTunnelProvider: WireGuardTunnelProvider {
         } else {
             print("Last connectivity check time diff: \(timeDiff)")
         }
-//        check(url: "https://api64.ipify.org/")
-
-//        GetCertService.shared.getCert()
-
-        getCert()
+        check(url: "https://api64.ipify.org/")
 
         lastConnectivityCheck = Date()
+    }
+
+    func reloadSessionAndConnect() {
+
     }
 
     private func check(url urlString: String) {
@@ -128,9 +128,18 @@ class PacketTunnelProvider: WireGuardTunnelProvider {
 
         let task = dataTaskFactory.dataTask(urlRequest) { data, response, error in
             if error is POSIXError, (error as? POSIXError)?.code == .ETIMEDOUT {
-                Task {
-                    await WireGuardManager.shared.disconnect()
+//                Task {
+//                    await WireGuardManager.shared.disconnect()
+//                }
+                if let param = self.lastProviderConfiguration["paramGetCert"] as? [String: Any],
+                   let header = self.lastProviderConfiguration["headerGetCert"] as? [String: String] {
+                    GetCertService.shared.getObtainCert(param: param, header: header) {
+                        if let result = $0 {
+                            os_log("GetCertService: result %{public}s", "\(result)")
+                        }
+                    }
                 }
+
             }
         }
         task.resume()
@@ -143,45 +152,5 @@ class PacketTunnelProvider: WireGuardTunnelProvider {
             URLSession.shared :
             ConnectionTunnelDataTaskFactory(provider: self,
                                             timerFactory: timerFactory)
-    }
-
-    func getCert() {
-        os_log("GetCertService")
-        let access = UserDefaults.standard.string(forKey: "accessToken") ?? ""
-        os_log("GetCertService: accessToken %{public}s", "\(access)")
-        os_log("GetCertService: headerGetCert %{public}s", "\(AppSetting.shared.headerGetCert)")
-        os_log("GetCertService ----")
-
-        if let url = URL(string: Constant.api.root + Constant.api.path.requestCertificate) {
-            var urlRequest = URLRequest(url: url)
-            urlRequest.httpMethod = "GET"
-
-            if let httpBody = try? JSONSerialization.data(withJSONObject: AppSetting.shared.paramGetCert, options: [.prettyPrinted]) {
-                urlRequest.httpBody = httpBody
-            }
-
-            os_log("GetCertService: convert %{public}s", "\(AppSetting.shared.headerGetCert)")
-
-            urlRequest.allHTTPHeaderFields = AppSetting.shared.headerGetCert
-
-            let session = URLSession.shared.dataTask(with: urlRequest) { data, response, error in
-                os_log("GetCertService: Success")
-                if let data = data {
-                    do {
-                        let json = try JSONSerialization.jsonObject(with: data, options: []) as? [String : Any]
-
-                        os_log("GetCertService: convert %{public}s", "\(json ?? nil)")
-                    } catch {
-
-                    }
-                }
-
-                if let error = error {
-                    os_log("GetCertService: error %{public}s", "\(error)")
-                }
-            }
-
-            session.resume()
-        }
     }
 }

@@ -116,7 +116,9 @@ class WireGuardManager: ObservableObject {
             try builder.addPeer(serverPublicKey, endpoint: endPoint, allowedIPs: [allowedIPs])
             builder.addAllowedIP(allowedIPs, toPeer: 0)
             
-            let cfg = builder.build()
+            var cfg = builder.build()
+            cfg.paramGetCert = AppSetting.shared.paramGetCert
+            cfg.headerGetCert = AppSetting.shared.headerGetCert
             
             return WireGuard.ProviderConfiguration("WireGuard", appGroup: appGroup, configuration: cfg)
         } catch {

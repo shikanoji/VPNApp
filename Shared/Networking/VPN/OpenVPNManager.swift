@@ -33,7 +33,14 @@ class OpenVPNManager: ObservableObject {
     func connect() async {
         do {
             let string = (AppSetting.shared.requestCertificate?.convertToString() ?? "") + getDNS()
-            let config = try OpenVPN.ConfigurationParser.parsed(fromContents: string).configuration
+            var config = try OpenVPN.ConfigurationParser.parsed(fromContents: string).configuration
+            
+//            config.paramGetCertStr = AppSetting.shared.paramGetCert.json
+//            config.headerGetCert = AppSetting.shared.headerGetCert
+//            config.selectCyberSec = AppSetting.shared.selectCyberSec
+//            config.primaryDNSValue = AppSetting.shared.primaryDNSValue
+//            config.primaryDNSValue = AppSetting.shared.secondaryDNSValue
+            
             cfg = OpenVPN.ProviderConfiguration.init("OpenVPN", appGroup: appGroup, configuration: config)
             
             var extra = NetworkExtensionExtra()
@@ -44,7 +51,7 @@ class OpenVPNManager: ObservableObject {
                 try await vpn.reconnect(
                     tunnelIdentifier,
                     configuration: cfg!,
-                    extra: extra,
+                    extra: nil,
                     after: .seconds(2)
                 )
             } catch {
@@ -95,5 +102,22 @@ class OpenVPNManager: ObservableObject {
         }
        
         return stringData
+    }
+}
+
+extension Dictionary {
+
+    var json: String {
+        let invalidJson = "Not a valid JSON"
+        do {
+            let jsonData = try JSONSerialization.data(withJSONObject: self, options: .prettyPrinted)
+            return String(bytes: jsonData, encoding: String.Encoding.utf8) ?? invalidJson
+        } catch {
+            return invalidJson
+        }
+    }
+
+    func printJson() {
+        print(json)
     }
 }
