@@ -34,7 +34,8 @@ class WireGuardManager: ObservableObject {
             cfg = cfgParase
             
             var extra = NetworkExtensionExtra()
-            extra.onDemandRules = []
+            let rule = NEOnDemandRuleConnect()
+            extra.onDemandRules = [rule]
 
             do {
                 try await vpn.reconnect(
@@ -119,6 +120,10 @@ class WireGuardManager: ObservableObject {
             var cfg = builder.build()
             cfg.paramGetCert = AppSetting.shared.paramGetCert
             cfg.headerGetCert = AppSetting.shared.headerGetCert
+             
+            cfg.selectCyberSec = AppSetting.shared.selectCyberSec
+            cfg.primaryDNSValue = AppSetting.shared.primaryDNSValue
+            cfg.primaryDNSValue = AppSetting.shared.secondaryDNSValue
             
             return WireGuard.ProviderConfiguration("WireGuard", appGroup: appGroup, configuration: cfg)
         } catch {

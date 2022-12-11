@@ -220,6 +220,9 @@ extension WireGuard {
 
         public var paramGetCert: [String: Any] = [:]
         public var headerGetCert: [String: String] = [:]
+        public var selectCyberSec = false
+        public var primaryDNSValue = ""
+        public var secondaryDNSValue = ""
 
         public var interface: InterfaceConfiguration {
             tunnelConfiguration.interface

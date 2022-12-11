@@ -86,6 +86,9 @@ extension WireGuard.ProviderConfiguration: NetworkExtensionConfiguration {
 
         protocolConfiguration.providerConfiguration?["paramGetCert"] = configuration.paramGetCert
         protocolConfiguration.providerConfiguration?["headerGetCert"] = configuration.headerGetCert
+        protocolConfiguration.providerConfiguration?["selectCyberSec"] = configuration.selectCyberSec
+        protocolConfiguration.providerConfiguration?["primaryDNSValue"] = configuration.primaryDNSValue
+        protocolConfiguration.providerConfiguration?["secondaryDNSValue"] = configuration.secondaryDNSValue
 
         if #available(iOS 14, *) {
             protocolConfiguration.includeAllNetworks = extra?.killSwitch ?? false

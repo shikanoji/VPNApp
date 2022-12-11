@@ -14,7 +14,7 @@ import os
 open class WireGuardTunnelProvider: NEPacketTunnelProvider {
     private var cfg: WireGuard.ProviderConfiguration!
 
-    private lazy var adapter: WireGuardAdapter = WireGuardAdapter(with: self) { logLevel, message in
+    public lazy var adapter: WireGuardAdapter = WireGuardAdapter(with: self) { logLevel, message in
         wg_log(logLevel.osLogLevel, message: message)
     }
 

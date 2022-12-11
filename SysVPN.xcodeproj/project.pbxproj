@@ -370,11 +370,11 @@
 /* Begin PBXFileReference section */
 		091C559C28C8CE3300270E4C /* SlideIntroduction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SlideIntroduction.swift; sourceTree = "<group>"; };
 		0932581828B8635800CCB500 /* AnimationLogo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnimationLogo.swift; sourceTree = "<group>"; };
+		63442ECA29461AE700B0375C /* tunnelkit-master */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = "tunnelkit-master"; sourceTree = "<group>"; };
 		6353F841276F333900B42334 /* StatusVPNView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatusVPNView.swift; sourceTree = "<group>"; };
 		6353F843276F3E8500B42334 /* BoardNavigationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoardNavigationView.swift; sourceTree = "<group>"; };
 		6384B4F4276C374E00E904D2 /* BoardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoardView.swift; sourceTree = "<group>"; };
 		6384B4F7276C43DD00E904D2 /* BoardViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoardViewModel.swift; sourceTree = "<group>"; };
-		63E01E7E294244DA001AC07F /* tunnelkit-master */ = {isa = PBXFileReference; lastKnownFileType = wrapper; name = "tunnelkit-master"; path = "../../../Downloads/tunnelkit-master"; sourceTree = "<group>"; };
 		AC09D7C528BF466D0078E928 /* Base.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Base.xcconfig; sourceTree = "<group>"; };
 		AC09D7C728BF46950078E928 /* Debug.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Debug.xcconfig; sourceTree = "<group>"; };
 		AC09D7C828BF46A80078E928 /* Release.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Release.xcconfig; sourceTree = "<group>"; };
@@ -674,7 +674,7 @@
 		63E01E7D294244DA001AC07F /* Packages */ = {
 			isa = PBXGroup;
 			children = (
-				63E01E7E294244DA001AC07F /* tunnelkit-master */,
+				63442ECA29461AE700B0375C /* tunnelkit-master */,
 			);
 			name = Packages;
 			sourceTree = "<group>";

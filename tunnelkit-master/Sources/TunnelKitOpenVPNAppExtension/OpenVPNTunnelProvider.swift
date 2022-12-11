@@ -232,20 +232,39 @@ open class OpenVPNTunnelProvider: NEPacketTunnelProvider {
         }
     }
     
-    open func reloadSessionAndConnect(cfg: OpenVPN.Configuration) {
+    func refreshConnection() {
+        reasserting = true
+        tunnelQueue.sync {
+            shouldReconnect = false
+            self.session?.delegate = nil
+            self.socket?.delegate = nil
+            self.socket?.delegate = nil
+            self.socket?.unobserve()
+            self.socket = nil
+            self.session?.shutdown(error: nil)
+            self.session = nil
+        }
+    }
+    
+    open func reloadSessionAndConnect(cfg: OpenVPN.ProviderConfiguration) {
+        refreshConnection()
+        self.cfg = cfg
+        
+        strategy = ConnectionStrategy(configuration: cfg.configuration)
+
         let session: OpenVPNSession
         do {
-            session = try OpenVPNSession(queue: tunnelQueue, configuration: cfg, cachesURL: cachesURL)
+            session = try OpenVPNSession(queue: tunnelQueue, configuration: cfg.configuration, cachesURL: cachesURL)
             refreshDataCount()
-        } catch {
+        } catch let e {
+            pendingStartHandler?(e)
             return
         }
         
+        session.credentials = nil
         session.delegate = self
         self.session = session
-
-        logCurrentSSID()
-        
+         
         tunnelQueue.sync {
             self.connectTunnel()
         }

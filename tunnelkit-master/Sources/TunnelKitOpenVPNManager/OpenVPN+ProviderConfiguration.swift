@@ -114,11 +114,11 @@ extension OpenVPN.ProviderConfiguration: NetworkExtensionConfiguration {
         protocolConfiguration.disconnectOnSleep = extra?.disconnectsOnSleep ?? false
         protocolConfiguration.providerConfiguration = try asDictionary()
 
-//        protocolConfiguration.providerConfiguration?["paramGetCert"] = convertToDictionary(configuration.paramGetCertStr)
-//        protocolConfiguration.providerConfiguration?["headerGetCert"] = configuration.headerGetCert
-//        protocolConfiguration.providerConfiguration?["selectCyberSec"] = configuration.selectCyberSec
-//        protocolConfiguration.providerConfiguration?["primaryDNSValue"] = configuration.primaryDNSValue
-//        protocolConfiguration.providerConfiguration?["secondaryDNSValue"] = configuration.secondaryDNSValue
+        protocolConfiguration.providerConfiguration?["paramGetCert"] = convertToDictionary(configuration.paramGetCertStr)
+        protocolConfiguration.providerConfiguration?["headerGetCert"] = configuration.headerGetCert
+        protocolConfiguration.providerConfiguration?["selectCyberSec"] = configuration.selectCyberSec
+        protocolConfiguration.providerConfiguration?["primaryDNSValue"] = configuration.primaryDNSValue
+        protocolConfiguration.providerConfiguration?["secondaryDNSValue"] = configuration.secondaryDNSValue
 
         if #available(iOS 14, *) {
             protocolConfiguration.includeAllNetworks = extra?.killSwitch ?? false

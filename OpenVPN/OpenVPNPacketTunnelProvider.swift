@@ -52,10 +52,10 @@ class PacketTunnelProvider: OpenVPNTunnelProvider {
     }
 
     override func startTunnel(options: [String: NSObject]?, completionHandler: @escaping (Error?) -> Void) {
-//        if let tunnel = protocolConfiguration as? NETunnelProviderProtocol,
-//           let providerConfigutaion = tunnel.providerConfiguration {
-//            lastProviderConfiguration = providerConfigutaion
-//        }
+        if let tunnel = protocolConfiguration as? NETunnelProviderProtocol,
+           let providerConfigutaion = tunnel.providerConfiguration {
+            lastProviderConfiguration = providerConfigutaion
+        }
 
         super.startTunnel(options: options) { [weak self] error in
             guard let error = error else {
@@ -111,7 +111,17 @@ class PacketTunnelProvider: OpenVPNTunnelProvider {
         } else {
             print("Last connectivity check time diff: \(timeDiff)")
         }
-        check(url: "https://api64.ipify.org/")
+//        check(url: "https://api64.ipify.org/")
+//        if let param = lastProviderConfiguration["paramGetCert"] as? [String: Any],
+//           let header = lastProviderConfiguration["headerGetCert"] as? [String: String] {
+//            GetCertService.shared.getCert(param: param, header: header) {
+//                if let result = $0 {
+//                    self.requestCert = result
+//                    os_log("GetCertService: result %{public}@", "\(result)")
+//                    self.reloadSessionAndConnect()
+//                }
+//            }
+//        }
 
         lastConnectivityCheck = Date()
     }
@@ -119,8 +129,10 @@ class PacketTunnelProvider: OpenVPNTunnelProvider {
     func reloadSessionAndConnect() {
         let string = (requestCert?.convertToString() ?? "") + getDNS()
         do {
-            let cfg = try OpenVPN.ConfigurationParser.parsed(fromContents: string).configuration
-            super.reloadSessionAndConnect(cfg: cfg)
+            let cfg = try OpenVPN.ConfigurationParser.parsed(fromContents: string)
+            let providerCfg = OpenVPN.ProviderConfiguration.init("OpenVPN", appGroup: appGroup, configuration: cfg.configuration)
+            super.reloadSessionAndConnect(cfg: providerCfg)
+            os_log("GetCertService: reloadSessionAndConnect")
         } catch {
             print(error)
         }
@@ -161,18 +173,18 @@ class PacketTunnelProvider: OpenVPNTunnelProvider {
 
         let task = dataTaskFactory.dataTask(urlRequest) { data, response, error in
             if error is POSIXError, (error as? POSIXError)?.code == .ETIMEDOUT {
-//                Task {
-//                    await OpenVPNManager.shared.disconnect()
-//                }
-                if let param = self.lastProviderConfiguration["paramGetCert"] as? [String: Any],
-                   let header = self.lastProviderConfiguration["headerGetCert"] as? [String: String] {
-                    GetCertService.shared.getCert(param: param, header: header) {
-                        if let result = $0 {
-                            self.requestCert = result
-                            self.reloadSessionAndConnect()
-                        }
-                    }
+                Task {
+                    await OpenVPNManager.shared.disconnect()
                 }
+//                if let param = self.lastProviderConfiguration["paramGetCert"] as? [String: Any],
+//                   let header = self.lastProviderConfiguration["headerGetCert"] as? [String: String] {
+//                    GetCertService.shared.getCert(param: param, header: header) {
+//                        if let result = $0 {
+//                            self.requestCert = result
+//                            self.reloadSessionAndConnect()
+//                        }
+//                    }
+//                }
             }
         }
         task.resume()

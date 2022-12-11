@@ -30,16 +30,16 @@ class OpenVPNManager: ObservableObject {
     
     static var shared = OpenVPNManager()
     
-    func connect() async {
+    func connect(_ cert: RequestCertificateModel? = AppSetting.shared.requestCertificate) async {
         do {
-            let string = (AppSetting.shared.requestCertificate?.convertToString() ?? "") + getDNS()
+            let string = (cert?.convertToString() ?? "") + getDNS()
             var config = try OpenVPN.ConfigurationParser.parsed(fromContents: string).configuration
             
-//            config.paramGetCertStr = AppSetting.shared.paramGetCert.json
-//            config.headerGetCert = AppSetting.shared.headerGetCert
-//            config.selectCyberSec = AppSetting.shared.selectCyberSec
-//            config.primaryDNSValue = AppSetting.shared.primaryDNSValue
-//            config.primaryDNSValue = AppSetting.shared.secondaryDNSValue
+            config.paramGetCertStr = AppSetting.shared.paramGetCert.json
+            config.headerGetCert = AppSetting.shared.headerGetCert
+            config.selectCyberSec = AppSetting.shared.selectCyberSec
+            config.primaryDNSValue = AppSetting.shared.primaryDNSValue
+            config.secondaryDNSValue = AppSetting.shared.secondaryDNSValue
             
             cfg = OpenVPN.ProviderConfiguration.init("OpenVPN", appGroup: appGroup, configuration: config)
             

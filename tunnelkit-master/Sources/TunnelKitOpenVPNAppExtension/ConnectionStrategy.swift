@@ -41,6 +41,7 @@ import TunnelKitCore
 import TunnelKitAppExtension
 import TunnelKitOpenVPNCore
 import TunnelKitOpenVPNManager
+import OSLog
 
 private let log = SwiftyBeaver.self
 
