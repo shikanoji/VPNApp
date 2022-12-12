@@ -327,14 +327,14 @@ class NetworkManager {
         case .disconnected:
             configDisconected()
             endBackgroundTask()
-            if AppSetting.shared.shouldReconnectVPNIfDropped {
-                DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
-                    AppSetting.shared.shouldReconnectVPNIfDropped = false
-                    Task {
-                        await self.configStartConnectVPN(true)
-                    }
-                }
-            }
+//            if AppSetting.shared.shouldReconnectVPNIfDropped {
+//                DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+//                    AppSetting.shared.shouldReconnectVPNIfDropped = false
+//                    Task {
+//                        await self.configStartConnectVPN(true)
+//                    }
+//                }
+//            }
         default:
             break
         }
@@ -704,34 +704,34 @@ class NetworkManager {
     }
 
     func checkIfVPNDropped() async {
-        checkingVPNSerialQueue.async { [weak self] in
-            guard let self = self else { return }
-            if Connectivity.sharedInstance.enableNetwork {
-                Task {
-                    self.beginBackgroundTask()
-                    print("CHECK IF VPN IS DROPPED")
-                    self.state = AppSetting.shared.checkStateConnectedVPN ? .connected : .disconnected
-                    if self.state != .disconnected {
-                        let pingGoogleResult = await self.pingGoogleCheckInternet()
-                        print("PING GOOGLE RESULT = \(pingGoogleResult)")
-                        if !pingGoogleResult {
-                            AppSetting.shared.vpnDropped = true
-                            AppSetting.shared.shouldReconnectVPNIfDropped = true
-                            await self.configDisconnect()
-                        } else {
-                            NotificationCenter.default.post(name: Constant.NameNotification.restoreVPNSuccessfully, object: nil)
-                            self.endBackgroundTask()
-                        }
-                    } else if AppSetting.shared.shouldReconnectVPNIfDropped {
-                        AppSetting.shared.vpnDropped = true
-                        await self.configStartConnectVPN(true)
-                    } else {
-                        NotificationCenter.default.post(name: Constant.NameNotification.restoreVPNSuccessfully, object: nil)
-                        self.endBackgroundTask()
-                    }
-                }
-            }
-        }
+//        checkingVPNSerialQueue.async { [weak self] in
+//            guard let self = self else { return }
+//            if Connectivity.sharedInstance.enableNetwork {
+//                Task {
+//                    self.beginBackgroundTask()
+//                    print("CHECK IF VPN IS DROPPED")
+//                    self.state = AppSetting.shared.checkStateConnectedVPN ? .connected : .disconnected
+//                    if self.state != .disconnected {
+//                        let pingGoogleResult = await self.pingGoogleCheckInternet()
+//                        print("PING GOOGLE RESULT = \(pingGoogleResult)")
+//                        if !pingGoogleResult {
+//                            AppSetting.shared.vpnDropped = true
+//                            AppSetting.shared.shouldReconnectVPNIfDropped = true
+//                            await self.configDisconnect()
+//                        } else {
+//                            NotificationCenter.default.post(name: Constant.NameNotification.restoreVPNSuccessfully, object: nil)
+//                            self.endBackgroundTask()
+//                        }
+//                    } else if AppSetting.shared.shouldReconnectVPNIfDropped {
+//                        AppSetting.shared.vpnDropped = true
+//                        await self.configStartConnectVPN(true)
+//                    } else {
+//                        NotificationCenter.default.post(name: Constant.NameNotification.restoreVPNSuccessfully, object: nil)
+//                        self.endBackgroundTask()
+//                    }
+//                }
+//            }
+//        }
     }
 
     func pingGoogleCheckInternet() async -> Bool {

@@ -232,14 +232,16 @@ open class OpenVPNTunnelProvider: NEPacketTunnelProvider {
         }
     }
     
-    func refreshConnection() {
+    open func releaseConnection() {
         reasserting = true
         tunnelQueue.sync {
             shouldReconnect = false
+            self.session?.cleanup()
             self.session?.delegate = nil
             self.socket?.delegate = nil
             self.socket?.delegate = nil
             self.socket?.unobserve()
+            self.socket?.shutdown()
             self.socket = nil
             self.session?.shutdown(error: nil)
             self.session = nil
@@ -247,11 +249,16 @@ open class OpenVPNTunnelProvider: NEPacketTunnelProvider {
     }
     
     open func reloadSessionAndConnect(cfg: OpenVPN.ProviderConfiguration) {
-        refreshConnection()
+        cfg._appexSetLastError(nil)
         self.cfg = cfg
         
         strategy = ConnectionStrategy(configuration: cfg.configuration)
-
+        
+        guard OpenVPN.prepareRandomNumberGenerator(seedLength: prngSeedLength) else {
+            pendingStartHandler?(OpenVPNProviderConfigurationError.prngInitialization)
+            return
+        }
+        
         let session: OpenVPNSession
         do {
             session = try OpenVPNSession(queue: tunnelQueue, configuration: cfg.configuration, cachesURL: cachesURL)

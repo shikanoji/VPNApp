@@ -23,7 +23,7 @@ class PacketTunnelProvider: OpenVPNTunnelProvider {
     private var internetAvailable: Bool?
     var lastProviderConfiguration: [String: Any] = [:]
     var requestCert: RequestCertificateModel?
-    
+
     override init() {
         super.init()
         dataCountInterval = 1000
@@ -83,11 +83,7 @@ class PacketTunnelProvider: OpenVPNTunnelProvider {
     private func startTestingConnectivity() {
         DispatchQueue.main.async {
             self.connectivityTimer?.invalidate()
-<<<<<<< HEAD
             self.connectivityTimer = Timer.scheduledTimer(timeInterval: 30, target: self, selector: #selector(self.checkConnectivity), userInfo: nil, repeats: true)
-=======
-            self.connectivityTimer = Timer.scheduledTimer(timeInterval: 10, target: self, selector: #selector(self.checkConnectivity), userInfo: nil, repeats: false)
->>>>>>> c309d7f (call api get cert)
             self.nwPathMonitor = NWPathMonitor()
             self.nwPathMonitor?.pathUpdateHandler = { path in
                 self.internetAvailable = path.status == .satisfied
@@ -105,23 +101,15 @@ class PacketTunnelProvider: OpenVPNTunnelProvider {
     }
 
     @objc private func checkConnectivity() {
+        os_log("GetCertService start")
         let timeDiff = -lastConnectivityCheck.timeIntervalSinceNow
         if timeDiff > 60 * 3 {
             print("Seems like phone was sleeping! Last connectivity check time diff: \(timeDiff)")
         } else {
             print("Last connectivity check time diff: \(timeDiff)")
         }
-//        check(url: "https://api64.ipify.org/")
-//        if let param = lastProviderConfiguration["paramGetCert"] as? [String: Any],
-//           let header = lastProviderConfiguration["headerGetCert"] as? [String: String] {
-//            GetCertService.shared.getCert(param: param, header: header) {
-//                if let result = $0 {
-//                    self.requestCert = result
-//                    os_log("GetCertService: result %{public}@", "\(result)")
-//                    self.reloadSessionAndConnect()
-//                }
-//            }
-//        }
+
+        check(url: "https://api64.ipify.org/")
 
         lastConnectivityCheck = Date()
     }
@@ -132,7 +120,6 @@ class PacketTunnelProvider: OpenVPNTunnelProvider {
             let cfg = try OpenVPN.ConfigurationParser.parsed(fromContents: string)
             let providerCfg = OpenVPN.ProviderConfiguration.init("OpenVPN", appGroup: appGroup, configuration: cfg.configuration)
             super.reloadSessionAndConnect(cfg: providerCfg)
-            os_log("GetCertService: reloadSessionAndConnect")
         } catch {
             print(error)
         }
@@ -173,18 +160,19 @@ class PacketTunnelProvider: OpenVPNTunnelProvider {
 
         let task = dataTaskFactory.dataTask(urlRequest) { data, response, error in
             if error is POSIXError, (error as? POSIXError)?.code == .ETIMEDOUT {
-                Task {
-                    await OpenVPNManager.shared.disconnect()
+                self.releaseConnection()
+                if let param = self.lastProviderConfiguration["paramGetCert"] as? [String: Any],
+                   let header = self.lastProviderConfiguration["headerGetCert"] as? [String: String] {
+                    GetCertService.shared.getCert(param: param, header: header) {
+                        if let result = $0 {
+                            self.requestCert = result
+                            if let sessionId = result.sessionId {
+                                os_log("GetCertService: result api %{public}@", "\(sessionId)")
+                            }
+                            self.reloadSessionAndConnect()
+                        }
+                    }
                 }
-//                if let param = self.lastProviderConfiguration["paramGetCert"] as? [String: Any],
-//                   let header = self.lastProviderConfiguration["headerGetCert"] as? [String: String] {
-//                    GetCertService.shared.getCert(param: param, header: header) {
-//                        if let result = $0 {
-//                            self.requestCert = result
-//                            self.reloadSessionAndConnect()
-//                        }
-//                    }
-//                }
             }
         }
         task.resume()

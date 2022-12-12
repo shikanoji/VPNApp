@@ -51,7 +51,7 @@ class OpenVPNManager: ObservableObject {
                 try await vpn.reconnect(
                     tunnelIdentifier,
                     configuration: cfg!,
-                    extra: nil,
+                    extra: extra,
                     after: .seconds(2)
                 )
             } catch {

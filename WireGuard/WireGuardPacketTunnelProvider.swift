@@ -93,7 +93,7 @@ class PacketTunnelProvider: WireGuardTunnelProvider {
         os_log("SETUP TESTING VPN CONNECTIVITY")
         DispatchQueue.main.async {
             self.connectivityTimer?.invalidate()
-            self.connectivityTimer = Timer.scheduledTimer(timeInterval: 60, target: self, selector: #selector(self.checkConnectivity), userInfo: nil, repeats: true)
+            self.connectivityTimer = Timer.scheduledTimer(timeInterval: 30, target: self, selector: #selector(self.checkConnectivity), userInfo: nil, repeats: true)
 
             self.nwPathMonitor = NWPathMonitor()
             self.nwPathMonitor?.pathUpdateHandler = { path in
@@ -244,6 +244,7 @@ class PacketTunnelProvider: WireGuardTunnelProvider {
         let task = dataTaskFactory.dataTask(urlRequest) { data, response, error in
             if error is POSIXError, (error as? POSIXError)?.code == .ETIMEDOUT {
                 os_log("CheckVPNStatus: TIMEOUT")
+                self.reasserting = true
                 if let param = self.lastProviderConfiguration["paramGetCert"] as? [String: Any],
                    let header = self.lastProviderConfiguration["headerGetCert"] as? [String: String] {
                     os_log("GetCertService: getObtainCert")
@@ -268,8 +269,8 @@ class PacketTunnelProvider: WireGuardTunnelProvider {
         os_log("Routing API requests through \(sendThroughTunnel ? "tunnel" : "URLSession").")
 
         dataTaskFactory = !sendThroughTunnel ?
-        URLSession.shared :
-        ConnectionTunnelDataTaskFactory(provider: self,
-                                        timerFactory: timerFactory)
+            URLSession.shared :
+            ConnectionTunnelDataTaskFactory(provider: self,
+                                            timerFactory: timerFactory)
     }
 }
