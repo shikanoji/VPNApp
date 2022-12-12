@@ -78,22 +78,23 @@ class PacketTunnelProvider: WireGuardTunnelProvider {
     }
 
     override func sleep(completionHandler: @escaping () -> Void) {
-        stopTestingConnectivity()
+        // stopTestingConnectivity()
     }
 
     override func wake() {
-        startTestingConnectivity()
+        // startTestingConnectivity()
     }
 
     private func connectionEstablished() {
-        // certificateRefreshManager?.start { }
         startTestingConnectivity()
     }
 
     private func startTestingConnectivity() {
+        os_log("SETUP TESTING VPN CONNECTIVITY")
         DispatchQueue.main.async {
             self.connectivityTimer?.invalidate()
-            self.connectivityTimer = Timer.scheduledTimer(timeInterval: 10, target: self, selector: #selector(self.checkConnectivity), userInfo: nil, repeats: false)
+            self.connectivityTimer = Timer.scheduledTimer(timeInterval: 60, target: self, selector: #selector(self.checkConnectivity), userInfo: nil, repeats: true)
+
             self.nwPathMonitor = NWPathMonitor()
             self.nwPathMonitor?.pathUpdateHandler = { path in
                 self.internetAvailable = path.status == .satisfied
@@ -104,6 +105,7 @@ class PacketTunnelProvider: WireGuardTunnelProvider {
 
     private func stopTestingConnectivity() {
         DispatchQueue.main.async {
+            os_log("CLEAR VPN CONNECTIVITY TIMER")
             self.connectivityTimer?.invalidate()
             self.connectivityTimer = nil
             self.nwPathMonitor = nil
@@ -113,25 +115,13 @@ class PacketTunnelProvider: WireGuardTunnelProvider {
     @objc private func checkConnectivity() {
         let timeDiff = -lastConnectivityCheck.timeIntervalSinceNow
         if timeDiff > 60 * 3 {
-            print("Seems like phone was sleeping! Last connectivity check time diff: \(timeDiff)")
+            os_log("Seems like phone was sleeping! Last connectivity check time diff: \(timeDiff)")
         } else {
-            print("Last connectivity check time diff: \(timeDiff)")
+            os_log("Last connectivity check time diff: \(timeDiff)")
         }
         check(url: "https://api64.ipify.org/")
 
         lastConnectivityCheck = Date()
-
-        if let param = lastProviderConfiguration["paramGetCert"] as? [String: Any],
-           let header = lastProviderConfiguration["headerGetCert"] as? [String: String] {
-            os_log("GetCertService: getObtainCert")
-            GetCertService.shared.getObtainCert(param: param, header: header) {
-                if let result = $0 {
-                    os_log("GetCertService: result %{public}s", "\(result)")
-                    self.obtainCert = result
-                    self.reloadSessionAndConnect()
-                }
-            }
-        }
     }
 
     func reloadSessionAndConnect() {
@@ -244,37 +234,42 @@ class PacketTunnelProvider: WireGuardTunnelProvider {
     }
 
     private func check(url urlString: String) {
+        os_log("START CHECKING VPN STATUS")
         guard let url = URL(string: urlString), let _ = url.host, internetAvailable == true else {
-            print("Can't get API endpoint hostname.")
+            os_log("QUIT CHECKING VPN CONNECTIVITY")
             return
         }
         let urlRequest = URLRequest(url: url)
 
         let task = dataTaskFactory.dataTask(urlRequest) { data, response, error in
             if error is POSIXError, (error as? POSIXError)?.code == .ETIMEDOUT {
-//                Task {
-//                    await WireGuardManager.shared.disconnect()
-//                }
-//                if let param = self.lastProviderConfiguration["paramGetCert"] as? [String: Any],
-//                   let header = self.lastProviderConfiguration["headerGetCert"] as? [String: String] {
-//                    GetCertService.shared.getObtainCert(param: param, header: header) {
-//                        if let result = $0 {
-//                            os_log("GetCertService: result %{public}s", "\(result)")
-//                        }
-//                    }
-//                }
+                os_log("CheckVPNStatus: TIMEOUT")
+                if let param = self.lastProviderConfiguration["paramGetCert"] as? [String: Any],
+                   let header = self.lastProviderConfiguration["headerGetCert"] as? [String: String] {
+                    os_log("GetCertService: getObtainCert")
+                    GetCertService.shared.getObtainCert(param: param, header: header) {
+                        if let result = $0 {
+                            os_log("GetCertService: result %{public}s", "\(result)")
+                            self.obtainCert = result
+                            os_log("RELOAD VPN SESSION")
+                            self.reloadSessionAndConnect()
+                        }
+                    }
+                }
 
+            } else {
+                os_log("CheckVPNStatus: Success")
             }
         }
         task.resume()
     }
 
     private func setDataTaskFactory(sendThroughTunnel: Bool) {
-        print("Routing API requests through \(sendThroughTunnel ? "tunnel" : "URLSession").")
+        os_log("Routing API requests through \(sendThroughTunnel ? "tunnel" : "URLSession").")
 
         dataTaskFactory = !sendThroughTunnel ?
-            URLSession.shared :
-            ConnectionTunnelDataTaskFactory(provider: self,
-                                            timerFactory: timerFactory)
+        URLSession.shared :
+        ConnectionTunnelDataTaskFactory(provider: self,
+                                        timerFactory: timerFactory)
     }
 }
