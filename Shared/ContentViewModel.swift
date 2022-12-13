@@ -100,7 +100,7 @@ class ContentViewModel: ObservableObject {
     }
     
     func loadAppSettingAndData(completion: @escaping () -> Void) {
-        if !AppSetting.shared.isConnectedToVpn && AppSetting.shared.needLoadApiMap {
+        if !AppSetting.shared.isConnectedToVpn {
             getCountryList {
                 self.getMultihopList {
                     completion()
@@ -112,7 +112,7 @@ class ContentViewModel: ObservableObject {
     }
     
     func getCountryList(completion: @escaping () -> Void) {
-        guard Connectivity.sharedInstance.enableNetwork else {
+        guard (Connectivity.sharedInstance.enableNetwork || Connectivity.isConnectedToInternet) else {
             completion()
             return
         }
@@ -130,7 +130,7 @@ class ContentViewModel: ObservableObject {
     }
     
     func getMultihopList(completion: @escaping () -> Void) {
-        guard Connectivity.sharedInstance.enableNetwork else {
+        guard (Connectivity.sharedInstance.enableNetwork || Connectivity.isConnectedToInternet) else {
             completion()
             return
         }

@@ -129,7 +129,7 @@ class WireGuardManager: ObservableObject {
     func getCustomDNS() -> [String] {
         var dnsList: [String] = []
         
-        guard let dnsCyberSec = AppSetting.shared.requestCertificate?.dns,
+        guard let dnsCyberSec = AppSetting.shared.obtainCertificate?.dns,
               !dnsCyberSec.isEmpty else {
             if AppSetting.shared.primaryDNSValue != "" {
                 dnsList.append(AppSetting.shared.primaryDNSValue)
