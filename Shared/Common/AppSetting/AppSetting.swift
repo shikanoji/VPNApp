@@ -298,4 +298,22 @@ class AppSetting {
     var checkStateConnectedVPN: Bool {
         return isConnectedToOurVPN && isConnectedToVpn
     }
+
+    var shouldReconnectVPNIfDropped: Bool {
+        get {
+            return UserDefaults.standard.bool(forKey: AppKeys.shouldReconnectVPNIfDropped.rawValue)
+        }
+        set {
+            UserDefaults.standard.setValue(newValue, forKey: AppKeys.shouldReconnectVPNIfDropped.rawValue)
+        }
+    }
+
+    var openVPNTunnelCouldBeDropped: Bool {
+        get {
+            return UserDefaults.standard.bool(forKey: "openVPNTunnelCouldBeDropped")
+        }
+        set {
+            UserDefaults.standard.setValue(newValue, forKey: "openVPNTunnelCouldBeDropped")
+        }
+    }
 }

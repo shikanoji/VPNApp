@@ -45,6 +45,7 @@ class OpenVPNManager: ObservableObject {
             
             var extra = NetworkExtensionExtra()
             let rule = NEOnDemandRuleConnect()
+            rule.interfaceTypeMatch = .any
             extra.onDemandRules = [rule]
 
             do {

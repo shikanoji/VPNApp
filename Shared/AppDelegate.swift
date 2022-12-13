@@ -37,6 +37,7 @@ class AppDelegate: NSObject, UIApplicationDelegate, MessagingDelegate, UNUserNot
             self.handleAppRefresh(task: task as! BGProcessingTask)
         }
         AppDelegate.shared = self
+        AppSetting.shared.openVPNTunnelCouldBeDropped = false
         NotificationCenter.default.addObserver(
             self,
             selector: #selector(endBGTaskOnSuccessfullyRestoreVPN),

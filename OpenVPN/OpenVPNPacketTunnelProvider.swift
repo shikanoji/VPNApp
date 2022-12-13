@@ -25,11 +25,23 @@ class PacketTunnelProvider: OpenVPNTunnelProvider {
     var requestCert: RequestCertificateModel?
 
     override init() {
+        os_log("INITIATE TUNNEL PROVIDER")
         super.init()
+        if userDefaultsShared?.bool(forKey: "openVPNTunnelCouldBeDropped") == true {
+            os_log("VPN DROPPED - DISCONNECT")
+            userDefaultsShared?.set(false, forKey: "openVPNTunnelCouldBeDropped")
+            Task {
+                await OpenVPNManager.shared.disconnect()
+            }
+        }
         dataCountInterval = 1000
         timerFactory = TimerFactoryImplementation()
         let dataTaskFactoryGetter = { [unowned self] in dataTaskFactory! }
         setDataTaskFactory(sendThroughTunnel: true)
+    }
+
+    deinit {
+        os_log("DEINITIATE TUNNEL PROVIDER")
     }
 
     override func setTunnelNetworkSettings(_ tunnelNetworkSettings: NETunnelNetworkSettings?, completionHandler: ((Error?) -> Void)? = nil) {
@@ -67,20 +79,30 @@ class PacketTunnelProvider: OpenVPNTunnelProvider {
         }
     }
 
+    override func stopTunnel(with reason: NEProviderStopReason) async {
+        os_log("STOP OPENVPN TUNNEL")
+        userDefaultsShared?.set(false, forKey: "openVPNTunnelCouldBeDropped")
+        await super.stopTunnel(with: reason)
+    }
+
     override func sleep(completionHandler: @escaping () -> Void) {
-        stopTestingConnectivity()
+        // stopTestingConnectivity()
     }
 
     override func wake() {
-        startTestingConnectivity()
+        // startTestingConnectivity()
+        checkConnectivity()
     }
 
     private func connectionEstablished() {
+        os_log("START OPENVPN TUNNEL")
+        userDefaultsShared?.set(true, forKey: "openVPNTunnelCouldBeDropped")
         // certificateRefreshManager?.start { }
         startTestingConnectivity()
     }
 
     private func startTestingConnectivity() {
+        os_log("SETUP TESTING VPN CONNECTIVITY")
         DispatchQueue.main.async {
             self.connectivityTimer?.invalidate()
             self.connectivityTimer = Timer.scheduledTimer(timeInterval: 30, target: self, selector: #selector(self.checkConnectivity), userInfo: nil, repeats: true)
@@ -93,15 +115,14 @@ class PacketTunnelProvider: OpenVPNTunnelProvider {
     }
 
     private func stopTestingConnectivity() {
-        DispatchQueue.main.async {
-            self.connectivityTimer?.invalidate()
-            self.connectivityTimer = nil
-            self.nwPathMonitor = nil
-        }
+//        DispatchQueue.main.async {
+//            self.connectivityTimer?.invalidate()
+//            self.connectivityTimer = nil
+//            self.nwPathMonitor = nil
+//        }
     }
 
     @objc private func checkConnectivity() {
-        os_log("GetCertService start")
         let timeDiff = -lastConnectivityCheck.timeIntervalSinceNow
         if timeDiff > 60 * 3 {
             print("Seems like phone was sleeping! Last connectivity check time diff: \(timeDiff)")
@@ -152,30 +173,43 @@ class PacketTunnelProvider: OpenVPNTunnelProvider {
     }
 
     private func check(url urlString: String) {
+        os_log("START CHECKING VPN STATUS")
         guard let url = URL(string: urlString), let _ = url.host, internetAvailable == true else {
-            print("Can't get API endpoint hostname.")
+            os_log("QUIT CHECKING VPN CONNECTIVITY")
             return
         }
         let urlRequest = URLRequest(url: url)
 
         let task = dataTaskFactory.dataTask(urlRequest) { data, response, error in
             if error is POSIXError, (error as? POSIXError)?.code == .ETIMEDOUT {
-                self.releaseConnection()
-                if let param = self.lastProviderConfiguration["paramGetCert"] as? [String: Any],
-                   let header = self.lastProviderConfiguration["headerGetCert"] as? [String: String] {
-                    GetCertService.shared.getCert(param: param, header: header) {
-                        if let result = $0 {
-                            self.requestCert = result
-                            if let sessionId = result.sessionId {
-                                os_log("GetCertService: result api %{public}@", "\(sessionId)")
-                            }
-                            self.reloadSessionAndConnect()
+                os_log("CheckVPNStatus: TIMEOUT")
+                self.refreshCert()
+            } else {
+                os_log("CheckVPNStatus: Success")
+            }
+        }
+        task.resume()
+    }
+
+    private func refreshCert() {
+        os_log("START REFRESH CERTIFICATE")
+        releaseConnection()
+        DispatchQueue.global(qos: .background).asyncAfter(deadline: .now() + 1) {
+            if let param = self.lastProviderConfiguration["paramGetCert"] as? [String: Any],
+               let header = self.lastProviderConfiguration["headerGetCert"] as? [String: String] {
+                GetCertService.shared.getCert(param: param, header: header) {
+                    if let result = $0 {
+                        self.requestCert = result
+                        if let sessionId = result.sessionId {
+                            os_log("GetCertService: result api %{public}@", "\(sessionId)")
                         }
+                        os_log("RELOAD VPN SESSION")
+
+                        self.reloadSessionAndConnect()
                     }
                 }
             }
         }
-        task.resume()
     }
 
     private func setDataTaskFactory(sendThroughTunnel: Bool) {

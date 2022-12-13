@@ -8,15 +8,6 @@
 import Foundation
 
 extension AppSetting {
-    var shouldReconnectVPNIfDropped: Bool {
-        get {
-            return UserDefaults.standard.bool(forKey: AppKeys.shouldReconnectVPNIfDropped.rawValue)
-        }
-        set {
-            UserDefaults.standard.setValue(newValue, forKey: AppKeys.shouldReconnectVPNIfDropped.rawValue)
-        }
-    }
-
     var fcmToken: String {
         get {
             return UserDefaults.standard.string(forKey: AppKeys.fcmToken.rawValue) ?? ""
