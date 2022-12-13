@@ -228,7 +228,7 @@ class BoardViewModel: ObservableObject {
     
     func configDataRemote() {
         getIpInfo {
-            if !AppSetting.shared.isConnectedToVpn && AppSetting.shared.needLoadApiMap && Connectivity.sharedInstance.enableNetwork {
+            if !AppSetting.shared.isConnectedToVpn {
                 self.getCountryList {
                     self.getMultihopList {
                     }
@@ -265,7 +265,7 @@ class BoardViewModel: ObservableObject {
     }
     
     func getCountryList(completion: @escaping () -> Void) {
-        guard Connectivity.sharedInstance.enableNetwork else {
+        guard (Connectivity.sharedInstance.enableNetwork || Connectivity.isConnectedToInternet) else {
             completion()
             return
         }
@@ -284,14 +284,14 @@ class BoardViewModel: ObservableObject {
     }
     
     func getMultihopList(completion: @escaping () -> Void) {
-        guard Connectivity.sharedInstance.enableNetwork else {
+        guard (Connectivity.sharedInstance.enableNetwork || Connectivity.isConnectedToInternet) else {
             completion()
             return
         }
         
         ServiceManager.shared.getMutihopList()
             .subscribe { response in
-                if let result = response.result {
+                if let result = response.result, !result.isEmpty {
                     AppSetting.shared.saveMutilhopList(result)
                     self.mutilhopList = result
                 }

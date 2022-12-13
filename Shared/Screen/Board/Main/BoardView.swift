@@ -142,8 +142,8 @@ struct BoardView: View {
         .onWillAppear {
             viewModel.mesh = mesh
             viewModel.authentication = authentication
-            viewModel.configDataRemote()
             viewModel.configDataLocal()
+            viewModel.configDataRemote()
         }
     }
     
