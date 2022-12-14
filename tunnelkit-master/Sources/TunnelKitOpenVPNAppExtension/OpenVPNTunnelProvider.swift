@@ -680,7 +680,7 @@ extension OpenVPNTunnelProvider {
             }
             else {
                 os_log("END POINT FAILED")
-                refreshConnection()
+                startCheckRefresh()
             }
             return false
         }
