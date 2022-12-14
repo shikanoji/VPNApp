@@ -17,9 +17,9 @@ extension VPNStatus {
         switch self {
         case .connected:
             return L10n.Board.connected
-        case .connecting, .disconnecting:
+        case .connecting:
             return L10n.Board.connecting
-        case .disconnected:
+        case .disconnected, .disconnecting:
             return L10n.Board.navigationTitleNotConnect
         }
     }

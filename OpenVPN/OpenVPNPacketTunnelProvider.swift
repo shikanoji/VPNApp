@@ -24,6 +24,7 @@ class PacketTunnelProvider: OpenVPNTunnelProvider {
     private var currentRefreshSession: String?
     var lastProviderConfiguration: [String: Any] = [:]
     var requestCert: RequestCertificateModel?
+    private var requestCerting = false
 
     override init() {
         os_log("INITIATE TUNNEL PROVIDER")
@@ -37,7 +38,7 @@ class PacketTunnelProvider: OpenVPNTunnelProvider {
         }
         dataCountInterval = 1000
         timerFactory = TimerFactoryImplementation()
-        let dataTaskFactoryGetter = { [unowned self] in dataTaskFactory! }
+        _ = { [unowned self] in dataTaskFactory! }
         setDataTaskFactory(sendThroughTunnel: true)
     }
 
@@ -198,7 +199,7 @@ class PacketTunnelProvider: OpenVPNTunnelProvider {
         let urlRequest = URLRequest(url: url)
 
 
-        var sessionRefreshId = UUID().uuidString;
+        let sessionRefreshId = UUID().uuidString
         currentRefreshSession = sessionRefreshId
 
         os_log("CheckVPNStatus:  refresh with id:  %{public}@", sessionRefreshId)
@@ -226,14 +227,12 @@ class PacketTunnelProvider: OpenVPNTunnelProvider {
             return
         }
         os_log("START REFRESH CERTIFICATE")
-
-
-        releaseConnection()
         DispatchQueue.global(qos: .background).asyncAfter(deadline: .now() + 1) {
             if let param = self.lastProviderConfiguration["paramGetCert"] as? [String: Any],
                let header = self.lastProviderConfiguration["headerGetCert"] as? [String: String] {
                 GetCertService.shared.getCert(param: param, header: header) {
                     if let result = $0 {
+                        self.releaseConnection()
                         self.requestCert = result
                         if let sessionId = result.sessionId {
                             os_log("GetCertService: result api %{public}@", "\(sessionId)")

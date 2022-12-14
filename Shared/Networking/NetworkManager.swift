@@ -327,14 +327,14 @@ class NetworkManager {
         case .disconnected:
             configDisconected()
             endBackgroundTask()
-            if AppSetting.shared.shouldReconnectVPNIfDropped {
-                DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
-                    AppSetting.shared.shouldReconnectVPNIfDropped = false
-                    Task {
-                        await self.configStartConnectVPN(true)
-                    }
-                }
-            }
+//            if AppSetting.shared.shouldReconnectVPNIfDropped {
+//                DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
+//                    AppSetting.shared.shouldReconnectVPNIfDropped = false
+//                    Task {
+//                        await self.configStartConnectVPN(true)
+//                    }
+//                }
+//            }
         default:
             break
         }
@@ -413,7 +413,7 @@ class NetworkManager {
         checkAutoconnect()
         switch autoConnectType {
         case .off:
-            switch NetworkManager.shared.state {
+            switch state {
             case .disconnected:
                 AppSetting.shared.saveTimeConnectedVPN = nil
                 await configStartConnectVPN()

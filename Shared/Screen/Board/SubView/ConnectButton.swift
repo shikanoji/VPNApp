@@ -79,10 +79,10 @@ struct ConnectButton: View {
                 }
                 ZStack {
                     Circle()
-                        .strokeBorder(viewModel.stateUI == .disconnected ? Color.white : AppColor.themeColor, lineWidth: Constant.Board.QuickButton.widthBorderMax)
+                        .strokeBorder(viewModel.stateUI == .disconnected || viewModel.stateUI == .disconnecting ? Color.white : AppColor.themeColor, lineWidth: Constant.Board.QuickButton.widthBorderMax)
                         .frame(width: calculatebuttonsizeWidth(widthSizeFrame: widthSizeFrame)/4.5 + 21,
                                height: calculatebuttonsizeHeight(heightSizeFrame: heightSizeFrame)/4.5 + 21)
-                        .background(Circle().foregroundColor(viewModel.stateUI == .disconnected ? AppColor.themeColor : Color.white))
+                        .background(Circle().foregroundColor(viewModel.stateUI == .disconnected || viewModel.stateUI == .disconnecting ? AppColor.themeColor : Color.white))
                     Circle()
                         .strokeBorder(Color.black, lineWidth: Constant.Board.QuickButton.widthBorderMax)
                         .frame(width: calculatebuttonsizeWidth(widthSizeFrame: widthSizeFrame)/4.5 + 14,
