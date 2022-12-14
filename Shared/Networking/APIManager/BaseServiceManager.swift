@@ -20,11 +20,18 @@ class BaseServiceManager<API: TargetType> {
     func request(_ api: API) -> Single<Response> {
         return provider.rx.request(api)
             .flatMap {
-                if $0.statusCode == 401, !AppSetting.shared.isRefreshingToken {
-                    AppSetting.shared.isRefreshingToken = true
-                    throw TokenError.tokenExpired
-                } else {
+                if $0.statusCode >= 500 {
+                    AppSetting.shared.changeDomain = true
+                    Constant.changeDomain()
                     return Single.just($0)
+                } else {
+                    AppSetting.shared.changeDomain = false
+                    if $0.statusCode == 401, !AppSetting.shared.isRefreshingToken {
+                        AppSetting.shared.isRefreshingToken = true
+                        throw TokenError.tokenExpired
+                    } else {
+                        return Single.just($0)
+                    }
                 }
             }
             .retry { (error: Observable<TokenError>) in
@@ -33,7 +40,7 @@ class BaseServiceManager<API: TargetType> {
                 }
             }
             .handleResponse()
-            .retry(AppSetting.shared.refreshTokenError ? 0 : 2)
+            .retry(AppSetting.shared.refreshTokenError ? (AppSetting.shared.changeDomain ? 1 : 0) : 2)
     }
 
     func cancelTask() {

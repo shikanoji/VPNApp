@@ -10,6 +10,7 @@ import RxSwift
 
 enum AppKeys: String {
     /// Auth Keys
+    case changeDomain = "changeDomain"
     case idUser = "idUser"
     case email = "email"
     case isPremium = "isPremium"

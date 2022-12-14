@@ -17,9 +17,6 @@ class Connectivity: ObservableObject {
     private let monitorCellular = NWPathMonitor(requiredInterfaceType: .cellular)
 
     static let sharedReachability = NetworkReachabilityManager()!
-    static var isConnectedToInternet:Bool {
-        return sharedReachability.isReachable
-    }
 
     var enableWifi = false {
         didSet {
@@ -35,7 +32,7 @@ class Connectivity: ObservableObject {
     }
 
     var enableNetwork: Bool {
-        return enableWifi || enableCellular
+        return enableWifi || enableCellular || Connectivity.sharedReachability.isReachable
     }
 
     init() {

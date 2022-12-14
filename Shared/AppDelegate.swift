@@ -43,6 +43,7 @@ class AppDelegate: NSObject, UIApplicationDelegate, MessagingDelegate, UNUserNot
             name: Constant.NameNotification.restoreVPNSuccessfully,
             object: nil
         )
+        Constant.resetDomain()
         return true
     }
     
@@ -131,6 +132,10 @@ class AppDelegate: NSObject, UIApplicationDelegate, MessagingDelegate, UNUserNot
             await NetworkManager.shared.checkIfVPNDropped()
             currentBackGroundTask = task
         }
+    }
+    
+    func applicationWillTerminate(_ application: UIApplication) {
+        Constant.resetDomain()
     }
 
     @objc func endBGTaskOnSuccessfullyRestoreVPN() {

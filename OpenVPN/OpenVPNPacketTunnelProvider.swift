@@ -18,7 +18,7 @@ class PacketTunnelProvider: OpenVPNTunnelProvider {
     private var timerFactory: TimerFactory!
     private var nwPathMonitor: NWPathMonitor?
     private var internetAvailable: Bool?
-    
+
     override init() {
         super.init()
         dataCountInterval = 1000
