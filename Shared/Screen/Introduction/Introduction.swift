@@ -37,6 +37,7 @@ struct IntroductionView: View {
                 Text(L10n.Introduction.introBottomTitle)
                     .font(.system(size: Constant.TextSize.Global.subcription))
                     .foregroundColor(.white)
+                    .padding(.bottom, 20)
                 Spacer()
             }
             .padding(.bottom, safeAreaInsets.bottom)

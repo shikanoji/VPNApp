@@ -54,12 +54,15 @@ struct RegisterView: View {
                 }
             normalRegisterButton
             Spacer().frame(height: buttonSpacing)
-            AppButton(style: .darkButton, width: Constant.Global.widthFormAndButton, text: L10n.Register.signupWithGoogle, icon: Asset.Assets.google.swiftUIImage) {
-                viewModel.signupGoogle()
-            }
-            Spacer().frame(height: 10)
-            AppButton(style: .darkButton, width: Constant.Global.widthFormAndButton, text: L10n.Register.signupWithApple, icon: Asset.Assets.apple.swiftUIImage) {
-                viewModel.signupApple()
+            diviText
+            Spacer().frame(height: 20)
+            HStack(spacing: 16) {
+                AppButton(style: .darkButton, width: Constant.Global.widthFormAndButtonLogin, text: L10n.Register.signupWithGoogle, icon: Asset.Assets.google.swiftUIImage) {
+                    viewModel.signupGoogle()
+                }
+                AppButton(style: .darkButton, width: Constant.Global.widthFormAndButtonLogin, text: L10n.Register.signupWithApple, icon: Asset.Assets.apple.swiftUIImage) {
+                    viewModel.signupApple()
+                }
             }
             Spacer().frame(height: buttonSpacing)
         }
@@ -80,6 +83,19 @@ struct RegisterView: View {
                 NavigationLink(destination: LoginView(viewModel: LoginViewModel()), isActive: $shouldPushLoginView) {
                 }
             }
+        }
+    }
+
+    var diviText: some View {
+        HStack(spacing: 12) {
+            Asset.Assets.diviLogin.swiftUIImage
+                .resizable()
+                .frame(width: 60, height: 1)
+            Text(L10n.Register.signUpWith)
+                .setLightBlackText()
+            Asset.Assets.diviLogin.swiftUIImage
+                .resizable()
+                .frame(width: 60, height: 1)
         }
     }
 

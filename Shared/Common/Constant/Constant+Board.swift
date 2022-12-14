@@ -166,6 +166,7 @@ extension Constant {
         static let iconUncheck = Asset.Assets.iconUncheck.swiftUIImage
         static let iconArrowRight = Asset.Assets.iconArrowRight.swiftUIImage
         static let widthFormAndButton = UIScreen.main.bounds.width - 64
+        static let widthFormAndButtonLogin = (UIScreen.main.bounds.width - 80) / 2
     }
 
     struct Loading {

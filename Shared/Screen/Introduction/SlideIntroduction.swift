@@ -46,6 +46,7 @@ struct SlideIntroduction: View {
                     intro.image
                         .resizable()
                         .scaledToFit()
+                        .padding(.horizontal, 20)
                     Spacer().frame(height: 10)
                     Text(intro.title).setTitle()
                         .multilineTextAlignment(.center)

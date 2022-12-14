@@ -67,6 +67,7 @@ internal enum Asset {
     internal static let launchScreen = ImageAsset(name: "LaunchScreen")
     internal static let launchScreenBackGround = ImageAsset(name: "LaunchScreen_BackGround")
     internal static let apple = ImageAsset(name: "apple")
+    internal static let diviLogin = ImageAsset(name: "divi-login")
     internal static let google = ImageAsset(name: "google")
     internal static let logoText = ImageAsset(name: "Logo-Text")
     internal static let logoLarge = ImageAsset(name: "Logo-large")

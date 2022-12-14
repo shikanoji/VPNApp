@@ -6,16 +6,17 @@
   
 */
 "Title" = "Welcome back";
-"Body" = "If not protect your virtual life now, then when?";
+"Body" = "Start protecting yourself with SysVPN";
 
 "UsernamePlaceholder" = "Your username";
 "PasswordPlaceholder" = "Password";
 "EmailPlaceholder" = "Your email";
 
 "Signin" = "Sign in";
-"SigninWithGoogle" = "Sign in with Google";
-"SigninWithApple" = "Sign in with Apple";
+"SigninWithGoogle" = "Google";
+"SigninWithApple" = "Apple";
 
 "NoAccountQuestion" = "Don't have an account?";
-"CreateNew" = "Create new";
+"signInWith" = "Or sign in with";
+"CreateNew" = "Sign up";
 "ForgotPassword" = "Forgot your password?";
