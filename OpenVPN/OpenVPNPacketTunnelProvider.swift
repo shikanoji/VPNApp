@@ -135,6 +135,10 @@ class PacketTunnelProvider: OpenVPNTunnelProvider {
 //        }
     }
 
+    override func startCheckRefresh() {
+        startTestingConnectivity()
+    }
+
     @objc private func checkConnectivity() {
         let timeDiff = -lastConnectivityCheck.timeIntervalSinceNow
         if timeDiff > 60 * 3 {

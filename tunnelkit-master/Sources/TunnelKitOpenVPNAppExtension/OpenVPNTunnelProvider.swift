@@ -242,13 +242,16 @@ open class OpenVPNTunnelProvider: NEPacketTunnelProvider {
         reasserting = true
         tunnelQueue.sync {
             shouldReconnect = false
-            self.session?.cleanup()
+           
             self.session?.delegate = nil
             self.socket?.delegate = nil
             self.socket?.delegate = nil
+            
+            self.session?.cleanup()
             self.socket?.unobserve()
             self.socket?.shutdown()
             self.socket = nil
+            
             self.session?.shutdown(error: nil)
             self.session = nil
         }
@@ -355,12 +358,12 @@ open class OpenVPNTunnelProvider: NEPacketTunnelProvider {
                     self.refreshConnection()
                 }
                 
-                else {
-                    if self.killSwitch {
-                        return
-                    }
-                    self.disposeTunnel(error: error)
-                }
+                /* else {
+                     if self.killSwitch {
+                         return
+                     }
+                     self.disposeTunnel(error: error)
+                 } */
                 
             }
         }
@@ -448,6 +451,10 @@ open class OpenVPNTunnelProvider: NEPacketTunnelProvider {
             return
         }
         cfg._appexSetDataCount(dataCount)
+    }
+    
+    open func startCheckRefresh() {
+        
     }
 }
 
@@ -538,7 +545,8 @@ extension OpenVPNTunnelProvider: GenericSocketDelegate {
             if failedTime > 0 {
                 failedTime -= 1
                 os_log("REFRESH SOCKET FAILED  %{public}@", shutdownError?.localizedDescription ?? "")
-                refreshConnection()
+                // refreshConnection()
+                startCheckRefresh()
             }
             os_log(" cancel disposeTunnel")
             return 
