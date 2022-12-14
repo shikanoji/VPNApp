@@ -19,8 +19,8 @@ class PacketTunnelProvider: OpenVPNTunnelProvider {
     private var dataTaskFactory: DataTaskFactory!
     private var lastConnectivityCheck: Date = Date()
     private var timerFactory: TimerFactory!
-    private var nwPathMonitor: NWPathMonitor?
-    private var internetAvailable: Bool?
+    private var nwPathMonitor: NWPathMonitor? 
+
     var lastProviderConfiguration: [String: Any] = [:]
     var requestCert: RequestCertificateModel?
 
@@ -28,11 +28,11 @@ class PacketTunnelProvider: OpenVPNTunnelProvider {
         os_log("INITIATE TUNNEL PROVIDER")
         super.init()
         if userDefaultsShared?.bool(forKey: "openVPNTunnelCouldBeDropped") == true {
-            os_log("VPN DROPPED - DISCONNECT")
-            userDefaultsShared?.set(false, forKey: "openVPNTunnelCouldBeDropped")
-            Task {
-                await OpenVPNManager.shared.disconnect()
-            }
+            /*  os_log("VPN DROPPED - DISCONNECT")
+             userDefaultsShared?.set(false, forKey: "openVPNTunnelCouldBeDropped")
+             Task {
+                 await OpenVPNManager.shared.disconnect()
+             }*/
         }
         dataCountInterval = 1000
         timerFactory = TimerFactoryImplementation()
@@ -64,12 +64,15 @@ class PacketTunnelProvider: OpenVPNTunnelProvider {
     }
 
     override func startTunnel(options: [String: NSObject]?, completionHandler: @escaping (Error?) -> Void) {
+        os_log("VPN START")
         if let tunnel = protocolConfiguration as? NETunnelProviderProtocol,
            let providerConfigutaion = tunnel.providerConfiguration {
             lastProviderConfiguration = providerConfigutaion
         }
 
         super.startTunnel(options: options) { [weak self] error in
+
+            os_log("VPN START ERROR \(error)")
             guard let error = error else {
                 completionHandler(nil)
                 self?.connectionEstablished()
@@ -79,19 +82,23 @@ class PacketTunnelProvider: OpenVPNTunnelProvider {
         }
     }
 
-    override func stopTunnel(with reason: NEProviderStopReason) async {
-        os_log("STOP OPENVPN TUNNEL")
+
+    override func stopTunnel(with reason: NEProviderStopReason, completionHandler: @escaping () -> Void) {
+        os_log("STOP OPENVPN TUNNEL \(reason.rawValue)")
         userDefaultsShared?.set(false, forKey: "openVPNTunnelCouldBeDropped")
-        await super.stopTunnel(with: reason)
+        super.stopTunnel(with: reason, completionHandler: completionHandler)
     }
 
     override func sleep(completionHandler: @escaping () -> Void) {
         // stopTestingConnectivity()
+        os_log("VPN SLEEP")
     }
 
     override func wake() {
         // startTestingConnectivity()
-        checkConnectivity()
+        // checkConnectivity()
+
+        os_log("VPN WAKE")
     }
 
     private func connectionEstablished() {
@@ -99,6 +106,11 @@ class PacketTunnelProvider: OpenVPNTunnelProvider {
         userDefaultsShared?.set(true, forKey: "openVPNTunnelCouldBeDropped")
         // certificateRefreshManager?.start { }
         startTestingConnectivity()
+    }
+
+    override func refreshConnection() {
+        os_log("[] REFRESH CERT")
+        refreshCert() 
     }
 
     private func startTestingConnectivity() {
@@ -183,7 +195,8 @@ class PacketTunnelProvider: OpenVPNTunnelProvider {
         let task = dataTaskFactory.dataTask(urlRequest) { data, response, error in
             if error is POSIXError, (error as? POSIXError)?.code == .ETIMEDOUT {
                 os_log("CheckVPNStatus: TIMEOUT")
-                self.refreshCert()
+                // self.refreshCert()
+                self.refreshConnection() 
             } else {
                 os_log("CheckVPNStatus: Success")
             }
@@ -192,6 +205,9 @@ class PacketTunnelProvider: OpenVPNTunnelProvider {
     }
 
     private func refreshCert() {
+        if internetAvailable == false {
+            return
+        }
         os_log("START REFRESH CERTIFICATE")
         releaseConnection()
         DispatchQueue.global(qos: .background).asyncAfter(deadline: .now() + 1) {
@@ -220,4 +236,6 @@ class PacketTunnelProvider: OpenVPNTunnelProvider {
             ConnectionTunnelDataTaskFactory(provider: self,
                                             timerFactory: timerFactory)
     }
+
+
 }

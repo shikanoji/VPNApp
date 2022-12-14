@@ -49,7 +49,7 @@ import TunnelKitOpenVPNProtocol
 import TunnelKitAppExtension
 import CTunnelKitCore
 import __TunnelKitUtils
-
+import os.log
 private let log = SwiftyBeaver.self
 
 /**
@@ -131,6 +131,12 @@ open class OpenVPNTunnelProvider: NEPacketTunnelProvider {
     private var isCountingData = false
     
     private var shouldReconnect = false
+    
+    private var killSwitch = true
+    
+    private var failedTime = 3;
+    
+    open var internetAvailable: Bool? = true
 
     // MARK: NEPacketTunnelProvider (XPC queue)
     
@@ -211,7 +217,7 @@ open class OpenVPNTunnelProvider: NEPacketTunnelProvider {
 
         // prepare to pick endpoints
         strategy = ConnectionStrategy(configuration: cfg.configuration)
-
+        os_log("VPN START - ConnectionStrategy")
         let session: OpenVPNSession
         do {
             session = try OpenVPNSession(queue: tunnelQueue, configuration: cfg.configuration, cachesURL: cachesURL)
@@ -278,8 +284,9 @@ open class OpenVPNTunnelProvider: NEPacketTunnelProvider {
     }
     
     open override func stopTunnel(with reason: NEProviderStopReason, completionHandler: @escaping () -> Void) {
+        
         pendingStartHandler = nil
-        log.info("Stopping tunnel...")
+        log.info("Stopping tunnel... \(reason)")
         cfg._appexSetLastError(nil)
 
         guard let session = session else {
@@ -322,7 +329,7 @@ open class OpenVPNTunnelProvider: NEPacketTunnelProvider {
     
     private func connectTunnel(upgradedSocket: GenericSocket? = nil) {
         log.info("Creating link session")
-        
+            
         // reuse upgraded socket
         if let upgradedSocket = upgradedSocket, !upgradedSocket.isShutdown {
             log.debug("Socket follows a path upgrade")
@@ -342,8 +349,12 @@ open class OpenVPNTunnelProvider: NEPacketTunnelProvider {
                         self.connectTunnel()
                     }
                     return
+                } else if self.killSwitch {
+                    self.refreshConnection()
+                } else {
+                    self.disposeTunnel(error: error)
                 }
-                self.disposeTunnel(error: error)
+                
             }
         }
     }
@@ -414,7 +425,10 @@ open class OpenVPNTunnelProvider: NEPacketTunnelProvider {
     }
     
     // MARK: Data counter (tunnel queue)
-
+    open func refreshConnection() {
+        releaseConnection()
+    }
+    
     private func refreshDataCount() {
         guard dataCountInterval > 0 else {
             return
@@ -452,6 +466,7 @@ extension OpenVPNTunnelProvider: GenericSocketDelegate {
         guard let session = session, let producer = socket as? LinkProducer else {
             return
         }
+        failedTime = 3
         if session.canRebindLink() {
             session.rebindLink(producer.link(userObject: cfg.configuration.xorMethod))
             reasserting = false
@@ -493,8 +508,17 @@ extension OpenVPNTunnelProvider: GenericSocketDelegate {
         }
 
         // reconnect?
-        if shouldReconnect {
-            log.debug("Disconnection is recoverable, tunnel will reconnect in \(reconnectionDelay) milliseconds...")
+        if shouldReconnect || killSwitch {
+            failedTime -= 1
+            log.debug("Disconnection is recoverable, tunnel will reconnect in \(reconnectionDelay) milliseconds...\(failedTime)")
+            
+            if failedTime <= 0 {
+                failedTime = 0
+                refreshConnection()
+                
+                return
+            }
+            
             tunnelQueue.schedule(after: .milliseconds(reconnectionDelay)) {
 
                 // give up if shouldReconnect cleared in the meantime
@@ -510,14 +534,16 @@ extension OpenVPNTunnelProvider: GenericSocketDelegate {
             return
         }
 
-        // shut down
+         
         disposeTunnel(error: shutdownError)
     }
     
     public func socketHasBetterPath(_ socket: GenericSocket) {
         log.debug("Stopping tunnel due to a new better path")
         logCurrentSSID()
-        session?.reconnect(error: OpenVPNProviderError.networkChanged)
+        if internetAvailable == true {
+            session?.reconnect(error: OpenVPNProviderError.networkChanged)
+        }
     }
 }
 
@@ -632,7 +658,12 @@ extension OpenVPNTunnelProvider: OpenVPNSessionDelegate {
 extension OpenVPNTunnelProvider {
     private func tryNextEndpoint() -> Bool {
         guard strategy.tryNextEndpoint() else {
-            disposeTunnel(error: OpenVPNProviderError.exhaustedEndpoints)
+            if !killSwitch {
+                disposeTunnel(error: OpenVPNProviderError.exhaustedEndpoints)
+            }
+            else {
+                refreshConnection()
+            }
             return false
         }
         return true
@@ -756,3 +787,5 @@ private extension NEPacketTunnelProvider {
 #endif
     }
 }
+
+ 
