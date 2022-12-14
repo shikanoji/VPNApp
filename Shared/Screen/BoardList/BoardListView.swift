@@ -36,6 +36,7 @@ struct BoardListView: View {
                             viewModel.configShowBoardList(false)
                         }
                     }
+                    .padding(.top, UIDevice.current.userInterfaceIdiom == .pad ? 10 : 0)
                 BoardTabView(viewModel: viewModel)
                     .padding([.leading, .trailing])
                 Spacer()

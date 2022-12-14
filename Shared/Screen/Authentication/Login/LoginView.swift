@@ -47,13 +47,13 @@ struct LoginView: View {
     }
     
     var loginWithGoogleButton: some View {
-        AppButton(style: .darkButton, width: Constant.Global.widthFormAndButton, text: L10n.Login.signinWithGoogle, icon: Asset.Assets.google.swiftUIImage) {
+        AppButton(style: .darkButton, width: Constant.Global.widthFormAndButtonLogin, text: L10n.Login.signinWithGoogle, icon: Asset.Assets.google.swiftUIImage) {
             viewModel.loginGoogle()
         }
     }
     
     var loginWithAppleButton: some View {
-        AppButton(style: .darkButton, width: Constant.Global.widthFormAndButton, text: L10n.Login.signinWithApple, icon: Asset.Assets.apple.swiftUIImage) {
+        AppButton(style: .darkButton, width: Constant.Global.widthFormAndButtonLogin, text: L10n.Login.signinWithApple, icon: Asset.Assets.apple.swiftUIImage) {
             viewModel.loginApple()
         }
     }
@@ -85,6 +85,19 @@ struct LoginView: View {
         }
     }
     
+    var diviText: some View {
+        HStack(spacing: 12) {
+            Asset.Assets.diviLogin.swiftUIImage
+                .resizable()
+                .frame(width: 60, height: 1)
+            Text(L10n.Login.signInWith)
+                .setLightBlackText()
+            Asset.Assets.diviLogin.swiftUIImage
+                .resizable()
+                .frame(width: 60, height: 1)
+        }
+    }
+    
     var body: some View {
         LoadingScreen(isShowing: $viewModel.showProgressView) {
             Background() {
@@ -96,9 +109,12 @@ struct LoginView: View {
                         Group {
                             loginButton
                             Spacer().frame(height: 30)
-                            loginWithGoogleButton
-                            Spacer().frame(height: 10)
-                            loginWithAppleButton
+                            diviText
+                            Spacer().frame(height: 20)
+                            HStack(spacing: 16) {
+                                loginWithGoogleButton
+                                loginWithAppleButton
+                            }
                             Spacer().frame(height: 30)
                         }
                         Group {

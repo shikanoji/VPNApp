@@ -311,10 +311,10 @@ public enum L10n {
     public static let updateRequiredNote = L10n.tr("Introduction", "UpdateRequiredNote", fallback: "The current version of SYSVPN is no longer supported. Please update the app to continue using the app.")
   }
   public enum Login {
-    /// If not protect your virtual life now, then when?
-    public static let body = L10n.tr("Login", "Body", fallback: "If not protect your virtual life now, then when?")
-    /// Create new
-    public static let createNew = L10n.tr("Login", "CreateNew", fallback: "Create new")
+    /// Start protecting yourself with SysVPN
+    public static let body = L10n.tr("Login", "Body", fallback: "Start protecting yourself with SysVPN")
+    /// Sign up
+    public static let createNew = L10n.tr("Login", "CreateNew", fallback: "Sign up")
     /// Your email
     public static let emailPlaceholder = L10n.tr("Login", "EmailPlaceholder", fallback: "Your email")
     /// Forgot your password?
@@ -325,10 +325,12 @@ public enum L10n {
     public static let passwordPlaceholder = L10n.tr("Login", "PasswordPlaceholder", fallback: "Password")
     /// Sign in
     public static let signin = L10n.tr("Login", "Signin", fallback: "Sign in")
-    /// Sign in with Apple
-    public static let signinWithApple = L10n.tr("Login", "SigninWithApple", fallback: "Sign in with Apple")
-    /// Sign in with Google
-    public static let signinWithGoogle = L10n.tr("Login", "SigninWithGoogle", fallback: "Sign in with Google")
+    /// Or sign in with
+    public static let signInWith = L10n.tr("Login", "signInWith", fallback: "Or sign in with")
+    /// Apple
+    public static let signinWithApple = L10n.tr("Login", "SigninWithApple", fallback: "Apple")
+    /// Google
+    public static let signinWithGoogle = L10n.tr("Login", "SigninWithGoogle", fallback: "Google")
     /// strings
     ///   SysVPN
     /// 
@@ -459,24 +461,26 @@ public enum L10n {
     }
   }
   public enum Register {
-    /// If not protect your virtual life now, then when?
-    public static let body = L10n.tr("Register", "Body", fallback: "If not protect your virtual life now, then when?")
+    /// Start protecting yourself with SysVPN
+    public static let body = L10n.tr("Register", "Body", fallback: "Start protecting yourself with SysVPN")
     /// Your email
     public static let emailPlaceholder = L10n.tr("Register", "EmailPlaceholder", fallback: "Your email")
     /// Already have an account?
     public static let hadAccountText = L10n.tr("Register", "HadAccountText", fallback: "Already have an account?")
     /// Password
     public static let passwordPlaceholder = L10n.tr("Register", "PasswordPlaceholder", fallback: "Password")
-    /// Retype Password
-    public static let retypePassword = L10n.tr("Register", "RetypePassword", fallback: "Retype Password")
+    /// Retype Your Password
+    public static let retypePassword = L10n.tr("Register", "RetypePassword", fallback: "Retype Your Password")
     /// Sign in
     public static let signin = L10n.tr("Register", "Signin", fallback: "Sign in")
     /// Create an account
     public static let signup = L10n.tr("Register", "Signup", fallback: "Create an account")
-    /// Sign up with Apple
-    public static let signupWithApple = L10n.tr("Register", "SignupWithApple", fallback: "Sign up with Apple")
-    /// Sign up with Google
-    public static let signupWithGoogle = L10n.tr("Register", "SignupWithGoogle", fallback: "Sign up with Google")
+    /// Or sign up with
+    public static let signUpWith = L10n.tr("Register", "signUpWith", fallback: "Or sign up with")
+    /// Apple
+    public static let signupWithApple = L10n.tr("Register", "SignupWithApple", fallback: "Apple")
+    /// Google
+    public static let signupWithGoogle = L10n.tr("Register", "SignupWithGoogle", fallback: "Google")
     /// strings
     ///   SysVPN
     /// 
