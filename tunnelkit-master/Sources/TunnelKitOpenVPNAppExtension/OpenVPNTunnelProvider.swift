@@ -349,9 +349,16 @@ open class OpenVPNTunnelProvider: NEPacketTunnelProvider {
                         self.connectTunnel()
                     }
                     return
-                } else if self.killSwitch {
+                } else if self.failedTime > 0 {
+                    self.failedTime -= 1
+                    os_log("REFRESH CERT FROM START FAILED")
                     self.refreshConnection()
-                } else {
+                }
+                
+                else {
+                    if self.killSwitch {
+                        return
+                    }
                     self.disposeTunnel(error: error)
                 }
                 
@@ -508,17 +515,10 @@ extension OpenVPNTunnelProvider: GenericSocketDelegate {
         }
 
         // reconnect?
-        if shouldReconnect || killSwitch {
-            failedTime -= 1
+        if shouldReconnect {
+            
             log.debug("Disconnection is recoverable, tunnel will reconnect in \(reconnectionDelay) milliseconds...\(failedTime)")
-            
-            if failedTime <= 0 {
-                failedTime = 0
-                refreshConnection()
-                
-                return
-            }
-            
+          
             tunnelQueue.schedule(after: .milliseconds(reconnectionDelay)) {
 
                 // give up if shouldReconnect cleared in the meantime
@@ -533,7 +533,16 @@ extension OpenVPNTunnelProvider: GenericSocketDelegate {
             }
             return
         }
-
+        
+        if killSwitch {
+            if failedTime > 0 {
+                failedTime -= 1
+                os_log("REFRESH SOCKET FAILED  %{public}@", shutdownError?.localizedDescription ?? "")
+                refreshConnection()
+            }
+            os_log(" cancel disposeTunnel")
+            return 
+        }
          
         disposeTunnel(error: shutdownError)
     }
@@ -662,6 +671,7 @@ extension OpenVPNTunnelProvider {
                 disposeTunnel(error: OpenVPNProviderError.exhaustedEndpoints)
             }
             else {
+                os_log("END POINT FAILED")
                 refreshConnection()
             }
             return false

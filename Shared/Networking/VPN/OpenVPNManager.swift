@@ -47,7 +47,7 @@ class OpenVPNManager: ObservableObject {
             let rule = NEOnDemandRuleConnect()
             rule.interfaceTypeMatch = .any
             extra.onDemandRules = [rule]
-            extra.killSwitch = true
+            //    extra.killSwitch = true
             do {
                 try await vpn.reconnect(
                     tunnelIdentifier,

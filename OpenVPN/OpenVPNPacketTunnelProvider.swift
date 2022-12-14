@@ -21,6 +21,7 @@ class PacketTunnelProvider: OpenVPNTunnelProvider {
     private var timerFactory: TimerFactory!
     private var nwPathMonitor: NWPathMonitor? 
 
+    private var currentRefreshSession: String?
     var lastProviderConfiguration: [String: Any] = [:]
     var requestCert: RequestCertificateModel?
 
@@ -84,7 +85,7 @@ class PacketTunnelProvider: OpenVPNTunnelProvider {
 
 
     override func stopTunnel(with reason: NEProviderStopReason, completionHandler: @escaping () -> Void) {
-        os_log("STOP OPENVPN TUNNEL \(reason.rawValue)")
+        os_log("STOP OPENVPN TUNNEL %{public}@ ", reason.rawValue)
         userDefaultsShared?.set(false, forKey: "openVPNTunnelCouldBeDropped")
         super.stopTunnel(with: reason, completionHandler: completionHandler)
     }
@@ -192,7 +193,19 @@ class PacketTunnelProvider: OpenVPNTunnelProvider {
         }
         let urlRequest = URLRequest(url: url)
 
+
+        var sessionRefreshId = UUID().uuidString;
+        currentRefreshSession = sessionRefreshId
+
+        os_log("CheckVPNStatus:  refresh with id:  %{public}@", sessionRefreshId)
+
         let task = dataTaskFactory.dataTask(urlRequest) { data, response, error in
+
+            if sessionRefreshId != self.currentRefreshSession {
+                os_log("CheckVPNStatus: Invalid session refresh  %{public}@", sessionRefreshId)
+                return
+            }
+
             if error is POSIXError, (error as? POSIXError)?.code == .ETIMEDOUT {
                 os_log("CheckVPNStatus: TIMEOUT")
                 // self.refreshCert()
@@ -209,6 +222,8 @@ class PacketTunnelProvider: OpenVPNTunnelProvider {
             return
         }
         os_log("START REFRESH CERTIFICATE")
+
+
         releaseConnection()
         DispatchQueue.global(qos: .background).asyncAfter(deadline: .now() + 1) {
             if let param = self.lastProviderConfiguration["paramGetCert"] as? [String: Any],
@@ -222,6 +237,8 @@ class PacketTunnelProvider: OpenVPNTunnelProvider {
                         os_log("RELOAD VPN SESSION")
 
                         self.reloadSessionAndConnect()
+                    } else {
+                        os_log("RELOAD VPN FAILED")
                     }
                 }
             }
